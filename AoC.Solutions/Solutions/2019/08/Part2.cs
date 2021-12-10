@@ -1,8 +1,8 @@
-﻿using System.Diagnostics;
-using AoC.Infrastructure;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
+using System.Diagnostics;
+using AoC.Solutions.Infrastructure;
 
-namespace AoC.Solutions._2019._08;
+namespace AoC.Solutions.Solutions._2019._08;
 
 [UsedImplicitly]
 public class Part2 : Solution

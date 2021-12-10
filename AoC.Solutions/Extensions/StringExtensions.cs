@@ -1,4 +1,4 @@
-﻿namespace AoC.Extensions;
+﻿namespace AoC.Solutions.Extensions;
 
 public static class StringExtensions
 {

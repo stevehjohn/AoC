@@ -1,6 +1,6 @@
-﻿using AoC.Extensions;
+﻿using AoC.Solutions.Extensions;
 
-namespace AoC.Solutions._2021._08;
+namespace AoC.Solutions.Solutions._2021._08;
 
 public class Digit
 {

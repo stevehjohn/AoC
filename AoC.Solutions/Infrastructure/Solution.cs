@@ -1,4 +1,4 @@
-﻿namespace AoC.Infrastructure;
+﻿namespace AoC.Solutions.Infrastructure;
 
 public abstract class Solution
 {

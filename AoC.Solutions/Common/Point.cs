@@ -1,4 +1,4 @@
-﻿namespace AoC.Common;
+﻿namespace AoC.Solutions.Common;
 
 public class Point
 {

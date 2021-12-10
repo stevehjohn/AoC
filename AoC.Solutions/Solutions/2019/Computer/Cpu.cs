@@ -1,8 +1,8 @@
-﻿using System.Reflection;
-using AoC.Exceptions;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
+using System.Reflection;
+using AoC.Solutions.Exceptions;
 
-namespace AoC.Solutions._2019.Computer;
+namespace AoC.Solutions.Solutions._2019.Computer;
 
 public class Cpu
 {

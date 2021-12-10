@@ -1,7 +1,7 @@
-﻿using AoC.Exceptions;
+﻿using AoC.Solutions.Exceptions;
 using JetBrains.Annotations;
 
-namespace AoC.Solutions._2021._04;
+namespace AoC.Solutions.Solutions._2021._04;
 
 [UsedImplicitly]
 public class Part2 : Base

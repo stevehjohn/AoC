@@ -1,6 +1,6 @@
-﻿using AoC.Infrastructure;
+﻿using AoC.Solutions.Infrastructure;
 
-namespace AoC.Solutions._2021._06;
+namespace AoC.Solutions.Solutions._2021._06;
 
 public abstract class Base : Solution
 {

@@ -1,14 +1,15 @@
-﻿using AoC.Infrastructure;
+﻿using AoC.Solutions.Infrastructure;
+using AoC.Solutions.Solutions._2019.Computer;
 using JetBrains.Annotations;
 
-namespace AoC.Solutions._2019._05;
+namespace AoC.Solutions.Solutions._2019._05;
 
 [UsedImplicitly]
 public class Part1 : Solution
 {
     public override string GetAnswer()
     {
-        var cpu = new Computer.Cpu();
+        var cpu = new Cpu();
 
         cpu.Initialise();
 

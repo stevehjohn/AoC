@@ -1,7 +1,7 @@
-﻿using System.Text;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
+using System.Text;
 
-namespace AoC.Solutions._2021._10;
+namespace AoC.Solutions.Solutions._2021._10;
 
 [UsedImplicitly]
 public class Part2 : Base

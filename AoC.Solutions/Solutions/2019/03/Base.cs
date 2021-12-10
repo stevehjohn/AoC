@@ -1,7 +1,7 @@
-﻿using AoC.Common;
-using AoC.Infrastructure;
+﻿using AoC.Solutions.Common;
+using AoC.Solutions.Infrastructure;
 
-namespace AoC.Solutions._2019._03;
+namespace AoC.Solutions.Solutions._2019._03;
 
 public abstract class Base : Solution
 {

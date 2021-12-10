@@ -1,7 +1,7 @@
-﻿using AoC.Infrastructure;
+﻿using AoC.Solutions.Infrastructure;
 using JetBrains.Annotations;
 
-namespace AoC.Solutions._2021._03;
+namespace AoC.Solutions.Solutions._2021._03;
 
 [UsedImplicitly]
 public class Part2 : Solution

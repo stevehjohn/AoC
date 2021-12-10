@@ -1,4 +1,4 @@
-﻿namespace AoC.Solutions._2019.Computer;
+﻿namespace AoC.Solutions.Solutions._2019.Computer;
 
 public enum CpuState
 {

@@ -1,4 +1,4 @@
-﻿namespace AoC.Solutions._2021._04;
+﻿namespace AoC.Solutions.Solutions._2021._04;
 
 public class Board
 {

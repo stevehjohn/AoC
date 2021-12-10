@@ -1,4 +1,4 @@
-﻿namespace AoC.Exceptions;
+﻿namespace AoC.Solutions.Exceptions;
 
 public class IncorrectAnswerException : Exception
 {

@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
-using AoC.Exceptions;
-using AoC.Infrastructure;
+using AoC.Solutions.Exceptions;
+using AoC.Solutions.Infrastructure;
 
 var solutions = Assembly.GetExecutingAssembly()
                         .GetTypes()

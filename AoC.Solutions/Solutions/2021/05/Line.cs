@@ -1,7 +1,7 @@
-﻿using AoC.Common;
-using AoC.Extensions;
+﻿using AoC.Solutions.Common;
+using AoC.Solutions.Extensions;
 
-namespace AoC.Solutions._2021._05;
+namespace AoC.Solutions.Solutions._2021._05;
 
 public class Line
 {

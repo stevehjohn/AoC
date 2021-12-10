@@ -1,12 +1,13 @@
-﻿using AoC.Infrastructure;
+﻿using AoC.Solutions.Infrastructure;
+using AoC.Solutions.Solutions._2019.Computer;
 
-namespace AoC.Solutions._2019._09;
+namespace AoC.Solutions.Solutions._2019._09;
 
 public abstract class Base : Solution
 {
     public string GetAnswer(int input)
     {
-        var cpu = new Computer.Cpu();
+        var cpu = new Cpu();
 
         cpu.Initialise(65536);
 

@@ -1,6 +1,6 @@
 ﻿using JetBrains.Annotations;
 
-namespace AoC.Solutions._2019._03;
+namespace AoC.Solutions.Solutions._2019._03;
 
 [UsedImplicitly]
 public class Part1 : Base
