@@ -18,6 +18,8 @@ public class TestAllSolutions
         foreach (var solution in solutions)
         {
             var instance = Activator.CreateInstance(solution) as Solution;
+
+            var answer = instance?.GetAnswer();
         }
     }
 }
