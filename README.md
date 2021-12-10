@@ -1,3 +1,3 @@
-# AoC 2021
+# AoC
 
 Stevo's Advent of Code Repo.
