@@ -10,7 +10,7 @@ public abstract class Solution
 
         var parts = nameSpace.Split('.');
 
-        var path = parts.Skip(1).Select(s => s.Replace("_", string.Empty)).ToArray();
+        var path = parts.Skip(2).Select(s => s.Replace("_", string.Empty)).ToArray();
 
         Input = File.ReadAllLines($"{string.Join(Path.DirectorySeparatorChar, path)}{Path.DirectorySeparatorChar}input.txt");
     }

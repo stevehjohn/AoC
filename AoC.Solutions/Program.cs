@@ -38,7 +38,7 @@ foreach (var solution in solutions)
 
     CheckAnswer(instance.GetType(), answer);
 
-    var year = int.Parse(solution.Namespace?.Split('.')[2].Replace("_", string.Empty) ?? "0");
+    var year = int.Parse(solution.Namespace?.Split('.')[3].Replace("_", string.Empty) ?? "0");
 
     if (previousYear == null)
     {
@@ -55,7 +55,7 @@ foreach (var solution in solutions)
 
     var displayAnswer = answer.Length < 26
         ? answer
-        : $"{answer.Substring(0, 27)}...";
+        : $"{answer[..27]}...";
 
     Console.WriteLine($" {year} {int.Parse(solution.Namespace?.Split('.')[3].Replace("_", string.Empty) ?? "0"),2}.{solution.Name[4]}: {displayAnswer,-30} {stopwatch.ElapsedMilliseconds}ms");
 
@@ -68,7 +68,7 @@ WriteYearSummary();
 
 void CheckAnswer(Type solution, string answer)
 {
-    var key = $"{int.Parse(solution.Namespace?.Split('.')[2].Replace("_", string.Empty) ?? "0")}.{int.Parse(solution.Namespace?.Split('.')[3].Replace("_", string.Empty) ?? "0")}.{solution.Name[4]}";
+    var key = $"{int.Parse(solution.Namespace?.Split('.')[3].Replace("_", string.Empty) ?? "0")}.{int.Parse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0")}.{solution.Name[4]}";
 
     var correctAnswerLine = answers.FirstOrDefault(a => a.StartsWith(key));
 
