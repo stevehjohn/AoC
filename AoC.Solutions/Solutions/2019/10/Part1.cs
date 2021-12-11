@@ -19,36 +19,7 @@ public class Part1 : Base
 
         foreach (var scanner in Asteroids)
         {
-            var detectable = 0;
-
-            foreach (var target in Asteroids)
-            {
-                if (scanner == target)
-                {
-                    continue;
-                }
-
-                var isBlocked = false;
-
-                var blockers = Asteroids.Where(b => b.X >= Math.Min(scanner.X, target.X) && b.X <= Math.Max(scanner.X, target.X)
-                                                                                         && b.Y >= Math.Min(scanner.Y, target.Y) && b.Y <= Math.Max(scanner.Y, target.Y)
-                                                                                         && b != scanner && b != target);
-
-                foreach (var blocker in blockers)
-                {
-                    isBlocked = IsBlocking(scanner, target, blocker);
-
-                    if (isBlocked)
-                    {
-                        break;
-                    }
-                }
-
-                if (!isBlocked)
-                {
-                    detectable++;
-                }
-            }
+            var detectable = Asteroids.Where(a => a != scanner).Select(a => Math.Atan2(a.X - scanner.X, a.Y - scanner.Y)).Distinct().Count();
 
             if (detectable > maxDetectable)
             {
