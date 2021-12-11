@@ -1,24 +1,15 @@
-﻿using AoC.Solutions.Infrastructure;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2019._06;
 
 [UsedImplicitly]
-public class Part1 : Solution
+public class Part1 : Base
 {
-    private Body _root;
-
-    private readonly List<Body> _nodes = new();
-
     public override string GetAnswer()
     {
-        _root = new Body("COM");
-
-        _root.Orbiters.AddRange(GetOrbiters(_root));
-
         var orbitCount = 0;
 
-        foreach (var leaf in _nodes)
+        foreach (var leaf in Nodes)
         {
             var node = leaf.Orbits;
 
@@ -35,16 +26,5 @@ public class Part1 : Solution
         }
 
         return orbitCount.ToString();
-    }
-
-    private List<Body> GetOrbiters(Body body)
-    {
-        var orbiters = Input.Where(i => i.StartsWith($"{body.Name})")).Select(i => new Body(i.Split(')')[1]) { Orbits = body }).ToList();
-
-        _nodes.AddRange(orbiters);
-
-        orbiters.ForEach(o => o.Orbiters.AddRange(GetOrbiters(o)));
-
-        return orbiters;
     }
 }
