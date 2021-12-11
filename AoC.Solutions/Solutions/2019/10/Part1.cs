@@ -37,14 +37,14 @@ public class Part1 : Base
                 foreach (var blocker in blockers)
                 {
                     isBlocked = IsBlocking(scanner, target, blocker);
-                    
+
                     if (isBlocked)
                     {
                         break;
                     }
                 }
 
-                if (! isBlocked)
+                if (!isBlocked)
                 {
                     detectable++;
                 }

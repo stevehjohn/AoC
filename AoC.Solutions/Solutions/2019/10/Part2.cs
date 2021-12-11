@@ -6,23 +6,25 @@ namespace AoC.Solutions.Solutions._2019._10;
 [UsedImplicitly]
 public class Part2 : Base
 {
+    private const int ElfBet = 200;
+
     public override string GetAnswer()
     {
         var station = new Point(11, 13);
 
         Asteroids = Asteroids.Where(a => a.X != station.X || a.Y != station.Y).ToList();
 
-        var asteroidsWithAngle = Asteroids.Select(a => (Angle: Math.Atan2(a.X - station.X, a.Y - station.Y), Point: a)).OrderByDescending(a => a.Angle).ToList();
+        var asteroidsWithAngle = Asteroids.Select(a => (Angle: Math.Atan2(a.X - station.X, a.Y - station.Y), Point: a)).ToList();
 
-        var angles = asteroidsWithAngle.Select(a => a.Angle).Distinct().ToList();
+        var angles = asteroidsWithAngle.Select(a => a.Angle).Distinct().OrderByDescending(a => a).ToList();
 
         var count = 0;
 
-        var lastRemoved = new Point(-1, -1);
+        var lastRemoved = 0;
 
-        while (count < 200)
+        while (count < ElfBet)
         {
-            foreach (var angle in angles.ToList())
+            foreach (var angle in angles)
             {
                 // ReSharper disable once CompareOfFloatsByEqualityOperator - Angles will match exactly
                 var asteroidsInLine = asteroidsWithAngle.Where(a => a.Angle == angle).ToList();
@@ -36,14 +38,17 @@ public class Part2 : Base
 
                 asteroidsWithAngle.Remove(closest);
 
-                lastRemoved = closest.Point;
+                lastRemoved = closest.Point.X * 100 + closest.Point.Y;
 
                 count++;
 
-                break;
+                if (count >= ElfBet)
+                {
+                    break;
+                }
             }
         }
 
-        return (lastRemoved.X * 100 + lastRemoved.Y).ToString();
+        return lastRemoved.ToString();
     }
 }
