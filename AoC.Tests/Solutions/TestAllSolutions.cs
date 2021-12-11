@@ -53,5 +53,7 @@ public class TestAllSolutions
         {
             throw new IncorrectAnswerException($"Incorrect answer for {key}. Expected {split[1]}, actual {answer}.");
         }
+
+        Console.WriteLine($"{key}: Correct.");
     }
 }
