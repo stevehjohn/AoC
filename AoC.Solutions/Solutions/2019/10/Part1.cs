@@ -37,7 +37,8 @@ public class Part1 : Solution
 
                 var isBlocked = false;
 
-                foreach (var blocker in asteroids)
+                foreach (var blocker in asteroids.Where(b => b.X >= Math.Min(scanner.X, target.X) && b.X <= Math.Max(scanner.X, target.X)
+                                                             && b.Y >= Math.Min(scanner.Y, target.Y) && b.Y <= Math.Max(scanner.Y, target.Y)))
                 {
                     if (blocker == scanner || blocker == target)
                     {

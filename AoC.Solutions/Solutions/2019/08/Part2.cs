@@ -1,6 +1,8 @@
-﻿using JetBrains.Annotations;
+﻿#if DEBUG
 using System.Diagnostics;
+#endif
 using AoC.Solutions.Infrastructure;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2019._08;
 
