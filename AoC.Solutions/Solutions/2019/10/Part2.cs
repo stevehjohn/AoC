@@ -39,6 +39,8 @@ public class Part2 : Base
                 lastRemoved = closest.Point;
 
                 count++;
+
+                break;
             }
         }
 
