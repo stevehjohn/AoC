@@ -17,7 +17,6 @@
     <Folder Include="Solutions\2020\01\" />
     <Folder Include="Solutions\2021\08\" />
     <Folder Include="Solutions\2021\10\" />
-    <Folder Include="Solutions\2021\11\" />
   </ItemGroup>
 
   <ItemGroup>
