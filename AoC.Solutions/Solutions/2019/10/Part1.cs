@@ -2,40 +2,26 @@
 using System.Diagnostics;
 #endif
 using AoC.Solutions.Common;
-using AoC.Solutions.Infrastructure;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2019._10;
 
 [UsedImplicitly]
-public class Part1 : Solution
+public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var asteroids = new List<Point>();
-
-        for (var y = 0; y < Input.Length; y++)
-        {
-            for (var x = 0; x < Input[y].Length; x++)
-            {
-                if (Input[y][x] == '#')
-                {
-                    asteroids.Add(new Point(x, y));
-                }
-            }
-        }
-
         var maxDetectable = 0;
 
 #if DEBUG
         Point bestScanner = null;
 #endif
 
-        foreach (var scanner in asteroids)
+        foreach (var scanner in Asteroids)
         {
             var detectable = 0;
 
-            foreach (var target in asteroids)
+            foreach (var target in Asteroids)
             {
                 if (scanner == target)
                 {
@@ -44,7 +30,7 @@ public class Part1 : Solution
 
                 var isBlocked = false;
 
-                foreach (var blocker in asteroids.Where(b => b.X >= Math.Min(scanner.X, target.X) && b.X <= Math.Max(scanner.X, target.X)
+                foreach (var blocker in Asteroids.Where(b => b.X >= Math.Min(scanner.X, target.X) && b.X <= Math.Max(scanner.X, target.X)
                                                              && b.Y >= Math.Min(scanner.Y, target.Y) && b.Y <= Math.Max(scanner.Y, target.Y)))
                 {
                     if (blocker == scanner || blocker == target)
@@ -84,10 +70,5 @@ public class Part1 : Solution
 #endif
 
         return maxDetectable.ToString();
-    }
-
-    private static bool IsBlocking(Point scanner, Point target, Point blocker)
-    {
-        return (blocker.X - scanner.X) * (target.Y - scanner.Y) - (blocker.Y - scanner.Y) * (target.X - scanner.X) == 0;
     }
 }
