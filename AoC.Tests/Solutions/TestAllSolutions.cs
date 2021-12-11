@@ -42,7 +42,7 @@ public class TestAllSolutions
 
         if (correctAnswerLine == null)
         {
-            Console.WriteLine($"Please add correct answer for {key} to AllAnswers.txt.");
+            Console.WriteLine($"Please add the correct answer for {key} to AllAnswers.txt.");
 
             return;
         }

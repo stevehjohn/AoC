@@ -74,7 +74,7 @@ void CheckAnswer(Type solution, string answer)
 
     if (correctAnswerLine == null)
     {
-        Console.WriteLine($"Please add correct answer for {key} to AllAnswers.txt.");
+        Console.WriteLine($"Please add the correct answer for {key} to AllAnswers.txt.");
 
         return;
     }
