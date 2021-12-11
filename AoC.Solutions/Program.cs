@@ -57,7 +57,7 @@ foreach (var solution in solutions)
         ? answer
         : $"{answer[..27]}...";
 
-    Console.WriteLine($" {year} {int.Parse(solution.Namespace?.Split('.')[3].Replace("_", string.Empty) ?? "0"),2}.{solution.Name[4]}: {displayAnswer,-30} {stopwatch.ElapsedMilliseconds}ms");
+    Console.WriteLine($" {year} {int.Parse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0"),2}.{solution.Name[4]}: {displayAnswer,-30} {stopwatch.ElapsedMilliseconds}ms");
 
     totalMs += stopwatch.ElapsedMilliseconds;
 
