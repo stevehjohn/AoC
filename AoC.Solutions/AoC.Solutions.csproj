@@ -14,7 +14,7 @@
   <ItemGroup>
     <Folder Include="Infrastructure\" />
     <Folder Include="Solutions\2019\06\" />
-    <Folder Include="Solutions\2019\10\" />
+    <Folder Include="Solutions\2019\10\" />    
     <Folder Include="Solutions\2020\01\" />
     <Folder Include="Solutions\2021\08\" />
     <Folder Include="Solutions\2021\10\" />
@@ -40,19 +40,16 @@
     <None Update="Solutions\2019\05\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Solutions\2019\07\input.txt">
+    <None Update="Solutions\2019\06\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Solutions\2019\06\input.txt">
+    <None Update="Solutions\2019\07\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Solutions\2019\08\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Solutions\2019\09\input.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Common\Ocr\characters.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Solutions\2020\01\input.txt">
