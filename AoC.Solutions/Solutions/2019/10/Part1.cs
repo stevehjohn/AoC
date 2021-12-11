@@ -1,7 +1,7 @@
 ﻿#if DEBUG
 using System.Diagnostics;
-#endif
 using AoC.Solutions.Common;
+#endif
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2019._10;
