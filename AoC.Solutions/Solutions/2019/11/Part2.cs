@@ -1,4 +1,8 @@
-﻿using JetBrains.Annotations;
+﻿#if DEBUG
+using System.Diagnostics;
+#endif
+using System.Text;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2019._11;
 
@@ -19,21 +23,43 @@ public class Part2 : Base
 
         var image = new char[width + 1, height + 1];
 
+        for (var y = height; y >= 0; y--)
+        {
+            for (var x = 0; x <= width; x++)
+            {
+                image[x, y] = ' ';
+            }
+        }
+
         foreach (var panel in Panels)
         {
             image[panel.Position.X + Math.Abs(minX), panel.Position.Y + Math.Abs(minY)] = panel.Colour == 1 ? '*' : ' ';
         }
 
+        var answer = new StringBuilder();
+
         for (var y = height; y >= 0; y--)
         {
             for (var x = 0; x <= width; x++)
             {
-                Console.Write(image[x, y]);
+#if DEBUG
+                if (Debugger.IsAttached)
+                {
+                    Debug.Write(image[x, y]);
+                }
+#endif
+
+                answer.Append(image[x, y]);
             }
 
-            Console.WriteLine();
+#if DEBUG
+            if (Debugger.IsAttached)
+            {
+                Debug.WriteLine(string.Empty);
+            }
+#endif
         }
 
-        return "TEST";
+        return answer.ToString();
     }
 }
