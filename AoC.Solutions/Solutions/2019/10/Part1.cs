@@ -1,4 +1,7 @@
-﻿using AoC.Solutions.Common;
+﻿#if DEBUG
+using System.Diagnostics;
+#endif
+using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
 using JetBrains.Annotations;
 
@@ -23,6 +26,10 @@ public class Part1 : Solution
         }
 
         var maxDetectable = 0;
+
+#if DEBUG
+        Point bestScanner = null;
+#endif
 
         foreach (var scanner in asteroids)
         {
@@ -62,8 +69,19 @@ public class Part1 : Solution
             if (detectable > maxDetectable)
             {
                 maxDetectable = detectable;
+
+#if DEBUG
+                bestScanner = scanner;
+#endif
             }
         }
+
+#if DEBUG
+        if (Debugger.IsAttached)
+        {
+            Debug.WriteLine($"{bestScanner}");
+        }
+#endif
 
         return maxDetectable.ToString();
     }
