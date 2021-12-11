@@ -24,9 +24,9 @@ public class Part2 : Base
             image[panel.Position.X + Math.Abs(minX), panel.Position.Y + Math.Abs(minY)] = panel.Colour == 1 ? '*' : ' ';
         }
 
-        for (var y = 0; y < height; y++)
+        for (var y = height; y >= 0; y--)
         {
-            for (var x = 0; x < width; x++)
+            for (var x = 0; x <= width; x++)
             {
                 Console.Write(image[x, y]);
             }
