@@ -6,22 +6,27 @@ public class Point
 
     public int Y { get; set; }
 
+    public int Z { get; set; }
+
     public Point(Point point)
     {
         X = point.X;
 
         Y = point.Y;
+
+        Z = point.Z;
     }
 
-    public Point(int x, int y)
+    public Point(int x, int y, int z = 0)
     {
         X = x;
 
         Y = y;
+
+        Z = z;
     }
 
-    public override string ToString()
+    public Point()
     {
-        return $"{X}, {Y}";
     }
 }
