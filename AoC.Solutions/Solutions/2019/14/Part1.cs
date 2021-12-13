@@ -16,7 +16,7 @@ public class Part1 : Solution
 
         var total = GetOre(fuel);
 
-        return "TEST";
+        return total.ToString();
     }
 
     private void ParseInput()
@@ -41,29 +41,33 @@ public class Part1 : Solution
         }
     }
 
-    private Matter ParseMatter(string input)
+    private static Matter ParseMatter(string input)
     {
         var parts = input.Split(' ', StringSplitOptions.TrimEntries);
 
         return new Matter
                {
-                   Mass = int.Parse(parts[0]),
+                   Amount = int.Parse(parts[0]),
                    Name = parts[1]
                };
     }
 
-    private int GetOre(Reaction node, int sum = 0)
+    private int GetOre(Reaction node)
     {
-        foreach (var material in node.Materials)
-        {
-            if (material.Name == "ORE")
-            {
-                continue;
-            }
+        //var total = 0;
 
-            sum += GetOre(_reactions.Single(r => r.Result.Name == material.Name), sum);
-        }
+        //foreach (var material in node.Materials)
+        //{
+        //    if (material.Name == "ORE")
+        //    {
+        //        return material.Amount;
+        //    }
 
-        return sum;
+        //    total += material.Amount * GetOre(_reactions.Single(r => r.Result.Name == material.Name)) * node.Result.Amount;
+        //}
+
+        //return total;
+
+        return 0;
     }
 }

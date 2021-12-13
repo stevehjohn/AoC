@@ -4,5 +4,5 @@ public class Matter
 {
     public string Name { get; set; }
 
-    public int Mass { get; set; }
+    public int Amount { get; set; }
 }
