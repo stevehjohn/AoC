@@ -18,6 +18,7 @@
     <Folder Include="Solutions\2020\01\" />
     <Folder Include="Solutions\2021\08\" />
     <Folder Include="Solutions\2021\10\" />
+    <Folder Include="Solutions\2021\13\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -107,6 +108,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Solutions\2021\12\input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Solutions\2021\13\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Solutions\AllAnswers.txt">
