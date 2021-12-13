@@ -8,13 +8,20 @@ public class Part1 : Solution
 {
     private readonly List<Reaction> _reactions = new();
 
+    private readonly Dictionary<string, int> _stock = new();
+
     public override string GetAnswer()
     {
         ParseInput();
 
         var fuel = _reactions.Single(r => r.Result.Name == "FUEL");
 
-        var total = GetOre(fuel);
+        foreach (var reaction in _reactions)
+        {
+            _stock.Add(reaction.Result.Name, 0);
+        }
+
+        var total = GetOre(fuel, fuel.Result.Amount);
 
         return total.ToString();
     }
@@ -52,22 +59,29 @@ public class Part1 : Solution
                };
     }
 
-    private int GetOre(Reaction node)
+    private int GetOre(Reaction node, int requiredAmount)
     {
-        //var total = 0;
+        var total = 0;
 
-        //foreach (var material in node.Materials)
-        //{
-        //    if (material.Name == "ORE")
-        //    {
-        //        return material.Amount;
-        //    }
+        foreach (var matter in node.Materials)
+        {
+            if (matter.Name == "ORE")
+            {
+                return matter.Amount * requiredAmount;
+            }
 
-        //    total += material.Amount * GetOre(_reactions.Single(r => r.Result.Name == material.Name)) * node.Result.Amount;
-        //}
+            if (_stock[matter.Name] >= matter.Amount)
+            {
+                _stock[matter.Name] -= matter.Amount;
 
-        //return total;
+                return matter.Amount;
+            }
 
-        return 0;
+            _stock[matter.Name] += (int) Math.Ceiling((double) requiredAmount / matter.Amount) * matter.Amount;
+
+            total += GetOre(_reactions.Single(r => r.Result.Name == matter.Name), matter.Amount);
+        }
+
+        return total;
     }
 }
