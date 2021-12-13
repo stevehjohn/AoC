@@ -33,7 +33,10 @@ public class Part2 : Base
 
         foreach (var panel in Panels)
         {
-            image[panel.Position.X + Math.Abs(minX), panel.Position.Y + Math.Abs(minY)] = panel.Colour == 1 ? '*' : ' ';
+            if (panel.Colour == 1)
+            {
+                image[panel.Position.X + Math.Abs(minX) - 1, panel.Position.Y + Math.Abs(minY)] = '*';
+            }
         }
 
         var answer = new StringBuilder();
