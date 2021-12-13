@@ -34,7 +34,8 @@ public class Part1 : Base
 #if DEBUG
         if (Debugger.IsAttached)
         {
-            Debug.WriteLine($"{bestScanner}");
+            // ReSharper disable once PossibleNullReferenceException
+            Debug.WriteLine($"{bestScanner.X}, {bestScanner.Y}");
         }
 #endif
 
