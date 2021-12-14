@@ -6,6 +6,8 @@ namespace AoC.Solutions.Solutions._2021._03;
 [UsedImplicitly]
 public class Part2 : Solution
 {
+    public override string Description => "Power consumption";
+
     public override string GetAnswer()
     {
         var oxygen = Filter(Input.ToList());

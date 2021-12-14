@@ -5,6 +5,8 @@ namespace AoC.Solutions.Solutions._2021._11;
 
 public abstract class Base : Solution
 {
+    public override string Description => "Flashers";
+
     private int _width;
 
     private int _height;

@@ -4,6 +4,8 @@ namespace AoC.Solutions.Solutions._2021._09;
 
 public abstract class Base : Solution
 {
+    public override string Description => "Lava level";
+
     protected int[,] Map;
 
     protected int Width;

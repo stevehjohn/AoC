@@ -4,6 +4,8 @@ namespace AoC.Solutions.Solutions._2021._04;
 
 public abstract class Base : Solution
 {
+    public override string Description => "Squid bingo";
+
     protected int[] ReadDraws()
     {
         return Input[0].Split(',').Select(int.Parse).ToArray();

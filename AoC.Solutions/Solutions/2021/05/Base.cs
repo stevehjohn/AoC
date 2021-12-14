@@ -4,6 +4,8 @@ namespace AoC.Solutions.Solutions._2021._05;
 
 public abstract class Base : Solution
 {
+    public override string Description => "Hydrothermal vents";
+
     public string GetAnswer(bool includeDiagonal)
     {
         var lines = Input.Select(Line.Parse).ToList();

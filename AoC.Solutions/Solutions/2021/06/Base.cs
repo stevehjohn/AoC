@@ -4,6 +4,8 @@ namespace AoC.Solutions.Solutions._2021._06;
 
 public abstract class Base : Solution
 {
+    public override string Description => "Lanternfish parthenogenesis";
+
     public string GetAnswer(int days)
     {
         var fish = Input[0].Split(',').Select(int.Parse).ToList();

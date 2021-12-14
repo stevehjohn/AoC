@@ -5,6 +5,8 @@ namespace AoC.Solutions.Solutions._2021._13;
 
 public abstract class Base : Solution
 {
+    public override string Description => "ZX Spectrum copy protection";
+
     protected readonly List<Point> Dots = new();
 
     private readonly List<(string, int)> _folds = new();

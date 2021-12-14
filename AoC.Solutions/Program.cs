@@ -19,6 +19,8 @@ Console.WriteLine();
 
 var answers = File.ReadAllLines($"Solutions{Path.DirectorySeparatorChar}AllAnswers.txt");
 
+var previousDesc = string.Empty;
+
 foreach (var solution in solutions)
 {
     var instance = Activator.CreateInstance(solution) as Solution;
@@ -59,7 +61,16 @@ foreach (var solution in solutions)
         ? answer
         : $"{answer[..27]}...";
 
-    Console.WriteLine($" {year} {int.Parse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0"),2}.{solution.Name[4]}: {displayAnswer,-30} {stopwatch.ElapsedMilliseconds}ms");
+    var description = string.Empty;
+
+    if (instance.Description != previousDesc)
+    {
+        description = instance.Description;
+
+        previousDesc = description;
+    }
+
+    Console.WriteLine($" {year} {int.Parse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0"),2}.{solution.Name[4]}: {displayAnswer,-30} {$"{stopwatch.ElapsedMilliseconds}ms".PadRight(6)}  {description}");
 
     totalMs += stopwatch.ElapsedMilliseconds;
 

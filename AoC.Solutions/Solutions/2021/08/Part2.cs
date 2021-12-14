@@ -6,6 +6,8 @@ namespace AoC.Solutions.Solutions._2021._08;
 [UsedImplicitly]
 public class Part2 : Solution
 {
+    public override string Description => "Old school displays";
+
     public override string GetAnswer()
     {
         var total = 0;

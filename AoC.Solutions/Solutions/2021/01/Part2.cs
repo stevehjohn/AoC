@@ -6,6 +6,8 @@ namespace AoC.Solutions.Solutions._2021._01;
 [UsedImplicitly]
 public class Part2 : Solution
 {
+    public override string Description => "Depth scan";
+
     public override string GetAnswer()
     {
         var window = new List<int>();

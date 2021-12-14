@@ -4,6 +4,8 @@ namespace AoC.Solutions.Solutions._2021._14;
 
 public abstract class Base : Solution
 {
+    public override string Description => "Ablative armour";
+
     public string GetAnswer(int steps)
     {
         var pairs = new Dictionary<string, long>();
