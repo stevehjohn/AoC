@@ -6,6 +6,8 @@ namespace AoC.Solutions.Solutions._2021._07;
 [UsedImplicitly]
 public class Part2 : Solution
 {
+    public override string Description => "Crab submarines";
+
     public override string GetAnswer()
     {
         var positions = Input[0].Split(',').Select(int.Parse).OrderBy(n => n).ToList();

@@ -8,6 +8,8 @@ namespace AoC.Solutions.Solutions._2021._07;
 [UsedImplicitly]
 public class PartX : Solution
 {
+    public override string Description => "Easter egg";
+
     public override string GetAnswer()
     {
         var cpu = new Cpu();
