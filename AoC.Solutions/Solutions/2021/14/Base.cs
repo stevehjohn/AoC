@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public string GetAnswer(int steps)
     {
-        var pairs = new Dictionary<string, int>();
+        var pairs = new Dictionary<string, long>();
 
         for (var i = 0; i < Input[0].Length - 1; i++)
         {
@@ -20,28 +20,66 @@ public abstract class Base : Solution
 
         for (var i = 0; i < steps; i++)
         {
+            var pairsToAdd = new Dictionary<string, long>();
+
             for (var r = 2; r < Input.Length; r++)
             {
                 var rule = Input[r].Split("->", StringSplitOptions.TrimEntries);
 
-                if (! pairs.ContainsKey(rule[0]))
+                if (! pairs.ContainsKey(rule[0]) || pairs[rule[0]] == 0)
                 {
                     continue;
                 }
 
                 var newPair = $"{rule[0][0]}{rule[1][0]}";
 
-                if (! pairs.ContainsKey(newPair))
+                if (! pairsToAdd.ContainsKey(newPair))
                 {
-                    pairs.Add(newPair, 1);
+                    pairsToAdd.Add(newPair, pairs[rule[0]]);
                 }
                 else
                 {
-                    pairs[newPair]++;
+                    pairsToAdd[newPair] += pairs[rule[0]];
+                }
+
+                newPair = $"{rule[1][0]}{rule[0][1]}";
+
+                if (! pairsToAdd.ContainsKey(newPair))
+                {
+                    pairsToAdd.Add(newPair, pairs[rule[0]]);
+                }
+                else
+                {
+                    pairsToAdd[newPair] += pairs[rule[0]];
+                }
+
+                pairs[rule[0]] = 0;
+            }
+
+            foreach (var pair in pairsToAdd)
+            {
+                if (pairs.ContainsKey(pair.Key))
+                {
+                    pairs[pair.Key] += pair.Value;
+                }
+                else
+                {
+                    pairs.Add(pair.Key, pair.Value);
                 }
             }
         }
 
-        return "TEST";
+        var counts = new long[26];
+
+        foreach (var pair in pairs.Where(p => p.Value > 0))
+        {
+            counts[pair.Key[0] - 'A'] += pair.Value;
+            counts[pair.Key[1] - 'A'] += pair.Value;
+        }
+
+        counts[Input[0][0] - 'A']++;
+        counts[Input[0][Input[0].Length - 1] - 'A']++;
+
+        return (counts.Max() / 2L - counts.Where(c => c > 0).Min() / 2L).ToString();
     }
 }

@@ -108,9 +108,6 @@
     <None Update="Solutions\2021\13\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Solutions\2021\14\input - Copy.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Solutions\2021\14\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
