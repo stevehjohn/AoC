@@ -35,9 +35,9 @@ public class Part1 : Solution
             var io = line.Split("=>", StringSplitOptions.TrimEntries);
 
             var reaction = new Reaction
-                           {
-                               Result = ParseMatter(io[1])
-                           };
+            {
+                Result = ParseMatter(io[1])
+            };
 
             var input = io[0].Split(',', StringSplitOptions.TrimEntries);
 
@@ -55,10 +55,10 @@ public class Part1 : Solution
         var parts = input.Split(' ', StringSplitOptions.TrimEntries);
 
         return new Matter
-               {
-                   Amount = int.Parse(parts[0]),
-                   Name = parts[1]
-               };
+        {
+            Amount = int.Parse(parts[0]),
+            Name = parts[1]
+        };
     }
 
     private int GetOre(Reaction node, int requiredAmount)
@@ -79,7 +79,7 @@ public class Part1 : Solution
                 return matter.Amount;
             }
 
-            _stock[matter.Name] += (int) Math.Ceiling((double) requiredAmount / matter.Amount) * matter.Amount;
+            _stock[matter.Name] += (int)Math.Ceiling((double)requiredAmount / matter.Amount) * matter.Amount;
 
             total += GetOre(_reactions.Single(r => r.Result.Name == matter.Name), matter.Amount);
         }
