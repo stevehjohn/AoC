@@ -28,6 +28,8 @@ foreach (var solution in solutions)
         continue;
     }
 
+    GC.Collect();
+
     var stopwatch = new Stopwatch();
 
     stopwatch.Start();
