@@ -33,24 +33,26 @@ public abstract class Base : Solution
 
                 var newPair = $"{rule[0][0]}{rule[1][0]}";
 
+                var incrementBy = pairs[rule[0]];
+
                 if (! pairsToAdd.ContainsKey(newPair))
                 {
-                    pairsToAdd.Add(newPair, pairs[rule[0]]);
+                    pairsToAdd.Add(newPair, incrementBy);
                 }
                 else
                 {
-                    pairsToAdd[newPair] += pairs[rule[0]];
+                    pairsToAdd[newPair] += incrementBy;
                 }
 
                 newPair = $"{rule[1][0]}{rule[0][1]}";
 
                 if (! pairsToAdd.ContainsKey(newPair))
                 {
-                    pairsToAdd.Add(newPair, pairs[rule[0]]);
+                    pairsToAdd.Add(newPair, incrementBy);
                 }
                 else
                 {
-                    pairsToAdd[newPair] += pairs[rule[0]];
+                    pairsToAdd[newPair] += incrementBy;
                 }
 
                 pairs[rule[0]] = 0;
