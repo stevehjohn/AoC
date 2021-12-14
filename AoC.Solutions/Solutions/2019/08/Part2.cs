@@ -9,6 +9,8 @@ namespace AoC.Solutions.Solutions._2019._08;
 [UsedImplicitly]
 public class Part2 : Solution
 {
+    public override string Description => "Space graphics interchange format";
+
     public override string GetAnswer()
     {
         var data = Input[0];

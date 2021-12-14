@@ -4,6 +4,8 @@ namespace AoC.Solutions.Solutions._2019._06;
 
 public abstract class Base : Solution
 {
+    public override string Description => "Orbital transfers";
+
     protected Body Root;
 
     protected readonly List<Body> Nodes = new();

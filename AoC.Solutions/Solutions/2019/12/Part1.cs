@@ -6,6 +6,8 @@ namespace AoC.Solutions.Solutions._2019._12;
 [UsedImplicitly]
 public class Part1 : Solution
 {
+    public override string Description => "The n-body problem which will eat your memory and CPU";
+
     private readonly List<Moon> _moons = new();
 
     public override string GetAnswer()

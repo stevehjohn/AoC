@@ -6,6 +6,8 @@ namespace AoC.Solutions.Solutions._2019._11;
 
 public abstract class Base : Solution
 {
+    public override string Description => "Personal plate";
+
     protected readonly List<Panel> Panels = new();
 
     private Cpu _cpu;

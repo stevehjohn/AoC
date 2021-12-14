@@ -6,6 +6,8 @@ namespace AoC.Solutions.Solutions._2019._01;
 [UsedImplicitly]
 public class Part2 : Solution
 {
+    public override string Description => "Calculate launch fuel";
+
     public override string GetAnswer()
     {
         var fuel = 0;

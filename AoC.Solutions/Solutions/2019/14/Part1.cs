@@ -6,6 +6,8 @@ namespace AoC.Solutions.Solutions._2019._14;
 [UsedImplicitly]
 public class Part1 : Solution
 {
+    public override string Description => "Replicator";
+
     private readonly List<Reaction> _reactions = new();
 
     private readonly Dictionary<string, int> _stock = new();

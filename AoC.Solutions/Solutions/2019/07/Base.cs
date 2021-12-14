@@ -5,6 +5,8 @@ namespace AoC.Solutions.Solutions._2019._07;
 
 public abstract class Base : Solution
 {
+    public override string Description => "Amplifiers (CPU used unmodified)";
+
     public string GetAnswer(List<int[]> phases)
     {
         var highestOutput = 0L;

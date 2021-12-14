@@ -7,6 +7,8 @@ namespace AoC.Solutions.Solutions._2019._05;
 [UsedImplicitly]
 public class Part2 : Solution
 {
+    public override string Description => "Air conditioning (CPU extension 1)";
+
     public override string GetAnswer()
     {
         var cpu = new Cpu();

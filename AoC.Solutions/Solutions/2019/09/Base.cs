@@ -5,6 +5,8 @@ namespace AoC.Solutions.Solutions._2019._09;
 
 public abstract class Base : Solution
 {
+    public override string Description => "Sensor booster (CPU complete)";
+
     public string GetAnswer(int input)
     {
         var cpu = new Cpu();

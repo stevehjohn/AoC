@@ -5,6 +5,8 @@ namespace AoC.Solutions.Solutions._2019._10;
 
 public abstract class Base : Solution
 {
+    public override string Description => "Asteroids";
+
     protected List<Point> Asteroids;
 
     protected Base()

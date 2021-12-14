@@ -4,7 +4,7 @@ public abstract class Solution
 {
     protected string[] Input;
 
-    public virtual string Description => "Not yet named";
+    public abstract string Description { get; }
 
     protected Solution()
     {

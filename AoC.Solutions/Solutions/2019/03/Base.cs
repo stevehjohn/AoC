@@ -5,6 +5,8 @@ namespace AoC.Solutions.Solutions._2019._03;
 
 public abstract class Base : Solution
 {
+    public override string Description => "Path intersections";
+
     protected List<Line> Path1;
 
     protected List<Line> Path2;

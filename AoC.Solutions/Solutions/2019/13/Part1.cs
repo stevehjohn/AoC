@@ -7,6 +7,8 @@ namespace AoC.Solutions.Solutions._2019._13;
 [UsedImplicitly]
 public class Part1 : Solution
 {
+    public override string Description => "Arkanoid";
+
     public override string GetAnswer()
     {
         var cpu = new Cpu();

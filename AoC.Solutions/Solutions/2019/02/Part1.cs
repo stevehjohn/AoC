@@ -7,6 +7,8 @@ namespace AoC.Solutions.Solutions._2019._02;
 [UsedImplicitly]
 public class Part1 : Solution
 {
+    public override string Description => "Gravity assist (CPU start)";
+
     public override string GetAnswer()
     {
         var cpu = new Cpu();
