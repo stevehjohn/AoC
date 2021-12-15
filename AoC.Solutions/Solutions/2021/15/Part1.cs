@@ -17,7 +17,7 @@ public class Part1 : Solution
 
     private int _minimumCost = int.MaxValue;
 
-    private readonly List<Point> _visited = new();
+    private readonly HashSet<int> _visited = new();
 
     public override string GetAnswer()
     {
@@ -49,7 +49,7 @@ public class Part1 : Solution
     {
         var neighbors = GetNeighbors(position);
 
-        _visited.Add(position);
+        _visited.Add(position.X + position.Y * _width);
 
         if (cost > _minimumCost)
         {
@@ -58,9 +58,9 @@ public class Part1 : Solution
 
         foreach (var neighbor in neighbors)
         {
-            if (_visited.Any(v => v.X == neighbor.X && v.Y == neighbor.Y))
+            if (_visited.Contains(neighbor.X + neighbor.Y * _width))
             {
-                continue;
+                return;
             }
 
             if (neighbor.X == _width - 1 && neighbor.Y == _height - 1)
@@ -77,6 +77,7 @@ public class Part1 : Solution
 
             Solve(neighbor, cost + _map[neighbor.X, neighbor.Y]);
 
+            // TODO: Apply to 2021.12.2?
             _visited.Remove(_visited.Last());
         }
     }
