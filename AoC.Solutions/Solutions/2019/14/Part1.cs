@@ -94,7 +94,7 @@ public class Part1 : Solution
 
         foreach (var matter in node.Components)
         {
-            
+            // Create the stock and decrement it.
         }
 
         return 0;
