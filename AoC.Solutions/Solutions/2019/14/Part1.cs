@@ -8,86 +8,55 @@ public class Part1 : Solution
 {
     public override string Description => "Nanofactory replicator";
 
-    private readonly List<Reaction> _reactions = new();
-
     private readonly Dictionary<string, int> _stock = new();
+
+    private Matter _fuel;
 
     private const string BaseMaterial = "ORE";
 
+    private const string EndMaterial = "FUEL";
+
     public override string GetAnswer()
     {
-        ParseInput();
+        _fuel = ProcessInput(EndMaterial);
 
-        var fuel = _reactions.Single(r => r.Result.Name == "FUEL");
-
-        foreach (var reaction in _reactions)
-        {
-            _stock.Add(reaction.Result.Name, 0);
-        }
-
-        _stock.Add(BaseMaterial, int.MaxValue);
-
-        var total = GetOre(fuel);
-
-        return total.ToString();
+        return "FUDGE";
     }
 
-    private void ParseInput()
+    public Matter ProcessInput(string outputMatter)
     {
-        foreach (var line in Input)
+        var line = Input.Single(i => i.EndsWith($" {outputMatter}"));
+
+        var io = line.Split("=>", StringSplitOptions.TrimEntries);
+
+        var output = ParseMatter(io[1]);
+
+        var matter = new Matter
+                     {
+                         Amount = output.Amount,
+                         Name = output.Name
+                     };
+
+        var input = io[0].Split(',', StringSplitOptions.TrimEntries);
+
+        foreach (var item in input)
         {
-            var io = line.Split("=>", StringSplitOptions.TrimEntries);
+            var parsed = ParseMatter(item);
 
-            var reaction = new Reaction
-            {
-                Result = ParseMatter(io[1])
-            };
-
-            var input = io[0].Split(',', StringSplitOptions.TrimEntries);
-
-            foreach (var matter in input)
-            {
-                reaction.Materials.Add(ParseMatter(matter));
-            }
-
-            _reactions.Add(reaction);
-        }
-    }
-
-    private static Matter ParseMatter(string input)
-    {
-        var parts = input.Split(' ', StringSplitOptions.TrimEntries);
-
-        return new Matter
-               {
-                   Amount = int.Parse(parts[0]),
-                   Name = parts[1]
-               };
-    }
-
-    private int GetOre(Reaction reaction)
-    {
-        var total = 0;
-
-        foreach (var material in reaction.Materials)
-        {
-            if (_stock[material.Name] >= material.Amount)
-            {
-                _stock[material.Name] -= material.Amount;
-
-                continue;
-            }
-
-            if (material.Name == BaseMaterial)
-            {
-                _stock[reaction.Result.Name] += reaction.Result.Amount;
-
-                return reaction.Result.Amount * material.Amount;
-            }
-
-            total += GetOre(_reactions.Single(r => r.Result.Name == material.Name));
+            matter.Components.Add(new Matter
+                                  {
+                                      Amount = parsed.Amount,
+                                      Name = parsed.Name
+                                  });
         }
 
-        return total;
+        return matter;
+    }
+
+    private (int Amount, string Name) ParseMatter(string matter)
+    {
+        var split = matter.Split(' ', StringSplitOptions.TrimEntries);
+
+        return (int.Parse(split[0]), split[1]);
     }
 }

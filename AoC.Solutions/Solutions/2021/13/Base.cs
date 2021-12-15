@@ -9,7 +9,7 @@ public abstract class Base : Solution
 
     protected readonly List<Point> Dots = new();
 
-    private readonly List<(string, int)> _folds = new();
+    private readonly List<(string Axis, int Location)> _folds = new();
 
     protected void ParseInput()
     {
@@ -39,15 +39,15 @@ public abstract class Base : Solution
     {
         foreach (var fold in _folds)
         {
-            if (fold.Item1 == "x")
+            if (fold.Axis == "x")
             {
-                var foldedX = Dots.Where(d => d.X > fold.Item2).ToList();
+                var foldedX = Dots.Where(d => d.X > fold.Location).ToList();
 
                 foreach (var point in foldedX)
                 {
                     Dots.Remove(point);
 
-                    var newX = fold.Item2 - (point.X - fold.Item2);
+                    var newX = fold.Location - (point.X - fold.Location);
 
                     if (! Dots.Any(d => d.X == newX && d.Y == point.Y))
                     {
@@ -57,13 +57,13 @@ public abstract class Base : Solution
             }
             else
             {
-                var foldedY = Dots.Where(d => d.Y > fold.Item2).ToList();
+                var foldedY = Dots.Where(d => d.Y > fold.Location).ToList();
 
                 foreach (var point in foldedY)
                 {
                     Dots.Remove(point);
 
-                    var newY = fold.Item2 - (point.Y - fold.Item2);
+                    var newY = fold.Location - (point.Y - fold.Location);
 
                     if (! Dots.Any(d => d.X == point.X && d.Y == newY))
                     {
