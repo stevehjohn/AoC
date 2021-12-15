@@ -17,11 +17,13 @@ public class Part1 : Solution
 
     private int _minimumCost = int.MaxValue;
 
+    private readonly List<Point> _visited = new();
+
     public override string GetAnswer()
     {
         ParseInput();
 
-        Solve(new Point(0, 0), new List<Point>());
+        Solve(new Point(0, 0));
 
         return _minimumCost.ToString();
     }
@@ -43,12 +45,11 @@ public class Part1 : Solution
         }
     }
     
-    // TODO: Exit if exceeding lowest cost so far.
-    private void Solve(Point position, List<Point> visited, int cost = 0)
+    private void Solve(Point position, int cost = 0)
     {
         var neighbors = GetNeighbors(position);
 
-        visited.Add(position);
+        _visited.Add(position);
 
         if (cost > _minimumCost)
         {
@@ -57,7 +58,7 @@ public class Part1 : Solution
 
         foreach (var neighbor in neighbors)
         {
-            if (visited.Any(v => v.X == neighbor.X && v.Y == neighbor.Y))
+            if (_visited.Any(v => v.X == neighbor.X && v.Y == neighbor.Y))
             {
                 continue;
             }
@@ -70,9 +71,13 @@ public class Part1 : Solution
                 {
                     _minimumCost = cost;
                 }
+
+                return;
             }
 
-            Solve(neighbor, visited.ToList(), cost + _map[neighbor.X, neighbor.Y]);
+            Solve(neighbor, cost + _map[neighbor.X, neighbor.Y]);
+
+            _visited.Remove(_visited.Last());
         }
     }
 
