@@ -15,13 +15,15 @@ public class Part1 : Solution
 
     private int[,] _map;
 
+    private int _minimumCost = int.MaxValue;
+
     public override string GetAnswer()
     {
         ParseInput();
 
-        var cost = Solve(new Point(0, 0), new List<Point>());
+        Solve(new Point(0, 0), new List<Point>());
 
-        return "TEST";
+        return _minimumCost.ToString();
     }
 
     private void ParseInput()
@@ -42,13 +44,16 @@ public class Part1 : Solution
     }
     
     // TODO: Exit if exceeding lowest cost so far.
-    private int Solve(Point position, List<Point> visited, int cost = 0)
+    private void Solve(Point position, List<Point> visited, int cost = 0)
     {
         var neighbors = GetNeighbors(position);
 
         visited.Add(position);
 
-        Console.Write($"-> ({position.X}, {position.Y}) ");
+        if (cost > _minimumCost)
+        {
+            return;
+        }
 
         foreach (var neighbor in neighbors)
         {
@@ -61,15 +66,14 @@ public class Part1 : Solution
             {
                 cost += _map[neighbor.X, neighbor.Y];
 
-                Console.WriteLine($"-> {cost}");
-
-                return cost;
+                if (cost < _minimumCost)
+                {
+                    _minimumCost = cost;
+                }
             }
 
             Solve(neighbor, visited.ToList(), cost + _map[neighbor.X, neighbor.Y]);
         }
-
-        return int.MaxValue;
     }
 
     private List<Point> GetNeighbors(Point position)
