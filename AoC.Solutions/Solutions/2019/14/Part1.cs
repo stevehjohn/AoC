@@ -52,7 +52,14 @@ public class Part1 : Solution
 
             if (matterParsed.Name == BaseMaterial)
             {
-                continue;
+                return new List<Matter>
+                       {
+                           new()
+                           {
+                               Amount = matterParsed.Amount,
+                               Name = BaseMaterial
+                           }
+                       };
             }
 
             var matter = new Matter
