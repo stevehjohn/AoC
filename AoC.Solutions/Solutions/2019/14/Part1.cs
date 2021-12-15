@@ -29,14 +29,47 @@ public class Part1 : Solution
 
         var output = ParseMatter(io[1]);
 
-        return new Matter
-               {
-                   Amount = output.Amount,
-                   Name = output.Name
-               };
+        var matter = new Matter
+                     {
+                         Amount = output.Amount,
+                         Name = output.Name
+                     };
+
+        matter.Components.AddRange(ProcessComponents(io[0]));
+
+        return matter;
     }
 
-    private (int Amount, string Name) ParseMatter(string matter)
+    private List<Matter> ProcessComponents(string input)
+    {
+        var components = input.Split(',', StringSplitOptions.TrimEntries);
+
+        var result = new List<Matter>();
+
+        foreach (var component in components)
+        {
+            var matterParsed = ParseMatter(component);
+
+            if (matterParsed.Name == BaseMaterial)
+            {
+                continue;
+            }
+
+            var matter = new Matter
+                         {
+                             Amount = matterParsed.Amount,
+                             Name = matterParsed.Name
+                         };
+
+            matter.Components.AddRange(ProcessComponents(Input.Single(i => i.EndsWith($" {matterParsed.Name}"))));
+
+            result.Add(matter);
+        }
+
+        return result;
+    }
+
+    private static (int Amount, string Name) ParseMatter(string matter)
     {
         var split = matter.Split(' ', StringSplitOptions.TrimEntries);
 
