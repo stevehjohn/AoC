@@ -20,7 +20,9 @@ public class Part1 : Solution
     {
         _fuel = ProcessInput(EndMaterial);
 
-        return "FUDGE";
+        var fuel = GetOre(_fuel).ToString();
+        
+        return fuel;
     }
 
     public Matter ProcessInput(string outputMatter)
@@ -74,6 +76,28 @@ public class Part1 : Solution
         }
 
         return result;
+    }
+
+    private int GetOre(Matter node, int totalAmount = 1)
+    {
+        if (! _stock.ContainsKey(node.Name))
+        {
+            _stock.Add(node.Name, 0);
+        }
+
+        if (_stock[node.Name] >= node.Amount)
+        {
+            _stock[node.Name] -= node.Amount;
+
+            return node.Amount;
+        }
+
+        foreach (var matter in node.Components)
+        {
+            
+        }
+
+        return 0;
     }
 
     private static (int Amount, string Name) ParseMatter(string matter)
