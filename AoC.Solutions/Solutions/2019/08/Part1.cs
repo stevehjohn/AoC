@@ -6,7 +6,7 @@ namespace AoC.Solutions.Solutions._2019._08;
 [UsedImplicitly]
 public class Part1 : Solution
 {
-    public override string Description => "Space graphics interchange format";
+    public override string Description => "Space GIF";
 
     public override string GetAnswer()
     {

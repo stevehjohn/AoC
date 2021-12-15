@@ -6,11 +6,13 @@ namespace AoC.Solutions.Solutions._2019._14;
 [UsedImplicitly]
 public class Part1 : Solution
 {
-    public override string Description => "Replicator";
+    public override string Description => "Nanofactory replicator";
 
     private readonly List<Reaction> _reactions = new();
 
     private readonly Dictionary<string, int> _stock = new();
+
+    private const string BaseMaterial = "ORE";
 
     public override string GetAnswer()
     {
@@ -23,7 +25,9 @@ public class Part1 : Solution
             _stock.Add(reaction.Result.Name, 0);
         }
 
-        var total = GetOre(fuel, fuel.Result.Amount);
+        _stock.Add(BaseMaterial, int.MaxValue);
+
+        var total = GetOre(fuel);
 
         return total.ToString();
     }
@@ -55,33 +59,33 @@ public class Part1 : Solution
         var parts = input.Split(' ', StringSplitOptions.TrimEntries);
 
         return new Matter
-        {
-            Amount = int.Parse(parts[0]),
-            Name = parts[1]
-        };
+               {
+                   Amount = int.Parse(parts[0]),
+                   Name = parts[1]
+               };
     }
 
-    private int GetOre(Reaction node, int requiredAmount)
+    private int GetOre(Reaction reaction)
     {
         var total = 0;
 
-        foreach (var matter in node.Materials)
+        foreach (var material in reaction.Materials)
         {
-            if (matter.Name == "ORE")
+            if (_stock[material.Name] >= material.Amount)
             {
-                return matter.Amount * requiredAmount;
+                _stock[material.Name] -= material.Amount;
+
+                continue;
             }
 
-            if (_stock[matter.Name] >= matter.Amount)
+            if (material.Name == BaseMaterial)
             {
-                _stock[matter.Name] -= matter.Amount;
+                _stock[reaction.Result.Name] += reaction.Result.Amount;
 
-                return matter.Amount;
+                return reaction.Result.Amount * material.Amount;
             }
 
-            _stock[matter.Name] += (int)Math.Ceiling((double)requiredAmount / matter.Amount) * matter.Amount;
-
-            total += GetOre(_reactions.Single(r => r.Result.Name == matter.Name), matter.Amount);
+            total += GetOre(_reactions.Single(r => r.Result.Name == material.Name));
         }
 
         return total;
