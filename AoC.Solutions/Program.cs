@@ -9,7 +9,7 @@ namespace AoC.Solutions;
 [ExcludeFromCodeCoverage]
 public static class Program
 {
-    public static void Main()
+    public static void Main(string[] arguments)
     {
         var solutions = Assembly.GetExecutingAssembly()
                                 .GetTypes()
@@ -31,6 +31,14 @@ public static class Program
 
         foreach (var solution in solutions)
         {
+            if (arguments.Length == 1)
+            {
+                if ($"{int.Parse(solution.Namespace?.Split('.')[3].Replace("_", string.Empty) ?? "0")}.{int.Parse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0")}.{solution.Name[4]}" != arguments[0])
+                {
+                    continue;
+                }
+            }
+
             var instance = Activator.CreateInstance(solution) as Solution;
 
             if (instance == null)
