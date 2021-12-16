@@ -23,7 +23,7 @@ public class Part1 : Solution
     {
         ParseInput();
 
-        Solve(new Point(0, 0));
+        Solve(0, 0);
 
         return _minimumCost.ToString();
     }
@@ -47,16 +47,16 @@ public class Part1 : Solution
         }
     }
     
-    private void Solve(Point position, int cost = 0)
+    private void Solve(int x, int y, int cost = 0)
     {
-        _visited[position.X, position.Y] = true;
+        _visited[x, y] = true;
 
         if (cost > _minimumCost)
         {
             return;
         }
 
-        var neighbors = GetNeighbors(position);
+        var neighbors = GetNeighbors(new Point(x, y));
 
         foreach (var neighbor in neighbors)
         {
@@ -77,7 +77,7 @@ public class Part1 : Solution
                 return;
             }
 
-            Solve(neighbor, cost + _map[neighbor.X, neighbor.Y]);
+            Solve(neighbor.X, neighbor.Y, cost + _map[neighbor.X, neighbor.Y]);
 
             _visited[neighbor.X, neighbor.Y] = false;
         }
