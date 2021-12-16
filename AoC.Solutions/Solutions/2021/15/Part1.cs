@@ -48,12 +48,12 @@ public class Part1 : Solution
     
     private void Solve(int x, int y, int cost = 0)
     {
-        _visited[x, y] = true;
-
         if (cost > _minimumCost)
         {
             return;
         }
+
+        _visited[x, y] = true;
 
         if (x < _width - 1)
         {
