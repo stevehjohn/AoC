@@ -1,5 +1,4 @@
-﻿using AoC.Solutions.Common;
-using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Infrastructure;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2021._15;
