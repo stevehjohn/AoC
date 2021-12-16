@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using System.Text;
+using AoC.Solutions.Infrastructure;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2021._15;
@@ -22,7 +23,13 @@ public class Part1 : Solution
     {
         ParseInput();
 
+        Console.Clear();
+
+        Console.CursorVisible = false;
+
         Solve(0, 0);
+
+        Console.ReadKey();
 
         return _minimumCost.ToString();
     }
@@ -60,14 +67,14 @@ public class Part1 : Solution
             CheckNeighbor(x + 1, y, cost);
         }
 
-        if (x > 0)
-        {
-            CheckNeighbor(x - 1, y, cost);
-        }
-
         if (y < _height - 1)
         {
             CheckNeighbor(x, y + 1, cost);
+        }
+
+        if (x > 0)
+        {
+            CheckNeighbor(x - 1, y, cost);
         }
 
         if (y > 0)
@@ -75,6 +82,8 @@ public class Part1 : Solution
             CheckNeighbor(x, y - 1, cost);
         }
     }
+
+    private int _previousCost = int.MaxValue;
 
     private void CheckNeighbor(int x, int y, int cost)
     {
@@ -91,6 +100,36 @@ public class Part1 : Solution
             {
                 _minimumCost = cost;
             }
+
+            Console.CursorTop = 0;
+
+            Console.CursorLeft = 0;
+
+            Console.WriteLine();
+
+            for (var y1 = 0; y1 < _height; y1++)
+            {
+                var line = new StringBuilder(200);
+
+                line.Append(' ');
+
+                for (var x1 = 0; x1 < _width; x1++)
+                {
+                    line.Append(_visited[x1, y1] || x1 == _width - 1 && y1 == _height - 1 ? '█' : ' ');
+                }
+
+                Console.WriteLine(line);
+            }
+
+            Console.WriteLine();
+
+            Console.ForegroundColor = cost > _previousCost ? ConsoleColor.Red : ConsoleColor.Green;
+
+            Console.WriteLine($" {cost}");
+
+            _previousCost = cost;
+
+            Console.ForegroundColor = ConsoleColor.Green;
 
             return;
         }
