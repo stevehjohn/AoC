@@ -56,57 +56,48 @@ public class Part1 : Solution
             return;
         }
 
-        var neighbors = GetNeighbors(new Point(x, y));
-
-        foreach (var neighbor in neighbors)
+        if (x < _width - 1)
         {
-            if (_visited[neighbor.X, neighbor.Y])
-            {
-                return;
-            }
+            CheckNeighbor(x + 1, y, cost);
+        }
 
-            if (neighbor.X == _width - 1 && neighbor.Y == _height - 1)
-            {
-                cost += _map[neighbor.X, neighbor.Y];
+        if (x > 0)
+        {
+            CheckNeighbor(x - 1, y, cost);
+        }
 
-                if (cost < _minimumCost)
-                {
-                    _minimumCost = cost;
-                }
+        if (y < _height - 1)
+        {
+            CheckNeighbor(x, y + 1, cost);
+        }
 
-                return;
-            }
-
-            Solve(neighbor.X, neighbor.Y, cost + _map[neighbor.X, neighbor.Y]);
-
-            _visited[neighbor.X, neighbor.Y] = false;
+        if (y > 0)
+        {
+            CheckNeighbor(x, y - 1, cost);
         }
     }
 
-    private List<Point> GetNeighbors(Point position)
+    private void CheckNeighbor(int x, int y, int cost)
     {
-        var neighbors = new List<Point>();
-
-        if (position.X < _width - 1)
+        if (_visited[x, y])
         {
-            neighbors.Add(new Point(position.X + 1, position.Y));
+            return;
         }
 
-        if (position.Y < _height - 1)
+        if (x == _width - 1 && y == _height - 1)
         {
-            neighbors.Add(new Point(position.X, position.Y + 1));
+            cost += _map[x, y];
+
+            if (cost < _minimumCost)
+            {
+                _minimumCost = cost;
+            }
+
+            return;
         }
 
-        if (position.X > 1)
-        {
-            neighbors.Add(new Point(position.X - 1, position.Y));
-        }
+        Solve(x, y, cost + _map[x, y]);
 
-        if (position.Y > 1)
-        {
-            neighbors.Add(new Point(position.X, position.Y - 1));
-        }
-
-        return neighbors;
+        _visited[x, y] = false;
     }
 }
