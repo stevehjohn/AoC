@@ -41,14 +41,20 @@ public class Part2 : Base
             for (var x = 0; x < width; x++)
             {
 #if DEBUG
-                Debug.Write(image[x, y]);
+                if (Debugger.IsAttached)
+                {
+                    Debug.Write(image[x, y]);
+                }
 #endif
 
                 answer.Append(image[x, y]);
             }
 
 #if DEBUG
-            Debug.WriteLine(string.Empty);
+            if (Debugger.IsAttached)
+            {
+                Debug.WriteLine(string.Empty);
+            }
 #endif
         }
 
