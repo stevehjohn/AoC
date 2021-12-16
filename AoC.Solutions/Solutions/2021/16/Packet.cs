@@ -1,10 +1,16 @@
-﻿namespace AoC.Solutions.Solutions._2021._16;
+﻿using System.Text;
+
+namespace AoC.Solutions.Solutions._2021._16;
 
 public class Packet
 {
     public int Version { get; private init; }
 
+    public int Type { get; private init; }
+
     public int Length { get; private set; }
+
+    public long Value { get; private set; }
 
     public List<Packet> SubPackets { get; }
 
@@ -31,28 +37,64 @@ public class Packet
         return packets;
     }
 
+    public long ProcessPacket()
+    {
+        switch (Type)
+        {
+            case 0:
+                return SubPackets.Sum(p => p.ProcessPacket());
+            case 1:
+                var product = 1L;
+
+                SubPackets.ForEach(p => product *= p.ProcessPacket());
+
+                return product;
+            case 2:
+                return SubPackets.Min(p => p.ProcessPacket());
+            case 3:
+                return SubPackets.Max(p => p.ProcessPacket());
+            case 5:
+                return SubPackets[0].ProcessPacket() > SubPackets[1].ProcessPacket() ? 1 : 0;
+            case 6:
+                return SubPackets[0].ProcessPacket() < SubPackets[1].ProcessPacket() ? 1 : 0;
+            case 7:
+                return SubPackets[0].ProcessPacket() == SubPackets[1].ProcessPacket() ? 1 : 0;
+        }
+
+        return Value;
+    }
+
     private static Packet Parse(string input)
     {
         var version = GetValue(input, 0, 3);
-
-        var packet = new Packet
-                     {
-                         Version = version
-                     };
 
         var type = GetValue(input, 3, 3);
 
         var position = 6;
 
+        var packet = new Packet
+                     {
+                         Version = version,
+                         Type = type
+                     };
+
         switch (type)
         {
             case 4:
+                var binaryValue = new StringBuilder();
+
                 while (input[position] == '1')
                 {
+                    binaryValue.Append(input.Substring(position + 1, 4));
+
                     position += 5;
                 }
 
+                binaryValue.Append(input.Substring(position + 1, 4));
+
                 position += 5;
+
+                packet.Value = Convert.ToInt64(binaryValue.ToString(), 2);
 
                 break;
             default:

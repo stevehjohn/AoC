@@ -1,31 +1,15 @@
-﻿using AoC.Solutions.Infrastructure;
-using JetBrains.Annotations;
-using System.Globalization;
-using System.Text;
+﻿using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2021._16;
 
 [UsedImplicitly]
-public class Part1 : Solution
+public class Part1 : Base
 {
     public override string Description => "Packet processing";
 
     public override string GetAnswer()
     {
-        var binary = new StringBuilder();
-
-        var data = Input[0];
-
-        for (var i = 0; i < data.Length; i ++)
-        {
-            var number = int.Parse(data.Substring(i, 1), NumberStyles.HexNumber);
-
-            binary.Append(Convert.ToString(number, 2).PadLeft(4, '0'));
-        }
-
-        var binaryString = binary.ToString();
-
-        var rootPacket = Packet.GetPackets(binaryString).Single();
+        var rootPacket = GetRootPacket();
 
         var versionSum = rootPacket.Version;
 
