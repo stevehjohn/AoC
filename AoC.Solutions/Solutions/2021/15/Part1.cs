@@ -47,14 +47,14 @@ public class Part1 : Solution
     
     private void Solve(Point position, int cost = 0)
     {
-        var neighbors = GetNeighbors(position);
-
         _visited.Add(position.X + position.Y * _width);
 
         if (cost > _minimumCost)
         {
             return;
         }
+
+        var neighbors = GetNeighbors(position);
 
         foreach (var neighbor in neighbors)
         {
