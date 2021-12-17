@@ -1,13 +1,10 @@
-﻿using AoC.Solutions.Infrastructure;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2021._03;
 
 [UsedImplicitly]
-public class Part2 : Solution
+public class Part2 : Base
 {
-    public override string Description => "Power consumption";
-
     public override string GetAnswer()
     {
         var oxygen = Filter(Input.ToList());

@@ -1,13 +1,10 @@
-﻿using AoC.Solutions.Infrastructure;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2021._08;
 
 [UsedImplicitly]
-public class Part1 : Solution
+public class Part1 : Base
 {
-    public override string Description => "Old school displays";
-
     public override string GetAnswer()
     {
         var outputs = Input.Select(s => s.Split('|', StringSplitOptions.TrimEntries)[1]);

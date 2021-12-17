@@ -1,13 +1,10 @@
-﻿using AoC.Solutions.Infrastructure;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2021._08;
 
 [UsedImplicitly]
-public class Part2 : Solution
+public class Part2 : Base
 {
-    public override string Description => "Old school displays";
-
     public override string GetAnswer()
     {
         var total = 0;
