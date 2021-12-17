@@ -28,6 +28,26 @@ public abstract class Base : Solution
         }
     }
 
+    protected void RunCycle()
+    {
+        for (var comparer = 0; comparer < Moons.Count; comparer++)
+        {
+            for (var comparee = comparer + 1; comparee < Moons.Count; comparee++)
+            {
+                ApplyGravity(Moons[comparer], Moons[comparee]);
+            }
+        }
+
+        for (var i = 0; i < Moons.Count; i++)
+        {
+            Moons[i].Position.X += Moons[i].Velocity.X;
+
+            Moons[i].Position.Y += Moons[i].Velocity.Y;
+
+            Moons[i].Position.Z += Moons[i].Velocity.Z;
+        }
+    }
+
     protected static void ApplyGravity(Moon comparer, Moon comparee)
     {
         comparer.Velocity.X += GetGravity(comparer.Position.X, comparee.Position.X);
