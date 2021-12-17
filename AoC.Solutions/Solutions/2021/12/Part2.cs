@@ -56,8 +56,10 @@ public class Part2 : Base
                 continue;
             }
 
-            total += Visit(connection, visited.ToList(), specialNode, specialNodeCount);
+            total += Visit(connection, visited, specialNode, specialNodeCount);
         }
+
+        visited.Remove(node);
 
         return total;
     }
