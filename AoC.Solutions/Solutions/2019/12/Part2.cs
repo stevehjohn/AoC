@@ -5,8 +5,6 @@
 //[UsedImplicitly]
 //public class Part2 : Base
 //{
-//    public override string Description => "Orbital simulation";
-
 //    public override string GetAnswer()
 //    {
 //        return "TEST";

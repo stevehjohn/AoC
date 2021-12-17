@@ -4,6 +4,8 @@ namespace AoC.Solutions.Solutions._2019._12;
 
 public abstract class Base : Solution
 {
+    public override string Description => "Orbital simulation";
+
     protected readonly List<Moon> Moons = new();
 
     protected void ParseInput()
