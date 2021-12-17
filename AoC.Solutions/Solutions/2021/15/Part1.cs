@@ -21,7 +21,7 @@ public class Part1 : Solution
     {
         _rootNode = ParseInput();
 
-        Solve();
+        //Solve();
 
         return "TEST";
     }
