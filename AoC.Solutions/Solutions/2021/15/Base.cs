@@ -11,21 +11,13 @@ public abstract class Base : Solution
 
     private Node _rootNode;
 
-    protected void ParseInput()
+    protected void ParseInput(int scalingFactor = 1)
     {
-        _width = Input[0].Length;
+        _width = Input[0].Length * scalingFactor;
 
-        _height = Input.Length;
+        _height = Input.Length * scalingFactor;
 
-        var nodes = new Node[_width, _height];
-
-        for (var y = 0; y < _height; y++)
-        {
-            for (var x = 0; x < _width; x++)
-            {
-                nodes[x, y] = new Node(new Point(x, y), (byte)(Input[y][x] - '0'));
-            }
-        }
+        var nodes = GetNodes(scalingFactor);
 
         for (var y = 0; y < _height; y++)
         {
@@ -56,6 +48,38 @@ public abstract class Base : Solution
         _rootNode = nodes[0, 0];
     }
 
+    private Node[,] GetNodes(int scalingFactor)
+    {
+        var nodes = new Node[_width, _height];
+
+        var originalWidth = _width / scalingFactor;
+
+        var originalHeight = _height / scalingFactor;
+
+        for (var xScale = 0; xScale < scalingFactor; xScale++)
+        {
+            for (var yScale = 0; yScale < scalingFactor; yScale++)
+            {
+                for (var y = 0; y < originalHeight; y++)
+                {
+                    for (var x = 0; x < originalWidth; x++)
+                    {
+                        var cost = (byte) (Input[x][y] - '0' + xScale + yScale);
+
+                        if (cost > 9)
+                        {
+                            cost -= 9;
+                        }
+
+                        nodes[x + xScale * originalWidth, y + yScale * originalHeight] = new Node(new Point(x + xScale * originalWidth, y + yScale * originalHeight), cost);
+                    }
+                }
+            }
+        }
+
+        return nodes;
+    }
+
     protected int Solve()
     {
         var queue = new PriorityQueue<Node>();
@@ -67,7 +91,7 @@ public abstract class Base : Solution
                         { 0, 0 }
                     };
 
-        while (!queue.IsEmpty)
+        while (! queue.IsEmpty)
         {
             var node = queue.Pop();
 
@@ -80,7 +104,7 @@ public abstract class Base : Solution
             {
                 var cost = costs[node.Position.X + node.Position.Y * _width] + neighbor.Value;
 
-                if (!costs.TryGetValue(neighbor.Position.X + neighbor.Position.Y * _width, out var nextCost) || cost < nextCost)
+                if (! costs.TryGetValue(neighbor.Position.X + neighbor.Position.Y * _width, out var nextCost) || cost < nextCost)
                 {
                     costs[neighbor.Position.X + neighbor.Position.Y * _width] = cost;
 
