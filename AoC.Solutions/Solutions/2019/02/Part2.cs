@@ -1,15 +1,12 @@
 ﻿using AoC.Solutions.Exceptions;
-using AoC.Solutions.Infrastructure;
 using AoC.Solutions.Solutions._2019.Computer;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2019._02;
 
 [UsedImplicitly]
-public class Part2 : Solution
+public class Part2 : Base
 {
-    public override string Description => "Gravity assist (CPU start)";
-
     public override string GetAnswer()
     {
         var cpu = new Cpu();

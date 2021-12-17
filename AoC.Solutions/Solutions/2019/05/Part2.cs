@@ -1,14 +1,11 @@
-﻿using AoC.Solutions.Infrastructure;
-using AoC.Solutions.Solutions._2019.Computer;
+﻿using AoC.Solutions.Solutions._2019.Computer;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2019._05;
 
 [UsedImplicitly]
-public class Part2 : Solution
+public class Part2 : Base
 {
-    public override string Description => "Air conditioning (CPU extension 1)";
-
     public override string GetAnswer()
     {
         var cpu = new Cpu();
