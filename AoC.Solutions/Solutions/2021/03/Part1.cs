@@ -1,13 +1,10 @@
-﻿using AoC.Solutions.Infrastructure;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2021._03;
 
 [UsedImplicitly]
-public class Part1 : Solution
+public class Part1 : Base
 {
-    public override string Description => "Power consumption";
-
     public override string GetAnswer()
     {
         var length = Input[0].Length;
