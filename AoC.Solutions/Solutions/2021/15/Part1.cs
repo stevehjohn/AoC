@@ -1,5 +1,4 @@
-﻿using System.Text;
-using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Infrastructure;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2021._15;
@@ -37,9 +36,9 @@ public class Part1 : Solution
         _width = Input[0].Length;
 
         _height = Input.Length;
-        
+
         _map = new int[_width, _height];
-        
+
         _visited = new bool[_width, _height];
 
         for (var y = 0; y < _height; y++)
@@ -50,7 +49,7 @@ public class Part1 : Solution
             }
         }
     }
-    
+
     private void Solve(int x, int y, int cost = 0)
     {
         if (cost >= _minimumCost)
@@ -81,8 +80,6 @@ public class Part1 : Solution
         }
     }
 
-    private int _previousCost = int.MaxValue;
-
     private void CheckNeighbor(int x, int y, int cost)
     {
         if (_visited[x, y])
@@ -99,55 +96,11 @@ public class Part1 : Solution
                 _minimumCost = cost;
             }
 
-            Dump(cost, true);
-
             return;
         }
 
         Solve(x, y, cost + _map[x, y]);
 
         _visited[x, y] = false;
-    }
-
-    private void Dump(int cost, bool isEnd = false)
-    {
-        Console.CursorTop = 0;
-
-        Console.CursorLeft = 0;
-
-        Console.WriteLine();
-
-        Console.ForegroundColor = ! isEnd ? ConsoleColor.Red : ConsoleColor.Green;
-
-        for (var y1 = 0; y1 < _height; y1++)
-        {
-            var line = new StringBuilder(200);
-
-            line.Append(' ');
-
-            for (var x1 = 0; x1 < _width; x1++)
-            {
-                line.Append(_visited[x1, y1] || x1 == _width - 1 && y1 == _height - 1 ? '█' : ' ');
-            }
-
-            Console.WriteLine(line);
-        }
-
-        Console.WriteLine();
-
-        Console.ForegroundColor = cost > _previousCost ? ConsoleColor.Red : ConsoleColor.Green;
-
-        if (isEnd)
-        {
-            _previousCost = cost;
-
-            Console.WriteLine($" {cost}        ");
-        }
-        else
-        {
-            Console.WriteLine($" {_previousCost}        ");
-        }
-
-        Console.ForegroundColor = ConsoleColor.Green;
     }
 }
