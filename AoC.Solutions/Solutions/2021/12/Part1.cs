@@ -37,8 +37,10 @@ public class Part1 : Base
                 continue;
             }
 
-            total += Visit(connection, visited.ToList());
+            total += Visit(connection, visited);
         }
+
+        visited.Remove(node);
 
         return total;
     }
