@@ -9,16 +9,21 @@ public class Part2 : Base
     {
         ParseInput();
 
-        var initialStates = Moons.Select(m => new Moon(m)).ToList();
+        var previousStates = new List<Moon>[Moons.Count];
 
-        var cycleCounts = new List<int>[Moons.Count];
+        var cycleCounts = new int[Moons.Count, 3];
 
         for (var i = 0; i < Moons.Count; i++)
         {
-            cycleCounts[i] = new List<int>();
+            previousStates[i] = new List<Moon>
+                                {
+                                    new(Moons[i])
+                                };
         }
 
         var cycle = 0;
+
+        var found = 0;
 
         while (true)
         {
@@ -28,23 +33,40 @@ public class Part2 : Base
 
             for (var i = 0; i < Moons.Count; i++)
             {
-                if (Moons[i].Position.X == initialStates[i].Position.X && Moons[i].Velocity.X == initialStates[i].Velocity.X)
+                if (previousStates[i].Any(m => m.Position.X == Moons[i].Position.X && m.Velocity.X == Moons[i].Velocity.X))
                 {
-                    cycleCounts[i].Add(cycle);
+                    if (cycleCounts[i, 0] == 0 && cycle > 0)
+                    {
+                        cycleCounts[i, 0] = cycle;
+
+                        found++;
+                    }
                 }
 
-                if (Moons[i].Position.Y == initialStates[i].Position.Y && Moons[i].Velocity.Y == initialStates[i].Velocity.Y)
+                if (previousStates[i].Any(m => m.Position.Y == Moons[i].Position.Y && m.Velocity.Y == Moons[i].Velocity.Y))
                 {
-                    cycleCounts[i].Add(cycle);
+                    if (cycleCounts[i, 1] == 0 && cycle > 0)
+                    {
+                        cycleCounts[i, 1] = cycle;
+
+                        found++;
+                    }
                 }
 
-                if (Moons[i].Position.Z == initialStates[i].Position.Z && Moons[i].Velocity.Z == initialStates[i].Velocity.Z)
+                if (previousStates[i].Any(m => m.Position.Z == Moons[i].Position.Z && m.Velocity.Z == Moons[i].Velocity.Z))
                 {
-                    cycleCounts[i].Add(cycle);
+                    if (cycleCounts[i, 2] == 0 && cycle > 0)
+                    {
+                        cycleCounts[i, 2] = cycle;
+
+                        found++;
+                    }
                 }
+
+                previousStates[i].Add(new Moon(Moons[i]));
             }
 
-            if (cycleCounts.All(c => c.Count > 0))
+            if (found == Moons.Count * 3)
             {
                 break;
             }
