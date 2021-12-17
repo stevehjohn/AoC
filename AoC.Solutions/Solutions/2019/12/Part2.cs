@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System.Windows.Markup;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2019._12;
 
@@ -21,7 +22,7 @@ public class Part2 : Base
                                 };
         }
 
-        var cycle = 0;
+        var cycle = 1;
 
         var found = 0;
 
@@ -72,6 +73,56 @@ public class Part2 : Base
             }
         }
 
+        var values = new List<long>();
+
+        for (var i = 0; i < Moons.Count; i++)
+        {
+            values.Add(cycleCounts[i, 0]);
+
+            values.Add(cycleCounts[i, 1]);
+            
+            values.Add(cycleCounts[i, 2]);
+        }
+
+        var lowestCommonMultiple = LowestCommonMultiple(values);
+
         return "TESTING";
+    }
+
+    private long LowestCommonMultiple(List<long> input)
+    {
+        if (input.Count == 2)
+        {
+            var left = input[0];
+
+            var right = input[1];
+
+            return left * right / GreatestCommonFactor(left, right);
+        }
+
+        var lowestCommonMultiple = LowestCommonMultiple(input.Take(2).ToList());
+
+        var remaining = input.Skip(2).ToList();
+
+        remaining.Add(lowestCommonMultiple);
+
+        return LowestCommonMultiple(remaining);
+    }
+
+    private long GreatestCommonFactor(long left, long right)
+    {
+        while (left != right)
+        {
+            if (left > right)
+            {
+                left -= right;
+            }
+            else
+            {
+                right -= left;
+            }
+        }
+
+        return left;
     }
 }
