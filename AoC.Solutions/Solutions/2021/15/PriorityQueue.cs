@@ -20,6 +20,10 @@ public class PriorityQueue<T>
     {
         var min = _entries.Min(e => e.Priority);
 
-        return _entries.First(e => e.Priority == min).Entry;
+        var entry = _entries.First(e => e.Priority == min);
+
+        _entries.Remove(entry);
+
+        return entry.Entry;
     }
 }
