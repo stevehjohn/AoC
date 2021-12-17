@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using AoC.Solutions.Common;
+﻿using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2021._15;
@@ -83,18 +82,18 @@ public abstract class Base : Solution
 
     protected int Solve()
     {
-        var queue = new PriorityQueue<Node>();
+        var queue = new PriorityQueue<Node, int>();
 
-        queue.Push(int.MaxValue, _rootNode);
+        queue.Enqueue(_rootNode, int.MaxValue);
 
         var costs = new Dictionary<int, int>
                     {
                         { 0, 0 }
                     };
 
-        while (! queue.IsEmpty)
+        while (queue.Count > 0)
         {
-            var node = queue.Pop();
+            var node = queue.Dequeue();
 
             if (node.Position.X == _width - 1 && node.Position.Y == _height - 1)
             {
@@ -109,7 +108,7 @@ public abstract class Base : Solution
                 {
                     costs[neighbor.Position.X + neighbor.Position.Y * _width] = cost;
 
-                    queue.Push(cost, neighbor);
+                    queue.Enqueue(neighbor, cost);
                 }
             }
         }
