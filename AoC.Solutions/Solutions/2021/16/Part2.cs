@@ -5,8 +5,6 @@ namespace AoC.Solutions.Solutions._2021._16;
 [UsedImplicitly]
 public class Part2 : Base
 {
-    public override string Description => "Packet processing";
-
     public override string GetAnswer()
     {
         var rootPacket = GetRootPacket();

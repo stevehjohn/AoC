@@ -6,6 +6,8 @@ namespace AoC.Solutions.Solutions._2021._16;
 
 public abstract class Base : Solution
 {
+    public override string Description => "Packet processing";
+
     protected Packet GetRootPacket()
     {
         var binary = new StringBuilder();

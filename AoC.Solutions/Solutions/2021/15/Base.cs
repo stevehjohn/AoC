@@ -5,6 +5,8 @@ namespace AoC.Solutions.Solutions._2021._15;
 
 public abstract class Base : Solution
 {
+    public override string Description => "Risky business";
+
     private int _width;
 
     private int _height;

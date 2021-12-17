@@ -14,7 +14,7 @@ public class Node
 
     public int Id { get; }
 
-    private static int _id = 0;
+    private static int _id;
 
     public Node(string name)
     {

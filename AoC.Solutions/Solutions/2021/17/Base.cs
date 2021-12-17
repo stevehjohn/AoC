@@ -5,6 +5,8 @@ namespace AoC.Solutions.Solutions._2021._17;
 
 public abstract class Base : Solution
 {
+    public override string Description => "Probe launch trick shot";
+
     protected List<Point> Velocities = new();
 
     protected int HighestY { get; private set; }
