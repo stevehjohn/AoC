@@ -22,10 +22,6 @@ public class Part1 : Solution
     {
         ParseInput();
 
-        Console.Clear();
-
-        Console.CursorVisible = false;
-
         Solve(0, 0);
 
         return _minimumCost.ToString();
