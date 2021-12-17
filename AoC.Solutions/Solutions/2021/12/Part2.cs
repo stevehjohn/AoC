@@ -14,7 +14,7 @@ public class Part2 : Base
         return pathCount.ToString();
     }
 
-    private static int Visit(Node node, List<Node> visited, Node specialNode = null, int specialNodeCount = 0)
+    private static int Visit(Node node, List<Node> visited, Node specialNode = null)
     {
         if (node.IsEnd)
         {
@@ -31,17 +31,10 @@ public class Part2 : Base
             if (specialNode == null)
             {
                 specialNode = node;
-
-                specialNodeCount = 1;
             }
             else
             {
-                specialNodeCount++;
-
-                if (specialNodeCount == 2)
-                {
-                    return 0;
-                }
+                return 0;
             }
         }
 
@@ -56,7 +49,7 @@ public class Part2 : Base
                 continue;
             }
 
-            total += Visit(connection, visited, specialNode, specialNodeCount);
+            total += Visit(connection, visited, specialNode);
         }
 
         visited.Remove(node);
