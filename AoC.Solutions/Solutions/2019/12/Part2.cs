@@ -1,5 +1,4 @@
-﻿using System.Windows.Markup;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2019._12;
 
@@ -22,7 +21,7 @@ public class Part2 : Base
                                 };
         }
 
-        var cycle = 1;
+        var cycle = -1;
 
         var found = 0;
 
@@ -89,7 +88,7 @@ public class Part2 : Base
         return "TESTING";
     }
 
-    private long LowestCommonMultiple(List<long> input)
+    private static long LowestCommonMultiple(List<long> input)
     {
         if (input.Count == 2)
         {
@@ -109,7 +108,7 @@ public class Part2 : Base
         return LowestCommonMultiple(remaining);
     }
 
-    private long GreatestCommonFactor(long left, long right)
+    private static long GreatestCommonFactor(long left, long right)
     {
         while (left != right)
         {
