@@ -101,13 +101,7 @@ public class Part1 : Solution
 
             Dump(cost, true);
 
-            Thread.Sleep(250);
-
             return;
-        }
-        else
-        {
-            Dump(cost);
         }
 
         Solve(x, y, cost + _map[x, y]);
