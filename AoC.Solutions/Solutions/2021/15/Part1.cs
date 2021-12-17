@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Common;
+using AoC.Solutions.Infrastructure;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2021._15;
@@ -8,99 +9,97 @@ public class Part1 : Solution
 {
     public override string Description => "Risky business";
 
-    private int _width;
+    private readonly PriorityQueue<Node> _queue = new();
 
+    private int _width;
+    
     private int _height;
 
-    private int[,] _map;
+    private Node _rootNode;
 
     private int _minimumCost = int.MaxValue;
 
-    private bool[,] _visited;
-
     public override string GetAnswer()
     {
-        ParseInput();
+        _rootNode = ParseInput();
 
-        Console.Clear();
+        Solve();
 
-        Console.CursorVisible = false;
-
-        Solve(0, 0);
-
-        return _minimumCost.ToString();
+        return "TEST";
     }
 
-    private void ParseInput()
+    private Node ParseInput()
     {
         _width = Input[0].Length;
 
         _height = Input.Length;
 
-        _map = new int[_width, _height];
-
-        _visited = new bool[_width, _height];
+        var nodes = new Node[_width, _height];
 
         for (var y = 0; y < _height; y++)
         {
             for (var x = 0; x < _width; x++)
             {
-                _map[x, y] = (byte) (Input[y][x] - '0');
+                nodes[x, y] = new Node(new Point(x, y), (byte) (Input[y][x] - '0'));
             }
         }
-    }
 
-    private void Solve(int x, int y, int cost = 0)
-    {
-        if (cost >= _minimumCost)
+        for (var y = 0; y < _height; y++)
         {
-            return;
-        }
-
-        _visited[x, y] = true;
-
-        if (x < _width - 1)
-        {
-            CheckNeighbor(x + 1, y, cost);
-        }
-
-        if (y < _height - 1)
-        {
-            CheckNeighbor(x, y + 1, cost);
-        }
-
-        if (x > 0)
-        {
-            CheckNeighbor(x - 1, y, cost);
-        }
-
-        if (y > 0)
-        {
-            CheckNeighbor(x, y - 1, cost);
-        }
-    }
-
-    private void CheckNeighbor(int x, int y, int cost)
-    {
-        if (_visited[x, y])
-        {
-            return;
-        }
-
-        if (x == _width - 1 && y == _height - 1)
-        {
-            cost += _map[x, y];
-
-            if (cost < _minimumCost)
+            for (var x = 0; x < _width; x++)
             {
-                _minimumCost = cost;
-            }
+                if (x > 0)
+                {
+                    nodes[x, y].Neighbors.Add(nodes[x - 1, y]);
+                }
 
+                if (y > 0)
+                {
+                    nodes[x, y].Neighbors.Add(nodes[x, y - 1]);
+                }
+
+                if (x < _width - 1)
+                {
+                    nodes[x, y].Neighbors.Add(nodes[x + 1, y]);
+                }
+
+                if (y < _height - 1)
+                {
+                    nodes[x, y].Neighbors.Add(nodes[x, y + 1]);
+                }
+            }
+        }
+
+        return nodes[0, 0];
+    }
+
+    private void Solve(int cost = int.MaxValue)
+    {
+        if (cost > _minimumCost)
+        {
             return;
         }
 
-        Solve(x, y, cost + _map[x, y]);
+        var queue = new PriorityQueue<Node>();
 
-        _visited[x, y] = false;
+        queue.Push(int.MaxValue, _rootNode);
+
+        while (! queue.IsEmpty)
+        {
+            var node = queue.Pop();
+
+            if (node.Position.X == _width - 1 && node.Position.Y == _height - 1)
+            {
+                break;
+            }
+
+            foreach (var neighbor in node.Neighbors)
+            {
+                if (cost + neighbor.Value < cost)
+                {
+                    queue.Push(int.MaxValue, neighbor);
+                }
+            }
+        }
     }
 }

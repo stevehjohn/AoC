@@ -1,8 +1,10 @@
-﻿namespace AoC.Solutions.Common;
+﻿namespace AoC.Solutions.Solutions._2021._15;
 
 public class PriorityQueue<T>
 {
     private readonly List<(int Priority, T Entry)> _entries;
+
+    public bool IsEmpty => _entries.Count == 0;
 
     public PriorityQueue()
     {
