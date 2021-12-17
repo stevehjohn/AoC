@@ -1,14 +1,11 @@
-﻿using AoC.Solutions.Infrastructure;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2019._12;
 
 [UsedImplicitly]
-public class Part1 : Solution
+public class Part1 : Base
 {
-    public override string Description => "The n-body problem which will eat your memory and CPU";
-
-    private readonly List<Moon> _moons = new();
+    public override string Description => "Orbital simulation";
 
     public override string GetAnswer()
     {
@@ -16,52 +13,27 @@ public class Part1 : Solution
 
         for (var step = 0; step < 1000; step++)
         {
-            for (var comparer = 0; comparer < _moons.Count; comparer++)
+            for (var comparer = 0; comparer < Moons.Count; comparer++)
             {
-                for (var comparee = comparer + 1; comparee < _moons.Count; comparee++)
+                for (var comparee = comparer + 1; comparee < Moons.Count; comparee++)
                 {
-                    ApplyGravity(_moons[comparer], _moons[comparee]);
+                    ApplyGravity(Moons[comparer], Moons[comparee]);
                 }
             }
 
-            for (var i = 0; i < _moons.Count; i++)
+            for (var i = 0; i < Moons.Count; i++)
             {
-                _moons[i].Position.X += _moons[i].Velocity.X;
+                Moons[i].Position.X += Moons[i].Velocity.X;
 
-                _moons[i].Position.Y += _moons[i].Velocity.Y;
+                Moons[i].Position.Y += Moons[i].Velocity.Y;
                 
-                _moons[i].Position.Z += _moons[i].Velocity.Z;
+                Moons[i].Position.Z += Moons[i].Velocity.Z;
             }
         }
 
-        var energy = _moons.Sum(m => m.Energy);
+        var energy = Moons.Sum(m => m.Energy);
 
         return energy.ToString();
-    }
-
-    private void ParseInput()
-    {
-        foreach (var line in Input)
-        {
-            var components = line[1..^1].Split(',', StringSplitOptions.TrimEntries);
-
-            var moon = new Moon
-                       {
-                           Position =
-                           {
-                               X = ParseComponent(components[0]),
-                               Y = ParseComponent(components[1]),
-                               Z = ParseComponent(components[2])
-                           }
-                       };
-
-            _moons.Add(moon);
-        }
-    }
-
-    private static int ParseComponent(string component)
-    {
-        return int.Parse(component.Split('=', StringSplitOptions.TrimEntries)[1]);
     }
 
     private static void ApplyGravity(Moon comparer, Moon comparee)
