@@ -1,13 +1,10 @@
-﻿using AoC.Solutions.Infrastructure;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2019._01;
 
 [UsedImplicitly]
-public class Part1 : Solution
+public class Part1 : Base
 {
-    public override string Description => "Calculate launch fuel";
-
     public override string GetAnswer()
     {
         var fuel = 0;
