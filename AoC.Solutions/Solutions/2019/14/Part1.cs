@@ -1,10 +1,9 @@
-﻿//using AoC.Solutions.Infrastructure;
-//using JetBrains.Annotations;
+﻿//using JetBrains.Annotations;
 
 //namespace AoC.Solutions.Solutions._2019._14;
 
 //[UsedImplicitly]
-//public class Part1 : Solution
+//public class Part1 : Base
 //{
 //    public override string Description => "Nanofactory replicator";
 
