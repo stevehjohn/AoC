@@ -9,19 +9,19 @@ public class Part2 : Base
     {
         LoadMap();
 
-        var pathCount = Visit(Start, new List<Node>());
+        var pathCount = Visit(Start, new List<int>());
 
         return pathCount.ToString();
     }
 
-    private static int Visit(Node node, List<Node> visited, Node specialNode = null)
+    private static int Visit(Node node, List<int> visited, Node specialNode = null)
     {
         if (node.IsEnd)
         {
             return 1;
         }
 
-        if (! node.IsBig && visited.Contains(node))
+        if (! node.IsBig && visited.Contains(node.Id))
         {
             if (specialNode != null && node != specialNode)
             {
@@ -38,7 +38,7 @@ public class Part2 : Base
             }
         }
 
-        visited.Add(node);
+        visited.Add(node.Id);
 
         var total = 0;
 
@@ -52,7 +52,7 @@ public class Part2 : Base
             total += Visit(connection, visited, specialNode);
         }
 
-        visited.Remove(node);
+        visited.Remove(node.Id);
 
         return total;
     }

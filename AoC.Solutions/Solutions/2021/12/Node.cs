@@ -12,10 +12,18 @@ public class Node
 
     public bool IsEnd => Name.Equals("end", StringComparison.InvariantCultureIgnoreCase);
 
+    public int Id { get; }
+
+    private static int _id = 0;
+
     public Node(string name)
     {
         Name = name;
 
         Connections = new List<Node>();
+
+        Id = _id;
+
+        _id++;
     }
 }
