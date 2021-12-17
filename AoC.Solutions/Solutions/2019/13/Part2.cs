@@ -7,7 +7,7 @@ namespace AoC.Solutions.Solutions._2019._13;
 [UsedImplicitly]
 public class Part2 : Solution
 {
-    public override string Description => "Arkanoid";
+    public override string Description => "Arkanoid (CPU used unmodified)";
 
     public override string GetAnswer()
     {
