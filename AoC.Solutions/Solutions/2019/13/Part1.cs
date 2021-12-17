@@ -1,14 +1,11 @@
-﻿using AoC.Solutions.Infrastructure;
-using AoC.Solutions.Solutions._2019.Computer;
+﻿using AoC.Solutions.Solutions._2019.Computer;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2019._13;
 
 [UsedImplicitly]
-public class Part1 : Solution
+public class Part1 : Base
 {
-    public override string Description => "Arkanoid (CPU used unmodified)";
-
     public override string GetAnswer()
     {
         var cpu = new Cpu();

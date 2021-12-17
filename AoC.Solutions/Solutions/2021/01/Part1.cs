@@ -5,8 +5,6 @@ namespace AoC.Solutions.Solutions._2021._01;
 [UsedImplicitly]
 public class Part1 : Base
 {
-    public override string Description => "Depth scan";
-
     public override string GetAnswer()
     {
         var increases = 0;

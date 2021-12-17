@@ -1,16 +1,13 @@
 ﻿#if DEBUG
 using System.Diagnostics;
 #endif
-using AoC.Solutions.Infrastructure;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2019._08;
 
 [UsedImplicitly]
-public class Part2 : Solution
+public class Part2 : Base
 {
-    public override string Description => "Space GIF";
-
     public override string GetAnswer()
     {
         var data = Input[0];

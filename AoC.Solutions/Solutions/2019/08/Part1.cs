@@ -1,13 +1,10 @@
-﻿using AoC.Solutions.Infrastructure;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2019._08;
 
 [UsedImplicitly]
-public class Part1 : Solution
-{
-    public override string Description => "Space GIF";
-
+public class Part1 : Base
+{ 
     public override string GetAnswer()
     {
         var data = Input[0];
