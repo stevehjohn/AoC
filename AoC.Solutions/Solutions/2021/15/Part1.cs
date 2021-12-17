@@ -9,8 +9,6 @@ public class Part1 : Solution
 {
     public override string Description => "Risky business";
 
-    private readonly PriorityQueue<Node> _queue = new();
-
     private int _width;
     
     private int _height;
@@ -73,16 +71,13 @@ public class Part1 : Solution
         return nodes[0, 0];
     }
 
-    private void Solve(int cost = int.MaxValue)
+    private void Solve()
     {
-        if (cost > _minimumCost)
-        {
-            return;
-        }
-
         var queue = new PriorityQueue<Node>();
 
         queue.Push(int.MaxValue, _rootNode);
+
+        var cost = 0;
 
         while (! queue.IsEmpty)
         {
@@ -95,7 +90,7 @@ public class Part1 : Solution
 
             foreach (var neighbor in node.Neighbors)
             {
-                if (cost + neighbor.Value < cost)
+                if (cost + neighbor.Value < _minimumCost)
                 {
                     queue.Push(int.MaxValue, neighbor);
                 }
