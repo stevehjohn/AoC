@@ -21,7 +21,7 @@ public class Part1 : Base
             return 1;
         }
 
-        if (!node.IsBig && visited.Contains(node))
+        if (! node.IsBig && visited.Contains(node))
         {
             return 0;
         }
