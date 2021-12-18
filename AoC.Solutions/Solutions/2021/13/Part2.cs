@@ -9,7 +9,7 @@ namespace AoC.Solutions.Solutions._2021._13;
 [UsedImplicitly]
 public class Part2 : Base
 {
-    public override bool OcrOutput => true;
+    public override bool OcrOutput => false;
 
     public override string GetAnswer()
     {
