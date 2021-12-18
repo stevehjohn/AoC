@@ -98,6 +98,8 @@ public abstract class Base : Solution
         Console.Clear();
 
         Console.CursorVisible = false;
+
+        Console.ForegroundColor = ConsoleColor.DarkGray;
 #endif
 
         while (queue.Count > 0)
@@ -119,13 +121,13 @@ public abstract class Base : Solution
 
             foreach (var neighbor in node.Neighbors)
             {
-#if DUMP && DEBUG
-                Console.CursorLeft = neighbor.Position.X;
+//#if DUMP && DEBUG
+//                Console.CursorLeft = neighbor.Position.X;
 
-                Console.CursorTop = neighbor.Position.Y;
+//                Console.CursorTop = neighbor.Position.Y;
 
-                Console.Write('█');
-#endif
+//                Console.Write('█');
+//#endif
 
                 var cost = costs[node.Position.X + node.Position.Y * _width] + neighbor.Value;
 
@@ -136,23 +138,33 @@ public abstract class Base : Solution
                     queue.Enqueue(neighbor, cost);
                 }
             }
+
+#if DUMP && DEBUG
+            DrawPath(costs);
+#endif
         }
 
-        DrawPath(costs);
+#if DUMP && DEBUG
+        DrawPath(costs, true);
 
         Console.CursorLeft = 0;
 
         Console.CursorTop = _height + 2;
+#endif
 
         return costs[_width - 1 + (_height - 1) * _width];
     }
 
 #if DUMP && DEBUG
-    private void DrawPath(Dictionary<int, int> costs)
+    private void DrawPath(Dictionary<int, int> costs, bool final = false)
     {
-        var position = new Point(_width - 1, _height - 1);
+        var target = costs.Where(c => c.Key % _width == c.Key / _width).OrderByDescending(c => c.Key).First().Key;
 
-        Console.ForegroundColor = ConsoleColor.DarkBlue;
+        var position = new Point(target / _width, target / _width);
+
+        var temp = Console.ForegroundColor;
+
+        Console.ForegroundColor = final ? ConsoleColor.Green : ConsoleColor.DarkCyan;
 
         while (position.X != 0 || position.Y != 0)
         {
@@ -173,6 +185,11 @@ public abstract class Base : Solution
                     continue;
                 }
 
+                if (! costs.ContainsKey(x + position.Y * _width))
+                {
+                    continue;
+                }
+
                 if (costs[x + position.Y * _width] < lowest)
                 {
                     lowestPosition.X = x;
@@ -186,6 +203,11 @@ public abstract class Base : Solution
             for (var y = position.Y - 1; y < position.Y + 2; y += 2)
             {
                 if (y < 0 || y >= _width)
+                {
+                    continue;
+                }
+
+                if (!costs.ContainsKey(position.X + y * _width))
                 {
                     continue;
                 }
@@ -209,7 +231,7 @@ public abstract class Base : Solution
 
         Console.Write('█');
 
-        Console.ForegroundColor = ConsoleColor.Green;
+        Console.ForegroundColor = temp;
     }
 #endif
 }
