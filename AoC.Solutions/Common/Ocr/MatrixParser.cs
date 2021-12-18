@@ -28,8 +28,40 @@ public class MatrixParser
 
     public string Parse(string input)
     {
-        // Note: Input may not be an exact "round" length due to missing blank segments.
+        var matrix = ConvertToMatrix(input);
 
         return input;
+    }
+
+    private bool[,] ConvertToMatrix(string input)
+    {
+        var length = input.Length;
+
+        if (length % 30 != 0)
+        {
+            length += 30 - length % 30;
+        }
+
+        var matrix = new bool[length / 6, length / 5];
+
+        var x = 0;
+
+        var y = 0;
+
+        for (var i = 0; i < input.Length; i++)
+        {
+            matrix[x, y] = input[i] == '*';
+
+            x++;
+
+            if (x >= matrix.GetLength(0))
+            {
+                x = 0;
+
+                y++;
+            }
+        }
+
+        return matrix;
     }
 }
