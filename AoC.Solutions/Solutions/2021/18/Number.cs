@@ -10,6 +10,14 @@ public class Number
 
     public static Number Parse(string input)
     {
+        if (input.Length == 1)
+        {
+            return new Number
+                   {
+                       Value = int.Parse(input)
+                   };
+        }
+
         var openings = 0;
 
         for (var i = 0; i < input.Length; i++)
@@ -37,12 +45,7 @@ public class Number
                 return new Number
                        {
                            Left = Parse(left),
-                           Right = Parse(right),
-                           Value = left.Length == 1
-                                       ? int.Parse(left)
-                                       : right.Length == 1
-                                           ? int.Parse(right)
-                                           : null
+                           Right = Parse(right)
                        };
             }
         }
