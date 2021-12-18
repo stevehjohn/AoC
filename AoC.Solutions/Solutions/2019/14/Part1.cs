@@ -1,108 +1,113 @@
-﻿//using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
-//namespace AoC.Solutions.Solutions._2019._14;
+namespace AoC.Solutions.Solutions._2019._14;
 
-//[UsedImplicitly]
-//public class Part1 : Base
-//{
-//    public override string Description => "Nanofactory replicator";
+[UsedImplicitly]
+public class Part1 : Base
+{
+    public override string Description => "Nanofactory replicator";
 
-//    private readonly Dictionary<string, int> _stock = new();
+    private readonly Dictionary<string, int> _stock = new();
 
-//    private Matter _fuel;
+    private Matter _fuel;
 
-//    private const string BaseMaterial = "ORE";
+    private const string BaseMaterial = "ORE";
 
-//    private const string EndMaterial = "FUEL";
+    private const string EndMaterial = "FUEL";
 
-//    public override string GetAnswer()
-//    {
-//        _fuel = ProcessInput(EndMaterial);
+    public override string GetAnswer()
+    {
+        _fuel = ProcessInput(EndMaterial);
 
-//        var fuel = GetOre(_fuel).ToString();
-        
-//        return fuel;
-//    }
+        var fuel = GetOre(_fuel, _fuel.Amount).ToString();
 
-//    public Matter ProcessInput(string outputMatter)
-//    {
-//        var io = Input.Single(i => i.EndsWith($" {outputMatter}")).Split("=>", StringSplitOptions.TrimEntries);
+        return fuel;
+    }
 
-//        var output = ParseMatter(io[1]);
+    public Matter ProcessInput(string outputMatter)
+    {
+        var io = Input.Single(i => i.EndsWith($" {outputMatter}")).Split("=>", StringSplitOptions.TrimEntries);
 
-//        var matter = new Matter
-//                     {
-//                         Amount = output.Amount,
-//                         Name = output.Name
-//                     };
+        var output = ParseMatter(io[1]);
 
-//        matter.Components.AddRange(ProcessComponents(io[0]));
+        var matter = new Matter
+        {
+            Amount = output.Amount,
+            Name = output.Name
+        };
 
-//        return matter;
-//    }
+        matter.Components.AddRange(ProcessComponents(io[0]));
 
-//    private List<Matter> ProcessComponents(string input)
-//    {
-//        var components = input.Split(',', StringSplitOptions.TrimEntries);
+        return matter;
+    }
 
-//        var result = new List<Matter>();
+    private List<Matter> ProcessComponents(string input)
+    {
+        var components = input.Split(',', StringSplitOptions.TrimEntries);
 
-//        foreach (var component in components)
-//        {
-//            var matterParsed = ParseMatter(component);
+        var result = new List<Matter>();
 
-//            if (matterParsed.Name == BaseMaterial)
-//            {
-//                return new List<Matter>
-//                       {
-//                           new()
-//                           {
-//                               Amount = matterParsed.Amount,
-//                               Name = BaseMaterial
-//                           }
-//                       };
-//            }
+        foreach (var component in components)
+        {
+            var matterParsed = ParseMatter(component);
 
-//            var matter = new Matter
-//                         {
-//                             Amount = matterParsed.Amount,
-//                             Name = matterParsed.Name
-//                         };
+            if (matterParsed.Name == BaseMaterial)
+            {
+                return new List<Matter>
+                       {
+                           new()
+                           {
+                               Amount = matterParsed.Amount,
+                               Name = BaseMaterial
+                           }
+                       };
+            }
 
-//            matter.Components.AddRange(ProcessComponents(Input.Single(i => i.EndsWith($" {matterParsed.Name}"))));
+            var matter = new Matter
+            {
+                Amount = matterParsed.Amount,
+                Name = matterParsed.Name
+            };
 
-//            result.Add(matter);
-//        }
+            matter.Components.AddRange(ProcessComponents(Input.Single(i => i.EndsWith($" {matterParsed.Name}"))));
 
-//        return result;
-//    }
+            result.Add(matter);
+        }
 
-//    private int GetOre(Matter node, int totalAmount = 1)
-//    {
-//        if (! _stock.ContainsKey(node.Name))
-//        {
-//            _stock.Add(node.Name, 0);
-//        }
+        return result;
+    }
 
-//        if (_stock[node.Name] >= node.Amount)
-//        {
-//            _stock[node.Name] -= node.Amount;
+    private int GetOre(Matter node, int requiredAmount)
+    {
+        if (node.Name == BaseMaterial)
+        {
+            return node.Amount * requiredAmount;
+        }
 
-//            return node.Amount;
-//        }
+        if (!_stock.ContainsKey(node.Name))
+        {
+            _stock.Add(node.Name, 0);
+        }
 
-//        foreach (var matter in node.Components)
-//        {
-//            // Create the stock and decrement it.
-//        }
+        if (_stock[node.Name] >= node.Amount)
+        {
+            _stock[node.Name] -= node.Amount;
 
-//        return 0;
-//    }
+            return node.Amount;
+        }
 
-//    private static (int Amount, string Name) ParseMatter(string matter)
-//    {
-//        var split = matter.Split(' ', StringSplitOptions.TrimEntries);
+        foreach (var matter in node.Components)
+        {
+            // Create the stock and decrement it.
+        }
 
-//        return (int.Parse(split[0]), split[1]);
-//    }
-//}
+        return 0;
+    }
+
+    private static (int Amount, string Name) ParseMatter(string matter)
+    {
+        var split = matter.Split(' ', StringSplitOptions.TrimEntries);
+
+        return (int.Parse(split[0]), split[1]);
+    }
+}
