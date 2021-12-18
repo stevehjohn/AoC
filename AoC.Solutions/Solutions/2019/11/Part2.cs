@@ -9,6 +9,8 @@ namespace AoC.Solutions.Solutions._2019._11;
 [UsedImplicitly]
 public class Part2 : Base
 {
+    public override bool OcrOutput => true;
+
     public override string GetAnswer()
     {
         RunRobot(1);
@@ -54,6 +56,10 @@ public class Part2 : Base
 
                 answer.Append(image[x, y]);
             }
+
+            answer = new StringBuilder(answer.ToString().TrimEnd());
+
+            answer.Append('\0');
 
 #if DEBUG
             if (Debugger.IsAttached)
