@@ -18,7 +18,9 @@ public class Part1 : Base
             Reduce(left);
         }
 
-        return "TESTING";
+        var magnitude = GetMagnitude(left);
+
+        return magnitude.ToString();
     }
 
     private static Number Add(Number left, Number right)
@@ -34,6 +36,16 @@ public class Part1 : Base
         number.Right.Parent = number;
 
         return number;
+    }
+
+    private static int GetMagnitude(Number number)
+    {
+        if (number.Value != null)
+        {
+            return (int) number.Value;
+        }
+
+        return GetMagnitude(number.Left) * 3 + GetMagnitude(number.Right) * 2;
     }
 
     private static void Reduce(Number number)
@@ -108,13 +120,9 @@ public class Part1 : Base
 
         probe = direction == -1 ? probe.Left : probe.Right;
 
-        var x = 0;
-
-        while (probe.Value == null && x < 3)
+        while (probe.Value == null)
         {
             probe = direction == -1 ? probe.Right : probe.Left;
-
-            x++;
         }
 
         return probe;

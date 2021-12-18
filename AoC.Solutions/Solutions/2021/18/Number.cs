@@ -66,7 +66,7 @@ public class Number
         return MakeString(this);
     }
 
-    private string MakeString(Number number)
+    private static string MakeString(Number number)
     {
         if (number.Value != null)
         {
