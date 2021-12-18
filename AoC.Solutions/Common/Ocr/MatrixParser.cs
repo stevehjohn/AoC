@@ -89,9 +89,9 @@ public class MatrixParser
         {
             var matched = true;
 
-            for (var x = 0; x < 5; x++)
+            for (var y = 0; y < 6; y++)
             {
-                for (var y = 0; y < 6; y++)
+                for (var x = 0; x < 5; x++)
                 {
                     // TODO: Maybe make character class do the match.
                     if (matrix[position + x, y] != template.Template[x, y])
