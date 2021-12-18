@@ -40,14 +40,14 @@ public class MatrixParser
 
     private static bool[,] ConvertToMatrix(string input)
     {
-        var length = input.Length;
+        var length = input.IndexOf('\0');
 
-        if (length % 30 != 0)
+        if (length % 5 != 0)
         {
-            length += 30 - length % 30;
+            length += 5 - length % 5;
         }
 
-        var matrix = new bool[length / 6, 6];
+        var matrix = new bool[length, 6];
 
         var x = 0;
 
@@ -55,16 +55,18 @@ public class MatrixParser
 
         for (var i = 0; i < input.Length; i++)
         {
-            matrix[x, y] = input[i] == '*';
-
-            x++;
-
             if (input[i] == '\0')
             {
                 x = 0;
 
                 y++;
+
+                continue;
             }
+
+            matrix[x, y] = input[i] == '*';
+
+            x++;
         }
 
         return matrix;

@@ -1,6 +1,7 @@
 ﻿#if DEBUG
 using System.Diagnostics;
 #endif
+using System.Text;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2019._08;
@@ -8,6 +9,8 @@ namespace AoC.Solutions.Solutions._2019._08;
 [UsedImplicitly]
 public class Part2 : Base
 {
+    public override bool OcrOutput => true;
+
     public override string GetAnswer()
     {
         var data = Input[0];
@@ -43,6 +46,15 @@ public class Part2 : Base
         }
 #endif
 
-        return new string(image);
+        var result = new StringBuilder();
+
+        result.Append($"{new string(image.Take(25).ToArray())}\0");
+        result.Append($"{new string(image.Skip(25).Take(25).ToArray())}\0");
+        result.Append($"{new string(image.Skip(50).Take(25).ToArray())}\0");
+        result.Append($"{new string(image.Skip(75).Take(25).ToArray())}\0");
+        result.Append($"{new string(image.Skip(100).Take(25).ToArray())}\0");
+        result.Append($"{new string(image.Skip(125).Take(25).ToArray())}\0");
+
+        return result.ToString();
     }
 }
