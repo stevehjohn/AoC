@@ -142,6 +142,8 @@ public abstract class Base : Solution
         Console.CursorLeft = 0;
 
         Console.CursorTop = _height + 2;
+
+        Console.ForegroundColor = ConsoleColor.Green;
 #endif
 
         return costs[_width - 1 + (_height - 1) * _width];
