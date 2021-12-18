@@ -42,8 +42,35 @@ public class Part1 : Base
         }
     }
 
-    private bool Explode(Number number)
+    private bool Explode(Number number, int depth = 0)
     {
+        if (depth == 4)
+        {
+            var probe = number;
+
+            while (probe.Left.Value == null)
+            {
+                probe = probe.Left;
+
+                probe.Left.Value += number.Value;
+            }
+
+            probe = number;
+
+            while (probe.Right.Value == null)
+            {
+                probe = probe.Right;
+
+                probe.Right.Value += number.Value;
+            }
+
+            return true;
+        }
+
+        Explode(number.Left, depth + 1);
+        
+        Explode(number.Right, depth + 1);
+
         return false;
     }
 
