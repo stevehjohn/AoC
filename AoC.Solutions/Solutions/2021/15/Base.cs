@@ -121,14 +121,6 @@ public abstract class Base : Solution
 
             foreach (var neighbor in node.Neighbors)
             {
-//#if DUMP && DEBUG
-//                Console.CursorLeft = neighbor.Position.X;
-
-//                Console.CursorTop = neighbor.Position.Y;
-
-//                Console.Write('█');
-//#endif
-
                 var cost = costs[node.Position.X + node.Position.Y * _width] + neighbor.Value;
 
                 if (! costs.TryGetValue(neighbor.Position.X + neighbor.Position.Y * _width, out var nextCost) || cost < nextCost)
