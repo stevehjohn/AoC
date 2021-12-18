@@ -1,4 +1,7 @@
-﻿namespace AoC.Solutions.Common.Ocr;
+﻿using System.Text;
+using AoC.Solutions.Exceptions;
+
+namespace AoC.Solutions.Common.Ocr;
 
 public class MatrixParser
 {
@@ -30,10 +33,12 @@ public class MatrixParser
     {
         var matrix = ConvertToMatrix(input);
 
+        var result = OcrMatrix(matrix);
+
         return input;
     }
 
-    private bool[,] ConvertToMatrix(string input)
+    private static bool[,] ConvertToMatrix(string input)
     {
         var length = input.Length;
 
@@ -63,5 +68,52 @@ public class MatrixParser
         }
 
         return matrix;
+    }
+
+    private string OcrMatrix(bool[,] matrix)
+    {
+        var result = new StringBuilder();
+
+        for (var x = 0; x < matrix.GetLength(0); x += 5)
+        {
+            result.Append(MatchCharacter(matrix, x));
+        }
+
+        return result.ToString();
+    }
+
+    private char MatchCharacter(bool[,] matrix, int position)
+    {
+        // TODO: This double break with flag is nasty.
+        foreach (var template in _templates)
+        {
+            var matched = true;
+
+            for (var x = 0; x < 5; x++)
+            {
+                for (var y = 0; y < 6; y++)
+                {
+                    // TODO: Maybe make character class do the match.
+                    if (matrix[position + x, y] != template.Template[x, y])
+                    {
+                        matched = false;
+
+                        break;
+                    }
+                }
+
+                if (! matched)
+                {
+                    break;
+                }
+            }
+
+            if (matched)
+            {
+                return template.Character;
+            }
+        }
+
+        throw new PuzzleException("Character not recognised during OCR.");
     }
 }
