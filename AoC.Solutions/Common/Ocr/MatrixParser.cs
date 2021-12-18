@@ -35,7 +35,7 @@ public class MatrixParser
 
         var result = OcrMatrix(matrix);
 
-        return input;
+        return result;
     }
 
     private static bool[,] ConvertToMatrix(string input)
@@ -47,7 +47,7 @@ public class MatrixParser
             length += 30 - length % 30;
         }
 
-        var matrix = new bool[length / 6, length / 5];
+        var matrix = new bool[length / 6, 6];
 
         var x = 0;
 
@@ -59,7 +59,7 @@ public class MatrixParser
 
             x++;
 
-            if (x >= matrix.GetLength(0))
+            if (input[i] == '\0')
             {
                 x = 0;
 

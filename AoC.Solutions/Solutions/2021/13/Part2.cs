@@ -9,7 +9,7 @@ namespace AoC.Solutions.Solutions._2021._13;
 [UsedImplicitly]
 public class Part2 : Base
 {
-    public override bool OcrOutput => false;
+    public override bool OcrOutput => true;
 
     public override string GetAnswer()
     {
@@ -51,6 +51,8 @@ public class Part2 : Base
 
                 answer.Append(image[x, y]);
             }
+
+            answer.Append('\0');
 
 #if DEBUG
             if (Debugger.IsAttached)
