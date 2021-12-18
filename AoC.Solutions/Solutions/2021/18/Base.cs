@@ -18,6 +18,8 @@ public abstract class Base : Solution
 
         number.Right.Parent = number;
 
+        Reduce(number);
+
         return number;
     }
 
