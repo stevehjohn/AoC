@@ -65,7 +65,7 @@ public class Part1 : Base
 
             number.Right = new Number { Value = (int) Math.Ceiling((decimal) number.Value / 2) };
 
-            number.Value = 0;
+            number.Value = null;
 
             return true;
         }
