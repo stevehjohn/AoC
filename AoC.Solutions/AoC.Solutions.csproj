@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Common\Ocr\" />
     <Folder Include="Infrastructure\" />
     <Folder Include="Solutions\2019\06\" />
     <Folder Include="Solutions\2019\11\" />
@@ -26,6 +27,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Common\Ocr\OcrTemplate.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Solutions\2019\01\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
