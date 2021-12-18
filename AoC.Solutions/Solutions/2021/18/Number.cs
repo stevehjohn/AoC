@@ -60,4 +60,19 @@ public class Number
 
         return null;
     }
+
+    public override string ToString()
+    {
+        return MakeString(this);
+    }
+
+    private string MakeString(Number number)
+    {
+        if (number.Value != null)
+        {
+            return number.Value.ToString();
+        }
+
+        return $"[{MakeString(number.Left)},{MakeString(number.Right)}]";
+    }
 }
