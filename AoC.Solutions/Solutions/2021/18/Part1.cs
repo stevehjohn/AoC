@@ -7,8 +7,24 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var x = Number.Parse("[[[[1,2],[3,4]],[[5,6],[7,8]]],9]");
+        var left = Number.Parse(Input[0]);
+
+        for (var i = 1; i < Input.Length; i++)
+        {
+            var right = Number.Parse(Input[i]);
+
+            left = Add(left, right);
+        }
 
         return "TESTING";
+    }
+
+    private static Number Add(Number left, Number right)
+    {
+        return new Number
+               {
+                   Left = left,
+                   Right = right
+               };
     }
 }
