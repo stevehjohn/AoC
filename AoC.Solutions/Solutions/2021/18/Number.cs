@@ -12,10 +12,6 @@ public class Number
     {
         var openings = 0;
 
-        var left = string.Empty;
-        
-        var right = string.Empty;
-
         for (var i = 0; i < input.Length; i++)
         {
             if (input[i] == '[')
@@ -34,9 +30,20 @@ public class Number
 
             if (input[i] == ',' && openings == 1)
             {
-                left = input[1..i];
+                var left = input[1..i];
 
-                right = input[(i + 1)..^1];
+                var right = input[(i + 1)..^1];
+
+                return new Number
+                       {
+                           Left = Parse(left),
+                           Right = Parse(right),
+                           Value = left.Length == 1
+                                       ? int.Parse(left)
+                                       : right.Length == 1
+                                           ? int.Parse(right)
+                                           : null
+                       };
             }
         }
 
