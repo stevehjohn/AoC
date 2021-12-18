@@ -1,4 +1,4 @@
-﻿using AoC.Solutions.Exceptions;
+﻿using AoC.Solutions.Common.Ocr;
 using AoC.Solutions.Infrastructure;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -29,6 +29,8 @@ public static class Program
 
         var previousDesc = string.Empty;
 
+        var matrixParser = new MatrixParser();
+
         foreach (var solution in solutions)
         {
             if (arguments.Length == 1)
@@ -55,6 +57,11 @@ public static class Program
             var answer = instance.GetAnswer();
 
             stopwatch.Stop();
+
+            if (instance.OcrOutput)
+            {
+                answer = matrixParser.Parse(answer);
+            }
 
             CheckAnswer(instance.GetType(), answer);
 
