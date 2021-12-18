@@ -18,6 +18,37 @@ public class Part1 : Base
         //    Reduce(left);
         //}
 
+        var inputs = new List<string>
+                     {
+                         "[[[[[9,8],1],2],3],4]",
+                         "[7,[6,[5,[4,[3,2]]]]]",
+                         "[[6,[5,[4,[3,2]]]],1]",
+                         "[[3,[2,[1,[7,3]]]],[6,[5,[4,[3,2]]]]]",
+                         "[[3,[2,[8,0]]],[9,[5,[4,[3,2]]]]]"
+                     };
+
+        var outputs = new List<string>
+                      {
+                          "[[[[0,9],2],3],4]",
+                          "[7,[6,[5,[7,0]]]]",
+                          "[[6,[5,[7,0]]],3]",
+                          "[[3,[2,[8,0]]],[9,[5,[4,[3,2]]]]]",
+                          "[[3,[2,[8,0]]],[9,[5,[7,0]]]]"
+                      };
+
+        for (var i = 0; i < inputs.Count; i++)
+        {
+            var number = Number.Parse(inputs[i]);
+
+            Explode(number);
+
+            Console.ForegroundColor = number.ToString() == outputs[i] ? ConsoleColor.Green : ConsoleColor.Red;
+
+            Console.WriteLine(number.ToString());
+        }
+
+        Console.ForegroundColor = ConsoleColor.Green;
+
         return "TESTING";
     }
 
