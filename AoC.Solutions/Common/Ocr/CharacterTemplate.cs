@@ -4,7 +4,7 @@ public class CharacterTemplate
 {
     public char Character { get; }
 
-    private readonly bool[,] _template = new bool[5, 6];
+    public readonly bool[,] Template = new bool[5, 6];
 
     public CharacterTemplate(char character, string[] template)
     {
@@ -14,7 +14,7 @@ public class CharacterTemplate
         {
             for (var x = 0; x < template[y].Length; x++)
             {
-                _template[x, y] = template[y][x] == '*';
+                Template[x, y] = template[y][x] == '*';
             }
         }
     }
