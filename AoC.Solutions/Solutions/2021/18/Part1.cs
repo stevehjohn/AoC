@@ -54,6 +54,8 @@ public class Part1 : Base
             var left = FindAdjacent(number, -1);
 
             var right = FindAdjacent(number, 1);
+
+            return true;
         }
 
         return Explode(number.Left, depth + 1) || Explode(number.Right, depth + 1);
@@ -63,59 +65,28 @@ public class Part1 : Base
     {
         var probe = number.Parent;
 
-        if (direction == -1)
+        while (probe != null && (direction == -1 ? probe.Left : probe.Right) == number)
         {
-            while (probe != null && probe.Left == number)
-            {
-                var temp = probe;
+            var temp = probe;
 
-                probe = probe.Parent;
+            probe = probe.Parent;
 
-                number = temp;
-            }
-
-            if (probe == null)
-            {
-                return null;
-            }
-
-            probe = probe.Left;
-
-            while (probe.Value == null)
-            {
-                probe = probe.Right;
-            }
-
-            return probe;
+            number = temp;
         }
 
-        if (direction == 1)
+        if (probe == null)
         {
-            while (probe != null && probe.Right == number)
-            {
-                var temp = probe;
-
-                probe = probe.Parent;
-
-                number = temp;
-            }
-
-            if (probe == null)
-            {
-                return null;
-            }
-
-            probe = probe.Right;
-
-            while (probe.Value == null)
-            {
-                probe = probe.Left;
-            }
-
-            return probe;
+            return null;
         }
 
-        return null;
+        probe = (direction == -1 ? probe.Left : probe.Right);
+
+        while (probe.Value == null)
+        {
+            probe = (direction == -1 ? probe.Right : probe.Left);
+        }
+
+        return probe;
     }
 
     private static bool Split(Number number)
