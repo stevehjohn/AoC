@@ -6,6 +6,8 @@ public abstract class Solution
 
     public abstract string Description { get; }
 
+    public virtual bool OcrOutput => false;
+
     protected Solution()
     {
         var nameSpace = GetType().Namespace ?? string.Empty;

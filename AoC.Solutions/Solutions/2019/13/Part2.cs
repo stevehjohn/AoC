@@ -6,6 +6,8 @@ namespace AoC.Solutions.Solutions._2019._13;
 [UsedImplicitly]
 public class Part2 : Base
 {
+    public override bool OcrOutput => true;
+
     public override string GetAnswer()
     {
         var cpu = new Cpu();
