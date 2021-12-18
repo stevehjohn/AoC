@@ -5,108 +5,48 @@ namespace AoC.Solutions.Solutions._2019._14;
 [UsedImplicitly]
 public class Part1 : Base
 {
-    public override string Description => "Nanofactory replicator";
+    private List<Reaction> _reactions = new();
 
-    private readonly Dictionary<string, int> _stock = new();
-
-    private Matter _fuel;
-
-    private const string BaseMaterial = "ORE";
-
-    private const string EndMaterial = "FUEL";
+    private Dictionary<string, int> _stock = new();
 
     public override string GetAnswer()
     {
-        _fuel = ProcessInput(EndMaterial);
+        ParseInput();
 
-        var fuel = GetOre(_fuel, _fuel.Amount).ToString();
-
-        return fuel;
+        throw new NotImplementedException();
     }
 
-    public Matter ProcessInput(string outputMatter)
+    private void ParseInput()
     {
-        var io = Input.Single(i => i.EndsWith($" {outputMatter}")).Split("=>", StringSplitOptions.TrimEntries);
-
-        var output = ParseMatter(io[1]);
-
-        var matter = new Matter
+        foreach (var line in Input)
         {
-            Amount = output.Amount,
-            Name = output.Name
-        };
-
-        matter.Components.AddRange(ProcessComponents(io[0]));
-
-        return matter;
+            _reactions.Add(ParseLine(line));
+        }
     }
 
-    private List<Matter> ProcessComponents(string input)
+    private Reaction ParseLine(string line)
     {
-        var components = input.Split(',', StringSplitOptions.TrimEntries);
+        var io = line.Split("=>", StringSplitOptions.TrimEntries);
 
-        var result = new List<Matter>();
+        var output = ParseComponent(io[1]);
 
-        foreach (var component in components)
+        var reaction = new Reaction(output.Name, output.Quantity);
+
+        var inputs = io[0].Split(',', StringSplitOptions.TrimEntries);
+
+        foreach (var input in inputs)
         {
-            var matterParsed = ParseMatter(component);
+            var component = ParseComponent(input);
 
-            if (matterParsed.Name == BaseMaterial)
-            {
-                return new List<Matter>
-                       {
-                           new()
-                           {
-                               Amount = matterParsed.Amount,
-                               Name = BaseMaterial
-                           }
-                       };
-            }
-
-            var matter = new Matter
-            {
-                Amount = matterParsed.Amount,
-                Name = matterParsed.Name
-            };
-
-            matter.Components.AddRange(ProcessComponents(Input.Single(i => i.EndsWith($" {matterParsed.Name}"))));
-
-            result.Add(matter);
+            reaction.ComponentsRequired.Add(component.Name, component.Quantity);
         }
 
-        return result;
+        return reaction;
     }
 
-    private int GetOre(Matter node, int requiredAmount)
+    private (int Quantity, string Name) ParseComponent(string component)
     {
-        if (node.Name == BaseMaterial)
-        {
-            return node.Amount * requiredAmount;
-        }
-
-        if (!_stock.ContainsKey(node.Name))
-        {
-            _stock.Add(node.Name, 0);
-        }
-
-        if (_stock[node.Name] >= node.Amount)
-        {
-            _stock[node.Name] -= node.Amount;
-
-            return node.Amount;
-        }
-
-        foreach (var matter in node.Components)
-        {
-            // Create the stock and decrement it.
-        }
-
-        return 0;
-    }
-
-    private static (int Amount, string Name) ParseMatter(string matter)
-    {
-        var split = matter.Split(' ', StringSplitOptions.TrimEntries);
+        var split = component.Split(' ', StringSplitOptions.TrimEntries);
 
         return (int.Parse(split[0]), split[1]);
     }
