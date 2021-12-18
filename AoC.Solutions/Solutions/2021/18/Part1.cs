@@ -14,8 +14,6 @@ public class Part1 : Base
             var right = Number.Parse(Input[i]);
 
             left = Add(left, right);
-
-            Reduce(left);
         }
 
         var magnitude = GetMagnitude(left);

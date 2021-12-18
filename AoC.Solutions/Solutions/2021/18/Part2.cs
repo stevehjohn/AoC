@@ -20,8 +20,6 @@ public class Part2 : Base
 
                 var added = Add(Number.Parse(Input[outer]), Number.Parse(Input[inner]));
 
-                Reduce(added);
-
                 var magnitude = GetMagnitude(added);
 
                 if (magnitude > largest)
