@@ -7,58 +7,33 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        //var left = Number.Parse(Input[0]);
+        var left = Number.Parse(Input[0]);
 
-        //for (var i = 1; i < Input.Length; i++)
-        //{
-        //    var right = Number.Parse(Input[i]);
-
-        //    left = Add(left, right);
-
-        //    Reduce(left);
-        //}
-
-        var inputs = new List<string>
-                     {
-                         "[[[[[9,8],1],2],3],4]",
-                         "[7,[6,[5,[4,[3,2]]]]]",
-                         "[[6,[5,[4,[3,2]]]],1]",
-                         "[[3,[2,[1,[7,3]]]],[6,[5,[4,[3,2]]]]]",
-                         "[[3,[2,[8,0]]],[9,[5,[4,[3,2]]]]]"
-                     };
-
-        var outputs = new List<string>
-                      {
-                          "[[[[0,9],2],3],4]",
-                          "[7,[6,[5,[7,0]]]]",
-                          "[[6,[5,[7,0]]],3]",
-                          "[[3,[2,[8,0]]],[9,[5,[4,[3,2]]]]]",
-                          "[[3,[2,[8,0]]],[9,[5,[7,0]]]]"
-                      };
-
-        for (var i = 0; i < inputs.Count; i++)
+        for (var i = 1; i < Input.Length; i++)
         {
-            var number = Number.Parse(inputs[i]);
+            var right = Number.Parse(Input[i]);
 
-            Explode(number);
+            left = Add(left, right);
 
-            Console.ForegroundColor = number.ToString() == outputs[i] ? ConsoleColor.Green : ConsoleColor.Red;
-
-            Console.WriteLine(number.ToString());
+            Reduce(left);
         }
-
-        Console.ForegroundColor = ConsoleColor.Green;
 
         return "TESTING";
     }
 
     private static Number Add(Number left, Number right)
     {
-        return new Number
-               {
-                   Left = left,
-                   Right = right
-               };
+        var number = new Number
+                     {
+                         Left = left,
+                         Right = right
+                     };
+
+        number.Left.Parent = number;
+
+        number.Right.Parent = number;
+
+        return number;
     }
 
     private static void Reduce(Number number)
@@ -69,7 +44,12 @@ public class Part1 : Base
         {
             modified = Explode(number);
 
-            modified |= Split(number);
+            if (modified)
+            {
+                continue;
+            }
+
+            modified = Split(number);
         }
     }
 
@@ -154,9 +134,17 @@ public class Part1 : Base
 
         if (number.Value > 9)
         {
-            number.Left = new Number { Value = (int) Math.Floor((decimal) number.Value / 2) };
+            number.Left = new Number
+                          {
+                              Value = (int) Math.Floor((decimal) number.Value / 2),
+                              Parent = number
+                          };
 
-            number.Right = new Number { Value = (int) Math.Ceiling((decimal) number.Value / 2) };
+            number.Right = new Number
+                           {
+                               Value = (int) Math.Ceiling((decimal) number.Value / 2),
+                               Parent = number
+                           };
 
             number.Value = null;
 
