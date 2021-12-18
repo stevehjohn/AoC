@@ -7,16 +7,16 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var left = Number.Parse(Input[0]);
+        //var left = Number.Parse(Input[0]);
 
-        for (var i = 1; i < Input.Length; i++)
-        {
-            var right = Number.Parse(Input[i]);
+        //for (var i = 1; i < Input.Length; i++)
+        //{
+        //    var right = Number.Parse(Input[i]);
 
-            left = Add(left, right);
+        //    left = Add(left, right);
 
-            Reduce(left);
-        }
+        //    Reduce(left);
+        //}
 
         return "TESTING";
     }
@@ -30,7 +30,7 @@ public class Part1 : Base
                };
     }
 
-    private void Reduce(Number number)
+    private static void Reduce(Number number)
     {
         var modified = true;
 
@@ -42,33 +42,80 @@ public class Part1 : Base
         }
     }
 
-    private bool Explode(Number number, int depth = 0)
+    private static bool Explode(Number number, int depth = 0)
     {
-        if (depth == 4)
+        if (number.Value != null)
         {
-            // Get
-            var probe = number.Parent.Right;
-
-            while (probe.Parent.Left.Value == null)
-            {
-                probe = probe.Parent.Left;
-            }
-
-            probe = number;
-
-            while (probe.Parent.Right.Value == null)
-            {
-                probe = probe.Parent.Right;
-            }
-
-            return true;
+            return false;
         }
 
-        Explode(number.Left, depth + 1);
-        
-        Explode(number.Right, depth + 1);
+        if (depth == 4)
+        {
+            var left = FindAdjacent(number, -1);
 
-        return false;
+            var right = FindAdjacent(number, 1);
+        }
+
+        return Explode(number.Left, depth + 1) || Explode(number.Right, depth + 1);
+    }
+
+    private static Number FindAdjacent(Number number, int direction)
+    {
+        var probe = number.Parent;
+
+        if (direction == -1)
+        {
+            while (probe != null && probe.Left == number)
+            {
+                var temp = probe;
+
+                probe = probe.Parent;
+
+                number = temp;
+            }
+
+            if (probe == null)
+            {
+                return null;
+            }
+
+            probe = probe.Left;
+
+            while (probe.Value == null)
+            {
+                probe = probe.Right;
+            }
+
+            return probe;
+        }
+
+        if (direction == 1)
+        {
+            while (probe != null && probe.Right == number)
+            {
+                var temp = probe;
+
+                probe = probe.Parent;
+
+                number = temp;
+            }
+
+            if (probe == null)
+            {
+                return null;
+            }
+
+            probe = probe.Right;
+
+            while (probe.Value == null)
+            {
+                probe = probe.Left;
+            }
+
+            return probe;
+        }
+
+        return null;
     }
 
     private static bool Split(Number number)
