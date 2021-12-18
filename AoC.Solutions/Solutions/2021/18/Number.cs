@@ -8,12 +8,15 @@ public class Number
 
     public Number Right { get; set; }
 
-    public static Number Parse(string input)
+    public Number Parent { get; set; }
+
+    public static Number Parse(string input, Number parent = null)
     {
         if (input.Length == 1)
         {
             return new Number
                    {
+                       Parent = parent,
                        Value = int.Parse(input)
                    };
         }
@@ -42,11 +45,16 @@ public class Number
 
                 var right = input[(i + 1)..^1];
 
-                return new Number
-                       {
-                           Left = Parse(left),
-                           Right = Parse(right)
-                       };
+                var number = new Number
+                             {
+                                 Parent = parent
+                             };
+
+                number.Left = Parse(left, number);
+                
+                number.Right = Parse(right, number);
+
+                return number;
             }
         }
 
