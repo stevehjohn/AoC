@@ -55,6 +55,16 @@ public class Part1 : Base
 
             var right = FindAdjacent(number, 1);
 
+            number.Parent.Left = new Number
+                                 {
+                                     Value = left == null ? 0 : number.Left.Value + left.Value
+                                 };
+
+            number.Parent.Right = new Number
+                                  {
+                                      Value = right == null ? 0 : number.Right.Value + right.Value
+                                  };
+
             return true;
         }
 
@@ -79,11 +89,11 @@ public class Part1 : Base
             return null;
         }
 
-        probe = (direction == -1 ? probe.Left : probe.Right);
+        probe = direction == -1 ? probe.Left : probe.Right;
 
         while (probe.Value == null)
         {
-            probe = (direction == -1 ? probe.Right : probe.Left);
+            probe = direction == -1 ? probe.Right : probe.Left;
         }
 
         return probe;
