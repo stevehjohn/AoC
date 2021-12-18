@@ -46,22 +46,19 @@ public class Part1 : Base
     {
         if (depth == 4)
         {
-            var probe = number;
+            // Get
+            var probe = number.Parent.Right;
 
-            while (probe.Left.Value == null)
+            while (probe.Parent.Left.Value == null)
             {
-                probe = probe.Left;
-
-                probe.Left.Value += number.Value;
+                probe = probe.Parent.Left;
             }
 
             probe = number;
 
-            while (probe.Right.Value == null)
+            while (probe.Parent.Right.Value == null)
             {
-                probe = probe.Right;
-
-                probe.Right.Value += number.Value;
+                probe = probe.Parent.Right;
             }
 
             return true;
