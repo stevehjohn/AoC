@@ -13,13 +13,13 @@ public class Part1 : Base
 
         var scannerCount = _scanners.Count;
 
-        var x = 0;
-
         for (var s1 = 0; s1 < scannerCount; s1++)
         {
             var scanner1 = _scanners[s1];
 
             var scanner1BeaconCount = scanner1.Count;
+
+            var overlaps = 0;
 
             for (var b1 = 0; b1 < scanner1BeaconCount; b1++)
             {
@@ -40,11 +40,14 @@ public class Part1 : Base
                     {
                         var scanner2Beacon = scanner2[b2];
 
-                        var common = scanner1Beacon.Intersect(scanner2Beacon).ToList();
-
-                        if (common.Count > 0)
+                        if (scanner1Beacon.Overlaps(scanner2Beacon))
                         {
-                            Console.WriteLine(common.Count);
+                            overlaps++;
+
+                            if (overlaps == 12)
+                            {
+                                continue;
+                            }
                         }
                     }
                 }
