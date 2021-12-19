@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Common;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2021._19;
 
@@ -7,11 +8,15 @@ public class Part1 : Base
 {
     private readonly Dictionary<int, List<HashSet<string>>> _scanners = new();
 
+    private readonly Dictionary<int, Point> _scannerPositions = new();
+
     public override string GetAnswer()
     {
         ParseInput();
 
         var scannerCount = _scanners.Count;
+
+        _scannerPositions.Add(0, new Point(0, 0, 0));
 
         for (var s1 = 0; s1 < scannerCount; s1++)
         {
@@ -19,7 +24,7 @@ public class Part1 : Base
 
             var scanner1BeaconCount = scanner1.Count;
 
-            var commonBeacons = new List<HashSet<string>>();
+            var commonBeacons = new List<(HashSet<string>, HashSet<string>)>();
 
             for (var b1 = 0; b1 < scanner1BeaconCount; b1++)
             {
@@ -42,10 +47,12 @@ public class Part1 : Base
 
                         if (scanner1Beacon.Overlaps(scanner2Beacon))
                         {
-                            commonBeacons.Add(scanner1Beacon);
+                            commonBeacons.Add((scanner1Beacon, scanner2Beacon));
 
                             if (commonBeacons.Count == 12)
                             {
+                                CalculateNewScannerPosition(s1, s2, commonBeacons);
+
                                 continue;
                             }
                         }
@@ -55,6 +62,10 @@ public class Part1 : Base
         }
 
         return "TESTING";
+    }
+
+    private void CalculateNewScannerPosition(int scanner1Id, int scanner2Id, List<(HashSet<string>, HashSet<string>)> commonBeacons)
+    {
     }
 
     private void ParseInput()
