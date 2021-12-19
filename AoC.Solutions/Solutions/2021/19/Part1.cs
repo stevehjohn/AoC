@@ -89,55 +89,33 @@ public class Part1 : Base
     {
         var components = line.Split(',').Select(int.Parse).ToArray();
 
-        var hashes = new HashSet<string>();
-
-        hashes.Add(FormatCoords(components[0], components[1], components[2], -1, 1, 1));
-
-        hashes.Add(FormatCoords(components[0], components[1], components[2], 1, 1, 1));
-
-        hashes.Add(FormatCoords(components[0], components[1], components[2], -1, -1, 1));
-
-        hashes.Add(FormatCoords(components[0], components[1], components[2], 1, -1, 1));
-
-        hashes.Add(FormatCoords(components[0], components[1], components[2], -1, 1, -1));
-
-        hashes.Add(FormatCoords(components[0], components[1], components[2], 1, 1, -1));
-
-        hashes.Add(FormatCoords(components[0], components[1], components[2], -1, -1, -1));
-
-        hashes.Add(FormatCoords(components[0], components[1], components[2], 1, -1, -1));
-
-        hashes.Add(FormatCoords(components[1], components[2], components[0], -1, 1, 1));
-
-        hashes.Add(FormatCoords(components[1], components[2], components[0], 1, 1, 1));
-
-        hashes.Add(FormatCoords(components[1], components[2], components[0], -1, -1, 1));
-
-        hashes.Add(FormatCoords(components[1], components[2], components[0], 1, -1, 1));
-
-        hashes.Add(FormatCoords(components[1], components[2], components[0], -1, 1, -1));
-
-        hashes.Add(FormatCoords(components[1], components[2], components[0], 1, 1, -1));
-
-        hashes.Add(FormatCoords(components[1], components[2], components[0], -1, -1, -1));
-
-        hashes.Add(FormatCoords(components[1], components[2], components[0], 1, -1, -1));
-
-        hashes.Add(FormatCoords(components[2], components[0], components[1], -1, 1, 1));
-
-        hashes.Add(FormatCoords(components[2], components[0], components[1], 1, 1, 1));
-
-        hashes.Add(FormatCoords(components[2], components[0], components[1], -1, -1, 1));
-
-        hashes.Add(FormatCoords(components[2], components[0], components[1], 1, -1, 1));
-
-        hashes.Add(FormatCoords(components[2], components[0], components[1], -1, 1, -1));
-
-        hashes.Add(FormatCoords(components[2], components[0], components[1], 1, 1, -1));
-
-        hashes.Add(FormatCoords(components[2], components[0], components[1], -1, -1, -1));
-
-        hashes.Add(FormatCoords(components[2], components[0], components[1], 1, -1, -1));
+        var hashes = new HashSet<string>
+                     {
+                         FormatCoords(components[0], components[1], components[2], -1, 1, 1),
+                         FormatCoords(components[0], components[1], components[2], 1, 1, 1),
+                         FormatCoords(components[0], components[1], components[2], -1, -1, 1),
+                         FormatCoords(components[0], components[1], components[2], 1, -1, 1),
+                         FormatCoords(components[0], components[1], components[2], -1, 1, -1),
+                         FormatCoords(components[0], components[1], components[2], 1, 1, -1),
+                         FormatCoords(components[0], components[1], components[2], -1, -1, -1),
+                         FormatCoords(components[0], components[1], components[2], 1, -1, -1),
+                         FormatCoords(components[1], components[2], components[0], -1, 1, 1),
+                         FormatCoords(components[1], components[2], components[0], 1, 1, 1),
+                         FormatCoords(components[1], components[2], components[0], -1, -1, 1),
+                         FormatCoords(components[1], components[2], components[0], 1, -1, 1),
+                         FormatCoords(components[1], components[2], components[0], -1, 1, -1),
+                         FormatCoords(components[1], components[2], components[0], 1, 1, -1),
+                         FormatCoords(components[1], components[2], components[0], -1, -1, -1),
+                         FormatCoords(components[1], components[2], components[0], 1, -1, -1),
+                         FormatCoords(components[2], components[0], components[1], -1, 1, 1),
+                         FormatCoords(components[2], components[0], components[1], 1, 1, 1),
+                         FormatCoords(components[2], components[0], components[1], -1, -1, 1),
+                         FormatCoords(components[2], components[0], components[1], 1, -1, 1),
+                         FormatCoords(components[2], components[0], components[1], -1, 1, -1),
+                         FormatCoords(components[2], components[0], components[1], 1, 1, -1),
+                         FormatCoords(components[2], components[0], components[1], -1, -1, -1),
+                         FormatCoords(components[2], components[0], components[1], 1, -1, -1)
+                     };
 
         return hashes;
     }
