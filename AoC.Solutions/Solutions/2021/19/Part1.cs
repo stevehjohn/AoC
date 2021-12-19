@@ -11,11 +11,6 @@ public class Part1 : Base
     {
         ParseInput();
 
-        foreach (var scanner in _scanners)
-        {
-            scanner.Value.CalculateNormalisedCoordinates();
-        }
-
         return "TESTING";
     }
 
