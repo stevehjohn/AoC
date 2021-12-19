@@ -19,7 +19,7 @@ public class Part1 : Base
 
             var scanner1BeaconCount = scanner1.Count;
 
-            var overlaps = 0;
+            var commonBeacons = new List<HashSet<string>>();
 
             for (var b1 = 0; b1 < scanner1BeaconCount; b1++)
             {
@@ -42,9 +42,9 @@ public class Part1 : Base
 
                         if (scanner1Beacon.Overlaps(scanner2Beacon))
                         {
-                            overlaps++;
+                            commonBeacons.Add(scanner1Beacon);
 
-                            if (overlaps == 12)
+                            if (commonBeacons.Count == 12)
                             {
                                 continue;
                             }
