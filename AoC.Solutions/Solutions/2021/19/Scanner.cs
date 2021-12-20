@@ -119,14 +119,14 @@ public class Scanner
                || left.X == -right.Y && left.Y == -right.Z && left.Z == -right.X
                || left.X == right.Y && left.Y == -right.Z && left.Z == -right.X
 
-               || left.X == -right.Z && left.Y == right.X && left.Z == right.X
-               || left.X == right.Z && left.Y == right.X && left.Z == right.X
-               || left.X == -right.Z && left.Y == -right.X && left.Z == right.X
-               || left.X == right.Z && left.Y == -right.X && left.Z == right.X
-               || left.X == -right.Z && left.Y == right.X && left.Z == -right.X
-               || left.X == right.Z && left.Y == right.X && left.Z == -right.X
-               || left.X == -right.Z && left.Y == -right.X && left.Z == -right.X
-               || left.X == right.Z && left.Y == -right.X && left.Z == -right.X;
+               || left.X == -right.Z && left.Y == right.X && left.Z == right.Y
+               || left.X == right.Z && left.Y == right.X && left.Z == right.Y
+               || left.X == -right.Z && left.Y == -right.X && left.Z == right.Y
+               || left.X == right.Z && left.Y == -right.X && left.Z == right.Y
+               || left.X == -right.Z && left.Y == right.X && left.Z == -right.Y
+               || left.X == right.Z && left.Y == right.X && left.Z == -right.Y
+               || left.X == -right.Z && left.Y == -right.X && left.Z == -right.Y
+               || left.X == right.Z && left.Y == -right.X && left.Z == -right.Y;
         // ReSharper restore CompareOfFloatsByEqualityOperator
     }
 }
