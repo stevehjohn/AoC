@@ -54,11 +54,11 @@ public class Scanner
             _normalisedBeacons.Add(positiveSpacePoint);
         }
 
-        var xCentre = Beacons.Average(b => b.X);
+        var xCentre = NormalisedBeacons.Average(b => b.X);
 
-        var yCentre = Beacons.Average(b => b.Y);
+        var yCentre = NormalisedBeacons.Average(b => b.Y);
 
-        var zCentre = Beacons.Average(b => b.Z);
+        var zCentre = NormalisedBeacons.Average(b => b.Z);
 
         foreach (var beacon in NormalisedBeacons)
         {
