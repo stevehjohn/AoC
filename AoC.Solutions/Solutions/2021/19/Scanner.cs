@@ -54,20 +54,13 @@ public class Scanner
             _normalisedBeacons.Add(positiveSpacePoint);
         }
 
-        // TODO: I don't think the centre is the average... this is where you're going wrong.
-        var xCentre = NormalisedBeacons.Average(b => b.X);
-
-        var yCentre = NormalisedBeacons.Average(b => b.Y);
-
-        var zCentre = NormalisedBeacons.Average(b => b.Z);
-
         foreach (var beacon in NormalisedBeacons)
         {
-            beacon.X = xCentre - beacon.X;
+            beacon.X = 500 - beacon.X;
 
-            beacon.Y = yCentre - beacon.Y;
+            beacon.Y = 500 - beacon.Y;
             
-            beacon.Z = zCentre - beacon.Z;
+            beacon.Z = 500 - beacon.Z;
         }
     }
 
@@ -84,7 +77,7 @@ public class Scanner
                     matchedPositions.Add((origin.Beacons[ob], Beacons[b]));
                 }
 
-                if (matchedPositions.Count == 12)
+                if (matchedPositions.Count == 2)
                 {
                     Console.WriteLine("WIN");
 
@@ -92,7 +85,7 @@ public class Scanner
                 }
             }
 
-            if (matchedPositions.Count == 12)
+            if (matchedPositions.Count == 2)
             {
                 break;
             }
