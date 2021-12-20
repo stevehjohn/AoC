@@ -83,13 +83,13 @@ public class Scanner
                     matchedPositions.Add((origin.Beacons[ob], Beacons[b]));
                 }
 
-                if (matchedPositions.Count == 3)
+                if (matchedPositions.Count == 12)
                 {
                     break;
                 }
             }
 
-            if (matchedPositions.Count == 3)
+            if (matchedPositions.Count == 12)
             {
                 break;
             }
@@ -98,6 +98,35 @@ public class Scanner
 
     private static bool MatchBeaconPosition(PointDouble left, PointDouble right)
     {
-        return left.X == right.X && left.Y == right.Y && left.Z == right.Z;
+        // TODO: Match left with all rotations of right.
+
+        // ReSharper disable CompareOfFloatsByEqualityOperator - I know what I'm doing... maybe
+        return left.X == -right.X && left.Y == right.Y && left.Z == right.Z
+               || left.X == right.X && left.Y == right.Y && left.Z == right.Z
+               || left.X == -right.X && left.Y == -right.Y && left.Z == right.Z
+               || left.X == right.X && left.Y == -right.Y && left.Z == right.Z
+               || left.X == -right.X && left.Y == right.Y && left.Z == -right.Z
+               || left.X == right.X && left.Y == right.Y && left.Z == -right.Z
+               || left.X == -right.X && left.Y == -right.Y && left.Z == -right.Z
+               || left.X == right.X && left.Y == -right.Y && left.Z == -right.Z
+
+               || left.X == -right.Y && left.Y == right.Z && left.Z == right.X
+               || left.X == right.Y && left.Y == right.Z && left.Z == right.X
+               || left.X == -right.Y && left.Y == -right.Z && left.Z == right.X
+               || left.X == right.Y && left.Y == -right.Z && left.Z == right.X
+               || left.X == -right.Y && left.Y == right.Z && left.Z == -right.X
+               || left.X == right.Y && left.Y == right.Z && left.Z == -right.X
+               || left.X == -right.Y && left.Y == -right.Z && left.Z == -right.X
+               || left.X == right.Y && left.Y == -right.Z && left.Z == -right.X
+
+               || left.X == -right.Z && left.Y == right.X && left.Z == right.X
+               || left.X == right.Z && left.Y == right.X && left.Z == right.X
+               || left.X == -right.Z && left.Y == -right.X && left.Z == right.X
+               || left.X == right.Z && left.Y == -right.X && left.Z == right.X
+               || left.X == -right.Z && left.Y == right.X && left.Z == -right.X
+               || left.X == right.Z && left.Y == right.X && left.Z == -right.X
+               || left.X == -right.Z && left.Y == -right.X && left.Z == -right.X
+               || left.X == right.Z && left.Y == -right.X && left.Z == -right.X;
+        // ReSharper restore CompareOfFloatsByEqualityOperator
     }
 }
