@@ -54,19 +54,19 @@ public class Scanner
             _normalisedBeacons.Add(positiveSpacePoint);
         }
 
-        var xCentre = (NormalisedBeacons.Max(b => b.X) - NormalisedBeacons.Min(b => b.X)) / 2;
+        //var xCentre = (NormalisedBeacons.Max(b => b.X) - NormalisedBeacons.Min(b => b.X)) / 2;
         
-        var yCentre = (NormalisedBeacons.Max(b => b.Y) - NormalisedBeacons.Min(b => b.Y)) / 2;
+        //var yCentre = (NormalisedBeacons.Max(b => b.Y) - NormalisedBeacons.Min(b => b.Y)) / 2;
         
-        var zCentre = (NormalisedBeacons.Max(b => b.Z) - NormalisedBeacons.Min(b => b.Z)) / 2;
+        //var zCentre = (NormalisedBeacons.Max(b => b.Z) - NormalisedBeacons.Min(b => b.Z)) / 2;
 
         foreach (var beacon in NormalisedBeacons)
         {
-            beacon.X = 100 - beacon.X;
+            beacon.X = 5000 - beacon.X;
 
-            beacon.Y = 100 - beacon.Y;
+            beacon.Y = 5000 - beacon.Y;
             
-            beacon.Z = 100 - beacon.Z;
+            beacon.Z = 5000 - beacon.Z;
         }
     }
 
