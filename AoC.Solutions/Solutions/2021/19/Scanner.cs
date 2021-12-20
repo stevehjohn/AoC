@@ -41,13 +41,13 @@ public class Scanner
     {
         _normalisedBeacons = new List<PointDouble>();
 
-        var xBase = -Beacons.Min(b => b.X);
+        var xBase = Beacons.Min(b => b.X);
 
-        var yBase = -Beacons.Min(b => b.Y);
+        var yBase = Beacons.Min(b => b.Y);
 
-        var zBase = -Beacons.Min(b => b.Z);
+        var zBase = Beacons.Min(b => b.Z);
 
-        var neutralBase = Math.Min(xBase, Math.Min(yBase, zBase));
+        var neutralBase = -Math.Min(xBase, Math.Min(yBase, zBase));
 
         foreach (var beacon in Beacons)
         {
@@ -56,14 +56,14 @@ public class Scanner
             _normalisedBeacons.Add(positiveSpacePoint);
         }
 
-        foreach (var beacon in NormalisedBeacons)
-        {
-            beacon.X = 5000 - beacon.X;
+        //foreach (var beacon in NormalisedBeacons)
+        //{
+        //    beacon.X = 5000 - beacon.X;
 
-            beacon.Y = 5000 - beacon.Y;
+        //    beacon.Y = 5000 - beacon.Y;
             
-            beacon.Z = 5000 - beacon.Z;
-        }
+        //    beacon.Z = 5000 - beacon.Z;
+        //}
     }
 
     public void TryGetPosition(Scanner origin)
@@ -78,8 +78,6 @@ public class Scanner
                 {
                     matchedPositions.Add((origin.Beacons[ob], Beacons[b]));
                 }
-
-                Console.WriteLine(matchedPositions.Count);
 
                 //if (matchedPositions.Count == 2)
                 //{
@@ -96,11 +94,13 @@ public class Scanner
             //    break;
             //}
         }
+
+        Console.WriteLine(matchedPositions.Count);
     }
 
     private static bool MatchBeaconPosition(PointDouble left, PointDouble right)
     {
-        // TODO: Match left with all rotations of right.
+        // TODO: Centre here... 500 + each figure
 
         // ReSharper disable CompareOfFloatsByEqualityOperator - I know what I'm doing... maybe
         return left.X == -right.X && left.Y == right.Y && left.Z == right.Z
