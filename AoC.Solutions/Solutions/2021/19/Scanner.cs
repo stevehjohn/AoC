@@ -45,60 +45,41 @@ public class Scanner
         // Then just one matching oriented beacon can be used for position?
     }
 
-    private (List<Point> OriginBeacons, List<Point> TargetBeacons) GetMatchingDistances(Scanner origin)
+    private List<DistancePair> GetMatchingDistances(Scanner origin)
     {
-        // TODO: This could really be optimised
-        var originMatchIndexes = new List<int>();
-
-        var targetMatchIndexes = new List<int>();
-
-        var distances = new List<Distance>();
+        // TODO: Any more optimisations here?
+        var distances = new List<DistancePair>();
 
         for (var ob = 0; ob < origin.Distances.Count; ob++)
         {
             var originDistance = origin.Distances[ob];
 
-            if (distances.Contains(originDistance))
-            {
-                continue;
-            }
+            //if (distances.Contains(originDistance))
+            //{
+            //    continue;
+            //}
 
             // TODO: Why does b starting at ob + 1 break things?
             for (var b = 0; b < Distances.Count; b++)
             {
                 var targetDistance = Distances[b];
 
-                if (distances.Contains(targetDistance))
-                {
-                    continue;
-                }
+                //if (distances.Contains(targetDistance))
+                //{
+                //    continue;
+                //}
 
                 // TODO: reduce dereferencing?
                 if (CheckDistancesMatchRegardlessOfOrientation(originDistance.Delta, targetDistance.Delta))
                 {
-                    distances.Add(origin.Distances[ob]);
-
-                    distances.Add(Distances[b]);
+                    distances.Add(new DistancePair(origin.Distances[ob], Distances[b]));
                 }
             }
         }
 
-        originMatchIndexes = originMatchIndexes.Distinct().ToList();
-
-        targetMatchIndexes = targetMatchIndexes.Distinct().ToList();
-
-        var originBeacons = new List<Point>();
-
-        originMatchIndexes.ForEach(i => originBeacons.Add(origin.Beacons[i]));
-
-        var targetBeacons = new List<Point>();
-
-        targetMatchIndexes.ForEach(i => targetBeacons.Add(Beacons[i]));
-
-        return (originBeacons, targetBeacons);
+        return distances;
     }
 
-    // TODO: Rename if this works...
     private static bool CheckDistancesMatchRegardlessOfOrientation(Point left, Point right)
     {
         return left.X == right.X && left.Y == right.Y && left.Z == right.Z
