@@ -79,8 +79,8 @@ public class Scanner
         }
     }
 
-    private static bool MatchBeaconPosition(Point left, Point right)
+    private static bool MatchBeaconPosition(DisorientedPoint left, DisorientedPoint right)
     {
-        return false;
+        return left.Matches(right);
     }
 }
