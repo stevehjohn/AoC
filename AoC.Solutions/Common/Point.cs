@@ -29,4 +29,36 @@ public class Point
     public Point()
     {
     }
+
+    public override bool Equals(object obj)
+    {
+        if (ReferenceEquals(null, obj))
+        {
+            return false;
+        }
+
+        if (ReferenceEquals(this, obj))
+        {
+            return true;
+        }
+
+        if (obj.GetType() != GetType())
+        {
+            return false;
+        }
+        
+        return Equals((Point)obj);
+    }
+
+    public override int GetHashCode()
+    {
+        // ReSharper disable NonReadonlyMemberInGetHashCode - sue me - I need Point to be mutable sometimes
+        return HashCode.Combine(X, Y, Z);
+        // ReSharper restore NonReadonlyMemberInGetHashCode
+    }
+
+    protected bool Equals(Point other)
+    {
+        return X == other.X && Y == other.Y && Z == other.Z;
+    }
 }

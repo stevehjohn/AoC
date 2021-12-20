@@ -25,7 +25,7 @@ public class DisorientedPoint : Point
 
     public bool Matches(DisorientedPoint other)
     {
-        return Orientations.FirstOrDefault(o => other.Orientations.Any(oo => o == oo)) != null;
+        return Orientations.FirstOrDefault(o => other.Orientations.Any(o.Equals)) != null;
     }
 
     private void CalculateOrientations()
