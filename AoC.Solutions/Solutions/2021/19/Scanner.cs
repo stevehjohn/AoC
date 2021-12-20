@@ -63,16 +63,16 @@ public class Scanner
             {
                 if (MatchBeaconPosition(origin.NormalisedBeacons[ob], NormalisedBeacons[b]))
                 {
-                    matchedPositions.Add((Beacons[ob], Beacons[b]));
+                    matchedPositions.Add((origin.Beacons[ob], Beacons[b]));
                 }
 
-                if (matchedPositions.Count == 3)
+                if (matchedPositions.Count == 12)
                 {
                     break;
                 }
             }
 
-            if (matchedPositions.Count == 3)
+            if (matchedPositions.Count == 12)
             {
                 break;
             }
