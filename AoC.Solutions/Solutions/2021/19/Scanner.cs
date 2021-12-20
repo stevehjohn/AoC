@@ -40,6 +40,8 @@ public class Scanner
     public void TryGetPosition(Scanner origin)
     {
         var matchingBeacons = GetMatchingDistances(origin);
+
+        // 3 distances should be enough to orient the scanner...
     }
 
     private (List<Point> OriginBeacons, List<Point> TargetBeacons) GetMatchingDistances(Scanner origin)
@@ -89,8 +91,6 @@ public class Scanner
         var targetBeacons = new List<Point>();
 
         targetMatchIndexes.ForEach(i => targetBeacons.Add(Beacons[i]));
-
-        Console.WriteLine($"{originMatchIndexes.Count} == {targetMatchIndexes.Count}");
 
         return (originBeacons, targetBeacons);
     }
