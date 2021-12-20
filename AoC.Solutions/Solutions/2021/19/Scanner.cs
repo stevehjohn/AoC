@@ -6,6 +6,8 @@ public class Scanner
 {
     public int Id { get; }
 
+    public Point Position { get; set; }
+
     public List<Point> Beacons { get; }
     
     public List<Point> NormalisedBeacons 
