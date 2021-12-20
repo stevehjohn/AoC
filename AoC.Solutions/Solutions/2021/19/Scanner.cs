@@ -55,5 +55,32 @@ public class Scanner
 
     public void TryGetPosition(Scanner origin)
     {
+        var matchedPositions = new List<(Point, Point)>();
+
+        for (var ob = 0; ob < origin.NormalisedBeacons.Count; ob++)
+        {
+            for (var b = 0; b < NormalisedBeacons.Count; b++)
+            {
+                if (MatchBeaconPosition(origin.NormalisedBeacons[ob], NormalisedBeacons[b]))
+                {
+                    matchedPositions.Add((Beacons[ob], Beacons[b]));
+                }
+
+                if (matchedPositions.Count == 12)
+                {
+                    break;
+                }
+            }
+
+            if (matchedPositions.Count == 12)
+            {
+                break;
+            }
+        }
+    }
+
+    private bool MatchBeaconPosition(Point left, Point right)
+    {
+        return false;
     }
 }
