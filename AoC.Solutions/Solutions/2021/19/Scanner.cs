@@ -47,18 +47,14 @@ public class Scanner
 
         var zBase = -Beacons.Min(b => b.Z);
 
+        var neutralBase = Math.Min(xBase, Math.Min(yBase, zBase));
+
         foreach (var beacon in Beacons)
         {
-            var positiveSpacePoint = new PointDouble(xBase + beacon.X, yBase + beacon.Y, zBase + beacon.Z);
+            var positiveSpacePoint = new PointDouble(neutralBase + beacon.X, neutralBase + beacon.Y, neutralBase + beacon.Z);
 
             _normalisedBeacons.Add(positiveSpacePoint);
         }
-
-        //var xCentre = (NormalisedBeacons.Max(b => b.X) - NormalisedBeacons.Min(b => b.X)) / 2;
-        
-        //var yCentre = (NormalisedBeacons.Max(b => b.Y) - NormalisedBeacons.Min(b => b.Y)) / 2;
-        
-        //var zCentre = (NormalisedBeacons.Max(b => b.Z) - NormalisedBeacons.Min(b => b.Z)) / 2;
 
         foreach (var beacon in NormalisedBeacons)
         {
@@ -83,18 +79,22 @@ public class Scanner
                     matchedPositions.Add((origin.Beacons[ob], Beacons[b]));
                 }
 
-                if (matchedPositions.Count == 2)
-                {
-                    Console.WriteLine("WIN");
+                Console.WriteLine(matchedPositions.Count);
 
-                    break;
-                }
+                //if (matchedPositions.Count == 2)
+                //{
+                //    Console.WriteLine("WIN");
+
+                //    break;
+                //}
             }
 
-            if (matchedPositions.Count == 2)
-            {
-                break;
-            }
+            //if (matchedPositions.Count == 2)
+            //{
+            //    Console.WriteLine("WIN");
+
+            //    break;
+            //}
         }
     }
 
