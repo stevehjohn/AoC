@@ -41,11 +41,11 @@ public class Scanner
     {
         _normalisedBeacons = new List<PointDouble>();
 
-        var xBase = Beacons.Min(b => b.X);
+        var xBase = -Beacons.Min(b => b.X);
 
-        var yBase = Beacons.Min(b => b.Y);
+        var yBase = -Beacons.Min(b => b.Y);
 
-        var zBase = Beacons.Min(b => b.Z);
+        var zBase = -Beacons.Min(b => b.Z);
 
         var neutralBase = -Math.Min(xBase, Math.Min(yBase, zBase));
 
@@ -54,14 +54,18 @@ public class Scanner
             var positiveSpacePoint = new PointDouble(neutralBase + beacon.X, neutralBase + beacon.Y, neutralBase + beacon.Z);
 
             _normalisedBeacons.Add(positiveSpacePoint);
+
+            Console.WriteLine($"{beacon} -> {positiveSpacePoint}");
         }
+
+        Console.WriteLine();
 
         //foreach (var beacon in NormalisedBeacons)
         //{
         //    beacon.X = 5000 - beacon.X;
 
         //    beacon.Y = 5000 - beacon.Y;
-            
+
         //    beacon.Z = 5000 - beacon.Z;
         //}
     }
@@ -103,32 +107,32 @@ public class Scanner
         // TODO: Centre here... 500 + each figure
 
         // ReSharper disable CompareOfFloatsByEqualityOperator - I know what I'm doing... maybe
-        return left.X == -right.X && left.Y == right.Y && left.Z == right.Z
-               || left.X == right.X && left.Y == right.Y && left.Z == right.Z
-               || left.X == -right.X && left.Y == -right.Y && left.Z == right.Z
-               || left.X == right.X && left.Y == -right.Y && left.Z == right.Z
-               || left.X == -right.X && left.Y == right.Y && left.Z == -right.Z
-               || left.X == right.X && left.Y == right.Y && left.Z == -right.Z
-               || left.X == -right.X && left.Y == -right.Y && left.Z == -right.Z
-               || left.X == right.X && left.Y == -right.Y && left.Z == -right.Z
+        return 5000 + left.X == 5000 + -right.X && 5000 + left.Y == 5000 + right.Y && 5000 + left.Z == 5000 + right.Z
+               || 5000 + left.X == 5000 + right.X && 5000 + left.Y == 5000 + right.Y && 5000 + left.Z == 5000 + right.Z
+               || 5000 + left.X == 5000 + -right.X && 5000 + left.Y == 5000 + -right.Y && 5000 + left.Z == 5000 + right.Z
+               || 5000 + left.X == 5000 + right.X && 5000 + left.Y == 5000 + -right.Y && 5000 + left.Z == 5000 + right.Z
+               || 5000 + left.X == 5000 + -right.X && 5000 + left.Y == 5000 + right.Y && 5000 + left.Z == 5000 + -right.Z
+               || 5000 + left.X == 5000 + right.X && 5000 + left.Y == 5000 + right.Y && 5000 + left.Z == 5000 + -right.Z
+               || 5000 + left.X == 5000 + -right.X && 5000 + left.Y == 5000 + -right.Y && 5000 + left.Z == 5000 + -right.Z
+               || 5000 + left.X == 5000 + right.X && 5000 + left.Y == 5000 + -right.Y && 5000 + left.Z == 5000 + -right.Z
 
-               || left.X == -right.Y && left.Y == right.Z && left.Z == right.X
-               || left.X == right.Y && left.Y == right.Z && left.Z == right.X
-               || left.X == -right.Y && left.Y == -right.Z && left.Z == right.X
-               || left.X == right.Y && left.Y == -right.Z && left.Z == right.X
-               || left.X == -right.Y && left.Y == right.Z && left.Z == -right.X
-               || left.X == right.Y && left.Y == right.Z && left.Z == -right.X
-               || left.X == -right.Y && left.Y == -right.Z && left.Z == -right.X
-               || left.X == right.Y && left.Y == -right.Z && left.Z == -right.X
+               || 5000 + left.X == 5000 + -right.Y && 5000 + left.Y == 5000 + right.Z && 5000 + left.Z == 5000 + right.X
+               || 5000 + left.X == 5000 + right.Y && 5000 + left.Y == 5000 + right.Z && 5000 + left.Z == 5000 + right.X
+               || 5000 + left.X == 5000 + -right.Y && 5000 + left.Y == 5000 + -right.Z && 5000 + left.Z == 5000 + right.X
+               || 5000 + left.X == 5000 + right.Y && 5000 + left.Y == 5000 + -right.Z && 5000 + left.Z == 5000 + right.X
+               || 5000 + left.X == 5000 + -right.Y && 5000 + left.Y == 5000 + right.Z && 5000 + left.Z == 5000 + -right.X
+               || 5000 + left.X == 5000 + right.Y && 5000 + left.Y == 5000 + right.Z && 5000 + left.Z == 5000 + -right.X
+               || 5000 + left.X == 5000 + -right.Y && 5000 + left.Y == 5000 + -right.Z && 5000 + left.Z == 5000 + -right.X
+               || 5000 + left.X == 5000 + right.Y && 5000 + left.Y == 5000 + -right.Z && 5000 + left.Z == 5000 + -right.X
 
-               || left.X == -right.Z && left.Y == right.X && left.Z == right.Y
-               || left.X == right.Z && left.Y == right.X && left.Z == right.Y
-               || left.X == -right.Z && left.Y == -right.X && left.Z == right.Y
-               || left.X == right.Z && left.Y == -right.X && left.Z == right.Y
-               || left.X == -right.Z && left.Y == right.X && left.Z == -right.Y
-               || left.X == right.Z && left.Y == right.X && left.Z == -right.Y
-               || left.X == -right.Z && left.Y == -right.X && left.Z == -right.Y
-               || left.X == right.Z && left.Y == -right.X && left.Z == -right.Y;
+               || 5000 + left.X == 5000 + -right.Z && 5000 + left.Y == 5000 + right.X && 5000 + left.Z == 5000 + right.Y
+               || 5000 + left.X == 5000 + right.Z && 5000 + left.Y == 5000 + right.X && 5000 + left.Z == 5000 + right.Y
+               || 5000 + left.X == 5000 + -right.Z && 5000 + left.Y == 5000 + -right.X && 5000 + left.Z == 5000 + right.Y
+               || 5000 + left.X == 5000 + right.Z && 5000 + left.Y == 5000 + -right.X && 5000 + left.Z == 5000 + right.Y
+               || 5000 + left.X == 5000 + -right.Z && 5000 + left.Y == 5000 + right.X && 5000 + left.Z == 5000 + -right.Y
+               || 5000 + left.X == 5000 + right.Z && 5000 + left.Y == 5000 + right.X && 5000 + left.Z == 5000 + -right.Y
+               || 5000 + left.X == 5000 + -right.Z && 5000 + left.Y == 5000 + -right.X && 5000 + left.Z == 5000 + -right.Y
+               || 5000 + left.X == 5000 + right.Z && 5000 + left.Y == 5000 + -right.X && 5000 + left.Z == 5000 + -right.Y;
         // ReSharper restore CompareOfFloatsByEqualityOperator
     }
 }

@@ -29,4 +29,9 @@ public class Point
     public Point()
     {
     }
+
+    public override string ToString()
+    {
+        return $"{X,4},{Y,4},{Z,4}";
+    }
 }
