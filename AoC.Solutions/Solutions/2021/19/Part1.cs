@@ -25,6 +25,8 @@ public class Part1 : Base
                 {
                     continue;
                 }
+
+                _scanners[s2].TryGetPosition(_scanners[s1]);
             }
         }
 

@@ -52,4 +52,8 @@ public class Scanner
             _normalisedBeacons.Add(new Point(xBase + beacon.X, yBase + beacon.Y, zBase + beacon.Z));
         }
     }
+
+    public void TryGetPosition(Scanner origin)
+    {
+    }
 }
