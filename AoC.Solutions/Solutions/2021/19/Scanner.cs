@@ -4,6 +4,10 @@ namespace AoC.Solutions.Solutions._2021._19;
 
 public class Scanner
 {
+    private const int RequiredMatchesByScanner = 3; // TODO: Reset to proper value when working
+
+    private const int RequiredMatchesForOrientation = 3;
+
     public int Id { get; }
 
     public Point Position { get; set; }
@@ -42,19 +46,26 @@ public class Scanner
         var matchingBeacons = GetMatchingDistances(origin);
 
         // 3 distances should be enough to orient the scanner...
-        // Then just one matching oriented beacon can be used for position?
+        // Then just one matching one oriented beacon can be used for position?
+        if (matchingBeacons != null)
+        {
+        }
     }
 
     private List<DistancePair> GetMatchingDistances(Scanner origin)
     {
-        // TODO: Any more optimisations here?
+        // TODO: Any more optimisations here? Getting 66 results for 12 matches seems ludicrous.
         var distances = new List<DistancePair>();
+
+        var matchCount = 0;
+
+        var matchesRequired = (RequiredMatchesByScanner - 1) * RequiredMatchesByScanner / 2;
 
         for (var ob = 0; ob < origin.Distances.Count; ob++)
         {
             var originDistance = origin.Distances[ob];
 
-            //if (distances.Contains(originDistance))
+            //if (distances.Any(d => d.Origin == originDistance))
             //{
             //    continue;
             //}
@@ -64,20 +75,29 @@ public class Scanner
             {
                 var targetDistance = Distances[b];
 
-                //if (distances.Contains(targetDistance))
+                //if (distances.Any(d => d.Target == targetDistance))
                 //{
                 //    continue;
                 //}
 
-                // TODO: reduce dereferencing?
                 if (CheckDistancesMatchRegardlessOfOrientation(originDistance.Delta, targetDistance.Delta))
                 {
-                    distances.Add(new DistancePair(origin.Distances[ob], Distances[b]));
+                    if (distances.Count < RequiredMatchesForOrientation)
+                    {
+                        distances.Add(new DistancePair(origin.Distances[ob], Distances[b]));
+                    }
+
+                    matchCount++;
+
+                    if (matchCount == matchesRequired)
+                    {
+                        return distances;
+                    }
                 }
             }
         }
 
-        return distances;
+        return null;
     }
 
     private static bool CheckDistancesMatchRegardlessOfOrientation(Point left, Point right)
