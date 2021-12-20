@@ -8,22 +8,22 @@ public class Scanner
 
     public Point Position { get; set; }
 
-    public List<Point> Beacons { get; }
-    
-    public List<PointDouble> NormalisedBeacons 
+    private List<Point> Beacons { get; }
+
+    private List<Point> Distances
     {
         get
         {
-            if (_normalisedBeacons == null)
+            if (_distances == null)
             {
-                CalculateNormalisedCoordinates();
+                CalculateDistances();
             }
 
-            return _normalisedBeacons;
+            return _distances;
         }
     }
 
-    private List<PointDouble> _normalisedBeacons;
+    private List<Point> _distances;
 
     public Scanner(int id)
     {
@@ -37,102 +37,64 @@ public class Scanner
         Beacons.Add(new Point(x, y, z));
     }
 
-    public void CalculateNormalisedCoordinates()
-    {
-        _normalisedBeacons = new List<PointDouble>();
-
-        var xBase = -Beacons.Min(b => b.X);
-
-        var yBase = -Beacons.Min(b => b.Y);
-
-        var zBase = -Beacons.Min(b => b.Z);
-
-        var neutralBase = -Math.Min(xBase, Math.Min(yBase, zBase));
-
-        foreach (var beacon in Beacons)
-        {
-            var positiveSpacePoint = new PointDouble(neutralBase + beacon.X, neutralBase + beacon.Y, neutralBase + beacon.Z);
-
-            _normalisedBeacons.Add(positiveSpacePoint);
-
-            Console.WriteLine($"{beacon} -> {positiveSpacePoint}");
-        }
-
-        Console.WriteLine();
-
-        //foreach (var beacon in NormalisedBeacons)
-        //{
-        //    beacon.X = 5000 - beacon.X;
-
-        //    beacon.Y = 5000 - beacon.Y;
-
-        //    beacon.Z = 5000 - beacon.Z;
-        //}
-    }
-
     public void TryGetPosition(Scanner origin)
     {
-        var matchedPositions = new List<(Point, Point)>();
-
-        for (var ob = 0; ob < origin.NormalisedBeacons.Count; ob++)
-        {
-            for (var b = 0; b < NormalisedBeacons.Count; b++)
-            {
-                if (MatchBeaconPosition(origin.NormalisedBeacons[ob], NormalisedBeacons[b]))
-                {
-                    matchedPositions.Add((origin.Beacons[ob], Beacons[b]));
-                }
-
-                //if (matchedPositions.Count == 2)
-                //{
-                //    Console.WriteLine("WIN");
-
-                //    break;
-                //}
-            }
-
-            //if (matchedPositions.Count == 2)
-            //{
-            //    Console.WriteLine("WIN");
-
-            //    break;
-            //}
-        }
-
-        Console.WriteLine(matchedPositions.Count);
+        var matchedDistances = GetMatchingDistances(origin);
     }
 
-    private static bool MatchBeaconPosition(PointDouble left, PointDouble right)
+    private List<Point> GetMatchingDistances(Scanner origin)
     {
-        // TODO: Centre here... 500 + each figure
+        var matches = new List<Point>();
 
-        // ReSharper disable CompareOfFloatsByEqualityOperator - I know what I'm doing... maybe
-        return 5000 + left.X == 5000 + -right.X && 5000 + left.Y == 5000 + right.Y && 5000 + left.Z == 5000 + right.Z
-               || 5000 + left.X == 5000 + right.X && 5000 + left.Y == 5000 + right.Y && 5000 + left.Z == 5000 + right.Z
-               || 5000 + left.X == 5000 + -right.X && 5000 + left.Y == 5000 + -right.Y && 5000 + left.Z == 5000 + right.Z
-               || 5000 + left.X == 5000 + right.X && 5000 + left.Y == 5000 + -right.Y && 5000 + left.Z == 5000 + right.Z
-               || 5000 + left.X == 5000 + -right.X && 5000 + left.Y == 5000 + right.Y && 5000 + left.Z == 5000 + -right.Z
-               || 5000 + left.X == 5000 + right.X && 5000 + left.Y == 5000 + right.Y && 5000 + left.Z == 5000 + -right.Z
-               || 5000 + left.X == 5000 + -right.X && 5000 + left.Y == 5000 + -right.Y && 5000 + left.Z == 5000 + -right.Z
-               || 5000 + left.X == 5000 + right.X && 5000 + left.Y == 5000 + -right.Y && 5000 + left.Z == 5000 + -right.Z
+        var c = 0;
 
-               || 5000 + left.X == 5000 + -right.Y && 5000 + left.Y == 5000 + right.Z && 5000 + left.Z == 5000 + right.X
-               || 5000 + left.X == 5000 + right.Y && 5000 + left.Y == 5000 + right.Z && 5000 + left.Z == 5000 + right.X
-               || 5000 + left.X == 5000 + -right.Y && 5000 + left.Y == 5000 + -right.Z && 5000 + left.Z == 5000 + right.X
-               || 5000 + left.X == 5000 + right.Y && 5000 + left.Y == 5000 + -right.Z && 5000 + left.Z == 5000 + right.X
-               || 5000 + left.X == 5000 + -right.Y && 5000 + left.Y == 5000 + right.Z && 5000 + left.Z == 5000 + -right.X
-               || 5000 + left.X == 5000 + right.Y && 5000 + left.Y == 5000 + right.Z && 5000 + left.Z == 5000 + -right.X
-               || 5000 + left.X == 5000 + -right.Y && 5000 + left.Y == 5000 + -right.Z && 5000 + left.Z == 5000 + -right.X
-               || 5000 + left.X == 5000 + right.Y && 5000 + left.Y == 5000 + -right.Z && 5000 + left.Z == 5000 + -right.X
+        for (var ob = 0; ob < origin.Distances.Count; ob++)
+        {
+            for (var b = 0; b < Distances.Count; b++)
+            {
+                if (CheckDistancesMatchRegardlessOfOrientation(origin.Distances[ob], Distances[b]))
+                {
+                    // Which distance do we store?
+                    c++;
+                }
+            }
+        }
 
-               || 5000 + left.X == 5000 + -right.Z && 5000 + left.Y == 5000 + right.X && 5000 + left.Z == 5000 + right.Y
-               || 5000 + left.X == 5000 + right.Z && 5000 + left.Y == 5000 + right.X && 5000 + left.Z == 5000 + right.Y
-               || 5000 + left.X == 5000 + -right.Z && 5000 + left.Y == 5000 + -right.X && 5000 + left.Z == 5000 + right.Y
-               || 5000 + left.X == 5000 + right.Z && 5000 + left.Y == 5000 + -right.X && 5000 + left.Z == 5000 + right.Y
-               || 5000 + left.X == 5000 + -right.Z && 5000 + left.Y == 5000 + right.X && 5000 + left.Z == 5000 + -right.Y
-               || 5000 + left.X == 5000 + right.Z && 5000 + left.Y == 5000 + right.X && 5000 + left.Z == 5000 + -right.Y
-               || 5000 + left.X == 5000 + -right.Z && 5000 + left.Y == 5000 + -right.X && 5000 + left.Z == 5000 + -right.Y
-               || 5000 + left.X == 5000 + right.Z && 5000 + left.Y == 5000 + -right.X && 5000 + left.Z == 5000 + -right.Y;
-        // ReSharper restore CompareOfFloatsByEqualityOperator
+        Console.WriteLine(c);
+
+        return matches;
+    }
+
+    private static bool CheckDistancesMatchRegardlessOfOrientation(Point left, Point right)
+    {
+        return left.X == right.X && left.Y == right.Y && left.Z == right.Z
+               || left.X == -right.X && left.Y == right.Y && left.Z == right.Z
+               || left.X == right.X && left.Y == -right.Y && left.Z == right.Z
+               || left.X == -right.X && left.Y == -right.Y && left.Z == right.Z
+               || left.X == right.X && left.Y == right.Y && left.Z == -right.Z
+               || left.X == -right.X && left.Y == right.Y && left.Z == -right.Z
+               || left.X == right.X && left.Y == -right.Y && left.Z == -right.Z
+               || left.X == -right.X && left.Y == -right.Y && left.Z == -right.Z;
+    }
+
+    private void CalculateDistances()
+    {
+        _distances = new List<Point>();
+
+        for (var ob = 0; ob < Beacons.Count; ob++)
+        {
+            for (var b = ob + 1; b < Beacons.Count; b++)
+            {
+                var distance = new Point(Beacons[ob].X - Beacons[b].X, Beacons[ob].Y - Beacons[b].Y, Beacons[ob].Z - Beacons[b].Z);
+
+                _distances.Add(distance);
+
+                //Console.WriteLine(Beacons[ob]);
+
+                //Console.WriteLine($"{Beacons[b]} => {distance}");
+
+                //Console.WriteLine();
+            }
+        }
     }
 }
