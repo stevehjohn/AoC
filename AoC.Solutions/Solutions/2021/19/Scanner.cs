@@ -41,7 +41,7 @@ public class Scanner
     {
         _normalisedBeacons = new List<DisorientedPoint>();
 
-        var xBase = -Beacons.Min(b => b.X);
+        var xBase = -(Beacons.Max(b => b.X) - Beacons.Min(b => b.X)) / 2;
         
         var yBase = -Beacons.Min(b => b.Y);
 
