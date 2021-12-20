@@ -46,9 +46,19 @@ public class Scanner
         var matchingBeacons = GetMatchingDistances(origin);
 
         // 3 distances should be enough to orient the scanner...
-        // Then just one matching one oriented beacon can be used for position?
+        // Then just one matching oriented beacon can be used for position?
         if (matchingBeacons != null)
         {
+            foreach (var beacon in matchingBeacons)
+            {
+                //Console.WriteLine($"{beacon.Origin.Beacon1}                  {beacon.Target.Beacon1}");
+
+                //Console.WriteLine($"    {beacon.Origin.Delta}         {beacon.Target.Delta}");
+
+                //Console.WriteLine($"{beacon.Origin.Beacon2}                  {beacon.Target.Beacon2}");
+
+                //Console.WriteLine();
+            }
         }
     }
 
