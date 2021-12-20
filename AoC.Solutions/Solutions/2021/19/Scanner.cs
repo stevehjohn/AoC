@@ -54,6 +54,7 @@ public class Scanner
             _normalisedBeacons.Add(positiveSpacePoint);
         }
 
+        // TODO: I don't think the centre is the average... this is where you're going wrong.
         var xCentre = NormalisedBeacons.Average(b => b.X);
 
         var yCentre = NormalisedBeacons.Average(b => b.Y);
@@ -85,6 +86,8 @@ public class Scanner
 
                 if (matchedPositions.Count == 12)
                 {
+                    Console.WriteLine("WIN");
+
                     break;
                 }
             }
