@@ -14,14 +14,9 @@ public class Part1 : Base
 
         for (var s1 = 0; s1 < _scanners.Count; s1++)
         {
-            if (_scanners[s1].Position == null)
-            {
-                continue;
-            }
-
             for (var s2 = 0; s2 < _scanners.Count; s2++)
             {
-                if (s1 == s2 || _scanners[s2].Position != null)
+                if (s1 == s2 || (_scanners[s1].Position != null && _scanners[s2].Position != null))
                 {
                     continue;
                 }
