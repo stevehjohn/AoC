@@ -10,7 +10,7 @@ public class Scanner
 
     public List<Point> Beacons { get; }
     
-    public List<Point> NormalisedBeacons 
+    public List<DisorientedPoint> NormalisedBeacons 
     {
         get
         {
@@ -23,7 +23,7 @@ public class Scanner
         }
     }
 
-    private List<Point> _normalisedBeacons;
+    private List<DisorientedPoint> _normalisedBeacons;
 
     public Scanner(int id)
     {
@@ -39,7 +39,7 @@ public class Scanner
 
     public void CalculateNormalisedCoordinates()
     {
-        _normalisedBeacons = new List<Point>();
+        _normalisedBeacons = new List<DisorientedPoint>();
 
         var xBase = -Beacons.Min(b => b.X);
         
@@ -49,7 +49,7 @@ public class Scanner
 
         foreach (var beacon in Beacons)
         {
-            _normalisedBeacons.Add(new Point(xBase + beacon.X, yBase + beacon.Y, zBase + beacon.Z));
+            _normalisedBeacons.Add(new DisorientedPoint(xBase + beacon.X, yBase + beacon.Y, zBase + beacon.Z));
         }
     }
 
@@ -79,7 +79,7 @@ public class Scanner
         }
     }
 
-    private bool MatchBeaconPosition(Point left, Point right)
+    private static bool MatchBeaconPosition(Point left, Point right)
     {
         return false;
     }
