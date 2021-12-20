@@ -50,7 +50,7 @@ public class Scanner
 
         for (var ob = 0; ob < origin.Distances.Count; ob++)
         {
-            for (var b = 0; b < Distances.Count; b++)
+            for (var b = ob; b < Distances.Count; b++)
             {
                 if (CheckDistancesMatchRegardlessOfOrientation(origin.Distances[ob], Distances[b]))
                 {
