@@ -66,13 +66,13 @@ public class Scanner
                     matchedPositions.Add((Beacons[ob], Beacons[b]));
                 }
 
-                if (matchedPositions.Count == 12)
+                if (matchedPositions.Count == 3)
                 {
                     break;
                 }
             }
 
-            if (matchedPositions.Count == 12)
+            if (matchedPositions.Count == 3)
             {
                 break;
             }
