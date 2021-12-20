@@ -10,7 +10,7 @@ public class Scanner
 
     public List<Point> Beacons { get; }
     
-    public List<DisorientedPoint> NormalisedBeacons 
+    public List<PointDouble> NormalisedBeacons 
     {
         get
         {
@@ -23,7 +23,7 @@ public class Scanner
         }
     }
 
-    private List<DisorientedPoint> _normalisedBeacons;
+    private List<PointDouble> _normalisedBeacons;
 
     public Scanner(int id)
     {
@@ -39,17 +39,34 @@ public class Scanner
 
     public void CalculateNormalisedCoordinates()
     {
-        _normalisedBeacons = new List<DisorientedPoint>();
+        _normalisedBeacons = new List<PointDouble>();
 
-        var xBase = -(Beacons.Max(b => b.X) - Beacons.Min(b => b.X)) / 2;
-        
+        var xBase = -Beacons.Min(b => b.X);
+
         var yBase = -Beacons.Min(b => b.Y);
 
         var zBase = -Beacons.Min(b => b.Z);
 
         foreach (var beacon in Beacons)
         {
-            _normalisedBeacons.Add(new DisorientedPoint(xBase + beacon.X, yBase + beacon.Y, zBase + beacon.Z));
+            var positiveSpacePoint = new PointDouble(xBase + beacon.X, yBase + beacon.Y, zBase + beacon.Z);
+
+            _normalisedBeacons.Add(positiveSpacePoint);
+        }
+
+        var xCentre = Beacons.Average(b => b.X);
+
+        var yCentre = Beacons.Average(b => b.Y);
+
+        var zCentre = Beacons.Average(b => b.Z);
+
+        foreach (var beacon in NormalisedBeacons)
+        {
+            beacon.X = xCentre - beacon.X;
+
+            beacon.Y = yCentre - beacon.Y;
+            
+            beacon.Z = zCentre - beacon.Z;
         }
     }
 
@@ -66,21 +83,21 @@ public class Scanner
                     matchedPositions.Add((origin.Beacons[ob], Beacons[b]));
                 }
 
-                if (matchedPositions.Count == 12)
+                if (matchedPositions.Count == 3)
                 {
                     break;
                 }
             }
 
-            if (matchedPositions.Count == 12)
+            if (matchedPositions.Count == 3)
             {
                 break;
             }
         }
     }
 
-    private static bool MatchBeaconPosition(DisorientedPoint left, DisorientedPoint right)
+    private static bool MatchBeaconPosition(PointDouble left, PointDouble right)
     {
-        return left.Matches(right);
+        return left.X == right.X && left.Y == right.Y && left.Z == right.Z;
     }
 }
