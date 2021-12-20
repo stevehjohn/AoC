@@ -10,7 +10,7 @@ public class Scanner
 
     private List<Point> Beacons { get; }
 
-    private List<(Point Distance, int Beacon1, int Beacon2)> Distances
+    private List<Distance> Distances
     {
         get
         {
@@ -23,7 +23,7 @@ public class Scanner
         }
     }
 
-    private List<(Point Distance, int Beacon1, int Beacon2)> _distances;
+    private List<Distance> _distances;
 
     public Scanner(int id)
     {
@@ -42,6 +42,7 @@ public class Scanner
         var matchingBeacons = GetMatchingDistances(origin);
 
         // 3 distances should be enough to orient the scanner...
+        // Then just one matching oriented beacon can be used for position?
     }
 
     private (List<Point> OriginBeacons, List<Point> TargetBeacons) GetMatchingDistances(Scanner origin)
@@ -51,31 +52,33 @@ public class Scanner
 
         var targetMatchIndexes = new List<int>();
 
+        var distances = new List<Distance>();
+
         for (var ob = 0; ob < origin.Distances.Count; ob++)
         {
-            if (originMatchIndexes.Contains(ob))
+            var originDistance = origin.Distances[ob];
+
+            if (distances.Contains(originDistance))
             {
                 continue;
             }
 
-            // Why does b starting at ob + 1 break things?
+            // TODO: Why does b starting at ob + 1 break things?
             for (var b = 0; b < Distances.Count; b++)
             {
-                if (targetMatchIndexes.Contains(b))
+                var targetDistance = Distances[b];
+
+                if (distances.Contains(targetDistance))
                 {
                     continue;
                 }
 
-                // TODO: reduce dereferencing
-                if (CheckDistancesMatchRegardlessOfOrientation(origin.Distances[ob].Distance, Distances[b].Distance))
+                // TODO: reduce dereferencing?
+                if (CheckDistancesMatchRegardlessOfOrientation(originDistance.Delta, targetDistance.Delta))
                 {
-                    originMatchIndexes.Add(origin.Distances[ob].Beacon1);
+                    distances.Add(origin.Distances[ob]);
 
-                    originMatchIndexes.Add(origin.Distances[ob].Beacon2);
-
-                    targetMatchIndexes.Add(Distances[b].Beacon1);
-
-                    targetMatchIndexes.Add(Distances[b].Beacon2);
+                    distances.Add(Distances[b]);
                 }
             }
         }
@@ -98,28 +101,31 @@ public class Scanner
     // TODO: Rename if this works...
     private static bool CheckDistancesMatchRegardlessOfOrientation(Point left, Point right)
     {
-        return left.X == right.X && left.Y == right.Y && left.Z == right.Z;
-
-               //|| left.X == -right.X && left.Y == right.Y && left.Z == right.Z
-               //|| left.X == right.X && left.Y == -right.Y && left.Z == right.Z
-               //|| left.X == -right.X && left.Y == -right.Y && left.Z == right.Z
-               //|| left.X == right.X && left.Y == right.Y && left.Z == -right.Z
-               //|| left.X == -right.X && left.Y == right.Y && left.Z == -right.Z
-               //|| left.X == right.X && left.Y == -right.Y && left.Z == -right.Z
-               //|| left.X == -right.X && left.Y == -right.Y && left.Z == -right.Z;
+        return left.X == right.X && left.Y == right.Y && left.Z == right.Z
+               || left.X == -right.X && left.Y == right.Y && left.Z == right.Z
+               || left.X == right.X && left.Y == -right.Y && left.Z == right.Z
+               || left.X == -right.X && left.Y == -right.Y && left.Z == right.Z
+               || left.X == right.X && left.Y == right.Y && left.Z == -right.Z
+               || left.X == -right.X && left.Y == right.Y && left.Z == -right.Z
+               || left.X == right.X && left.Y == -right.Y && left.Z == -right.Z
+               || left.X == -right.X && left.Y == -right.Y && left.Z == -right.Z;
     }
 
     private void CalculateDistances()
     {
-        _distances = new List<(Point Distance, int Beacon1, int Beacon2)>();
+        _distances = new List<Distance>();
 
         for (var ob = 0; ob < Beacons.Count; ob++)
         {
             for (var b = ob + 1; b < Beacons.Count; b++)
             {
-                var distance = new Point(Math.Abs(Beacons[ob].X - Beacons[b].X), Math.Abs(Beacons[ob].Y - Beacons[b].Y), Math.Abs(Beacons[ob].Z - Beacons[b].Z));
+                var outerBeacon = Beacons[ob];
 
-                _distances.Add((distance, ob, b));
+                var beacon = Beacons[b];
+
+                var distance = new Point(outerBeacon.X - beacon.X, outerBeacon.Y - beacon.Y, outerBeacon.Z - beacon.Z);
+
+                _distances.Add(new Distance(distance, outerBeacon, beacon));
 
                 //Console.WriteLine(Beacons[ob]);
 
