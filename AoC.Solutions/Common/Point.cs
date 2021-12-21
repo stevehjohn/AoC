@@ -62,6 +62,8 @@ public class Point
 
     public override int GetHashCode()
     {
+        // ReSharper disable NonReadonlyMemberInGetHashCode - sue me, I need Point to be mutable sometimes...
         return HashCode.Combine(X, Y, Z);
+        // ReSharper restore NonReadonlyMemberInGetHashCode
     }
 }

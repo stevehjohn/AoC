@@ -8,6 +8,8 @@ public class Scanner
 
     public Point Position { get; set; }
 
+    public int BeaconCount => Beacons.Count;
+
     private List<Point> Beacons { get; }
 
     private List<Distance> Distances
@@ -37,24 +39,26 @@ public class Scanner
         Beacons.Add(new Point(x, y, z));
     }
 
-    public void TryGetPosition(Scanner origin)
+    public void RemoveMatchingBeacons(Scanner origin)
     {
         var matchingBeacons = GetMatchingDistances(origin);
 
-        Console.WriteLine(matchingBeacons.Count);
+        //foreach (var beacon in matchingBeacons)
+        //{
+        //    Console.WriteLine($"{beacon.Origin.Beacon1}                  {beacon.Target.Beacon1}");
 
-        foreach (var beacon in matchingBeacons)
-        {
-            Console.WriteLine($"{beacon.Origin.Beacon1}                  {beacon.Target.Beacon1}");
+        //    Console.WriteLine($"    {beacon.Origin.Delta}         {beacon.Target.Delta}");
 
-            Console.WriteLine($"    {beacon.Origin.Delta}         {beacon.Target.Delta}");
+        //    Console.WriteLine($"{beacon.Origin.Beacon2}                  {beacon.Target.Beacon2}");
 
-            Console.WriteLine($"{beacon.Origin.Beacon2}                  {beacon.Target.Beacon2}");
-
-            Console.WriteLine();
-        }
+        //    Console.WriteLine();
+        //}
 
         var beaconPairs = ResolveMatchingBeacons(matchingBeacons);
+
+        Console.WriteLine(beaconPairs.Count);
+
+        Beacons.RemoveAll(b => beaconPairs.Any(p => p.Beacon2.Equals(b)));
     }
 
     private static List<Pair> ResolveMatchingBeacons(List<DistancePair> matchingBeacons)
@@ -122,7 +126,9 @@ public class Scanner
 
     private static bool CheckDistanceMatch(Point left, Point right)
     {
-        return left.X == right.X && left.Y == right.Y && left.Z == right.Z;
+        return left.X == right.X && left.Y == right.Y && left.Z == right.Z
+               || left.X == right.Y && left.Y == right.Z && left.Z == right.X
+               || left.X == right.Z && left.Y == right.X && left.Z == right.Y;
     }
 
     private void CalculateDistances()
