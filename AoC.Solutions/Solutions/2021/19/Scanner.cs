@@ -4,10 +4,6 @@ namespace AoC.Solutions.Solutions._2021._19;
 
 public class Scanner
 {
-    private const int RequiredMatchesByScanner = 3; // TODO: Reset to proper value when working
-
-    private const int RequiredMatchesForOrientation = 3;
-
     public int Id { get; }
 
     public Point Position { get; set; }
@@ -45,64 +41,83 @@ public class Scanner
     {
         var matchingBeacons = GetMatchingDistances(origin);
 
-        // 3 distances should be enough to orient the scanner...
-        // Then just one matching oriented beacon can be used for position?
-        if (matchingBeacons != null)
+        Console.WriteLine(matchingBeacons.Count);
+
+        foreach (var beacon in matchingBeacons)
         {
-            OrientScanner(matchingBeacons);
+            Console.WriteLine($"{beacon.Origin.Beacon1}                  {beacon.Target.Beacon1}");
+
+            Console.WriteLine($"    {beacon.Origin.Delta}         {beacon.Target.Delta}");
+
+            Console.WriteLine($"{beacon.Origin.Beacon2}                  {beacon.Target.Beacon2}");
+
+            Console.WriteLine();
         }
+
+        var beaconPairs = ResolveMatchingBeacons(matchingBeacons);
     }
 
-    private void OrientScanner(List<DistancePair> pair)
+    private static List<Pair> ResolveMatchingBeacons(List<DistancePair> matchingBeacons)
     {
+        var pairs = new List<Pair>();
+
+        var distinctOrigins = matchingBeacons.Select(p => p.Origin.Beacon1).Distinct().Union(matchingBeacons.Select(p => p.Origin.Beacon2).Distinct());
+
+        foreach (var originBeacon in distinctOrigins)
+        {
+            var candidates = new List<Point>();
+
+            foreach (var candidatePair in matchingBeacons)
+            {
+                if (! (originBeacon.Equals(candidatePair.Origin.Beacon1) || originBeacon.Equals(candidatePair.Origin.Beacon2)))
+                {
+                    continue;
+                }
+
+                if (candidates.Any(c => Equals(c, candidatePair.Target.Beacon1)))
+                {
+                    pairs.Add(new Pair(originBeacon, candidatePair.Target.Beacon1));
+
+                    break;
+                }
+
+                if (candidates.Any(c => Equals(c, candidatePair.Target.Beacon2)))
+                {
+                    pairs.Add(new Pair(originBeacon, candidatePair.Target.Beacon2));
+
+                    break;
+                }
+
+                candidates.Add(candidatePair.Target.Beacon1);
+                
+                candidates.Add(candidatePair.Target.Beacon2);
+            }
+        }
+
+        return pairs;
     }
 
     private List<DistancePair> GetMatchingDistances(Scanner origin)
     {
         var distances = new List<DistancePair>();
 
-        var matchCount = 0;
-
-        // TODO: Any more optimisations here? Getting 66 results for 12 matches seems ludicrous.
-        var matchesRequired = (RequiredMatchesByScanner - 1) * RequiredMatchesByScanner / 2;
-
         for (var ob = 0; ob < origin.Distances.Count; ob++)
         {
             var originDistance = origin.Distances[ob];
-
-            //if (distances.Any(d => d.Origin == originDistance))
-            //{
-            //    continue;
-            //}
 
             // TODO: Why does b starting at ob + 1 break things?
             for (var b = 0; b < Distances.Count; b++)
             {
                 var targetDistance = Distances[b];
 
-                //if (distances.Any(d => d.Target == targetDistance))
-                //{
-                //    continue;
-                //}
-
                 if (CheckDistanceMatch(originDistance.Delta, targetDistance.Delta))
                 {
-                    if (distances.Count < RequiredMatchesForOrientation)
-                    {
-                        distances.Add(new DistancePair(origin.Distances[ob], Distances[b]));
-                    }
-
-                    matchCount++;
-
-                    if (matchCount == matchesRequired)
-                    {
-                        return distances;
-                    }
+                    distances.Add(new DistancePair(origin.Distances[ob], Distances[b]));
                 }
             }
         }
 
-        return null;
+        return distances;
     }
 
     private static bool CheckDistanceMatch(Point left, Point right)
