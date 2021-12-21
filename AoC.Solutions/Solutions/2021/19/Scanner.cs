@@ -49,6 +49,82 @@ public class Scanner
         var matchingBeacons = GetMatchingDistances(origin);
 
         var beaconPairs = ResolveMatchingBeacons(matchingBeacons);
+
+        FindTranslation(beaconPairs.Take(12).ToList());
+    }
+
+    private void FindTranslation(List<Pair> pairs)
+    {
+        // Find a translation that works for all pairs
+        var allTranslations = new Dictionary<Point, int>();
+
+        foreach (var pair in pairs)
+        {
+            var translations = GetTranslations(pair.Beacon1, pair.Beacon2);
+
+            foreach (var translation in translations)
+            {
+                if (allTranslations.ContainsKey(translation))
+                {
+                    allTranslations[translation]++;
+                }
+                else
+                {
+                    allTranslations.Add(translation, 1);
+                }
+            }
+        }
+
+        var x = allTranslations.First(t => t.Value == 12);
+    }
+
+    private List<Point> GetTranslations(Point left, Point right)
+    {
+        var translations = new List<Point>();
+
+        translations.Add(new Point(left.X - right.X, left.Y - right.Y, left.Z - right.Z));
+        translations.Add(new Point(left.X - right.Y, left.Y - right.X, left.Z - right.Z));
+        translations.Add(new Point(left.X - right.Z, left.Y - right.X, left.Z - right.Y));
+        translations.Add(new Point(left.X - right.X, left.Y - right.Z, left.Z - right.Y));
+        translations.Add(new Point(left.X - right.Y, left.Y - right.Z, left.Z - right.X));
+        translations.Add(new Point(left.X - right.Z, left.Y - right.Y, left.Z - right.X));
+
+        translations.Add(new Point(left.X - right.X, left.Y - right.Y, left.Z + right.Z));
+        translations.Add(new Point(left.X - right.Y, left.Y - right.X, left.Z + right.Z));
+        translations.Add(new Point(left.X - right.Z, left.Y - right.X, left.Z + right.Y));
+        translations.Add(new Point(left.X - right.X, left.Y - right.Z, left.Z + right.Y));
+        translations.Add(new Point(left.X - right.Y, left.Y - right.Z, left.Z + right.X));
+        translations.Add(new Point(left.X - right.Z, left.Y - right.Y, left.Z + right.X));
+
+        translations.Add(new Point(left.X - right.X, left.Y + right.Y, left.Z - right.Z));
+        translations.Add(new Point(left.X - right.Y, left.Y + right.X, left.Z - right.Z));
+        translations.Add(new Point(left.X - right.Z, left.Y + right.X, left.Z - right.Y));
+        translations.Add(new Point(left.X - right.X, left.Y + right.Z, left.Z - right.Y));
+        translations.Add(new Point(left.X - right.Y, left.Y + right.Z, left.Z - right.X));
+        translations.Add(new Point(left.X - right.Z, left.Y + right.Y, left.Z - right.X));
+
+        translations.Add(new Point(left.X - right.X, left.Y + right.Y, left.Z + right.Z));
+        translations.Add(new Point(left.X - right.Y, left.Y + right.X, left.Z + right.Z));
+        translations.Add(new Point(left.X - right.Z, left.Y + right.X, left.Z + right.Y));
+        translations.Add(new Point(left.X - right.X, left.Y + right.Z, left.Z + right.Y));
+        translations.Add(new Point(left.X - right.Y, left.Y + right.Z, left.Z + right.X));
+        translations.Add(new Point(left.X - right.Z, left.Y + right.Y, left.Z + right.X));
+
+        translations.Add(new Point(left.X + right.X, left.Y - right.Y, left.Z + right.Z));
+        translations.Add(new Point(left.X + right.Y, left.Y - right.X, left.Z + right.Z));
+        translations.Add(new Point(left.X + right.Z, left.Y - right.X, left.Z + right.Y));
+        translations.Add(new Point(left.X + right.X, left.Y - right.Z, left.Z + right.Y));
+        translations.Add(new Point(left.X + right.Y, left.Y - right.Z, left.Z + right.X));
+        translations.Add(new Point(left.X + right.Z, left.Y - right.Y, left.Z + right.X));
+
+        translations.Add(new Point(left.X + right.X, left.Y + right.Y, left.Z + right.Z));
+        translations.Add(new Point(left.X + right.Y, left.Y + right.X, left.Z + right.Z));
+        translations.Add(new Point(left.X + right.Z, left.Y + right.X, left.Z + right.Y));
+        translations.Add(new Point(left.X + right.X, left.Y + right.Z, left.Z + right.Y));
+        translations.Add(new Point(left.X + right.Y, left.Y + right.Z, left.Z + right.X));
+        translations.Add(new Point(left.X + right.Z, left.Y + right.Y, left.Z + right.X));
+
+        return translations;
     }
 
     private static List<Pair> ResolveMatchingBeacons(List<DistancePair> matchingBeacons)
