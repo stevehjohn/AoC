@@ -19,7 +19,7 @@ public class Part1 : Base
 
         foreach (var scanner in Asteroids)
         {
-            var detectable = Asteroids.Where(a => a != scanner).Select(a => Math.Atan2(a.X - scanner.X, a.Y - scanner.Y)).Distinct().Count();
+            var detectable = Asteroids.Where(a => ! Equals(a, scanner)).Select(a => Math.Atan2(a.X - scanner.X, a.Y - scanner.Y)).Distinct().Count();
 
             if (detectable > maxDetectable)
             {
