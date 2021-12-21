@@ -4,8 +4,6 @@ namespace AoC.Solutions.Solutions._2021._19;
 
 public class Scanner
 {
-    public int Id { get; }
-
     public Point Position { get; set; }
 
     public int BeaconCount => Beacons.Count;
@@ -27,10 +25,8 @@ public class Scanner
 
     private List<Distance> _distances;
 
-    public Scanner(int id)
+    public Scanner()
     {
-        Id = id;
-
         Beacons = new List<Point>();
     }
 
@@ -46,6 +42,13 @@ public class Scanner
         var beaconPairs = ResolveMatchingBeacons(matchingBeacons);
 
         Beacons.RemoveAll(b => beaconPairs.Any(p => p.Beacon2.Equals(b)));
+    }
+
+    public void LocateRelativeTo(Scanner origin)
+    {
+        var matchingBeacons = GetMatchingDistances(origin);
+
+        var beaconPairs = ResolveMatchingBeacons(matchingBeacons);
     }
 
     private static List<Pair> ResolveMatchingBeacons(List<DistancePair> matchingBeacons)
