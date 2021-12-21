@@ -15,6 +15,8 @@ public abstract class Base : Solution
 
     private List<Point> _pixelsToFlip;
 
+    public int LightPixelCount => _lightPixels.Count;
+
     protected void ParseInput()
     {
         _algorithm = Input[0].Select(c => c == '#').ToArray();
@@ -27,7 +29,7 @@ public abstract class Base : Solution
             {
                 if (line[x] == '#')
                 {
-                    _lightPixels.Add(new Point(x, y));
+                    _lightPixels.Add(new Point(10000 + x, 10000 + y));
                 }
             }
 
