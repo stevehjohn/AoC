@@ -10,6 +10,7 @@ public class Part1 : Solution
 
     public override string GetAnswer()
     {
+        // TODO: Parse
         var player1Position = 5;
 
         var player2Position = 10;
