@@ -15,15 +15,19 @@ public class Part1 : Base
         // TODO: Can this be slightly optimised also?
         for (var s1 = 0; s1 < _scanners.Count; s1++)
         {
-            for (var s2 = 1; s2 < _scanners.Count; s2++)
-            {
-                if (s1 == s2 || _scanners[s1].Position != null && _scanners[s2].Position != null)
-                {
-                    continue;
-                }
+            var originScanner = _scanners[s1];
 
-                _scanners[s2].TryGetPosition(_scanners[s1]);
+            for (var s2 = s1 + 1; s2 < _scanners.Count; s2++)
+            {
+                Console.Write($"({s1}, {s2}): ");
+
+                originScanner.RemoveMatchingBeacons(_scanners[s2]);
             }
+        }
+
+        for (var s = 0; s < _scanners.Count; s++)
+        {
+            Console.WriteLine(_scanners[s].BeaconCount);
         }
 
         return "TESTING";
