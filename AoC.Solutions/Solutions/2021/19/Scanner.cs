@@ -43,20 +43,7 @@ public class Scanner
     {
         var matchingBeacons = GetMatchingDistances(origin);
 
-        //foreach (var beacon in matchingBeacons)
-        //{
-        //    Console.WriteLine($"{beacon.Origin.Beacon1}                  {beacon.Target.Beacon1}");
-
-        //    Console.WriteLine($"    {beacon.Origin.Delta}         {beacon.Target.Delta}");
-
-        //    Console.WriteLine($"{beacon.Origin.Beacon2}                  {beacon.Target.Beacon2}");
-
-        //    Console.WriteLine();
-        //}
-
         var beaconPairs = ResolveMatchingBeacons(matchingBeacons);
-
-        Console.WriteLine(beaconPairs.Count);
 
         Beacons.RemoveAll(b => beaconPairs.Any(p => p.Beacon2.Equals(b)));
     }
@@ -127,8 +114,11 @@ public class Scanner
     private static bool CheckDistanceMatch(Point left, Point right)
     {
         return left.X == right.X && left.Y == right.Y && left.Z == right.Z
+               || left.X == right.Y && left.Y == right.X && left.Z == right.Z
+               || left.X == right.Z && left.Y == right.X && left.Z == right.Y
+               || left.X == right.X && left.Y == right.Z && left.Z == right.Y
                || left.X == right.Y && left.Y == right.Z && left.Z == right.X
-               || left.X == right.Z && left.Y == right.X && left.Z == right.Y;
+               || left.X == right.Z && left.Y == right.Y && left.Z == right.X;
     }
 
     private void CalculateDistances()

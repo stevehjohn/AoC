@@ -19,18 +19,18 @@ public class Part1 : Base
 
             for (var s2 = s1 + 1; s2 < _scanners.Count; s2++)
             {
-                Console.Write($"({s1}, {s2}): ");
-
                 originScanner.RemoveMatchingBeacons(_scanners[s2]);
             }
         }
 
+        var beaconCount = 0;
+
         for (var s = 0; s < _scanners.Count; s++)
         {
-            Console.WriteLine(_scanners[s].BeaconCount);
+            beaconCount += _scanners[s].BeaconCount;
         }
 
-        return "TESTING";
+        return beaconCount.ToString();
     }
 
     private void ParseInput()
