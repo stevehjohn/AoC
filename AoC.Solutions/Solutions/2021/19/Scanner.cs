@@ -76,6 +76,8 @@ public class Scanner
         }
 
         var x = allTranslations.Where(t => t.Value > 1);
+
+        Console.WriteLine(x.Count());
     }
 
     private List<Point> GetTranslations(Point left, Point right)
@@ -83,46 +85,34 @@ public class Scanner
         var translations = new List<Point>();
 
         translations.Add(new Point(left.X - right.X, left.Y - right.Y, left.Z - right.Z));
+        translations.Add(new Point(left.X + right.X, left.Y - right.Y, left.Z - right.Z));
+        translations.Add(new Point(-left.X - right.X, left.Y - right.Y, left.Z - right.Z));
+        translations.Add(new Point(-left.X + right.X, left.Y - right.Y, left.Z - right.Z));
+
         translations.Add(new Point(left.X - right.Y, left.Y - right.X, left.Z - right.Z));
+        translations.Add(new Point(left.X + right.Y, left.Y - right.X, left.Z - right.Z));
+        translations.Add(new Point(-left.X - right.Y, left.Y - right.X, left.Z - right.Z));
+        translations.Add(new Point(-left.X + right.Y, left.Y - right.X, left.Z - right.Z));
+
         translations.Add(new Point(left.X - right.Z, left.Y - right.X, left.Z - right.Y));
+        translations.Add(new Point(left.X + right.Z, left.Y - right.X, left.Z - right.Y));
+        translations.Add(new Point(-left.X - right.Z, left.Y - right.X, left.Z - right.Y));
+        translations.Add(new Point(-left.X + right.Z, left.Y - right.X, left.Z - right.Y));
+
         translations.Add(new Point(left.X - right.X, left.Y - right.Z, left.Z - right.Y));
+        translations.Add(new Point(left.X + right.X, left.Y - right.Z, left.Z - right.Y));
+        translations.Add(new Point(-left.X - right.X, left.Y - right.Z, left.Z - right.Y));
+        translations.Add(new Point(-left.X + right.X, left.Y - right.Z, left.Z - right.Y));
+
         translations.Add(new Point(left.X - right.Y, left.Y - right.Z, left.Z - right.X));
+        translations.Add(new Point(left.X + right.Y, left.Y - right.Z, left.Z - right.X));
+        translations.Add(new Point(-left.X - right.Y, left.Y - right.Z, left.Z - right.X));
+        translations.Add(new Point(-left.X + right.Y, left.Y - right.Z, left.Z - right.X));
+
         translations.Add(new Point(left.X - right.Z, left.Y - right.Y, left.Z - right.X));
-
-        translations.Add(new Point(left.X - right.X, left.Y - right.Y, left.Z + right.Z));
-        translations.Add(new Point(left.X - right.Y, left.Y - right.X, left.Z + right.Z));
-        translations.Add(new Point(left.X - right.Z, left.Y - right.X, left.Z + right.Y));
-        translations.Add(new Point(left.X - right.X, left.Y - right.Z, left.Z + right.Y));
-        translations.Add(new Point(left.X - right.Y, left.Y - right.Z, left.Z + right.X));
-        translations.Add(new Point(left.X - right.Z, left.Y - right.Y, left.Z + right.X));
-
-        translations.Add(new Point(left.X - right.X, left.Y + right.Y, left.Z - right.Z));
-        translations.Add(new Point(left.X - right.Y, left.Y + right.X, left.Z - right.Z));
-        translations.Add(new Point(left.X - right.Z, left.Y + right.X, left.Z - right.Y));
-        translations.Add(new Point(left.X - right.X, left.Y + right.Z, left.Z - right.Y));
-        translations.Add(new Point(left.X - right.Y, left.Y + right.Z, left.Z - right.X));
-        translations.Add(new Point(left.X - right.Z, left.Y + right.Y, left.Z - right.X));
-
-        translations.Add(new Point(left.X - right.X, left.Y + right.Y, left.Z + right.Z));
-        translations.Add(new Point(left.X - right.Y, left.Y + right.X, left.Z + right.Z));
-        translations.Add(new Point(left.X - right.Z, left.Y + right.X, left.Z + right.Y));
-        translations.Add(new Point(left.X - right.X, left.Y + right.Z, left.Z + right.Y));
-        translations.Add(new Point(left.X - right.Y, left.Y + right.Z, left.Z + right.X));
-        translations.Add(new Point(left.X - right.Z, left.Y + right.Y, left.Z + right.X));
-
-        translations.Add(new Point(left.X + right.X, left.Y - right.Y, left.Z + right.Z));
-        translations.Add(new Point(left.X + right.Y, left.Y - right.X, left.Z + right.Z));
-        translations.Add(new Point(left.X + right.Z, left.Y - right.X, left.Z + right.Y));
-        translations.Add(new Point(left.X + right.X, left.Y - right.Z, left.Z + right.Y));
-        translations.Add(new Point(left.X + right.Y, left.Y - right.Z, left.Z + right.X));
-        translations.Add(new Point(left.X + right.Z, left.Y - right.Y, left.Z + right.X));
-
-        translations.Add(new Point(left.X + right.X, left.Y + right.Y, left.Z + right.Z));
-        translations.Add(new Point(left.X + right.Y, left.Y + right.X, left.Z + right.Z));
-        translations.Add(new Point(left.X + right.Z, left.Y + right.X, left.Z + right.Y));
-        translations.Add(new Point(left.X + right.X, left.Y + right.Z, left.Z + right.Y));
-        translations.Add(new Point(left.X + right.Y, left.Y + right.Z, left.Z + right.X));
-        translations.Add(new Point(left.X + right.Z, left.Y + right.Y, left.Z + right.X));
+        translations.Add(new Point(left.X + right.Z, left.Y - right.Y, left.Z - right.X));
+        translations.Add(new Point(-left.X - right.Z, left.Y - right.Y, left.Z - right.X));
+        translations.Add(new Point(-left.X + right.Z, left.Y - right.Y, left.Z - right.X));
 
         return translations;
     }
