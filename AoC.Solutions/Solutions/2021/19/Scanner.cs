@@ -75,7 +75,7 @@ public class Scanner
             }
         }
 
-        var x = allTranslations.First(t => t.Value == 12);
+        var x = allTranslations.Where(t => t.Value > 1);
     }
 
     private List<Point> GetTranslations(Point left, Point right)

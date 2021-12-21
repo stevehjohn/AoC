@@ -15,6 +15,8 @@ public class Part2 : Base
 
             for (var s2 = s1 + 1; s2 < Scanners.Count; s2++)
             {
+                Console.WriteLine($"{s1}, {s2}");
+
                 originScanner.LocateRelativeTo(Scanners[s2]);
             }
         }
