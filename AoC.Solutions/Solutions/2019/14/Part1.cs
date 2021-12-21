@@ -66,7 +66,7 @@ public class Part1 : Base
         }
     }
 
-    private Reaction ParseLine(string line)
+    private static Reaction ParseLine(string line)
     {
         var io = line.Split("=>", StringSplitOptions.TrimEntries);
 
@@ -86,7 +86,7 @@ public class Part1 : Base
         return reaction;
     }
 
-    private (int Quantity, string Name) ParseComponent(string component)
+    private static (int Quantity, string Name) ParseComponent(string component)
     {
         var split = component.Split(' ', StringSplitOptions.TrimEntries);
 
