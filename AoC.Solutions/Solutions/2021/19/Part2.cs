@@ -19,6 +19,11 @@ public class Part2 : Base
             }
         }
 
+        for (var s = 0; s < Scanners.Count; s++)
+        {
+            Console.WriteLine(Scanners[s].Position);
+        }
+
         return "TESTING";
     }
 }
