@@ -2,5 +2,10 @@
   <Settings>
     <CopyReferencedAssembliesToWorkspace>True</CopyReferencedAssembliesToWorkspace>
     <DetectStackOverflow>True</DetectStackOverflow>
+    <IgnoredTests>
+      <NamedTestSelector>
+        <TestName>AoC.Tests.Solutions.TestAllSolutions.RunTests</TestName>
+      </NamedTestSelector>
+    </IgnoredTests>
   </Settings>
 </ProjectConfiguration>

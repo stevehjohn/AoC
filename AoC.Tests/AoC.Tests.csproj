@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Solutions\" />
+    <Folder Include="Solutions\2021\19\" />
   </ItemGroup>
 
   <ItemGroup>
