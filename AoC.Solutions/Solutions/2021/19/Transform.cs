@@ -40,13 +40,9 @@ public class Transform
     // TODO: Could there be fewer calls to TryAxisMapping?
     public void CalculateTransform(Point origin, Point target, int xDelta, int yDelta, int zDelta)
     {
-        _deltas[0] = xDelta;
-
-        _deltas[1] = yDelta;
-        
-        _deltas[2] = zDelta;
-
         // Getting there... there's an issue with the origin's +/- and the delta's +/-
+
+        TryAxisMapping(origin.X, target.X, xDelta, Axis.X, Axis.X);
     }
 
     private void TryAxisMapping(int left, int right, int delta, Axis origin, Axis target)
