@@ -10,9 +10,18 @@ public class Transform
 
     public Point TransformPoint(Point origin)
     {
-        return null;
+        var point = new Point(origin);
+
+        point.X -= _deltas[(int) _mappings[0]];
+
+        point.Y -= _deltas[(int) _mappings[1]];
+
+        point.Z -= _deltas[(int) _mappings[2]];
+
+        return point;
     }
 
+    // TODO: Could there be fewer calls to TryAxisMapping?
     public void CalculateTransform(Point origin, Point target, int xDelta, int yDelta, int zDelta)
     {
         TryAxisMapping(origin.X, target.X, xDelta, Axis.X, Axis.X);
@@ -70,7 +79,6 @@ public class Transform
         TryAxisMapping(origin.Z, target.Z, yDelta, Axis.Z, Axis.Z);
 
         TryAxisMapping(origin.Z, target.Z, zDelta, Axis.Z, Axis.Z);
-
     }
 
     private void TryAxisMapping(int left, int right, int delta, Axis origin, Axis target)
@@ -99,5 +107,4 @@ public class Transform
 
         return null;
     }
-
 }
