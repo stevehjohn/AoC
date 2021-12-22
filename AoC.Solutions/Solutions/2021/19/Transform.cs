@@ -46,8 +46,6 @@ public class Transform
 
     public void CalculateTransform(Point origin, Point target, int xDelta, int yDelta, int zDelta)
     {
-        // Getting there... there's an issue with the origin's +/- and the delta's +/-
-
         TryAxisMapping(origin.X, target.X, xDelta, Axis.X, Axis.X);
         TryAxisMapping(origin.X, target.Y, xDelta, Axis.X, Axis.Y);
         TryAxisMapping(origin.X, target.Z, xDelta, Axis.X, Axis.Z);
