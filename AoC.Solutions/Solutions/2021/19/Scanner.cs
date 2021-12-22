@@ -51,11 +51,11 @@ public class Scanner
 
         var beaconPairs = ResolveMatchingBeacons(matchingBeacons);
 
-        FindTranslation(beaconPairs.ToList());
+        FindTranslation(origin, beaconPairs.ToList());
     }
 
     // TODO: If I get this working, it still needs a bloody good refactor... rank AF
-    private void FindTranslation(List<Pair> pairs)
+    private void FindTranslation(Scanner origin, List<Pair> pairs)
     {
         // Find a translation that works for all pairs (or 12, or something)
         var xTranslations = new Dictionary<int, int>();
@@ -111,9 +111,16 @@ public class Scanner
 
         // It seems the second value in each of these is correct... but IDK why...
         // In the first instance anyway. Why are there 2?
-        var q = xTranslations.Where(v => v.Value >= 12);
-        var w = yTranslations.Where(v => v.Value >= 12);
-        var e = zTranslations.Where(v => v.Value >= 12);
+        var x = xTranslations.LastOrDefault(v => v.Value >= 12).Key;
+        var y = yTranslations.LastOrDefault(v => v.Value >= 12).Key;
+        var z = zTranslations.LastOrDefault(v => v.Value >= 12).Key;
+
+        if (origin.Position == null)
+        {
+            return;
+        }
+
+        Position = new Point(origin.Position.X + x, origin.Position.Y + y, origin.Position.Z + z);
 
         //axisTranslations = GetAxisTranslations(pair.Beacon1.Y, pair.Beacon2);
         //axisTranslations = GetAxisTranslations(pair.Beacon1.Z, pair.Beacon2);
