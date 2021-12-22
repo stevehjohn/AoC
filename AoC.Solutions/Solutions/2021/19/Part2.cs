@@ -13,7 +13,7 @@ public class Part2 : Base
         {
             var originScanner = Scanners[s1];
 
-            for (var s2 = s1 + 1; s2 < Scanners.Count; s2++)
+            for (var s2 = 0; s2 < Scanners.Count; s2++)
             {
                 Scanners[s2].LocateRelativeTo(originScanner);
             }
