@@ -32,7 +32,7 @@ public class Point
 
     public override string ToString()
     {
-        return $"{X,4},{Y,4},{Z,4}";
+        return $"{X,5},{Y,5},{Z,5}";
     }
 
     protected bool Equals(Point other)

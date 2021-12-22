@@ -77,6 +77,11 @@ public class Scanner
 
         var x = allTranslations.Where(t => Math.Abs(t.Key.X) == 68 && Math.Abs(t.Key.Y) == 1246 && Math.Abs(t.Key.Z) == 43);
 
+        /*
+         * I'm disappearing up my own arse here...
+         * Currently have all permutations (-ve & +ve) of the correct answer, but no way to determine which is correct...
+         */
+
         foreach (var p in x)
         {
             Console.WriteLine(p.Key);
@@ -99,6 +104,69 @@ public class Scanner
             translations.Add(new Point(left.X + rotation.X, left.Y - rotation.Y, left.Z + rotation.Z));
             translations.Add(new Point(left.X + rotation.X, left.Y + rotation.Y, left.Z - rotation.Z));
             translations.Add(new Point(left.X + rotation.X, left.Y - rotation.Y, left.Z - rotation.Z));
+
+            translations.Add(new Point(left.X - rotation.X, left.Y + rotation.Y, -left.Z + rotation.Z));
+            translations.Add(new Point(left.X - rotation.X, left.Y - rotation.Y, -left.Z + rotation.Z));
+            translations.Add(new Point(left.X - rotation.X, left.Y + rotation.Y, -left.Z - rotation.Z));
+            translations.Add(new Point(left.X - rotation.X, left.Y - rotation.Y, -left.Z - rotation.Z));
+            translations.Add(new Point(left.X + rotation.X, left.Y + rotation.Y, -left.Z + rotation.Z));
+            translations.Add(new Point(left.X + rotation.X, left.Y - rotation.Y, -left.Z + rotation.Z));
+            translations.Add(new Point(left.X + rotation.X, left.Y + rotation.Y, -left.Z - rotation.Z));
+            translations.Add(new Point(left.X + rotation.X, left.Y - rotation.Y, -left.Z - rotation.Z));
+
+            translations.Add(new Point(left.X - rotation.X, -left.Y + rotation.Y, left.Z + rotation.Z));
+            translations.Add(new Point(left.X - rotation.X, -left.Y - rotation.Y, left.Z + rotation.Z));
+            translations.Add(new Point(left.X - rotation.X, -left.Y + rotation.Y, left.Z - rotation.Z));
+            translations.Add(new Point(left.X - rotation.X, -left.Y - rotation.Y, left.Z - rotation.Z));
+            translations.Add(new Point(left.X + rotation.X, -left.Y + rotation.Y, left.Z + rotation.Z));
+            translations.Add(new Point(left.X + rotation.X, -left.Y - rotation.Y, left.Z + rotation.Z));
+            translations.Add(new Point(left.X + rotation.X, -left.Y + rotation.Y, left.Z - rotation.Z));
+            translations.Add(new Point(left.X + rotation.X, -left.Y - rotation.Y, left.Z - rotation.Z));
+
+            translations.Add(new Point(left.X - rotation.X, -left.Y + rotation.Y, -left.Z + rotation.Z));
+            translations.Add(new Point(left.X - rotation.X, -left.Y - rotation.Y, -left.Z + rotation.Z));
+            translations.Add(new Point(left.X - rotation.X, -left.Y + rotation.Y, -left.Z - rotation.Z));
+            translations.Add(new Point(left.X - rotation.X, -left.Y - rotation.Y, -left.Z - rotation.Z));
+            translations.Add(new Point(left.X + rotation.X, -left.Y + rotation.Y, -left.Z + rotation.Z));
+            translations.Add(new Point(left.X + rotation.X, -left.Y - rotation.Y, -left.Z + rotation.Z));
+            translations.Add(new Point(left.X + rotation.X, -left.Y + rotation.Y, -left.Z - rotation.Z));
+            translations.Add(new Point(left.X + rotation.X, -left.Y - rotation.Y, -left.Z - rotation.Z));
+
+            translations.Add(new Point(-left.X - rotation.X, left.Y + rotation.Y, left.Z + rotation.Z));
+            translations.Add(new Point(-left.X - rotation.X, left.Y - rotation.Y, left.Z + rotation.Z));
+            translations.Add(new Point(-left.X - rotation.X, left.Y + rotation.Y, left.Z - rotation.Z));
+            translations.Add(new Point(-left.X - rotation.X, left.Y - rotation.Y, left.Z - rotation.Z));
+            translations.Add(new Point(-left.X + rotation.X, left.Y + rotation.Y, left.Z + rotation.Z));
+            translations.Add(new Point(-left.X + rotation.X, left.Y - rotation.Y, left.Z + rotation.Z));
+            translations.Add(new Point(-left.X + rotation.X, left.Y + rotation.Y, left.Z - rotation.Z));
+            translations.Add(new Point(-left.X + rotation.X, left.Y - rotation.Y, left.Z - rotation.Z));
+
+            translations.Add(new Point(-left.X - rotation.X, left.Y + rotation.Y, -left.Z + rotation.Z));
+            translations.Add(new Point(-left.X - rotation.X, left.Y - rotation.Y, -left.Z + rotation.Z));
+            translations.Add(new Point(-left.X - rotation.X, left.Y + rotation.Y, -left.Z - rotation.Z));
+            translations.Add(new Point(-left.X - rotation.X, left.Y - rotation.Y, -left.Z - rotation.Z));
+            translations.Add(new Point(-left.X + rotation.X, left.Y + rotation.Y, -left.Z + rotation.Z));
+            translations.Add(new Point(-left.X + rotation.X, left.Y - rotation.Y, -left.Z + rotation.Z));
+            translations.Add(new Point(-left.X + rotation.X, left.Y + rotation.Y, -left.Z - rotation.Z));
+            translations.Add(new Point(-left.X + rotation.X, left.Y - rotation.Y, -left.Z - rotation.Z));
+
+            translations.Add(new Point(-left.X - rotation.X, -left.Y + rotation.Y, left.Z + rotation.Z));
+            translations.Add(new Point(-left.X - rotation.X, -left.Y - rotation.Y, left.Z + rotation.Z));
+            translations.Add(new Point(-left.X - rotation.X, -left.Y + rotation.Y, left.Z - rotation.Z));
+            translations.Add(new Point(-left.X - rotation.X, -left.Y - rotation.Y, left.Z - rotation.Z));
+            translations.Add(new Point(-left.X + rotation.X, -left.Y + rotation.Y, left.Z + rotation.Z));
+            translations.Add(new Point(-left.X + rotation.X, -left.Y - rotation.Y, left.Z + rotation.Z));
+            translations.Add(new Point(-left.X + rotation.X, -left.Y + rotation.Y, left.Z - rotation.Z));
+            translations.Add(new Point(-left.X + rotation.X, -left.Y - rotation.Y, left.Z - rotation.Z));
+
+            translations.Add(new Point(-left.X - rotation.X, -left.Y + rotation.Y, -left.Z + rotation.Z));
+            translations.Add(new Point(-left.X - rotation.X, -left.Y - rotation.Y, -left.Z + rotation.Z));
+            translations.Add(new Point(-left.X - rotation.X, -left.Y + rotation.Y, -left.Z - rotation.Z));
+            translations.Add(new Point(-left.X - rotation.X, -left.Y - rotation.Y, -left.Z - rotation.Z));
+            translations.Add(new Point(-left.X + rotation.X, -left.Y + rotation.Y, -left.Z + rotation.Z));
+            translations.Add(new Point(-left.X + rotation.X, -left.Y - rotation.Y, -left.Z + rotation.Z));
+            translations.Add(new Point(-left.X + rotation.X, -left.Y + rotation.Y, -left.Z - rotation.Z));
+            translations.Add(new Point(-left.X + rotation.X, -left.Y - rotation.Y, -left.Z - rotation.Z));
         }
 
         return translations;
