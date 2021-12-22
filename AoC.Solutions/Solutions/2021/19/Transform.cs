@@ -10,13 +10,29 @@ public class Transform
 
     public Point TransformPoint(Point origin)
     {
-        var point = new Point(origin);
+        var point = new Point(origin)
+                    {
+                        X = (_mappings[0] == Axis.X
+                                 ? origin.X
+                                 : _mappings[0] == Axis.Y
+                                     ? origin.Y
+                                     : origin.Z)
+                            + _deltas[(int)_mappings[0]],
 
-        point.X -= _deltas[(int) _mappings[0]];
+                        Y = (_mappings[1] == Axis.X
+                                 ? origin.X
+                                 : _mappings[1] == Axis.Y
+                                     ? origin.Y
+                                     : origin.Z)
+                            + _deltas[(int)_mappings[1]],
 
-        point.Y -= _deltas[(int) _mappings[1]];
-
-        point.Z -= _deltas[(int) _mappings[2]];
+                        Z = (_mappings[2] == Axis.X
+                                 ? origin.X
+                                 : _mappings[2] == Axis.Y
+                                     ? origin.Y
+                                     : origin.Z)
+                            + _deltas[(int)_mappings[2]]
+                    };
 
         return point;
     }
@@ -24,61 +40,13 @@ public class Transform
     // TODO: Could there be fewer calls to TryAxisMapping?
     public void CalculateTransform(Point origin, Point target, int xDelta, int yDelta, int zDelta)
     {
-        TryAxisMapping(origin.X, target.X, xDelta, Axis.X, Axis.X);
+        _deltas[0] = xDelta;
 
-        TryAxisMapping(origin.X, target.X, yDelta, Axis.X, Axis.X);
+        _deltas[1] = yDelta;
+        
+        _deltas[2] = zDelta;
 
-        TryAxisMapping(origin.X, target.X, zDelta, Axis.X, Axis.X);
-
-        TryAxisMapping(origin.X, target.Y, xDelta, Axis.X, Axis.Y);
-
-        TryAxisMapping(origin.X, target.Y, yDelta, Axis.X, Axis.Y);
-
-        TryAxisMapping(origin.X, target.Y, zDelta, Axis.X, Axis.Y);
-
-        TryAxisMapping(origin.X, target.Z, xDelta, Axis.X, Axis.Z);
-
-        TryAxisMapping(origin.X, target.Z, yDelta, Axis.X, Axis.Z);
-
-        TryAxisMapping(origin.X, target.Z, zDelta, Axis.X, Axis.Z);
-
-
-        TryAxisMapping(origin.Y, target.X, xDelta, Axis.Y, Axis.X);
-
-        TryAxisMapping(origin.Y, target.X, yDelta, Axis.Y, Axis.X);
-
-        TryAxisMapping(origin.Y, target.X, zDelta, Axis.Y, Axis.X);
-
-        TryAxisMapping(origin.Y, target.Y, xDelta, Axis.Y, Axis.Y);
-
-        TryAxisMapping(origin.Y, target.Y, yDelta, Axis.Y, Axis.Y);
-
-        TryAxisMapping(origin.Y, target.Y, zDelta, Axis.Y, Axis.Y);
-
-        TryAxisMapping(origin.Y, target.Z, xDelta, Axis.Y, Axis.Z);
-
-        TryAxisMapping(origin.Y, target.Z, yDelta, Axis.Y, Axis.Z);
-
-        TryAxisMapping(origin.Y, target.Z, zDelta, Axis.Y, Axis.Z);
-
-
-        TryAxisMapping(origin.Z, target.X, xDelta, Axis.Z, Axis.X);
-
-        TryAxisMapping(origin.Z, target.X, yDelta, Axis.Z, Axis.X);
-
-        TryAxisMapping(origin.Z, target.X, zDelta, Axis.Z, Axis.X);
-
-        TryAxisMapping(origin.Z, target.Y, xDelta, Axis.Z, Axis.Y);
-
-        TryAxisMapping(origin.Z, target.Y, yDelta, Axis.Z, Axis.Y);
-
-        TryAxisMapping(origin.Z, target.Y, zDelta, Axis.Z, Axis.Y);
-
-        TryAxisMapping(origin.Z, target.Z, xDelta, Axis.Z, Axis.Z);
-
-        TryAxisMapping(origin.Z, target.Z, yDelta, Axis.Z, Axis.Z);
-
-        TryAxisMapping(origin.Z, target.Z, zDelta, Axis.Z, Axis.Z);
+        // Getting there... there's an issue with the origin's +/- and the delta's +/-
     }
 
     private void TryAxisMapping(int left, int right, int delta, Axis origin, Axis target)
@@ -87,9 +55,7 @@ public class Transform
 
         if (match != null)
         {
-            _mappings[(int) origin] = target;
-
-            _deltas[(int) origin] = match.Value;
+            _mappings[(int) target] = origin;
         }
     }
 
