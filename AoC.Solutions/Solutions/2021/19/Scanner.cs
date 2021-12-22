@@ -55,7 +55,7 @@ public class Scanner
 
         var beaconPairs = ResolveMatchingBeacons(matchingBeacons);
 
-        FindTranslation(origin, beaconPairs.ToList());
+        FindTranslation(origin, beaconPairs.Take(12).ToList());
     }
 
     // TODO: If I get this working, it still needs a bloody good refactor... rank AF
@@ -64,11 +64,11 @@ public class Scanner
         // Find a translation that works for all pairs (or 12, or something)
 
         // Make sure they match for the same point?
-        var xTranslations = new Dictionary<int, int>();
+        var xTranslations = new Dictionary<int, List<Point>>();
 
-        var yTranslations = new Dictionary<int, int>();
+        var yTranslations = new Dictionary<int, List<Point>>();
 
-        var zTranslations = new Dictionary<int, int>();
+        var zTranslations = new Dictionary<int, List<Point>>();
 
         foreach (var pair in pairs)
         {
@@ -78,11 +78,11 @@ public class Scanner
             {
                 if (xTranslations.ContainsKey(t))
                 {
-                    xTranslations[t]++;
+                    xTranslations[t].Add(pair.Beacon1);
                 }
                 else
                 {
-                    xTranslations.Add(t, 1);
+                    xTranslations.Add(t, new List<Point> { pair.Beacon1 });
                 }
             });
 
@@ -92,11 +92,11 @@ public class Scanner
             {
                 if (yTranslations.ContainsKey(t))
                 {
-                    yTranslations[t]++;
+                    yTranslations[t].Add(pair.Beacon1);
                 }
                 else
                 {
-                    yTranslations.Add(t, 1);
+                    yTranslations.Add(t, new List<Point> { pair.Beacon1 });
                 }
             });
 
@@ -106,26 +106,29 @@ public class Scanner
             {
                 if (zTranslations.ContainsKey(t))
                 {
-                    zTranslations[t]++;
+                    zTranslations[t].Add(pair.Beacon1);
                 }
                 else
                 {
-                    zTranslations.Add(t, 1);
+                    zTranslations.Add(t, new List<Point> { pair.Beacon1 });
                 }
             });
         }
 
+        var xCandidates = xTranslations.Where(p => p.Value.Count >= 12);
+        var yCandidates = yTranslations.Where(p => p.Value.Count >= 12);
+
         // Why 2 matches?
-        var x = xTranslations.LastOrDefault(v => v.Value >= 12).Key;
-        var y = yTranslations.LastOrDefault(v => v.Value >= 12).Key;
-        var z = zTranslations.LastOrDefault(v => v.Value >= 12).Key;
+        //var x = xTranslations.LastOrDefault(v => v.Value >= 12).Key;
+        //var y = yTranslations.LastOrDefault(v => v.Value >= 12).Key;
+        //var z = zTranslations.LastOrDefault(v => v.Value >= 12).Key;
 
         if (origin.Position == null)
         {
             return;
         }
 
-        Position = new Point(origin.Position.X + x, origin.Position.Y + y, origin.Position.Z + z);
+        //Position = new Point(origin.Position.X + x, origin.Position.Y + y, origin.Position.Z + z);
     }
 
     private static List<int> GetAxisTranslations(int value, Point coordinate)
