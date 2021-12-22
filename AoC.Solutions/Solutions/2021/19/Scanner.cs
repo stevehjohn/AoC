@@ -126,7 +126,7 @@ public class Scanner
 
         transform.CalculateTransform(pairs[0].Beacon1, pairs[0].Beacon2, x, y, z);
 
-        Position = transform.TransformPoint(origin.Position) ?? new Point();
+        Position = transform.TransformPoint(origin.Position);
     }
 
     private static List<int> GetAxisTranslations(int value, Point coordinate)
