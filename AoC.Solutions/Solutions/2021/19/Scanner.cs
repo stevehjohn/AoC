@@ -51,9 +51,10 @@ public class Scanner
 
         var beaconPairs = ResolveMatchingBeacons(matchingBeacons);
 
-        FindTranslation(beaconPairs.Take(12).ToList());
+        FindTranslation(beaconPairs.ToList());
     }
 
+    // TODO: If I get this working, it still needs a bloody good refactor... rank AF
     private void FindTranslation(List<Pair> pairs)
     {
         // Find a translation that works for all pairs (or 12, or something)
@@ -107,6 +108,10 @@ public class Scanner
                 }
             });
         }
+
+        var q = xTranslations.Where(v => v.Value >= 12);
+        var w = yTranslations.Where(v => v.Value >= 12);
+        var e = zTranslations.Where(v => v.Value >= 12);
 
         //axisTranslations = GetAxisTranslations(pair.Beacon1.Y, pair.Beacon2);
         //axisTranslations = GetAxisTranslations(pair.Beacon1.Z, pair.Beacon2);
