@@ -67,7 +67,7 @@ public class Scanner
         foreach (var pair in pairs)
         {
             var axisTranslations = GetAxisTranslations(pair.Beacon1.X, pair.Beacon2);
-            
+
             axisTranslations.ForEach(t =>
             {
                 if (xTranslations.ContainsKey(t))
@@ -76,7 +76,7 @@ public class Scanner
                 }
                 else
                 {
-                    xTranslations.Add(t,1);
+                    xTranslations.Add(t, 1);
                 }
             });
 
@@ -175,7 +175,7 @@ public class Scanner
                 }
 
                 candidates.Add(candidatePair.Target.Beacon1);
-                
+
                 candidates.Add(candidatePair.Target.Beacon2);
             }
         }
