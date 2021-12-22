@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using AoC.Solutions.Common;
+﻿using AoC.Solutions.Common;
 
 namespace AoC.Solutions.Solutions._2021._19;
 
@@ -63,6 +62,8 @@ public class Scanner
     private void FindTranslation(Scanner origin, List<Pair> pairs)
     {
         // Find a translation that works for all pairs (or 12, or something)
+
+        // Make sure they match for the same point?
         var xTranslations = new Dictionary<int, int>();
 
         var yTranslations = new Dictionary<int, int>();
@@ -114,8 +115,7 @@ public class Scanner
             });
         }
 
-        // It seems the second value in each of these is correct... but IDK why...
-        // In the first instance anyway. Why are there 2?
+        // Why 2 matches?
         var x = xTranslations.LastOrDefault(v => v.Value >= 12).Key;
         var y = yTranslations.LastOrDefault(v => v.Value >= 12).Key;
         var z = zTranslations.LastOrDefault(v => v.Value >= 12).Key;
@@ -126,9 +126,6 @@ public class Scanner
         }
 
         Position = new Point(origin.Position.X + x, origin.Position.Y + y, origin.Position.Z + z);
-
-        //axisTranslations = GetAxisTranslations(pair.Beacon1.Y, pair.Beacon2);
-        //axisTranslations = GetAxisTranslations(pair.Beacon1.Z, pair.Beacon2);
     }
 
     private static List<int> GetAxisTranslations(int value, Point coordinate)
