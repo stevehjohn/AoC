@@ -14,7 +14,7 @@ public class Transform
 
     public Point TransformPoint(Point origin)
     {
-        var point = new Point(origin)
+        var point = new Point
                     {
                         X = ((_signs[0] == Sign.Negative ? -1 : 1)
                              * (_mappings[0] == Axis.X
