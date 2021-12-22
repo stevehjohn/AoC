@@ -49,6 +49,11 @@ public class Scanner
     {
         var matchingBeacons = GetMatchingDistances(origin);
 
+        if (matchingBeacons.Count < 66)
+        {
+            return;
+        }
+
         var beaconPairs = ResolveMatchingBeacons(matchingBeacons);
 
         FindTranslation(origin, beaconPairs.ToList());
