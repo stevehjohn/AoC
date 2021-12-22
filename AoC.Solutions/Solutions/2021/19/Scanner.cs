@@ -55,7 +55,7 @@ public class Scanner
 
     private void FindTranslation(List<Pair> pairs)
     {
-        // Find a translation that works for all pairs
+        // Find a translation that works for all pairs (or 12, or something)
         var allTranslations = new Dictionary<Point, int>();
 
         foreach (var pair in pairs)
@@ -77,9 +77,9 @@ public class Scanner
 
         var x = allTranslations.Where(t => Math.Abs(t.Key.X) == 68 && Math.Abs(t.Key.Y) == 1246 && Math.Abs(t.Key.Z) == 43);
 
-        if (x != null)
+        foreach (var p in x)
         {
-            Console.WriteLine(x);
+            Console.WriteLine(p.Key);
         }
     }
 
@@ -87,8 +87,55 @@ public class Scanner
     {
         var translations = new List<Point>();
 
+        var rotations = GetRotations(right);
+
+        foreach (var rotation in rotations)
+        {
+            translations.Add(new Point(left.X - rotation.X, left.Y + rotation.Y, left.Z + rotation.Z));
+            translations.Add(new Point(left.X - rotation.X, left.Y - rotation.Y, left.Z + rotation.Z));
+            translations.Add(new Point(left.X - rotation.X, left.Y + rotation.Y, left.Z - rotation.Z));
+            translations.Add(new Point(left.X - rotation.X, left.Y - rotation.Y, left.Z - rotation.Z));
+            translations.Add(new Point(left.X + rotation.X, left.Y + rotation.Y, left.Z + rotation.Z));
+            translations.Add(new Point(left.X + rotation.X, left.Y - rotation.Y, left.Z + rotation.Z));
+            translations.Add(new Point(left.X + rotation.X, left.Y + rotation.Y, left.Z - rotation.Z));
+            translations.Add(new Point(left.X + rotation.X, left.Y - rotation.Y, left.Z - rotation.Z));
+        }
 
         return translations;
+    }
+
+    private static List<Point> GetRotations(Point right)
+    {
+        var rotations = new List<Point>();
+
+        rotations.Add(new Point(right.X, right.Y, right.Z));
+        rotations.Add(new Point(right.X, right.Z, right.Y));
+        rotations.Add(new Point(right.X, right.Y, -right.Z));
+        rotations.Add(new Point(right.X, right.Z, -right.Y));
+        rotations.Add(new Point(right.X, -right.Y, right.Z));
+        rotations.Add(new Point(right.X, -right.Z, right.Y));
+        rotations.Add(new Point(-right.X, right.Y, right.Z));
+        rotations.Add(new Point(-right.X, right.Z, right.Y));
+
+        rotations.Add(new Point(right.Y, right.X, right.Z));
+        rotations.Add(new Point(right.Y, right.Z, right.X));
+        rotations.Add(new Point(right.Y, right.X, -right.Z));
+        rotations.Add(new Point(right.Y, right.Z, -right.X));
+        rotations.Add(new Point(right.Y, -right.X, right.Z));
+        rotations.Add(new Point(right.Y, -right.Z, right.X));
+        rotations.Add(new Point(-right.Y, right.X, right.Z));
+        rotations.Add(new Point(-right.Y, right.Z, right.X));
+
+        rotations.Add(new Point(right.Z, right.X, right.Y));
+        rotations.Add(new Point(right.Z, right.Y, right.X));
+        rotations.Add(new Point(right.Z, right.X, -right.Y));
+        rotations.Add(new Point(right.Z, right.Y, -right.X));
+        rotations.Add(new Point(right.Z, -right.X, right.Y));
+        rotations.Add(new Point(right.Z, -right.Y, right.X));
+        rotations.Add(new Point(-right.Z, right.X, right.Y));
+        rotations.Add(new Point(-right.Z, right.Y, right.X));
+
+        return rotations;
     }
 
     private static List<Pair> ResolveMatchingBeacons(List<DistancePair> matchingBeacons)
