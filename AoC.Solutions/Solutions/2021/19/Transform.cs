@@ -127,5 +127,42 @@ public class Transform
 
             return;
         }
+
+        if (-left + delta == -right)
+        {
+            _mappings[(int) target] = origin;
+
+            _deltas[(int) target] = delta;
+
+            _signs[(int) target] = Sign.Negative;
+
+            _flipResult[(int) target] = Sign.Negative;
+
+            return;
+        }
+
+        if (-left - delta == right)
+        {
+            _mappings[(int) target] = origin;
+
+            _deltas[(int) target] = delta;
+
+            _signs[(int) target] = Sign.Negative;
+
+            _flipResult[(int) target] = Sign.Positive;
+
+            return;
+        }
+
+        if (-left - delta == -right)
+        {
+            _mappings[(int) target] = origin;
+
+            _deltas[(int) target] = delta;
+
+            _signs[(int) target] = Sign.Negative;
+
+            _flipResult[(int) target] = Sign.Negative;
+        }
     }
 }
