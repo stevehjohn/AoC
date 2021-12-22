@@ -57,35 +57,81 @@ public class Scanner
     private void FindTranslation(List<Pair> pairs)
     {
         // Find a translation that works for all pairs (or 12, or something)
-        var translation = new Point();
+        var xTranslations = new Dictionary<int, int>();
+
+        var yTranslations = new Dictionary<int, int>();
+
+        var zTranslations = new Dictionary<int, int>();
 
         foreach (var pair in pairs)
         {
             var axisTranslations = GetAxisTranslations(pair.Beacon1.X, pair.Beacon2);
+            
+            axisTranslations.ForEach(t =>
+            {
+                if (xTranslations.ContainsKey(t))
+                {
+                    xTranslations[t]++;
+                }
+                else
+                {
+                    xTranslations.Add(t,1);
+                }
+            });
+
             axisTranslations = GetAxisTranslations(pair.Beacon1.Y, pair.Beacon2);
+
+            axisTranslations.ForEach(t =>
+            {
+                if (yTranslations.ContainsKey(t))
+                {
+                    yTranslations[t]++;
+                }
+                else
+                {
+                    yTranslations.Add(t, 1);
+                }
+            });
+
             axisTranslations = GetAxisTranslations(pair.Beacon1.Z, pair.Beacon2);
+
+            axisTranslations.ForEach(t =>
+            {
+                if (zTranslations.ContainsKey(t))
+                {
+                    zTranslations[t]++;
+                }
+                else
+                {
+                    zTranslations.Add(t, 1);
+                }
+            });
         }
+
+        //axisTranslations = GetAxisTranslations(pair.Beacon1.Y, pair.Beacon2);
+        //axisTranslations = GetAxisTranslations(pair.Beacon1.Z, pair.Beacon2);
     }
 
     private static List<int> GetAxisTranslations(int value, Point coordinate)
     {
-        var axisTranslations = new List<int>();
+        var axisTranslations = new List<int>
+                               {
+                                   value - coordinate.X,
+                                   value - coordinate.Y,
+                                   value - coordinate.Z,
 
-        axisTranslations.Add(value - coordinate.X);
-        axisTranslations.Add(value - coordinate.Y);
-        axisTranslations.Add(value - coordinate.Z);
+                                   -value - coordinate.X,
+                                   -value - coordinate.Y,
+                                   -value - coordinate.Z,
 
-        axisTranslations.Add(-value - coordinate.X);
-        axisTranslations.Add(-value - coordinate.Y);
-        axisTranslations.Add(-value - coordinate.Z);
+                                   value - -coordinate.X,
+                                   value - -coordinate.Y,
+                                   value - -coordinate.Z,
 
-        axisTranslations.Add(value - -coordinate.X);
-        axisTranslations.Add(value - -coordinate.Y);
-        axisTranslations.Add(value - -coordinate.Z);
-
-        axisTranslations.Add(-value - -coordinate.X);
-        axisTranslations.Add(-value - -coordinate.Y);
-        axisTranslations.Add(-value - -coordinate.Z);
+                                   -value - -coordinate.X,
+                                   -value - -coordinate.Y,
+                                   -value - -coordinate.Z
+                               };
 
         return axisTranslations;
     }
