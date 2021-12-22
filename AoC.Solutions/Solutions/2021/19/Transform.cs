@@ -1,5 +1,4 @@
 ﻿using AoC.Solutions.Common;
-using AoC.Solutions.Exceptions;
 
 namespace AoC.Solutions.Solutions._2021._19;
 
@@ -40,7 +39,7 @@ public class Transform
                                         ? origin.Y
                                         : origin.Z)
                              + _deltas[2]) * (_flipResult[2] == Sign.Negative ? -1 : 1)
-        };
+                    };
 
         return point;
     }
@@ -50,16 +49,33 @@ public class Transform
         // Getting there... there's an issue with the origin's +/- and the delta's +/-
 
         TryAxisMapping(origin.X, target.X, xDelta, Axis.X, Axis.X);
-
         TryAxisMapping(origin.X, target.Y, xDelta, Axis.X, Axis.Y);
+        TryAxisMapping(origin.X, target.Z, xDelta, Axis.X, Axis.Z);
 
+        TryAxisMapping(origin.Y, target.X, yDelta, Axis.Y, Axis.X);
+        TryAxisMapping(origin.Y, target.Y, yDelta, Axis.Y, Axis.Y);
         TryAxisMapping(origin.Y, target.Z, yDelta, Axis.Y, Axis.Z);
 
         TryAxisMapping(origin.Z, target.X, zDelta, Axis.Z, Axis.X);
+        TryAxisMapping(origin.Z, target.Y, zDelta, Axis.Z, Axis.Y);
+        TryAxisMapping(origin.Z, target.Z, zDelta, Axis.Z, Axis.Z);
     }
 
     private void TryAxisMapping(int left, int right, int delta, Axis origin, Axis target)
     {
+        if (left + delta == right)
+        {
+            _mappings[(int) target] = origin;
+
+            _deltas[(int) target] = delta;
+
+            _signs[(int) target] = Sign.Positive;
+
+            _flipResult[(int) target] = Sign.Positive;
+
+            return;
+        }
+
         if (left + delta == -right)
         {
             _mappings[(int) target] = origin;
@@ -75,26 +91,26 @@ public class Transform
 
         if (left - delta == right)
         {
-            _mappings[(int)target] = origin;
+            _mappings[(int) target] = origin;
 
-            _deltas[(int)target] = -delta;
+            _deltas[(int) target] = -delta;
 
-            _signs[(int)target] = Sign.Positive;
+            _signs[(int) target] = Sign.Positive;
 
-            _flipResult[(int)target] = Sign.Positive;
+            _flipResult[(int) target] = Sign.Positive;
 
             return;
         }
 
         if (left - delta == -right)
         {
-            _mappings[(int)target] = origin;
+            _mappings[(int) target] = origin;
 
-            _deltas[(int)target] = -delta;
+            _deltas[(int) target] = -delta;
 
-            _signs[(int)target] = Sign.Positive;
+            _signs[(int) target] = Sign.Positive;
 
-            _flipResult[(int)target] = Sign.Negative;
+            _flipResult[(int) target] = Sign.Negative;
 
             return;
         }
@@ -107,11 +123,9 @@ public class Transform
 
             _signs[(int) target] = Sign.Negative;
 
-            _flipResult[(int)target] = Sign.Positive;
+            _flipResult[(int) target] = Sign.Positive;
 
             return;
         }
-
-        throw new PuzzleException("You've missed a case.");
     }
 }
