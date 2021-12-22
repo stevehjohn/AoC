@@ -11,7 +11,7 @@ public abstract class Base : Solution
 
     protected void ParseInput()
     {
-        var scanner = new Scanner()
+        var scanner = new Scanner
                       {
                           Position = new Point()
                       };
