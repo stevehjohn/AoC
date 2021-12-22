@@ -87,25 +87,8 @@ public class Scanner
     {
         var translations = new List<Point>();
 
-        translations.Add(new Point(left.X - right.X, left.Y - right.Y, left.Z - right.Z));
-        translations.Add(new Point(left.X - right.Y, left.Y - right.Z, left.Z - right.X));
-        translations.Add(new Point(left.X - right.Z, left.Y - right.X, left.Z - right.Y));
 
         return translations;
-    }
-
-    private static List<Point> GetAllRotations(Point point)
-    {
-        var rotations = new List<Point>();
-
-        rotations.Add(new Point(point.X, point.Y, point.Z));
-        rotations.Add(new Point(point.X, point.Z, point.Y));
-        rotations.Add(new Point(point.Y, point.X, point.Z));
-        rotations.Add(new Point(point.Y, point.Z, point.X));
-        rotations.Add(new Point(point.Z, point.X, point.Y));
-        rotations.Add(new Point(point.Z, point.Y, point.X));
-
-        return rotations;
     }
 
     private static List<Pair> ResolveMatchingBeacons(List<DistancePair> matchingBeacons)
