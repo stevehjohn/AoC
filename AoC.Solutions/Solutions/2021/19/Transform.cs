@@ -49,6 +49,8 @@ public class Transform
     {
         // Getting there... there's an issue with the origin's +/- and the delta's +/-
 
+        TryAxisMapping(origin.X, target.X, xDelta, Axis.X, Axis.X);
+
         TryAxisMapping(origin.X, target.Y, xDelta, Axis.X, Axis.Y);
 
         TryAxisMapping(origin.Y, target.Z, yDelta, Axis.Y, Axis.Z);
@@ -70,16 +72,29 @@ public class Transform
 
             return;
         }
-        
+
         if (left - delta == right)
         {
-            _mappings[(int) target] = origin;
+            _mappings[(int)target] = origin;
 
-            _deltas[(int) target] = -delta;
+            _deltas[(int)target] = -delta;
 
-            _signs[(int) target] = Sign.Positive;
+            _signs[(int)target] = Sign.Positive;
 
             _flipResult[(int)target] = Sign.Positive;
+
+            return;
+        }
+
+        if (left - delta == -right)
+        {
+            _mappings[(int)target] = origin;
+
+            _deltas[(int)target] = -delta;
+
+            _signs[(int)target] = Sign.Positive;
+
+            _flipResult[(int)target] = Sign.Negative;
 
             return;
         }
