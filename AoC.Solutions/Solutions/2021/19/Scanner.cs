@@ -46,6 +46,11 @@ public class Scanner
 
     public void LocateRelativeTo(Scanner origin)
     {
+        if (Position != null)
+        {
+            return;
+        }
+
         var matchingBeacons = GetMatchingDistances(origin);
 
         if (matchingBeacons.Count < 66)
@@ -61,11 +66,6 @@ public class Scanner
     // TODO: If I get this working, it still needs a bloody good refactor... rank AF
     private void FindTranslation(Scanner origin, List<Pair> pairs)
     {
-        if (origin.Position == null)
-        {
-            return;
-        }
-
         // Find a translation that works for all pairs (or 12, or something)
         var xTranslations = new Dictionary<int, int>();
 
