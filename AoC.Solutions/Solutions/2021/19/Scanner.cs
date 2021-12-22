@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Common;
+﻿using System.ComponentModel.DataAnnotations;
+using AoC.Solutions.Common;
 
 namespace AoC.Solutions.Solutions._2021._19;
 
@@ -56,154 +57,37 @@ public class Scanner
     private void FindTranslation(List<Pair> pairs)
     {
         // Find a translation that works for all pairs (or 12, or something)
-        var allTranslations = new Dictionary<Point, int>();
+        var translation = new Point();
 
         foreach (var pair in pairs)
         {
-            var translations = GetTranslations(pair.Beacon1, pair.Beacon2);
-
-            foreach (var translation in translations)
-            {
-                if (allTranslations.ContainsKey(translation))
-                {
-                    allTranslations[translation]++;
-                }
-                else
-                {
-                    allTranslations.Add(translation, 1);
-                }
-            }
-        }
-
-        var x = allTranslations.Where(t => Math.Abs(t.Key.X) == 68 && Math.Abs(t.Key.Y) == 1246 && Math.Abs(t.Key.Z) == 43);
-
-        /*
-         * I'm disappearing up my own arse here...
-         * Currently have all permutations (-ve & +ve) of the correct answer, but no way to determine which is correct...
-         */
-
-        foreach (var p in x)
-        {
-            Console.WriteLine(p.Key);
+            var axisTranslations = GetAxisTranslations(pair.Beacon1.X, pair.Beacon2);
+            axisTranslations = GetAxisTranslations(pair.Beacon1.Y, pair.Beacon2);
+            axisTranslations = GetAxisTranslations(pair.Beacon1.Z, pair.Beacon2);
         }
     }
 
-    private static List<Point> GetTranslations(Point left, Point right)
+    private static List<int> GetAxisTranslations(int value, Point coordinate)
     {
-        var translations = new List<Point>();
+        var axisTranslations = new List<int>();
 
-        var rotations = GetRotations(right);
+        axisTranslations.Add(value - coordinate.X);
+        axisTranslations.Add(value - coordinate.Y);
+        axisTranslations.Add(value - coordinate.Z);
 
-        foreach (var rotation in rotations)
-        {
-            translations.Add(new Point(left.X - rotation.X, left.Y + rotation.Y, left.Z + rotation.Z));
-            translations.Add(new Point(left.X - rotation.X, left.Y - rotation.Y, left.Z + rotation.Z));
-            translations.Add(new Point(left.X - rotation.X, left.Y + rotation.Y, left.Z - rotation.Z));
-            translations.Add(new Point(left.X - rotation.X, left.Y - rotation.Y, left.Z - rotation.Z));
-            translations.Add(new Point(left.X + rotation.X, left.Y + rotation.Y, left.Z + rotation.Z));
-            translations.Add(new Point(left.X + rotation.X, left.Y - rotation.Y, left.Z + rotation.Z));
-            translations.Add(new Point(left.X + rotation.X, left.Y + rotation.Y, left.Z - rotation.Z));
-            translations.Add(new Point(left.X + rotation.X, left.Y - rotation.Y, left.Z - rotation.Z));
+        axisTranslations.Add(-value - coordinate.X);
+        axisTranslations.Add(-value - coordinate.Y);
+        axisTranslations.Add(-value - coordinate.Z);
 
-            translations.Add(new Point(left.X - rotation.X, left.Y + rotation.Y, -left.Z + rotation.Z));
-            translations.Add(new Point(left.X - rotation.X, left.Y - rotation.Y, -left.Z + rotation.Z));
-            translations.Add(new Point(left.X - rotation.X, left.Y + rotation.Y, -left.Z - rotation.Z));
-            translations.Add(new Point(left.X - rotation.X, left.Y - rotation.Y, -left.Z - rotation.Z));
-            translations.Add(new Point(left.X + rotation.X, left.Y + rotation.Y, -left.Z + rotation.Z));
-            translations.Add(new Point(left.X + rotation.X, left.Y - rotation.Y, -left.Z + rotation.Z));
-            translations.Add(new Point(left.X + rotation.X, left.Y + rotation.Y, -left.Z - rotation.Z));
-            translations.Add(new Point(left.X + rotation.X, left.Y - rotation.Y, -left.Z - rotation.Z));
+        axisTranslations.Add(value - -coordinate.X);
+        axisTranslations.Add(value - -coordinate.Y);
+        axisTranslations.Add(value - -coordinate.Z);
 
-            translations.Add(new Point(left.X - rotation.X, -left.Y + rotation.Y, left.Z + rotation.Z));
-            translations.Add(new Point(left.X - rotation.X, -left.Y - rotation.Y, left.Z + rotation.Z));
-            translations.Add(new Point(left.X - rotation.X, -left.Y + rotation.Y, left.Z - rotation.Z));
-            translations.Add(new Point(left.X - rotation.X, -left.Y - rotation.Y, left.Z - rotation.Z));
-            translations.Add(new Point(left.X + rotation.X, -left.Y + rotation.Y, left.Z + rotation.Z));
-            translations.Add(new Point(left.X + rotation.X, -left.Y - rotation.Y, left.Z + rotation.Z));
-            translations.Add(new Point(left.X + rotation.X, -left.Y + rotation.Y, left.Z - rotation.Z));
-            translations.Add(new Point(left.X + rotation.X, -left.Y - rotation.Y, left.Z - rotation.Z));
+        axisTranslations.Add(-value - -coordinate.X);
+        axisTranslations.Add(-value - -coordinate.Y);
+        axisTranslations.Add(-value - -coordinate.Z);
 
-            translations.Add(new Point(left.X - rotation.X, -left.Y + rotation.Y, -left.Z + rotation.Z));
-            translations.Add(new Point(left.X - rotation.X, -left.Y - rotation.Y, -left.Z + rotation.Z));
-            translations.Add(new Point(left.X - rotation.X, -left.Y + rotation.Y, -left.Z - rotation.Z));
-            translations.Add(new Point(left.X - rotation.X, -left.Y - rotation.Y, -left.Z - rotation.Z));
-            translations.Add(new Point(left.X + rotation.X, -left.Y + rotation.Y, -left.Z + rotation.Z));
-            translations.Add(new Point(left.X + rotation.X, -left.Y - rotation.Y, -left.Z + rotation.Z));
-            translations.Add(new Point(left.X + rotation.X, -left.Y + rotation.Y, -left.Z - rotation.Z));
-            translations.Add(new Point(left.X + rotation.X, -left.Y - rotation.Y, -left.Z - rotation.Z));
-
-            translations.Add(new Point(-left.X - rotation.X, left.Y + rotation.Y, left.Z + rotation.Z));
-            translations.Add(new Point(-left.X - rotation.X, left.Y - rotation.Y, left.Z + rotation.Z));
-            translations.Add(new Point(-left.X - rotation.X, left.Y + rotation.Y, left.Z - rotation.Z));
-            translations.Add(new Point(-left.X - rotation.X, left.Y - rotation.Y, left.Z - rotation.Z));
-            translations.Add(new Point(-left.X + rotation.X, left.Y + rotation.Y, left.Z + rotation.Z));
-            translations.Add(new Point(-left.X + rotation.X, left.Y - rotation.Y, left.Z + rotation.Z));
-            translations.Add(new Point(-left.X + rotation.X, left.Y + rotation.Y, left.Z - rotation.Z));
-            translations.Add(new Point(-left.X + rotation.X, left.Y - rotation.Y, left.Z - rotation.Z));
-
-            translations.Add(new Point(-left.X - rotation.X, left.Y + rotation.Y, -left.Z + rotation.Z));
-            translations.Add(new Point(-left.X - rotation.X, left.Y - rotation.Y, -left.Z + rotation.Z));
-            translations.Add(new Point(-left.X - rotation.X, left.Y + rotation.Y, -left.Z - rotation.Z));
-            translations.Add(new Point(-left.X - rotation.X, left.Y - rotation.Y, -left.Z - rotation.Z));
-            translations.Add(new Point(-left.X + rotation.X, left.Y + rotation.Y, -left.Z + rotation.Z));
-            translations.Add(new Point(-left.X + rotation.X, left.Y - rotation.Y, -left.Z + rotation.Z));
-            translations.Add(new Point(-left.X + rotation.X, left.Y + rotation.Y, -left.Z - rotation.Z));
-            translations.Add(new Point(-left.X + rotation.X, left.Y - rotation.Y, -left.Z - rotation.Z));
-
-            translations.Add(new Point(-left.X - rotation.X, -left.Y + rotation.Y, left.Z + rotation.Z));
-            translations.Add(new Point(-left.X - rotation.X, -left.Y - rotation.Y, left.Z + rotation.Z));
-            translations.Add(new Point(-left.X - rotation.X, -left.Y + rotation.Y, left.Z - rotation.Z));
-            translations.Add(new Point(-left.X - rotation.X, -left.Y - rotation.Y, left.Z - rotation.Z));
-            translations.Add(new Point(-left.X + rotation.X, -left.Y + rotation.Y, left.Z + rotation.Z));
-            translations.Add(new Point(-left.X + rotation.X, -left.Y - rotation.Y, left.Z + rotation.Z));
-            translations.Add(new Point(-left.X + rotation.X, -left.Y + rotation.Y, left.Z - rotation.Z));
-            translations.Add(new Point(-left.X + rotation.X, -left.Y - rotation.Y, left.Z - rotation.Z));
-
-            translations.Add(new Point(-left.X - rotation.X, -left.Y + rotation.Y, -left.Z + rotation.Z));
-            translations.Add(new Point(-left.X - rotation.X, -left.Y - rotation.Y, -left.Z + rotation.Z));
-            translations.Add(new Point(-left.X - rotation.X, -left.Y + rotation.Y, -left.Z - rotation.Z));
-            translations.Add(new Point(-left.X - rotation.X, -left.Y - rotation.Y, -left.Z - rotation.Z));
-            translations.Add(new Point(-left.X + rotation.X, -left.Y + rotation.Y, -left.Z + rotation.Z));
-            translations.Add(new Point(-left.X + rotation.X, -left.Y - rotation.Y, -left.Z + rotation.Z));
-            translations.Add(new Point(-left.X + rotation.X, -left.Y + rotation.Y, -left.Z - rotation.Z));
-            translations.Add(new Point(-left.X + rotation.X, -left.Y - rotation.Y, -left.Z - rotation.Z));
-        }
-
-        return translations;
-    }
-
-    private static List<Point> GetRotations(Point right)
-    {
-        var rotations = new List<Point>();
-
-        rotations.Add(new Point(right.X, right.Y, right.Z));
-        rotations.Add(new Point(right.X, right.Z, right.Y));
-        rotations.Add(new Point(right.X, right.Y, -right.Z));
-        rotations.Add(new Point(right.X, right.Z, -right.Y));
-        rotations.Add(new Point(right.X, -right.Y, right.Z));
-        rotations.Add(new Point(right.X, -right.Z, right.Y));
-        rotations.Add(new Point(-right.X, right.Y, right.Z));
-        rotations.Add(new Point(-right.X, right.Z, right.Y));
-
-        rotations.Add(new Point(right.Y, right.X, right.Z));
-        rotations.Add(new Point(right.Y, right.Z, right.X));
-        rotations.Add(new Point(right.Y, right.X, -right.Z));
-        rotations.Add(new Point(right.Y, right.Z, -right.X));
-        rotations.Add(new Point(right.Y, -right.X, right.Z));
-        rotations.Add(new Point(right.Y, -right.Z, right.X));
-        rotations.Add(new Point(-right.Y, right.X, right.Z));
-        rotations.Add(new Point(-right.Y, right.Z, right.X));
-
-        rotations.Add(new Point(right.Z, right.X, right.Y));
-        rotations.Add(new Point(right.Z, right.Y, right.X));
-        rotations.Add(new Point(right.Z, right.X, -right.Y));
-        rotations.Add(new Point(right.Z, right.Y, -right.X));
-        rotations.Add(new Point(right.Z, -right.X, right.Y));
-        rotations.Add(new Point(right.Z, -right.Y, right.X));
-        rotations.Add(new Point(-right.Z, right.X, right.Y));
-        rotations.Add(new Point(-right.Z, right.Y, right.X));
-
-        return rotations;
+        return axisTranslations;
     }
 
     private static List<Pair> ResolveMatchingBeacons(List<DistancePair> matchingBeacons)
