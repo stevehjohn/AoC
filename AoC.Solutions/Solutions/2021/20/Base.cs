@@ -1,5 +1,4 @@
 ﻿#define DUMP
-using System.Text;
 using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
 
@@ -11,17 +10,25 @@ public abstract class Base : Solution
 
     private bool[] _algorithm;
 
-    private readonly List<Point> _lightPixels = new();
+    private int _width;
 
-    private List<Point> _pixelsToFlip;
+    private int _height;
 
-    public int LightPixelCount => _lightPixels.Count;
+    private bool[,] _image;
+
+    private readonly List<Point> _pixelsToFlip = new();
 
     protected void ParseInput()
     {
         _algorithm = Input[0].Select(c => c == '#').ToArray();
 
-        var y = 0;
+        var y = 1;
+
+        _width = Input[2].Length + 4;
+
+        _height = Input.Length + 2;
+
+        _image = new bool[_width, _height];
 
         foreach (var line in Input.Skip(2))
         {
@@ -29,117 +36,95 @@ public abstract class Base : Solution
             {
                 if (line[x] == '#')
                 {
-                    _lightPixels.Add(new Point(10000 + x, 10000 + y));
+                    _image[x + 2, y + 1] = true;
                 }
             }
 
             y++;
         }
-    }
 
-    protected void Enhance()
-    {
-        _pixelsToFlip = new List<Point>();
-
-        foreach (var pixel in _lightPixels)
-        {
-            EvaluatePixel(new Point(pixel.X - 1, pixel.Y - 1));
-
-            EvaluatePixel(new Point(pixel.X, pixel.Y - 1));
-
-            EvaluatePixel(new Point(pixel.X + 1, pixel.Y - 1));
-
-            EvaluatePixel(new Point(pixel.X - 1, pixel.Y));
-
-            EvaluatePixel(new Point(pixel.X, pixel.Y));
-
-            EvaluatePixel(new Point(pixel.X + 1, pixel.Y));
-
-            EvaluatePixel(new Point(pixel.X - 1, pixel.Y + 1));
-
-            EvaluatePixel(new Point(pixel.X, pixel.Y + 1));
-
-            EvaluatePixel(new Point(pixel.X + 1, pixel.Y + 1));
-        }
-
-        ApplyEnhancement();
-
-#if DUMP && DEBUG
+#if DEBUG && DUMP
         Dump();
 #endif
     }
 
-    private void ApplyEnhancement()
+    public void Enhance()
     {
+        _pixelsToFlip.Clear();
+
+        for (var y = 1; y < _height - 2; y++)
+        {
+            for (var x = 1; x < _width - 2; x++)
+            {
+                //if (_image[x, y]) Debugger.Break();
+
+                EnhancePixel(x, y);
+            }
+        }
+
+        Apply();
+
+#if DEBUG && DUMP
+        Dump();
+#endif
+    }
+
+    private void Apply()
+    {
+        var newImage = new bool[_width + 4, _height + 4];
+
+        for (var y = 0; y < _height; y++)
+        {
+            for (var x = 0; x < _width; x++)
+            {
+                newImage[x + 2, y + 2] = _image[x, y];
+            }
+        }
+
         foreach (var pixel in _pixelsToFlip)
         {
-            if (_lightPixels.Contains(pixel))
-            {
-                _lightPixels.Remove(pixel);
-            }
-            else
-            {
-                _lightPixels.Add(pixel);
-            }
+            newImage[pixel.X + 2, pixel.Y + 2] = ! newImage[pixel.X + 2, pixel.Y + 2];
         }
+
+        _image = newImage;
+
+        _width += 4;
+
+        _height += 4;
     }
 
-    private void EvaluatePixel(Point pixel)
+    private void EnhancePixel(int cX, int cY)
     {
-        var indexBinary = new StringBuilder();
+        short index = 0;
 
-        indexBinary.Append(_lightPixels.Any(p => p.Equals(new Point(pixel.X - 1, pixel.Y - 1))) ? '1' : '0');
+        var shift = 10;
 
-        indexBinary.Append(_lightPixels.Any(p => p.Equals(new Point(pixel.X, pixel.Y - 1))) ? '1' : '0');
-
-        indexBinary.Append(_lightPixels.Any(p => p.Equals(new Point(pixel.X + 1, pixel.Y - 1))) ? '1' : '0');
-
-        indexBinary.Append(_lightPixels.Any(p => p.Equals(new Point(pixel.X - 1, pixel.Y))) ? '1' : '0');
-
-        indexBinary.Append(_lightPixels.Any(p => p.Equals(new Point(pixel.X, pixel.Y))) ? '1' : '0');
-
-        indexBinary.Append(_lightPixels.Any(p => p.Equals(new Point(pixel.X + 1, pixel.Y))) ? '1' : '0');
-
-        indexBinary.Append(_lightPixels.Any(p => p.Equals(new Point(pixel.X - 1, pixel.Y + 1))) ? '1' : '0');
-
-        indexBinary.Append(_lightPixels.Any(p => p.Equals(new Point(pixel.X, pixel.Y + 1))) ? '1' : '0');
-
-        indexBinary.Append(_lightPixels.Any(p => p.Equals(new Point(pixel.X + 1, pixel.Y + 1))) ? '1' : '0');
-
-        var index = Convert.ToInt32(indexBinary.ToString(), 2);
-
-        if (_algorithm[index])
+        for (var y = cY - 1; y < cY + 2; y++)
         {
-            if (! _lightPixels.Contains(pixel) && ! _pixelsToFlip.Contains(pixel))
+            for (var x = cX - 1; x < cX + 2; x++)
             {
-                _pixelsToFlip.Add(pixel);
+                index += (short) (_image[x, y] ? 256 >> shift : 0);
+
+                shift--;
             }
         }
-        else
+
+        var pixel = new Point(cX, cY);
+
+        if (_algorithm[index] != _image[cX, cY] && ! _pixelsToFlip.Contains(pixel))
         {
-            if (_lightPixels.Contains(pixel) && ! _pixelsToFlip.Contains(pixel))
-            {
-                _pixelsToFlip.Add(pixel);
-            }
+            _pixelsToFlip.Add(pixel);
         }
     }
 
-#if DUMP && DEBUG
+#if DEBUG && DUMP
     private void Dump()
     {
-        var yMin = _lightPixels.Min(p => p.Y);
-
-        var xMin = _lightPixels.Min(p => p.X);
-
-        var yMax = _lightPixels.Max(p => p.Y);
-
-        var xMax = _lightPixels.Max(p => p.X);
-
-        for (var y = yMin; y <= yMax; y++)
+        for (var y = 0; y < _height; y++)
         {
-            for (var x = xMin; x <= xMax; x++)
+            for (var x = 0; x < _width; x++)
             {
-                Console.Write(_lightPixels.Any(p => p.X == x && p.Y == y) ? '#' : '.');
+                Console.Write(_image[x, y] ? '#' : '.');
             }
 
             Console.WriteLine();
