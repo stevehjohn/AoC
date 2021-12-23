@@ -10,13 +10,17 @@ public class Transform
 
     private readonly PointCloud _target;
 
+    private readonly Pair _pair;
+
     private TransformParameters _parameters;
 
-    public Transform(PointCloud origin, PointCloud target)
+    public Transform(PointCloud origin, PointCloud target, Pair pair)
     {
         _origin = origin;
 
         _target = target;
+
+        _pair = pair;
     }
 
     public Point TransformPoint(Point point)
@@ -26,14 +30,15 @@ public class Transform
             CalculateParameters();
         }
 
-        // Just need the deltas now...?
-        var transformed = TransformPoint(new PointDecimal(point), _parameters);
+        var origin = new PointDecimal(_pair.Beacon1);
+
+        var target = RotatePoint(new PointDecimal(_pair.Beacon2), _parameters);
 
         return new Point
                {
-                   X = (int) transformed.X,
-                   Y = (int) transformed.Y,
-                   Z = (int) transformed.Z
+                   X = (int) (point.X + (origin.X - target.X)),
+                   Y = (int) (point.Y + (origin.Y - target.Y)),
+                   Z = (int) (point.Z + (origin.Z - target.Z))
                };
     }
 
@@ -100,7 +105,11 @@ public class Transform
     {
         foreach (var originPoint in _origin.Points)
         {
-            if (! _target.Points.Any(p => p.Equals(TransformPoint(originPoint, parameters))))
+            var transformed = RotatePoint(originPoint, parameters);
+
+            var match = _target.Points.SingleOrDefault(p => p.Equals(transformed));
+
+            if (match == null)
             {
                 return false;
             }
@@ -109,7 +118,7 @@ public class Transform
         return true;
     }
 
-    private static PointDecimal TransformPoint(PointDecimal point, TransformParameters parameters)
+    private static PointDecimal RotatePoint(PointDecimal point, TransformParameters parameters)
     {
         var transformed = new PointDecimal
                           {
