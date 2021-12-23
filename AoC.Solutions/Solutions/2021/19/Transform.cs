@@ -46,6 +46,7 @@ public class Transform
 
     public void CalculateTransform(Point origin, Point target, int xDelta, int yDelta, int zDelta)
     {
+        // So, looks like TryAxisMapping could match 2 conditions - which is correct?
         TryAxisMapping(origin.X, target.X, xDelta, Axis.X, Axis.X);
         TryAxisMapping(origin.X, target.Y, xDelta, Axis.X, Axis.Y);
         TryAxisMapping(origin.X, target.Z, xDelta, Axis.X, Axis.Z);
