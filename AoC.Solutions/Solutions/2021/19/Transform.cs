@@ -74,45 +74,45 @@ public class Transform
             AddMappingParameter(target, origin, delta, Sign.Positive, Sign.Positive);
         }
 
-        if (left + delta == -right)
-        {
-            AddMappingParameter(target, origin, delta, Sign.Positive, Sign.Negative);
-        }
+        //if (left + delta == -right)
+        //{
+        //    AddMappingParameter(target, origin, delta, Sign.Positive, Sign.Negative);
+        //}
 
         if (left - delta == right)
         {
             AddMappingParameter(target, origin, -delta, Sign.Positive, Sign.Positive);
         }
 
-        if (left - delta == -right)
-        {
-            AddMappingParameter(target, origin, -delta, Sign.Positive, Sign.Negative);
-        }
+        //if (left - delta == -right)
+        //{
+        //    AddMappingParameter(target, origin, -delta, Sign.Positive, Sign.Negative);
+        //}
 
         if (-left + delta == right)
         {
             AddMappingParameter(target, origin, delta, Sign.Negative, Sign.Positive);
         }
 
-        if (-left + delta == -right)
-        {
-            AddMappingParameter(target, origin, delta, Sign.Negative, Sign.Negative);
-        }
+        //if (-left + delta == -right)
+        //{
+        //    AddMappingParameter(target, origin, delta, Sign.Negative, Sign.Negative);
+        //}
 
         if (-left - delta == right)
         {
             AddMappingParameter(target, origin, -delta, Sign.Negative, Sign.Positive);
         }
 
-        if (-left - delta == -right)
-        {
-            AddMappingParameter(target, origin, -delta, Sign.Negative, Sign.Negative);
-        }
+        //if (-left - delta == -right)
+        //{
+        //    AddMappingParameter(target, origin, -delta, Sign.Negative, Sign.Negative);
+        //}
     }
 
     private void AddMappingParameter(Axis target, Axis origin, int delta, Sign sign, Sign flipResult)
     {
-        var parameters = _transformParameters.FirstOrDefault(p => p.Mappings[(int) target] == Axis.Unknown);
+        var parameters = _transformParameters.FirstOrDefault(); //(p => p.Mappings[(int) target] == Axis.Unknown);
 
         if (parameters == null)
         {
