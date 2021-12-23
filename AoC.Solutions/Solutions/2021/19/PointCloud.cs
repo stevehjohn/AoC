@@ -6,6 +6,8 @@ public class PointCloud
 {
     private readonly List<PointDecimal> _points;
 
+    public List<PointDecimal> Points => _points;
+
     public PointCloud(List<Point> points)
     {
         _points = points.Select(p => new PointDecimal(p)).ToList();

@@ -90,6 +90,39 @@ public class Transform
 
     private bool CheckCloudsMatch(TransformParameters parameters)
     {
-        return false;
+        foreach (var originPoint in _origin.Points)
+        {
+            if (! _target.Points.Any(p => p.Equals(TransformPoint(originPoint, parameters))))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static PointDecimal TransformPoint(PointDecimal point, TransformParameters parameters)
+    {
+        var transformed = new PointDecimal();
+
+        transformed.X = (int) parameters.Flips[(int) Axis.X] * (parameters.Mappings[(int) Axis.X] == Axis.X
+                                                                    ? point.X
+                                                                    : parameters.Mappings[(int) Axis.X] == Axis.Y
+                                                                        ? point.Y
+                                                                        : point.Z);
+
+        transformed.X = (int) parameters.Flips[(int) Axis.X] * (parameters.Mappings[(int) Axis.Y] == Axis.X
+                                                                    ? point.X
+                                                                    : parameters.Mappings[(int) Axis.Y] == Axis.Y
+                                                                        ? point.Y
+                                                                        : point.Z);
+
+        transformed.X = (int) parameters.Flips[(int) Axis.X] * (parameters.Mappings[(int) Axis.Z] == Axis.X
+                                                                    ? point.X
+                                                                    : parameters.Mappings[(int) Axis.Z] == Axis.Y
+                                                                        ? point.Y
+                                                                        : point.Z);
+
+        return transformed;
     }
 }

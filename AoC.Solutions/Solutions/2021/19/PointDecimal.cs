@@ -28,12 +28,16 @@ public class PointDecimal
         Z = z;
     }
 
+    public PointDecimal()
+    {
+    }
+
     public override string ToString()
     {
         return $"{X,5},{Y,5},{Z,5}";
     }
 
-    protected bool Equals(Point other)
+    protected bool Equals(PointDecimal other)
     {
         return X == other.X && Y == other.Y && Z == other.Z;
     }
@@ -54,8 +58,8 @@ public class PointDecimal
         {
             return false;
         }
-        
-        return Equals((Point)obj);
+
+        return Equals((PointDecimal) obj);
     }
 
     public override int GetHashCode()
