@@ -34,11 +34,13 @@ public class Transform
 
         var target = RotatePoint(new PointDecimal(_pair.Beacon2), _parameters);
 
+        var x = RotatePoint(new PointDecimal(point), _parameters);
+
         return new Point
                {
-                   X = (int) (point.X + (origin.X - target.X)),
-                   Y = (int) (point.Y + (origin.Y - target.Y)),
-                   Z = (int) (point.Z + (origin.Z - target.Z))
+                   X = (int) (x.X + (origin.X - target.X)),
+                   Y = (int) (x.Y + (origin.Y - target.Y)),
+                   Z = (int) (x.Z + (origin.Z - target.Z))
                };
     }
 
