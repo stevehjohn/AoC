@@ -65,6 +65,13 @@ public class Scanner
 
     private void FindTranslation(Scanner origin, List<Pair> pairs)
     {
+        var left = new PointCloud(pairs.Select(p => p.Beacon1).ToList());
+
+        var right = new PointCloud(pairs.Select(p => p.Beacon2).ToList());
+
+        var transform = new Transform(left, right);
+
+        var x = transform.TransformPoint(origin.Position);
     }
 
     private static List<Pair> ResolveMatchingBeacons(List<DistancePair> matchingBeacons)
