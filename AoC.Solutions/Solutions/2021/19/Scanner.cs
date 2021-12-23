@@ -63,7 +63,7 @@ public class Scanner
         FindTranslation(origin, beaconPairs.Take(12).ToList());
     }
 
-    private void FindTranslation(Scanner origin, List<Pair> pairs)
+    private static void FindTranslation(Scanner origin, List<Pair> pairs)
     {
         var left = new PointCloud(pairs.Select(p => p.Beacon1).ToList());
 
