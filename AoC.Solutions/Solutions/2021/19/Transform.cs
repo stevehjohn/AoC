@@ -26,7 +26,15 @@ public class Transform
             CalculateParameters();
         }
 
-        return null;
+        // Just need the deltas now...?
+        var transformed = TransformPoint(new PointDecimal(point), _parameters);
+
+        return new Point
+               {
+                   X = (int) transformed.X,
+                   Y = (int) transformed.Y,
+                   Z = (int) transformed.Z
+               };
     }
 
     private void CalculateParameters()
@@ -60,7 +68,7 @@ public class Transform
         throw new PuzzleException("No translation found.");
     }
 
-    private List<TransformParameters> GetParameterCombinations()
+    private static List<TransformParameters> GetParameterCombinations()
     {
         var permutations = new List<TransformParameters>();
 
@@ -103,25 +111,26 @@ public class Transform
 
     private static PointDecimal TransformPoint(PointDecimal point, TransformParameters parameters)
     {
-        var transformed = new PointDecimal();
+        var transformed = new PointDecimal
+                          {
+                              X = (int) parameters.Flips[(int) Axis.X] * (parameters.Mappings[(int) Axis.X] == Axis.X
+                                                                              ? point.X
+                                                                              : parameters.Mappings[(int) Axis.X] == Axis.Y
+                                                                                  ? point.Y
+                                                                                  : point.Z),
 
-        transformed.X = (int) parameters.Flips[(int) Axis.X] * (parameters.Mappings[(int) Axis.X] == Axis.X
-                                                                    ? point.X
-                                                                    : parameters.Mappings[(int) Axis.X] == Axis.Y
-                                                                        ? point.Y
-                                                                        : point.Z);
+                              Y = (int) parameters.Flips[(int) Axis.Y] * (parameters.Mappings[(int) Axis.Y] == Axis.X
+                                                                              ? point.X
+                                                                              : parameters.Mappings[(int) Axis.Y] == Axis.Y
+                                                                                  ? point.Y
+                                                                                  : point.Z),
 
-        transformed.Y = (int) parameters.Flips[(int) Axis.Y] * (parameters.Mappings[(int) Axis.Y] == Axis.X
-                                                                    ? point.X
-                                                                    : parameters.Mappings[(int) Axis.Y] == Axis.Y
-                                                                        ? point.Y
-                                                                        : point.Z);
-
-        transformed.Z = (int) parameters.Flips[(int) Axis.Z] * (parameters.Mappings[(int) Axis.Z] == Axis.X
-                                                                    ? point.X
-                                                                    : parameters.Mappings[(int) Axis.Z] == Axis.Y
-                                                                        ? point.Y
-                                                                        : point.Z);
+                              Z = (int) parameters.Flips[(int) Axis.Z] * (parameters.Mappings[(int) Axis.Z] == Axis.X
+                                                                              ? point.X
+                                                                              : parameters.Mappings[(int) Axis.Z] == Axis.Y
+                                                                                  ? point.Y
+                                                                                  : point.Z)
+                          };
 
         return transformed;
     }
