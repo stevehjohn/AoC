@@ -60,7 +60,6 @@ public abstract class Base : Solution
                 //if (_image[x, y]) Debugger.Break();
 
                 //if (x == 4 && y == 4) Debugger.Break();
-
                 EnhancePixel(x, y);
             }
         }
