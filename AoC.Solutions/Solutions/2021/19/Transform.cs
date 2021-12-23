@@ -30,17 +30,15 @@ public class Transform
             CalculateParameters();
         }
 
-        var origin = new PointDecimal(_pair.Beacon1);
+        var beacon1 = new PointDecimal(_pair.Beacon1);
 
-        var target = RotatePoint(new PointDecimal(_pair.Beacon2), _parameters);
-
-        var x = RotatePoint(new PointDecimal(point), _parameters);
+        var beacon2 = RotatePoint(new PointDecimal(_pair.Beacon2), _parameters);
 
         return new Point
                {
-                   X = (int) (x.X + (origin.X - target.X)),
-                   Y = (int) (x.Y + (origin.Y - target.Y)),
-                   Z = (int) (x.Z + (origin.Z - target.Z))
+                   X = (int) (beacon1.X - beacon2.X),
+                   Y = (int) (beacon1.Y - beacon2.Y),
+                   Z = (int) (beacon1.Z - beacon2.Z)
                };
     }
 
