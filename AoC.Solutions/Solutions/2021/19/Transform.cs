@@ -111,13 +111,13 @@ public class Transform
                                                                         ? point.Y
                                                                         : point.Z);
 
-        transformed.X = (int) parameters.Flips[(int) Axis.X] * (parameters.Mappings[(int) Axis.Y] == Axis.X
+        transformed.Y = (int) parameters.Flips[(int) Axis.Y] * (parameters.Mappings[(int) Axis.Y] == Axis.X
                                                                     ? point.X
                                                                     : parameters.Mappings[(int) Axis.Y] == Axis.Y
                                                                         ? point.Y
                                                                         : point.Z);
 
-        transformed.X = (int) parameters.Flips[(int) Axis.X] * (parameters.Mappings[(int) Axis.Z] == Axis.X
+        transformed.Z = (int) parameters.Flips[(int) Axis.Z] * (parameters.Mappings[(int) Axis.Z] == Axis.X
                                                                     ? point.X
                                                                     : parameters.Mappings[(int) Axis.Z] == Axis.Y
                                                                         ? point.Y
