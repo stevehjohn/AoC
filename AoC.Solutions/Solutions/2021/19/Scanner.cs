@@ -126,6 +126,12 @@ public class Scanner
 
         transform.CalculateTransform(pairs[0].Beacon1, pairs[0].Beacon2, x, y, z);
 
+        //foreach (var pair in pairs)
+        //{
+        //    Console.WriteLine($"{pair.Beacon1} => {transform.TransformPoint(pair.Beacon1)}");
+        //}
+        // So, given the transform makes b1 => b2 correctly, what is going on with the scanner origin?
+
         Position = transform.TransformPoint(origin.Position);
     }
 
