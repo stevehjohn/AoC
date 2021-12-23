@@ -1,5 +1,4 @@
 ﻿#define DUMP
-using System.Diagnostics;
 using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
 

@@ -4,42 +4,42 @@ namespace AoC.Solutions.Solutions._2021._19;
 
 public class Transform
 {
-    private readonly Axis[] _mappings = new Axis[3];
-
-    private readonly int[] _deltas = new int[3];
-
-    private readonly Sign[] _signs = new Sign[3];
-
-    private readonly Sign[] _flipResult = new Sign[3];
+    private readonly List<TransformParameters> _transformParameters = new();
 
     public Point TransformPoint(Point origin)
     {
+        var parameters = _transformParameters[0];
+
+        var x = ((parameters.Signs[0] == Sign.Negative ? -1 : 1)
+                 * (parameters.Mappings[0] == Axis.X
+                        ? origin.X
+                        : parameters.Mappings[0] == Axis.Y
+                            ? origin.Y
+                            : origin.Z)
+                 + parameters.Deltas[0]) * (parameters.FlipResult[0] == Sign.Negative ? -1 : 1);
+
+        var y = ((parameters.Signs[1] == Sign.Negative ? -1 : 1)
+                 * (parameters.Mappings[1] == Axis.X
+                        ? origin.X
+                        : parameters.Mappings[1] == Axis.Y
+                            ? origin.Y
+                            : origin.Z)
+                 + parameters.Deltas[1]) * (parameters.FlipResult[1] == Sign.Negative ? -1 : 1);
+
+        var z = ((parameters.Signs[2] == Sign.Negative ? -1 : 1)
+                 * (parameters.Mappings[2] == Axis.X
+                        ? origin.X
+                        : parameters.Mappings[2] == Axis.Y
+                            ? origin.Y
+                            : origin.Z)
+                 + parameters.Deltas[2]) * (parameters.FlipResult[2] == Sign.Negative ? -1 : 1);
+
         var point = new Point
                     {
-                        X = ((_signs[0] == Sign.Negative ? -1 : 1)
-                             * (_mappings[0] == Axis.X
-                                    ? origin.X
-                                    : _mappings[0] == Axis.Y
-                                        ? origin.Y
-                                        : origin.Z)
-                             + _deltas[0]) * (_flipResult[0] == Sign.Negative ? -1 : 1),
-
-                        Y = ((_signs[1] == Sign.Negative ? -1 : 1)
-                             * (_mappings[1] == Axis.X
-                                    ? origin.X
-                                    : _mappings[1] == Axis.Y
-                                        ? origin.Y
-                                        : origin.Z)
-                             + _deltas[1]) * (_flipResult[1] == Sign.Negative ? -1 : 1),
-
-                        Z = ((_signs[2] == Sign.Negative ? -1 : 1)
-                             * (_mappings[2] == Axis.X
-                                    ? origin.X
-                                    : _mappings[2] == Axis.Y
-                                        ? origin.Y
-                                        : origin.Z)
-                             + _deltas[2]) * (_flipResult[2] == Sign.Negative ? -1 : 1)
-                    };
+                        X = x,
+                        Y = y,
+                        Z = z
+        };
 
         return point;
     }
@@ -58,110 +58,75 @@ public class Transform
         TryAxisMapping(origin.Z, target.X, zDelta, Axis.Z, Axis.X);
         TryAxisMapping(origin.Z, target.Y, zDelta, Axis.Z, Axis.Y);
         TryAxisMapping(origin.Z, target.Z, zDelta, Axis.Z, Axis.Z);
+
+        // Looks like it's just luck which order the deltas end up in...
+
+        //foreach (var parameter in _transformParameters)
+        //{
+        //    Console.WriteLine($"{parameter.Deltas[0]}, {parameter.Deltas[1]}, {parameter.Deltas[2]}");
+        //}
     }
 
     private void TryAxisMapping(int left, int right, int delta, Axis origin, Axis target)
     {
         if (left + delta == right)
         {
-            _mappings[(int) target] = origin;
-
-            _deltas[(int) target] = delta;
-
-            _signs[(int) target] = Sign.Positive;
-
-            _flipResult[(int) target] = Sign.Positive;
-
-            return;
+            AddMappingParameter(target, origin, delta, Sign.Positive, Sign.Positive);
         }
 
         if (left + delta == -right)
         {
-            _mappings[(int) target] = origin;
-
-            _deltas[(int) target] = delta;
-
-            _signs[(int) target] = Sign.Positive;
-
-            _flipResult[(int) target] = Sign.Negative;
-
-            return;
+            AddMappingParameter(target, origin, delta, Sign.Positive, Sign.Negative);
         }
 
         if (left - delta == right)
         {
-            _mappings[(int) target] = origin;
-
-            _deltas[(int) target] = -delta;
-
-            _signs[(int) target] = Sign.Positive;
-
-            _flipResult[(int) target] = Sign.Positive;
-
-            return;
+            AddMappingParameter(target, origin, -delta, Sign.Positive, Sign.Positive);
         }
 
         if (left - delta == -right)
         {
-            _mappings[(int) target] = origin;
-
-            _deltas[(int) target] = -delta;
-
-            _signs[(int) target] = Sign.Positive;
-
-            _flipResult[(int) target] = Sign.Negative;
-
-            return;
+            AddMappingParameter(target, origin, -delta, Sign.Positive, Sign.Negative);
         }
 
         if (-left + delta == right)
         {
-            _mappings[(int) target] = origin;
-
-            _deltas[(int) target] = delta;
-
-            _signs[(int) target] = Sign.Negative;
-
-            _flipResult[(int) target] = Sign.Positive;
-
-            return;
+            AddMappingParameter(target, origin, delta, Sign.Negative, Sign.Positive);
         }
 
         if (-left + delta == -right)
         {
-            _mappings[(int) target] = origin;
-
-            _deltas[(int) target] = delta;
-
-            _signs[(int) target] = Sign.Negative;
-
-            _flipResult[(int) target] = Sign.Negative;
-
-            return;
+            AddMappingParameter(target, origin, delta, Sign.Negative, Sign.Negative);
         }
 
         if (-left - delta == right)
         {
-            _mappings[(int) target] = origin;
-
-            _deltas[(int) target] = delta;
-
-            _signs[(int) target] = Sign.Negative;
-
-            _flipResult[(int) target] = Sign.Positive;
-
-            return;
+            AddMappingParameter(target, origin, -delta, Sign.Negative, Sign.Positive);
         }
 
         if (-left - delta == -right)
         {
-            _mappings[(int) target] = origin;
-
-            _deltas[(int) target] = delta;
-
-            _signs[(int) target] = Sign.Negative;
-
-            _flipResult[(int) target] = Sign.Negative;
+            AddMappingParameter(target, origin, -delta, Sign.Negative, Sign.Negative);
         }
+    }
+
+    private void AddMappingParameter(Axis target, Axis origin, int delta, Sign sign, Sign flipResult)
+    {
+        var parameters = _transformParameters.FirstOrDefault(p => p.Mappings[(int) target] == Axis.Unknown);
+
+        if (parameters == null)
+        {
+            parameters = new TransformParameters();
+
+            _transformParameters.Add(parameters);
+        }
+
+        parameters.Mappings[(int) target] = origin;
+
+        parameters.Deltas[(int) target] = delta;
+
+        parameters.Signs[(int) target] = sign;
+
+        parameters.FlipResult[(int) target] = flipResult;
     }
 }
