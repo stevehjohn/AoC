@@ -2,7 +2,14 @@
 
 public class TransformParameters
 {
-    public Axis[] Mappings { get; } = new Axis[3];
+    public Axis[] Mappings { get; }
 
-    public Sign[] Flips { get; } = new Sign[3];
+    public Sign[] Flips { get; }
+
+    public TransformParameters(Axis[] mappings, Sign[] flips)
+    {
+        Mappings = mappings;
+
+        Flips = flips;
+    }
 }
