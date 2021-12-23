@@ -11,8 +11,6 @@ public class Part1 : Base
 
         Enhance();
 
-        Enhance();
-
-        return LightPixelCount.ToString();
+        return "TESTING";
     }
 }
