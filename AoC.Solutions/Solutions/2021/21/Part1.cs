@@ -10,10 +10,9 @@ public class Part1 : Solution
 
     public override string GetAnswer()
     {
-        // TODO: Parse
-        var player1Position = 5;
+        var player1Position = int.Parse(Input[0].Substring(Input[0].IndexOf(':') + 1));
 
-        var player2Position = 10;
+        var player2Position = int.Parse(Input[1].Substring(Input[1].IndexOf(':') + 1));
 
         var player1Score = 0;
 
