@@ -34,12 +34,14 @@ public class Transform
 
         var beacon2 = RotatePoint(new PointDecimal(_pair.Beacon2), _parameters);
 
-        return new Point
-               {
-                   X = (int) (beacon1.X - beacon2.X),
-                   Y = (int) (beacon1.Y - beacon2.Y),
-                   Z = (int) (beacon1.Z - beacon2.Z)
-               };
+        var result = new Point
+                     {
+                         X = point.X - (int) (beacon2.X - beacon1.X),
+                         Y = point.Y - (int) (beacon2.Y - beacon1.Y),
+                         Z = point.Z - (int) (beacon2.Z - beacon1.Z)
+                     };
+
+        return result;
     }
 
     private void CalculateParameters()
