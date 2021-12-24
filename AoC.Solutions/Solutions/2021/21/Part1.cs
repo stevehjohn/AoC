@@ -6,7 +6,7 @@ namespace AoC.Solutions.Solutions._2021._21;
 [UsedImplicitly]
 public class Part1 : Solution
 {
-    public override string Description => "";
+    public override string Description => "Quantum dice";
 
     public override string GetAnswer()
     {

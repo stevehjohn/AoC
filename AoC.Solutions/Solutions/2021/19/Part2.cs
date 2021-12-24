@@ -15,12 +15,17 @@ public class Part2 : Base
 
             for (var s2 = 0; s2 < Scanners.Count; s2++)
             {
-                if (s1 == s2)
+                if (s1 == s2 || Scanners[s2].Position != null)
                 {
                     continue;
                 }
 
                 Scanners[s2].LocateRelativeTo(originScanner);
+
+                //if (Scanners[s2].Position != null)
+                //{
+                //    Console.WriteLine($"{s1} => {s2}");
+                //}
             }
         }
 
