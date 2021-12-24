@@ -46,7 +46,7 @@ public class Scanner
 
     public void LocateRelativeTo(Scanner origin)
     {
-        if (Position != null)
+        if (Position != null || origin.Position == null)
         {
             return;
         }
