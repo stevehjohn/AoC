@@ -22,10 +22,10 @@ public class Part2 : Base
 
                 Scanners[s2].LocateRelativeTo(originScanner);
 
-                //if (Scanners[s2].Position != null)
-                //{
-                //    Console.WriteLine($"{s1} => {s2}");
-                //}
+                if (Scanners[s2].Position != null)
+                {
+                    Console.WriteLine($"{s1} => {s2}");
+                }
             }
         }
 
