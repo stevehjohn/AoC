@@ -2,20 +2,14 @@
 
 public class TransformParameters
 {
-    public Axis[] Mappings { get; } = new Axis[3];
+    public Axis[] Mappings { get; }
 
-    public int[] Deltas { get; } = new int[3];
+    public Sign[] Flips { get; }
 
-    public Sign[] Signs { get; } = new Sign[3];
-
-    public Sign[] FlipResult { get; } = new Sign[3];
-
-    public TransformParameters()
+    public TransformParameters(Axis[] mappings, Sign[] flips)
     {
-        Mappings[0] = Axis.Unknown;
+        Mappings = mappings;
 
-        Mappings[1] = Axis.Unknown;
-        
-        Mappings[2] = Axis.Unknown;
+        Flips = flips;
     }
 }

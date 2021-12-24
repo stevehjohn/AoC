@@ -12,10 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Solutions\2021\19\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\AoC.Solutions\AoC.Solutions.csproj" />
   </ItemGroup>
 

@@ -2,6 +2,6 @@
 
 public enum Sign
 {
-    Positive,
-    Negative
+    Negative = -1,
+    Positive = 1
 }
