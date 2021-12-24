@@ -30,16 +30,14 @@ public class Transform
             CalculateParameters();
         }
 
-        var beacon1 = new PointDecimal(_pair.Beacon1);
+        // Fuck
+        // Surely, once rotation is known, one delta, rotated, is enough?
 
-        var beacon2 = RotatePoint(new PointDecimal(_pair.Beacon2), _parameters);
+        var beacon2 = RotatePoint(new PointDecimal(_pair.Beacon2.X, _pair.Beacon2.Y, _pair.Beacon2.Z), _parameters);
 
-        var result = new Point
-                     {
-                         X = point.X - (int) (beacon2.X - beacon1.X),
-                         Y = point.Y - (int) (beacon2.Y - beacon1.Y),
-                         Z = point.Z - (int) (beacon2.Z - beacon1.Z)
-                     };
+        var delta = new PointDecimal(_pair.Beacon1.X - beacon2.X, _pair.Beacon1.Y - beacon2.Y, _pair.Beacon1.Z - beacon2.Z);
+
+        var result = new Point((int) (point.X + delta.X), (int) (point.Y + delta.Y), (int) (point.Z + delta.Z));
 
         return result;
     }
