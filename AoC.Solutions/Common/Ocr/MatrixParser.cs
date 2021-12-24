@@ -86,7 +86,6 @@ public class MatrixParser
 
     private char MatchCharacter(bool[,] matrix, int position)
     {
-        // TODO: This double break with flag is nasty.
         foreach (var template in _templates)
         {
             var matched = true;
@@ -95,7 +94,6 @@ public class MatrixParser
             {
                 for (var x = 0; x < 5; x++)
                 {
-                    // TODO: Maybe make character class do the match.
                     if (matrix[position + x, y] != template.Template[x, y])
                     {
                         matched = false;

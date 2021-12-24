@@ -1,132 +1,146 @@
 ﻿using AoC.Solutions.Common;
+using AoC.Solutions.Exceptions;
+using AoC.Solutions.Extensions;
 
 namespace AoC.Solutions.Solutions._2021._19;
 
 public class Transform
 {
-    private readonly List<TransformParameters> _transformParameters = new();
+    private readonly PointCloud _origin;
 
-    public Point TransformPoint(Point origin)
+    private readonly PointCloud _target;
+
+    private readonly Pair _pair;
+
+    private TransformParameters _parameters;
+
+    public Transform(PointCloud origin, PointCloud target, Pair pair)
     {
-        var parameters = _transformParameters[0];
+        _origin = origin;
 
-        var x = ((parameters.Signs[0] == Sign.Negative ? -1 : 1)
-                 * (parameters.Mappings[0] == Axis.X
-                        ? origin.X
-                        : parameters.Mappings[0] == Axis.Y
-                            ? origin.Y
-                            : origin.Z)
-                 + parameters.Deltas[0]) * (parameters.FlipResult[0] == Sign.Negative ? -1 : 1);
+        _target = target;
 
-        var y = ((parameters.Signs[1] == Sign.Negative ? -1 : 1)
-                 * (parameters.Mappings[1] == Axis.X
-                        ? origin.X
-                        : parameters.Mappings[1] == Axis.Y
-                            ? origin.Y
-                            : origin.Z)
-                 + parameters.Deltas[1]) * (parameters.FlipResult[1] == Sign.Negative ? -1 : 1);
-
-        var z = ((parameters.Signs[2] == Sign.Negative ? -1 : 1)
-                 * (parameters.Mappings[2] == Axis.X
-                        ? origin.X
-                        : parameters.Mappings[2] == Axis.Y
-                            ? origin.Y
-                            : origin.Z)
-                 + parameters.Deltas[2]) * (parameters.FlipResult[2] == Sign.Negative ? -1 : 1);
-
-        var point = new Point
-                    {
-                        X = x,
-                        Y = y,
-                        Z = z
-        };
-
-        return point;
+        _pair = pair;
     }
 
-    public void CalculateTransform(Point origin, Point target, int xDelta, int yDelta, int zDelta)
+    public Point TransformPoint(Point point)
     {
-        // So, looks like TryAxisMapping could match 2 conditions - which is correct?
-        TryAxisMapping(origin.X, target.X, xDelta, Axis.X, Axis.X);
-        TryAxisMapping(origin.X, target.Y, xDelta, Axis.X, Axis.Y);
-        TryAxisMapping(origin.X, target.Z, xDelta, Axis.X, Axis.Z);
+        if (_parameters == null)
+        {
+            CalculateParameters();
+        }
 
-        TryAxisMapping(origin.Y, target.X, yDelta, Axis.Y, Axis.X);
-        TryAxisMapping(origin.Y, target.Y, yDelta, Axis.Y, Axis.Y);
-        TryAxisMapping(origin.Y, target.Z, yDelta, Axis.Y, Axis.Z);
+        // Fuck
+        // Surely, once rotation is known, one delta, rotated, is enough?
 
-        TryAxisMapping(origin.Z, target.X, zDelta, Axis.Z, Axis.X);
-        TryAxisMapping(origin.Z, target.Y, zDelta, Axis.Z, Axis.Y);
-        TryAxisMapping(origin.Z, target.Z, zDelta, Axis.Z, Axis.Z);
+        var beacon2 = RotatePoint(new PointDecimal(_pair.Beacon2.X, _pair.Beacon2.Y, _pair.Beacon2.Z), _parameters);
 
-        // Looks like it's just luck which order the deltas end up in...
+        var delta = new PointDecimal(_pair.Beacon1.X - beacon2.X, _pair.Beacon1.Y - beacon2.Y, _pair.Beacon1.Z - beacon2.Z);
 
-        //foreach (var parameter in _transformParameters)
-        //{
-        //    Console.WriteLine($"{parameter.Deltas[0]}, {parameter.Deltas[1]}, {parameter.Deltas[2]}");
-        //}
+        var result = new Point((int) (point.X + delta.X), (int) (point.Y + delta.Y), (int) (point.Z + delta.Z));
+
+        return result;
     }
 
-    private void TryAxisMapping(int left, int right, int delta, Axis origin, Axis target)
+    private void CalculateParameters()
     {
-        if (left + delta == right)
-        {
-            AddMappingParameter(target, origin, delta, Sign.Positive, Sign.Positive);
-        }
+        CentreClouds();
 
-        //if (left + delta == -right)
-        //{
-        //    AddMappingParameter(target, origin, delta, Sign.Positive, Sign.Negative);
-        //}
-
-        if (left - delta == right)
-        {
-            AddMappingParameter(target, origin, -delta, Sign.Positive, Sign.Positive);
-        }
-
-        //if (left - delta == -right)
-        //{
-        //    AddMappingParameter(target, origin, -delta, Sign.Positive, Sign.Negative);
-        //}
-
-        if (-left + delta == right)
-        {
-            AddMappingParameter(target, origin, delta, Sign.Negative, Sign.Positive);
-        }
-
-        //if (-left + delta == -right)
-        //{
-        //    AddMappingParameter(target, origin, delta, Sign.Negative, Sign.Negative);
-        //}
-
-        if (-left - delta == right)
-        {
-            AddMappingParameter(target, origin, -delta, Sign.Negative, Sign.Positive);
-        }
-
-        //if (-left - delta == -right)
-        //{
-        //    AddMappingParameter(target, origin, -delta, Sign.Negative, Sign.Negative);
-        //}
+        FindRotation();
     }
 
-    private void AddMappingParameter(Axis target, Axis origin, int delta, Sign sign, Sign flipResult)
+    private void CentreClouds()
     {
-        var parameters = _transformParameters.FirstOrDefault(); //(p => p.Mappings[(int) target] == Axis.Unknown);
+        _origin.CentreAtZero();
 
-        if (parameters == null)
+        _target.CentreAtZero();
+    }
+
+    private void FindRotation()
+    {
+        var parameterCombinations = GetParameterCombinations();
+
+        foreach (var combination in parameterCombinations)
         {
-            parameters = new TransformParameters();
+            if (CheckCloudsMatch(combination))
+            {
+                _parameters = combination;
 
-            _transformParameters.Add(parameters);
+                return;
+            }
         }
 
-        parameters.Mappings[(int) target] = origin;
+        throw new PuzzleException("No translation found.");
+    }
 
-        parameters.Deltas[(int) target] = delta;
+    private static List<TransformParameters> GetParameterCombinations()
+    {
+        var permutations = new List<TransformParameters>();
 
-        parameters.Signs[(int) target] = sign;
+        var axisPermutations = new[] { Axis.X, Axis.Y, Axis.Z }.GetPermutations();
 
-        parameters.FlipResult[(int) target] = flipResult;
+        foreach (var axisPermutation in axisPermutations)
+        {
+            permutations.Add(new TransformParameters(axisPermutation, new[] { Sign.Positive, Sign.Positive, Sign.Positive }));
+
+            permutations.Add(new TransformParameters(axisPermutation, new[] { Sign.Positive, Sign.Positive, Sign.Negative }));
+
+            permutations.Add(new TransformParameters(axisPermutation, new[] { Sign.Positive, Sign.Negative, Sign.Positive }));
+
+            permutations.Add(new TransformParameters(axisPermutation, new[] { Sign.Positive, Sign.Negative, Sign.Negative }));
+
+            permutations.Add(new TransformParameters(axisPermutation, new[] { Sign.Negative, Sign.Positive, Sign.Positive }));
+
+            permutations.Add(new TransformParameters(axisPermutation, new[] { Sign.Negative, Sign.Positive, Sign.Negative }));
+
+            permutations.Add(new TransformParameters(axisPermutation, new[] { Sign.Negative, Sign.Negative, Sign.Positive }));
+
+            permutations.Add(new TransformParameters(axisPermutation, new[] { Sign.Negative, Sign.Negative, Sign.Negative }));
+        }
+
+        return permutations;
+    }
+
+    private bool CheckCloudsMatch(TransformParameters parameters)
+    {
+        foreach (var originPoint in _origin.Points)
+        {
+            var transformed = RotatePoint(originPoint, parameters);
+
+            var match = _target.Points.SingleOrDefault(p => p.Equals(transformed));
+
+            if (match == null)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static PointDecimal RotatePoint(PointDecimal point, TransformParameters parameters)
+    {
+        var transformed = new PointDecimal
+                          {
+                              X = (int) parameters.Flips[(int) Axis.X] * (parameters.Mappings[(int) Axis.X] == Axis.X
+                                                                              ? point.X
+                                                                              : parameters.Mappings[(int) Axis.X] == Axis.Y
+                                                                                  ? point.Y
+                                                                                  : point.Z),
+
+                              Y = (int) parameters.Flips[(int) Axis.Y] * (parameters.Mappings[(int) Axis.Y] == Axis.X
+                                                                              ? point.X
+                                                                              : parameters.Mappings[(int) Axis.Y] == Axis.Y
+                                                                                  ? point.Y
+                                                                                  : point.Z),
+
+                              Z = (int) parameters.Flips[(int) Axis.Z] * (parameters.Mappings[(int) Axis.Z] == Axis.X
+                                                                              ? point.X
+                                                                              : parameters.Mappings[(int) Axis.Z] == Axis.Y
+                                                                                  ? point.Y
+                                                                                  : point.Z)
+                          };
+
+        return transformed;
     }
 }
