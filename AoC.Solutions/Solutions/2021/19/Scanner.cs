@@ -122,7 +122,6 @@ public class Scanner
         {
             var originDistance = origin.Distances[ob];
 
-            // TODO: Why does b starting at ob + 1 break things?
             for (var b = 0; b < Distances.Count; b++)
             {
                 var targetDistance = Distances[b];
