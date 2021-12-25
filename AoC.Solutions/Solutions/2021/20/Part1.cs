@@ -7,12 +7,6 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        ParseInput();
-
-        Enhance();
-
-        Enhance();
-
-        return "TESTING";
+        return GetAnswer(2);
     }
 }
