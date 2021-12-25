@@ -1,5 +1,4 @@
 ﻿#define DUMP
-using System.Diagnostics;
 using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
 
@@ -19,15 +18,31 @@ public abstract class Base : Solution
 
     private readonly List<Point> _pixelsToFlip = new();
 
+    private bool _infinityLit;
+
+    public string GetAnswer(int iterations)
+    {
+        ParseInput();
+
+        for (var i = 0; i < iterations; i++)
+        {
+            Enhance();
+        }
+
+        return CountLitPixels().ToString();
+    }
+
     protected void ParseInput()
     {
         _algorithm = Input[0].Select(c => c == '#').ToArray();
 
-        var y = 1;
+        var y = 0;
 
-        _width = Input[2].Length + 4;
+        const int padBy = 3;
 
-        _height = Input.Length + 2;
+        _width = Input[2].Length + padBy * 2;
+
+        _height = Input.Length - 2 + padBy * 2;
 
         _image = new bool[_width, _height];
 
@@ -37,7 +52,7 @@ public abstract class Base : Solution
             {
                 if (line[x] == '#')
                 {
-                    _image[x + 2, y + 1] = true;
+                    _image[x + padBy, y + padBy] = true;
                 }
             }
 
@@ -53,9 +68,9 @@ public abstract class Base : Solution
     {
         _pixelsToFlip.Clear();
 
-        for (var y = 1; y < _height - 1; y++)
+        for (var y = 0; y < _height; y++)
         {
-            for (var x = 1; x < _width - 1; x++)
+            for (var x = 0; x < _width; x++)
             {
                 EnhancePixel(x, y);
             }
@@ -63,33 +78,55 @@ public abstract class Base : Solution
 
         Apply();
 
+        if (_algorithm[0])
+        {
+            _infinityLit = ! _infinityLit;
+        }
+
 #if DEBUG && DUMP
         Dump();
 #endif
     }
 
-    private void Apply()
+    public int CountLitPixels()
     {
-        var newImage = new bool[_width + 4, _height + 4];
+        var lit = 0;
 
         for (var y = 0; y < _height; y++)
         {
             for (var x = 0; x < _width; x++)
             {
-                newImage[x + 2, y + 2] = _image[x, y];
+                lit += _image[x, y] ? 1 : 0;
+            }
+        }
+
+        return lit;
+    }
+
+    private void Apply()
+    {
+        const int growBy = 3;
+
+        var newImage = new bool[_width + growBy * 2, _height + growBy * 2];
+
+        for (var y = 0; y < _height; y++)
+        {
+            for (var x = 0; x < _width; x++)
+            {
+                newImage[x + growBy, y + growBy] = _image[x, y];
             }
         }
 
         foreach (var pixel in _pixelsToFlip)
         {
-            newImage[pixel.X + 2, pixel.Y + 2] = ! newImage[pixel.X + 2, pixel.Y + 2];
+            newImage[pixel.X + growBy, pixel.Y + growBy] = ! newImage[pixel.X + growBy, pixel.Y + growBy];
         }
 
         _image = newImage;
 
-        _width += 4;
+        _width += growBy * 2;
 
-        _height += 4;
+        _height += growBy * 2;
     }
 
     private void EnhancePixel(int cX, int cY)
@@ -102,7 +139,14 @@ public abstract class Base : Solution
         {
             for (var x = cX - 1; x < cX + 2; x++)
             {
-                index += _image[x, y] ? 256 >> shift : 0;
+                if (x < 0 || x >= _width || y < 0 || y >= _height)
+                {
+                    index += _infinityLit ? 256 >> shift : 0;
+                }
+                else
+                {
+                    index += _image[x, y] ? 256 >> shift : 0;
+                }
 
                 shift++;
             }
