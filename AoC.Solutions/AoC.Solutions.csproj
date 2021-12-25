@@ -25,7 +25,6 @@
     <Folder Include="Solutions\2021\22\" />
     <Folder Include="Solutions\2021\23\" />
     <Folder Include="Solutions\2021\24\" />
-    <Folder Include="Solutions\2021\25\" />
   </ItemGroup>
 
   <ItemGroup>
