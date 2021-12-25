@@ -1,6 +1,6 @@
 ﻿using JetBrains.Annotations;
 
-namespace AoC.Solutions.Solutions._2021._20;
+namespace AoC.Solutions.Solutions._2021._22;
 
 [UsedImplicitly]
 public class Part1 : Base
@@ -9,9 +9,7 @@ public class Part1 : Base
     {
         ParseInput();
 
-        Enhance();
-
-        Enhance();
+        ProcessInput();
 
         return "TESTING";
     }

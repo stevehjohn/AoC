@@ -1,4 +1,5 @@
 ﻿#define DUMP
+using System.Diagnostics;
 using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
 
@@ -52,13 +53,10 @@ public abstract class Base : Solution
     {
         _pixelsToFlip.Clear();
 
-        for (var y = 1; y < _height - 2; y++)
+        for (var y = 1; y < _height - 1; y++)
         {
-            for (var x = 1; x < _width - 2; x++)
+            for (var x = 1; x < _width - 1; x++)
             {
-                //if (_image[x, y]) Debugger.Break();
-
-                //if (x == 4 && y == 4) Debugger.Break();
                 EnhancePixel(x, y);
             }
         }
@@ -98,7 +96,7 @@ public abstract class Base : Solution
     {
         var index = 0;
 
-        var shift = 10;
+        var shift = 0;
 
         for (var y = cY - 1; y < cY + 2; y++)
         {
@@ -106,7 +104,7 @@ public abstract class Base : Solution
             {
                 index += _image[x, y] ? 256 >> shift : 0;
 
-                shift--;
+                shift++;
             }
         }
 
