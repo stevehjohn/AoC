@@ -72,6 +72,13 @@ public class Scanner
         var transform = new Transform(left, right, pairs[0]);
 
         Position = transform.TransformPoint(origin.Position);
+
+        // Chain the transforms.
+        // eg, s0 -> s1 -> s2 match in that order.
+        // s2 transformed by s1 transformed might be garbage.
+        // transform s2 by s1 (untransformed), then apply transform from s0 to s1.
+        // Maybe.
+        // Urgh. IDK. How can you do this if s1 doesn't have a position until transformed?
     }
 
     private static List<Pair> ResolveMatchingBeacons(List<DistancePair> matchingBeacons)
