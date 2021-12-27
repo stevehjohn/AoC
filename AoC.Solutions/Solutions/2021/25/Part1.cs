@@ -12,7 +12,7 @@ public class Part1 : Base
 
     private CellState[,] _cells;
 
-    private readonly List<(Point Source, Point Target)> _cellsToMove = new();
+    private readonly HashSet<(Point Source, Point Target)> _cellsToMove = new();
 
     public override string GetAnswer()
     {
