@@ -3,10 +3,9 @@ using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2021._20;
 
-// TODO: Optimise.
 public abstract class Base : Solution
 {
-    private int _padBy = 50;
+    private int _padBy;
 
     public override string Description => "NCIS image enhancement";
 
@@ -18,7 +17,7 @@ public abstract class Base : Solution
 
     private bool[,] _image;
 
-    private readonly List<Point> _pixelsToFlip = new();
+    private readonly HashSet<Point> _pixelsToFlip = new();
 
     private bool _infinityLit;
 
@@ -31,6 +30,7 @@ public abstract class Base : Solution
         for (var i = 0; i < iterations; i++)
         {
             Enhance();
+            Console.WriteLine($"{i} => {_pixelsToFlip.Count}");
         }
 
         return CountLitPixels().ToString();
