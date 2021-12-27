@@ -3,10 +3,9 @@ using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2021._20;
 
+// TODO: Optimise.
 public abstract class Base : Solution
 {
-    private const int GrowBy = 0;
-
     private int _padBy = 50;
 
     public override string Description => "NCIS image enhancement";
@@ -108,30 +107,9 @@ public abstract class Base : Solution
 
     private void Apply()
     {
-        bool[,] newImage = null;
-
-        if (GrowBy > 0)
-        {
-            newImage = new bool[_width + GrowBy * 2, _height + GrowBy * 2];
-
-            for (var y = 0; y < _height; y++)
-            {
-                for (var x = 0; x < _width; x++)
-                {
-                    newImage[x + GrowBy, y + GrowBy] = _image[x, y];
-                }
-            }
-
-            _width += GrowBy * 2;
-
-            _height += GrowBy * 2;
-        }
-
-        _image = newImage ?? _image;
-
         foreach (var pixel in _pixelsToFlip)
         {
-            _image[pixel.X + GrowBy, pixel.Y + GrowBy] = ! _image[pixel.X + GrowBy, pixel.Y + GrowBy];
+            _image[pixel.X, pixel.Y] = ! _image[pixel.X, pixel.Y];
         }
     }
 
