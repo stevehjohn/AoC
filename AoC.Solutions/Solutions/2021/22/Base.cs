@@ -56,7 +56,6 @@ public abstract class Base : Solution
 
         foreach (var cuboid in _cuboids)
         {
-            // Think the bug is in intersect... 9...11 didn't produce 10..11
             var intersection = cuboid.Cuboid.Intersects(instruction.Cuboid);
 
             if (intersection == null)
@@ -81,7 +80,7 @@ public abstract class Base : Solution
 
         foreach (var item in _cuboids)
         {
-            volume += (item.State ? 1 : 0) * item.Cuboid.Volume;
+            volume += (item.State ? 1 : -1) * item.Cuboid.Volume;
         }
 
         return volume;
