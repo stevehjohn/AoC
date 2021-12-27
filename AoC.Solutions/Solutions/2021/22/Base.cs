@@ -7,7 +7,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Reactor reboot";
 
-    private readonly List<Cuboid> _cuboids = new();
+    private readonly List<(Cuboid Cuboid, bool State)> _cuboids = new();
 
     private readonly List<Instruction> _instructions = new ();
 
@@ -42,44 +42,48 @@ public abstract class Base : Solution
 
     protected void ProcessInput()
     {
-        _cuboids.Add(_instructions.First().Cuboid);
+        _cuboids.Add((_instructions.First().Cuboid, true));
 
         foreach (var instruction in _instructions.Skip(1))
         {
-            var intersections = GetIntersections(instruction.Cuboid);
-
-            if (intersections.Count == 0 && instruction.State)
-            {
-                _cuboids.Add(instruction.Cuboid);
-
-                continue;
-            }
-
-            /*
-             * Split the intersecting cuboids leaving non intersecting parts in the list.
-             *   (remove both original cuboids, add their sub-cuboids but not the intersection.
-             * If the instruction 'off', do not add the intersection to the list.
-             */
-
-            // Just for testing... need to split the cuboids.
-            _cuboids.AddRange(intersections);
+            ProcessInstruction(instruction);
         }
     }
 
-    private List<Cuboid> GetIntersections(Cuboid other)
+    private void ProcessInstruction(Instruction instruction)
     {
-        var result = new List<Cuboid>();
+        var toAdd = new List<(Cuboid Cuboid, bool Sign)>();
 
         foreach (var cuboid in _cuboids)
         {
-            var intersection = cuboid.Intersects(other);
+            // Think the bug is in intersect... 9...11 didn't produce 10..11
+            var intersection = cuboid.Cuboid.Intersects(instruction.Cuboid);
 
-            if (intersection != null)
+            if (intersection == null)
             {
-                result.Add(intersection);
+                continue;
             }
+
+            toAdd.Add((intersection, false));
         }
 
-        return result;
+        _cuboids.AddRange(toAdd);
+
+        if (instruction.State)
+        {
+            _cuboids.Add((instruction.Cuboid, true));
+        }
+    }
+
+    protected int GetVolume()
+    {
+        var volume = 0;
+
+        foreach (var item in _cuboids)
+        {
+            volume += (item.State ? 1 : 0) * item.Cuboid.Volume;
+        }
+
+        return volume;
     }
 }

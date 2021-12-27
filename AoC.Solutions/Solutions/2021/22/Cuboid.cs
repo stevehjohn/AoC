@@ -8,6 +8,11 @@ public class Cuboid
 
     public Point B { get; }
 
+    public int Volume
+    {
+        get { return (B.X - A.X + 1) * (B.Y - A.Y + 1) * (B.Z - A.Z + 1); }
+    }
+
     public Cuboid(Point a, Point b)
     {
         A = a;
@@ -38,7 +43,7 @@ public class Cuboid
 
     private static int? LineIntersect(int aLeft, int aRight, int b)
     {
-        if (b >= aLeft || b <= aRight)
+        if (b >= aLeft && b <= aRight)
         {
             return b;
         }

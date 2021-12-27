@@ -11,6 +11,6 @@ public class Part1 : Base
 
         ProcessInput();
 
-        return "TESTING";
+        return GetVolume().ToString();
     }
 }
