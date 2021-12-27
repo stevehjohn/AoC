@@ -42,25 +42,43 @@ public abstract class Base : Solution
 
     protected void ProcessInput()
     {
-        foreach (var instruction in _instructions)
+        _cuboids.Add(_instructions.First().Cuboid);
+
+        foreach (var instruction in _instructions.Skip(1))
         {
             var intersections = GetIntersections(instruction.Cuboid);
 
-            if (intersections.Count == 0)
+            if (intersections.Count == 0 && instruction.State)
             {
-                if (instruction.State)
-                {
-                    _cuboids.Add(instruction.Cuboid);
-                }
+                _cuboids.Add(instruction.Cuboid);
 
                 continue;
             }
+
+            /*
+             * Split the intersecting cuboids leaving non intersecting parts in the list.
+             *   (remove both original cuboids, add their sub-cuboids but not the intersection.
+             * If the instruction 'off', do not add the intersection to the list.
+             */
+
+            // Just for testing... need to split the cuboids.
+            _cuboids.AddRange(intersections);
         }
     }
 
-    private static List<Cuboid> GetIntersections(Cuboid other)
+    private List<Cuboid> GetIntersections(Cuboid other)
     {
         var result = new List<Cuboid>();
+
+        foreach (var cuboid in _cuboids)
+        {
+            var intersection = cuboid.Intersects(other);
+
+            if (intersection != null)
+            {
+                result.Add(intersection);
+            }
+        }
 
         return result;
     }
