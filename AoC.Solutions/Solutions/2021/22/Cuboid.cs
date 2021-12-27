@@ -35,7 +35,8 @@ public class Cuboid
             return null;
         }
 
-        return new Cuboid(new Point(aX.Value, aY.Value, aZ.Value), new Point(bX.Value, bY.Value, bZ.Value));
+        return new Cuboid(new Point(Math.Min(aX.Value, bX.Value), Math.Min(aY.Value, bY.Value), Math.Min(aZ.Value, bZ.Value)),
+                          new Point(Math.Max(aX.Value, bX.Value), Math.Max(aY.Value, bY.Value), Math.Max(aZ.Value, bZ.Value)));
     }
 
     private static int? LineIntersect(int aLeft, int aRight, int bLeft, int bRight)
