@@ -47,6 +47,8 @@ public abstract class Base : Solution
         foreach (var instruction in _instructions.Skip(1))
         {
             ProcessInstruction(instruction);
+
+            Console.WriteLine(GetVolume());
         }
     }
 
@@ -63,7 +65,7 @@ public abstract class Base : Solution
                 continue;
             }
 
-            toAdd.Add((intersection, false));
+            toAdd.Add((intersection, ! cuboid.State));
         }
 
         _cuboids.AddRange(toAdd);
