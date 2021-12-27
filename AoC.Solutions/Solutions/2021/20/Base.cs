@@ -1,11 +1,14 @@
-﻿#define DUMP
-using AoC.Solutions.Common;
+﻿using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2021._20;
 
 public abstract class Base : Solution
 {
+    private const int GrowBy = 0;
+
+    private int _padBy = 50;
+
     public override string Description => "NCIS image enhancement";
 
     private bool[] _algorithm;
@@ -22,6 +25,8 @@ public abstract class Base : Solution
 
     public string GetAnswer(int iterations)
     {
+        _padBy = iterations;
+
         ParseInput();
 
         for (var i = 0; i < iterations; i++)
@@ -38,11 +43,9 @@ public abstract class Base : Solution
 
         var y = 0;
 
-        const int padBy = 3;
+        _width = Input[2].Length + _padBy * 2;
 
-        _width = Input[2].Length + padBy * 2;
-
-        _height = Input.Length - 2 + padBy * 2;
+        _height = Input.Length - 2 + _padBy * 2;
 
         _image = new bool[_width, _height];
 
@@ -52,7 +55,7 @@ public abstract class Base : Solution
             {
                 if (line[x] == '#')
                 {
-                    _image[x + padBy, y + padBy] = true;
+                    _image[x + _padBy, y + _padBy] = true;
                 }
             }
 
@@ -105,28 +108,31 @@ public abstract class Base : Solution
 
     private void Apply()
     {
-        const int growBy = 3;
+        bool[,] newImage = null;
 
-        var newImage = new bool[_width + growBy * 2, _height + growBy * 2];
-
-        for (var y = 0; y < _height; y++)
+        if (GrowBy > 0)
         {
-            for (var x = 0; x < _width; x++)
+            newImage = new bool[_width + GrowBy * 2, _height + GrowBy * 2];
+
+            for (var y = 0; y < _height; y++)
             {
-                newImage[x + growBy, y + growBy] = _image[x, y];
+                for (var x = 0; x < _width; x++)
+                {
+                    newImage[x + GrowBy, y + GrowBy] = _image[x, y];
+                }
             }
+
+            _width += GrowBy * 2;
+
+            _height += GrowBy * 2;
         }
+
+        _image = newImage ?? _image;
 
         foreach (var pixel in _pixelsToFlip)
         {
-            newImage[pixel.X + growBy, pixel.Y + growBy] = ! newImage[pixel.X + growBy, pixel.Y + growBy];
+            _image[pixel.X + GrowBy, pixel.Y + GrowBy] = ! _image[pixel.X + GrowBy, pixel.Y + GrowBy];
         }
-
-        _image = newImage;
-
-        _width += growBy * 2;
-
-        _height += growBy * 2;
     }
 
     private void EnhancePixel(int cX, int cY)
