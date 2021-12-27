@@ -30,7 +30,6 @@ public abstract class Base : Solution
         for (var i = 0; i < iterations; i++)
         {
             Enhance();
-            Console.WriteLine($"{i} => {_pixelsToFlip.Count}");
         }
 
         return CountLitPixels().ToString();
