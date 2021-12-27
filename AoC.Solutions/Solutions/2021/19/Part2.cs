@@ -22,17 +22,21 @@ public class Part2 : Base
 
                 Scanners[s2].LocateRelativeTo(originScanner);
 
+#if DEBUG
                 if (Scanners[s2].Position != null)
                 {
                     Console.WriteLine($"{s1} => {s2}");
                 }
+#endif
             }
         }
 
+#if DEBUG
         for (var s = 0; s < Scanners.Count; s++)
         {
             Console.WriteLine(Scanners[s].Position);
         }
+#endif
 
         return "TESTING";
     }
