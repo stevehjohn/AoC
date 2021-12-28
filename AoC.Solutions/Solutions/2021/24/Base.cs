@@ -18,9 +18,9 @@ public abstract class Base : Solution
 
         for (var subroutine = 0; subroutine < Input.Length; subroutine += 18)
         {
-            var check = GetOperand(subroutine + 5);
+            var operand = GetOperand(subroutine + 5);
 
-            if (check > 0)
+            if (operand > 0)
             {
                 rules.Push((target++, GetOperand(subroutine + 15)));
 
@@ -29,15 +29,29 @@ public abstract class Base : Solution
 
             var rule = rules.Pop();
 
-            var offset = rule.offset + check;
+            var offset = rule.offset + operand;
 
             if (offset > 0)
             {
-                modelNumber[rule.target] -= (char) offset;
+                if (max)
+                {
+                    modelNumber[rule.target] -= (char) offset;
+                }
+                else
+                {
+                    modelNumber[target] += (char) offset;
+                }
             }
             else
             {
-                modelNumber[target] += (char) offset;
+                if (max)
+                {
+                    modelNumber[target] += (char) offset;
+                }
+                else
+                {
+                    modelNumber[rule.target] -= (char) offset;
+                }
             }
 
             target++;
