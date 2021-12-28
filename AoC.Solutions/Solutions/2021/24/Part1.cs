@@ -7,7 +7,7 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var result = GetModelNumber();
+        var result = GetModelNumber(true);
 
         return result;
     }

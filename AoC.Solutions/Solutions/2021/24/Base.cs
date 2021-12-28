@@ -6,11 +6,13 @@ public abstract class Base : Solution
 {
     public override string Description => "Model number";
 
-    protected string GetModelNumber()
+    protected string GetModelNumber(bool max)
     {
+        var baseChar = max ? '9' : '1';
+
         var rules = new Stack<(int target, int offset)>();
 
-        var modelNumber = new char[14];
+        var modelNumber = new string(baseChar, 14).ToCharArray();
 
         var target = 0;
 
@@ -31,16 +33,14 @@ public abstract class Base : Solution
 
             if (offset > 0)
             {
-                modelNumber[rule.target] = (char) ('9' - offset);
-
-                modelNumber[target++] = '9';
+                modelNumber[rule.target] -= (char) offset;
             }
             else
             {
-                modelNumber[rule.target] = '9';
-
-                modelNumber[target++] = (char)('9' + offset);
+                modelNumber[target] += (char) offset;
             }
+
+            target++;
         }
 
         return new string(modelNumber);
