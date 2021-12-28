@@ -17,10 +17,10 @@ public class Part2 : Base
 
         var result = Play(scores, positions, true);
 
-        return Math.Max(result.Item1, result.Item2).ToString();
+        return Math.Max(result.Player1Universes, result.Player2Universes).ToString();
     }
 
-    private (long, long) Play((int Player1, int Player2) scores, (int Player1, int Player2) positions, bool player1, int universes = 1)
+    private (long Player1Universes, long Player2Universes) Play((int Player1, int Player2) scores, (int Player1, int Player2) positions, bool player1, int universes = 1)
     {
         var result = (0L, 0L);
 
