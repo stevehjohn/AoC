@@ -40,11 +40,13 @@ public abstract class Base : Solution
         return (int.Parse(split[0]), int.Parse(split[1]));
     }
 
-    protected void ProcessInput()
+    protected void ProcessInput(int linesToProcess)
     {
         _cuboids.Add((_instructions.First().Cuboid, true));
 
-        foreach (var instruction in _instructions.Skip(1))
+        var instructions = _instructions.Skip(1).Take(linesToProcess - 1);
+
+        foreach (var instruction in instructions)
         {
             ProcessInstruction(instruction);
         }
