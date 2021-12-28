@@ -47,8 +47,6 @@ public abstract class Base : Solution
         foreach (var instruction in _instructions.Skip(1))
         {
             ProcessInstruction(instruction);
-
-            Console.WriteLine(GetVolume());
         }
     }
 
@@ -56,6 +54,7 @@ public abstract class Base : Solution
     {
         var toAdd = new List<(Cuboid Cuboid, bool Sign)>();
 
+        // Problem is still with the intersect routine...
         foreach (var cuboid in _cuboids)
         {
             var intersection = cuboid.Cuboid.Intersects(instruction.Cuboid);
