@@ -56,7 +56,6 @@ public abstract class Base : Solution
     {
         var toAdd = new List<(Cuboid Cuboid, bool Sign)>();
 
-        // Problem is still with the intersect routine...
         foreach (var cuboid in _cuboids)
         {
             var intersection = cuboid.Cuboid.Intersects(instruction.Cuboid);
