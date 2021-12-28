@@ -61,9 +61,9 @@ public class Part2 : Base
 
             var next = Play(scores, positions, ! player1, universes * probability.Probability);
 
-            result.Item1 += next.Item1;
+            result.Item1 += next.Player1Universes;
 
-            result.Item2 += next.Item2;
+            result.Item2 += next.Player2Universes;
         }
 
         return result;
