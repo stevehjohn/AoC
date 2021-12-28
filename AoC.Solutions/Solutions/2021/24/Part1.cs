@@ -14,8 +14,8 @@ public class Part1 : Base
 
     private string GetModelNumber()
     {
-        var stack = new Stack<(int source, int offset)>();
-        
+        var rules = new Stack<(int target, int offset)>();
+
         var modelNumber = new char[14];
 
         var target = 0;
@@ -24,30 +24,28 @@ public class Part1 : Base
         {
             var check = GetOperand(subroutine + 5);
 
-            var offset = GetOperand(subroutine + 15);
-
             if (check > 0)
             {
-                stack.Push((target++, offset));
+                rules.Push((target++, GetOperand(subroutine + 15)));
 
                 continue;
             }
 
-            var rule = stack.Pop();
+            var rule = rules.Pop();
 
             var totalOffset = rule.offset + check;
 
             if (totalOffset > 0)
             {
-                modelNumber[rule.source] = (char) ('9' - (char) totalOffset);
+                modelNumber[rule.target] = (char) ('9' - totalOffset);
 
                 modelNumber[target++] = '9';
             }
             else
             {
-                modelNumber[rule.source] = '9';
+                modelNumber[rule.target] = '9';
 
-                modelNumber[target++] = (char) ('9' + (char) totalOffset);
+                modelNumber[target++] = (char) ('9' + totalOffset);
             }
         }
 
