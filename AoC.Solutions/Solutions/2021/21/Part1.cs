@@ -1,18 +1,15 @@
-﻿using AoC.Solutions.Infrastructure;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2021._21;
 
 [UsedImplicitly]
-public class Part1 : Solution
+public class Part1 : Base
 {
     public override string Description => "Quantum dice";
 
     public override string GetAnswer()
     {
-        var player1Position = int.Parse(Input[0].Substring(Input[0].IndexOf(':') + 1));
-
-        var player2Position = int.Parse(Input[1].Substring(Input[1].IndexOf(':') + 1));
+        ParseInput();
 
         var player1Score = 0;
 
@@ -32,25 +29,25 @@ public class Part1 : Solution
 
             if (player == 1)
             {
-                player1Position += roll;
+                Player1Position += roll;
 
-                while (player1Position > 10)
+                while (Player1Position > 10)
                 {
-                    player1Position -= 10;
+                    Player1Position -= 10;
                 }
 
-                player1Score += player1Position;
+                player1Score += Player1Position;
             }
             else
             {
-                player2Position += roll;
+                Player2Position += roll;
 
-                while (player2Position > 10)
+                while (Player2Position > 10)
                 {
-                    player2Position -= 10;
+                    Player2Position -= 10;
                 }
 
-                player2Score += player2Position;
+                player2Score += Player2Position;
             }
 
             player++;
