@@ -77,9 +77,9 @@ public abstract class Base : Solution
         }
     }
 
-    protected int GetVolume()
+    protected long GetVolume()
     {
-        var volume = 0;
+        var volume = 0L;
 
         foreach (var item in _cuboids)
         {

@@ -9,7 +9,7 @@ public class Cuboid
 
     public Point B { get; }
 
-    public int Volume => (B.X - A.X + 1) * (B.Y - A.Y + 1) * (B.Z - A.Z + 1);
+    public long Volume => ((long) B.X - A.X + 1) * ((long) B.Y - A.Y + 1) * ((long) B.Z - A.Z + 1);
 
     public Cuboid(Point a, Point b)
     {
