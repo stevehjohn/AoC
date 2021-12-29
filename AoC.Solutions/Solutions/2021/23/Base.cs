@@ -45,17 +45,27 @@ public abstract class Base : Solution
 
         for (var i = 1; i <= _amphipodCount; i++)
         {
-            costs.Add(TryMove(_initialPositions, i));
+            costs.Add(TryMove(_initialPositions, i, 0, Enumerable.Repeat(-1, _amphipodCount).ToArray()));
         }
 
         return costs.Min();
     }
 
-    private int TryMove((int, int)[,] initialPositions, int index, int totalCost = 0)
+    private int TryMove((int, int)[,] initialPositions, int index, int totalCost, int[] initialHallwayTargets)
     {
+        // Hallway positions exhausted
+        if (initialHallwayTargets[index - 1] >= Width - 1)
+        {
+            return int.MaxValue;
+        }
+
         var positions = new (int Type, int Id)[Width, Height];
 
         Array.Copy(initialPositions, positions, Width * Height);
+
+        var hallwayTargets = new int[initialHallwayTargets.Length];
+
+        Array.Copy(initialHallwayTargets, hallwayTargets, initialHallwayTargets.Length);
 
         var home = 0;
 
@@ -143,7 +153,7 @@ public abstract class Base : Solution
 
         // In burrow, can get to hallway?
         // TODO: Pick position in hall...
-        var targetX = 0;
+        var targetX = ++hallwayTargets[index - 1];
 
         cost = CostToGetTo(positions, aX, aY, targetX, 0);
 
@@ -154,11 +164,6 @@ public abstract class Base : Solution
 
         next:
 
-        for (var i = 1; i <= _amphipodCount; i++)
-        {
-            TryMove(_initialPositions, i, cost);
-        }
-
 #if DEBUG && DUMP
         Console.ReadKey();
 
@@ -168,6 +173,11 @@ public abstract class Base : Solution
 
         Dump(positions);
 #endif
+
+        for (var i = 1; i <= _amphipodCount; i++)
+        {
+            TryMove(positions, i, cost, hallwayTargets);
+        }
 
         return int.MaxValue;
     }
@@ -242,13 +252,13 @@ public abstract class Base : Solution
     {
         for (var y = 0; y < Height; y++)
         {
-            Console.Write('#');
+            Console.Write('.');
 
             for (var x = 0; x < Width; x++)
             {
                 if (positions[x, y].Type == 0)
                 {
-                    Console.Write(' ');
+                    Console.Write(y > 0 && x != 2 && x != 4 && x != 6 && x != 8 ? '.' : ' ');
 
                     continue;
                 }
@@ -256,7 +266,7 @@ public abstract class Base : Solution
                 Console.Write((char) (positions[x, y].Type / 2 + '@'));
             }
 
-            Console.WriteLine('#');
+            Console.WriteLine('.');
         }
 
         Console.WriteLine();
