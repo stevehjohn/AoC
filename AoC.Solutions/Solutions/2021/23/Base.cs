@@ -81,11 +81,10 @@ public abstract class Base : Solution
                 {
                     home++;
                 }
-                // TODO: Uncomment when not using sparse test data.
-                //else
-                //{
-                //    goto notHome;
-                //}
+                else
+                {
+                    goto notHome;
+                }
             }
         }
 
@@ -226,7 +225,7 @@ public abstract class Base : Solution
     {
         if (positions[endX, endY].Type != 0)
         {
-            throw new PuzzleException("!");
+            throw new PuzzleException("Cock up.");
         }
 
         positions[endX, endY].Type = positions[startX, startY].Type;
