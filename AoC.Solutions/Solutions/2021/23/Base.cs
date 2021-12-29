@@ -1,5 +1,4 @@
 ﻿#define DUMP
-using AoC.Solutions.Exceptions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2021._23;
@@ -54,7 +53,7 @@ public abstract class Base : Solution
         return costs.Min();
     }
 
-    private int TryMove((int, int)[,] initialPositions, int index, int[] initialHallwayTargets)
+    private int TryMove((int, int)[,] initialPositions, int index, int[] initialHallwayTargets, int level = 0)
     {
         // Hallway positions exhausted
         if (initialHallwayTargets[index - 1] >= Width - 1)
@@ -81,10 +80,10 @@ public abstract class Base : Solution
                 {
                     home++;
                 }
-                else
-                {
-                    goto notHome;
-                }
+                //else
+                //{
+                //    goto notHome;
+                //}
             }
         }
 
@@ -126,7 +125,7 @@ public abstract class Base : Solution
         // Is home (and not blocking another in)?
         if (aX == type)
         {
-            if (aY == 2 || aY == 1 && positions[type, 2].Type == type)
+            if (aY == 2 || aY == 1 && positions[aX, 2].Type == type)
             {
                 goto next;
             }
@@ -181,14 +180,20 @@ public abstract class Base : Solution
 
         // TODO: What are the pauses? Something to do with 0 cost?
 
+        // TODO: Why you infinite loop?
+
         next:
 
 #if DEBUG && DUMP
         //Console.ReadKey();
 
+        Thread.Sleep(10);
+
         Console.CursorVisible = false;
 
         Console.CursorTop = 1;
+
+        Console.WriteLine($"{new string('.', level)}                                                                          ");
 
         Dump(positions);
 #endif
@@ -200,7 +205,7 @@ public abstract class Base : Solution
 
             for (var i = 1; i <= _amphipodCount; i++)
             {
-                var subCost = TryMove(positions, i, hallwayTargets);
+                var subCost = TryMove(positions, i, hallwayTargets, level + 1);
 
                 if (subCost < int.MaxValue)
                 {
@@ -211,6 +216,10 @@ public abstract class Base : Solution
             if (costs.Any())
             {
                 cost += costs.Min();
+            }
+            else
+            {
+                return int.MaxValue;
             }
         }
         else
@@ -223,11 +232,6 @@ public abstract class Base : Solution
 
     private static void MoveTo((int Type, int Id)[,] positions, int startX, int startY, int endX, int endY)
     {
-        if (positions[endX, endY].Type != 0)
-        {
-            throw new PuzzleException("Cock up.");
-        }
-
         positions[endX, endY].Type = positions[startX, startY].Type;
 
         positions[endX, endY].Id = positions[startX, startY].Id;
