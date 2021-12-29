@@ -151,10 +151,7 @@ public abstract class Base : Solution
 
             Console.ForegroundColor = ConsoleColor.Green;
 
-            if (y == 1)
-            {
                 Console.ReadKey();
-            }
 
             return cost * GetCostMultiplier(type);
         }
@@ -206,6 +203,11 @@ public abstract class Base : Solution
 
         for (var i = 1; i <= _amphipodCount; i++)
         {
+            if (i == id)
+            {
+                continue;
+            }
+
             cost += TryMove(positions, i, previousPositions);
         }
 
