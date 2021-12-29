@@ -43,10 +43,12 @@ public abstract class Base : Solution
     {
         var costs = new List<int>();
 
-        for (var i = 1; i <= _amphipodCount; i++)
-        {
-            costs.Add(TryMove(_initialPositions, i, 0, Enumerable.Repeat(-1, _amphipodCount).ToArray()));
-        }
+        //for (var i = 1; i <= _amphipodCount; i++)
+        //{
+        //    costs.Add(TryMove(_initialPositions, i, 0, Enumerable.Repeat(-1, _amphipodCount).ToArray()));
+        //}
+        
+        costs.Add(TryMove(_initialPositions, 1, 0, Enumerable.Repeat(-1, _amphipodCount).ToArray()));
 
         return costs.Min();
     }
@@ -56,7 +58,7 @@ public abstract class Base : Solution
         // Hallway positions exhausted
         if (initialHallwayTargets[index - 1] >= Width - 1)
         {
-            return int.MaxValue;
+            return 0;
         }
 
         var positions = new (int Type, int Id)[Width, Height];
@@ -78,10 +80,11 @@ public abstract class Base : Solution
                 {
                     home++;
                 }
-                else
-                {
-                    goto notHome;
-                }
+                // TODO: Uncomment when not using sparse test data.
+                //else
+                //{
+                //    goto notHome;
+                //}
             }
         }
 
@@ -118,6 +121,8 @@ public abstract class Base : Solution
 
         var cost = 0;
 
+        var moved = false;
+
         // Is home (and not blocking another in)?
         if (aX == type)
         {
@@ -136,6 +141,8 @@ public abstract class Base : Solution
             {
                 MoveTo(positions, aX, aY, type, 2);
 
+                moved = true;
+
                 goto next;
             }
         }
@@ -146,6 +153,8 @@ public abstract class Base : Solution
             if (cost > 0)
             {
                 MoveTo(positions, aX, aY, type, 2);
+
+                moved = true;
 
                 goto next;
             }
@@ -167,12 +176,16 @@ public abstract class Base : Solution
         if (cost > 0)
         {
             MoveTo(positions, aX, aY, targetX, 0);
+
+            moved = true;
         }
+
+        // TODO: What are the pauses?
 
         next:
 
 #if DEBUG && DUMP
-        //Console.ReadKey();
+        //Thread.Sleep(200);
 
         Console.CursorVisible = false;
 
@@ -181,12 +194,16 @@ public abstract class Base : Solution
         Dump(positions);
 #endif
 
-        for (var i = 1; i <= _amphipodCount; i++)
+        // TODO: Add cost multiplier.
+        if (moved)
         {
-            TryMove(positions, i, totalCost + cost, hallwayTargets);
+            for (var i = 1; i <= _amphipodCount; i++)
+            {
+                TryMove(positions, i, totalCost + cost, hallwayTargets);
+            }
         }
-
-        return int.MaxValue;
+        
+        return cost;
     }
 
     private static void MoveTo((int Type, int Id)[,] positions, int startX, int startY, int endX, int endY)
