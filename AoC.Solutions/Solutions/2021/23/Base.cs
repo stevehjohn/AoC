@@ -9,11 +9,15 @@ public abstract class Base : Solution
 
     private int[,] _initialPositions;
 
+    private const int Width = 11;
+
+    private const int Height = 3;
+
     private int _amphipodCount;
 
     protected void ParseInput()
     {
-        _initialPositions = new int[11, 3];
+        _initialPositions = new int[Width, Height];
 
         for (var y = 1; y < 4; y++)
         {
@@ -47,9 +51,12 @@ public abstract class Base : Solution
         return costs.Min();
     }
 
-    private static int TryMove(int[,] positions, int index)
+    private static int TryMove(int[,] initialPositions, int index)
     {
         // Gonna need to deep copy positions.
+        var positions = new int[Width, Height];
+
+        Array.Copy(initialPositions, positions, Width * Height);
 
         var x = 0;
 
@@ -72,7 +79,7 @@ public abstract class Base : Solution
 
             x++;
 
-            if (x == positions.GetLength(0))
+            if (x == Width)
             {
                 x = 0;
 
@@ -153,11 +160,11 @@ public abstract class Base : Solution
 #if DUMP && DEBUG
     private static void Dump(int[,] positions)
     {
-        for (var y = 0; y < positions.GetLength(1); y++)
+        for (var y = 0; y < Height; y++)
         {
             Console.Write('#');
 
-            for (var x = 0; x < positions.GetLength(0); x++)
+            for (var x = 0; x < Width; x++)
             {
                 if (positions[x, y] == 0)
                 {
