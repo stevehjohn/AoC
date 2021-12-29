@@ -1,4 +1,5 @@
 ﻿#define DUMP
+using AoC.Solutions.Exceptions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2021._23;
@@ -152,7 +153,7 @@ public abstract class Base : Solution
 
             if (cost > 0)
             {
-                MoveTo(positions, aX, aY, type, 2);
+                MoveTo(positions, aX, aY, type, 1);
 
                 moved = true;
 
@@ -186,13 +187,9 @@ public abstract class Base : Solution
 #if DEBUG && DUMP
         //Console.ReadKey();
 
-        Thread.Sleep(100);
-
         Console.CursorVisible = false;
 
         Console.CursorTop = 1;
-
-        Console.WriteLine(cost);
 
         Dump(positions);
 #endif
@@ -227,6 +224,11 @@ public abstract class Base : Solution
 
     private static void MoveTo((int Type, int Id)[,] positions, int startX, int startY, int endX, int endY)
     {
+        if (positions[endX, endY].Type != 0)
+        {
+            throw new PuzzleException("!");
+        }
+
         positions[endX, endY].Type = positions[startX, startY].Type;
 
         positions[endX, endY].Id = positions[startX, startY].Id;
