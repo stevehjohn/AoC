@@ -48,14 +48,12 @@ public abstract class Base : Solution
             costs.Add(TryMove(_initialPositions, i, new int[_amphipodCount]));
         }
 
-        //costs.Add(TryMove(_initialPositions, 5));
-
         return costs.Min();
     }
 
     private int TryMove((int, int)[,] initialPositions, int index, int[] initialPreviousPositions)
     {
-        if (initialPreviousPositions[index - 1] == 11)
+        if (initialPreviousPositions[index - 1] > Width)
         {
             return 0;
         }
@@ -71,6 +69,12 @@ public abstract class Base : Solution
         var x = 0;
 
         var y = 0;
+
+        Console.CursorVisible = false;
+
+        Console.CursorTop = 10;
+
+        Dump(positions);
 
         // Find amphipod of index.
         while (true)
@@ -110,6 +114,10 @@ public abstract class Base : Solution
                 return 0;
             }
 
+            positions[x, y].Type = 0;
+
+            positions[x, y].Id = 0;
+
             while (x != type)
             {
                 x += x < type ? 1 : -1;
@@ -122,22 +130,31 @@ public abstract class Base : Solution
                 cost++;
             }
 
-            positions[x, y].Type = 0;
-
-            positions[x, y].Id = 0;
-
             cost++;
-
-            if (positions[2, type].Type == 0)
+            
+            y++;
+            
+            if (positions[type, 2].Type == 0)
             {
                 cost++;
 
                 y++;
             }
 
-            positions[type, y + 1].Type = type;
+            positions[type, y].Type = type;
 
-            positions[type, y + 1].Id = id;
+            positions[type, y].Id = id;
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+
+            Dump(positions);
+
+            Console.ForegroundColor = ConsoleColor.Green;
+
+            if (y == 1)
+            {
+                Console.ReadKey();
+            }
 
             return cost * GetCostMultiplier(type);
         }
@@ -148,37 +165,44 @@ public abstract class Base : Solution
             return 0;
         }
 
+        // In burrow, can get out, pick a hallway position.
+        var newX = previousPositions[index - 1];
+
+        while (newX < Width && (positions[newX, 0].Type != 0 || newX == 2 || newX == 4 || newX == 6 || newX == 8))
+        {
+            newX++;
+
+            if (newX >= Width)
+            {
+                return 0;
+            }
+        }
+
         positions[x, y].Type = 0;
 
         positions[x, y].Id = 0;
 
-        // In burrow, can get out, pick a hallway position.
         cost = y;
-
-        y = 0;
-
-        // How to pick a different position every time?
-        var newX = previousPositions[index - 1];
 
         cost += Math.Abs(newX - x);
 
-        positions[newX, y].Type = type;
+        positions[newX, 0].Type = type;
 
-        positions[newX, y].Id = id;
+        positions[newX, 0].Id = id;
 
-        Console.CursorVisible = false;
+        //Console.CursorVisible = false;
 
-        Console.CursorTop = 10;
+        //Console.CursorTop = 10;
 
-        Console.WriteLine(cost * GetCostMultiplier(type));
+        //Console.WriteLine(cost * GetCostMultiplier(type));
 
-        Dump(positions);
+        //Dump(positions);
 
-        Thread.Sleep(100);
+        //Thread.Sleep(10);
 
         cost *= GetCostMultiplier(type);
 
-        previousPositions[index - 1]++;
+        previousPositions[index - 1] = newX;
 
         for (var i = 1; i <= _amphipodCount; i++)
         {
