@@ -7,7 +7,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Hotel amphipod";
 
-    private int[,] _initialPositions;
+    private (int, int)[,] _initialPositions;
 
     private const int Width = 11;
 
@@ -17,7 +17,7 @@ public abstract class Base : Solution
 
     protected void ParseInput()
     {
-        _initialPositions = new int[Width, Height];
+        _initialPositions = new (int, int)[Width, Height];
 
         for (var y = 1; y < 4; y++)
         {
@@ -28,9 +28,9 @@ public abstract class Base : Solution
                     continue;
                 }
 
-                _initialPositions[x - 1, y - 1] = (Input[y][x] - '@') * 2;
-
                 _amphipodCount++;
+
+                _initialPositions[x - 1, y - 1] = ((Input[y][x] - '@') * 2, _amphipodCount);
             }
         }
 
@@ -43,18 +43,18 @@ public abstract class Base : Solution
     {
         var costs = new List<int>();
 
-        for (var i = 0; i < 1; i++)
+        for (var i = 0; i < _amphipodCount; i++)
         {
-            costs.Add(TryMove(_initialPositions, 1));
+            costs.Add(TryMove(_initialPositions, i));
         }
 
         return costs.Min();
     }
 
-    private static int TryMove(int[,] initialPositions, int index)
+    private static int TryMove((int, int)[,] initialPositions, int index)
     {
         // Gonna need to deep copy positions.
-        var positions = new int[Width, Height];
+        var positions = new (int Type, int Id)[Width, Height];
 
         Array.Copy(initialPositions, positions, Width * Height);
 
@@ -62,19 +62,12 @@ public abstract class Base : Solution
 
         var y = 0;
 
-        var i = -1;
-
         // Find amphipod of index.
         while (true)
         {
-            if (positions[x, y] != 0)
+            if (positions[x, y].Id == index)
             {
-                i++;
-
-                if (i == index)
-                {
-                    break;
-                }
+                break;
             }
 
             x++;
@@ -87,14 +80,16 @@ public abstract class Base : Solution
             }
         }
 
-        var type = positions[x, y];
+        var type = positions[x, y].Type;
+
+        var id = positions[x, y].Id;
 
         var cost = 0;
 
         // In hallway, can it go home?
         if (y == 0)
         {
-            if (positions[type, 1] != 0 || positions[type, 2] != type && positions[type, 2] != 0)
+            if (positions[type, 1].Type != 0 || positions[type, 2].Type != type && positions[type, 2].Type != 0)
             {
                 return 0;
             }
@@ -103,7 +98,7 @@ public abstract class Base : Solution
             {
                 x += x < type ? 1 : -1;
 
-                if (positions[x, y] != 0)
+                if (positions[x, y].Type != 0)
                 {
                     return 0;
                 }
@@ -111,39 +106,57 @@ public abstract class Base : Solution
                 cost++;
             }
 
-            positions[x, y] = 0;
+            positions[x, y].Type = 0;
+
+            positions[x, y].Id = 0;
 
             cost++;
 
-            if (positions[2, type] == 0)
+            if (positions[2, type].Type == 0)
             {
                 cost++;
 
                 y++;
             }
 
-            positions[type, y + 1] = type;
+            positions[type, y + 1].Type = type;
+
+            positions[type, y + 1].Id = id;
 
             return cost * GetCostMultiplier(type);
         }
 
         // In burrow, can it get out?
-        if (y == 2 && positions[x, 1] != 0)
+        if (y == 2 && positions[x, 1].Type != 0)
         {
             return 0;
         }
+
+        positions[x, y].Type = 0;
+
+        positions[x, y].Id = 0;
 
         // In burrow, can get out, pick a hallway position.
         cost = y;
 
         y = 0;
 
-        positions[x, y] = 0;
-
         // How to pick a different position every time?
+        var newX = 10;
 
+        cost += Math.Abs(newX - x);
 
-        return cost * GetCostMultiplier(type);
+        positions[newX, y].Type = type;
+
+        positions[newX, y].Id = id;
+
+        Console.WriteLine(cost * GetCostMultiplier(type));
+
+        Dump(positions);
+
+        cost *= GetCostMultiplier(type);
+
+        return cost;
     }
 
     private static int GetCostMultiplier(int type)
@@ -158,7 +171,7 @@ public abstract class Base : Solution
     }
 
 #if DUMP && DEBUG
-    private static void Dump(int[,] positions)
+    private static void Dump((int Type, int)[,] positions)
     {
         for (var y = 0; y < Height; y++)
         {
@@ -166,14 +179,14 @@ public abstract class Base : Solution
 
             for (var x = 0; x < Width; x++)
             {
-                if (positions[x, y] == 0)
+                if (positions[x, y].Type == 0)
                 {
                     Console.Write(' ');
 
                     continue;
                 }
 
-                Console.Write((char) (positions[x, y] / 2 + '@'));
+                Console.Write((char) (positions[x, y].Type / 2 + '@'));
             }
 
             Console.WriteLine('#');
