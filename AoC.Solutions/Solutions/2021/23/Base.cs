@@ -117,7 +117,7 @@ public abstract class Base : Solution
 
             positions[type, y + 1] = type;
 
-            return cost * GetCost(type);
+            return cost * GetCostMultiplier(type);
         }
 
         // In burrow, can it get out?
@@ -127,11 +127,19 @@ public abstract class Base : Solution
         }
 
         // In burrow, can get out, pick a hallway position.
+        cost = y;
 
-        return 0;
+        y = 0;
+
+        positions[x, y] = 0;
+
+        // How to pick a different position every time?
+
+
+        return cost * GetCostMultiplier(type);
     }
 
-    private static int GetCost(int type)
+    private static int GetCostMultiplier(int type)
     {
         return type switch
         {
