@@ -42,212 +42,163 @@ public abstract class Base : Solution
     protected int Solve()
     {
         var costs = new List<int>();
-        
+
         for (var i = 1; i <= _amphipodCount; i++)
         {
-            costs.Add(TryMove(_initialPositions, i, Enumerable.Repeat(-1, _amphipodCount).ToArray()));
+            costs.Add(TryMove(_initialPositions, i));
         }
 
         return costs.Min();
     }
 
-    private int TryMove((int, int)[,] initialPositions, int index, int[] initialPreviousPositions)
+    private int TryMove((int, int)[,] initialPositions, int index, int totalCost = 0)
     {
-        if (initialPreviousPositions[index - 1] >= Width)
-        {
-            return 0;
-        }
-
         var positions = new (int Type, int Id)[Width, Height];
 
         Array.Copy(initialPositions, positions, Width * Height);
 
-        var previousPositions = new int[initialPreviousPositions.Length];
+        var home = 0;
 
-        Array.Copy(initialPreviousPositions, previousPositions, initialPreviousPositions.Length);
+        // All home?
+        for (var y = 1; y < Height; y++)
+        {
+            for (var x = 2; x < Width - 2; x += 2)
+            {
+                if (positions[x, y].Type == x)
+                {
+                    home++;
+                }
+                else
+                {
+                    goto notHome;
+                }
+            }
+        }
 
-        var x = 0;
+        if (home == _amphipodCount)
+        {
+            return totalCost;
+        }
 
-        var y = 0;
+        notHome:
+
+        var aX = 0;
+
+        var aY = 0;
 
         // Find amphipod of index.
         while (true)
         {
-            if (positions[x, y].Id == index)
+            if (positions[aX, aY].Id == index)
             {
                 break;
             }
 
-            x++;
+            aX++;
 
-            if (x == Width)
+            if (aX == Width)
             {
-                x = 0;
+                aX = 0;
 
-                y++;
+                aY++;
             }
         }
 
-        var type = positions[x, y].Type;
+        var type = positions[aX, aY].Type;
 
-        var id = positions[x, y].Id;
+        // Is home (and not blocking another in)?
+        if (aX == type)
+        {
+            if (aY == 2 || aY == 1 && positions[type, 2].Type == type)
+            {
+                goto next;
+            }
+        }
 
         var cost = 0;
 
-        // Is home?
-        if (x == type && y == 2 || x == type && y == 1 && positions[type, 2].Type == type)
+        // In hallway or burrow, can get home?
+        if (positions[type, 2].Type == 0)
         {
-            return 0;
-        }
+            cost = CostToGetTo(positions, aX, aY, type, 2);
 
-        int newX;
-
-        // In hallway, can it go home?
-        if (y == 0)
-        {
-            if (positions[type, 1].Type != 0 || positions[type, 2].Type != type && positions[type, 2].Type != 0)
+            if (cost > 0)
             {
-                return 0;
+                MoveTo(positions, aX, aY, type, 2);
+
+                goto next;
             }
-
-            newX = x;
-
-            while (newX != type)
-            {
-                newX += newX < type ? 1 : -1;
-
-                if (positions[newX, y].Type != 0)
-                {
-                    return 0;
-                }
-
-                cost++;
-            }
-
-            positions[x, y].Type = 0;
-
-            positions[x, y].Id = 0;
-
-            cost++;
-            
-            y++;
-            
-            if (positions[type, 2].Type == 0)
-            {
-                cost++;
-
-                y++;
-            }
-
-            positions[type, y].Type = type;
-
-            positions[type, y].Id = id;
-
-            //Console.ForegroundColor = ConsoleColor.Blue;
-
-            //Dump(positions);
-
-            //Console.ForegroundColor = ConsoleColor.Green;
-
-            //Console.ReadKey();
-
-            return cost * GetCostMultiplier(type);
         }
-
-        // In burrow, can it get out?
-        if (y == 2 && positions[x, 1].Type != 0)
+        else if (positions[type, 1].Type == 0 && positions[type, 2].Type == type)
         {
-            return 0;
-        }
+            cost = CostToGetTo(positions, aX, aY, type, 1);
 
-        // In burrow, can get home?
-        if (positions[type, 2].Type == type && positions[type, 1].Type == 0 || positions[type, 2].Type == 0 && positions[type, 1].Type == 0)
-        {
-            newX = x;
-
-            while (newX != type)
+            if (cost > 0)
             {
-                newX += newX < type ? 1 : -1;
+                MoveTo(positions, aX, aY, type, 2);
 
-                if (positions[newX, 0].Type != 0)
-                {
-                    goto next;
-                }
-            }
-
-            // TODO: Get cost
-            positions[x, y].Type = 0;
-
-            positions[x, y].Id = 0;
-
-            y = positions[type, 2].Type == 0 ? 2 : 1;
-
-            positions[type, y].Type = type;
-
-            positions[type, y].Id = id;
-
-            Console.CursorVisible = false;
-
-            Console.CursorTop = 10;
-
-            Console.WriteLine();
-
-            Dump(positions);
-
-            Thread.Sleep(100);
-
-            return 0;
-        }
-
-next:
-
-        // In burrow, can get out, pick a hallway position.
-        newX = previousPositions[index - 1] + 1;
-
-        if (newX == Width)
-        {
-            return 0;
-        }
-
-        while (positions[newX, 0].Type != 0 || newX == 2 || newX == 4 || newX == 6 || newX == 8)
-        {
-            newX++;
-
-            if (newX >= Width)
-            {
-                return 0;
+                goto next;
             }
         }
 
-        positions[x, y].Type = 0;
+        // In burrow, can get to hallway?
 
-        positions[x, y].Id = 0;
-
-        cost = y;
-
-        cost += Math.Abs(newX - x);
-
-        positions[newX, 0].Type = type;
-
-        positions[newX, 0].Id = id;
-
-        Console.CursorVisible = false;
-
-        Console.CursorTop = 10;
-
-        Console.WriteLine(cost * GetCostMultiplier(type));
+        next:
 
         Dump(positions);
 
-        Thread.Sleep(100);
+        return 0;
+    }
 
-        cost *= GetCostMultiplier(type);
+    private static void MoveTo((int Type, int Id)[,] positions, int startX, int startY, int endX, int endY)
+    {
+        positions[endX, endY].Type = positions[startX, startY].Type;
 
-        previousPositions[index - 1] = newX;
+        positions[endX, endY].Id = positions[startX, startY].Id;
 
-        for (var i = 1; i <= _amphipodCount; i++)
+        positions[startX, startY].Type = 0;
+
+        positions[startX, startY].Id = 0;
+    }
+
+    private static int CostToGetTo((int Type, int)[,] positions, int startX, int startY, int endX, int endY)
+    {
+        var cost = 0;
+
+        while (startY > 0)
         {
-            cost += TryMove(positions, i, previousPositions);
+            startY--;
+
+            if (positions[startX, startY].Type != 0)
+            {
+                return 0;
+            }
+
+            cost++;
+        }
+
+        while (startX != endX)
+        {
+            startX += startX < endX ? 1 : -1;
+
+            if (positions[startX, startY].Type != 0)
+            {
+                return 0;
+            }
+
+            cost++;
+        }
+
+        while (startY < endY)
+        {
+            startY++;
+
+            if (positions[startX, startY].Type != 0)
+            {
+                return 0;
+            }
+
+            cost++;
         }
 
         return cost;
