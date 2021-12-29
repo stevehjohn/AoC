@@ -43,22 +43,22 @@ public abstract class Base : Solution
     {
         var costs = new List<int>();
 
-        //for (var i = 1; i <= _amphipodCount; i++)
-        //{
-        //    costs.Add(TryMove(_initialPositions, i, 0, Enumerable.Repeat(-1, _amphipodCount).ToArray()));
-        //}
-        
-        costs.Add(TryMove(_initialPositions, 1, 0, Enumerable.Repeat(-1, _amphipodCount).ToArray()));
+        for (var i = 1; i <= _amphipodCount; i++)
+        {
+            costs.Add(TryMove(_initialPositions, i, Enumerable.Repeat(-1, _amphipodCount).ToArray()));
+        }
+
+        //costs.Add(TryMove(_initialPositions, 1, Enumerable.Repeat(-1, _amphipodCount).ToArray()));
 
         return costs.Min();
     }
 
-    private int TryMove((int, int)[,] initialPositions, int index, int totalCost, int[] initialHallwayTargets)
+    private int TryMove((int, int)[,] initialPositions, int index, int[] initialHallwayTargets)
     {
         // Hallway positions exhausted
         if (initialHallwayTargets[index - 1] >= Width - 1)
         {
-            return 0;
+            return int.MaxValue;
         }
 
         var positions = new (int Type, int Id)[Width, Height];
@@ -90,7 +90,7 @@ public abstract class Base : Solution
 
         if (home == _amphipodCount)
         {
-            return totalCost;
+            return 0;
         }
 
         notHome:
@@ -161,7 +161,6 @@ public abstract class Base : Solution
         }
 
         // In burrow, can get to hallway?
-        // TODO: Pick position in hall...
         var targetX = ++hallwayTargets[index - 1];
 
         if (targetX is 2 or 4 or 6 or 8)
@@ -180,16 +179,20 @@ public abstract class Base : Solution
             moved = true;
         }
 
-        // TODO: What are the pauses?
+        // TODO: What are the pauses? Something to do with 0 cost?
 
         next:
 
 #if DEBUG && DUMP
-        //Thread.Sleep(200);
+        //Console.ReadKey();
+
+        Thread.Sleep(100);
 
         Console.CursorVisible = false;
 
         Console.CursorTop = 1;
+
+        Console.WriteLine(cost);
 
         Dump(positions);
 #endif
@@ -197,12 +200,28 @@ public abstract class Base : Solution
         // TODO: Add cost multiplier.
         if (moved)
         {
+            var costs = new List<int>();
+
             for (var i = 1; i <= _amphipodCount; i++)
             {
-                TryMove(positions, i, totalCost + cost, hallwayTargets);
+                var subCost = TryMove(positions, i, hallwayTargets);
+
+                if (subCost < int.MaxValue)
+                {
+                    costs.Add(subCost);
+                }
+            }
+
+            if (costs.Any())
+            {
+                cost += costs.Min();
             }
         }
-        
+        else
+        {
+            return int.MaxValue;
+        }
+
         return cost;
     }
 
