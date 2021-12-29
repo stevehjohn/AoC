@@ -42,10 +42,10 @@ public abstract class Base : Solution
     protected int Solve()
     {
         var costs = new List<int>();
-
+        
         for (var i = 1; i <= _amphipodCount; i++)
         {
-            costs.Add(TryMove(_initialPositions, i, new int[_amphipodCount]));
+            costs.Add(TryMove(_initialPositions, i, Enumerable.Repeat(-1, _amphipodCount).ToArray()));
         }
 
         return costs.Min();
@@ -53,7 +53,7 @@ public abstract class Base : Solution
 
     private int TryMove((int, int)[,] initialPositions, int index, int[] initialPreviousPositions)
     {
-        if (initialPreviousPositions[index - 1] > Width)
+        if (initialPreviousPositions[index - 1] >= Width)
         {
             return 0;
         }
@@ -69,12 +69,6 @@ public abstract class Base : Solution
         var x = 0;
 
         var y = 0;
-
-        Console.CursorVisible = false;
-
-        Console.CursorTop = 10;
-
-        Dump(positions);
 
         // Find amphipod of index.
         while (true)
@@ -106,6 +100,8 @@ public abstract class Base : Solution
             return 0;
         }
 
+        int newX;
+
         // In hallway, can it go home?
         if (y == 0)
         {
@@ -114,21 +110,23 @@ public abstract class Base : Solution
                 return 0;
             }
 
-            positions[x, y].Type = 0;
+            newX = x;
 
-            positions[x, y].Id = 0;
-
-            while (x != type)
+            while (newX != type)
             {
-                x += x < type ? 1 : -1;
+                newX += newX < type ? 1 : -1;
 
-                if (positions[x, y].Type != 0)
+                if (positions[newX, y].Type != 0)
                 {
                     return 0;
                 }
 
                 cost++;
             }
+
+            positions[x, y].Type = 0;
+
+            positions[x, y].Id = 0;
 
             cost++;
             
@@ -145,13 +143,13 @@ public abstract class Base : Solution
 
             positions[type, y].Id = id;
 
-            Console.ForegroundColor = ConsoleColor.Blue;
+            //Console.ForegroundColor = ConsoleColor.Blue;
 
-            Dump(positions);
+            //Dump(positions);
 
-            Console.ForegroundColor = ConsoleColor.Green;
+            //Console.ForegroundColor = ConsoleColor.Green;
 
-                Console.ReadKey();
+            //Console.ReadKey();
 
             return cost * GetCostMultiplier(type);
         }
@@ -162,10 +160,56 @@ public abstract class Base : Solution
             return 0;
         }
 
-        // In burrow, can get out, pick a hallway position.
-        var newX = previousPositions[index - 1];
+        // In burrow, can get home?
+        if (positions[type, 2].Type == type && positions[type, 1].Type == 0 || positions[type, 2].Type == 0 && positions[type, 1].Type == 0)
+        {
+            newX = x;
 
-        while (newX < Width && (positions[newX, 0].Type != 0 || newX == 2 || newX == 4 || newX == 6 || newX == 8))
+            while (newX != type)
+            {
+                newX += newX < type ? 1 : -1;
+
+                if (positions[newX, 0].Type != 0)
+                {
+                    goto next;
+                }
+            }
+
+            // TODO: Get cost
+            positions[x, y].Type = 0;
+
+            positions[x, y].Id = 0;
+
+            y = positions[type, 2].Type == 0 ? 2 : 1;
+
+            positions[type, y].Type = type;
+
+            positions[type, y].Id = id;
+
+            Console.CursorVisible = false;
+
+            Console.CursorTop = 10;
+
+            Console.WriteLine();
+
+            Dump(positions);
+
+            Thread.Sleep(100);
+
+            return 0;
+        }
+
+next:
+
+        // In burrow, can get out, pick a hallway position.
+        newX = previousPositions[index - 1] + 1;
+
+        if (newX == Width)
+        {
+            return 0;
+        }
+
+        while (positions[newX, 0].Type != 0 || newX == 2 || newX == 4 || newX == 6 || newX == 8)
         {
             newX++;
 
@@ -187,15 +231,15 @@ public abstract class Base : Solution
 
         positions[newX, 0].Id = id;
 
-        //Console.CursorVisible = false;
+        Console.CursorVisible = false;
 
-        //Console.CursorTop = 10;
+        Console.CursorTop = 10;
 
-        //Console.WriteLine(cost * GetCostMultiplier(type));
+        Console.WriteLine(cost * GetCostMultiplier(type));
 
-        //Dump(positions);
+        Dump(positions);
 
-        //Thread.Sleep(10);
+        Thread.Sleep(100);
 
         cost *= GetCostMultiplier(type);
 
@@ -203,11 +247,6 @@ public abstract class Base : Solution
 
         for (var i = 1; i <= _amphipodCount; i++)
         {
-            if (i == id)
-            {
-                continue;
-            }
-
             cost += TryMove(positions, i, previousPositions);
         }
 
