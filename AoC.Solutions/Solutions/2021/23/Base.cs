@@ -155,6 +155,13 @@ public abstract class Base : Solution
         // TODO: Pick position in hall...
         var targetX = ++hallwayTargets[index - 1];
 
+        if (targetX == 2 || targetX == 4 || targetX == 6 || targetX == 8)
+        {
+            targetX++;
+
+            hallwayTargets[index - 1]++;
+        }
+
         cost = CostToGetTo(positions, aX, aY, targetX, 0);
 
         if (cost > 0)
