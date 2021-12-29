@@ -106,6 +106,8 @@ public abstract class Base : Solution
 
         var type = positions[aX, aY].Type;
 
+        var cost = 0;
+
         // Is home (and not blocking another in)?
         if (aX == type)
         {
@@ -114,8 +116,6 @@ public abstract class Base : Solution
                 goto next;
             }
         }
-
-        var cost = 0;
 
         // In hallway or burrow, can get home?
         if (positions[type, 2].Type == 0)
@@ -142,12 +142,34 @@ public abstract class Base : Solution
         }
 
         // In burrow, can get to hallway?
+        // TODO: Pick position in hall...
+        var targetX = 0;
+
+        cost = CostToGetTo(positions, aX, aY, targetX, 0);
+
+        if (cost > 0)
+        {
+            MoveTo(positions, aX, aY, targetX, 0);
+        }
 
         next:
 
-        Dump(positions);
+        for (var i = 1; i <= _amphipodCount; i++)
+        {
+            TryMove(_initialPositions, i, cost);
+        }
 
-        return 0;
+#if DEBUG && DUMP
+        Console.ReadKey();
+
+        Console.CursorVisible = false;
+
+        Console.CursorTop = 1;
+
+        Dump(positions);
+#endif
+
+        return int.MaxValue;
     }
 
     private static void MoveTo((int Type, int Id)[,] positions, int startX, int startY, int endX, int endY)
