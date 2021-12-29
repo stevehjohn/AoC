@@ -43,20 +43,30 @@ public abstract class Base : Solution
     {
         var costs = new List<int>();
 
-        for (var i = 0; i < _amphipodCount; i++)
+        for (var i = 1; i <= _amphipodCount; i++)
         {
-            costs.Add(TryMove(_initialPositions, i));
+            costs.Add(TryMove(_initialPositions, i, new int[_amphipodCount]));
         }
+
+        //costs.Add(TryMove(_initialPositions, 5));
 
         return costs.Min();
     }
 
-    private static int TryMove((int, int)[,] initialPositions, int index)
+    private int TryMove((int, int)[,] initialPositions, int index, int[] initialPreviousPositions)
     {
-        // Gonna need to deep copy positions.
+        if (initialPreviousPositions[index - 1] == 11)
+        {
+            return 0;
+        }
+
         var positions = new (int Type, int Id)[Width, Height];
 
         Array.Copy(initialPositions, positions, Width * Height);
+
+        var previousPositions = new int[initialPreviousPositions.Length];
+
+        Array.Copy(initialPreviousPositions, previousPositions, initialPreviousPositions.Length);
 
         var x = 0;
 
@@ -85,6 +95,12 @@ public abstract class Base : Solution
         var id = positions[x, y].Id;
 
         var cost = 0;
+
+        // Is home?
+        if (x == type && y == 2 || x == type && y == 1 && positions[type, 2].Type == type)
+        {
+            return 0;
+        }
 
         // In hallway, can it go home?
         if (y == 0)
@@ -142,7 +158,7 @@ public abstract class Base : Solution
         y = 0;
 
         // How to pick a different position every time?
-        var newX = 10;
+        var newX = previousPositions[index - 1];
 
         cost += Math.Abs(newX - x);
 
@@ -150,11 +166,24 @@ public abstract class Base : Solution
 
         positions[newX, y].Id = id;
 
+        Console.CursorVisible = false;
+
+        Console.CursorTop = 10;
+
         Console.WriteLine(cost * GetCostMultiplier(type));
 
         Dump(positions);
 
+        Thread.Sleep(100);
+
         cost *= GetCostMultiplier(type);
+
+        previousPositions[index - 1]++;
+
+        for (var i = 1; i <= _amphipodCount; i++)
+        {
+            cost += TryMove(positions, i, previousPositions);
+        }
 
         return cost;
     }
