@@ -155,7 +155,7 @@ public abstract class Base : Solution
         // TODO: Pick position in hall...
         var targetX = ++hallwayTargets[index - 1];
 
-        if (targetX == 2 || targetX == 4 || targetX == 6 || targetX == 8)
+        if (targetX is 2 or 4 or 6 or 8)
         {
             targetX++;
 
@@ -172,7 +172,7 @@ public abstract class Base : Solution
         next:
 
 #if DEBUG && DUMP
-        Console.ReadKey();
+        //Console.ReadKey();
 
         Console.CursorVisible = false;
 
@@ -183,7 +183,7 @@ public abstract class Base : Solution
 
         for (var i = 1; i <= _amphipodCount; i++)
         {
-            TryMove(positions, i, cost, hallwayTargets);
+            TryMove(positions, i, totalCost + cost, hallwayTargets);
         }
 
         return int.MaxValue;
