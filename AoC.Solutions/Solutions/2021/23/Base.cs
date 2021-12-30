@@ -19,10 +19,6 @@ public abstract class Base : Solution
 
     private static readonly int[] Hallway = { 0, 1, 3, 5, 7, 9, 10 };
 
-#if DUMP && DEBUG
-    private static int _updateCount;
-#endif
-
     protected void ParseInput(bool insertExtra = false)
     {
         var state = new List<int>();
@@ -138,12 +134,7 @@ public abstract class Base : Solution
 #if DEBUG && DUMP
                 Console.CursorTop = 9;
 
-                if (_updateCount == 0)
-                {
-                    Console.WriteLine($" {_queue.Count}      ");
-                }
-
-                _updateCount = (_updateCount + 1) % 10000;
+                Console.WriteLine($" {_queue.Count}      ");
 #endif
 
                 for (var i = 0; i < state.Length; i++)
