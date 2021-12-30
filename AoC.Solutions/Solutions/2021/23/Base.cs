@@ -11,13 +11,18 @@ public abstract class Base : Solution
 
     private int _lowestCost;
 
-    private Queue<(int[] State, int Index, int Cost)> _queue;
+    private PriorityQueue<(int[] State, int Index, int Cost), int> _queue;
 
     private HashSet<int> _encounteredStates;
 
     private static readonly int[] Hallway = { 0, 1, 3, 5, 7, 9, 10 };
 
-    protected void ParseInput()
+    /*
+     #D#C#B#A#
+     #D#B#A#C#
+     */
+
+    protected void ParseInput(bool insertExtra = false)
     {
         var state = new List<int>();
 
@@ -56,7 +61,7 @@ public abstract class Base : Solution
     {
         _lowestCost = int.MaxValue;
 
-        _queue = new Queue<(int[] State, int Index, int Cost)>();
+        _queue = new PriorityQueue<(int[] State, int Index, int Cost), int>();
 
         _encounteredStates = new HashSet<int>();
 
@@ -68,7 +73,7 @@ public abstract class Base : Solution
                 continue;
             }
 
-            _queue.Enqueue((Copy(_initialAmphipodState), i, 0));
+            _queue.Enqueue((Copy(_initialAmphipodState), i, 0), 0);
 
             IsNewState(_initialAmphipodState);
         }
@@ -127,7 +132,7 @@ public abstract class Base : Solution
                     }
 
                     // TODO: Priority queue, lowest cost first?
-                    _queue.Enqueue((move.State, i, moveCost));
+                    _queue.Enqueue((move.State, i, moveCost), moveCost);
                 }
             }
         }
