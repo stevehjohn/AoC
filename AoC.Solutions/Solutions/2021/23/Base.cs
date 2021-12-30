@@ -117,7 +117,7 @@ public abstract class Base : Solution
 
                 Console.CursorTop = 10;
 
-                Console.WriteLine($"{_queue.Count}  ");
+                Console.WriteLine($"{_queue.Count}      ");
 
                 //Console.ReadKey();
 
@@ -132,6 +132,7 @@ public abstract class Base : Solution
                         continue;
                     }
 
+                    // TODO: Priority queue, lowest cost first?
                     _queue.Enqueue((move.State, i, moveCost));
                 }
             }
@@ -140,6 +141,8 @@ public abstract class Base : Solution
 
     private static int GetCostMultiplier(int type)
     {
+        return 1;
+
         return type switch
         {
             4 => 10,
@@ -190,7 +193,7 @@ public abstract class Base : Solution
         var pod = Decode(state[index]);
 
         // Is home?
-        if (pod.X == pod.Home)
+        if (pod.X == pod.Home && pod.Y > 0)
         {
             if (pod.Y == 2)
             {
