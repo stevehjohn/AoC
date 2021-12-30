@@ -1,4 +1,5 @@
 ﻿#define DUMP
+using System.Diagnostics;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2021._23;
@@ -52,6 +53,10 @@ public abstract class Base : Solution
 
         return costs.Min();
     }
+
+    // DEBUG
+    private List<(int, int)[,]> _states = new();
+    // END
 
     private int TryMove((int, int)[,] initialPositions, int index, int[] initialHallwayTargets, int level = 0)
     {
@@ -196,6 +201,35 @@ public abstract class Base : Solution
 
         Dump(positions);
 #endif
+
+        // DEBUG
+        var state = new (int Type, int Id)[Width, Height];
+
+        Array.Copy(positions, state, Width * Height);
+
+        _states.Add(state);
+
+        for (var i = 0; i < _states.Count - 1; i++)
+        {
+            var count = 0;
+            for (var y = 0; y < Height; y++)
+            {
+                for (var x = 0; x < Width; x++)
+                {
+                    if (_states[i][x, y].Item1 == positions[x, y].Type && _states[i][x, y].Item2 == positions[x, y].Id)
+                    {
+                        count++;
+                    }
+                }
+            }
+
+            if (count == Width * Height)
+            {
+                return int.MaxValue;
+                //Debugger.Break();
+            }
+        }
+        // END
 
         // TODO: Add cost multiplier.
         if (moved)
