@@ -55,12 +55,6 @@ public abstract class Base : Solution
 
     private int TryMove((int, int)[,] initialPositions, int index, int[] initialHallwayTargets, int level = 0)
     {
-        // Hallway positions exhausted
-        if (initialHallwayTargets[index - 1] >= Width - 1)
-        {
-            return int.MaxValue;
-        }
-
         var positions = new (int Type, int Id)[Width, Height];
 
         Array.Copy(initialPositions, positions, Width * Height);
@@ -80,10 +74,10 @@ public abstract class Base : Solution
                 {
                     home++;
                 }
-                //else
-                //{
-                //    goto notHome;
-                //}
+                else
+                {
+                    goto notHome;
+                }
             }
         }
 
@@ -162,6 +156,11 @@ public abstract class Base : Solution
         // In burrow, can get to hallway?
         var targetX = ++hallwayTargets[index - 1];
 
+        if (targetX >= Width - 1)
+        {
+            return int.MaxValue;
+        }
+
         if (targetX is 2 or 4 or 6 or 8)
         {
             targetX++;
@@ -187,7 +186,7 @@ public abstract class Base : Solution
 #if DEBUG && DUMP
         //Console.ReadKey();
 
-        Thread.Sleep(10);
+        //Thread.Sleep(10);
 
         Console.CursorVisible = false;
 
@@ -296,25 +295,25 @@ public abstract class Base : Solution
     }
 
 #if DUMP && DEBUG
-    private static void Dump((int Type, int)[,] positions)
+    private static void Dump((int Type, int Id)[,] positions)
     {
         for (var y = 0; y < Height; y++)
         {
-            Console.Write('.');
+            Console.Write("..");
 
             for (var x = 0; x < Width; x++)
             {
                 if (positions[x, y].Type == 0)
                 {
-                    Console.Write(y > 0 && x != 2 && x != 4 && x != 6 && x != 8 ? '.' : ' ');
+                    Console.Write(y > 0 && x != 2 && x != 4 && x != 6 && x != 8 ? ".." : "  ");
 
                     continue;
                 }
 
-                Console.Write((char) (positions[x, y].Type / 2 + '@'));
+                Console.Write($"{(char) (positions[x, y].Type / 2 + '@')}{positions[x, y].Id}");
             }
 
-            Console.WriteLine('.');
+            Console.WriteLine("..");
         }
 
         Console.WriteLine();
