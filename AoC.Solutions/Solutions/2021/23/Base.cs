@@ -15,18 +15,32 @@ public abstract class Base : Solution
 
     private HashSet<int> _encounteredStates;
 
-    private static readonly int[] Hallway = { 0, 1, 3, 5, 7, 9, 10 };
+    private static int _borrowDepth = 2;
 
-    /*
-     #D#C#B#A#
-     #D#B#A#C#
-     */
+    private static readonly int[] Hallway = { 0, 1, 3, 5, 7, 9, 10 };
 
     protected void ParseInput(bool insertExtra = false)
     {
         var state = new List<int>();
 
-        for (var y = 1; y < 4; y++)
+        if (insertExtra)
+        {
+            _borrowDepth = 4;
+
+            var newInput = new List<string>();
+
+            newInput.AddRange(Input.Take(3));
+
+            newInput.Add("  #D#C#B#A#");
+
+            newInput.Add("  #D#B#A#C#");
+
+            newInput.AddRange(Input.Skip(3).Take(2));
+
+            Input = newInput.ToArray();
+        }
+
+        for (var y = 1; y < 2 + _borrowDepth; y++)
         {
             for (var x = 1; x < 12; x += 2)
             {
@@ -118,7 +132,7 @@ public abstract class Base : Solution
                 }
 
 #if DEBUG && DUMP
-                Console.CursorTop = 7;
+                Console.CursorTop = 9;
 
                 Console.WriteLine($" {_queue.Count}      ");
 #endif
@@ -131,7 +145,6 @@ public abstract class Base : Solution
                         continue;
                     }
 
-                    // TODO: Priority queue, lowest cost first?
                     _queue.Enqueue((move.State, i, moveCost), moveCost);
                 }
             }
@@ -194,13 +207,25 @@ public abstract class Base : Solution
         // Is home?
         if (pod.X == pod.Home && pod.Y > 0)
         {
-            if (pod.Y == 2)
+            if (pod.Y == _borrowDepth)
             {
                 return result;
             }
 
-            // If y == 1, check not blocking a different type
-            if (TypeInPosition(state, pod.X, 2) == pod.Home)
+            var same = true;
+
+            // Check not blocking a different type.
+            for (var y = pod.Y + 1; y <= _borrowDepth; y++)
+            {
+                if (TypeInPosition(state, pod.X, y) != pod.Home)
+                {
+                    same = false;
+
+                    break;
+                }
+            }
+
+            if (same)
             {
                 return result;
             }
@@ -394,7 +419,7 @@ public abstract class Base : Solution
 
         Console.WriteLine('#');
 
-        for (var y = 1; y < 3; y++)
+        for (var y = 1; y < _borrowDepth + 1; y++)
         {
             Console.Write(y == 1 ? " ###" : "   #");
 
