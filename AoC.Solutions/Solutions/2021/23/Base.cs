@@ -204,6 +204,8 @@ public abstract class Base : Solution
 
         var pod = Decode(state[index]);
 
+        int y;
+
         // Is home?
         if (pod.X == pod.Home && pod.Y > 0)
         {
@@ -215,7 +217,7 @@ public abstract class Base : Solution
             var same = true;
 
             // Check not blocking a different type.
-            for (var y = pod.Y + 1; y <= _borrowDepth; y++)
+            for (y = pod.Y + 1; y <= _borrowDepth; y++)
             {
                 if (TypeInPosition(state, pod.X, y) != pod.Home)
                 {
@@ -232,19 +234,30 @@ public abstract class Base : Solution
         }
 
         // Can get home from current position?
-        var cost = CostToGetTo(state, pod.X, pod.Y, pod.Home, 2) * GetCostMultiplier(pod.Home);
+        //  Find if home is available
 
-        if (cost > 0)
-        {
-            result.Add((MakeMove(state, pod.X, pod.Y, pod.Home, 2), cost));
-        }
-        else if (TypeInPosition(state, pod.Home, 2) == pod.Home)
-        {
-            cost = CostToGetTo(state, pod.X, pod.Y, pod.Home, 1) * GetCostMultiplier(pod.Home);
+        int cost;
 
-            if (cost > 0)
+        for (y = _borrowDepth; y > 0; y--)
+        {
+            var typeInPosition = TypeInPosition(state, pod.Home, y);
+
+            if (typeInPosition == 0)
             {
-                result.Add((MakeMove(state, pod.X, pod.Y, pod.Home, 1), cost));
+                cost = CostToGetTo(state, pod.X, pod.Y, pod.Home, y) * GetCostMultiplier(pod.Home);
+
+                if (cost > 0)
+                {
+                    result.Add((MakeMove(state, pod.X, pod.Y, pod.Home, y), cost));
+                }
+
+                // Spot is empty, but can't get there.
+                break;
+            }
+
+            if (typeInPosition != pod.Home)
+            {
+                break;
             }
         }
 
