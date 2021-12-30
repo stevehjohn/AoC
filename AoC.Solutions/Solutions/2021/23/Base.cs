@@ -115,7 +115,7 @@ public abstract class Base : Solution
                 }
 
                 // Check against hash set.
-                if (! IsNewState(move.State, index))
+                if (! IsNewState(move.State))
                 {
                     continue;
                 }
@@ -162,7 +162,7 @@ public abstract class Base : Solution
         };
     }
 
-    private bool IsNewState(int[] state, int index = 0)
+    private bool IsNewState(int[] state)
     {
         var hash = 0;
 
@@ -170,8 +170,6 @@ public abstract class Base : Solution
         {
             hash = HashCode.Combine(hash, state[i]);
         }
-
-        hash = HashCode.Combine(hash, index);
 
         if (_encounteredStates.Contains(hash))
         {
