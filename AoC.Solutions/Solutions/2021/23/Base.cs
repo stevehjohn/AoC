@@ -15,7 +15,8 @@ public abstract class Base : Solution
 
     private HashSet<int> _encounteredStates;
 
-    // Stack for each room?
+    private static readonly int[] Hallway = { 0, 1, 3, 5, 7, 9, 10 };
+
     protected void ParseInput()
     {
         _initialAmphipodState = new int[8];
@@ -63,7 +64,12 @@ public abstract class Base : Solution
 
         for (var i = 0; i < _initialAmphipodState.Length; i++)
         {
-            // Could only enqueue top pods here.
+            // Only enqueue top pods here.
+            if (DecodeY(_initialAmphipodState[i]) != 1)
+            {
+                continue;
+            }
+
             _queue.Enqueue((Copy(_initialAmphipodState), i, 0));
 
             IsNewState(_initialAmphipodState, i, 0);
@@ -99,9 +105,6 @@ public abstract class Base : Solution
 
                     continue;
                 }
-
-                // Re: hashing, add the index (and maybe cost) to the hash.
-                // What about hashes of the first enqueued states?
 
 #if DEBUG && DUMP
                 Dump(state);
@@ -166,10 +169,75 @@ public abstract class Base : Solution
 
     private static List<(int[] State, int Cost)> GetMovesAndCosts(int[] state, int index)
     {
-        return null;
+        var result = new List<(int[] State, int Cost)>();
+
+        var pod = Decode(state[index]);
+
+        // Is home?
+        if (true)
+        {
+            if (pod.Y > 0 && pod.X == pod.Home)
+            {
+                return result;
+            }
+        }
+
+        // Can get home from current position?
+        var cost = CostToGetTo(state, pod.X, pod.Y, pod.Home, 2);
+
+        if (cost > 0)
+        {
+            result.Add((MakeMove(state, pod.X, pod.Y, pod.Home, 2), cost));
+        }
+        else if (TypeInPosition(state, pod.Home, 2) == pod.Home)
+        {
+            cost = CostToGetTo(state, pod.X, pod.Y, pod.Home, 1);
+
+            if (cost > 0)
+            {
+                result.Add((MakeMove(state, pod.X, pod.Y, pod.Home, 1), cost));
+            }
+        }
+
+        // Can get to hall? If so, add all possible positions.
+        foreach (var x in Hallway)
+        {
+            cost = CostToGetTo(state, pod.X, pod.Y, x, 0);
+
+            if (cost > 0)
+            {
+                result.Add((MakeMove(state, pod.X, pod.Y, x, 0), cost));
+            }
+        }
+
+        return result;
     }
 
-    private int[] Copy(int[] source)
+    private static int[] MakeMove(int[] state, int startX, int startY, int endX, int endY)
+    {
+    }
+
+    private static int CostToGetTo(int[] state, int startX, int startY, int endX, int endY)
+    {
+        return 0;
+    }
+
+    private static int TypeInPosition(int[] state, int x, int y)
+    {
+        for (var i = 0; i < state.Length; i++)
+        {
+            var pod = Decode(state[i]);
+
+            if (pod.X == x && pod.Y == y)
+            {
+                return pod.Home;
+            }
+        }
+
+        return 0;
+    }
+
+    private static int[] Copy(int[] source)
     {
         var copy = new int[source.Length];
 
@@ -187,7 +255,7 @@ public abstract class Base : Solution
         return result;
     }
 
-    private static (int X, int Y, int Home, int Id) Decode(int state)
+    private static (int X, int Y, int Home) Decode(int state)
     {
         var x = DecodeX(state);
 
@@ -195,9 +263,7 @@ public abstract class Base : Solution
 
         var home = DecodeHome(state);
 
-        var id = state & 255;
-
-        return (x, y, home, id);
+        return (x, y, home);
     }
 
     private static int DecodeX(int state)
@@ -280,7 +346,7 @@ public abstract class Base : Solution
         Console.WriteLine();
     }
 
-    private char GetType(int home)
+    private static char GetType(int home)
     {
         return (char) ('@' + (char) (DecodeHome(home) / 2));
     }
