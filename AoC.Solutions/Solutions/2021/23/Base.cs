@@ -1,5 +1,6 @@
 ﻿#define DUMP
 using AoC.Solutions.Infrastructure;
+using AoC.Solutions.Solutions._2021._19;
 
 namespace AoC.Solutions.Solutions._2021._23;
 
@@ -215,6 +216,21 @@ public abstract class Base : Solution
 
     private static int[] MakeMove(int[] state, int startX, int startY, int endX, int endY)
     {
+        var newState = Copy(state);
+
+        for (var i = 0; i < state.Length; i++)
+        {
+            var pod = Decode(state[i]);
+
+            if (pod.X == startX && pod.Y == startY)
+            {
+                newState[i] = Encode(endX, endY, pod.Home);
+
+                break;
+            }
+        }
+
+        return newState;
     }
 
     private static int CostToGetTo(int[] state, int startX, int startY, int endX, int endY)
