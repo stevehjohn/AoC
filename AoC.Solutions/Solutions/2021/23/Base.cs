@@ -65,6 +65,8 @@ public abstract class Base : Solution
         {
             // Could only enqueue top pods here.
             _queue.Enqueue((Copy(_initialAmphipodState), i, 0));
+
+            IsNewState(_initialAmphipodState, i, 0);
         }
 
         var cost = ProcessQueue();
@@ -88,6 +90,15 @@ public abstract class Base : Solution
                 }
 
                 // Check all home, if so, update cost and continue.
+                if (AllHome(move.State))
+                {
+                    if (cost + move.Cost < _lowestCost)
+                    {
+                        _lowestCost = cost + move.Cost;
+                    }
+
+                    continue;
+                }
 
                 // Re: hashing, add the index (and maybe cost) to the hash.
                 // What about hashes of the first enqueued states?
@@ -115,6 +126,44 @@ public abstract class Base : Solution
         return int.MaxValue;
     }
 
+    private bool IsNewState(int[] state, int index, int cost)
+    {
+        var hash = 0;
+
+        for (var i = 0; i < state.Length; i++)
+        {
+            hash = HashCode.Combine(hash, state[i]);
+        }
+
+        hash = HashCode.Combine(hash, index);
+
+        hash = HashCode.Combine(hash, cost);
+
+        if (_encounteredStates.Contains(hash))
+        {
+            return false;
+        }
+
+        _encounteredStates.Add(hash);
+
+        return true;
+    }
+
+    private static bool AllHome(int[] state)
+    {
+        for (var i = 0; i <= state.Length; i++)
+        {
+            var pod = Decode(state[i]);
+
+            if (pod.Y == 0 || pod.X != pod.Home)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     private static List<(int[] State, int Cost)> GetMovesAndCosts(int[] state, int index)
     {
         return null;
@@ -129,7 +178,7 @@ public abstract class Base : Solution
         return copy;
     }
 
-    private int Encode(int x, int y, int home)
+    private static int Encode(int x, int y, int home)
     {
         var result = ((x & 255) << 16)
                      | ((y & 255) << 8)
@@ -138,7 +187,7 @@ public abstract class Base : Solution
         return result;
     }
 
-    private (int X, int Y, int Home, int Id) Decode(int state)
+    private static (int X, int Y, int Home, int Id) Decode(int state)
     {
         var x = DecodeX(state);
 
@@ -151,17 +200,17 @@ public abstract class Base : Solution
         return (x, y, home, id);
     }
 
-    private int DecodeX(int state)
+    private static int DecodeX(int state)
     {
         return (state >> 16) & 255;
     }
 
-    private int DecodeY(int state)
+    private static int DecodeY(int state)
     {
         return (state >> 8) & 255;
     }
 
-    private int DecodeHome(int state)
+    private static int DecodeHome(int state)
     {
         return state & 255;
     }
