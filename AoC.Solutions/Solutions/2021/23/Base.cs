@@ -9,6 +9,12 @@ public abstract class Base : Solution
 
     private int[] _initialAmphipodState;
 
+    private int _lowestCost;
+
+    private Queue<(int[] State, int Index, int Cost)> _queue;
+
+    private HashSet<int> _encounteredStates;
+
     // Stack for each room?
     protected void ParseInput()
     {
@@ -40,7 +46,7 @@ public abstract class Base : Solution
 
 #if DEBUG && DUMP
         Console.Clear();
-        
+
         Console.CursorVisible = false;
 
         Dump(_initialAmphipodState);
@@ -49,7 +55,78 @@ public abstract class Base : Solution
 
     protected int Solve()
     {
-        return 0;
+        _lowestCost = int.MaxValue;
+
+        _queue = new Queue<(int[] State, int Index, int Cost)>();
+
+        _encounteredStates = new HashSet<int>();
+
+        for (var i = 0; i < _initialAmphipodState.Length; i++)
+        {
+            // Could only enqueue top pods here.
+            _queue.Enqueue((Copy(_initialAmphipodState), i, 0));
+        }
+
+        var cost = ProcessQueue();
+
+        return cost;
+    }
+
+    private int ProcessQueue()
+    {
+        while (_queue.Count > 0)
+        {
+            var (state, index, cost) = _queue.Dequeue();
+
+            var moves = GetMovesAndCosts(state, index);
+
+            foreach (var move in moves)
+            {
+                if (cost + move.Cost >= _lowestCost)
+                {
+                    continue;
+                }
+
+                // Check all home, if so, update cost and continue.
+
+                // Re: hashing, add the index (and maybe cost) to the hash.
+                // What about hashes of the first enqueued states?
+
+#if DEBUG && DUMP
+                Dump(state);
+
+                Console.WriteLine($"{new string('.', _queue.Count)} ");
+#endif
+
+                for (var i = 0; i < state.Length; i++)
+                {
+                    // Same pod can't move twice in a row...?
+                    if (i == index)
+                    {
+                        continue;
+                    }
+
+                    _queue.Enqueue((move.State, i, cost + move.Cost));
+                }
+            }
+        }
+
+
+        return int.MaxValue;
+    }
+
+    private static List<(int[] State, int Cost)> GetMovesAndCosts(int[] state, int index)
+    {
+        return null;
+    }
+
+    private int[] Copy(int[] source)
+    {
+        var copy = new int[source.Length];
+
+        Buffer.BlockCopy(source, 0, copy, 0, source.Length * sizeof(int));
+
+        return copy;
     }
 
     private int Encode(int x, int y, int home)
@@ -68,7 +145,7 @@ public abstract class Base : Solution
         var y = DecodeY(state);
 
         var home = DecodeHome(state);
-        
+
         var id = state & 255;
 
         return (x, y, home, id);
@@ -132,7 +209,6 @@ public abstract class Base : Solution
 
                 if (pod == 0)
                 {
-
                     Console.Write(".#");
 
                     continue;
