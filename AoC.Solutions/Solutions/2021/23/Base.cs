@@ -88,7 +88,9 @@ public abstract class Base : Solution
 
             foreach (var move in moves)
             {
-                if (cost + move.Cost >= _lowestCost)
+                var moveCost = cost + move.Cost;
+
+                if (moveCost >= _lowestCost)
                 {
                     continue;
                 }
@@ -102,16 +104,20 @@ public abstract class Base : Solution
                 // Check all home, if so, update cost and continue.
                 if (AllHome(move.State))
                 {
-                    if (cost + move.Cost < _lowestCost)
+                    if (moveCost < _lowestCost)
                     {
-                        _lowestCost = cost + move.Cost;
+                        _lowestCost = moveCost;
                     }
 
                     continue;
                 }
 
 #if DEBUG && DUMP
-                Dump(state);
+                //Dump(state);
+
+                Console.CursorTop = 10;
+
+                Console.WriteLine($"{_queue.Count}  ");
 
                 //Console.ReadKey();
 
@@ -126,10 +132,23 @@ public abstract class Base : Solution
                         continue;
                     }
 
-                    _queue.Enqueue((move.State, i, cost + move.Cost));
+                    _queue.Enqueue((move.State, i, moveCost));
                 }
             }
         }
+    }
+
+    private static int GetCostMultiplier(int type)
+    {
+        return 0;
+
+        return type switch
+        {
+            4 => 10,
+            6 => 100,
+            8 => 1000,
+            _ => 1
+        };
     }
 
     private bool IsNewState(int[] state) //, int index, int cost)
@@ -186,7 +205,7 @@ public abstract class Base : Solution
         }
 
         // Can get home from current position?
-        var cost = CostToGetTo(state, pod.X, pod.Y, pod.Home, 2);
+        var cost = CostToGetTo(state, pod.X, pod.Y, pod.Home, 2) * GetCostMultiplier(pod.Home);
 
         if (cost > 0)
         {
@@ -194,7 +213,7 @@ public abstract class Base : Solution
         }
         else if (TypeInPosition(state, pod.Home, 2) == pod.Home)
         {
-            cost = CostToGetTo(state, pod.X, pod.Y, pod.Home, 1);
+            cost = CostToGetTo(state, pod.X, pod.Y, pod.Home, 1) * GetCostMultiplier(pod.Home);
 
             if (cost > 0)
             {
@@ -205,7 +224,7 @@ public abstract class Base : Solution
         // Can get to hall? If so, add all possible positions.
         foreach (var x in Hallway)
         {
-            cost = CostToGetTo(state, pod.X, pod.Y, x, 0);
+            cost = CostToGetTo(state, pod.X, pod.Y, x, 0) * GetCostMultiplier(pod.Home);
 
             if (cost > 0)
             {
