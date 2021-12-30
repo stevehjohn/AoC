@@ -196,9 +196,15 @@ public abstract class Base : Solution
         var pod = Decode(state[index]);
 
         // Is home?
-        if (true)
+        if (pod.X == pod.Home)
         {
-            if (pod.Y > 0 && pod.X == pod.Home)
+            if (pod.Y == 2)
+            {
+                return result;
+            }
+
+            // If y == 1, check not blocking a different type
+            if (TypeInPosition(state, pod.X, 2) == pod.Home)
             {
                 return result;
             }
