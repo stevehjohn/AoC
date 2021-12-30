@@ -15,7 +15,7 @@ public abstract class Base : Solution
 
     private HashSet<int> _encounteredStates;
 
-    private static int _borrowDepth = 2;
+    private static int _burrowDepth = 2;
 
     private static readonly int[] Hallway = { 0, 1, 3, 5, 7, 9, 10 };
 
@@ -25,7 +25,7 @@ public abstract class Base : Solution
 
         if (insertExtra)
         {
-            _borrowDepth = 4;
+            _burrowDepth = 4;
 
             var newInput = new List<string>();
 
@@ -40,7 +40,7 @@ public abstract class Base : Solution
             Input = newInput.ToArray();
         }
 
-        for (var y = 1; y < 2 + _borrowDepth; y++)
+        for (var y = 1; y < 2 + _burrowDepth; y++)
         {
             for (var x = 1; x < 12; x += 2)
             {
@@ -207,7 +207,7 @@ public abstract class Base : Solution
         // Is home?
         if (pod.X == pod.Home && pod.Y > 0)
         {
-            if (pod.Y == _borrowDepth)
+            if (pod.Y == _burrowDepth)
             {
                 return result;
             }
@@ -215,7 +215,7 @@ public abstract class Base : Solution
             var same = true;
 
             // Check not blocking a different type.
-            for (y = pod.Y + 1; y <= _borrowDepth; y++)
+            for (y = pod.Y + 1; y <= _burrowDepth; y++)
             {
                 if (TypeInPosition(state, pod.X, y) != pod.Home)
                 {
@@ -236,7 +236,7 @@ public abstract class Base : Solution
 
         int cost;
 
-        for (y = _borrowDepth; y > 0; y--)
+        for (y = _burrowDepth; y > 0; y--)
         {
             var typeInPosition = TypeInPosition(state, pod.Home, y);
 
@@ -247,6 +247,8 @@ public abstract class Base : Solution
                 if (cost > 0)
                 {
                     result.Add((MakeMove(state, pod.X, pod.Y, pod.Home, y), cost));
+
+                    return result;
                 }
 
                 // Spot is empty, but can't get there.
@@ -430,7 +432,7 @@ public abstract class Base : Solution
 
         Console.WriteLine('#');
 
-        for (var y = 1; y < _borrowDepth + 1; y++)
+        for (var y = 1; y < _burrowDepth + 1; y++)
         {
             Console.Write(y == 1 ? " ###" : "   #");
 
