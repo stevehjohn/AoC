@@ -1,5 +1,4 @@
 ﻿#define DUMP
-using System.Diagnostics;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2021._23;
@@ -46,19 +45,15 @@ public abstract class Base : Solution
 
         for (var i = 1; i <= _amphipodCount; i++)
         {
-            costs.Add(TryMove(_initialPositions, i, Enumerable.Repeat(-1, _amphipodCount).ToArray()));
-        }
+            Console.WriteLine(i);
 
-        //costs.Add(TryMove(_initialPositions, 1, Enumerable.Repeat(-1, _amphipodCount).ToArray()));
+            costs.Add(TryMove(_initialPositions, i, Enumerable.Repeat(-1, _amphipodCount).ToArray(), new HashSet<int>()));
+        }
 
         return costs.Min();
     }
 
-    // DEBUG
-    private List<(int, int)[,]> _states = new();
-    // END
-
-    private int TryMove((int, int)[,] initialPositions, int index, int[] initialHallwayTargets, int level = 0)
+    private int TryMove((int, int)[,] initialPositions, int index, int[] initialHallwayTargets, HashSet<int> states)
     {
         var positions = new (int Type, int Id)[Width, Height];
 
@@ -79,10 +74,10 @@ public abstract class Base : Solution
                 {
                     home++;
                 }
-                else
-                {
-                    goto notHome;
-                }
+                //else
+                //{
+                //    goto notHome;
+                //}
             }
         }
 
@@ -161,7 +156,7 @@ public abstract class Base : Solution
         // In burrow, can get to hallway?
         var targetX = ++hallwayTargets[index - 1];
 
-        if (targetX >= Width - 1)
+        if (targetX >= Width)
         {
             return int.MaxValue;
         }
@@ -182,10 +177,6 @@ public abstract class Base : Solution
             moved = true;
         }
 
-        // TODO: What are the pauses? Something to do with 0 cost?
-
-        // TODO: Why you infinite loop?
-
         next:
 
 #if DEBUG && DUMP
@@ -193,52 +184,43 @@ public abstract class Base : Solution
 
         //Thread.Sleep(10);
 
-        Console.CursorVisible = false;
+        //Console.CursorVisible = false;
 
-        Console.CursorTop = 1;
+        //Console.CursorTop = 1;
 
-        Console.WriteLine($"{new string('.', level)}                                                                          ");
-
-        Dump(positions);
+        //Dump(positions);
 #endif
 
-        // DEBUG
-        var state = new (int Type, int Id)[Width, Height];
+        var hash = 0;
 
-        Array.Copy(positions, state, Width * Height);
-
-        _states.Add(state);
-
-        for (var i = 0; i < _states.Count - 1; i++)
+        for (var y = 0; y < Height; y++)
         {
-            var count = 0;
-            for (var y = 0; y < Height; y++)
+            for (var x = 0; x < Width; x++)
             {
-                for (var x = 0; x < Width; x++)
-                {
-                    if (_states[i][x, y].Item1 == positions[x, y].Type && _states[i][x, y].Item2 == positions[x, y].Id)
-                    {
-                        count++;
-                    }
-                }
-            }
+                hash = HashCode.Combine(hash, positions[x, y].Type);
 
-            if (count == Width * Height)
-            {
-                return int.MaxValue;
-                //Debugger.Break();
+                hash = HashCode.Combine(hash, positions[x, y].Id);
             }
         }
-        // END
 
-        // TODO: Add cost multiplier.
+        if (states.Contains(hash))
+        {
+            return int.MaxValue;
+        }
+        else
+        {
+            states.Add(hash);
+        }
+
+        //cost *= GetCostMultiplier(type);
+        
         if (moved)
         {
             var costs = new List<int>();
 
             for (var i = 1; i <= _amphipodCount; i++)
             {
-                var subCost = TryMove(positions, i, hallwayTargets, level + 1);
+                var subCost = TryMove(positions, i, hallwayTargets, states);
 
                 if (subCost < int.MaxValue)
                 {
@@ -259,6 +241,8 @@ public abstract class Base : Solution
         {
             return int.MaxValue;
         }
+
+        states.Remove(hash);
 
         return cost;
     }
