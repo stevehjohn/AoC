@@ -19,6 +19,10 @@ public abstract class Base : Solution
 
     private static readonly int[] Hallway = { 0, 1, 3, 5, 7, 9, 10 };
 
+#if DUMP && DEBUG
+    private static int _updateCount;
+#endif
+
     protected void ParseInput(bool insertExtra = false)
     {
         var state = new List<int>();
@@ -134,7 +138,12 @@ public abstract class Base : Solution
 #if DEBUG && DUMP
                 Console.CursorTop = 9;
 
-                Console.WriteLine($" {_queue.Count}      ");
+                if (_updateCount == 0)
+                {
+                    Console.WriteLine($" {_queue.Count}      ");
+                }
+
+                _updateCount = (_updateCount + 1) % 10000;
 #endif
 
                 for (var i = 0; i < state.Length; i++)
@@ -232,8 +241,6 @@ public abstract class Base : Solution
         }
 
         // Can get home from current position?
-        //  Find if home is available
-
         int cost;
 
         for (y = _burrowDepth; y > 0; y--)
@@ -262,13 +269,16 @@ public abstract class Base : Solution
         }
 
         // Can get to hall? If so, add all possible positions.
-        foreach (var x in Hallway)
+        if (pod.Y > 0)
         {
-            cost = CostToGetTo(state, pod.X, pod.Y, x, 0) * GetCostMultiplier(pod.Home);
-
-            if (cost > 0)
+            foreach (var x in Hallway)
             {
-                result.Add((MakeMove(state, pod.X, pod.Y, x, 0), cost));
+                cost = CostToGetTo(state, pod.X, pod.Y, x, 0) * GetCostMultiplier(pod.Home);
+
+                if (cost > 0)
+                {
+                    result.Add((MakeMove(state, pod.X, pod.Y, x, 0), cost));
+                }
             }
         }
 
