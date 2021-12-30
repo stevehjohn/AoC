@@ -96,7 +96,7 @@ public abstract class Base : Solution
                 }
 
                 // Check against hash set.
-                if (! IsNewState(move.State))
+                if (! IsNewState(move.State, index))
                 {
                     continue;
                 }
@@ -113,15 +113,9 @@ public abstract class Base : Solution
                 }
 
 #if DEBUG && DUMP
-                //Dump(state);
+                Console.CursorTop = 7;
 
-                Console.CursorTop = 10;
-
-                Console.WriteLine($"{_queue.Count}      ");
-
-                //Console.ReadKey();
-
-                //Console.WriteLine($"{new string('.', _queue.Count)} ");
+                Console.WriteLine($" {_queue.Count}      ");
 #endif
 
                 for (var i = 0; i < state.Length; i++)
@@ -141,8 +135,6 @@ public abstract class Base : Solution
 
     private static int GetCostMultiplier(int type)
     {
-        return 1;
-
         return type switch
         {
             4 => 10,
@@ -152,7 +144,7 @@ public abstract class Base : Solution
         };
     }
 
-    private bool IsNewState(int[] state)
+    private bool IsNewState(int[] state, int index = 0)
     {
         var hash = 0;
 
@@ -160,6 +152,8 @@ public abstract class Base : Solution
         {
             hash = HashCode.Combine(hash, state[i]);
         }
+
+        hash = HashCode.Combine(hash, index);
 
         if (_encounteredStates.Contains(hash))
         {
