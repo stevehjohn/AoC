@@ -1,6 +1,5 @@
 ﻿#define DUMP
 using AoC.Solutions.Infrastructure;
-using AoC.Solutions.Solutions._2021._19;
 
 namespace AoC.Solutions.Solutions._2021._23;
 
@@ -95,6 +94,8 @@ public abstract class Base : Solution
                 {
                     continue;
                 }
+
+                // Check against hash set.
 
                 // Check all home, if so, update cost and continue.
                 if (AllHome(move.State))
@@ -235,7 +236,48 @@ public abstract class Base : Solution
 
     private static int CostToGetTo(int[] state, int startX, int startY, int endX, int endY)
     {
-        return 0;
+        var cost = 0;
+
+        // Emerge from burrow
+        while (startX != endX && startY > 0)
+        {
+            startY--;
+
+            if (TypeInPosition(state, startX, startY) != 0)
+            {
+                return 0;
+            }
+
+            cost++;
+        }
+
+        // Travel hall
+        while (startX != endX)
+        {
+            startX += startX > endX ? -1 : 1;
+
+            if (TypeInPosition(state, startX, startY) != 0)
+            {
+                return 0;
+            }
+
+            cost++;
+        }
+
+        // Enter burrow
+        while (startY < endY)
+        {
+            startY++;
+
+            if (TypeInPosition(state, startX, startY) != 0)
+            {
+                return 0;
+            }
+
+            cost++;
+        }
+
+        return cost;
     }
 
     private static int TypeInPosition(int[] state, int x, int y)
@@ -298,7 +340,7 @@ public abstract class Base : Solution
     }
 
 #if DEBUG && DUMP
-    private void Dump(int[] state)
+    private static void Dump(int[] state)
     {
         Console.CursorTop = 1;
 
