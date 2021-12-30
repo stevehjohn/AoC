@@ -32,13 +32,17 @@ public abstract class Base : Solution
                     continue;
                 }
 
-                _initialAmphipodState[count] = Encode(x - 1, y - 1, (c - '@') * 2, count);
+                _initialAmphipodState[count] = Encode(x - 1, y - 1, (c - '@') * 2);
 
                 count++;
             }
         }
 
 #if DEBUG && DUMP
+        Console.Clear();
+        
+        Console.CursorVisible = false;
+
         Dump(_initialAmphipodState);
 #endif
     }
@@ -48,12 +52,11 @@ public abstract class Base : Solution
         return 0;
     }
 
-    private int Encode(int x, int y, int home, int id)
+    private int Encode(int x, int y, int home)
     {
-        var result = ((x & 255) << 24)
-                     | ((y & 255) << 16)
-                     | ((home & 255) << 8)
-                     | (id & 255);
+        var result = ((x & 255) << 16)
+                     | ((y & 255) << 8)
+                     | (home & 255);
 
         return result;
     }
@@ -73,25 +76,31 @@ public abstract class Base : Solution
 
     private int DecodeX(int state)
     {
-        return (state >> 24) & 255;
+        return (state >> 16) & 255;
     }
 
     private int DecodeY(int state)
     {
-        return (state >> 16) & 255;
+        return (state >> 8) & 255;
     }
 
     private int DecodeHome(int state)
     {
-        return (state >> 8) & 255;
+        return state & 255;
     }
 
 #if DEBUG && DUMP
     private void Dump(int[] state)
     {
+        Console.CursorTop = 1;
+
+        Console.CursorLeft = 0;
+
         Console.WriteLine(" #############");
 
         Console.Write(" #");
+
+        var previousColour = Console.ForegroundColor;
 
         for (var x = 0; x < 11; x++)
         {
@@ -104,7 +113,11 @@ public abstract class Base : Solution
                 continue;
             }
 
+            Console.ForegroundColor = ConsoleColor.Blue;
+
             Console.Write(GetType(pod));
+
+            Console.ForegroundColor = previousColour;
         }
 
         Console.WriteLine('#');
@@ -119,12 +132,19 @@ public abstract class Base : Solution
 
                 if (pod == 0)
                 {
+
                     Console.Write(".#");
 
                     continue;
                 }
 
-                Console.Write($"{GetType(pod)}#");
+                Console.ForegroundColor = ConsoleColor.Blue;
+
+                Console.Write(GetType(pod));
+
+                Console.ForegroundColor = previousColour;
+
+                Console.Write('#');
             }
 
             Console.WriteLine(y == 1 ? "##" : string.Empty);
