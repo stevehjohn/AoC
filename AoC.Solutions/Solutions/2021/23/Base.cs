@@ -140,8 +140,6 @@ public abstract class Base : Solution
 
     private static int GetCostMultiplier(int type)
     {
-        return 1;
-
         return type switch
         {
             4 => 10,
