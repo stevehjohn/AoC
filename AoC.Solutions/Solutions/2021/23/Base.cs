@@ -7,250 +7,130 @@ public abstract class Base : Solution
 {
     public override string Description => "Hotel amphipod";
 
-    private (int, int)[,] _initialPositions;
+    private int[] _initialAmphipodState;
 
-    private const int Width = 11;
+    private int _lowestCost;
 
-    private const int Height = 3;
+    private Queue<(int[] State, int Index, int Cost)> _queue;
 
-    private int _amphipodCount;
+    private HashSet<int> _encounteredStates;
+
+    private static readonly int[] Hallway = { 0, 1, 3, 5, 7, 9, 10 };
 
     protected void ParseInput()
     {
-        _initialPositions = new (int, int)[Width, Height];
+        var state = new List<int>();
 
         for (var y = 1; y < 4; y++)
         {
-            for (var x = 1; x < Input[y].Length; x++)
+            for (var x = 1; x < 12; x += 2)
             {
-                if (Input[y][x] == '#' || Input[y][x] == '.' || Input[y][x] == ' ')
+                if (x >= Input[y].Length)
                 {
                     continue;
                 }
 
-                _amphipodCount++;
+                var c = Input[y][x];
 
-                _initialPositions[x - 1, y - 1] = ((Input[y][x] - '@') * 2, _amphipodCount);
+                if (c == '#' || c == '.' || c == ' ')
+                {
+                    continue;
+                }
+
+                state.Add(Encode(x - 1, y - 1, (c - '@') * 2));
             }
         }
 
-#if DUMP && DEBUG
-        Dump(_initialPositions);
+        _initialAmphipodState = state.ToArray();
+
+#if DEBUG && DUMP
+        Console.Clear();
+
+        Console.CursorVisible = false;
+
+        Dump(_initialAmphipodState);
 #endif
     }
 
     protected int Solve()
     {
-        var costs = new List<int>();
-        
-        for (var i = 1; i <= _amphipodCount; i++)
+        _lowestCost = int.MaxValue;
+
+        _queue = new Queue<(int[] State, int Index, int Cost)>();
+
+        _encounteredStates = new HashSet<int>();
+
+        for (var i = 0; i < _initialAmphipodState.Length; i++)
         {
-            costs.Add(TryMove(_initialPositions, i, Enumerable.Repeat(-1, _amphipodCount).ToArray()));
+            // Only enqueue top pods here.
+            if (DecodeY(_initialAmphipodState[i]) != 1)
+            {
+                continue;
+            }
+
+            _queue.Enqueue((Copy(_initialAmphipodState), i, 0));
+
+            IsNewState(_initialAmphipodState);
         }
 
-        return costs.Min();
+        ProcessQueue();
+
+        return _lowestCost;
     }
 
-    private int TryMove((int, int)[,] initialPositions, int index, int[] initialPreviousPositions)
+    private void ProcessQueue()
     {
-        if (initialPreviousPositions[index - 1] >= Width)
+        while (_queue.Count > 0)
         {
-            return 0;
-        }
+            var (state, index, cost) = _queue.Dequeue();
 
-        var positions = new (int Type, int Id)[Width, Height];
+            var moves = GetMovesAndCosts(state, index);
 
-        Array.Copy(initialPositions, positions, Width * Height);
-
-        var previousPositions = new int[initialPreviousPositions.Length];
-
-        Array.Copy(initialPreviousPositions, previousPositions, initialPreviousPositions.Length);
-
-        var x = 0;
-
-        var y = 0;
-
-        // Find amphipod of index.
-        while (true)
-        {
-            if (positions[x, y].Id == index)
+            foreach (var move in moves)
             {
-                break;
-            }
+                var moveCost = cost + move.Cost;
 
-            x++;
-
-            if (x == Width)
-            {
-                x = 0;
-
-                y++;
-            }
-        }
-
-        var type = positions[x, y].Type;
-
-        var id = positions[x, y].Id;
-
-        var cost = 0;
-
-        // Is home?
-        if (x == type && y == 2 || x == type && y == 1 && positions[type, 2].Type == type)
-        {
-            return 0;
-        }
-
-        int newX;
-
-        // In hallway, can it go home?
-        if (y == 0)
-        {
-            if (positions[type, 1].Type != 0 || positions[type, 2].Type != type && positions[type, 2].Type != 0)
-            {
-                return 0;
-            }
-
-            newX = x;
-
-            while (newX != type)
-            {
-                newX += newX < type ? 1 : -1;
-
-                if (positions[newX, y].Type != 0)
+                if (moveCost >= _lowestCost)
                 {
-                    return 0;
+                    continue;
                 }
 
-                cost++;
-            }
-
-            positions[x, y].Type = 0;
-
-            positions[x, y].Id = 0;
-
-            cost++;
-            
-            y++;
-            
-            if (positions[type, 2].Type == 0)
-            {
-                cost++;
-
-                y++;
-            }
-
-            positions[type, y].Type = type;
-
-            positions[type, y].Id = id;
-
-            //Console.ForegroundColor = ConsoleColor.Blue;
-
-            //Dump(positions);
-
-            //Console.ForegroundColor = ConsoleColor.Green;
-
-            //Console.ReadKey();
-
-            return cost * GetCostMultiplier(type);
-        }
-
-        // In burrow, can it get out?
-        if (y == 2 && positions[x, 1].Type != 0)
-        {
-            return 0;
-        }
-
-        // In burrow, can get home?
-        if (positions[type, 2].Type == type && positions[type, 1].Type == 0 || positions[type, 2].Type == 0 && positions[type, 1].Type == 0)
-        {
-            newX = x;
-
-            while (newX != type)
-            {
-                newX += newX < type ? 1 : -1;
-
-                if (positions[newX, 0].Type != 0)
+                // Check against hash set.
+                if (! IsNewState(move.State, index))
                 {
-                    goto next;
+                    continue;
+                }
+
+                // Check all home, if so, update cost and continue.
+                if (AllHome(move.State))
+                {
+                    if (moveCost < _lowestCost)
+                    {
+                        _lowestCost = moveCost;
+                    }
+
+                    continue;
+                }
+
+#if DEBUG && DUMP
+                Console.CursorTop = 7;
+
+                Console.WriteLine($" {_queue.Count}      ");
+#endif
+
+                for (var i = 0; i < state.Length; i++)
+                {
+                    // Same pod can't move twice in a row...?
+                    if (i == index)
+                    {
+                        continue;
+                    }
+
+                    // TODO: Priority queue, lowest cost first?
+                    _queue.Enqueue((move.State, i, moveCost));
                 }
             }
-
-            // TODO: Get cost
-            positions[x, y].Type = 0;
-
-            positions[x, y].Id = 0;
-
-            y = positions[type, 2].Type == 0 ? 2 : 1;
-
-            positions[type, y].Type = type;
-
-            positions[type, y].Id = id;
-
-            Console.CursorVisible = false;
-
-            Console.CursorTop = 10;
-
-            Console.WriteLine();
-
-            Dump(positions);
-
-            Thread.Sleep(100);
-
-            return 0;
         }
-
-next:
-
-        // In burrow, can get out, pick a hallway position.
-        newX = previousPositions[index - 1] + 1;
-
-        if (newX == Width)
-        {
-            return 0;
-        }
-
-        while (positions[newX, 0].Type != 0 || newX == 2 || newX == 4 || newX == 6 || newX == 8)
-        {
-            newX++;
-
-            if (newX >= Width)
-            {
-                return 0;
-            }
-        }
-
-        positions[x, y].Type = 0;
-
-        positions[x, y].Id = 0;
-
-        cost = y;
-
-        cost += Math.Abs(newX - x);
-
-        positions[newX, 0].Type = type;
-
-        positions[newX, 0].Id = id;
-
-        Console.CursorVisible = false;
-
-        Console.CursorTop = 10;
-
-        Console.WriteLine(cost * GetCostMultiplier(type));
-
-        Dump(positions);
-
-        Thread.Sleep(100);
-
-        cost *= GetCostMultiplier(type);
-
-        previousPositions[index - 1] = newX;
-
-        for (var i = 1; i <= _amphipodCount; i++)
-        {
-            cost += TryMove(positions, i, previousPositions);
-        }
-
-        return cost;
     }
 
     private static int GetCostMultiplier(int type)
@@ -264,29 +144,286 @@ next:
         };
     }
 
-#if DUMP && DEBUG
-    private static void Dump((int Type, int)[,] positions)
+    private bool IsNewState(int[] state, int index = 0)
     {
-        for (var y = 0; y < Height; y++)
-        {
-            Console.Write('#');
+        var hash = 0;
 
-            for (var x = 0; x < Width; x++)
+        for (var i = 0; i < state.Length; i++)
+        {
+            hash = HashCode.Combine(hash, state[i]);
+        }
+
+        hash = HashCode.Combine(hash, index);
+
+        if (_encounteredStates.Contains(hash))
+        {
+            return false;
+        }
+
+        _encounteredStates.Add(hash);
+
+        return true;
+    }
+
+    private static bool AllHome(int[] state)
+    {
+        for (var i = 0; i < state.Length; i++)
+        {
+            var pod = Decode(state[i]);
+
+            if (pod.Y == 0 || pod.X != pod.Home)
             {
-                if (positions[x, y].Type == 0)
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static List<(int[] State, int Cost)> GetMovesAndCosts(int[] state, int index)
+    {
+        var result = new List<(int[] State, int Cost)>();
+
+        var pod = Decode(state[index]);
+
+        // Is home?
+        if (pod.X == pod.Home && pod.Y > 0)
+        {
+            if (pod.Y == 2)
+            {
+                return result;
+            }
+
+            // If y == 1, check not blocking a different type
+            if (TypeInPosition(state, pod.X, 2) == pod.Home)
+            {
+                return result;
+            }
+        }
+
+        // Can get home from current position?
+        var cost = CostToGetTo(state, pod.X, pod.Y, pod.Home, 2) * GetCostMultiplier(pod.Home);
+
+        if (cost > 0)
+        {
+            result.Add((MakeMove(state, pod.X, pod.Y, pod.Home, 2), cost));
+        }
+        else if (TypeInPosition(state, pod.Home, 2) == pod.Home)
+        {
+            cost = CostToGetTo(state, pod.X, pod.Y, pod.Home, 1) * GetCostMultiplier(pod.Home);
+
+            if (cost > 0)
+            {
+                result.Add((MakeMove(state, pod.X, pod.Y, pod.Home, 1), cost));
+            }
+        }
+
+        // Can get to hall? If so, add all possible positions.
+        foreach (var x in Hallway)
+        {
+            cost = CostToGetTo(state, pod.X, pod.Y, x, 0) * GetCostMultiplier(pod.Home);
+
+            if (cost > 0)
+            {
+                result.Add((MakeMove(state, pod.X, pod.Y, x, 0), cost));
+            }
+        }
+
+        return result;
+    }
+
+    private static int[] MakeMove(int[] state, int startX, int startY, int endX, int endY)
+    {
+        var newState = Copy(state);
+
+        for (var i = 0; i < state.Length; i++)
+        {
+            var pod = Decode(state[i]);
+
+            if (pod.X == startX && pod.Y == startY)
+            {
+                newState[i] = Encode(endX, endY, pod.Home);
+
+                break;
+            }
+        }
+
+        return newState;
+    }
+
+    private static int CostToGetTo(int[] state, int startX, int startY, int endX, int endY)
+    {
+        var cost = 0;
+
+        // Emerge from burrow
+        while (startX != endX && startY > 0)
+        {
+            startY--;
+
+            if (TypeInPosition(state, startX, startY) != 0)
+            {
+                return 0;
+            }
+
+            cost++;
+        }
+
+        // Travel hall
+        while (startX != endX)
+        {
+            startX += startX > endX ? -1 : 1;
+
+            if (TypeInPosition(state, startX, startY) != 0)
+            {
+                return 0;
+            }
+
+            cost++;
+        }
+
+        // Enter burrow
+        while (startY < endY)
+        {
+            startY++;
+
+            if (TypeInPosition(state, startX, startY) != 0)
+            {
+                return 0;
+            }
+
+            cost++;
+        }
+
+        return cost;
+    }
+
+    private static int TypeInPosition(int[] state, int x, int y)
+    {
+        for (var i = 0; i < state.Length; i++)
+        {
+            var pod = Decode(state[i]);
+
+            if (pod.X == x && pod.Y == y)
+            {
+                return pod.Home;
+            }
+        }
+
+        return 0;
+    }
+
+    private static int[] Copy(int[] source)
+    {
+        var copy = new int[source.Length];
+
+        Buffer.BlockCopy(source, 0, copy, 0, source.Length * sizeof(int));
+
+        return copy;
+    }
+
+    private static int Encode(int x, int y, int home)
+    {
+        var result = ((x & 255) << 16)
+                     | ((y & 255) << 8)
+                     | (home & 255);
+
+        return result;
+    }
+
+    private static (int X, int Y, int Home) Decode(int state)
+    {
+        var x = DecodeX(state);
+
+        var y = DecodeY(state);
+
+        var home = DecodeHome(state);
+
+        return (x, y, home);
+    }
+
+    private static int DecodeX(int state)
+    {
+        return (state >> 16) & 255;
+    }
+
+    private static int DecodeY(int state)
+    {
+        return (state >> 8) & 255;
+    }
+
+    private static int DecodeHome(int state)
+    {
+        return state & 255;
+    }
+
+#if DEBUG && DUMP
+    private static void Dump(int[] state)
+    {
+        Console.CursorTop = 1;
+
+        Console.CursorLeft = 0;
+
+        Console.WriteLine(" #############");
+
+        Console.Write(" #");
+
+        var previousColour = Console.ForegroundColor;
+
+        for (var x = 0; x < 11; x++)
+        {
+            var pod = state.SingleOrDefault(s => DecodeX(s) == x && DecodeY(s) == 0);
+
+            if (pod == 0)
+            {
+                Console.Write('.');
+
+                continue;
+            }
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+
+            Console.Write(GetType(pod));
+
+            Console.ForegroundColor = previousColour;
+        }
+
+        Console.WriteLine('#');
+
+        for (var y = 1; y < 3; y++)
+        {
+            Console.Write(y == 1 ? " ###" : "   #");
+
+            for (var x = 2; x < 10; x += 2)
+            {
+                var pod = state.SingleOrDefault(s => DecodeX(s) == x && DecodeY(s) == y);
+
+                if (pod == 0)
                 {
-                    Console.Write(' ');
+                    Console.Write(".#");
 
                     continue;
                 }
 
-                Console.Write((char) (positions[x, y].Type / 2 + '@'));
+                Console.ForegroundColor = ConsoleColor.Blue;
+
+                Console.Write(GetType(pod));
+
+                Console.ForegroundColor = previousColour;
+
+                Console.Write('#');
             }
 
-            Console.WriteLine('#');
+            Console.WriteLine(y == 1 ? "##" : string.Empty);
         }
 
+        Console.WriteLine("   #########");
+
         Console.WriteLine();
+    }
+
+    private static char GetType(int home)
+    {
+        return (char) ('@' + (char) (DecodeHome(home) / 2));
     }
 #endif
 }
