@@ -19,9 +19,7 @@ public abstract class Base : Solution
 
     protected void ParseInput()
     {
-        _initialAmphipodState = new int[8];
-
-        var count = 0;
+        var state = new List<int>();
 
         for (var y = 1; y < 4; y++)
         {
@@ -39,11 +37,11 @@ public abstract class Base : Solution
                     continue;
                 }
 
-                _initialAmphipodState[count] = Encode(x - 1, y - 1, (c - '@') * 2);
-
-                count++;
+                state.Add(Encode(x - 1, y - 1, (c - '@') * 2));
             }
         }
+
+        _initialAmphipodState = state.ToArray();
 
 #if DEBUG && DUMP
         Console.Clear();
@@ -72,15 +70,15 @@ public abstract class Base : Solution
 
             _queue.Enqueue((Copy(_initialAmphipodState), i, 0));
 
-            IsNewState(_initialAmphipodState, i, 0);
+            IsNewState(_initialAmphipodState); //, i, 0);
         }
 
-        var cost = ProcessQueue();
+        ProcessQueue();
 
-        return cost;
+        return _lowestCost;
     }
 
-    private int ProcessQueue()
+    private void ProcessQueue()
     {
         while (_queue.Count > 0)
         {
@@ -96,6 +94,10 @@ public abstract class Base : Solution
                 }
 
                 // Check against hash set.
+                if (! IsNewState(move.State)) //, index, cost + move.Cost))
+                {
+                    continue;
+                }
 
                 // Check all home, if so, update cost and continue.
                 if (AllHome(move.State))
@@ -111,7 +113,9 @@ public abstract class Base : Solution
 #if DEBUG && DUMP
                 Dump(state);
 
-                Console.WriteLine($"{new string('.', _queue.Count)} ");
+                //Console.ReadKey();
+
+                //Console.WriteLine($"{new string('.', _queue.Count)} ");
 #endif
 
                 for (var i = 0; i < state.Length; i++)
@@ -126,12 +130,9 @@ public abstract class Base : Solution
                 }
             }
         }
-
-
-        return int.MaxValue;
     }
 
-    private bool IsNewState(int[] state, int index, int cost)
+    private bool IsNewState(int[] state) //, int index, int cost)
     {
         var hash = 0;
 
@@ -140,9 +141,9 @@ public abstract class Base : Solution
             hash = HashCode.Combine(hash, state[i]);
         }
 
-        hash = HashCode.Combine(hash, index);
+        //hash = HashCode.Combine(hash, index);
 
-        hash = HashCode.Combine(hash, cost);
+        //hash = HashCode.Combine(hash, cost);
 
         if (_encounteredStates.Contains(hash))
         {
@@ -156,7 +157,7 @@ public abstract class Base : Solution
 
     private static bool AllHome(int[] state)
     {
-        for (var i = 0; i <= state.Length; i++)
+        for (var i = 0; i < state.Length; i++)
         {
             var pod = Decode(state[i]);
 
