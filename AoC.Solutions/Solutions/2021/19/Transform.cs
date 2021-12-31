@@ -12,7 +12,7 @@ public class Transform
 
     private readonly Pair _pair;
 
-    private TransformParameters _parameters;
+    private TransformParameters Parameters { get; set; }
 
     public Transform(PointCloud origin, PointCloud target, Pair pair)
     {
@@ -23,9 +23,9 @@ public class Transform
         _pair = pair;
     }
 
-    public Point TransformPoint(Point point)
+    public Point TransformPoint(Point point, Transform previousTransform)
     {
-        if (_parameters == null)
+        if (Parameters == null)
         {
             CalculateParameters();
         }
@@ -33,9 +33,14 @@ public class Transform
         // Fuck
         // Surely, once rotation is known, one delta, rotated, is enough?
 
-        var beacon2 = RotatePoint(new PointDecimal(_pair.Beacon2.X, _pair.Beacon2.Y, _pair.Beacon2.Z), _parameters);
+        var beacon2 = RotatePoint(new PointDecimal(_pair.Beacon2.X, _pair.Beacon2.Y, _pair.Beacon2.Z), Parameters);
 
         var delta = new PointDecimal(_pair.Beacon1.X - beacon2.X, _pair.Beacon1.Y - beacon2.Y, _pair.Beacon1.Z - beacon2.Z);
+
+        if (previousTransform != null)
+        {
+            delta = RotatePoint(delta, previousTransform.Parameters);
+        }
 
         var result = new Point((int) (point.X + delta.X), (int) (point.Y + delta.Y), (int) (point.Z + delta.Z));
 
@@ -64,7 +69,7 @@ public class Transform
         {
             if (CheckCloudsMatch(combination))
             {
-                _parameters = combination;
+                Parameters = combination;
 
                 return;
             }

@@ -8,6 +8,8 @@ public class Scanner
 
     public int BeaconCount => Beacons.Count;
 
+    protected Transform Transform { get; set; }
+
     private List<Point> Beacons { get; }
 
     private List<Distance> Distances
@@ -69,9 +71,9 @@ public class Scanner
 
         var right = new PointCloud(pairs.Select(p => p.Beacon2).ToList());
 
-        var transform = new Transform(left, right, pairs[0]);
+        Transform = new Transform(left, right, pairs[0]);
 
-        Position = transform.TransformPoint(origin.Position);
+        Position = Transform.TransformPoint(origin.Position, origin.Transform);
 
         // Chain the transforms.
         // eg, s0 -> s1 -> s2 match in that order.
