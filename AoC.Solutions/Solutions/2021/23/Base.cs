@@ -89,7 +89,7 @@ public abstract class Base : Solution
 
             _queue.Enqueue((Copy(_initialAmphipodState), i, 0), 0);
 
-            IsNewState(_initialAmphipodState);
+            IsNewState(_initialAmphipodState, i);
         }
 
         ProcessQueue();
@@ -115,7 +115,7 @@ public abstract class Base : Solution
                 }
 
                 // Check against hash set.
-                if (! IsNewState(move.State))
+                if (! IsNewState(move.State, index))
                 {
                     continue;
                 }
@@ -162,7 +162,7 @@ public abstract class Base : Solution
         };
     }
 
-    private bool IsNewState(int[] state)
+    private bool IsNewState(int[] state, int index)
     {
         var hash = 0;
 
@@ -170,6 +170,8 @@ public abstract class Base : Solution
         {
             hash = HashCode.Combine(hash, state[i]);
         }
+
+        hash = HashCode.Combine(hash, index);
 
         if (_encounteredStates.Contains(hash))
         {
