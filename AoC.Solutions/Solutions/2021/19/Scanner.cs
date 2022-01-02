@@ -8,7 +8,9 @@ public class Scanner
 
     public int BeaconCount => Beacons.Count;
 
-    protected Transform Transform { get; set; }
+    public Transform Transform { get; set; }
+
+    public Scanner Origin { get; set; }
 
     private List<Point> Beacons { get; }
 
@@ -73,14 +75,9 @@ public class Scanner
 
         Transform = new Transform(left, right, pairs[0]);
 
-        Position = Transform.TransformPoint(origin.Position, origin.Transform);
+        Position = Transform.TransformPoint(origin);
 
-        // Chain the transforms.
-        // eg, s0 -> s1 -> s2 match in that order.
-        // s2 transformed by s1 transformed might be garbage.
-        // transform s2 by s1 (untransformed), then apply transform from s0 to s1.
-        // Maybe.
-        // Urgh. IDK. How can you do this if s1 doesn't have a position until transformed?
+        Origin = origin;
     }
 
     private static List<Pair> ResolveMatchingBeacons(List<DistancePair> matchingBeacons)
