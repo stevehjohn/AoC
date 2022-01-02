@@ -23,7 +23,7 @@ public class Transform
         _pair = pair;
     }
 
-    public Point TransformPoint(Point point, Transform previousTransform)
+    public Point TransformPoint(Scanner origin)
     {
         if (Parameters == null)
         {
@@ -38,10 +38,16 @@ public class Transform
 
         var delta = new PointDecimal(beacon1.X - beacon2.X, beacon1.Y - beacon2.Y, beacon1.Z - beacon2.Z);
 
-        if (previousTransform != null)
+        var node = origin;
+
+        while (node != null && node.Transform != null)
         {
-            delta = RotatePoint(delta, previousTransform.Parameters);
+            delta = RotatePoint(delta, node.Transform.Parameters);
+
+            node = node.Origin;
         }
+
+        var point = origin.Position;
 
         var result = new Point((int) (point.X + delta.X), (int) (point.Y + delta.Y), (int) (point.Z + delta.Z));
 
