@@ -43,7 +43,7 @@ public class Transform
             delta = RotatePoint(delta, previousTransform.Parameters);
         }
 
-        var result = new Point((int)(point.X + delta.X), (int)(point.Y + delta.Y), (int)(point.Z + delta.Z));
+        var result = new Point((int) (point.X + delta.X), (int) (point.Y + delta.Y), (int) (point.Z + delta.Z));
 
         return result;
     }
