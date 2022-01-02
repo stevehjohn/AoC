@@ -66,14 +66,21 @@ public class Transform
     {
         var parameterCombinations = GetParameterCombinations();
 
+        var count = 0;
+
         foreach (var combination in parameterCombinations)
         {
             if (CheckCloudsMatch(combination))
             {
                 Parameters = combination;
 
-                return;
+                count++;
             }
+        }
+
+        if (count > 0)
+        {
+            return;
         }
 
         throw new PuzzleException("No translation found.");
@@ -109,11 +116,11 @@ public class Transform
 
     private bool CheckCloudsMatch(TransformParameters parameters)
     {
-        foreach (var originPoint in _origin.Points)
+        foreach (var targetPoint in _target.Points)
         {
-            var transformed = RotatePoint(originPoint, parameters);
+            var transformed = RotatePoint(targetPoint, parameters);
 
-            var match = _target.Points.SingleOrDefault(p => p.Equals(transformed));
+            var match = _origin.Points.SingleOrDefault(p => p.Equals(transformed));
 
             if (match == null)
             {
