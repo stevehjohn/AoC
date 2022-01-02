@@ -72,21 +72,14 @@ public class Transform
     {
         var parameterCombinations = GetParameterCombinations();
 
-        var count = 0;
-
         foreach (var combination in parameterCombinations)
         {
             if (CheckCloudsMatch(combination))
             {
                 Parameters = combination;
 
-                count++;
+                return;
             }
-        }
-
-        if (count > 0)
-        {
-            return;
         }
 
         throw new PuzzleException("No translation found.");
