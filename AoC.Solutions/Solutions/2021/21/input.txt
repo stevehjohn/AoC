@@ -1,2 +1,2 @@
-Player 1 starting position: 5
-Player 2 starting position: 10
+Player 1 starting position: 6
+Player 2 starting position: 9
