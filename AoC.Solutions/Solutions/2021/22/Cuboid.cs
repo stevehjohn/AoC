@@ -1,5 +1,4 @@
-﻿#define DUMP
-using AoC.Solutions.Common;
+﻿using AoC.Solutions.Common;
 
 namespace AoC.Solutions.Solutions._2021._22;
 
