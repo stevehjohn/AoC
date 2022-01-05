@@ -1,95 +1,103 @@
-﻿//using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
-//namespace AoC.Solutions.Solutions._2019._14;
+namespace AoC.Solutions.Solutions._2019._14;
 
-//[UsedImplicitly]
-//public class Part1 : Base
-//{
-//    private readonly List<Reaction> _reactions = new();
+[UsedImplicitly]
+public class Part1 : Base
+{
+    private readonly List<Reaction> _reactions = new();
 
-//    private readonly Dictionary<string, int> _stock = new();
+    private readonly Dictionary<string, int> _stock = new();
 
-//    private const string EndMaterial = "FUEL";
+    private const string EndMaterial = "FUEL";
 
-//    private const string BaseMaterial = "ORE";
+    private const string BaseMaterial = "ORE";
 
-//    public override string GetAnswer()
-//    {
-//        ParseInput();
+    private int _total;
 
-//        var endMaterial = _reactions.Single(r => r.Name == EndMaterial);
+    public override string GetAnswer()
+    {
+        ParseInput();
 
-//        var ore = GetRequiredOre(endMaterial, endMaterial.AmountCreated);
+        var endMaterial = _reactions.Single(r => r.Name == EndMaterial);
 
-//        return "TESTING";
-//    }
+        _total = 0;
 
-//    private int GetRequiredOre(Reaction reaction, int requiredAmount)
-//    {
-//        if (_stock[reaction.Name] >= requiredAmount)
-//        {
-//            _stock[reaction.Name] -= requiredAmount;
+        GetRequiredOre(endMaterial, 1, 0);
 
-//            return 0;
-//        }
+        return _total.ToString();
+    }
 
-//        var total = 0;
+    private void GetRequiredOre(Reaction reaction, int amountRequired, int level)
+    {
+        var padding = new string(' ', level * 2);
 
-//        foreach (var component in reaction.ComponentsRequired)
-//        {
-//            if (component.Key == BaseMaterial)
-//            {
-//                total += component.Value;
+        Console.WriteLine($"{padding}{reaction.Name}");
 
-//                _stock[reaction.Name] += reaction.AmountCreated;
+        foreach (var component in reaction.ComponentsRequired)
+        {
+            Console.Write($"{padding}{component.Key}: {component.Value} ");
 
-//                continue;
-//            }
+            Console.WriteLine($"{(component.Key == BaseMaterial ? string.Empty : $"Stock: {_stock[component.Key]}")}");
 
-//            var requirement = _reactions.Single(r => r.Name == component.Key);
+            if (component.Key == BaseMaterial)
+            {
+                while (_stock[reaction.Name] < amountRequired)
+                {
+                    _stock[reaction.Name] += reaction.AmountCreated;
 
-//            total += GetRequiredOre(requirement, requiredAmount * requirement.AmountCreated);
-//        }
+                    _total += component.Value;
 
-//        return total;
-//    }
+                    Console.WriteLine($"{padding}  {reaction.Name} stock {_stock[reaction.Name]}. Ore: {_total}");
+                }
 
-//    private void ParseInput()
-//    {
-//        foreach (var line in Input)
-//        {
-//            var reaction = ParseLine(line);
+                continue;
+            }
 
-//            _reactions.Add(reaction);
+            var nextAmountRequired = component.Value * (int) Math.Ceiling((decimal) amountRequired / reaction.AmountCreated);
 
-//            _stock.Add(reaction.Name, 0);
-//        }
-//    }
+            GetRequiredOre(_reactions.Single(r => r.Name == component.Key), nextAmountRequired, level + 1);
 
-//    private static Reaction ParseLine(string line)
-//    {
-//        var io = line.Split("=>", StringSplitOptions.TrimEntries);
+            _stock[component.Key] -= nextAmountRequired;
+        }
+    }
 
-//        var output = ParseComponent(io[1]);
+    private void ParseInput()
+    {
+        foreach (var line in Input)
+        {
+            var reaction = ParseLine(line);
 
-//        var reaction = new Reaction(output.Name, output.Quantity);
+            _reactions.Add(reaction);
 
-//        var inputs = io[0].Split(',', StringSplitOptions.TrimEntries);
+            _stock.Add(reaction.Name, 0);
+        }
+    }
 
-//        foreach (var input in inputs)
-//        {
-//            var component = ParseComponent(input);
+    private static Reaction ParseLine(string line)
+    {
+        var io = line.Split("=>", StringSplitOptions.TrimEntries);
 
-//            reaction.ComponentsRequired.Add(component.Name, component.Quantity);
-//        }
+        var output = ParseComponent(io[1]);
 
-//        return reaction;
-//    }
+        var reaction = new Reaction(output.Name, output.Quantity);
 
-//    private static (int Quantity, string Name) ParseComponent(string component)
-//    {
-//        var split = component.Split(' ', StringSplitOptions.TrimEntries);
+        var inputs = io[0].Split(',', StringSplitOptions.TrimEntries);
 
-//        return (int.Parse(split[0]), split[1]);
-//    }
-//}
+        foreach (var input in inputs)
+        {
+            var component = ParseComponent(input);
+
+            reaction.ComponentsRequired.Add(component.Name, component.Quantity);
+        }
+
+        return reaction;
+    }
+
+    private static (int Quantity, string Name) ParseComponent(string component)
+    {
+        var split = component.Split(' ', StringSplitOptions.TrimEntries);
+
+        return (int.Parse(split[0]), split[1]);
+    }
+}
