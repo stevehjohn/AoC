@@ -35,7 +35,9 @@ public static class Program
         {
             if (arguments.Length == 1)
             {
-                if ($"{int.Parse(solution.Namespace?.Split('.')[3].Replace("_", string.Empty) ?? "0")}.{int.Parse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0")}.{solution.Name[4]}" != arguments[0])
+                var solutionKey = $"{int.Parse(solution.Namespace?.Split('.')[3].Replace("_", string.Empty) ?? "0")}.{int.Parse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0"):D2}.{solution.Name[4]}";
+
+                if (solutionKey.Substring(0, arguments[0].Length) != arguments[0])
                 {
                     continue;
                 }
@@ -73,7 +75,7 @@ public static class Program
             }
             else if (year != previousYear)
             {
-                WriteYearSummary();
+                WriteYearSummary(arguments.Length == 0);
 
                 previousYear = year;
 
@@ -100,7 +102,7 @@ public static class Program
             yearMs += stopwatch.ElapsedMilliseconds;
         }
 
-        WriteYearSummary();
+        WriteYearSummary(arguments.Length == 0);
 
         void CheckAnswer(Type solution, string answer)
         {
@@ -148,11 +150,15 @@ public static class Program
             }
         }
 
-        void WriteYearSummary()
+        void WriteYearSummary(bool showTotal)
         {
-            Console.WriteLine($"{new string(' ', 43)}------- -------");
+            Console.Write($"{new string(' ', 43)}-------");
 
-            Console.WriteLine($"{new string(' ', 43)}{$"{yearMs}ms".PadRight(7)} {totalMs}ms");
+            Console.WriteLine(showTotal ? " -------" : string.Empty);
+
+            Console.Write($"{new string(' ', 43)}{$"{yearMs}ms",-7}");
+
+            Console.WriteLine(showTotal ? $" {totalMs}ms" : string.Empty);
 
             Console.WriteLine();
         }
