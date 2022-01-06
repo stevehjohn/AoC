@@ -1,7 +1,4 @@
-﻿#if DEBUG
-using System.Diagnostics;
-using AoC.Solutions.Common;
-#endif
+﻿using AoC.Solutions.Common;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2019._10;
@@ -13,9 +10,7 @@ public class Part1 : Base
     {
         var maxDetectable = 0;
 
-#if DEBUG
         Point bestScanner = null;
-#endif
 
         foreach (var scanner in Asteroids)
         {
@@ -25,18 +20,16 @@ public class Part1 : Base
             {
                 maxDetectable = detectable;
 
-#if DEBUG
                 bestScanner = scanner;
-#endif
             }
         }
 
-#if DEBUG
-        if (Debugger.IsAttached)
-        {
-            // ReSharper disable once PossibleNullReferenceException
-            Debug.WriteLine($"{bestScanner.X}, {bestScanner.Y}");
-        }
+        // ReSharper disable once PossibleNullReferenceException
+        File.WriteAllText("part1result.txt", $"{bestScanner.X}, {bestScanner.Y}");
+
+#if DEBUG && DUMP
+        // ReSharper disable once PossibleNullReferenceException
+        Debug.WriteLine($"{bestScanner.X}, {bestScanner.Y}");
 #endif
 
         return maxDetectable.ToString();
