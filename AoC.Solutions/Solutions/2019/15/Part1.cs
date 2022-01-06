@@ -34,6 +34,8 @@ public class Part1 : Base
 
         while (true)
         {
+            var newBots = new List<Bot>();
+
             foreach (var bot in bots)
             {
                 if (bot.IsHome)
@@ -41,8 +43,10 @@ public class Part1 : Base
                     return bot.Steps;
                 }
 
-                bot.Move();
+                newBots.AddRange(bot.Move());
             }
+
+            bots = newBots;
 
             Dump(bots);
 
