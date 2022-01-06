@@ -24,7 +24,7 @@ public class Part2 : Base
 
         Console.CursorLeft = 0;
 
-        Console.CursorTop = Height + 3;
+        Console.CursorTop = Height + 4;
 #endif
 
         return result.ToString();
@@ -57,8 +57,6 @@ public class Part2 : Base
         Width = data[1].Length;
 
         Height = data.Length - 2;
-
-        Origin = new Point(0, 0);
     }
 
     private int SpreadGas()
