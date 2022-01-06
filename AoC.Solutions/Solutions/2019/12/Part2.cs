@@ -9,21 +9,13 @@ public class Part2 : Base
     {
         ParseInput();
 
-        var previousStates = new List<Moon>[Moons.Count];
+        var xCycle = -1;
 
-        var cycleCounts = new int[Moons.Count, 3];
+        var yCycle = -1;
 
-        for (var i = 0; i < Moons.Count; i++)
-        {
-            previousStates[i] = new List<Moon>
-                                {
-                                    new(Moons[i])
-                                };
-        }
+        var zCycle = -1;
 
         var cycle = 0;
-
-        var found = 0;
 
         while (true)
         {
@@ -31,59 +23,28 @@ public class Part2 : Base
 
             cycle++;
 
-            for (var i = 0; i < Moons.Count; i++)
+            if (xCycle == -1 && Moons.All(m => m.Velocity.X == 0))
             {
-                if (cycleCounts[i, 0] == 0 && cycle > 0)
-                {
-                    if (previousStates[i].Any(m => m.Position.X == Moons[i].Position.X && m.Velocity.X == Moons[i].Velocity.X))
-                    {
-                        cycleCounts[i, 0] = cycle;
-
-                        found++;
-                    }
-                }
-
-                if (cycleCounts[i, 1] == 0 && cycle > 0)
-                {
-                    if (previousStates[i].Any(m => m.Position.Y == Moons[i].Position.Y && m.Velocity.Y == Moons[i].Velocity.Y))
-                    {
-                        cycleCounts[i, 1] = cycle;
-
-                        found++;
-                    }
-                }
-
-                if (cycleCounts[i, 2] == 0 && cycle > 0)
-                {
-                    if (previousStates[i].Any(m => m.Position.Z == Moons[i].Position.Z && m.Velocity.Z == Moons[i].Velocity.Z))
-                    {
-                        cycleCounts[i, 2] = cycle;
-
-                        found++;
-                    }
-                }
-
-                previousStates[i].Add(new Moon(Moons[i]));
+                xCycle = cycle;
             }
 
-            if (found == Moons.Count * 3)
+            if (yCycle == -1 && Moons.All(m => m.Velocity.Y == 0))
+            {
+                yCycle = cycle;
+            }
+
+            if (zCycle == -1 && Moons.All(m => m.Velocity.Z == 0))
+            {
+                zCycle = cycle;
+            }
+
+            if (xCycle > -1 && yCycle > -1 && zCycle > -1)
             {
                 break;
             }
         }
 
-        var values = new List<long>();
-
-        for (var i = 0; i < Moons.Count; i++)
-        {
-            values.Add(cycleCounts[i, 0]);
-
-            values.Add(cycleCounts[i, 1]);
-
-            values.Add(cycleCounts[i, 2]);
-        }
-
-        var lowestCommonMultiple = LowestCommonMultiple(values);
+        var lowestCommonMultiple = LowestCommonMultiple(new List<long> { xCycle, yCycle, zCycle }) * 2;
 
         return lowestCommonMultiple.ToString();
     }
