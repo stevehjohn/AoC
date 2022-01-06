@@ -58,7 +58,7 @@ public class Part1 : Base
 #if DEBUG && DUMP
             DrawBots(bots);
 
-            Thread.Sleep(25);
+            Thread.Sleep(50);
 #endif
         }
     }
@@ -85,7 +85,9 @@ public class Part1 : Base
     }
 
 #if DEBUG && DUMP
-    private static void DrawBots(List<Bot> bots)
+    private List<Point> _previousPositions = new();
+
+    private void DrawBots(List<Bot> bots)
     {
         foreach (var bot in bots)
         {
@@ -99,9 +101,20 @@ public class Part1 : Base
 
             Console.ForegroundColor = ConsoleColor.DarkGreen;
         }
+
+        foreach (var position in _previousPositions)
+        {
+            Console.CursorLeft = 1 + position.X;
+
+            Console.CursorTop = 1 + position.Y;
+
+            Console.Write(' ');
+        }
+
+        _previousPositions = bots.Select(b => new Point(b.Position)).ToList();
     }
 
-    private void Dump(List<Bot> bots = null)
+    private void Dump()
     {
         Console.CursorTop = 1;
 
@@ -115,32 +128,6 @@ public class Part1 : Base
 
             for (var x = 0; x < Height; x++)
             {
-                if (bots != null)
-                {
-                    var found = false;
-
-                    foreach (var bot in bots)
-                    {
-                        if (x == bot.Position.X && y == bot.Position.Y)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-
-                            Console.Write('█');
-
-                            Console.ForegroundColor = ConsoleColor.DarkGreen;
-
-                            found = true;
-
-                            break;
-                        }
-                    }
-
-                    if (found)
-                    {
-                        continue;
-                    }
-                }
-
                 if (x == Origin.X && y == Origin.Y)
                 {
                     Console.ForegroundColor = ConsoleColor.White;

@@ -1,4 +1,4 @@
-﻿//#define DUMP
+﻿#define DUMP
 using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
 using AoC.Solutions.Solutions._2019.Computer;
