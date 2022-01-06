@@ -10,9 +10,9 @@ public class Part2 : Base
 
     public override string GetAnswer()
     {
-        var station = new Point(11, 13);
+        var stationLocation = File.ReadAllText("part1result.txt").Split(',', StringSplitOptions.TrimEntries);
 
-        Asteroids = Asteroids.Where(a => a.X != station.X || a.Y != station.Y).ToList();
+        var station = new Point(int.Parse(stationLocation[0]), int.Parse(stationLocation[1]));
 
         var asteroidsWithAngle = Asteroids.Select(a => (Angle: Math.Atan2(a.X - station.X, a.Y - station.Y), Point: a)).ToList();
 
