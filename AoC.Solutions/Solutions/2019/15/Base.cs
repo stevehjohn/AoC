@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Common;
+﻿#define CHEATDUMP
+using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
 using AoC.Solutions.Solutions._2019.Computer;
 
@@ -6,6 +7,12 @@ namespace AoC.Solutions.Solutions._2019._15;
 
 public abstract class Base : Solution
 {
+#if DEBUG && CHEATDUMP
+    private const int XOffset = 21;
+
+    private const int YOffset = 21;
+#endif
+
     public override string Description => "Oxygen repair droid";
 
     protected bool[,] Map { get; private set; }
@@ -26,7 +33,8 @@ public abstract class Base : Solution
 
     public void GetMap()
     {
-#if DEBUG && DUMP
+// CHEATDUMP already knows the bounds of the maze.
+#if DEBUG && (DUMP || CHEATDUMP)
         Console.Clear();
 
         Console.CursorVisible = false;
@@ -43,6 +51,14 @@ public abstract class Base : Solution
         var y = 0;
 
         SetCellType(x, y, (CellType) 1);
+
+#if DEBUG
+#if DUMP
+        Dump();
+#elif CHEATDUMP
+#endif
+        CheatDump();
+#endif
 
         while (true)
         {
@@ -92,15 +108,23 @@ public abstract class Base : Solution
                 }
             }
 
-#if DEBUG && DUMP
+#if DEBUG
+#if DUMP
             Dump();
+#elif CHEATDUMP
+#endif
+            CheatDump(x, y);
+
+            Thread.Sleep(10);
 #endif
         }
 
-#if DEBUG && DUMP
-        Dump();
+#if DEBUG
+#if DUMP
+            Dump();
 #endif
-        
+#endif
+
         ConvertToArray();
     }
 
@@ -215,6 +239,96 @@ public abstract class Base : Solution
 
         _map[x][y] = cellType;
     }
+
+#if DEBUG && CHEATDUMP
+    private int _previousX = int.MinValue;
+
+    private int _previousY = int.MinValue;
+
+    private void CheatDump(int x = int.MinValue, int y = int.MinValue)
+    {
+        Console.ForegroundColor = ConsoleColor.White;
+
+        Console.CursorLeft = XOffset + 1;
+
+        Console.CursorTop = YOffset + 1;
+
+        Console.Write('S');
+
+        if (_oxygenX > int.MinValue)
+        {
+            Console.CursorLeft = _oxygenX + XOffset + 1;
+
+            Console.CursorTop = _oxygenY + YOffset + 1;
+
+            Console.Write('O');
+        }
+
+        if (x == int.MinValue)
+        {
+            return;
+        }
+
+        Console.CursorLeft = x + XOffset + 1;
+
+        Console.CursorTop = y + YOffset + 1;
+        
+        Console.ForegroundColor = ConsoleColor.Red;
+
+        Console.Write('█');
+
+        if (_previousX != int.MinValue)
+        {
+            Console.CursorLeft = _previousX + XOffset + 1;
+
+            Console.CursorTop = _previousY + YOffset + 1;
+        
+            Console.Write(' ');
+        }
+
+        Console.ForegroundColor = ConsoleColor.DarkGreen;
+
+        if (GetCellType(x - 1, y) == CellType.Wall)
+        {
+            Console.CursorLeft = x + XOffset;
+
+            Console.CursorTop = y + YOffset + 1;
+            
+            Console.Write('█');
+        }
+
+        if (GetCellType(x + 1, y) == CellType.Wall)
+        {
+            Console.CursorLeft = x + XOffset + 2;
+
+            Console.CursorTop = y + YOffset + 1;
+            
+            Console.Write('█');
+        }
+
+        if (GetCellType(x, y - 1) == CellType.Wall)
+        {
+            Console.CursorLeft = x + XOffset + 1;
+
+            Console.CursorTop = y + YOffset;
+            
+            Console.Write('█');
+        }
+
+        if (GetCellType(x, y + 1) == CellType.Wall)
+        {
+            Console.CursorLeft = x + XOffset + 1;
+
+            Console.CursorTop = y + YOffset + 2;
+            
+            Console.Write('█');
+        }
+
+        _previousX = x;
+
+        _previousY = y;
+    }
+#endif
 
 #if DEBUG && DUMP
     private void Dump(int pX = int.MinValue, int pY = int.MinValue)
