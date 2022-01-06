@@ -32,7 +32,7 @@ public abstract class Base : Solution
             }
         }
 
-        return intersections.Where(i => i.X != 0 && i.Y != 0).ToList();
+        return intersections.Where(i => i.X != 0 || i.Y != 0).ToList();
     }
 
     private static List<Line> ParseInput(string input)
