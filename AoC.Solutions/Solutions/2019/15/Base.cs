@@ -1,12 +1,15 @@
-﻿#define DUMP
+﻿//#define DUMP
 using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
 using AoC.Solutions.Solutions._2019.Computer;
 
 namespace AoC.Solutions.Solutions._2019._15;
 
+// TODO: A good old refactor...
 public abstract class Base : Solution
 {
+    protected const string Part1ResultFile = "2019.1.result";
+
 #if DEBUG && DUMP
     private const int XOffset = 21;
 
@@ -15,15 +18,15 @@ public abstract class Base : Solution
 
     public override string Description => "Oxygen repair droid";
 
-    protected bool[,] Map { get; private set; }
+    protected bool[,] Map { get; set; }
 
-    protected Point Origin { get; private set; }
+    protected Point Origin { get; set; }
 
-    protected Point Destination { get; private set; }
+    protected Point Destination { get; set; }
 
-    protected int Width { get; private set; }
+    protected int Width { get; set; }
 
-    protected int Height { get; private set; }
+    protected int Height { get; set; }
 
     private readonly Dictionary<int, Dictionary<int, CellType>> _map = new();
 

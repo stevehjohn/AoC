@@ -20,9 +20,14 @@ public class Part1 : Base
 
 #if DEBUG && DUMP
         Console.ForegroundColor = ConsoleColor.Green;
+
+        Console.CursorLeft = 0;
+
+        Console.CursorTop = Height + 3;
 #endif
 
         SaveResult();
+
 
         return shortestPath.ToString();
     }
@@ -59,6 +64,8 @@ public class Part1 : Base
     private void SaveResult()
     {
         var data = new StringBuilder();
+        
+        data.AppendLine($"{Origin.X},{Origin.Y}");
 
         data.AppendLine($"{Destination.X},{Destination.Y}");
 
@@ -72,7 +79,7 @@ public class Part1 : Base
             data.AppendLine();
         }
 
-        File.WriteAllText("2019.1.result", data.ToString());
+        File.WriteAllText(Part1ResultFile, data.ToString());
     }
 
 #if DEBUG && DUMP
