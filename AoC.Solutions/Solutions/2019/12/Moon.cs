@@ -20,4 +20,11 @@ public class Moon
 
         Velocity = new Point();
     }
+
+    public Moon(Moon moon)
+    {
+        Position = new Point(moon.Position);
+
+        Velocity = new Point(moon.Velocity);
+    }
 }
