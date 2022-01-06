@@ -29,16 +29,35 @@ public class Bot
         Steps = 0;
     }
 
+    protected Bot(Bot bot, Point direction)
+    {
+        Position = new Point(bot.Position);
+
+        Steps = bot.Steps;
+
+        _map = bot._map;
+
+        _direction = direction;
+
+        _destination = bot._destination;
+
+        Position.X += _direction.X;
+
+        Position.Y += _direction.Y;
+
+        Steps++;
+    }
+
     public List<Bot> Move()
     {
         var moves = GetPossibleMoves();
 
+        var bots = new List<Bot>();
+
         if (moves.Count == 0)
         {
-            return null;
+            return bots;
         }
-
-        var bots = new List<Bot>();
 
         if (moves.Count == 1)
         {
@@ -55,7 +74,12 @@ public class Bot
             return bots;
         }
 
-        return null;
+        foreach (var move in moves)
+        {
+            bots.Add(new Bot(this, move));
+        }
+
+        return bots;
     }
 
     private List<Point> GetPossibleMoves()
