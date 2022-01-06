@@ -8,6 +8,14 @@ public class Line
 
     public Point End { get; set; }
 
+    private int XMin => Math.Min(Start.X, End.X);
+
+    private int XMax => Math.Max(Start.X, End.X);
+
+    private int YMin => Math.Min(Start.Y, End.Y);
+
+    private int YMax => Math.Max(Start.Y, End.Y);
+
     public bool Intersects(Point point)
     {
         if (Start.X == End.X)
@@ -24,35 +32,14 @@ public class Line
 
     public Point IntersectionPoint(Line line)
     {
-        if (Start.X == End.X)
+        if (XMin >= line.XMin && XMin <= line.XMax && line.YMin >= YMin && line.YMin <= YMax)
         {
-            if (line.Start.X == line.End.X)
-            {
-                return null;
-            }
-
-            if (Start.X >= Math.Min(line.Start.X, line.End.X)
-                && Start.X <= Math.Max(line.Start.X, line.End.X)
-                && line.Start.Y >= Math.Min(Start.Y, End.Y)
-                && line.Start.Y <= Math.Max(Start.Y, End.Y))
-            {
-                return new Point(Start.X, line.Start.Y);
-            }
+            return new Point(XMin, line.YMin);
         }
-        else
-        {
-            if (line.Start.Y == line.End.Y)
-            {
-                return null;
-            }
 
-            if (line.Start.X >= Math.Min(Start.X, End.X)
-                && line.Start.X <= Math.Max(Start.X, End.X)
-                && Start.Y >= Math.Min(line.Start.Y, line.End.Y)
-                && Start.Y <= Math.Max(line.Start.Y, line.End.Y))
-            {
-                return new Point(line.Start.X, Start.Y);
-            }
+        if (line.XMin >= XMin && line.XMin <= XMax && YMin >= line.YMin && YMin <= line.YMax)
+        {
+            return new Point(line.XMin, YMin);
         }
 
         return null;
