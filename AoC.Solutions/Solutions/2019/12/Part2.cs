@@ -9,40 +9,13 @@ public class Part2 : Base
     {
         ParseInput();
 
-        var previousStates = new List<int>[3];
+        var xCycle = -1;
 
-        var cycleCounts = new long[3];
+        var yCycle = -1;
 
-        var xHash = 0;
-
-        var yHash = 0;
-
-        var zHash = 0;
-
-        for (var i = 0; i < Moons.Count; i++)
-        {
-            xHash = HashCode.Combine(xHash, Moons[i].Position.X, Moons[i].Velocity.X);
-
-            yHash = HashCode.Combine(yHash, Moons[i].Position.Y, Moons[i].Velocity.Y);
-
-            zHash = HashCode.Combine(zHash, Moons[i].Position.Z, Moons[i].Velocity.Z);
-        }
-
-        previousStates[0] = new List<int>();
-
-        previousStates[1] = new List<int>();
-
-        previousStates[2] = new List<int>();
-
-        previousStates[0].Add(xHash);
-
-        previousStates[1].Add(yHash);
-        
-        previousStates[2].Add(zHash);
+        var zCycle = -1;
 
         var cycle = 0;
-
-        var found = 0;
 
         while (true)
         {
@@ -50,58 +23,28 @@ public class Part2 : Base
 
             cycle++;
 
-            xHash = 0;
-            
-            yHash = 0;
-            
-            zHash = 0;
-
-            for (var i = 0; i < Moons.Count; i++)
+            if (xCycle == -1 && Moons.All(m => m.Velocity.X == 0))
             {
-                xHash = HashCode.Combine(xHash, Moons[i].Position.X, Moons[i].Velocity.X);
-
-                yHash = HashCode.Combine(yHash, Moons[i].Position.Y, Moons[i].Velocity.Y);
-
-                zHash = HashCode.Combine(zHash, Moons[i].Position.Z, Moons[i].Velocity.Z);
+                xCycle = cycle;
             }
 
-            if (cycleCounts[0] == 0 && cycle > 0)
+            if (yCycle == -1 && Moons.All(m => m.Velocity.Y == 0))
             {
-                if (previousStates[0].Any(s => s == xHash))
-                {
-                    cycleCounts[0] = cycle;
-
-                    found++;
-                }
-
-                if (previousStates[1].Any(s => s == yHash))
-                {
-                    cycleCounts[1] = cycle;
-
-                    found++;
-                }
-
-                if (previousStates[2].Any(s => s == zHash))
-                {
-                    cycleCounts[2] = cycle;
-
-                    found++;
-                }
+                yCycle = cycle;
             }
 
-            previousStates[0].Add(xHash);
+            if (zCycle == -1 && Moons.All(m => m.Velocity.Z == 0))
+            {
+                zCycle = cycle;
+            }
 
-            previousStates[1].Add(yHash);
-
-            previousStates[2].Add(zHash);
-
-            if (found == 3)
+            if (xCycle > -1 && yCycle > -1 && zCycle > -1)
             {
                 break;
             }
         }
 
-        var lowestCommonMultiple = LowestCommonMultiple(cycleCounts.ToList());
+        var lowestCommonMultiple = LowestCommonMultiple(new List<long> { xCycle, yCycle, zCycle }) * 2;
 
         return lowestCommonMultiple.ToString();
     }
