@@ -1,7 +1,7 @@
 ﻿#define DUMP
-using System.Text;
 using AoC.Solutions.Common;
 using JetBrains.Annotations;
+using System.Text;
 
 namespace AoC.Solutions.Solutions._2019._15;
 
@@ -56,7 +56,9 @@ public class Part1 : Base
             bots = newBots;
 
 #if DEBUG && DUMP
-            Dump(bots);
+            DrawBots(bots);
+
+            Thread.Sleep(25);
 #endif
         }
     }
@@ -83,11 +85,29 @@ public class Part1 : Base
     }
 
 #if DEBUG && DUMP
+    private static void DrawBots(List<Bot> bots)
+    {
+        foreach (var bot in bots)
+        {
+            Console.CursorLeft = 1 + bot.Position.X;
+
+            Console.CursorTop = 1 + bot.Position.Y;
+
+            Console.ForegroundColor = ConsoleColor.Red;
+
+            Console.Write('█');
+
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+        }
+    }
+
     private void Dump(List<Bot> bots = null)
     {
         Console.CursorTop = 1;
 
         Console.CursorLeft = 0;
+
+        Console.ForegroundColor = ConsoleColor.DarkGreen;
 
         for (var y = 0; y < Width; y++)
         {
