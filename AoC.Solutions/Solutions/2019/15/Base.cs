@@ -1,4 +1,4 @@
-﻿#define DUMP
+﻿using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
 using AoC.Solutions.Solutions._2019.Computer;
 
@@ -8,13 +8,23 @@ public abstract class Base : Solution
 {
     public override string Description => "Oxygen repair droid";
 
+    protected bool[,] Map { get; private set; }
+
+    protected Point Origin { get; private set; }
+
+    protected Point Destination { get; private set; }
+
+    protected int Width { get; private set; }
+
+    protected int Height { get; private set; }
+
     private readonly Dictionary<int, Dictionary<int, CellType>> _map = new();
 
-    protected int OxygenX = int.MinValue;
+    private int _oxygenX = int.MinValue;
 
-    protected int OxygenY = int.MinValue;
+    private int _oxygenY = int.MinValue;
 
-    public bool[,] GetMap()
+    public void GetMap()
     {
 #if DEBUG && DUMP
         Console.Clear();
@@ -59,9 +69,9 @@ public abstract class Base : Solution
 
             if (response == 2)
             {
-                OxygenX = x;
+                _oxygenX = x;
 
-                OxygenY = y;
+                _oxygenY = y;
 
                 if (! Explored())
                 {
@@ -71,9 +81,9 @@ public abstract class Base : Solution
                 break;
             }
 
-            if (OxygenX > int.MinValue)
+            if (_oxygenX > int.MinValue)
             {
-                if (Math.Abs(x - OxygenX) == 1 && y == OxygenY || Math.Abs(y - OxygenY) == 1 && x == OxygenX)
+                if (Math.Abs(x - _oxygenX) == 1 && y == _oxygenY || Math.Abs(y - _oxygenY) == 1 && x == _oxygenX)
                 {
                     if (Explored())
                     {
@@ -84,8 +94,43 @@ public abstract class Base : Solution
         }
 
 #if DEBUG && DUMP
-        Dump();
+                Dump();
 #endif
+        
+        ConvertToArray();
+    }
+
+    private void ConvertToArray()
+    {
+        var xMin = _map.Min(m => m.Key);
+
+        var xMax = _map.Max(m => m.Key);
+
+        var yMin = _map.SelectMany(m => m.Value.Keys).Min();
+
+        var yMax = _map.SelectMany(m => m.Value.Keys).Max();
+
+        Width = xMax - xMin + 1;
+
+        Height = yMax - yMin + 1;
+
+        var result = new bool[Width, Height];
+
+        for (var y = 0; y < Height; y++)
+        {
+            Console.Write(' ');
+
+            for (var x = 0; x < Width; x++)
+            {
+                result[x, y] = GetCellType(x + xMin, y + yMin) != CellType.Wall && GetCellType(x + xMin, y + yMin) != CellType.Unknown;
+            }
+        }
+
+        Map = result;
+
+        Origin = new Point(0 - xMin, 0 - yMin);
+
+        Destination = new Point(_oxygenX - xMin, _oxygenY - yMin);
     }
 
     private bool Explored()
