@@ -91,10 +91,14 @@ public abstract class Base : Solution
                     }
                 }
             }
+
+#if DEBUG && DUMP
+            Dump();
+#endif
         }
 
 #if DEBUG && DUMP
-                Dump();
+        Dump();
 #endif
         
         ConvertToArray();
@@ -118,8 +122,6 @@ public abstract class Base : Solution
 
         for (var y = 0; y < Height; y++)
         {
-            Console.Write(' ');
-
             for (var x = 0; x < Width; x++)
             {
                 result[x, y] = GetCellType(x + xMin, y + yMin) != CellType.Wall && GetCellType(x + xMin, y + yMin) != CellType.Unknown;
@@ -247,7 +249,7 @@ public abstract class Base : Solution
                     continue;
                 }
 
-                if (x == OxygenX && y == OxygenY)
+                if (x == _oxygenX && y == _oxygenY)
                 {
                     Console.Write('O');
 
