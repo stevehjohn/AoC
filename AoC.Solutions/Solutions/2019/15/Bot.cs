@@ -29,28 +29,31 @@ public class Bot
         Steps = 0;
     }
 
-    // TODO: Refactor this a bit to remove duplicate code.
     public List<Bot> Move()
     {
         var moves = GetPossibleMoves();
 
-        if (_direction.X == 0 && _direction.Y == 0)
+        if (moves.Count == 0)
         {
-            _direction = moves.Single();
-        } 
-        else if (moves.Count == 2)
-        {
-            if (! moves.Any(m => m.Equals(_direction)))
-            {
-                _direction = moves.Single(m => m.X != -_direction.X && m.Y != -_direction.Y);
-            }
+            return null;
         }
 
-        Position.X += _direction.X;
+        var bots = new List<Bot>();
 
-        Position.Y += _direction.Y;
+        if (moves.Count == 1)
+        {
+            _direction = moves.First();
 
-        Steps++;
+            Position.X += _direction.X;
+
+            Position.Y += _direction.Y;
+
+            Steps++;
+
+            bots.Add(this);
+
+            return bots;
+        }
 
         return null;
     }
@@ -79,6 +82,11 @@ public class Bot
             moves.Add(new Point(0, 1));
         }
 
-        return moves;
+        if (_direction.X == 0 && _direction.Y == 0)
+        {
+            return moves;
+        }
+
+        return moves.Where(m => m.X != -_direction.X || m.Y != -_direction.Y).ToList();
     }
 }
