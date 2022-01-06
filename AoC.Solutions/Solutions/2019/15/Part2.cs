@@ -69,7 +69,7 @@ public class Part2 : Base
 #if DEBUG && DUMP
             DrawBots(bots);
 
-            Thread.Sleep(50);
+            Thread.Sleep(25);
 #endif
         }
     }
