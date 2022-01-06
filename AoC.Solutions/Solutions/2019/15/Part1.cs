@@ -12,12 +12,6 @@ public class Part1 : Base
         GetMap();
 
 #if DEBUG && DUMP
-        Console.Clear();
-
-        Console.CursorVisible = false;
-
-        Console.ForegroundColor = ConsoleColor.DarkGreen;
-
         Dump();
 #endif
 

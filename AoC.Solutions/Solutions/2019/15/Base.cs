@@ -1,4 +1,4 @@
-﻿#define CHEATDUMP
+﻿#define DUMP
 using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
 using AoC.Solutions.Solutions._2019.Computer;
@@ -7,7 +7,7 @@ namespace AoC.Solutions.Solutions._2019._15;
 
 public abstract class Base : Solution
 {
-#if DEBUG && CHEATDUMP
+#if DEBUG && DUMP
     private const int XOffset = 21;
 
     private const int YOffset = 21;
@@ -33,8 +33,7 @@ public abstract class Base : Solution
 
     public void GetMap()
     {
-// CHEATDUMP already knows the bounds of the maze.
-#if DEBUG && (DUMP || CHEATDUMP)
+#if DEBUG && DUMP
         Console.Clear();
 
         Console.CursorVisible = false;
@@ -52,12 +51,15 @@ public abstract class Base : Solution
 
         SetCellType(x, y, (CellType) 1);
 
-#if DEBUG
-#if DUMP
-        Dump();
-#elif CHEATDUMP
-#endif
-        CheatDump();
+#if DEBUG && DUMP
+        if (XOffset > int.MinValue)
+        {
+            CheatDump(x, y);
+        }
+        else
+        {
+            Dump();
+        }
 #endif
 
         while (true)
@@ -108,21 +110,29 @@ public abstract class Base : Solution
                 }
             }
 
-#if DEBUG
-#if DUMP
-            Dump();
-#elif CHEATDUMP
-#endif
-            CheatDump(x, y);
+#if DEBUG && DUMP
+            if (XOffset > int.MinValue)
+            {
+                CheatDump(x, y);
 
-            Thread.Sleep(10);
+                Thread.Sleep(10);
+            }
+            else
+            {
+                Dump();
+            }
 #endif
         }
 
-#if DEBUG
-#if DUMP
+#if DEBUG && DUMP
+        if (XOffset > int.MinValue)
+        {
+            CheatDump(x, y);
+        }
+        else
+        {
             Dump();
-#endif
+        }
 #endif
 
         ConvertToArray();
@@ -240,7 +250,7 @@ public abstract class Base : Solution
         _map[x][y] = cellType;
     }
 
-#if DEBUG && CHEATDUMP
+#if DEBUG && DUMP
     private int _previousX = int.MinValue;
 
     private int _previousY = int.MinValue;
@@ -272,7 +282,7 @@ public abstract class Base : Solution
         Console.CursorLeft = x + XOffset + 1;
 
         Console.CursorTop = y + YOffset + 1;
-        
+
         Console.ForegroundColor = ConsoleColor.Red;
 
         Console.Write('█');
@@ -282,7 +292,7 @@ public abstract class Base : Solution
             Console.CursorLeft = _previousX + XOffset + 1;
 
             Console.CursorTop = _previousY + YOffset + 1;
-        
+
             Console.Write(' ');
         }
 
@@ -293,7 +303,7 @@ public abstract class Base : Solution
             Console.CursorLeft = x + XOffset;
 
             Console.CursorTop = y + YOffset + 1;
-            
+
             Console.Write('█');
         }
 
@@ -302,7 +312,7 @@ public abstract class Base : Solution
             Console.CursorLeft = x + XOffset + 2;
 
             Console.CursorTop = y + YOffset + 1;
-            
+
             Console.Write('█');
         }
 
@@ -311,7 +321,7 @@ public abstract class Base : Solution
             Console.CursorLeft = x + XOffset + 1;
 
             Console.CursorTop = y + YOffset;
-            
+
             Console.Write('█');
         }
 
@@ -320,7 +330,7 @@ public abstract class Base : Solution
             Console.CursorLeft = x + XOffset + 1;
 
             Console.CursorTop = y + YOffset + 2;
-            
+
             Console.Write('█');
         }
 
@@ -328,9 +338,7 @@ public abstract class Base : Solution
 
         _previousY = y;
     }
-#endif
 
-#if DEBUG && DUMP
     private void Dump(int pX = int.MinValue, int pY = int.MinValue)
     {
         Console.CursorTop = 1;
