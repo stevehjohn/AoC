@@ -1,4 +1,5 @@
 ﻿#define DUMP
+using System.Text;
 using AoC.Solutions.Common;
 using JetBrains.Annotations;
 
@@ -20,6 +21,8 @@ public class Part1 : Base
 #if DEBUG && DUMP
         Console.ForegroundColor = ConsoleColor.Green;
 #endif
+
+        SaveResult();
 
         return shortestPath.ToString();
     }
@@ -51,6 +54,25 @@ public class Part1 : Base
             Dump(bots);
 #endif
         }
+    }
+
+    private void SaveResult()
+    {
+        var data = new StringBuilder();
+
+        data.AppendLine($"{Destination.X},{Destination.Y}");
+
+        for (var y = 0; y < Width; y++)
+        {
+            for (var x = 0; x < Height; x++)
+            {
+                data.Append(Map[x, y] ? '1' : '0');
+            }
+
+            data.AppendLine();
+        }
+
+        File.WriteAllText("2019.1.result", data.ToString());
     }
 
 #if DEBUG && DUMP
