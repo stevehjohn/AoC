@@ -1,6 +1,7 @@
 ﻿#define DUMP
 using AoC.Solutions.Common;
 using JetBrains.Annotations;
+using System.Text;
 
 namespace AoC.Solutions.Solutions._2019._15;
 
@@ -12,12 +13,6 @@ public class Part1 : Base
         GetMap();
 
 #if DEBUG && DUMP
-        Console.Clear();
-
-        Console.CursorVisible = false;
-
-        Console.ForegroundColor = ConsoleColor.DarkGreen;
-
         Dump();
 #endif
 
@@ -25,7 +20,14 @@ public class Part1 : Base
 
 #if DEBUG && DUMP
         Console.ForegroundColor = ConsoleColor.Green;
+
+        Console.CursorLeft = 0;
+
+        Console.CursorTop = Height + 3;
 #endif
+
+        SaveResult();
+
 
         return shortestPath.ToString();
     }
@@ -54,17 +56,71 @@ public class Part1 : Base
             bots = newBots;
 
 #if DEBUG && DUMP
-            Dump(bots);
+            DrawBots(bots);
+
+            Thread.Sleep(50);
 #endif
         }
     }
 
+    private void SaveResult()
+    {
+        var data = new StringBuilder();
+        
+        data.AppendLine($"{Origin.X},{Origin.Y}");
+
+        data.AppendLine($"{Destination.X},{Destination.Y}");
+
+        for (var y = 0; y < Width; y++)
+        {
+            for (var x = 0; x < Height; x++)
+            {
+                data.Append(Map[x, y] ? '1' : '0');
+            }
+
+            data.AppendLine();
+        }
+
+        File.WriteAllText(Part1ResultFile, data.ToString());
+    }
+
 #if DEBUG && DUMP
-    private void Dump(List<Bot> bots = null)
+    private List<Point> _previousPositions = new();
+
+    private void DrawBots(List<Bot> bots)
+    {
+        foreach (var bot in bots)
+        {
+            Console.CursorLeft = 1 + bot.Position.X;
+
+            Console.CursorTop = 1 + bot.Position.Y;
+
+            Console.ForegroundColor = ConsoleColor.Red;
+
+            Console.Write('█');
+
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+        }
+
+        foreach (var position in _previousPositions)
+        {
+            Console.CursorLeft = 1 + position.X;
+
+            Console.CursorTop = 1 + position.Y;
+
+            Console.Write(' ');
+        }
+
+        _previousPositions = bots.Select(b => new Point(b.Position)).ToList();
+    }
+
+    private void Dump()
     {
         Console.CursorTop = 1;
 
         Console.CursorLeft = 0;
+
+        Console.ForegroundColor = ConsoleColor.DarkGreen;
 
         for (var y = 0; y < Width; y++)
         {
@@ -72,32 +128,6 @@ public class Part1 : Base
 
             for (var x = 0; x < Height; x++)
             {
-                if (bots != null)
-                {
-                    var found = false;
-
-                    foreach (var bot in bots)
-                    {
-                        if (x == bot.Position.X && y == bot.Position.Y)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-
-                            Console.Write('█');
-
-                            Console.ForegroundColor = ConsoleColor.DarkGreen;
-
-                            found = true;
-
-                            break;
-                        }
-                    }
-
-                    if (found)
-                    {
-                        continue;
-                    }
-                }
-
                 if (x == Origin.X && y == Origin.Y)
                 {
                     Console.ForegroundColor = ConsoleColor.White;

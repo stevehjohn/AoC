@@ -1,22 +1,32 @@
-﻿using AoC.Solutions.Common;
+﻿#define DUMP
+using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
 using AoC.Solutions.Solutions._2019.Computer;
 
 namespace AoC.Solutions.Solutions._2019._15;
 
+// TODO: A good old refactor...
 public abstract class Base : Solution
 {
+    protected const string Part1ResultFile = "2019.1.result";
+
+#if DEBUG && DUMP
+    private const int XOffset = 21;
+
+    private const int YOffset = 21;
+#endif
+
     public override string Description => "Oxygen repair droid";
 
-    protected bool[,] Map { get; private set; }
+    protected bool[,] Map { get; set; }
 
-    protected Point Origin { get; private set; }
+    protected Point Origin { get; set; }
 
-    protected Point Destination { get; private set; }
+    protected Point Destination { get; set; }
 
-    protected int Width { get; private set; }
+    protected int Width { get; set; }
 
-    protected int Height { get; private set; }
+    protected int Height { get; set; }
 
     private readonly Dictionary<int, Dictionary<int, CellType>> _map = new();
 
@@ -43,6 +53,17 @@ public abstract class Base : Solution
         var y = 0;
 
         SetCellType(x, y, (CellType) 1);
+
+#if DEBUG && DUMP
+        if (XOffset > int.MinValue)
+        {
+            CheatDump(x, y);
+        }
+        else
+        {
+            Dump();
+        }
+#endif
 
         while (true)
         {
@@ -93,14 +114,30 @@ public abstract class Base : Solution
             }
 
 #if DEBUG && DUMP
-            Dump();
+            if (XOffset > int.MinValue)
+            {
+                CheatDump(x, y);
+
+                Thread.Sleep(10);
+            }
+            else
+            {
+                Dump();
+            }
 #endif
         }
 
 #if DEBUG && DUMP
-        Dump();
+        if (XOffset > int.MinValue)
+        {
+            CheatDump(x, y);
+        }
+        else
+        {
+            Dump();
+        }
 #endif
-        
+
         ConvertToArray();
     }
 
@@ -217,6 +254,94 @@ public abstract class Base : Solution
     }
 
 #if DEBUG && DUMP
+    private int _previousX = int.MinValue;
+
+    private int _previousY = int.MinValue;
+
+    private void CheatDump(int x = int.MinValue, int y = int.MinValue)
+    {
+        Console.ForegroundColor = ConsoleColor.White;
+
+        Console.CursorLeft = XOffset + 1;
+
+        Console.CursorTop = YOffset + 1;
+
+        Console.Write('S');
+
+        if (_oxygenX > int.MinValue)
+        {
+            Console.CursorLeft = _oxygenX + XOffset + 1;
+
+            Console.CursorTop = _oxygenY + YOffset + 1;
+
+            Console.Write('O');
+        }
+
+        if (x == int.MinValue)
+        {
+            return;
+        }
+
+        Console.CursorLeft = x + XOffset + 1;
+
+        Console.CursorTop = y + YOffset + 1;
+
+        Console.ForegroundColor = ConsoleColor.Red;
+
+        Console.Write('█');
+
+        if (_previousX != int.MinValue)
+        {
+            Console.CursorLeft = _previousX + XOffset + 1;
+
+            Console.CursorTop = _previousY + YOffset + 1;
+
+            Console.Write(' ');
+        }
+
+        Console.ForegroundColor = ConsoleColor.DarkGreen;
+
+        if (GetCellType(x - 1, y) == CellType.Wall)
+        {
+            Console.CursorLeft = x + XOffset;
+
+            Console.CursorTop = y + YOffset + 1;
+
+            Console.Write('█');
+        }
+
+        if (GetCellType(x + 1, y) == CellType.Wall)
+        {
+            Console.CursorLeft = x + XOffset + 2;
+
+            Console.CursorTop = y + YOffset + 1;
+
+            Console.Write('█');
+        }
+
+        if (GetCellType(x, y - 1) == CellType.Wall)
+        {
+            Console.CursorLeft = x + XOffset + 1;
+
+            Console.CursorTop = y + YOffset;
+
+            Console.Write('█');
+        }
+
+        if (GetCellType(x, y + 1) == CellType.Wall)
+        {
+            Console.CursorLeft = x + XOffset + 1;
+
+            Console.CursorTop = y + YOffset + 2;
+
+            Console.Write('█');
+        }
+
+        _previousX = x;
+
+        _previousY = y;
+    }
+
     private void Dump(int pX = int.MinValue, int pY = int.MinValue)
     {
         Console.CursorTop = 1;
