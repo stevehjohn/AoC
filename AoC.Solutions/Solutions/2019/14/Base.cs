@@ -1,6 +1,8 @@
-﻿namespace AoC.Solutions.Solutions._2019._14;
+﻿using AoC.Solutions.Infrastructure;
 
-public class Base
+namespace AoC.Solutions.Solutions._2019._14;
+
+public abstract class Base : Solution
 {
-    
+    public override string Description => "Replicator";
 }
