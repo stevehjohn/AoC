@@ -7,6 +7,6 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        throw new NotImplementedException();
+        return "TESTING";
     }
 }

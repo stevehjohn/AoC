@@ -1,5 +1,4 @@
-﻿#define DUMP
-using AoC.Solutions.Common;
+﻿using AoC.Solutions.Common;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2019._15;

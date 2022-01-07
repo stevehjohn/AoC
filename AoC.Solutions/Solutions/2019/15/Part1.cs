@@ -1,5 +1,4 @@
-﻿#define DUMP
-using AoC.Solutions.Common;
+﻿using AoC.Solutions.Common;
 using JetBrains.Annotations;
 using System.Text;
 
