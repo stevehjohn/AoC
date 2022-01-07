@@ -41,7 +41,7 @@ public class Part1 : Base
                 continue;
             }
 
-            CalculateRequiredOre(component.Material, component.QuantityRequired * quantityRequired);
+            CalculateRequiredOre(component.Material, component.QuantityRequired * (int) Math.Ceiling((decimal) quantityRequired / material.QuantityProduced));
         }
     }
 }
