@@ -8,13 +8,17 @@ public abstract class Base : Solution
 
     protected Material RootMaterial { get; set; }
 
+    protected const string BaseMaterialName = "ORE";
+
     private const string RootMaterialName = "FUEL";
 
-    private const string BaseMaterialName = "ORE";
+    private readonly Dictionary<string, Material> _materials = new();
 
     protected void ParseInput()
     {
         RootMaterial = GetMaterial(RootMaterialName);
+
+        _materials.Clear();
     }
 
     private Material GetMaterial(string name)
@@ -25,6 +29,11 @@ public abstract class Base : Solution
 
         var material = new Material(name, ParseMaterial(parts[1]).Quantity);
 
+        if (! _materials.ContainsKey(material.Name))
+        {
+            _materials.Add(material.Name, material);
+        }
+
         var components = parts[0].Split(',', StringSplitOptions.TrimEntries);
 
         foreach (var component in components)
@@ -33,6 +42,15 @@ public abstract class Base : Solution
 
             if (componentData.Name == BaseMaterialName)
             {
+                material.Components.Add(new Component(componentData.Quantity, new Material(BaseMaterialName, 0)));
+
+                continue;
+            }
+
+            if (_materials.ContainsKey(componentData.Name))
+            {
+                material.Components.Add(new Component(componentData.Quantity, _materials[componentData.Name]));
+
                 continue;
             }
 
@@ -42,7 +60,7 @@ public abstract class Base : Solution
         return material;
     }
 
-    private (string Name, int Quantity) ParseMaterial(string input)
+    private static (string Name, int Quantity) ParseMaterial(string input)
     {
         var split = input.Split(' ', StringSplitOptions.TrimEntries);
 
