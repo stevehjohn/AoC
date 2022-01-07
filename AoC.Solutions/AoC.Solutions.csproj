@@ -16,6 +16,7 @@
     <Folder Include="Infrastructure\" />
     <Folder Include="Solutions\2019\06\" />
     <Folder Include="Solutions\2019\11\" />
+    <Folder Include="Solutions\2019\14\" />
     <Folder Include="Solutions\2021\08\" />
     <Folder Include="Solutions\2021\10\" />
     <Folder Include="Solutions\2021\16\" />
@@ -62,7 +63,7 @@
     <None Update="Solutions\2019\10\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Solutions\2019\10\part1result.txt">
+    <None Update="Solutions\2019\10\2019.10.1.result">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Solutions\2019\11\input.txt">
@@ -74,10 +75,13 @@
     <None Update="Solutions\2019\13\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Solutions\2019\14\input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Solutions\2019\15\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Solutions\2019\15\2019.1.result">
+    <None Update="Solutions\2019\15\2019.15.1.result">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Solutions\2021\01\input.txt">

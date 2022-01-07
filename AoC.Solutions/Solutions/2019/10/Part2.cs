@@ -10,7 +10,7 @@ public class Part2 : Base
 
     public override string GetAnswer()
     {
-        var stationLocation = File.ReadAllText("part1result.txt").Split(',', StringSplitOptions.TrimEntries);
+        var stationLocation = File.ReadAllText("2019.10.1.result").Split(',', StringSplitOptions.TrimEntries);
 
         var station = new Point(int.Parse(stationLocation[0]), int.Parse(stationLocation[1]));
 
