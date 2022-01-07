@@ -5,10 +5,10 @@ using AoC.Solutions.Solutions._2019.Computer;
 
 namespace AoC.Solutions.Solutions._2019._15;
 
-// TODO: A good old refactor...
+// TODO: A good old refactor... Move visualisations to another class (or partial class)?
 public abstract class Base : Solution
 {
-    protected const string Part1ResultFile = "2019.1.result";
+    protected const string Part1ResultFile = "2019.15.1.result";
 
 #if DEBUG && DUMP
     private const int XOffset = 21;
