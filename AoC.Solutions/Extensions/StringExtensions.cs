@@ -21,4 +21,25 @@ public static class StringExtensions
 
         return count;
     }
+
+    public static char[,] To2DArray(this string input)
+    {
+        var lines = input.Split('\n');
+
+        var result = new char[lines[0].Length, lines.Length];
+
+        var y = 0;
+
+        foreach (var line in lines)
+        {
+            for (var x = 0; x < line.Length; x++)
+            {
+                result[x, y] = line[x];
+            }
+
+            y++;
+        }
+
+        return result;
+    }
 }
