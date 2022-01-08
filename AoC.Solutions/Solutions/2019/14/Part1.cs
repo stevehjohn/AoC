@@ -22,10 +22,6 @@ public class Part1 : Base
         {
             if (component.Material.Name == BaseMaterialName)
             {
-                if (material.Stock >= quantityRequired)
-                {
-                }
-
                 while (material.Stock < quantityRequired)
                 {
                     material.Stock += material.QuantityProduced;
