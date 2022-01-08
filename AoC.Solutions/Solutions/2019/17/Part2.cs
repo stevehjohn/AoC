@@ -2,6 +2,7 @@
 using AoC.Solutions.Common;
 using AoC.Solutions.Exceptions;
 using JetBrains.Annotations;
+using Microsoft.VisualBasic;
 
 namespace AoC.Solutions.Solutions._2019._17;
 
@@ -31,7 +32,7 @@ public class Part2 : Base
 
         Map = newMap;
 
-        //GetSteps();
+        GetSteps();
 
         return "TESTING";
     }
@@ -42,9 +43,38 @@ public class Part2 : Base
 
         var commands = new StringBuilder();
 
+        var steps = 0;
+
         while (true)
         {
+            if (Map[bot.Position.X + bot.Direction.X, bot.Position.Y + bot.Direction.Y] != '#')
+            {
+                if (steps > 0)
+                {
+                    commands.Append($",{steps}");
+                }
+
+                steps = 0;
+
+                var turn = TryTurn(bot);
+
+                if (turn == null)
+                {
+                    break;
+                }
+            }
+
+            steps++;
+
+            bot.Position.X += bot.Direction.X;
+
+            bot.Position.Y += bot.Direction.Y;
         }
+    }
+
+    private (Point Direction, char Command)? TryTurn((Point Position, Point Direction) bot)
+    {
+        return null;
     }
 
     private (Point Position, Point Direction) GetBot()
