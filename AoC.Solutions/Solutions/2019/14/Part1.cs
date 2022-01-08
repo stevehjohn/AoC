@@ -18,24 +18,14 @@ public class Part1 : Base
 
     private void CalculateRequiredOre(Material material, int quantityRequired)
     {
-        if (material.Stock > 0)
-        {
-            material.Stock -= quantityRequired;
-
-            if (material.Stock >= 0)
-            {
-                return;
-            }
-
-            quantityRequired = -material.Stock;
-
-            material.Stock = 0;
-        }
-
         foreach (var component in material.Components)
         {
             if (component.Material.Name == BaseMaterialName)
             {
+                if (material.Stock >= quantityRequired)
+                {
+                }
+
                 while (material.Stock < quantityRequired)
                 {
                     material.Stock += material.QuantityProduced;
