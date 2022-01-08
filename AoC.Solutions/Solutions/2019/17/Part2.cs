@@ -42,7 +42,7 @@ public class Part2 : Base
 
         cpu.Run();
 
-        return cpu.UserOutput.Dequeue().ToString();
+        return cpu.UserOutput.Last().ToString();
     }
 
     private string GetSteps()
