@@ -9,6 +9,6 @@ public class Part1 : Base
     {
         ParseInput();
 
-        return GetRequiredOre().ToString();
+        return CreateFuel().ToString();
     }
 }

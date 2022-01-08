@@ -10,7 +10,7 @@ public abstract class Base : Solution
 
     private readonly Dictionary<string, int> _stock = new();
 
-    protected int GetRequiredOre()
+    protected int CreateFuel()
     {
         var ore = 0;
 
