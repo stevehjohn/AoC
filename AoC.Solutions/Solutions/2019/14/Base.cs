@@ -6,61 +6,79 @@ public abstract class Base : Solution
 {
     public override string Description => "Replicator";
 
-    protected Material RootMaterial { get; set; }
+    private readonly Dictionary<string, Recipe> _recipes = new();
 
-    protected const string BaseMaterialName = "ORE";
+    private readonly Dictionary<string, int> _stock = new();
 
-    private const string RootMaterialName = "FUEL";
+    protected int GetRequiredOre()
+    {
+        var ore = 0;
 
-    private readonly Dictionary<string, Material> _materials = new();
+        var orders = new Queue<Order>();
+
+        orders.Enqueue(new Order("FUEL", 1));
+
+        while (orders.Count > 0)
+        {
+            var order = orders.Dequeue();
+
+            if (order.IngredientName == "ORE")
+            {
+                ore += order.Amount;
+
+                continue;
+            }
+
+            if (order.Amount <= _stock[order.IngredientName])
+            {
+                _stock[order.IngredientName] -= order.Amount;
+
+                continue;
+            }
+
+            var required = order.Amount - _stock[order.IngredientName];
+
+            var recipe = _recipes[order.IngredientName];
+
+            var batches = (int) Math.Ceiling((decimal) required / recipe.AmountProduced);
+
+            foreach (var ingredient in recipe.Ingredients)
+            {
+                orders.Enqueue(new Order(ingredient.Name, ingredient.AmountRequired * batches));
+            }
+
+            _stock[order.IngredientName] = batches * recipe.AmountProduced - required;
+        }
+
+        return ore;
+    }
 
     protected void ParseInput()
     {
-        RootMaterial = GetMaterial(RootMaterialName);
-
-        _materials.Clear();
-    }
-
-    private Material GetMaterial(string name)
-    {
-        var line = Input.Single(i => i.EndsWith($" {name}"));
-
-        var parts = line.Split("=>", StringSplitOptions.TrimEntries);
-
-        var material = new Material(name, ParseMaterial(parts[1]).Quantity);
-
-        if (! _materials.ContainsKey(material.Name))
+        foreach (var line in Input)
         {
-            _materials.Add(material.Name, material);
-        }
+            var parts = line.Split("=>", StringSplitOptions.TrimEntries);
 
-        var components = parts[0].Split(',', StringSplitOptions.TrimEntries);
+            var recipeData = ParseItem(parts[1]);
 
-        foreach (var component in components)
-        {
-            var componentData = ParseMaterial(component);
+            var recipe = new Recipe(recipeData.Name, recipeData.Quantity);
 
-            if (componentData.Name == BaseMaterialName)
+            _stock.Add(recipe.Name, 0);
+
+            var ingredientsData = parts[0].Split(',', StringSplitOptions.TrimEntries);
+
+            foreach (var ingredientData in ingredientsData)
             {
-                material.Components.Add(new Component(componentData.Quantity, new Material(BaseMaterialName, 0)));
+                var ingredient = ParseItem(ingredientData);
 
-                continue;
+                recipe.Ingredients.Add(new Ingredient(ingredient.Name, ingredient.Quantity));
             }
 
-            if (_materials.ContainsKey(componentData.Name))
-            {
-                material.Components.Add(new Component(componentData.Quantity, _materials[componentData.Name]));
-
-                continue;
-            }
-
-            material.Components.Add(new Component(componentData.Quantity, GetMaterial(componentData.Name)));
+            _recipes.Add(recipe.Name, recipe);
         }
-
-        return material;
     }
 
-    private static (string Name, int Quantity) ParseMaterial(string input)
+    private static (string Name, int Quantity) ParseItem(string input)
     {
         var split = input.Split(' ', StringSplitOptions.TrimEntries);
 
