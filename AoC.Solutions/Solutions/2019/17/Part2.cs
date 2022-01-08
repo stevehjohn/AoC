@@ -1,8 +1,8 @@
 ﻿using AoC.Solutions.Common;
 using AoC.Solutions.Exceptions;
+using AoC.Solutions.Solutions._2019.Computer;
 using JetBrains.Annotations;
 using System.Text;
-using AoC.Solutions.Solutions._2019.Computer;
 
 namespace AoC.Solutions.Solutions._2019._17;
 
@@ -25,24 +25,56 @@ public class Part2 : Base
 
         cpu.Memory[0] = 2;
 
-        var userInput = "A,B,A,C,B,C,B,C,A,C\n";
+        var stepsCopy = steps;
 
-        userInput += "R,12,L,6,R,12\n";
+        var a = FindRepetition(stepsCopy);
 
-        userInput += "L,8,L,6,L,10\n";
+        stepsCopy = stepsCopy.Replace(a, string.Empty);
 
-        userInput += "R,12,L,10,L,6,R,10\n";
+        var b = FindRepetition(stepsCopy);
 
-        userInput += "n\n";
+        stepsCopy = stepsCopy.Replace(b, string.Empty);
 
-        foreach (var c in Encoding.ASCII.GetBytes(userInput))
+        b = b[1..];
+
+        var c = FindRepetition(stepsCopy);
+
+        c = c[2..];
+
+        var userInput = steps.Replace(a, "A").Replace(b, "B").Replace(c, "C");
+
+        userInput = $"{userInput}\n{a}\n{b}\n{c}\nn\n";
+
+        foreach (var chr in Encoding.ASCII.GetBytes(userInput))
         {
-            cpu.UserInput.Enqueue(c);
+            cpu.UserInput.Enqueue(chr);
         }
 
         cpu.Run();
 
         return cpu.UserOutput.Last().ToString();
+    }
+
+    private static string FindRepetition(string input)
+    {
+        var length = 2;
+
+        var last = input.Substring(0, length);
+
+        // ReSharper disable once StringIndexOfIsCultureSpecific.1
+        while (input[1..].IndexOf(last) > -1)
+        {
+            length++; 
+            
+            last = input.Substring(0, length);
+        }
+
+        while (! char.IsNumber(last[^1]))
+        {
+            last = last.Substring(0, last.Length - 1);
+        }
+
+        return last;
     }
 
     private string GetSteps()
