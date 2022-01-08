@@ -62,6 +62,10 @@ public class Part2 : Base
                 {
                     break;
                 }
+
+                commands.Append($",{turn.Value.Command}");
+
+                bot.Direction = turn.Value.Direction;
             }
 
             steps++;
@@ -74,6 +78,32 @@ public class Part2 : Base
 
     private (Point Direction, char Command)? TryTurn((Point Position, Point Direction) bot)
     {
+        if (bot.Direction.X == 0)
+        {
+            if (Map[bot.Position.X + 1, bot.Position.Y] == '#')
+            {
+                return (new Point(1, 0), bot.Direction.Y == -1 ? 'R' : 'L');
+            }
+
+            if (Map[bot.Position.X - 1, bot.Position.Y] == '#')
+            {
+                return (new Point(-1, 0), bot.Direction.Y == -1 ? 'L' : 'R');
+            }
+        }
+
+        if (bot.Direction.Y == 0)
+        {
+            if (Map[bot.Position.X, bot.Position.Y + 1] == '#')
+            {
+                return (new Point(0, 1), bot.Direction.X == -1 ? 'L' : 'R');
+            }
+
+            if (Map[bot.Position.X, bot.Position.Y - 1] == '#')
+            {
+                return (new Point(0, -1), bot.Direction.X == -1 ? 'R' : 'L');
+            }
+        }
+
         return null;
     }
 
