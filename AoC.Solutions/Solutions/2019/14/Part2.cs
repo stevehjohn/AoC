@@ -5,26 +5,35 @@ namespace AoC.Solutions.Solutions._2019._14;
 [UsedImplicitly]
 public class Part2 : Base
 {
+    private const long AvailableOre = 1_000_000_000_000;
+
     public override string GetAnswer()
     {
         ParseInput();
 
-        var fuel = 0;
+        var oreForOne = CreateFuel();
 
-        var ore = 0L;
+        var minEstimate = (int) (AvailableOre / oreForOne);
 
         while (true)
         {
-            ore += CreateFuel();
+            ResetStock();
 
-            if (ore > 1_000_000_000_000)
+            var ore = CreateFuel(minEstimate);
+
+            if (ore > AvailableOre)
             {
                 break;
             }
 
-            fuel++;
+            if (minEstimate % 100_000 == 0)
+            {
+                Console.WriteLine(minEstimate);
+            }
+
+            minEstimate++;
         }
 
-        return fuel.ToString();
+        return (minEstimate - 1).ToString();
     }
 }
