@@ -11,9 +11,9 @@ public class Part1 : Base
 
         var alignments = 0;
 
-        for (var y = 1; y < Map.GetLength(1) - 1; y++)
+        for (var y = 1; y < Height - 1; y++)
         {
-            for (var x = 1; x < Map.GetLength(0) - 1; x++)
+            for (var x = 1; x < Width - 1; x++)
             {
                 if (Map[x, y] != '#')
                 {

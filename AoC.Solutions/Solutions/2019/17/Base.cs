@@ -11,6 +11,10 @@ public abstract class Base : Solution
 
     protected char[,] Map;
 
+    protected int Width;
+
+    protected int Height;
+
     protected void GetMap()
     {
         var cpu = new Cpu();
@@ -29,5 +33,9 @@ public abstract class Base : Solution
         }
 
         Map = output.ToString().Trim().To2DArray();
+
+        Width = Map.GetLength(0);
+
+        Height = Map.GetLength(1);
     }
 }
