@@ -4,9 +4,9 @@ public class Order
 {
     public string IngredientName { get; }
 
-    public int Amount { get; }
+    public long Amount { get; }
 
-    public Order(string ingredientName, int amount)
+    public Order(string ingredientName, long amount)
     {
         IngredientName = ingredientName;
 

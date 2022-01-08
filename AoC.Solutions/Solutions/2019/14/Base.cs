@@ -8,15 +8,15 @@ public abstract class Base : Solution
 
     private readonly Dictionary<string, Recipe> _recipes = new();
 
-    private readonly Dictionary<string, int> _stock = new();
+    private readonly Dictionary<string, long> _stock = new();
 
-    protected int CreateFuel()
+    protected long CreateFuel(int amount = 1)
     {
-        var ore = 0;
+        var ore = 0L;
 
         var orders = new Queue<Order>();
 
-        orders.Enqueue(new Order("FUEL", 1));
+        orders.Enqueue(new Order("FUEL", amount));
 
         while (orders.Count > 0)
         {
@@ -40,7 +40,7 @@ public abstract class Base : Solution
 
             var recipe = _recipes[order.IngredientName];
 
-            var batches = (int) Math.Ceiling((decimal) required / recipe.AmountProduced);
+            var batches = (long) Math.Ceiling((decimal) required / recipe.AmountProduced);
 
             foreach (var ingredient in recipe.Ingredients)
             {
@@ -51,6 +51,14 @@ public abstract class Base : Solution
         }
 
         return ore;
+    }
+
+    protected void ResetStock()
+    {
+        foreach (var item in _stock)
+        {
+            _stock[item.Key] = 0;
+        }
     }
 
     protected void ParseInput()
