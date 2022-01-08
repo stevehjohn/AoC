@@ -15,6 +15,8 @@ public class Part2 : Base
 
         var minEstimate = (int) (AvailableOre / oreForOne);
 
+        var increment = minEstimate / 10;
+
         while (true)
         {
             ResetStock();
@@ -23,15 +25,19 @@ public class Part2 : Base
 
             if (ore > AvailableOre)
             {
-                break;
+                ResetStock();
+
+                if (CreateFuel(minEstimate - 1) < AvailableOre)
+                {
+                    break;
+                }
+
+                minEstimate -= increment;
+
+                increment /= 2;
             }
 
-            if (minEstimate % 100_000 == 0)
-            {
-                Console.WriteLine(minEstimate);
-            }
-
-            minEstimate++;
+            minEstimate += increment;
         }
 
         return (minEstimate - 1).ToString();
