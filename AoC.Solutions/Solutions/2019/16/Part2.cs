@@ -3,17 +3,23 @@
 namespace AoC.Solutions.Solutions._2019._16;
 
 [UsedImplicitly]
-public class Part1 : Base
+public class Part2 : Base
 {
     public override string GetAnswer()
     {
         var pattern = new[] { 0, 1, 0, -1 };
 
-        var data = Input[0].Select(c => byte.Parse(c.ToString())).ToArray();
+        //var data = string.Concat(Enumerable.Repeat(Input[0], 10_000)).Select(c => byte.Parse(c.ToString())).ToArray();
+        var data = string.Concat(Enumerable.Repeat("03036732577212944063491565474664", 10_000)).Select(c => byte.Parse(c.ToString())).ToArray();
+
+        //var offset = int.Parse(Input[0][..7]);
+        var offset = 303673;
 
         for (var p = 0; p < 100; p++)
         {
-            for (var o = 0; o < data.Length; o++)
+            Console.WriteLine(p);
+
+            for (var o = offset; o < data.Length; o++)
             {
                 var digit = 0;
 
@@ -38,6 +44,6 @@ public class Part1 : Base
             }
         }
 
-        return new string(data[..8].Select(d => (char) ('0' + d)).ToArray());
+        return new string(data[offset..(offset + 8)].Select(d => (char) ('0' + d)).ToArray());
     }
 }
