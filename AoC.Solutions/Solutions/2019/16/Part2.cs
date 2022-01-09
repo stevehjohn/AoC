@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System.Diagnostics;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2019._16;
 
@@ -9,16 +10,14 @@ public class Part2 : Base
     {
         var pattern = new[] { 0, 1, 0, -1 };
 
-        //var data = string.Concat(Enumerable.Repeat(Input[0], 10_000)).Select(c => byte.Parse(c.ToString())).ToArray();
-        var data = string.Concat(Enumerable.Repeat("03036732577212944063491565474664", 10_000)).Select(c => byte.Parse(c.ToString())).ToArray();
+        var data = string.Concat(Enumerable.Repeat(Input[0], 10_000)).Select(c => byte.Parse(c.ToString())).ToArray();
+        //var data = string.Concat(Enumerable.Repeat("03036732577212944063491565474664", 10_000)).Select(c => byte.Parse(c.ToString())).ToArray();
 
-        //var offset = int.Parse(Input[0][..7]);
-        var offset = 303673;
+        var offset = int.Parse(Input[0][..7]);
+        //var offset = 303673;
 
         for (var p = 0; p < 100; p++)
         {
-            Console.WriteLine(p);
-
             for (var o = offset; o < data.Length; o++)
             {
                 var digit = 0;
