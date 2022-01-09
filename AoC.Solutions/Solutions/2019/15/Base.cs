@@ -15,7 +15,7 @@ public abstract class Base : Solution
     private const int YOffset = 21;
 #endif
 
-    public override string Description => "Oxygen repair droid";
+    public override string Description => "Oxygen repair droid (CPU used unmodified)";
 
     protected bool[,] Map { get; set; }
 
