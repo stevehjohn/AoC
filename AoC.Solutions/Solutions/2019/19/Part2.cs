@@ -20,7 +20,8 @@ public class Part2 : Base
          * ..###.........
          */
 
-        var y = 0;
+        // Starting at 100 as signal is intermittent to begin with (see image above).
+        var y = 100;
 
         var xMin = 0;
 
@@ -41,6 +42,10 @@ public class Part2 : Base
             while (RunFor(xMax, y) == 1)
             {
                 xMax++;
+            }
+
+            if (xMax - xMin > 100)
+            {
             }
 
             y++;
