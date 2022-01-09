@@ -1,6 +1,5 @@
 ﻿using AoC.Solutions.Solutions._2019.Computer;
 using JetBrains.Annotations;
-using System.Diagnostics;
 
 namespace AoC.Solutions.Solutions._2019._19;
 
@@ -29,11 +28,6 @@ public class Part1 : Base
                 cpu.Run();
 
                 var output = (int) cpu.UserOutput.Dequeue();
-
-                if (output == 1)
-                {
-                    Debugger.Break();
-                }
 
                 total += output;
             }
