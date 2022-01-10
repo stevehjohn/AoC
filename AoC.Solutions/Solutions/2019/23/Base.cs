@@ -77,8 +77,6 @@ public abstract class Base : Solution
                 }
             }
 
-            var idle = true;
-
             for (var i = 0; i < 50; i++)
             {
                 var cpu = cpus[i];
@@ -93,14 +91,14 @@ public abstract class Base : Solution
                     }
 
                     allPackets[i].Clear();
-
-                    idle = false;
                 }
                 else
                 {
                     cpu.UserInput.Enqueue(-1);
                 }
             }
+
+            var idle = cpus.All(c => c.Value.UserInput.Peek() == -1);
 
             if (idle && natBuffer.X > 0 && natBuffer.Y > 0)
             {
