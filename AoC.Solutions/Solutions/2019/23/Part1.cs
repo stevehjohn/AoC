@@ -25,13 +25,13 @@ public class Part1 : Base
 
         while (true)
         {
-            var packets = new Dictionary<int, (int X, int Y)>();
+            var allPackets = new Dictionary<int, List<(int X, int Y)>>();
 
             for (var i = 0; i < 50; i++)
             {
                 var cpu = cpus[i];
 
-                cpu.Run();
+                var state = cpu.Run();
 
                 while (cpu.UserOutput.Count > 0)
                 {
@@ -46,7 +46,20 @@ public class Part1 : Base
                         return y.ToString();
                     }
 
-                    packets.Add(address, (x, y));
+                    List<(int X, int Y)> packets;
+
+                    if (allPackets.ContainsKey(address))
+                    {
+                        packets = allPackets[address];
+                    }
+                    else
+                    {
+                        packets = new List<(int X, int Y)>();
+
+                        allPackets.Add(address, packets);
+                    }
+
+                    packets.Add((x, y));
                 }
             }
 
@@ -54,13 +67,16 @@ public class Part1 : Base
             {
                 var cpu = cpus[i];
 
-                if (packets.TryGetValue(i, out var packet))
+                if (allPackets.TryGetValue(i, out var packets))
                 {
-                    cpu.UserInput.Enqueue(packet.X);
+                    foreach (var packet in packets)
+                    {
+                        cpu.UserInput.Enqueue(packet.X);
 
-                    cpu.UserInput.Enqueue(packet.Y);
+                        cpu.UserInput.Enqueue(packet.Y);
+                    }
 
-                    packets.Remove(i);
+                    allPackets[i].Clear();
                 }
                 else
                 {
