@@ -1,5 +1,4 @@
-﻿using AoC.Solutions.Common;
-using AoC.Solutions.Solutions._2019.Computer;
+﻿using AoC.Solutions.Solutions._2019.Computer;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2019._19;
@@ -9,47 +8,18 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        /*
-         * #.............
-         * ..............
-         * ..............
-         * .#............
-         * ..............
-         * .##...........
-         * .##...........
-         * ..##..........
-         * ..###.........
-         */
-
-        // Starting at 100 as signal is intermittent to begin with (see image above).
         var y = 100;
 
-        var xMin = 0;
-
-        var xMax = -1;
-
-        var xMaxes = new FixedLengthQueue<int>(100);
+        var x = 0;
 
         while (true)
         {
-            while (RunFor(xMin, y) == 0)
+            while (RunFor(x, y) == 0)
             {
-                xMin++;
+                x++;
             }
 
-            if (xMax == -1)
-            {
-                xMax = xMin;
-            }
-
-            while (RunFor(xMax, y) == 1)
-            {
-                xMax++;
-            }
-
-            xMaxes.Add(xMax);
-
-            if (xMaxes.First() - xMin > 100)
+            if (RunFor(x + 99, y - 99) == 1)
             {
                 break;
             }
@@ -57,7 +27,7 @@ public class Part2 : Base
             y++;
         }
 
-        return (xMin * 10_000 + (y - 100)).ToString();
+        return (x * 10_000 + (y - 99)).ToString();
     }
 
     private int RunFor(int x, int y)
