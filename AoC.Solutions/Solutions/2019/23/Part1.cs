@@ -19,34 +19,34 @@ public class Part1 : Base
             cpu.LoadProgram(Input);
 
             cpu.UserInput.Enqueue(i);
-
+            
             cpus.Add(i, cpu);
         }
 
         while (true)
         {
-            var allPackets = new Dictionary<int, List<(int X, int Y)>>();
+            var allPackets = new Dictionary<int, List<(long X, long Y)>>();
 
             for (var i = 0; i < 50; i++)
             {
                 var cpu = cpus[i];
 
-                var state = cpu.Run();
+                cpu.Run();
 
                 while (cpu.UserOutput.Count > 0)
                 {
                     var address = (int) cpu.UserOutput.Dequeue();
                     
-                    var x = (int) cpu.UserOutput.Dequeue();
+                    var x = cpu.UserOutput.Dequeue();
                     
-                    var y = (int) cpu.UserOutput.Dequeue();
+                    var y = cpu.UserOutput.Dequeue();
 
                     if (address == 255)
                     {
                         return y.ToString();
                     }
 
-                    List<(int X, int Y)> packets;
+                    List<(long X, long Y)> packets;
 
                     if (allPackets.ContainsKey(address))
                     {
@@ -54,7 +54,7 @@ public class Part1 : Base
                     }
                     else
                     {
-                        packets = new List<(int X, int Y)>();
+                        packets = new List<(long X, long Y)>();
 
                         allPackets.Add(address, packets);
                     }
