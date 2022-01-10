@@ -7,7 +7,7 @@ public abstract class Base : Solution
 {
     public override string Description => "IntCode network (CPU used unmodified)";
 
-    protected long RunNetwork()
+    protected long RunNetwork(bool hasNat = false)
     {
         var cpus = new Dictionary<int, Cpu>();
 
@@ -23,6 +23,10 @@ public abstract class Base : Solution
             
             cpus.Add(i, cpu);
         }
+
+        (long X, long Y) natBuffer = (0, 0);
+
+        var lastNatYSent = 0L;
 
         while (true)
         {
@@ -44,7 +48,16 @@ public abstract class Base : Solution
 
                     if (address == 255)
                     {
-                        return y;
+                        if (! hasNat)
+                        {
+                            return y;
+                        }
+
+                        natBuffer.X = x;
+
+                        natBuffer.Y = y;
+
+                        continue;
                     }
 
                     List<(long X, long Y)> packets;
@@ -64,6 +77,8 @@ public abstract class Base : Solution
                 }
             }
 
+            var idle = true;
+
             for (var i = 0; i < 50; i++)
             {
                 var cpu = cpus[i];
@@ -78,11 +93,27 @@ public abstract class Base : Solution
                     }
 
                     allPackets[i].Clear();
+
+                    idle = false;
                 }
                 else
                 {
                     cpu.UserInput.Enqueue(-1);
                 }
+            }
+
+            if (idle && natBuffer.X > 0 && natBuffer.Y > 0)
+            {
+                if (natBuffer.Y == lastNatYSent)
+                {
+                    return lastNatYSent;
+                }
+
+                cpus[0].UserInput.Enqueue(natBuffer.X);
+             
+                cpus[0].UserInput.Enqueue(natBuffer.Y);
+
+                lastNatYSent = natBuffer.Y;
             }
         }
     }
