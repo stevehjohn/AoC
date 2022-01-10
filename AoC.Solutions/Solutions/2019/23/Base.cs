@@ -4,5 +4,5 @@ namespace AoC.Solutions.Solutions._2019._23;
 
 public abstract class Base : Solution
 {
-    public override string Description => "IntCode network";
+    public override string Description => "IntCode network (CPU used unmodified)";
 }
