@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Solutions._2019.Computer;
+﻿using AoC.Solutions.Common;
+using AoC.Solutions.Solutions._2019.Computer;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2019._19;
@@ -27,6 +28,8 @@ public class Part2 : Base
 
         var xMax = -1;
 
+        var xMaxes = new FixedLengthQueue<int>(100);
+
         while (true)
         {
             while (RunFor(xMin, y) == 0)
@@ -44,14 +47,17 @@ public class Part2 : Base
                 xMax++;
             }
 
-            if (xMax - xMin > 100)
+            xMaxes.Add(xMax);
+
+            if (xMaxes.First() - xMin >= 100)
             {
+                break;
             }
 
             y++;
         }
 
-        return "TESTING";
+        return (xMin * 10_000 + y).ToString();
     }
 
     private int RunFor(int x, int y)
