@@ -5,7 +5,7 @@ namespace AoC.Solutions.Solutions._2019._22;
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private const int NumberOfCards = 10;
+    private const int NumberOfCards = 10007;
 
     private int[] _deck1;
     
@@ -16,8 +16,15 @@ public class Part1 : Base
     public override string GetAnswer()
     {
         _deck1 = new int[NumberOfCards];
-        
+
+        for (var i = 0; i < NumberOfCards; i++)
+        {
+            _deck1[i] = i;
+        }
+
         _deck2 = new int[NumberOfCards];
+
+        _currentDeck = 1;
 
         foreach (var line in Input)
         {
@@ -38,19 +45,72 @@ public class Part1 : Base
             DealWithIncrement(int.Parse(line.Substring(20)));
         }
 
-        return "TESTING";
+        var decks = GetDecks();
+
+        return Array.IndexOf(decks.Source, 2019).ToString();
     }
 
     private void DealIntoNewStack()
     {
+        var decks = GetDecks();
+
+        for (var i = 0; i < NumberOfCards; i++)
+        {
+            decks.Target[NumberOfCards - 1 - i] = decks.Source[i];
+        }
     }
 
-    private void Cut(int position)
+    private void Cut(int length)
     {
+        var decks = GetDecks();
+
+        int i;
+
+        if (length < 0)
+        {
+            length = -length;
+
+            for (i = 0; i < NumberOfCards - length; i++)
+            {
+                decks.Target[i + length] = decks.Source[i];
+            }
+
+            for (i = 0; i < length; i++)
+            {
+                decks.Target[i] = decks.Source[NumberOfCards - length + i];
+            }
+        }
+        else
+        {
+            for (i = 0; i < NumberOfCards - length; i++)
+            {
+                decks.Target[i] = decks.Source[i + length];
+            }
+
+            for (i = 0; i < length; i++)
+            {
+                decks.Target[NumberOfCards - length + i] = decks.Source[i];
+            }
+        }
     }
 
     private void DealWithIncrement(int increment)
     {
+        var decks = GetDecks();
+
+        var position = 0;
+
+        for (var i = 0; i < NumberOfCards; i++)
+        {
+            decks.Target[position] = decks.Source[i];
+
+            position += increment;
+
+            if (position >= NumberOfCards)
+            {
+                position -= NumberOfCards;
+            }
+        }
     }
 
     private (int[] Source, int[] Target) GetDecks()
