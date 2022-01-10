@@ -6,6 +6,10 @@ public abstract class Base : Solution
 {
     public override string Description => "Model number";
 
+    /*
+     * Won't pretend to understand this.
+    * Cribbed from this: https://www.reddit.com/r/adventofcode/comments/rnejv5/2021_day_24_solutions/hptwvcz/?utm_source=reddit&utm_medium=web2x&context=3
+    */
     protected string GetModelNumber(bool max)
     {
         var baseChar = max ? '9' : '1';

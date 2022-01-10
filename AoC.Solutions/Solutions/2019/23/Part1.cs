@@ -31,7 +31,7 @@ public class Part1 : Base
             {
                 var cpu = cpus[i];
 
-                cpu.Run();
+                var state = cpu.Run();
 
                 while (cpu.UserOutput.Count > 0)
                 {
