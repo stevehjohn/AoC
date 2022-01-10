@@ -7,7 +7,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Wastl's game of life";
 
-    protected void PlayRound(bool[,] grid)
+    protected static void PlayRound(bool[,] grid)
     {
         var dies = new List<Point>();
 

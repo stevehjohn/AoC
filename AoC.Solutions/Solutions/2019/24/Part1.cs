@@ -5,13 +5,14 @@ namespace AoC.Solutions.Solutions._2019._24;
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private readonly HashSet<int> _previousStates = new();
-
     public override string GetAnswer()
     {
         var grid = ParseInput();
 
-        _previousStates.Add(GetBiodiversity(grid));
+        var previousStates = new HashSet<int>
+                             {
+                                 GetBiodiversity(grid)
+                             };
 
         while (true)
         {
@@ -19,12 +20,12 @@ public class Part1 : Base
 
             var bioDiversity = GetBiodiversity(grid);
 
-            if (_previousStates.Contains(bioDiversity))
+            if (previousStates.Contains(bioDiversity))
             {
                 return bioDiversity.ToString();
             }
 
-            _previousStates.Add(bioDiversity);
+            previousStates.Add(bioDiversity);
         }
     }
 
