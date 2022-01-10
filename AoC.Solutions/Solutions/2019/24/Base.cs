@@ -7,9 +7,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Wastl's game of life";
 
-    protected readonly bool[,] Grid = new bool[7, 7];
-
-    protected void PlayRound()
+    protected void PlayRound(bool[,] grid)
     {
         var dies = new List<Point>();
 
@@ -19,35 +17,54 @@ public abstract class Base : Solution
         {
             for (var x = 1; x < 6; x++)
             {
-                var adjacent = AdjacentCount(x, y);
+                var adjacent = AdjacentCount(grid, x, y);
 
-                if (Grid[x, y] && adjacent != 1)
+                if (grid[x, y] && adjacent != 1)
                 {
                     dies.Add(new Point(x, y));
                 }
 
-                if (! Grid[x, y] && (adjacent == 1 || adjacent == 2))
+                if (! grid[x, y] && (adjacent == 1 || adjacent == 2))
                 {
                     infests.Add(new Point(x, y));
                 }
             }
         }
 
-        dies.ForEach(d => Grid[d.X, d.Y] = false);
+        dies.ForEach(d => grid[d.X, d.Y] = false);
 
-        infests.ForEach(i => Grid[i.X, i.Y] = true);
+        infests.ForEach(i => grid[i.X, i.Y] = true);
     }
 
-    private int AdjacentCount(int x, int y)
+    private static int AdjacentCount(bool[,] grid, int x, int y)
     {
-        var count = Grid[x - 1, y] ? 1 : 0;
+        var count = grid[x - 1, y] ? 1 : 0;
 
-        count += Grid[x, y - 1] ? 1 : 0;
+        count += grid[x, y - 1] ? 1 : 0;
 
-        count += Grid[x + 1, y] ? 1 : 0;
+        count += grid[x + 1, y] ? 1 : 0;
 
-        count += Grid[x, y + 1] ? 1 : 0;
+        count += grid[x, y + 1] ? 1 : 0;
 
         return count;
+    }
+
+    protected bool[,] ParseInput()
+    {
+        var result = new bool[7, 7];
+
+        var y = 1;
+
+        foreach (var line in Input)
+        {
+            for (var x = 1; x < 6; x++)
+            {
+                result[x, y] = line[x - 1] == '#';
+            }
+
+            y++;
+        }
+
+        return result;
     }
 }

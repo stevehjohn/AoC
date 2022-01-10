@@ -9,15 +9,15 @@ public class Part1 : Base
 
     public override string GetAnswer()
     {
-        ParseInput();
+        var grid = ParseInput();
 
-        _previousStates.Add(GetBiodiversity());
+        _previousStates.Add(GetBiodiversity(grid));
 
         while (true)
         {
-            PlayRound();
+            PlayRound(grid);
 
-            var bioDiversity = GetBiodiversity();
+            var bioDiversity = GetBiodiversity(grid);
 
             if (_previousStates.Contains(bioDiversity))
             {
@@ -28,7 +28,7 @@ public class Part1 : Base
         }
     }
 
-    private int GetBiodiversity()
+    private static int GetBiodiversity(bool[,] grid)
     {
         var i = 1;
 
@@ -38,7 +38,7 @@ public class Part1 : Base
         {
             for (var x = 1; x < 6; x++)
             {
-                if (Grid[x, y])
+                if (grid[x, y])
                 {
                     diversity += i;
                 }
@@ -48,19 +48,5 @@ public class Part1 : Base
         }
 
         return diversity;
-    }
-
-    private void ParseInput()
-    {
-        var y = 1;
-        foreach (var line in Input)
-        {
-            for (var x = 1; x < 6; x++)
-            {
-                Grid[x, y] = line[x - 1] == '#';
-            }
-
-            y++;
-        }
     }
 }
