@@ -49,7 +49,7 @@ public class Part2 : Base
 
             xMaxes.Add(xMax);
 
-            if (xMaxes.First() - xMin >= 100)
+            if (xMaxes.First() - xMin > 100)
             {
                 break;
             }
@@ -57,7 +57,7 @@ public class Part2 : Base
             y++;
         }
 
-        return (xMin * 10_000 + y).ToString();
+        return (xMin * 10_000 + (y - 100)).ToString();
     }
 
     private int RunFor(int x, int y)
