@@ -1,182 +1,91 @@
-﻿//using AoC.Solutions.Common;
-//using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
-//namespace AoC.Solutions.Solutions._2019._24;
+namespace AoC.Solutions.Solutions._2019._24;
 
-//[UsedImplicitly]
-//public class Part2 : Base
-//{
-//    private readonly List<bool[,]> _grids = new();
+[UsedImplicitly]
+public class Part2 : Base
+{
+    private readonly List<int> _grids = new();
 
-//    private readonly List<Point> _dies = new();
+    public override string GetAnswer()
+    {
+        _grids.Add(ParseInput());
 
-//    private readonly List<Point> _infests = new();
+        for (var i = 0; i < 10; i++)
+        {
+            PlayRound();
+        }
 
-//    public override string GetAnswer()
-//    {
-//        _grids.Add(ParseInput());
+        foreach (var grid in _grids)
+        {
+            Dump(grid);
+        }
 
-//        for (var i = 0; i < 10; i++)
-//        {
-//            PlayRound();
-//        }
+        return "TESTING";
+    }
 
-//        Dump();
+    private void PlayRound()
+    {
+        var parent = 0;
 
-//        return "TESTING";
-//    }
+        var grid = _grids.Last();
 
-//    private void Dump()
-//    {
-//        foreach (var grid in _grids)
-//        {
-//            for (var y = 1; y < 6; y++)
-//            {
-//                for (var x = 1; x < 6; x++)
-//                {
-//                    Console.Write(grid[x, y] ? '#' : ' ');
-//                }
+        if (CountBits(grid & 31) is 1 or 2)
+        {
+            parent += 128;
+        }
 
-//                Console.WriteLine();
-//            }
+        if (CountBits(grid & 1_082_401) is 1 or 2)
+        {
+            parent += 2_048;
+        }
 
-//            Console.WriteLine();
-//        }
-//    }
+        if (CountBits(grid & 17_318_416) is 1 or 2)
+        {
+            parent += 8_192;
+        }
 
-//    private void PlayRound()
-//    {
-//        for (var level = 0; level < _grids.Count; level++)
-//        {
-//            PlayGrid(level);
-//        }
+        if (CountBits(grid & 32505856) is 1 or 2)
+        {
+            parent += 131_072;
+        }
 
-//        foreach (var item in _dies)
-//        {
-//            _grids[item.Z][item.X, item.Y] = false;
-//        }
+        if (parent > 0)
+        {
+            _grids.Add(parent);
+        }
+    }
 
-//        _dies.Clear();
+    private static int CountBits(int value)
+    {
+        var count = 0;
 
-//        if (_infests.Max(i => i.Z) >= _grids.Count)
-//        {
-//            _grids.Add(new bool[7, 7]);
-//        }
+        while (value > 0)
+        {
+            count++;
 
-//        var zOffset = 0;
+            value &= value - 1;
+        }
 
-//        if (_infests.Min(i => i.Z) < 0)
-//        {
-//            _grids.Insert(0, new bool[7, 7]);
+        return count;
+    }
 
-//            zOffset = 1;
-//        }
+    private void Dump(int grid)
+    {
+        var bit = 16_777_216;
 
-//        foreach (var item in _infests)
-//        {
-//            _grids[item.Z + zOffset][item.X, item.Y] = true;
-//        }
+        for (var y = 0; y < 5; y++)
+        {
+            for (var x = 0; x < 5; x++)
+            {
+                Console.Write((grid & bit) > 0 ? '#' : ' ');
 
-//        _infests.Clear();
+                bit >>= 1;
+            }
 
-//        var empty = new List<int>();
+            Console.WriteLine();
+        }
 
-//        var i = 0;
-
-//        foreach (var grid in _grids)
-//        {
-//            var isEmpty = true;
-
-//            for (var y = 1; y < 6; y++)
-//            {
-//                for (var x = 1; x < 6; x++)
-//                {
-//                    if (grid[x, y])
-//                    {
-//                        isEmpty = false;
-//                    }
-//                }
-//            }
-
-//            if (isEmpty)
-//            {
-//                empty.Add(i);
-//            }
-
-//            i++;
-//        }
-
-//        foreach (var index in empty)
-//        {
-//            _grids.RemoveAt(index);
-//        }
-//    }
-
-//    private void PlayGrid(int level)
-//    {
-//        var grid = _grids[level];
-
-//        for (var y = 1; y < 6; y++)
-//        {
-//            for (var x = 1; x < 6; x++)
-//            {
-//                if (x == 3 && y == 3)
-//                {
-//                    continue;
-//                }
-
-//                var adjacent = GetAdjacentCount(level, x, y);
-
-//                if (grid[x, y] && adjacent != 1)
-//                {
-//                    _dies.Add(new Point(x, y, level));
-//                }
-
-//                if (! grid[x, y] && (adjacent == 1 || adjacent == 2))
-//                {
-//                    _infests.Add(new Point(x, y, level));
-//                }
-//            }
-//        }
-//    }
-
-//    private int GetAdjacentCount(int level, int x, int y)
-//    {
-//        var count = 0;
-
-//        if (x == 1)
-//        {
-//            count += level < _grids.Count - 1 && _grids[level + 1][2, 3] ? 1 : 0;
-//        }
-
-//        if (x == 5)
-//        {
-//            count += level < _grids.Count - 1 && _grids[level + 1][4, 3] ? 1 : 0;
-//        }
-
-//        if (y == 1)
-//        {
-//            count += level < _grids.Count - 1 && _grids[level + 1][3, 2] ? 1 : 0;
-//        }
-
-//        if (y == 5)
-//        {
-//            count += level < _grids.Count - 1 && _grids[level + 1][3, 4] ? 1 : 0;
-//        }
-
-//        if (x > 1 && x < 5 && y > 1 && y < 5)
-//        {
-//            count += level > 0 ? 1 : 0;
-//        }
-
-//        count += _grids[level][x - 1, y] ? 1 : 0;
-
-//        count += _grids[level][x + 1, y] ? 1 : 0;
-
-//        count += _grids[level][x, y - 1] ? 1 : 0;
-
-//        count += _grids[level][x, y + 1] ? 1 : 0;
-
-//        return count;
-//    }
-//}
+        Console.WriteLine();
+    }
+}
