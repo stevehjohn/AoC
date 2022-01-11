@@ -6,20 +6,20 @@ public abstract class Base : Solution
 {
     public override string Description => "Wastl's game of life";
 
-    protected bool[,] ParseInput()
+    protected int ParseInput()
     {
-        var result = new bool[7, 7];
+        var result = 0;
 
-        var y = 1;
+        var bit = 1;
 
         foreach (var line in Input)
         {
-            for (var x = 1; x < 6; x++)
+            for (var x = 0; x < 5; x++)
             {
-                result[x, y] = line[x - 1] == '#';
+                result |= line[x] == '#' ? bit : 0;
+         
+                bit <<= 1;
             }
-
-            y++;
         }
 
         return result;
