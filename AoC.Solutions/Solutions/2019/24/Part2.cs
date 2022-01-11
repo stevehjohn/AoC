@@ -62,33 +62,6 @@ public class Part2 : Base
         return newGrids;
     }
 
-    private int GetParent(int grid)
-    {
-        var parent = 0;
-
-        if (CountBits(grid & 31) is 1 or 2)
-        {
-            parent += 128;
-        }
-
-        if (CountBits(grid & 1_082_401) is 1 or 2)
-        {
-            parent += 2_048;
-        }
-
-        if (CountBits(grid & 17_318_416) is 1 or 2)
-        {
-            parent += 8_192;
-        }
-
-        if (CountBits(grid & 32505856) is 1 or 2)
-        {
-            parent += 131_072;
-        }
-
-        return parent;
-    }
-
     private static void Dump(int grid)
     {
         var bit = 1;
