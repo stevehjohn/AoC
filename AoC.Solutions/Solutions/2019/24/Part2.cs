@@ -12,16 +12,9 @@ public class Part2 : Base
                         ParseInput()
                     };
 
-        for (var i = 0; i < 10; i++)
+        for (var i = 0; i < 200; i++)
         {
             grids = PlayLevels(grids);
-
-            Console.Clear();
-
-            foreach (var grid in grids)
-            {
-                Dump(grid);
-            }
         }
 
         var count = 0;
@@ -38,20 +31,18 @@ public class Part2 : Base
     {
         var newGrids = new List<int>();
 
+        for (var i = 0; i < grids.Count; i++)
+        {
+            var result = PlayRound(grids[i], i < grids.Count - 1 ? grids[i + 1] : 0, i > 0 ? grids[i - 1] : 0);
+
+            newGrids.Add(result);
+        }
+
         var child = PlayRound(0, grids.First());
 
         if (child > 0)
         {
-            newGrids.Add(child);
-        }
-
-        for (var i = 0; i < grids.Count; i++)
-        {
-            var result = PlayRound(grids[i], i < grids.Count - 1 ? grids[i + 1] : 0, child);
-
-            newGrids.Add(result);
-
-            child = result;
+            newGrids.Insert(0, child);
         }
 
         var parent = PlayRound(0, 0, grids.Last());
@@ -62,24 +53,5 @@ public class Part2 : Base
         }
 
         return newGrids;
-    }
-
-    private static void Dump(int grid)
-    {
-        var bit = 1;
-
-        for (var y = 0; y < 5; y++)
-        {
-            for (var x = 0; x < 5; x++)
-            {
-                Console.Write((grid & bit) > 0 ? '#' : ' ');
-
-                bit <<= 1;
-            }
-
-            Console.WriteLine();
-        }
-
-        Console.WriteLine("-----");
     }
 }
