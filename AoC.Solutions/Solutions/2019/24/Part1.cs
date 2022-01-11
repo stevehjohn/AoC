@@ -30,7 +30,7 @@ public class Part1 : Base
         }
     }
 
-    protected static void PlayRound(bool[,] grid)
+    private static void PlayRound(bool[,] grid)
     {
         var dies = new List<Point>();
 
