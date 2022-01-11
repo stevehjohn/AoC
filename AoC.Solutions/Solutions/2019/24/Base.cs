@@ -134,6 +134,29 @@ public abstract class Base : Solution
             }
         }
 
+        if (parent > 0)
+        {
+            if ((bit & 31) > 0)
+            {
+                count += (parent & 128) > 0 ? 1 : 0;
+            }
+
+            if ((bit & 1_082_401) > 0)
+            {
+                count += (parent & 2_048) > 0 ? 1 : 0;
+            }
+
+            if ((bit & 17_318_416) > 0)
+            {
+                count += (parent & 8_192) > 0 ? 1 : 0;
+            }
+
+            if ((bit & 32_505_856) > 0)
+            {
+                count += (parent & 131_072) > 0 ? 1 : 0;
+            }
+        }
+
         return count;
     }
 
