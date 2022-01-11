@@ -1,154 +1,182 @@
-﻿using AoC.Solutions.Common;
-using JetBrains.Annotations;
+﻿//using AoC.Solutions.Common;
+//using JetBrains.Annotations;
 
-namespace AoC.Solutions.Solutions._2019._24;
+//namespace AoC.Solutions.Solutions._2019._24;
 
-[UsedImplicitly]
-public class Part2 : Base
-{
-    private readonly List<bool[,]> _grids = new();
+//[UsedImplicitly]
+//public class Part2 : Base
+//{
+//    private readonly List<bool[,]> _grids = new();
 
-    private readonly List<Point> _dies = new();
+//    private readonly List<Point> _dies = new();
 
-    private readonly List<Point> _infests = new();
+//    private readonly List<Point> _infests = new();
 
-    public override string GetAnswer()
-    {
-        _grids.Add(ParseInput());
+//    public override string GetAnswer()
+//    {
+//        _grids.Add(ParseInput());
 
-        for (var i = 0; i < 10; i++)
-        {
-            PlayRound();
-        }
+//        for (var i = 0; i < 10; i++)
+//        {
+//            PlayRound();
+//        }
 
-        return "TESTING";
-    }
+//        Dump();
 
-    private void PlayRound()
-    {
-        for (var level = 0; level < _grids.Count; level++)
-        {
-            PlayGrid(level);
-        }
+//        return "TESTING";
+//    }
 
-        foreach (var item in _dies)
-        {
-            _grids[item.Z][item.X, item.Y] = false;
-        }
+//    private void Dump()
+//    {
+//        foreach (var grid in _grids)
+//        {
+//            for (var y = 1; y < 6; y++)
+//            {
+//                for (var x = 1; x < 6; x++)
+//                {
+//                    Console.Write(grid[x, y] ? '#' : ' ');
+//                }
 
-        _dies.Clear();
+//                Console.WriteLine();
+//            }
 
-        if (_infests.Max(i => i.Z) >= _grids.Count)
-        {
-            _grids.Add(new bool[7, 7]);
-        }
+//            Console.WriteLine();
+//        }
+//    }
 
-        var zOffset = 0;
+//    private void PlayRound()
+//    {
+//        for (var level = 0; level < _grids.Count; level++)
+//        {
+//            PlayGrid(level);
+//        }
 
-        if (_infests.Min(i => i.Z) < 0)
-        {
-            _grids.Insert(0, new bool[7, 7]);
+//        foreach (var item in _dies)
+//        {
+//            _grids[item.Z][item.X, item.Y] = false;
+//        }
 
-            zOffset = 1;
-        }
+//        _dies.Clear();
 
-        foreach (var item in _infests)
-        {
-            _grids[item.Z + zOffset][item.X, item.Y] = true;
-        }
+//        if (_infests.Max(i => i.Z) >= _grids.Count)
+//        {
+//            _grids.Add(new bool[7, 7]);
+//        }
 
-        _infests.Clear();
+//        var zOffset = 0;
 
-        var empty = new List<int>();
+//        if (_infests.Min(i => i.Z) < 0)
+//        {
+//            _grids.Insert(0, new bool[7, 7]);
 
-        var i = 0;
+//            zOffset = 1;
+//        }
 
-        foreach (var grid in _grids)
-        {
-            var isEmpty = true;
+//        foreach (var item in _infests)
+//        {
+//            _grids[item.Z + zOffset][item.X, item.Y] = true;
+//        }
 
-            for (var y = 1; y < 6; y++)
-            {
-                for (var x = 1; x < 6; x++)
-                {
-                    if (grid[x, y])
-                    {
-                        isEmpty = false;
-                    }
-                }
-            }
+//        _infests.Clear();
 
-            if (isEmpty)
-            {
-                empty.Add(i);
-            }
+//        var empty = new List<int>();
 
-            i++;
-        }
+//        var i = 0;
 
-        foreach (var index in empty)
-        {
-            _grids.RemoveAt(index);
-        }
-    }
+//        foreach (var grid in _grids)
+//        {
+//            var isEmpty = true;
 
-    private void PlayGrid(int level)
-    {
-        var grid = _grids[level];
+//            for (var y = 1; y < 6; y++)
+//            {
+//                for (var x = 1; x < 6; x++)
+//                {
+//                    if (grid[x, y])
+//                    {
+//                        isEmpty = false;
+//                    }
+//                }
+//            }
 
-        for (var y = 1; y < 6; y++)
-        {
-            for (var x = 1; x < 6; x++)
-            {
-                if (x == 3 && y == 3)
-                {
-                    continue;
-                }
+//            if (isEmpty)
+//            {
+//                empty.Add(i);
+//            }
 
-                var adjacent = GetAdjacentCount(level, x, y);
+//            i++;
+//        }
 
-                if (grid[x, y] && adjacent != 1)
-                {
-                    _dies.Add(new Point(x, y, level));
-                }
+//        foreach (var index in empty)
+//        {
+//            _grids.RemoveAt(index);
+//        }
+//    }
 
-                if (! grid[x, y] && (adjacent == 1 || adjacent == 2))
-                {
-                    _infests.Add(new Point(x, y, level));
-                }
-            }
-        }
-    }
+//    private void PlayGrid(int level)
+//    {
+//        var grid = _grids[level];
 
-    private int GetAdjacentCount(int level, int x, int y)
-    {
-        var count = 0;
+//        for (var y = 1; y < 6; y++)
+//        {
+//            for (var x = 1; x < 6; x++)
+//            {
+//                if (x == 3 && y == 3)
+//                {
+//                    continue;
+//                }
 
-        if (x == 1)
-        {
-            count += level < _grids.Count - 1 && _grids[level + 1][2, 3] ? 1 : 0;
-        }
+//                var adjacent = GetAdjacentCount(level, x, y);
 
-        if (x == 5)
-        {
-            count += level < _grids.Count - 1 && _grids[level + 1][4, 3] ? 1 : 0;
-        }
+//                if (grid[x, y] && adjacent != 1)
+//                {
+//                    _dies.Add(new Point(x, y, level));
+//                }
 
-        if (y == 1)
-        {
-            count += level < _grids.Count - 1 && _grids[level + 1][3, 2] ? 1 : 0;
-        }
+//                if (! grid[x, y] && (adjacent == 1 || adjacent == 2))
+//                {
+//                    _infests.Add(new Point(x, y, level));
+//                }
+//            }
+//        }
+//    }
 
-        if (y == 5)
-        {
-            count += level < _grids.Count - 1 && _grids[level + 1][3, 4] ? 1 : 0;
-        }
+//    private int GetAdjacentCount(int level, int x, int y)
+//    {
+//        var count = 0;
 
-        if (x > 1 && x < 5 && y > 1 && y < 5)
-        {
-            count += level > 0 ? 1 : 0;
-        }
+//        if (x == 1)
+//        {
+//            count += level < _grids.Count - 1 && _grids[level + 1][2, 3] ? 1 : 0;
+//        }
 
-        return 0;
-    }
-}
+//        if (x == 5)
+//        {
+//            count += level < _grids.Count - 1 && _grids[level + 1][4, 3] ? 1 : 0;
+//        }
+
+//        if (y == 1)
+//        {
+//            count += level < _grids.Count - 1 && _grids[level + 1][3, 2] ? 1 : 0;
+//        }
+
+//        if (y == 5)
+//        {
+//            count += level < _grids.Count - 1 && _grids[level + 1][3, 4] ? 1 : 0;
+//        }
+
+//        if (x > 1 && x < 5 && y > 1 && y < 5)
+//        {
+//            count += level > 0 ? 1 : 0;
+//        }
+
+//        count += _grids[level][x - 1, y] ? 1 : 0;
+
+//        count += _grids[level][x + 1, y] ? 1 : 0;
+
+//        count += _grids[level][x, y - 1] ? 1 : 0;
+
+//        count += _grids[level][x, y + 1] ? 1 : 0;
+
+//        return count;
+//    }
+//}
