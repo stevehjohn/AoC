@@ -91,7 +91,7 @@ public class Part2 : Base
 
     private static void Dump(int grid)
     {
-        var bit = 16_777_216;
+        var bit = 1;
 
         for (var y = 0; y < 5; y++)
         {
@@ -99,7 +99,7 @@ public class Part2 : Base
             {
                 Console.Write((grid & bit) > 0 ? '#' : ' ');
 
-                bit >>= 1;
+                bit <<= 1;
             }
 
             Console.WriteLine();
