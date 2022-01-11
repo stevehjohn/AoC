@@ -15,6 +15,13 @@ public class Part2 : Base
         for (var i = 0; i < 10; i++)
         {
             grids = PlayLevels(grids);
+
+            //Console.Clear();
+
+            //foreach (var grid in grids)
+            //{
+            //    Dump(grid);
+            //}
         }
 
         var count = 0;
@@ -78,6 +85,6 @@ public class Part2 : Base
             Console.WriteLine();
         }
 
-        Console.WriteLine();
+        Console.WriteLine("-----");
     }
 }
