@@ -1,5 +1,4 @@
-﻿using AoC.Solutions.Common;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2019._24;
 
@@ -12,85 +11,72 @@ public class Part1 : Base
 
         var previousStates = new HashSet<int>
                              {
-                                 GetBiodiversity(grid)
+                                 grid
                              };
 
         while (true)
         {
-            PlayRound(grid);
+            grid = PlayRound(grid);
 
-            var bioDiversity = GetBiodiversity(grid);
-
-            if (previousStates.Contains(bioDiversity))
+            if (previousStates.Contains(grid))
             {
-                return bioDiversity.ToString();
+                return grid.ToString();
             }
 
-            previousStates.Add(bioDiversity);
+            previousStates.Add(grid);
         }
     }
 
-    private static void PlayRound(bool[,] grid)
+    private static int PlayRound(int grid)
     {
-        var dies = new List<Point>();
+        var dies = 33_554_431;
 
-        var infests = new List<Point>();
+        var infests = 0;
 
-        for (var y = 1; y < 6; y++)
+        var bit = 16_777_216;
+
+        for (var i = 0; i < 25; i++)
         {
-            for (var x = 1; x < 6; x++)
+            var adjacent = AdjacentCount(grid, bit);
+
+            if ((grid & bit) > 0 && adjacent != 1)
             {
-                var adjacent = AdjacentCount(grid, x, y);
-
-                if (grid[x, y] && adjacent != 1)
-                {
-                    dies.Add(new Point(x, y));
-                }
-
-                if (! grid[x, y] && (adjacent == 1 || adjacent == 2))
-                {
-                    infests.Add(new Point(x, y));
-                }
+                dies ^= bit;
             }
+
+            if ((grid & bit) == 0 && (adjacent == 1 || adjacent == 2))
+            {
+                infests |= bit;
+            }
+
+            bit >>= 1;
         }
 
-        dies.ForEach(d => grid[d.X, d.Y] = false);
+        grid &= dies;
 
-        infests.ForEach(i => grid[i.X, i.Y] = true);
+        grid |= infests;
+
+        return grid;
     }
 
-    private static int AdjacentCount(bool[,] grid, int x, int y)
+    private static int AdjacentCount(int grid, int bit)
     {
-        var count = grid[x - 1, y] ? 1 : 0;
+        var count = 0;
 
-        count += grid[x, y - 1] ? 1 : 0;
+        if ((bit & 17_318_416) == 0)
+        {
+            count += (grid & (bit << 1)) > 0 ? 1 : 0;
+        }
 
-        count += grid[x + 1, y] ? 1 : 0;
+        if ((bit & 1_082_401) == 0)
+        {
+            count += (grid & (bit >> 1)) > 0 ? 1 : 0;
+        }
 
-        count += grid[x, y + 1] ? 1 : 0;
+        count += (grid & (bit << 5)) > 0 ? 1 : 0;
+
+        count += (grid & (bit >> 5)) > 0 ? 1 : 0;
 
         return count;
-    }
-
-    private static int GetBiodiversity(bool[,] grid)
-    {
-        var i = 1;
-
-        var diversity = 0;
-
-        for (var y = 1; y < 6; y++)
-        {
-            for (var x = 1; x < 6; x++)
-            {
-                if (grid[x, y])
-                {
-                    diversity += i;
-                }
-
-                i *= 2;
-            }
-        }
-
-        return diversity;
     }
 }
