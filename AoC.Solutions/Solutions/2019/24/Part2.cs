@@ -7,7 +7,10 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        var grid = ParseInput();
+        var grids = new List<bool[,]>
+                    {
+                        ParseInput()
+                    };
 
         return "TESTING";
     }
