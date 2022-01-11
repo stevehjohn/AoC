@@ -17,7 +17,7 @@ public abstract class Base : Solution
             for (var x = 0; x < 5; x++)
             {
                 result |= line[x] == '#' ? bit : 0;
-         
+
                 bit <<= 1;
             }
         }
@@ -31,7 +31,7 @@ public abstract class Base : Solution
 
         var infests = 0;
 
-        var bit = 16_777_216;
+        var bit = 1;
 
         for (var i = 0; i < 25; i++)
         {
@@ -56,7 +56,7 @@ public abstract class Base : Solution
                 infests |= bit;
             }
 
-            bit >>= 1;
+            bit <<= 1;
         }
 
         grid &= dies;
@@ -96,25 +96,21 @@ public abstract class Base : Solution
     {
         var count = 0;
 
-        if ((bit & 17_318_416) == 0 && bit != 2_048)
+        grid &= 33_550_335;
+
+        if ((bit & 17_318_416) == 0)
         {
             count += (grid & (bit << 1)) > 0 ? 1 : 0;
         }
 
-        if ((bit & 1_082_401) == 0 && bit != 8_192)
+        if ((bit & 1_082_401) == 0)
         {
             count += (grid & (bit >> 1)) > 0 ? 1 : 0;
         }
 
-        if (bit != 128)
-        {
-            count += (grid & (bit << 5)) > 0 ? 1 : 0;
-        }
+        count += (grid & (bit << 5)) > 0 ? 1 : 0;
 
-        if (bit != 131_072)
-        {
-            count += (grid & (bit >> 5)) > 0 ? 1 : 0;
-        }
+        count += (grid & (bit >> 5)) > 0 ? 1 : 0;
 
         if (child > 0)
         {

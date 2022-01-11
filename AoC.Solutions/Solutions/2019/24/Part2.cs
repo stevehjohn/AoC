@@ -16,20 +16,18 @@ public class Part2 : Base
         {
             grids = PlayLevels(grids);
 
-            //Console.Clear();
+            Console.Clear();
 
-            //foreach (var grid in grids)
-            //{
-            //    Dump(grid);
-            //}
+            foreach (var grid in grids)
+            {
+                Dump(grid);
+            }
         }
 
         var count = 0;
 
         foreach (var grid in grids)
         {
-            Dump(grid);
-
             count += CountBits(grid);
         }
 
@@ -51,10 +49,7 @@ public class Part2 : Base
         {
             var result = PlayRound(grids[i], i < grids.Count - 1 ? grids[i + 1] : 0, child);
 
-            //if (result != 0)
-            {
-                newGrids.Add(result);
-            }
+            newGrids.Add(result);
 
             child = result;
         }
