@@ -5,18 +5,19 @@ namespace AoC.Solutions.Solutions._2019._24;
 [UsedImplicitly]
 public class Part2 : Base
 {
-    private readonly List<int> _grids = new();
-
     public override string GetAnswer()
     {
-        _grids.Add(ParseInput());
+        var grids = new List<int>
+                    {
+                        ParseInput()
+                    };
 
         for (var i = 0; i < 10; i++)
         {
-            PlayRound();
+            grids = PlayRound(grids);
         }
 
-        foreach (var grid in _grids)
+        foreach (var grid in grids)
         {
             Dump(grid);
         }
@@ -24,11 +25,23 @@ public class Part2 : Base
         return "TESTING";
     }
 
-    private void PlayRound()
+    private List<int> PlayRound(List<int> grids)
+    {
+        var newGrids = new List<int>();
+
+        var parent = GetParent(grids.Last());
+
+        if (parent > 0)
+        {
+            newGrids.Add(parent);
+        }
+
+        return newGrids;
+    }
+
+    private int GetParent(int grid)
     {
         var parent = 0;
-
-        var grid = _grids.Last();
 
         if (CountBits(grid & 31) is 1 or 2)
         {
@@ -50,10 +63,7 @@ public class Part2 : Base
             parent += 131_072;
         }
 
-        if (parent > 0)
-        {
-            _grids.Add(parent);
-        }
+        return parent;
     }
 
     private static int CountBits(int value)
