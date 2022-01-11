@@ -63,6 +63,11 @@ public abstract class Base : Solution
 
         grid |= infests;
 
+        if (parent >= 0 || child >= 0)
+        {
+            grid &= 33_550_335;
+        }
+
         return grid;
     }
 
