@@ -1,36 +1,166 @@
-﻿using System.Text;
+﻿#define DUMP
 using AoC.Solutions.Solutions._2019.Computer;
 using JetBrains.Annotations;
+using System.Text;
 
 namespace AoC.Solutions.Solutions._2019._25;
 
 [UsedImplicitly]
 public class Part1 : Base
 {
+    private readonly Cpu _cpu = new();
+
+    // TODO: Make the program play this part also (look at day 15's exploration algorithm?).
+    private readonly List<string> _commands = new()
+                                              {
+                                                  "east",
+                                                  "take spool of cat6",
+                                                  "north",
+                                                  "north",
+                                                  "take hypercube",
+                                                  "south",
+                                                  "south",
+                                                  "west",
+                                                  "south",
+                                                  "south",
+                                                  "south",
+                                                  "east",
+                                                  "east",
+                                                  "take planetoid",
+                                                  "west",
+                                                  "west",
+                                                  "north",
+                                                  "north",
+                                                  "east",
+                                                  "take space heater",
+                                                  "west",
+                                                  "north",
+                                                  "north",
+                                                  "take festive hat",
+                                                  "west",
+                                                  "take dark matter",
+                                                  "north",
+                                                  "east",
+                                                  "take semiconductor",
+                                                  "east",
+                                                  "take sand",
+                                                  "north",
+                                                  "inv"
+                                              };
+
     public override string GetAnswer()
     {
-        var cpu = new Cpu();
+        _cpu.Initialise(65536);
 
-        cpu.Initialise(65536);
+        _cpu.LoadProgram(Input);
 
-        cpu.LoadProgram(Input);
+        _cpu.Run();
 
-        while (true)
+        var output = ParseOutput(ReadString(_cpu));
+
+        foreach (var command in _commands)
         {
-            cpu.Run();
-
-            var output = ParseOutput(ReadString(cpu));
-
-            Console.WriteLine(output.Room);
+#if DEBUG && DUMP
+            if (! string.IsNullOrWhiteSpace(output.Room))
+            {
+                Console.WriteLine(output.Room);
+            }
 
             output.Directions.ForEach(Console.WriteLine);
 
             output.Items.ForEach(Console.WriteLine);
+#endif
 
-            var command = Console.ReadLine();
+            WriteString(_cpu, command);
 
-            WriteString(cpu, command);
+            _cpu.Run();
+
+            var response = ReadString(_cpu);
+
+            output = ParseOutput(response);
         }
+
+#if DEBUG && DUMP
+        Console.WriteLine(output.Room);
+
+        output.Directions.ForEach(Console.WriteLine);
+
+        output.Items.ForEach(Console.WriteLine);
+#endif
+
+        return PassCheckpoint(output.Items);
+    }
+
+    /*
+     * A loud, robotic voice says "Analysis complete! You may proceed." and you enter the cockpit.
+       Santa notices your small droid, looks puzzled for a moment, realizes what has happened, and radios your ship directly.
+       "Oh, hello! You should be able to get in by typing 16810049 on the keypad at the main airlock."
+     */
+    private string PassCheckpoint(List<string> items)
+    {
+        var i = 1;
+
+        var previousCode = 0;
+
+        string result;
+
+        while (true)
+        {
+            var greyCode = i ^ (i >> 1);
+
+            var change = GetChangedBit(previousCode, greyCode);
+
+            previousCode = greyCode;
+
+            i++;
+
+            var command = change.Value
+                              ? $"drop {items[change.Index]}"
+                              : $"take {items[change.Index]}";
+
+#if DEBUG && DUMP
+            Console.WriteLine(command);
+#endif
+
+            WriteString(_cpu, command);
+
+            _cpu.Run();
+
+            WriteString(_cpu, "west");
+
+            _cpu.Run();
+
+            result = ReadString(_cpu);
+
+            if (result.Contains("Analysis complete! You may proceed."))
+            {
+                break;
+            }
+        }
+
+        var index = result.IndexOf("typing", StringComparison.InvariantCultureIgnoreCase);
+
+        result = result[(index + 7)..];
+
+        result = result[..result.IndexOf(' ')];
+
+        return result;
+    }
+
+    private static (int Index, bool Value) GetChangedBit(int code1, int code2)
+    {
+        var index = 0;
+
+        var mask = 1;
+
+        while ((code1 & mask) == (code2 & mask))
+        {
+            mask <<= 1;
+
+            index++;
+        }
+
+        return (index, (code2 & mask) > 0);
     }
 
     private static (string Room, List<string> Directions, List<string> Items) ParseOutput(string output)
@@ -61,7 +191,7 @@ public class Part1 : Base
                 continue;
             }
 
-            if (line == "Items here:")
+            if (line == "Items here:" || line == "Items in your inventory:")
             {
                 mode = 2;
 
