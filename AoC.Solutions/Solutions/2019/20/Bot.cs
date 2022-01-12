@@ -69,6 +69,8 @@ public class Bot
 
         History.Add(new Point(Position.X, Position.Y));
 
+        _level = bot._level;
+
         Steps++;
     }
 
@@ -102,6 +104,11 @@ public class Bot
                 if (portal.Position.X == 0 || portal.Position.Y == 0 || portal.Position.X == _maze.GetLength(0) - 1 || portal.Position.Y == _maze.GetLength(1) - 1)
                 {
                     _level--;
+
+                    if (_level < 0)
+                    {
+                        return bots;
+                    }
                 }
                 else
                 {
@@ -186,6 +193,7 @@ public class Bot
         // TODO: There must be a more elegant way to do this.
         if (_level == 0)
         {
+            // TODO: Disable outer layer teleports.
             if (Position.X > 0 && _maze[Position.X - 1, Position.Y] is 0 and not 27)
             {
                 moves.Add(new Point(-1, 0));

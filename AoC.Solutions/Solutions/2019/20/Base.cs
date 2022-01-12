@@ -76,7 +76,7 @@ public abstract class Base : Solution
             bots = newBots;
 
 #if DEBUG && DUMP
-            Thread.Sleep(20);
+            //Thread.Sleep(20);
 
             DrawBots(bots, Portals, recursive);
 #endif
@@ -247,7 +247,7 @@ public abstract class Base : Solution
 
             Console.Write('█');
 
-            Thread.Sleep(20);
+            //Thread.Sleep(20);
         }
     }
 
