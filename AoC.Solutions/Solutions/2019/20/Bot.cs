@@ -57,25 +57,6 @@ public class Bot
 
     public List<Bot> Move()
     {
-        if (_maze[Position.X, Position.Y] > 0)
-        {
-            var portalId = _portals.Single(p => p.Position.X == Position.X && p.Position.Y == Position.Y).Id;
-
-            var destination = _portals.Single(p => p.Id == portalId && (p.Position.X != Position.X || p.Position.Y != Position.Y));
-
-            Position.X = destination.Position.X;
-
-            Position.Y = destination.Position.Y;
-
-            var move = GetPossibleMoves().Single();
-
-            Position.X += move.X;
-
-            Position.Y += move.Y;
-
-            _direction = move;
-        }
-
         var moves = GetPossibleMoves();
 
         var bots = new List<Bot>();
@@ -94,6 +75,25 @@ public class Bot
             Position.Y += _direction.Y;
 
             Steps++;
+
+            if (_maze[Position.X, Position.Y] > 0)
+            {
+                var portalId = _portals.Single(p => p.Position.X == Position.X && p.Position.Y == Position.Y).Id;
+
+                var destination = _portals.Single(p => p.Id == portalId && (p.Position.X != Position.X || p.Position.Y != Position.Y));
+
+                Position.X = destination.Position.X;
+
+                Position.Y = destination.Position.Y;
+
+                var move = GetPossibleMoves().Single();
+
+                Position.X += move.X;
+
+                Position.Y += move.Y;
+
+                _direction = move;
+            }
 
             bots.Add(this);
 
