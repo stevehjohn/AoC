@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Common;
+﻿using System.Security.Principal;
+using AoC.Solutions.Common;
 
 namespace AoC.Solutions.Solutions._2019._20;
 
@@ -15,8 +16,10 @@ public class Bot
     private Point _direction;
 
     private readonly int[,] _maze;
+    
+    private List<(int Id, Point Position)> _portals = new();
 
-    public Bot(Point position, Point destination, int[,] map)
+    public Bot(Point position, Point destination, int[,] map, List<(int Id, Point Position)> portals)
     {
         Position = position;
 
@@ -25,6 +28,8 @@ public class Bot
         _destination = destination;
 
         _maze = map;
+
+        _portals = portals;
 
         Steps = 0;
     }
@@ -41,6 +46,8 @@ public class Bot
 
         _destination = bot._destination;
 
+        _portals = bot._portals;
+
         Position.X += _direction.X;
 
         Position.Y += _direction.Y;
@@ -50,6 +57,25 @@ public class Bot
 
     public List<Bot> Move()
     {
+        if (_maze[Position.X, Position.Y] > 0)
+        {
+            var portalId = _portals.Single(p => p.Position.X == Position.X && p.Position.Y == Position.Y).Id;
+
+            var destination = _portals.Single(p => p.Id == portalId && (p.Position.X != Position.X || p.Position.Y != Position.Y));
+
+            Position.X = destination.Position.X;
+
+            Position.Y = destination.Position.Y;
+
+            var move = GetPossibleMoves().Single();
+
+            Position.X += move.X;
+
+            Position.Y += move.Y;
+
+            _direction = move;
+        }
+
         var moves = GetPossibleMoves();
 
         var bots = new List<Bot>();
@@ -86,22 +112,22 @@ public class Bot
     {
         var moves = new List<Point>();
 
-        if (_maze[Position.X - 1, Position.Y] is > -1 and not 27)
+        if (Position.X > 0 && _maze[Position.X - 1, Position.Y] is > -1 and not 27)
         {
             moves.Add(new Point(-1, 0));
         }
 
-        if (_maze[Position.X + 1, Position.Y] is > -1 and not 27)
+        if (Position.X < _maze.GetLength(0) - 1 && _maze[Position.X + 1, Position.Y] is > -1 and not 27)
         {
             moves.Add(new Point(1, 0));
         }
 
-        if (_maze[Position.X, Position.Y - 1] is > -1 and not 27)
+        if (Position.Y > 0 && _maze[Position.X, Position.Y - 1] is > -1 and not 27)
         {
             moves.Add(new Point(0, -1));
         }
 
-        if (_maze[Position.X, Position.Y + 1] is > -1 and not 27)
+        if (Position.Y < _maze.GetLength(1) - 1 &&_maze[Position.X, Position.Y + 1] is > -1 and not 27)
         {
             moves.Add(new Point(0, 1));
         }
