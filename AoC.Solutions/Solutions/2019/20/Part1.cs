@@ -25,8 +25,10 @@ public class Part1 : Base
     {
         var bots = new List<Bot>
                    {
-                       new(new Point(Start), new Point(End), Maze)
+                       new(new Point(Start), new Point(End), Maze, Portals)
                    };
+
+        DrawBots(bots, Portals);
 
         while (true)
         {
@@ -45,9 +47,9 @@ public class Part1 : Base
             bots = newBots;
 
 #if DEBUG && DUMP
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
 
-            DrawBots(bots);
+            DrawBots(bots, Portals);
 
             Console.CursorLeft = 0;
 
@@ -61,8 +63,19 @@ public class Part1 : Base
 #if DEBUG && DUMP
     private List<Point> _previousPositions = new();
 
-    private void DrawBots(List<Bot> bots)
+    private void DrawBots(List<Bot> bots, List<(int Id, Point Position)> portals)
     {
+        foreach (var portal in portals)
+        {
+            Console.CursorLeft = 1 + portal.Position.X;
+
+            Console.CursorTop = 1 + portal.Position.Y;
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+
+            Console.Write('█');
+        }
+
         foreach (var bot in bots)
         {
             Console.CursorLeft = 1 + bot.Position.X;
@@ -72,18 +85,23 @@ public class Part1 : Base
             Console.ForegroundColor = ConsoleColor.Red;
 
             Console.Write('█');
-
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
         }
 
         foreach (var position in _previousPositions)
         {
+            if (portals.Any(p => p.Position.Equals(position)))
+            {
+                continue;
+            }
+
             Console.CursorLeft = 1 + position.X;
 
             Console.CursorTop = 1 + position.Y;
 
             Console.Write(' ');
         }
+
+        Console.ForegroundColor = ConsoleColor.DarkGreen;
 
         _previousPositions = bots.Select(b => new Point(b.Position)).ToList();
     }
@@ -123,8 +141,6 @@ public class Part1 : Base
                     Console.ForegroundColor = ConsoleColor.Blue;
 
                     Console.Write('█');
-
-                    continue;
                 }
             }
 
