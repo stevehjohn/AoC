@@ -1,4 +1,6 @@
 ﻿#define DUMP
+using AoC.Solutions.Common;
+
 namespace AoC.Solutions.Solutions._2019._20;
 
 public class Part1 : Base
@@ -8,19 +10,84 @@ public class Part1 : Base
         ParseInput();
 
 #if DEBUG && DUMP
+        Console.CursorVisible = false;
+
         DumpMap();
-
-        Console.CursorLeft = 0;
-
-        Console.CursorTop = Height + 2;
-
-        Console.ForegroundColor = ConsoleColor.Green;
 #endif
 
-        return "TESTING";
+        var result = FindShortestRoute();
+
+        return result.ToString();
+    }
+
+    
+    private int FindShortestRoute()
+    {
+        var bots = new List<Bot>
+                   {
+                       new(new Point(Start), new Point(End), Maze)
+                   };
+
+        while (true)
+        {
+            var newBots = new List<Bot>();
+
+            foreach (var bot in bots)
+            {
+                if (bot.IsHome)
+                {
+                    return bot.Steps;
+                }
+
+                newBots.AddRange(bot.Move());
+            }
+
+            bots = newBots;
+
+#if DEBUG && DUMP
+            Thread.Sleep(100);
+
+            DrawBots(bots);
+
+            Console.CursorLeft = 0;
+
+            Console.CursorTop = Height + 2;
+
+            Console.ForegroundColor = ConsoleColor.Green;
+#endif
+        }
     }
 
 #if DEBUG && DUMP
+    private List<Point> _previousPositions = new();
+
+    private void DrawBots(List<Bot> bots)
+    {
+        foreach (var bot in bots)
+        {
+            Console.CursorLeft = 1 + bot.Position.X;
+
+            Console.CursorTop = 1 + bot.Position.Y;
+
+            Console.ForegroundColor = ConsoleColor.Red;
+
+            Console.Write('█');
+
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+        }
+
+        foreach (var position in _previousPositions)
+        {
+            Console.CursorLeft = 1 + position.X;
+
+            Console.CursorTop = 1 + position.Y;
+
+            Console.Write(' ');
+        }
+
+        _previousPositions = bots.Select(b => new Point(b.Position)).ToList();
+    }
+
     private void DumpMap()
     {
         Console.Clear();
