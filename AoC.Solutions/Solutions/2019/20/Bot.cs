@@ -8,7 +8,7 @@ public class Bot
 
     public int Steps { get; private set; }
 
-    public bool IsHome => Position.Equals(_destination);
+    public bool IsHome => Position.Equals(_destination) && _level == 0;
 
     private readonly Point _destination;
 
@@ -132,6 +132,7 @@ public class Bot
         return bots;
     }
 
+    // TODO: Could these be combined without losing too much efficiency?
     private List<Point> GetPossibleMoves()
     {
         var moves = new List<Point>();
@@ -154,6 +155,44 @@ public class Bot
         if (Position.Y < _maze.GetLength(1) - 1 && _maze[Position.X, Position.Y + 1] is > -1 and not 27)
         {
             moves.Add(new Point(0, 1));
+        }
+
+        if (_direction.X == 0 && _direction.Y == 0)
+        {
+            return moves;
+        }
+
+        return moves.Where(m => m.X != -_direction.X || m.Y != -_direction.Y).ToList();
+    }
+
+    private List<Point> GetPossibleMovesWhenRecursive()
+    {
+        var moves = new List<Point>();
+
+        if (_level == 0)
+        {
+            if (Position.X > 0 && _maze[Position.X - 1, Position.Y] is 0 and not 27)
+            {
+                moves.Add(new Point(-1, 0));
+            }
+
+            if (Position.X < _maze.GetLength(0) - 1 && _maze[Position.X + 1, Position.Y] is 0 and not 27)
+            {
+                moves.Add(new Point(1, 0));
+            }
+
+            if (Position.Y > 0 && _maze[Position.X, Position.Y - 1] is 0 and not 27)
+            {
+                moves.Add(new Point(0, -1));
+            }
+
+            if (Position.Y < _maze.GetLength(1) - 1 && _maze[Position.X, Position.Y + 1] is 0 and not 27)
+            {
+                moves.Add(new Point(0, 1));
+            }
+        }
+        else
+        {
         }
 
         if (_direction.X == 0 && _direction.Y == 0)
