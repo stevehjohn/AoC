@@ -69,7 +69,7 @@ public class Bot
 
         History.Add(new Point(Position.X, Position.Y));
 
-        _level = bot._level;
+        _level = bot._level
 
         Steps++;
     }
