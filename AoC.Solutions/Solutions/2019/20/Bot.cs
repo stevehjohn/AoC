@@ -20,7 +20,11 @@ public class Bot
 
     public List<Point> History { get; }
 
-    public Bot(Point position, Point destination, int[,] map, List<(int Id, Point Position)> portals)
+    private int _level;
+
+    private bool _recursive;
+
+    public Bot(Point position, Point destination, int[,] map, List<(int Id, Point Position)> portals, bool recursive)
     {
         Position = position;
 
@@ -36,6 +40,8 @@ public class Bot
                   {
                       new(Position)
                   };
+
+        _recursive = recursive;
 
         Steps = 0;
     }

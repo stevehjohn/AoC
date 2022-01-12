@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Common;
+﻿#define DUMP
+using AoC.Solutions.Common;
 using AoC.Solutions.Exceptions;
 using AoC.Solutions.Infrastructure;
 
@@ -20,7 +21,69 @@ public abstract class Base : Solution
 
     protected Point End;
 
-    protected void ParseInput()
+    protected string TravelMaze(bool recursive = false)
+    {
+        ParseInput();
+
+#if DEBUG && DUMP
+        Console.CursorVisible = false;
+
+        DumpMap();
+#endif
+
+        var result = FindShortestRoute(recursive);
+
+#if DEBUG && DUMP
+        Console.CursorLeft = 0;
+
+        Console.CursorTop = Height + 2;
+
+        Console.ForegroundColor = ConsoleColor.Green;
+#endif
+
+        return result.ToString();
+    }
+
+    private int FindShortestRoute(bool recursive)
+    {
+        var bots = new List<Bot>
+                   {
+                       new(new Point(Start), new Point(End), Maze, Portals, recursive)
+                   };
+
+#if DEBUG && DUMP
+        DrawBots(bots, Portals, recursive);
+#endif
+
+        while (true)
+        {
+            var newBots = new List<Bot>();
+
+            foreach (var bot in bots)
+            {
+                if (bot.IsHome)
+                {
+#if DEBUG && DUMP
+                    DrawHistory(bot);
+#endif
+
+                    return bot.Steps;
+                }
+
+                newBots.AddRange(bot.Move());
+            }
+
+            bots = newBots;
+
+#if DEBUG && DUMP
+            Thread.Sleep(20);
+
+            DrawBots(bots, Portals, recursive);
+#endif
+        }
+    }
+
+    private void ParseInput()
     {
         Width = Input[2].Length - 2;
 
@@ -68,7 +131,7 @@ public abstract class Base : Solution
         End = FindPortalExit(Portals.Single(p => p.Id == 702).Position);
     }
 
-    protected Point FindPortalExit(Point location)
+    private Point FindPortalExit(Point location)
     {
         if (location.X == 0)
         {
@@ -148,24 +211,143 @@ public abstract class Base : Solution
     {
         if (char.IsLetter(Input[y - 1][x]))
         {
-            return (Input[y - 1][x] - '@') * 26  + (Input[y][x] - '@');
+            return (Input[y - 1][x] - '@') * 26 + (Input[y][x] - '@');
         }
 
         if (char.IsLetter(Input[y + 1][x]))
         {
-            return (Input[y][x] - '@') * 26  + (Input[y + 1][x] - '@');
+            return (Input[y][x] - '@') * 26 + (Input[y + 1][x] - '@');
         }
 
         if (char.IsLetter(Input[y][x - 1]))
         {
-            return (Input[y][x - 1] - '@') * 26  + (Input[y][x] - '@');
+            return (Input[y][x - 1] - '@') * 26 + (Input[y][x] - '@');
         }
 
         if (char.IsLetter(Input[y][x + 1]))
         {
-            return (Input[y][x] - '@') * 26  + (Input[y][x + 1] - '@');
+            return (Input[y][x] - '@') * 26 + (Input[y][x + 1] - '@');
         }
 
         throw new PuzzleException("Unable to parse portal.");
     }
+
+#if DEBUG && DUMP
+    private static void DrawHistory(Bot bot)
+    {
+        for (var i = bot.History.Count - 1; i >= 0; i--)
+        {
+            var position = bot.History[i];
+
+            Console.CursorLeft = position.X + 1;
+
+            Console.CursorTop = position.Y + 1;
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+
+            Console.Write('█');
+
+            Thread.Sleep(20);
+        }
+    }
+
+    private List<Point> _previousPositions = new();
+
+    private void DrawBots(List<Bot> bots, List<(int Id, Point Position)> portals, bool recursive)
+    {
+        foreach (var portal in portals)
+        {
+            Console.CursorLeft = 1 + portal.Position.X;
+
+            Console.CursorTop = 1 + portal.Position.Y;
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+
+            Console.Write('█');
+        }
+
+        foreach (var bot in bots)
+        {
+            Console.CursorLeft = 1 + bot.Position.X;
+
+            Console.CursorTop = 1 + bot.Position.Y;
+
+            Console.ForegroundColor = ConsoleColor.Red;
+
+            Console.Write('█');
+        }
+
+        foreach (var position in _previousPositions)
+        {
+            if (portals.Any(p => p.Position.Equals(position)))
+            {
+                continue;
+            }
+
+            Console.CursorLeft = 1 + position.X;
+
+            Console.CursorTop = 1 + position.Y;
+
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+
+            Console.Write(recursive ? ' ' : '█');
+        }
+
+        Console.ForegroundColor = ConsoleColor.DarkGreen;
+
+        _previousPositions = bots.Select(b => new Point(b.Position)).ToList();
+    }
+
+    private void DumpMap()
+    {
+        Console.Clear();
+
+        Console.CursorLeft = 0;
+
+        Console.CursorTop = 1;
+
+        for (var y = 0; y < Height; y++)
+        {
+            Console.Write(' ');
+
+            for (var x = 0; x < Width; x++)
+            {
+                if (Maze[x, y] is -2 or 0)
+                {
+                    Console.Write(' ');
+
+                    continue;
+                }
+
+                if (Maze[x, y] == -1)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+
+                    Console.Write('█');
+
+                    continue;
+                }
+
+                if (Maze[x, y] > 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Blue;
+
+                    Console.Write('█');
+                }
+            }
+
+            Console.WriteLine();
+        }
+
+        Console.ForegroundColor = ConsoleColor.White;
+
+        Console.CursorLeft = End.X + 1;
+
+        Console.CursorTop = End.Y + 1;
+
+        Console.Write('█');
+
+        Console.BackgroundColor = ConsoleColor.Black;
+    }
+#endif
 }
