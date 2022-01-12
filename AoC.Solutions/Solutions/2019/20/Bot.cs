@@ -15,8 +15,10 @@ public class Bot
     private Point _direction;
 
     private readonly int[,] _maze;
-    
+
     private readonly List<(int Id, Point Position)> _portals;
+
+    public List<Point> History { get; }
 
     public Bot(Point position, Point destination, int[,] map, List<(int Id, Point Position)> portals)
     {
@@ -29,6 +31,11 @@ public class Bot
         _maze = map;
 
         _portals = portals;
+
+        History = new List<Point>
+                  {
+                      new(Position)
+                  };
 
         Steps = 0;
     }
@@ -50,6 +57,10 @@ public class Bot
         Position.X += _direction.X;
 
         Position.Y += _direction.Y;
+
+        History = bot.History.ToList();
+
+        History.Add(new Point(Position.X, Position.Y));
 
         Steps++;
     }
@@ -93,7 +104,13 @@ public class Bot
 
                 Position.Y += move.Y;
 
+                History.Add(new Point(Position.X, Position.Y));
+
                 _direction = move;
+            }
+            else
+            {
+                History.Add(new Point(Position));
             }
 
             bots.Add(this);
@@ -128,7 +145,7 @@ public class Bot
             moves.Add(new Point(0, -1));
         }
 
-        if (Position.Y < _maze.GetLength(1) - 1 &&_maze[Position.X, Position.Y + 1] is > -1 and not 27)
+        if (Position.Y < _maze.GetLength(1) - 1 && _maze[Position.X, Position.Y + 1] is > -1 and not 27)
         {
             moves.Add(new Point(0, 1));
         }

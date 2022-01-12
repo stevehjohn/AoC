@@ -17,6 +17,14 @@ public class Part1 : Base
 
         var result = FindShortestRoute();
 
+#if DEBUG && DUMP
+        Console.CursorLeft = 0;
+
+        Console.CursorTop = Height + 2;
+
+        Console.ForegroundColor = ConsoleColor.Green;
+#endif
+
         return result.ToString();
     }
 
@@ -40,6 +48,10 @@ public class Part1 : Base
             {
                 if (bot.IsHome)
                 {
+#if DEBUG && DUMP
+                    DrawHistory(bot);
+#endif
+
                     return bot.Steps;
                 }
 
@@ -49,20 +61,32 @@ public class Part1 : Base
             bots = newBots;
 
 #if DEBUG && DUMP
-            Thread.Sleep(50);
+            Thread.Sleep(20);
 
             DrawBots(bots, Portals);
-
-            Console.CursorLeft = 0;
-
-            Console.CursorTop = Height + 2;
-
-            Console.ForegroundColor = ConsoleColor.Green;
 #endif
         }
     }
 
 #if DEBUG && DUMP
+    private static void DrawHistory(Bot bot)
+    {
+        for (var i = bot.History.Count - 1; i >= 0; i--)
+        {
+            var position = bot.History[i];
+
+            Console.CursorLeft = position.X + 1;
+
+            Console.CursorTop = position.Y + 1;
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+
+            Console.Write('█');
+
+            Thread.Sleep(20);
+        }
+    }
+
     private List<Point> _previousPositions = new();
 
     private void DrawBots(List<Bot> bots, List<(int Id, Point Position)> portals)
