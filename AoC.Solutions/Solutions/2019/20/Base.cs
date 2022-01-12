@@ -253,6 +253,10 @@ public abstract class Base : Solution
 
     private List<Point> _previousPositions = new();
 
+    // ReSharper disable StringLiteralTypo
+    private string Levels = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ????????????????????????????????????????????????????????????????????????????????????????????????????";
+    // ReSharper restore StringLiteralTypo
+
     private void DrawBots(List<Bot> bots, List<(int Id, Point Position)> portals, bool recursive)
     {
         foreach (var portal in portals)
@@ -272,9 +276,22 @@ public abstract class Base : Solution
 
             Console.CursorTop = 1 + bot.Position.Y;
 
-            Console.ForegroundColor = ConsoleColor.Red;
+            if (recursive)
+            {
+                Console.BackgroundColor = ConsoleColor.Red;
 
-            Console.Write('█');
+                Console.ForegroundColor = ConsoleColor.White;
+
+                Console.Write(Levels[bot.Level]);
+
+                Console.BackgroundColor = ConsoleColor.Black;
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+
+                Console.Write('█');
+            }
         }
 
         foreach (var position in _previousPositions)

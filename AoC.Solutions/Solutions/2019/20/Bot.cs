@@ -1,5 +1,4 @@
-﻿using System.Security.Principal;
-using AoC.Solutions.Common;
+﻿using AoC.Solutions.Common;
 
 namespace AoC.Solutions.Solutions._2019._20;
 
@@ -9,7 +8,7 @@ public class Bot
 
     public int Steps { get; private set; }
 
-    public bool IsHome => Position.Equals(_destination) && _level == 0;
+    public bool IsHome => Position.Equals(_destination) && Level == 0;
 
     private readonly Point _destination;
 
@@ -21,9 +20,9 @@ public class Bot
 
     public List<Point> History { get; }
 
-    private int _level;
+    public int Level { get; set; }
 
-    private bool _recursive;
+    private readonly bool _recursive;
 
     public Bot(Point position, Point destination, int[,] map, List<(int Id, Point Position)> portals, bool recursive)
     {
@@ -69,7 +68,7 @@ public class Bot
 
         History.Add(new Point(Position.X, Position.Y));
 
-        _level = bot._level;
+        Level = bot.Level;
 
         _recursive = bot._recursive;
 
@@ -105,16 +104,16 @@ public class Bot
 
                 if (portal.Position.X == 0 || portal.Position.Y == 0 || portal.Position.X == _maze.GetLength(0) - 1 || portal.Position.Y == _maze.GetLength(1) - 1)
                 {
-                    _level--;
+                    Level--;
 
-                    if (_level < 0)
+                    if (Level < 0)
                     {
                         return bots;
                     }
                 }
                 else
                 {
-                    _level++;
+                    Level++;
                 }
 
                 var destination = _portals.Single(p => p.Id == portal.Id && (p.Position.X != Position.X || p.Position.Y != Position.Y));
@@ -193,7 +192,7 @@ public class Bot
         var moves = new List<Point>();
 
         // TODO: There must be a more elegant way to do this.
-        if (_level == 0)
+        if (Level == 0)
         {
             // TODO: Disable outer layer teleports.
             if (Position.X > 0 && _maze[Position.X - 1, Position.Y] is > -1 and not 27)
