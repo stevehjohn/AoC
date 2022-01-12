@@ -101,11 +101,11 @@ public class Bot
 
                 if (portal.Position.X == 0 || portal.Position.Y == 0 || portal.Position.X == _maze.GetLength(0) - 1 || portal.Position.Y == _maze.GetLength(1) - 1)
                 {
-                    _level++;
+                    _level--;
                 }
                 else
                 {
-                    _level--;
+                    _level++;
                 }
 
                 var destination = _portals.Single(p => p.Id == portal.Id && (p.Position.X != Position.X || p.Position.Y != Position.Y));
