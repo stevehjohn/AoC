@@ -98,7 +98,9 @@ public class Part1 : Base
 
             Console.CursorTop = 1 + position.Y;
 
-            Console.Write(' ');
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+
+            Console.Write('█');
         }
 
         Console.ForegroundColor = ConsoleColor.DarkGreen;
@@ -129,7 +131,7 @@ public class Part1 : Base
 
                 if (Maze[x, y] == -1)
                 {
-                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
 
                     Console.Write('█');
 
@@ -146,6 +148,16 @@ public class Part1 : Base
 
             Console.WriteLine();
         }
+
+        Console.ForegroundColor = ConsoleColor.White;
+
+        Console.CursorLeft = End.X + 1;
+
+        Console.CursorTop = End.Y + 1;
+
+        Console.Write('█');
+
+        Console.BackgroundColor = ConsoleColor.Black;
     }
 #endif
 }

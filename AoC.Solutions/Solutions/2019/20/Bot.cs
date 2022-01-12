@@ -1,5 +1,4 @@
-﻿using System.Security.Principal;
-using AoC.Solutions.Common;
+﻿using AoC.Solutions.Common;
 
 namespace AoC.Solutions.Solutions._2019._20;
 
@@ -17,7 +16,7 @@ public class Bot
 
     private readonly int[,] _maze;
     
-    private List<(int Id, Point Position)> _portals = new();
+    private readonly List<(int Id, Point Position)> _portals;
 
     public Bot(Point position, Point destination, int[,] map, List<(int Id, Point Position)> portals)
     {
