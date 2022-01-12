@@ -71,6 +71,8 @@ public class Bot
 
         _level = bot._level;
 
+        _recursive = bot._recursive;
+
         Steps++;
     }
 
