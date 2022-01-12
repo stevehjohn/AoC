@@ -86,6 +86,8 @@ public class Bot
 
                 Position.Y = destination.Position.Y;
 
+                _direction = new Point(0, 0);
+
                 var move = GetPossibleMoves().Single();
 
                 Position.X += move.X;
