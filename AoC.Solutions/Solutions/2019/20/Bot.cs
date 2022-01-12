@@ -196,22 +196,22 @@ public class Bot
         if (_level == 0)
         {
             // TODO: Disable outer layer teleports.
-            if (Position.X > 0 && _maze[Position.X - 1, Position.Y] is 0 and not 27)
+            if (Position.X > 0 && _maze[Position.X - 1, Position.Y] is > -1 and not 27)
             {
                 moves.Add(new Point(-1, 0));
             }
 
-            if (Position.X < _maze.GetLength(0) - 1 && _maze[Position.X + 1, Position.Y] is 0 and not 27)
+            if (Position.X < _maze.GetLength(0) - 1 && _maze[Position.X + 1, Position.Y] is > -1 and not 27)
             {
                 moves.Add(new Point(1, 0));
             }
 
-            if (Position.Y > 0 && _maze[Position.X, Position.Y - 1] is 0 and not 27)
+            if (Position.Y > 0 && _maze[Position.X, Position.Y - 1] is > -1 and not 27)
             {
                 moves.Add(new Point(0, -1));
             }
 
-            if (Position.Y < _maze.GetLength(1) - 1 && _maze[Position.X, Position.Y + 1] is 0 and not 27)
+            if (Position.Y < _maze.GetLength(1) - 1 && _maze[Position.X, Position.Y + 1] is > -1 and not 27)
             {
                 moves.Add(new Point(0, 1));
             }
