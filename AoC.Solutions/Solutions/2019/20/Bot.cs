@@ -169,6 +169,7 @@ public class Bot
     {
         var moves = new List<Point>();
 
+        // TODO: There must be a more elegant way to do this.
         if (_level == 0)
         {
             if (Position.X > 0 && _maze[Position.X - 1, Position.Y] is 0 and not 27)
@@ -193,6 +194,25 @@ public class Bot
         }
         else
         {
+            if (Position.X > 0 && _maze[Position.X - 1, Position.Y] is > -1 and not 27 and not 702)
+            {
+                moves.Add(new Point(-1, 0));
+            }
+
+            if (Position.X < _maze.GetLength(0) - 1 && _maze[Position.X + 1, Position.Y] is > -1 and not 27 and not 702)
+            {
+                moves.Add(new Point(1, 0));
+            }
+
+            if (Position.Y > 0 && _maze[Position.X, Position.Y - 1] is > -1 and not 27 and not 702)
+            {
+                moves.Add(new Point(0, -1));
+            }
+
+            if (Position.Y < _maze.GetLength(1) - 1 && _maze[Position.X, Position.Y + 1] is > -1 and not 27 and not 702)
+            {
+                moves.Add(new Point(0, 1));
+            }
         }
 
         if (_direction.X == 0 && _direction.Y == 0)
