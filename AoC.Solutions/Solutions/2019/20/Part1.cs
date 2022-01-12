@@ -47,7 +47,7 @@ public class Part1 : Base
             bots = newBots;
 
 #if DEBUG && DUMP
-            Thread.Sleep(1000);
+            Thread.Sleep(50);
 
             DrawBots(bots, Portals);
 
