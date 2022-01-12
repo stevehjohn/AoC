@@ -20,7 +20,7 @@ public class Part1 : Base
         return result.ToString();
     }
 
-    
+
     private int FindShortestRoute()
     {
         var bots = new List<Bot>
@@ -28,7 +28,9 @@ public class Part1 : Base
                        new(new Point(Start), new Point(End), Maze, Portals)
                    };
 
+#if DEBUG && DUMP
         DrawBots(bots, Portals);
+#endif
 
         while (true)
         {
