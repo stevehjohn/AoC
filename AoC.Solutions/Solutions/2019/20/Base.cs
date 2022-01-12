@@ -16,6 +16,10 @@ public abstract class Base : Solution
 
     protected List<(int Id, Point Position)> Portals = new();
 
+    protected Point Start;
+
+    protected Point End;
+
     protected void ParseInput()
     {
         Width = Input[2].Length - 2;
@@ -58,6 +62,55 @@ public abstract class Base : Solution
         }
 
         TrimPortals();
+
+        Start = FindPortalExit(Portals.Single(p => p.Id == 27).Position);
+
+        End = FindPortalExit(Portals.Single(p => p.Id == 702).Position);
+    }
+
+    protected Point FindPortalExit(Point location)
+    {
+        if (location.X == 0)
+        {
+            return new Point(location.X + 1, location.Y);
+        }
+
+        if (location.Y == 0)
+        {
+            return new Point(location.X, location.Y + 1);
+        }
+
+        if (location.X == Width - 1)
+        {
+            return new Point(location.X - 1, location.Y);
+        }
+
+        if (location.Y == Height - 1)
+        {
+            return new Point(location.X, location.Y - 1);
+        }
+
+        if (Maze[location.X, location.Y - 1] == 0)
+        {
+            return new Point(location.X, location.Y - 1);
+        }
+
+        if (Maze[location.X - 1, location.Y] == 0)
+        {
+            return new Point(location.X - 1, location.Y);
+        }
+
+        if (Maze[location.X + 1, location.Y] == 0)
+        {
+            return new Point(location.X + 1, location.Y);
+        }
+
+        if (Maze[location.X, location.Y + 1] == 0)
+        {
+            return new Point(location.X, location.Y + 1);
+        }
+
+        throw new PuzzleException("Unable to find portal exit.");
     }
 
     private void TrimPortals()
@@ -79,6 +132,8 @@ public abstract class Base : Solution
 
             if (Maze[x - 1, y] != 0 && Maze[x, y - 1] != 0 && Maze[x + 1, y] != 0 && Maze[x, y + 1] != 0)
             {
+                Maze[x, y] = -2;
+
                 toRemove.Push(i);
             }
         }
