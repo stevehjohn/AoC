@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Exceptions;
+﻿using AoC.Solutions.Common;
+using AoC.Solutions.Exceptions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2019._20;
@@ -12,6 +13,8 @@ public abstract class Base : Solution
     protected int Width;
 
     protected int Height;
+
+    protected List<(int Id, Point Position)> Portals = new();
 
     protected void ParseInput()
     {
@@ -46,8 +49,43 @@ public abstract class Base : Solution
                     continue;
                 }
 
-                Maze[x, y] = EncodePortal(x + 1, y + 1);
+                var portal = EncodePortal(x + 1, y + 1);
+
+                Maze[x, y] = portal;
+
+                Portals.Add((portal, new Point(x, y)));
             }
+        }
+
+        TrimPortals();
+    }
+
+    private void TrimPortals()
+    {
+        var toRemove = new Stack<int>();
+
+        for (var i = 0; i < Portals.Count; i++)
+        {
+            var portal = Portals[i];
+
+            var x = portal.Position.X;
+
+            var y = portal.Position.Y;
+
+            if (x == 0 || y == 0 || x == Width - 1 || y == Height - 1)
+            {
+                continue;
+            }
+
+            if (Maze[x - 1, y] != 0 && Maze[x, y - 1] != 0 && Maze[x + 1, y] != 0 && Maze[x, y + 1] != 0)
+            {
+                toRemove.Push(i);
+            }
+        }
+
+        while (toRemove.Count > 0)
+        {
+            Portals.RemoveAt(toRemove.Pop());
         }
     }
 
