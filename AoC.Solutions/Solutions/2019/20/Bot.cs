@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Common;
+﻿using System.Security.Principal;
+using AoC.Solutions.Common;
 
 namespace AoC.Solutions.Solutions._2019._20;
 
@@ -73,7 +74,9 @@ public class Bot
 
     public List<Bot> Move()
     {
-        var moves = GetPossibleMoves();
+        var moves = _recursive
+                        ? GetPossibleMovesWhenRecursive()
+                        : GetPossibleMoves();
 
         var bots = new List<Bot>();
 
@@ -94,9 +97,18 @@ public class Bot
 
             if (_maze[Position.X, Position.Y] > 0)
             {
-                var portalId = _portals.Single(p => p.Position.X == Position.X && p.Position.Y == Position.Y).Id;
+                var portal = _portals.Single(p => p.Position.X == Position.X && p.Position.Y == Position.Y);
 
-                var destination = _portals.Single(p => p.Id == portalId && (p.Position.X != Position.X || p.Position.Y != Position.Y));
+                if (portal.Position.X == 0 || portal.Position.Y == 0 || portal.Position.X == _maze.GetLength(0) - 1 || portal.Position.Y == _maze.GetLength(1) - 1)
+                {
+                    _level++;
+                }
+                else
+                {
+                    _level--;
+                }
+
+                var destination = _portals.Single(p => p.Id == portal.Id && (p.Position.X != Position.X || p.Position.Y != Position.Y));
 
                 Position.X = destination.Position.X;
 
@@ -104,7 +116,9 @@ public class Bot
 
                 _direction = new Point(0, 0);
 
-                var move = GetPossibleMoves().Single();
+                var move = (_recursive
+                                ? GetPossibleMovesWhenRecursive()
+                                : GetPossibleMoves()).Single();
 
                 Position.X += move.X;
 
