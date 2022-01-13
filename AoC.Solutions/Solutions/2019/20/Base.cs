@@ -82,6 +82,8 @@ public abstract class Base : Solution
             list.AddRange(move.Select(m => m.Position));
 
             DrawBots(list, recursive);
+
+            Thread.Sleep(1);
 #endif
         }
 
@@ -262,6 +264,8 @@ public abstract class Base : Solution
             }
 
             previousHistory = new Point(position);
+
+            Thread.Sleep(1);
         }
     }
 
