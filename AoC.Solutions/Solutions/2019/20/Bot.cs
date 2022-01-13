@@ -120,6 +120,11 @@ public class Bot
                 else
                 {
                     Level++;
+
+                    if (Level > _portals.Count / 2)
+                    {
+                        return bots;
+                    }
                 }
 
                 var destination = _portals.Single(p => p.Id == portal.Id && (p.Position.X != Position.X || p.Position.Y != Position.Y));
