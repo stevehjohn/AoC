@@ -48,14 +48,12 @@ public abstract class Base : Solution
     {
         var queue = new PriorityQueue<Bot, int>();
 
-        var startBot = new Bot(new Point(Start), new Point(End), Maze, Portals, recursive);
-
-        queue.Enqueue(startBot, 0);
+        queue.Enqueue(new Bot(new Point(Start), new Point(End), Maze, Portals, recursive), 0);
 
 #if DEBUG && DUMP
-        var list = new List<Bot>
+        var list = new List<Point>
                    {
-                       startBot
+                       new (Start)
                    };
 
         DrawBots(list, recursive);
@@ -79,9 +77,9 @@ public abstract class Base : Solution
             move.ForEach(b => queue.Enqueue(b, int.MaxValue - b.Steps));
 
 #if DEBUG && DUMP
-            list.Remove(bot);
+            list.Remove(bot.Position);
 
-            list.AddRange(move);
+            list.AddRange(move.Select(m => m.Position));
 
             DrawBots(list, recursive);
 #endif
@@ -269,9 +267,9 @@ public abstract class Base : Solution
 
     private List<Point> _previousPositions = new();
 
-    private void DrawBots(List<Bot> bots, bool recursive)
+    private void DrawBots(List<Point> bots, bool recursive)
     {
-        foreach (var bot in bots.Select(b => b.Position).Except(_previousPositions))
+        foreach (var bot in bots.Except(_previousPositions))
         {
             if (bot.X < 1 || bot.Y < 1 || bot.X >= Width - 1 || bot.Y >= Height - 1)
             {
@@ -298,7 +296,7 @@ public abstract class Base : Solution
 
         foreach (var position in _previousPositions)
         {
-            if (bots.Any(b => b.Position.Equals(position)))
+            if (bots.Any(b => b.Equals(position)))
             {
                 continue;
             }
@@ -312,7 +310,7 @@ public abstract class Base : Solution
 
         Console.ForegroundColor = ConsoleColor.DarkGreen;
 
-        _previousPositions = bots.Select(b => new Point(b.Position)).ToList();
+        _previousPositions = bots.Select(b => new Point(b)).ToList();
     }
 
     private void DumpMap()
