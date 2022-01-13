@@ -270,7 +270,8 @@ public abstract class Base : Solution
     private List<Point> _previousPositions = new();
 
     // ReSharper disable StringLiteralTypo
-    private string Levels = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private const string Levels = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
     // ReSharper restore StringLiteralTypo
 
     private void DrawBots(List<Bot> bots, bool recursive)
