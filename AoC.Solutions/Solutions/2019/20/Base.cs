@@ -58,7 +58,7 @@ public abstract class Base : Solution
                        startBot
                    };
 
-        DrawBots(list, Portals, recursive);
+        DrawBots(list, recursive);
 #endif
 
         while (queue.Count > 0)
@@ -83,7 +83,7 @@ public abstract class Base : Solution
 
             list.AddRange(move);
 
-            DrawBots(list, Portals, recursive);
+            DrawBots(list, recursive);
 #endif
         }
 
@@ -273,7 +273,7 @@ public abstract class Base : Solution
     private string Levels = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     // ReSharper restore StringLiteralTypo
 
-    private void DrawBots(List<Bot> bots, List<(int Id, Point Position)> portals, bool recursive)
+    private void DrawBots(List<Bot> bots, bool recursive)
     {
         foreach (var bot in bots)
         {
@@ -304,7 +304,7 @@ public abstract class Base : Solution
 
         foreach (var position in _previousPositions)
         {
-            if (portals.Any(p => p.Position.Equals(position) || bots.Any(b => b.Position.Equals(position))))
+            if (bots.Any(b => b.Position.Equals(position)))
             {
                 continue;
             }
