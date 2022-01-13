@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Common;
+﻿#define DUMP
+using AoC.Solutions.Common;
 
 namespace AoC.Solutions.Solutions._2019._20;
 
@@ -18,7 +19,9 @@ public class Bot
 
     private readonly List<(int Id, Point Position)> _portals;
 
+#if DEBUG && DUMP
     public List<Point> History { get; }
+#endif
 
     public int Level { get; set; }
 
@@ -38,13 +41,12 @@ public class Bot
 
         _recursive = recursive;
 
-        if (! _recursive)
-        {
-            History = new List<Point>
-                      {
-                          new(Position)
-                      };
-        }
+#if DEBUG && DUMP
+        History = new List<Point>
+                  {
+                      new(Position)
+                  };
+#endif
 
         Steps = 0;
     }
@@ -69,12 +71,11 @@ public class Bot
 
         _recursive = bot._recursive;
 
-        if (! _recursive)
-        {
-            History = bot.History.ToList();
+#if DEBUG && DUMP
+        History = bot.History.ToList();
 
-            History.Add(new Point(Position.X, Position.Y));
-        }
+        History.Add(new Point(Position.X, Position.Y));
+#endif
 
         Level = bot.Level;
 
@@ -143,19 +144,17 @@ public class Bot
 
                 Position.Y += move.Y;
 
-                if (! _recursive)
-                {
-                    History.Add(new Point(Position.X, Position.Y));
-                }
+#if DEBUG && DUMP
+                History.Add(new Point(Position.X, Position.Y));
+#endif
 
                 _direction = move;
             }
             else
             {
-                if (! _recursive)
-                {
-                    History.Add(new Point(Position));
-                }
+#if DEBUG && DUMP
+                History.Add(new Point(Position));
+#endif
             }
 
             bots.Add(this);

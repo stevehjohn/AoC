@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Common;
+﻿#define DUMP
+using AoC.Solutions.Common;
 using AoC.Solutions.Exceptions;
 using AoC.Solutions.Infrastructure;
 
@@ -51,7 +52,7 @@ public abstract class Base : Solution
                    };
 
 #if DEBUG && DUMP
-        DrawBots(bots, Portals, recursive);
+        //DrawBots(bots, Portals, recursive);
 #endif
 
         while (true)
@@ -63,10 +64,7 @@ public abstract class Base : Solution
                 if (bot.IsHome)
                 {
 #if DEBUG && DUMP
-                    if (! recursive)
-                    {
-                        DrawHistory(bot);
-                    }
+                    DrawHistory(bot);
 #endif
 
                     return bot.Steps;
@@ -78,7 +76,7 @@ public abstract class Base : Solution
             bots = newBots;
 
 #if DEBUG && DUMP
-            DrawBots(bots, Portals, recursive);
+            //DrawBots(bots, Portals, recursive);
 #endif
         }
     }
@@ -235,6 +233,8 @@ public abstract class Base : Solution
 #if DEBUG && DUMP
     private static void DrawHistory(Bot bot)
     {
+        var previousHistory = new Point();
+
         for (var i = bot.History.Count - 1; i >= 0; i--)
         {
             var position = bot.History[i];
@@ -243,16 +243,31 @@ public abstract class Base : Solution
 
             Console.CursorTop = position.Y + 1;
 
-            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.ForegroundColor = ConsoleColor.Red;
 
             Console.Write('█');
+
+            if (previousHistory.X > 0)
+            {
+                Console.CursorLeft = previousHistory.X + 1;
+
+                Console.CursorTop = previousHistory.Y + 1;
+
+                Console.ForegroundColor = ConsoleColor.Cyan;
+
+                Console.Write('█');
+            }
+
+            Thread.Sleep(1);
+
+            previousHistory = new Point(position);
         }
     }
 
     private List<Point> _previousPositions = new();
 
     // ReSharper disable StringLiteralTypo
-    private string Levels = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ????????????????????????????????????????????????????????????????????????????????????????????????????";
+    private string Levels = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     // ReSharper restore StringLiteralTypo
 
     private void DrawBots(List<Bot> bots, List<(int Id, Point Position)> portals, bool recursive)
