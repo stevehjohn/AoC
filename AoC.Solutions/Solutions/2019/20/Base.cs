@@ -269,29 +269,22 @@ public abstract class Base : Solution
 
     private List<Point> _previousPositions = new();
 
-    // ReSharper disable StringLiteralTypo
-    private const string Levels = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-    // ReSharper restore StringLiteralTypo
-
     private void DrawBots(List<Bot> bots, bool recursive)
     {
-        foreach (var bot in bots)
+        foreach (var bot in bots.Select(b => b.Position).Except(_previousPositions))
         {
-            if (bot.Position.X < 1 || bot.Position.Y < 1 || bot.Position.X >= Width - 1 || bot.Position.Y >= Height - 1)
+            if (bot.X < 1 || bot.Y < 1 || bot.X >= Width - 1 || bot.Y >= Height - 1)
             {
                 continue;
             }
 
-            Console.SetCursorPosition(1 + bot.Position.X, 1 + bot.Position.Y);
+            Console.SetCursorPosition(1 + bot.X, 1 + bot.Y);
             
             if (recursive)
             {
-                Console.BackgroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = ConsoleColor.Red;
 
-                Console.ForegroundColor = ConsoleColor.White;
-
-                Console.Write(Levels[bot.Level]);
+                Console.Write('█');
 
                 Console.BackgroundColor = ConsoleColor.Black;
             }
