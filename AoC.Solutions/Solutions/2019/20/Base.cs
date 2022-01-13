@@ -248,9 +248,7 @@ public abstract class Base : Solution
         {
             var position = bot.History[i];
 
-            Console.CursorLeft = position.X + 1;
-
-            Console.CursorTop = position.Y + 1;
+            Console.SetCursorPosition(position.X + 1, position.Y + 1);
 
             Console.ForegroundColor = ConsoleColor.Red;
 
@@ -258,9 +256,7 @@ public abstract class Base : Solution
 
             if (previousHistory.X > 0)
             {
-                Console.CursorLeft = previousHistory.X + 1;
-
-                Console.CursorTop = previousHistory.Y + 1;
+                Console.SetCursorPosition(previousHistory.X + 1, previousHistory.Y + 1);
 
                 Console.ForegroundColor = ConsoleColor.Cyan;
 
@@ -279,18 +275,9 @@ public abstract class Base : Solution
 
     private void DrawBots(List<Bot> bots, List<(int Id, Point Position)> portals, bool recursive)
     {
-        foreach (var portal in portals)
-        {
-            Console.SetCursorPosition(1 + portal.Position.X, 1 + portal.Position.Y);
-
-            Console.ForegroundColor = ConsoleColor.Blue;
-
-            Console.Write('█');
-        }
-
         foreach (var bot in bots)
         {
-            if (bots.Any(p => p.Position.Equals(bot.Position) && p != bot))
+            if (bot.Position.X < 1 || bot.Position.Y < 1 || bot.Position.X >= Width - 1 || bot.Position.Y >= Height - 1)
             {
                 continue;
             }
@@ -338,9 +325,7 @@ public abstract class Base : Solution
     {
         Console.Clear();
 
-        Console.CursorLeft = 0;
-
-        Console.CursorTop = 1;
+        Console.SetCursorPosition(0, 1);
 
         for (var y = 0; y < Height; y++)
         {
@@ -366,7 +351,14 @@ public abstract class Base : Solution
 
                 if (Maze[x, y] > 0)
                 {
-                    Console.ForegroundColor = ConsoleColor.Blue;
+                    if (Math.Abs(x - Start.X) == 1 && y == Start.Y || x == Start.X && Math.Abs(y - Start.Y) == 1 || Math.Abs(x - End.X) == 1 && y == End.Y || x == End.X && Math.Abs(y - End.Y) == 1)
+                    {
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                    }
 
                     Console.Write('█');
                 }
@@ -374,14 +366,6 @@ public abstract class Base : Solution
 
             Console.WriteLine();
         }
-
-        Console.ForegroundColor = ConsoleColor.White;
-
-        Console.CursorLeft = End.X + 1;
-
-        Console.CursorTop = End.Y + 1;
-
-        Console.Write('█');
 
         Console.BackgroundColor = ConsoleColor.Black;
     }
