@@ -1,5 +1,4 @@
-﻿#define DUMP
-using AoC.Solutions.Common;
+﻿using AoC.Solutions.Common;
 using AoC.Solutions.Exceptions;
 using AoC.Solutions.Infrastructure;
 
@@ -52,7 +51,7 @@ public abstract class Base : Solution
                    };
 
 #if DEBUG && DUMP
-        //DrawBots(bots, Portals, recursive);
+        DrawBots(bots, Portals, recursive);
 #endif
 
         while (true)
@@ -76,7 +75,7 @@ public abstract class Base : Solution
             bots = newBots;
 
 #if DEBUG && DUMP
-            //DrawBots(bots, Portals, recursive);
+            DrawBots(bots, Portals, recursive);
 #endif
         }
     }
