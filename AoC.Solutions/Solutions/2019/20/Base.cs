@@ -267,8 +267,6 @@ public abstract class Base : Solution
                 Console.Write('█');
             }
 
-            //Thread.Sleep(1);
-
             previousHistory = new Point(position);
         }
     }
