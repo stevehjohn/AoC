@@ -29,9 +29,9 @@ public class Bot
 
     private readonly Dictionary<int, int> _visitedPortals;
 
-    private static readonly HashSet<Point> _deadEnds = new();
+    private static readonly HashSet<int> DeadEnds = new();
 
-    private Point _splitAt;
+    private readonly Point _splitAt;
 
     public Bot(Point position, Point destination, int[,] map, List<(int Id, Point Position)> portals, bool recursive)
     {
@@ -102,14 +102,14 @@ public class Bot
 
         var bots = new List<Bot>();
 
-        if (_deadEnds.Contains(Position))
+        if (DeadEnds.Contains(Position.GetHashCode()))
         {
             return bots;
         }
 
         if (moves.Count == 0 && _splitAt != null)
         {
-            _deadEnds.Add(_splitAt);
+            DeadEnds.Add(Position.GetHashCode());
 
             return bots;
         }
