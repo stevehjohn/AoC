@@ -46,39 +46,35 @@ public abstract class Base : Solution
 
     private int FindShortestRoute(bool recursive)
     {
-        var bots = new List<Bot>
-                   {
-                       new(new Point(Start), new Point(End), Maze, Portals, recursive)
-                   };
-
 #if DEBUG && DUMP
-        DrawBots(bots, Portals, recursive);
+        //DrawBots(bots, Portals, recursive);
 #endif
 
-        while (true)
+        var bots = new PriorityQueue<Bot, int>();
+
+        bots.Enqueue(new Bot(new Point(Start), new Point(End), Maze, Portals, recursive), 0);
+
+        while (bots.Count > 0)
         {
-            var newBots = new List<Bot>();
+            var bot = bots.Dequeue();
 
-            foreach (var bot in bots)
+            if (bot.IsHome)
             {
-                if (bot.IsHome)
-                {
 #if DEBUG && DUMP
-                    DrawHistory(bot);
+                DrawHistory(bot);
 #endif
 
-                    return bot.Steps;
-                }
-
-                newBots.AddRange(bot.Move());
+                return bot.Steps;
             }
 
-            bots = newBots;
+            bot.Move().ForEach(b => bots.Enqueue(b, int.MaxValue - b.Steps));
 
 #if DEBUG && DUMP
-            DrawBots(bots, Portals, recursive);
+            DrawBots(bots.UnorderedItems.Select(b => b.Element), Portals, recursive);
 #endif
         }
+
+        throw new PuzzleException("No solution found.");
     }
 
     private void ParseInput()
@@ -270,7 +266,7 @@ public abstract class Base : Solution
     private string Levels = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     // ReSharper restore StringLiteralTypo
 
-    private void DrawBots(List<Bot> bots, List<(int Id, Point Position)> portals, bool recursive)
+    private void DrawBots(IEnumerable<Bot> bots, List<(int Id, Point Position)> portals, bool recursive)
     {
         foreach (var portal in portals)
         {
