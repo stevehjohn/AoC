@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Common;
+﻿#define DUMP
+using AoC.Solutions.Common;
 using AoC.Solutions.Exceptions;
 using AoC.Solutions.Infrastructure;
 
@@ -257,7 +258,7 @@ public abstract class Base : Solution
                 Console.Write('█');
             }
 
-            Thread.Sleep(1);
+            //Thread.Sleep(1);
 
             previousHistory = new Point(position);
         }
