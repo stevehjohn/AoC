@@ -46,17 +46,24 @@ public abstract class Base : Solution
 
     private int FindShortestRoute(bool recursive)
     {
+        var queue = new PriorityQueue<Bot, int>();
+
+        var startBot = new Bot(new Point(Start), new Point(End), Maze, Portals, recursive);
+
+        queue.Enqueue(startBot, 0);
+
 #if DEBUG && DUMP
-        //DrawBots(bots, Portals, recursive);
+        var list = new List<Bot>
+                   {
+                       startBot
+                   };
+
+        DrawBots(list, Portals, recursive);
 #endif
 
-        var bots = new PriorityQueue<Bot, int>();
-
-        bots.Enqueue(new Bot(new Point(Start), new Point(End), Maze, Portals, recursive), 0);
-
-        while (bots.Count > 0)
+        while (queue.Count > 0)
         {
-            var bot = bots.Dequeue();
+            var bot = queue.Dequeue();
 
             if (bot.IsHome)
             {
@@ -67,10 +74,16 @@ public abstract class Base : Solution
                 return bot.Steps;
             }
 
-            bot.Move().ForEach(b => bots.Enqueue(b, int.MaxValue - b.Steps));
+            var move = bot.Move();
+
+            move.ForEach(b => queue.Enqueue(b, int.MaxValue - b.Steps));
 
 #if DEBUG && DUMP
-            DrawBots(bots.UnorderedItems.Select(b => b.Element), Portals, recursive);
+            list.Remove(bot);
+
+            list.AddRange(move);
+
+            DrawBots(list, Portals, recursive);
 #endif
         }
 
@@ -266,13 +279,11 @@ public abstract class Base : Solution
     private string Levels = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     // ReSharper restore StringLiteralTypo
 
-    private void DrawBots(IEnumerable<Bot> bots, List<(int Id, Point Position)> portals, bool recursive)
+    private void DrawBots(List<Bot> bots, List<(int Id, Point Position)> portals, bool recursive)
     {
         foreach (var portal in portals)
         {
-            Console.CursorLeft = 1 + portal.Position.X;
-
-            Console.CursorTop = 1 + portal.Position.Y;
+            Console.SetCursorPosition(1 + portal.Position.X, 1 + portal.Position.Y);
 
             Console.ForegroundColor = ConsoleColor.Blue;
 
@@ -281,10 +292,13 @@ public abstract class Base : Solution
 
         foreach (var bot in bots)
         {
-            Console.CursorLeft = 1 + bot.Position.X;
+            if (bots.Any(p => p.Position.Equals(bot.Position) && p != bot))
+            {
+                continue;
+            }
 
-            Console.CursorTop = 1 + bot.Position.Y;
-
+            Console.SetCursorPosition(1 + bot.Position.X, 1 + bot.Position.Y);
+            
             if (recursive)
             {
                 Console.BackgroundColor = ConsoleColor.Red;
@@ -305,14 +319,12 @@ public abstract class Base : Solution
 
         foreach (var position in _previousPositions)
         {
-            if (portals.Any(p => p.Position.Equals(position)))
+            if (portals.Any(p => p.Position.Equals(position) || bots.Any(b => b.Position.Equals(position))))
             {
                 continue;
             }
 
-            Console.CursorLeft = 1 + position.X;
-
-            Console.CursorTop = 1 + position.Y;
+            Console.SetCursorPosition(1 + position.X, 1 + position.Y);
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
 
