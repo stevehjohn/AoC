@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Common;
+﻿#define DUMP
+using AoC.Solutions.Common;
 
 namespace AoC.Solutions.Solutions._2019._20;
 
@@ -26,6 +27,8 @@ public class Bot
 
     private readonly bool _recursive;
 
+    private readonly Dictionary<int, int> _visitedPortals;
+
     public Bot(Point position, Point destination, int[,] map, List<(int Id, Point Position)> portals, bool recursive)
     {
         Position = position;
@@ -46,6 +49,8 @@ public class Bot
                       new(Position)
                   };
 #endif
+
+        _visitedPortals = new Dictionary<int, int>();
 
         Steps = 0;
     }
@@ -78,6 +83,8 @@ public class Bot
 
         Level = bot.Level;
 
+        _visitedPortals = new Dictionary<int, int>(bot._visitedPortals);
+
         Steps++;
     }
 
@@ -108,6 +115,7 @@ public class Bot
             {
                 var portal = _portals.Single(p => p.Position.X == Position.X && p.Position.Y == Position.Y);
 
+
                 if (portal.Position.X == 0 || portal.Position.Y == 0 || portal.Position.X == _maze.GetLength(0) - 1 || portal.Position.Y == _maze.GetLength(1) - 1)
                 {
                     Level--;
@@ -119,6 +127,24 @@ public class Bot
                 }
                 else
                 {
+                    if (Level > 0)
+                    {
+                        if (_visitedPortals.ContainsKey(portal.Id))
+                        {
+                            _visitedPortals[portal.Id]++;
+
+                            // Not sure why 2 is the magic number, but it works...
+                            if (_visitedPortals[portal.Id] > 2)
+                            {
+                                return bots;
+                            }
+                        }
+                        else
+                        {
+                            _visitedPortals.Add(portal.Id, 0);
+                        }
+                    }
+
                     Level++;
 
                     if (Level > _portals.Count / 2)
