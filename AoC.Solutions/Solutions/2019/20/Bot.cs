@@ -8,7 +8,7 @@ public class Bot
 
     public int Steps { get; private set; }
 
-    public bool IsHome => Position.Equals(_destination) && Level == 0;
+    public bool IsHome => Position.Equals(_destination) && (Level == 0 || ! _recursive);
 
     private readonly Point _destination;
 
@@ -36,12 +36,15 @@ public class Bot
 
         _portals = portals;
 
-        History = new List<Point>
-                  {
-                      new(Position)
-                  };
-
         _recursive = recursive;
+
+        if (! _recursive)
+        {
+            History = new List<Point>
+                      {
+                          new(Position)
+                      };
+        }
 
         Steps = 0;
     }
@@ -64,13 +67,16 @@ public class Bot
 
         Position.Y += _direction.Y;
 
-        History = bot.History.ToList();
+        _recursive = bot._recursive;
 
-        History.Add(new Point(Position.X, Position.Y));
+        if (! _recursive)
+        {
+            History = bot.History.ToList();
+
+            History.Add(new Point(Position.X, Position.Y));
+        }
 
         Level = bot.Level;
-
-        _recursive = bot._recursive;
 
         Steps++;
     }
@@ -132,13 +138,19 @@ public class Bot
 
                 Position.Y += move.Y;
 
-                History.Add(new Point(Position.X, Position.Y));
+                if (! _recursive)
+                {
+                    History.Add(new Point(Position.X, Position.Y));
+                }
 
                 _direction = move;
             }
             else
             {
-                History.Add(new Point(Position));
+                if (! _recursive)
+                {
+                    History.Add(new Point(Position));
+                }
             }
 
             bots.Add(this);

@@ -64,7 +64,10 @@ public abstract class Base : Solution
                 if (bot.IsHome)
                 {
 #if DEBUG && DUMP
-                    DrawHistory(bot);
+                    if (! recursive)
+                    {
+                        DrawHistory(bot);
+                    }
 #endif
 
                     return bot.Steps;
@@ -76,8 +79,6 @@ public abstract class Base : Solution
             bots = newBots;
 
 #if DEBUG && DUMP
-            //Thread.Sleep(20);
-
             DrawBots(bots, Portals, recursive);
 #endif
         }
@@ -246,8 +247,6 @@ public abstract class Base : Solution
             Console.ForegroundColor = ConsoleColor.Cyan;
 
             Console.Write('█');
-
-            //Thread.Sleep(20);
         }
     }
 
