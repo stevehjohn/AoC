@@ -127,22 +127,18 @@ public class Bot
                 }
                 else
                 {
-                    if (Level > 0)
+                    if (_visitedPortals.ContainsKey(portal.Id))
                     {
-                        if (_visitedPortals.ContainsKey(portal.Id))
+                        if (_visitedPortals[portal.Id] > 1)
                         {
-                            _visitedPortals[portal.Id]++;
+                            return bots;
+                        }
 
-                            // Not sure why 2 is the magic number, but it works...
-                            if (_visitedPortals[portal.Id] > 2)
-                            {
-                                return bots;
-                            }
-                        }
-                        else
-                        {
-                            _visitedPortals.Add(portal.Id, 0);
-                        }
+                        _visitedPortals[portal.Id]++;
+                    }
+                    else
+                    {
+                        _visitedPortals.Add(portal.Id, 0);
                     }
 
                     Level++;
