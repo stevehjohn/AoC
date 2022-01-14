@@ -40,7 +40,7 @@ public abstract class Base : Solution
         while (bots.Count > 0)
         {
 #if DUMP && DEBUG
-            //Visualiser.DumpBots(bots.Select(b => b.Position).ToList(), _map);
+            Visualiser.DumpBots(bots.Select(b => b.Position).ToList(), _map);
 #endif
             var newBots = new List<Bot>();
 
