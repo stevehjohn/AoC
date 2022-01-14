@@ -38,35 +38,42 @@ public static class Visualiser
 
         var on = true;
 
-        for (var i = 0; i < 8; i++)
+        if (keys.Count > 0)
         {
-            foreach (var key in keys)
+            for (var i = 0; i < 8; i++)
             {
-                foreach (var k in new[] { key, char.ToLower(key) })
+                foreach (var key in keys)
                 {
-                    var position = locations[k];
-
-                    if (on)
+                    foreach (var k in new[] { key, char.ToLower(key) })
                     {
-                        Console.BackgroundColor = ConsoleColor.Yellow;
+                        var position = locations[k];
 
-                        Console.ForegroundColor = ConsoleColor.Black;
+                        if (on)
+                        {
+                            Console.BackgroundColor = ConsoleColor.Yellow;
+
+                            Console.ForegroundColor = ConsoleColor.Black;
+                        }
+                        else
+                        {
+                            Console.BackgroundColor = ConsoleColor.DarkBlue;
+
+                            Console.ForegroundColor = ConsoleColor.White;
+                        }
+
+                        Console.SetCursorPosition(position.X + 1, position.Y + 1);
+
+                        Console.Write(k);
                     }
-                    else
-                    {
-                        Console.BackgroundColor = ConsoleColor.DarkBlue;
-
-                        Console.ForegroundColor = ConsoleColor.White;
-                    }
-
-                    Console.SetCursorPosition(position.X + 1, position.Y + 1);
-
-                    Console.Write(k);
                 }
+
+                on = ! on;
+
+                Thread.Sleep(250);
             }
-
-            on = ! on;
-
+        }
+        else
+        {
             Thread.Sleep(250);
         }
 
