@@ -4,12 +4,12 @@ public class Destination
 {
     public char Name { get; }
 
-    public List<Destination> BlockedBy { get; }
+    public List<Destination> Requires { get; }
 
     public Destination(char name)
     {
         Name = name;
 
-        BlockedBy = new List<Destination>();
+        Requires = new List<Destination>();
     }
 }
