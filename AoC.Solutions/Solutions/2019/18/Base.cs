@@ -29,18 +29,18 @@ public abstract class Base : Solution
 #endif
         var bots = new List<Bot>
                    {
-                       new(_start, _map, _distances)
+                       new('@', _start, _map, _distances)
                    };
 
         foreach (var node in _itemLocations)
         {
-            bots.Add(new Bot(node.Value, _map, _distances));
+            bots.Add(new Bot(node.Key, node.Value, _map, _distances));
         }
 
         while (bots.Count > 0)
         {
 #if DUMP && DEBUG
-            Visualiser.DumpBots(bots.Select(b => b.Position).ToList(), _map);
+            Visualiser.DumpBots(bots, _map);
 #endif
             var newBots = new List<Bot>();
 
@@ -53,7 +53,7 @@ public abstract class Base : Solution
         }
 
 #if DUMP && DEBUG
-        Visualiser.DumpBots(bots.Select(b => b.Position).ToList(), _map);
+        Visualiser.DumpBots(bots, _map);
 #endif
     }
 
