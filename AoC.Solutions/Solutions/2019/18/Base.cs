@@ -1,4 +1,5 @@
 ﻿#define DUMP
+using System.Collections;
 using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
 
@@ -31,7 +32,7 @@ public abstract class Base : Solution
 #endif
         var bots = new List<Bot>
                    {
-                       new ('@', _start, _map, _distances, _paths)
+                       new('@', _start, _map, _distances, _paths)
                    };
 
         foreach (var node in _itemLocations)
@@ -42,7 +43,7 @@ public abstract class Base : Solution
         while (bots.Count > 0)
         {
 #if DUMP && DEBUG
-            Visualiser.DumpBots(bots, _map);
+            //Visualiser.DumpBots(bots, _map);
 #endif
             var newBots = new List<Bot>();
 
@@ -57,6 +58,29 @@ public abstract class Base : Solution
 #if DUMP && DEBUG
         Visualiser.DumpBots(bots, _map);
 #endif
+        FindPaths('@', _target);
+    }
+
+    private void FindPaths(char position, char door)
+    {
+        FindRequiredKeys(position, door);
+    }
+
+    private void FindRequiredKeys(char position, char door)
+    {
+        var pathKey = new string(new[] { position, door }.OrderBy(x => x).ToArray());
+
+        var path = _paths[pathKey];
+
+        foreach (var itemLocation in _itemLocations)
+        {
+            if (itemLocation.Key < 'a')
+            {
+                if (path.Contains(itemLocation.Value))
+                {
+                }
+            }
+        }
     }
 
     protected void ParseInput()
