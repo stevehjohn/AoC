@@ -43,7 +43,7 @@ public abstract class Base : Solution
         while (bots.Count > 0)
         {
 #if DUMP && DEBUG
-            //Visualiser.DumpBots(bots, _map);
+            //Visualiser.DumpBots(bots);
 #endif
             var newBots = new List<Bot>();
 
@@ -56,20 +56,25 @@ public abstract class Base : Solution
         }
 
 #if DUMP && DEBUG
-        Visualiser.DumpBots(bots, _map);
+        Visualiser.DumpBots(bots);
 #endif
         var destination = new Destination(_target);
 
-        FindPaths('@', _target);
+        FindPaths('@', destination);
     }
 
-    private void FindPaths(char position, char door)
+    private void FindPaths(char position, Destination destination)
     {
-        var destination = new Destination(_target);
-
-        var requiredKeys = FindRequiredKeys(position, door);
+        var requiredKeys = FindRequiredKeys(position, destination.Name);
 
         var availableKeys = FindAvailableKeys(position, requiredKeys.Select(k => (char) (k + 32)).ToList());
+
+        foreach (var availableKey in availableKeys)
+        {
+            var keyDestination = new Destination(availableKey);
+
+            destination.Requires.Add(keyDestination);
+        }
 
         //foreach (var key in keys)
         //{
@@ -113,6 +118,10 @@ public abstract class Base : Solution
                 }
             }
         }
+
+#if DUMP && DEBUG
+        Visualiser.VisualiseBlockers(path, keys, _itemLocations);
+#endif
 
         return keys;
     }
