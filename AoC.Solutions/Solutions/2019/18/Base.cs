@@ -1,5 +1,4 @@
 ﻿#define DUMP
-using System.Collections;
 using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
 
@@ -58,71 +57,6 @@ public abstract class Base : Solution
 #if DUMP && DEBUG
         Visualiser.DumpBots(bots);
 #endif
-        var destination = new Destination(_target);
-
-        FindPaths('@', destination, new List<char>());
-    }
-
-    private void FindPaths(char position, Destination destination, List<char> foundKeys)
-    {
-        var requiredKeys = FindRequiredKeys(position, destination.Name, foundKeys);
-
-        var availableKeys = FindAvailableKeys(position, requiredKeys.Select(k => (char) (k + 32)).ToList(), foundKeys);
-
-        foreach (var key in availableKeys)
-        {
-            FindPaths(key, destination, foundKeys.Union(availableKeys.Select(char.ToLower)).ToList());
-
-            //var keyDestination = new Destination(key);
-
-            //destination.Requires.Add(keyDestination);
-
-            //foreach (var item in destination.Requires)
-            //{
-            //    FindPaths(key, destination, foundKeys.Union(availableKeys.Select(char.ToLower)).ToList());
-            //}
-        }
-    }
-
-    private List<char> FindAvailableKeys(char position, List<char> required, List<char> foundKeys)
-    {
-        var keys = new List<char>();
-
-        foreach (var key in required)
-        {
-            if (FindRequiredKeys(position, key, foundKeys).Count == 0)
-            {
-                keys.Add(key);
-            }
-        }
-
-        return keys;
-    }
-
-    private List<char> FindRequiredKeys(char position, char target, List<char> foundKeys)
-    {
-        var pathKey = new string(new[] { position, target }.OrderBy(x => x).ToArray());
-
-        var path = _paths[pathKey];
-
-        var keys = new List<char>();
-
-        foreach (var itemLocation in _itemLocations)
-        {
-            if (itemLocation.Key < 'a' && ! foundKeys.Contains(char.ToLower(itemLocation.Key)))
-            {
-                if (path.Contains(itemLocation.Value))
-                {
-                    keys.Add(itemLocation.Key);
-                }
-            }
-        }
-
-#if DUMP && DEBUG
-        Visualiser.VisualiseBlockers(path, keys, _itemLocations);
-#endif
-
-        return keys;
     }
 
     protected void ParseInput()
