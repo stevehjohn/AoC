@@ -10,20 +10,24 @@ public static class Visualiser
 
     private static List<Point> _previousBots = new();
 
-    public static void DumpBots(List<Point> bots, char[,] map)
+    public static void DumpBots(List<Bot> bots, char[,] map)
     {
-        foreach (var bot in bots.Except(_previousBots))
+        foreach (var bot in bots)
         {
-            Console.SetCursorPosition(bot.X + 1, bot.Y + 1);
+            Console.SetCursorPosition(bot.Position.X + 1, bot.Position.Y + 1);
 
-            Console.ForegroundColor = ConsoleColor.Red;
+            Console.BackgroundColor = ConsoleColor.Red;
 
-            Console.Write('█');
+            Console.ForegroundColor = ConsoleColor.White;
+
+            Console.Write(bot.Name);
+
+            Console.BackgroundColor = ConsoleColor.Black;
         }
 
         foreach (var position in _previousBots)
         {
-            if (bots.Any(b => b.Equals(position)))
+            if (bots.Any(b => b.Position.Equals(position)))
             {
                 continue;
             }
@@ -48,7 +52,7 @@ public static class Visualiser
             }
         }
 
-        _previousBots = bots.Select(b => new Point(b)).ToList();
+        _previousBots = bots.Select(b => new Point(b.Position)).ToList();
 
         Console.SetCursorPosition(0, _height + 3);
 

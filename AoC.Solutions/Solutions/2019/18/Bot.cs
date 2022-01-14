@@ -4,6 +4,8 @@ namespace AoC.Solutions.Solutions._2019._18;
 
 public class Bot
 {
+    public char Name { get; }
+
     public Point Position { get; }
 
     public int Steps { get; private set; }
@@ -16,8 +18,10 @@ public class Bot
 
     private readonly Dictionary<char, int> _history;
 
-    public Bot(Point position, char[,] map, Dictionary<string, int> distances)
+    public Bot(char name, Point position, char[,] map, Dictionary<string, int> distances)
     {
+        Name = name;
+
         Position = new Point(position);
 
         _direction = new Point();
@@ -36,6 +40,8 @@ public class Bot
 
     protected Bot(Bot bot, Point direction)
     {
+        Name = bot.Name;
+
         Position = new Point(bot.Position);
 
         Steps = bot.Steps;
