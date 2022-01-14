@@ -16,7 +16,9 @@ public class Bot
 
     private readonly Dictionary<string, int> _distances;
 
-    private readonly Dictionary<char, int> _history;
+    private readonly Dictionary<char, int> _itemHistory;
+
+    private static readonly HashSet<int> AllHistory = new();
 
     public Bot(char name, Point position, char[,] map, Dictionary<string, int> distances)
     {
@@ -30,10 +32,12 @@ public class Bot
 
         _distances = distances;
 
-        _history = new Dictionary<char, int>
-                   {
-                       { _map[Position.X, Position.Y], 0 }
-                   };
+        _itemHistory = new Dictionary<char, int>
+                       {
+                           { _map[Position.X, Position.Y], 0 }
+                       };
+
+        AllHistory.Add(HashCode.Combine(Name, Position));
 
         Steps = 0;
     }
@@ -52,13 +56,17 @@ public class Bot
 
         _direction = direction;
 
-        _history = bot._history.ToDictionary(k => k.Key, v => v.Value);
+        _itemHistory = bot._itemHistory.ToDictionary(k => k.Key, v => v.Value);
 
         Position.X += _direction.X;
 
         Position.Y += _direction.Y;
 
+        AllHistory.Add(HashCode.Combine(Name, Position));
+
         Steps++;
+
+        AddItemHistory();
     }
 
     public List<Bot> Move()
@@ -66,6 +74,7 @@ public class Bot
         var moves = GetPossibleMoves();
 
         var bots = new List<Bot>();
+
 
         if (moves.Count == 0)
         {
@@ -83,36 +92,11 @@ public class Bot
 
             Position.Y += _direction.Y;
 
+            AllHistory.Add(HashCode.Combine(Name, Position));
+
             Steps++;
 
-            var c = _map[Position.X, Position.Y];
-
-            if (char.IsLetter(c) || c == '@')
-            {
-                _history.Add(c, Steps);
-
-                foreach (var i in _history)
-                {
-                    var currentSteps = Steps - i.Value;
-
-                    if (i.Key != c)
-                    {
-                        var pair = new string(new[] { i.Key, c }.OrderBy(x => x).ToArray());
-
-                        if (_distances.ContainsKey(pair))
-                        {
-                            if (_distances[pair] > currentSteps)
-                            {
-                                _distances[pair] = currentSteps;
-                            }
-                        }
-                        else
-                        {
-                            _distances.Add(pair, currentSteps);
-                        }
-                    }
-                }
-            }
+            AddItemHistory();
 
             bots.Add(this);
 
@@ -121,10 +105,49 @@ public class Bot
 
         foreach (var move in moves)
         {
+            var newMove = new Point(Position.X + move.X, Position.Y + move.Y);
+
+            if (AllHistory.Contains(HashCode.Combine(Name, newMove)))
+            {
+                continue;
+            }
+
             bots.Add(new Bot(this, move));
         }
 
         return bots;
+    }
+
+    private void AddItemHistory()
+    {
+        var c = _map[Position.X, Position.Y];
+
+        if (char.IsLetter(c) || c == '@')
+        {
+            _itemHistory.Add(c, Steps);
+
+            foreach (var i in _itemHistory)
+            {
+                var currentSteps = Steps - i.Value;
+
+                if (i.Key != c)
+                {
+                    var pair = new string(new[] { i.Key, c }.OrderBy(x => x).ToArray());
+
+                    if (_distances.ContainsKey(pair))
+                    {
+                        if (_distances[pair] > currentSteps)
+                        {
+                            _distances[pair] = currentSteps;
+                        }
+                    }
+                    else
+                    {
+                        _distances.Add(pair, currentSteps);
+                    }
+                }
+            }
+        }
     }
 
     private List<Point> GetPossibleMoves()

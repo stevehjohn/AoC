@@ -27,13 +27,16 @@ public abstract class Base : Solution
 #if DUMP && DEBUG
         Visualiser.DumpMap(_map);
 #endif
-        var bots = new List<Bot>
-                   {
-                       new('@', _start, _map, _distances)
-                   };
+        //var bots = new List<Bot>
+        //           {
+        //               new ('@', _start, _map, _distances)
+        //           };
+
+        var bots = new List<Bot>();
 
         foreach (var node in _itemLocations)
         {
+            if (node.Key == 'e')
             bots.Add(new Bot(node.Key, node.Value, _map, _distances));
         }
 
@@ -55,6 +58,8 @@ public abstract class Base : Solution
 #if DUMP && DEBUG
         Visualiser.DumpBots(bots, _map);
 #endif
+
+        var ordered = _distances.Where(d => d.Key.Contains('e')).OrderBy(d => d.Key);
     }
 
     protected void ParseInput()
