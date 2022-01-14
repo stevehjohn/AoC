@@ -18,7 +18,7 @@ public class Bot
 
     private readonly Dictionary<char, int> _itemHistory;
 
-    private readonly Dictionary<string, List<Point>> _paths = new();
+    private readonly Dictionary<string, List<Point>> _paths;
     
     private readonly List<Point> _positionsSinceLastItem;
 
@@ -45,9 +45,10 @@ public class Bot
 
         AllHistory.Add(HashCode.Combine(Name, Position));
 
-        _positionsSinceLastItem = new List<Point>();
-        
-        _positionsSinceLastItem.Add(new Point(Position));
+        _positionsSinceLastItem = new List<Point>
+                                  {
+                                      new(Position)
+                                  };
 
         Steps = 0;
     }
