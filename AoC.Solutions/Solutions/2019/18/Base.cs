@@ -58,17 +58,46 @@ public abstract class Base : Solution
 #if DUMP && DEBUG
         Visualiser.DumpBots(bots, _map);
 #endif
+        var destination = new Destination(_target);
+
         FindPaths('@', _target);
     }
 
     private void FindPaths(char position, char door)
     {
-        var keys = FindRequiredKeys(position, door);
+        var destination = new Destination(_target);
+
+        var requiredKeys = FindRequiredKeys(position, door);
+
+        var availableKeys = FindAvailableKeys(position, requiredKeys.Select(k => (char) (k + 32)).ToList());
+
+        //foreach (var key in keys)
+        //{
+        //    var blocker = new Destination(key);
+
+        //}
+
+        // Find order keys are required in.
     }
 
-    private List<char> FindRequiredKeys(char position, char door)
+    private List<char> FindAvailableKeys(char position, List<char> required)
     {
-        var pathKey = new string(new[] { position, door }.OrderBy(x => x).ToArray());
+        var keys = new List<char>();
+
+        foreach (var key in required)
+        {
+            if (FindRequiredKeys(position, key).Count == 0)
+            {
+                keys.Add(key);
+            }
+        }
+
+        return keys;
+    }
+
+    private List<char> FindRequiredKeys(char position, char target)
+    {
+        var pathKey = new string(new[] { position, target }.OrderBy(x => x).ToArray());
 
         var path = _paths[pathKey];
 
