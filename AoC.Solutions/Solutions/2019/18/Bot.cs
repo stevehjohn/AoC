@@ -12,9 +12,9 @@ public class Bot
 
     private readonly char[,] _map;
 
-    private char _previousNode;
-
     private readonly Dictionary<string, int> _distances;
+
+    private readonly Dictionary<char, int> _history;
 
     public Bot(Point position, char[,] map, Dictionary<string, int> distances)
     {
@@ -24,9 +24,12 @@ public class Bot
 
         _map = map;
 
-        _previousNode = _map[Position.X, Position.Y];
-
         _distances = distances;
+
+        _history = new Dictionary<char, int>
+                   {
+                       { _map[Position.X, Position.Y], 0 }
+                   };
 
         Steps = 0;
     }
@@ -43,7 +46,7 @@ public class Bot
 
         _direction = direction;
 
-        _previousNode = bot._previousNode;
+        _history = bot._history.ToDictionary(k => k.Key, v => v.Value);
 
         Position.X += _direction.X;
 
@@ -80,23 +83,29 @@ public class Bot
 
             if (char.IsLetter(c) || c == '@')
             {
-                var pair = new string(new[] { _previousNode, c }.OrderBy(x => x).ToArray());
+                _history.Add(c, Steps);
 
-                if (_distances.ContainsKey(pair))
+                foreach (var i in _history)
                 {
-                    if (_distances[pair] > Steps)
+                    var currentSteps = Steps - i.Value;
+
+                    if (i.Key != c)
                     {
-                        _distances[pair] = Steps;
+                        var pair = new string(new[] { i.Key, c }.OrderBy(x => x).ToArray());
+
+                        if (_distances.ContainsKey(pair))
+                        {
+                            if (_distances[pair] > currentSteps)
+                            {
+                                _distances[pair] = currentSteps;
+                            }
+                        }
+                        else
+                        {
+                            _distances.Add(pair, currentSteps);
+                        }
                     }
                 }
-                else
-                {
-                    _distances.Add(pair, Steps);
-                }
-
-                Steps = 0;
-
-                _previousNode = c;
             }
 
             bots.Add(this);
