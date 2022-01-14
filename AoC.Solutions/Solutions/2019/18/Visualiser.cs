@@ -61,7 +61,7 @@ public static class Visualiser
 
                     Console.SetCursorPosition(position.X + 1, position.Y + 1);
 
-                    Console.Write(key);
+                    Console.Write(k);
                 }
             }
 
