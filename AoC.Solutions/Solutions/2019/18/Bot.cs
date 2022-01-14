@@ -12,15 +12,21 @@ public class Bot
 
     private readonly char[,] _map;
 
-    private char _previousNode = '\0';
+    private char _previousNode;
 
-    public Bot(Point position, char[,] map)
+    private readonly Dictionary<string, int> _distances;
+
+    public Bot(Point position, char[,] map, Dictionary<string, int> distances)
     {
         Position = new Point(position);
 
         _direction = new Point();
 
         _map = map;
+
+        _previousNode = _map[Position.X, Position.Y];
+
+        _distances = distances;
 
         Steps = 0;
     }
@@ -33,7 +39,11 @@ public class Bot
 
         _map = bot._map;
 
+        _distances = bot._distances;
+
         _direction = direction;
+
+        _previousNode = bot._previousNode;
 
         Position.X += _direction.X;
 
@@ -65,6 +75,29 @@ public class Bot
             Position.Y += _direction.Y;
 
             Steps++;
+
+            var c = _map[Position.X, Position.Y];
+
+            if (char.IsLetter(c) || c == '@')
+            {
+                var pair = new string(new[] { _previousNode, c }.OrderBy(x => x).ToArray());
+
+                if (_distances.ContainsKey(pair))
+                {
+                    if (_distances[pair] > Steps)
+                    {
+                        _distances[pair] = Steps;
+                    }
+                }
+                else
+                {
+                    _distances.Add(pair, Steps);
+                }
+
+                Steps = 0;
+
+                _previousNode = c;
+            }
 
             bots.Add(this);
 

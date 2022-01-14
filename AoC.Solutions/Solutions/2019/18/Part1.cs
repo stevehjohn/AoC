@@ -9,8 +9,8 @@ public class Part1 : Base
     {
         ParseInput();
 
-        var result = Solve();
+        InterrogateMap();
 
-        return result.ToString();
+        return "TESTING";
     }
 }
