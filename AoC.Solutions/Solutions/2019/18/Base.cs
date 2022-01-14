@@ -20,6 +20,8 @@ public abstract class Base : Solution
 
     private readonly Dictionary<string, int> _distances = new();
 
+    private readonly Dictionary<string, List<Point>> _paths = new();
+
     private readonly Dictionary<char, Point> _itemLocations = new();
 
     protected void InterrogateMap()
@@ -29,14 +31,12 @@ public abstract class Base : Solution
 #endif
         var bots = new List<Bot>
                    {
-                       new ('@', _start, _map, _distances)
+                       new ('@', _start, _map, _distances, _paths)
                    };
-
-        //var bots = new List<Bot>();
 
         foreach (var node in _itemLocations)
         {
-            bots.Add(new Bot(node.Key, node.Value, _map, _distances));
+            bots.Add(new Bot(node.Key, node.Value, _map, _distances, _paths));
         }
 
         while (bots.Count > 0)
