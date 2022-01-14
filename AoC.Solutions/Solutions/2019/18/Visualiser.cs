@@ -48,7 +48,7 @@ public static class Visualiser
             }
             else
             {
-                Console.Write('.');
+                Console.Write(' ');
             }
         }
 
