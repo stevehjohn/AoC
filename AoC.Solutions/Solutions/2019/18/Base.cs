@@ -52,6 +52,13 @@ public abstract class Base : Solution
 #if DUMP && DEBUG
         Visualiser.DumpBots(bots.Select(b => b.Position).ToList(), _map);
 #endif
+
+        var ordered = _distances.OrderBy(d => d.Key);
+
+        foreach (var (key, value) in ordered)
+        {
+            Console.WriteLine($"{key}: {value}");
+        }
     }
 
     protected void ParseInput()
