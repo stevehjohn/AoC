@@ -53,8 +53,6 @@ public static class Visualiser
         Console.SetCursorPosition(0, _height + 3);
 
         Console.ForegroundColor = ConsoleColor.Green;
-
-        //Thread.Sleep(100);
     }
 
     public static void DumpMap(char[,] map)
