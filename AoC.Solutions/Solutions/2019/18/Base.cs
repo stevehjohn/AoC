@@ -16,13 +16,13 @@ public abstract class Base : Solution
 
     private Point _start;
 
-    private char _target = '\0';
-
     private readonly Dictionary<string, int> _distances = new();
 
     private readonly Dictionary<string, List<Point>> _paths = new();
 
     private readonly Dictionary<char, Point> _itemLocations = new();
+
+    private readonly List<string> _routes = new();
 
     protected void InterrogateMap()
     {
@@ -57,6 +57,49 @@ public abstract class Base : Solution
 #if DUMP && DEBUG
         Visualiser.DumpBots(bots);
 #endif
+
+        GenerateRoutes(new List<char>());
+    }
+
+    private void GenerateRoutes(List<char> collected)
+    {
+        FindAvailableKeys('@', collected);
+    }
+
+    private List<char> FindAvailableKeys(char position, List<char> collected)
+    {
+        var keys = new List<char>();
+
+        // TODO: This could really be optimised with a bit of pre-calculation.
+        foreach (var key in _itemLocations.Select(i => i.Key).Where(i => i >= 'a').Except(collected)) // Hopefully IEnumerable of all uncollected keys.
+        {
+            if (IsAccessible(position, key, collected))
+            {
+                keys.Add(key);
+            }
+        }
+
+        return keys;
+    }
+
+    private bool IsAccessible(char position, char target, List<char> collected)
+    {
+        var pathKey = new string(new[] { position, target }.OrderBy(x => x).ToArray());
+
+        var path = _paths[pathKey];
+
+        foreach (var itemLocation in _itemLocations)
+        {
+            if (itemLocation.Key < 'a' && ! collected.Contains(char.ToLower(itemLocation.Key)))
+            {
+                if (path.Contains(itemLocation.Value))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     protected void ParseInput()
@@ -78,11 +121,6 @@ public abstract class Base : Solution
                 if (c == '@')
                 {
                     _start = new Point(x, y);
-                }
-
-                if (c > _target)
-                {
-                    _target = c;
                 }
 
                 if (char.IsLetter(c))
