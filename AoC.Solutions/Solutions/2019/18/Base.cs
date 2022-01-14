@@ -60,38 +60,37 @@ public abstract class Base : Solution
 #endif
         var destination = new Destination(_target);
 
-        FindPaths('@', destination);
+        FindPaths('@', destination, new List<char>());
     }
 
-    private void FindPaths(char position, Destination destination)
+    private void FindPaths(char position, Destination destination, List<char> foundKeys)
     {
-        var requiredKeys = FindRequiredKeys(position, destination.Name);
+        var requiredKeys = FindRequiredKeys(position, destination.Name, foundKeys);
 
-        var availableKeys = FindAvailableKeys(position, requiredKeys.Select(k => (char) (k + 32)).ToList());
+        var availableKeys = FindAvailableKeys(position, requiredKeys.Select(k => (char) (k + 32)).ToList(), foundKeys);
 
-        foreach (var availableKey in availableKeys)
+        foreach (var key in availableKeys)
         {
-            var keyDestination = new Destination(availableKey);
+            FindPaths(key, destination, foundKeys.Union(availableKeys.Select(char.ToLower)).ToList());
 
-            destination.Requires.Add(keyDestination);
+            //var keyDestination = new Destination(key);
+
+            //destination.Requires.Add(keyDestination);
+
+            //foreach (var item in destination.Requires)
+            //{
+            //    FindPaths(key, destination, foundKeys.Union(availableKeys.Select(char.ToLower)).ToList());
+            //}
         }
-
-        //foreach (var key in keys)
-        //{
-        //    var blocker = new Destination(key);
-
-        //}
-
-        // Find order keys are required in.
     }
 
-    private List<char> FindAvailableKeys(char position, List<char> required)
+    private List<char> FindAvailableKeys(char position, List<char> required, List<char> foundKeys)
     {
         var keys = new List<char>();
 
         foreach (var key in required)
         {
-            if (FindRequiredKeys(position, key).Count == 0)
+            if (FindRequiredKeys(position, key, foundKeys).Count == 0)
             {
                 keys.Add(key);
             }
@@ -100,7 +99,7 @@ public abstract class Base : Solution
         return keys;
     }
 
-    private List<char> FindRequiredKeys(char position, char target)
+    private List<char> FindRequiredKeys(char position, char target, List<char> foundKeys)
     {
         var pathKey = new string(new[] { position, target }.OrderBy(x => x).ToArray());
 
@@ -110,7 +109,7 @@ public abstract class Base : Solution
 
         foreach (var itemLocation in _itemLocations)
         {
-            if (itemLocation.Key < 'a')
+            if (itemLocation.Key < 'a' && ! foundKeys.Contains(char.ToLower(itemLocation.Key)))
             {
                 if (path.Contains(itemLocation.Value))
                 {
