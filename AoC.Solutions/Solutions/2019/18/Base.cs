@@ -57,8 +57,6 @@ public abstract class Base : Solution
 #if DUMP && DEBUG
         Visualiser.DumpBots(bots, _map);
 #endif
-
-        var ordered = _distances.OrderBy(d => d.Key);
     }
 
     protected void ParseInput()
