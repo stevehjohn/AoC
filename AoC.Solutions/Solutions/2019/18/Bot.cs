@@ -18,9 +18,13 @@ public class Bot
 
     private readonly Dictionary<char, int> _itemHistory;
 
+    private readonly Dictionary<string, List<Point>> _paths = new();
+    
+    private readonly List<Point> _positionsSinceLastItem;
+
     private static readonly HashSet<int> AllHistory = new();
 
-    public Bot(char name, Point position, char[,] map, Dictionary<string, int> distances)
+    public Bot(char name, Point position, char[,] map, Dictionary<string, int> distances, Dictionary<string, List<Point>> paths)
     {
         Name = name;
 
@@ -32,12 +36,18 @@ public class Bot
 
         _distances = distances;
 
+        _paths = paths;
+
         _itemHistory = new Dictionary<char, int>
                        {
                            { _map[Position.X, Position.Y], 0 }
                        };
 
         AllHistory.Add(HashCode.Combine(Name, Position));
+
+        _positionsSinceLastItem = new List<Point>();
+        
+        _positionsSinceLastItem.Add(new Point(Position));
 
         Steps = 0;
     }
@@ -54,6 +64,8 @@ public class Bot
 
         _distances = bot._distances;
 
+        _paths = bot._paths;
+
         _direction = direction;
 
         _itemHistory = bot._itemHistory.ToDictionary(k => k.Key, v => v.Value);
@@ -63,6 +75,10 @@ public class Bot
         Position.Y += _direction.Y;
 
         AllHistory.Add(HashCode.Combine(Name, Position));
+
+        _positionsSinceLastItem = bot._positionsSinceLastItem.ToList();
+
+        _positionsSinceLastItem.Add(new Point(Position));
 
         Steps++;
 
@@ -93,6 +109,8 @@ public class Bot
             Position.Y += _direction.Y;
 
             AllHistory.Add(HashCode.Combine(Name, Position));
+            
+            _positionsSinceLastItem.Add(new Point(Position));
 
             Steps++;
 
@@ -139,12 +157,18 @@ public class Bot
                         if (_distances[pair] > currentSteps)
                         {
                             _distances[pair] = currentSteps;
+
+                            _paths[pair] = _positionsSinceLastItem.ToList();
                         }
                     }
                     else
                     {
                         _distances.Add(pair, currentSteps);
+
+                        _paths.Add(pair, _positionsSinceLastItem.ToList());
                     }
+
+                    _positionsSinceLastItem.Clear();
                 }
             }
         }
