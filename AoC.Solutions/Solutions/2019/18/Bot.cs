@@ -12,6 +12,8 @@ public class Bot
 
     private readonly char[,] _map;
 
+    private char _previousNode = '\0';
+
     public Bot(Point position, char[,] map)
     {
         Position = new Point(position);
@@ -51,9 +53,12 @@ public class Bot
             return bots;
         }
 
-        if (moves.Count == 1)
+        if (moves.Count == 1 || moves.Count == 3)
         {
-            _direction = moves.First();
+            if (moves.Count == 1)
+            {
+                _direction = moves.First();
+            }
 
             Position.X += _direction.X;
 
