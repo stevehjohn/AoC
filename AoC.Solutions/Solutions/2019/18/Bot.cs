@@ -169,7 +169,7 @@ public class Bot
                         _paths.Add(pair, _positionsSinceLastItem.ToList());
                     }
 
-                    _positionsSinceLastItem.Clear();
+                    //_positionsSinceLastItem.Clear();
                 }
             }
         }
