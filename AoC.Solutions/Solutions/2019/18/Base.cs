@@ -63,14 +63,16 @@ public abstract class Base : Solution
 
     private void FindPaths(char position, char door)
     {
-        FindRequiredKeys(position, door);
+        var keys = FindRequiredKeys(position, door);
     }
 
-    private void FindRequiredKeys(char position, char door)
+    private List<char> FindRequiredKeys(char position, char door)
     {
         var pathKey = new string(new[] { position, door }.OrderBy(x => x).ToArray());
 
         var path = _paths[pathKey];
+
+        var keys = new List<char>();
 
         foreach (var itemLocation in _itemLocations)
         {
@@ -78,9 +80,12 @@ public abstract class Base : Solution
             {
                 if (path.Contains(itemLocation.Value))
                 {
+                    keys.Add(itemLocation.Key);
                 }
             }
         }
+
+        return keys;
     }
 
     protected void ParseInput()
