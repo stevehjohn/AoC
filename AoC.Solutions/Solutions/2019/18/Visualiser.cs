@@ -84,7 +84,7 @@ public static class Visualiser
                     continue;
                 }
 
-                if (char.IsLetter(c))
+                if (char.IsLetter(c) || c == '@')
                 {
                     Console.BackgroundColor = ConsoleColor.DarkBlue;
 

@@ -18,20 +18,23 @@ public abstract class Base : Solution
 
     private char _target = '\0';
 
-    private readonly Dictionary<char, Node> _nodes = new();
-
     private readonly Dictionary<string, int> _distances = new();
+
+    private readonly Dictionary<char, Point> _itemLocations = new();
 
     protected void InterrogateMap()
     {
 #if DUMP && DEBUG
         Visualiser.DumpMap(_map);
 #endif
-        var bots = new List<Bot>();
+        var bots = new List<Bot>
+                   {
+                       new(_start, _map, _distances)
+                   };
 
-        foreach (var node in _nodes)
+        foreach (var node in _itemLocations)
         {
-            bots.Add(new Bot(node.Value.Position, _map, _distances));
+            bots.Add(new Bot(node.Value, _map, _distances));
         }
 
         while (bots.Count > 0)
@@ -52,23 +55,6 @@ public abstract class Base : Solution
 #if DUMP && DEBUG
         Visualiser.DumpBots(bots.Select(b => b.Position).ToList(), _map);
 #endif
-
-        BuildNodeGraph();
-    }
-
-    private void BuildNodeGraph()
-    {
-        foreach (var pair in _distances)
-        {
-            var combinations = new[] { pair.Key, new(new [] { pair.Key[1], pair.Key[0] }) };
-
-            foreach (var combination in combinations)
-            {
-                var parent = _nodes[combination[0]];
-
-                parent.Distances.Add(new Distance(pair.Value, _nodes[combination[1]]));
-            }
-        }
     }
 
     protected void ParseInput()
@@ -90,8 +76,6 @@ public abstract class Base : Solution
                 if (c == '@')
                 {
                     _start = new Point(x, y);
-
-                    _nodes.Add(c, new Node(c, new Point(x, y)));
                 }
 
                 if (c > _target)
@@ -101,7 +85,7 @@ public abstract class Base : Solution
 
                 if (char.IsLetter(c))
                 {
-                    _nodes.Add(c, new Node(c, new Point(x, y)));
+                    _itemLocations.Add(c, new Point(x, y));
                 }
             }
         }
