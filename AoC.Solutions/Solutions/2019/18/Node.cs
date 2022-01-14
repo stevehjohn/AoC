@@ -9,10 +9,14 @@ public class Node
 
     public Point Position { get; }
 
+    public Dictionary<char, int> Distances { get; }
+
     public Node(char name, Point position)
     {
         Name = name;
 
         Position = position;
+
+        Distances = new Dictionary<char, int>();
     }
 }

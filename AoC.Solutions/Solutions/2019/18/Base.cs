@@ -20,7 +20,9 @@ public abstract class Base : Solution
 
     private readonly List<Node> _nodes = new();
 
-    protected int Solve()
+    private readonly Dictionary<string, int> _distances = new();
+
+    protected void InterrogateMap()
     {
 #if DUMP && DEBUG
         Visualiser.DumpMap(_map);
@@ -29,7 +31,7 @@ public abstract class Base : Solution
 
         foreach (var node in _nodes)
         {
-            bots.Add(new Bot(node.Position, _map));
+            bots.Add(new Bot(node.Position, _map, _distances));
         }
 
         while (bots.Count > 0)
@@ -47,7 +49,9 @@ public abstract class Base : Solution
             bots = newBots;
         }
 
-        return 0;
+#if DUMP && DEBUG
+        Visualiser.DumpBots(bots.Select(b => b.Position).ToList(), _map);
+#endif
     }
 
     protected void ParseInput()
