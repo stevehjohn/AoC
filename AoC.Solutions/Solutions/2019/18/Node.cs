@@ -4,12 +4,11 @@ namespace AoC.Solutions.Solutions._2019._18;
 
 public class Node
 {
-
     public char Name { get; }
 
     public Point Position { get; }
 
-    public Dictionary<char, int> Distances { get; }
+    public List<Distance> Distances { get; }
 
     public Node(char name, Point position)
     {
@@ -17,6 +16,20 @@ public class Node
 
         Position = position;
 
-        Distances = new Dictionary<char, int>();
+        Distances = new List<Distance>();
+    }
+}
+
+public class Distance
+{
+    public int Steps { get; }
+
+    public Node Destination { get; }
+
+    public Distance(int steps, Node destination)
+    {
+        Steps = steps;
+
+        Destination = destination;
     }
 }

@@ -18,7 +18,7 @@ public abstract class Base : Solution
 
     private char _target = '\0';
 
-    private readonly List<Node> _nodes = new();
+    private readonly Dictionary<char, Node> _nodes = new();
 
     private readonly Dictionary<string, int> _distances = new();
 
@@ -31,13 +31,13 @@ public abstract class Base : Solution
 
         foreach (var node in _nodes)
         {
-            bots.Add(new Bot(node.Position, _map, _distances));
+            bots.Add(new Bot(node.Value.Position, _map, _distances));
         }
 
         while (bots.Count > 0)
         {
 #if DUMP && DEBUG
-            Visualiser.DumpBots(bots.Select(b => b.Position).ToList(), _map);
+            //Visualiser.DumpBots(bots.Select(b => b.Position).ToList(), _map);
 #endif
             var newBots = new List<Bot>();
 
@@ -53,11 +53,21 @@ public abstract class Base : Solution
         Visualiser.DumpBots(bots.Select(b => b.Position).ToList(), _map);
 #endif
 
-        var ordered = _distances.OrderBy(d => d.Key);
+        BuildNodeGraph();
+    }
 
-        foreach (var (key, value) in ordered)
+    private void BuildNodeGraph()
+    {
+        foreach (var pair in _distances)
         {
-            Console.WriteLine($"{key}: {value}");
+            var combinations = new[] { pair.Key, new(new [] { pair.Key[1], pair.Key[0] }) };
+
+            foreach (var combination in combinations)
+            {
+                var parent = _nodes[combination[0]];
+
+                parent.Distances.Add(new Distance(pair.Value, _nodes[combination[1]]));
+            }
         }
     }
 
@@ -81,7 +91,7 @@ public abstract class Base : Solution
                 {
                     _start = new Point(x, y);
 
-                    _nodes.Add(new Node(c, new Point(x, y)));
+                    _nodes.Add(c, new Node(c, new Point(x, y)));
                 }
 
                 if (c > _target)
@@ -91,7 +101,7 @@ public abstract class Base : Solution
 
                 if (char.IsLetter(c))
                 {
-                    _nodes.Add(new Node(c, new Point(x, y)));
+                    _nodes.Add(c, new Node(c, new Point(x, y)));
                 }
             }
         }
