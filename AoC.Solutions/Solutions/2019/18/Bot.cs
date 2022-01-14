@@ -66,7 +66,7 @@ public class Bot
             return bots;
         }
 
-        if (moves.Count == 1 || moves.Count == 3)
+        if (moves.Count == 1)
         {
             if (moves.Count == 1)
             {
