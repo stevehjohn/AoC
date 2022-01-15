@@ -1,4 +1,6 @@
-﻿using AoC.Solutions.Common;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text;
+using AoC.Solutions.Common;
 
 namespace AoC.Solutions.Solutions._2019._18;
 
@@ -16,15 +18,17 @@ public class Bot
 
     private readonly Dictionary<string, int> _distances;
 
-    private readonly Dictionary<char, int> _itemHistory;
+    private readonly List<(char Item, int Steps)> _itemHistory;
 
     private readonly Dictionary<string, List<Point>> _paths;
+
+    private readonly Dictionary<string, string> _doors;
     
     private readonly List<Point> _positionsSinceLastItem;
 
     private static readonly HashSet<int> AllHistory = new();
 
-    public Bot(char name, Point position, char[,] map, Dictionary<string, int> distances, Dictionary<string, List<Point>> paths)
+    public Bot(char name, Point position, char[,] map, Dictionary<string, int> distances, Dictionary<string, List<Point>> paths, Dictionary<string, string> doors)
     {
         Name = name;
 
@@ -38,9 +42,11 @@ public class Bot
 
         _paths = paths;
 
-        _itemHistory = new Dictionary<char, int>
+        _doors = doors;
+
+        _itemHistory = new List<(char Item, int Steps)>
                        {
-                           { _map[Position.X, Position.Y], 0 }
+                           ( Item: _map[Position.X, Position.Y], Steps: 0 )
                        };
 
         AllHistory.Add(HashCode.Combine(Name, Position));
@@ -67,9 +73,11 @@ public class Bot
 
         _paths = bot._paths;
 
+        _doors = bot._doors;
+
         _direction = direction;
 
-        _itemHistory = bot._itemHistory.ToDictionary(k => k.Key, v => v.Value);
+        _itemHistory = bot._itemHistory.ToList();
 
         Position.X += _direction.X;
 
@@ -143,15 +151,15 @@ public class Bot
 
         if (char.IsLetter(c) || c == '@')
         {
-            _itemHistory.Add(c, Steps);
+            _itemHistory.Add((Item: c, Steps));
 
             foreach (var i in _itemHistory)
             {
-                var currentSteps = Steps - i.Value;
+                var currentSteps = Steps - i.Steps;
 
-                if (i.Key != c)
+                if (i.Item != c)
                 {
-                    var pair = new string(new[] { i.Key, c }.OrderBy(x => x).ToArray());
+                    var pair = new string(new[] { i.Item, c }.OrderBy(x => x).ToArray());
 
                     if (_distances.ContainsKey(pair))
                     {
@@ -160,6 +168,8 @@ public class Bot
                             _distances[pair] = currentSteps;
 
                             _paths[pair] = _positionsSinceLastItem.ToList();
+
+                            AddBlockerData();
                         }
                     }
                     else
@@ -167,10 +177,54 @@ public class Bot
                         _distances.Add(pair, currentSteps);
 
                         _paths.Add(pair, _positionsSinceLastItem.ToList());
-                    }
 
-                    //_positionsSinceLastItem.Clear();
+                        AddBlockerData();
+                    }
                 }
+            }
+        }
+    }
+
+    private void AddBlockerData()
+    {
+        var historyLength = _itemHistory.Count;
+
+        if (historyLength > 2)
+        {
+            var last = _itemHistory[^1].Item;
+
+            if (! char.IsLower(last))
+            {
+                return;
+            }
+
+            var index = 2;
+
+            var blockerBuilder = new StringBuilder();
+
+            while (index < historyLength && char.IsUpper(_itemHistory[^index].Item))
+            {
+                blockerBuilder.Append(_itemHistory[^index].Item);
+
+                index++;
+            }
+
+            var blockers = blockerBuilder.ToString();
+
+            if (char.IsUpper(_itemHistory[^index].Item))
+            {
+                return;
+            }
+
+            var path = $"{_itemHistory[^index].Item}{last}";
+
+            if (_doors.ContainsKey(path))
+            {
+                _doors[path] = blockers;
+            }
+            else
+            {
+                _doors.Add(path, blockers);
             }
         }
     }
