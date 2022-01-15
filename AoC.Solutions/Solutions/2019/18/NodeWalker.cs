@@ -4,13 +4,13 @@ public class NodeWalker
 {
     private readonly Node _node;
 
-    public readonly HashSet<char> _visited;
+    public HashSet<char> Visited { get; }
 
     private readonly Dictionary<string, string> _doors;
 
     public int Steps { get; }
 
-    public int VisitedCount => _visited.Count;
+    public int VisitedCount => Visited.Count;
 
     public NodeWalker(Node node, Dictionary<string, string> doors)
     {
@@ -18,7 +18,7 @@ public class NodeWalker
 
         _doors = doors;
 
-        _visited = new HashSet<char>
+        Visited = new HashSet<char>
                    {
                        node.Name
                    };
@@ -30,7 +30,7 @@ public class NodeWalker
 
         _doors = previous._doors;
 
-        _visited = new HashSet<char>(previous._visited)
+        Visited = new HashSet<char>(previous.Visited)
                    {
                        node.Name
                    };
@@ -44,7 +44,7 @@ public class NodeWalker
 
         foreach (var (child, distance) in _node.Children)
         {
-            if (_visited.Contains(child.Name))
+            if (Visited.Contains(child.Name))
             {
                 continue;
             }
@@ -54,16 +54,12 @@ public class NodeWalker
                 continue;
             }
 
-            //_visited.Add(child.Name);
-
-            //Steps += distance;
-
             newWalkers.Add(new NodeWalker(this, child, distance));
         }
 
         return newWalkers;
     }
-
+    
     private bool IsBlocked(char target)
     {
         if (! _doors.TryGetValue($"{target}{_node.Name}", out var blockers))
@@ -78,7 +74,7 @@ public class NodeWalker
 
         foreach (var door in blockers)
         {
-            if (! _visited.Contains(char.ToLower(door)))
+            if (! Visited.Contains(char.ToLower(door)))
             {
                 return true;
             }

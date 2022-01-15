@@ -205,7 +205,6 @@ public class Bot
 
             while (index < historyLength)
             {
-                //if (char.IsUpper(_itemHistory[^index].Item))
                 if (_itemHistory[^index].Item != '@')
                 {
                     blockerBuilder.Append(_itemHistory[^index].Item);
