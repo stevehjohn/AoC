@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Text;
 using AoC.Solutions.Common;
 
 namespace AoC.Solutions.Solutions._2019._18;
@@ -56,15 +57,41 @@ public class Graph
         {
             var walker = queue.Dequeue();
 
-            if (walker.Steps > minSteps)
+            if (walker.Steps >= minSteps)
             {
                 continue;
             }
 
             var newWalkers = walker.Walk();
 
-            if (newWalkers.Count == 0 && walker.VisitedCount == 27)
+            if (newWalkers.Count == 0 && walker.VisitedCount == _nodes.Count)
             {
+                var total = 0;
+
+                var prev = '\0';
+
+                foreach (var c in walker._visited)
+                {
+                    if (prev != '\0')
+                    {
+                        var pair = new string(new[] { prev, c }.OrderBy(x => x).ToArray());
+
+                        var steps = _distances[pair];
+
+                        Console.WriteLine($"{prev} -> {c}: {steps}");
+
+                        total += steps;
+                    }
+
+                    prev = c;
+                }
+
+                Console.WriteLine();
+                
+                Console.WriteLine($"{total} vs {walker.Steps}");
+                
+                Console.WriteLine();
+
                 if (walker.Steps < minSteps)
                 {
                     minSteps = walker.Steps;
@@ -81,108 +108,5 @@ public class Graph
         Console.WriteLine(sw.Elapsed);
 
         return minSteps;
-    }
-}
-
-public class Node
-{
-    public char Name { get; }
-
-    public Dictionary<Node, int> Children { get; }
-
-    public Node(char name)
-    {
-        Name = name;
-
-        Children = new Dictionary<Node, int>();
-    }
-}
-
-public class NodeWalker
-{
-    private readonly Node _node;
-
-    private readonly HashSet<char> _visited;
-
-    private readonly Dictionary<string, string> _doors;
-
-    private readonly Dictionary<char, Point> _itemLocations;
-
-    public int Steps { get; private set; }
-
-    public int VisitedCount => _visited.Count;
-
-    public NodeWalker(Node node, Dictionary<string, string> doors)
-    {
-        _node = node;
-
-        _doors = doors;
-
-        _visited = new HashSet<char>
-                   {
-                       node.Name
-                   };
-    }
-
-    public NodeWalker(NodeWalker previous, Node node)
-    {
-        _node = node;
-
-        _doors = previous._doors;
-
-        _itemLocations = previous._itemLocations;
-
-        _visited = new HashSet<char>(previous._visited);
-
-        Steps = previous.Steps;
-    }
-
-    public List<NodeWalker> Walk()
-    {
-        var newWalkers = new List<NodeWalker>();
-
-        foreach (var (child, distance) in _node.Children)
-        {
-            if (_visited.Contains(child.Name))
-            {
-                continue;
-            }
-
-            if (IsBlocked(child.Name))
-            {
-                continue;
-            }
-
-            _visited.Add(child.Name);
-
-            Steps += distance;
-
-            newWalkers.Add(new NodeWalker(this, child));
-        }
-
-        return newWalkers;
-    }
-
-    private bool IsBlocked(char target)
-    {
-        if (! _doors.TryGetValue($"{target}{_node.Name}", out var blockers))
-        {
-            _doors.TryGetValue($"{_node.Name}{target}", out blockers);
-        }
-
-        if (blockers == null)
-        {
-            return false;
-        }
-
-        foreach (var door in blockers)
-        {
-            if (! _visited.Contains(char.ToLower(door)))
-            {
-                return true;
-            }
-        }
-        
-        return false;
     }
 }
