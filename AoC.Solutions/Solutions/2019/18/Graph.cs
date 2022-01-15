@@ -1,4 +1,6 @@
-﻿namespace AoC.Solutions.Solutions._2019._18;
+﻿using System.Diagnostics;
+
+namespace AoC.Solutions.Solutions._2019._18;
 
 public class Graph
 {
@@ -37,11 +39,13 @@ public class Graph
 
     public int Solve()
     {
-        var queue = new Queue<NodeWalker>();
+        var queue = new PriorityQueue<NodeWalker, int>();
 
-        queue.Enqueue(new NodeWalker(_nodes['@']));
+        queue.Enqueue(new NodeWalker(_nodes['@']), 0);
 
         var minSteps = int.MaxValue;
+
+        var sw = Stopwatch.StartNew();
 
         while (queue.Count > 0)
         {
@@ -64,8 +68,12 @@ public class Graph
                 continue;
             }
 
-            newWalkers.ForEach(w => queue.Enqueue(w));
+            newWalkers.ForEach(w => queue.Enqueue(w, int.MaxValue - w.Steps));
         }
+
+        sw.Stop();
+
+        Console.WriteLine(sw.Elapsed);
 
         return minSteps;
     }
