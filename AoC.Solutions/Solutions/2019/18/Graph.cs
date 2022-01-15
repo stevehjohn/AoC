@@ -71,31 +71,38 @@ public class Graph
 
             if (newWalkers.Count == 0 && walker.VisitedCount == _nodes.Count)
             {
-                var total = 0;
-
-                var prev = '\0';
-
                 foreach (var c in walker.Visited)
                 {
-                    if (prev != '\0')
-                    {
-                        var pair = new string(new[] { prev, c }.OrderBy(x => x).ToArray());
-
-                        var steps = _distances[pair];
-
-                        Console.WriteLine($"{prev} -> {c}: {steps}");
-
-                        total += steps;
-                    }
-
-                    prev = c;
+                    Console.Write(c);
                 }
 
-                Console.WriteLine();
+                Console.WriteLine($" {walker.Steps}");
 
-                Console.WriteLine($"{total} vs {walker.Steps}");
+                //var total = 0;
 
-                Console.WriteLine();
+                //var prev = '\0';
+
+                //foreach (var c in walker.Visited)
+                //{
+                //    if (prev != '\0')
+                //    {
+                //        var pair = new string(new[] { prev, c }.OrderBy(x => x).ToArray());
+
+                //        var steps = _distances[pair];
+
+                //        Console.WriteLine($"{prev} -> {c}: {steps}");
+
+                //        total += steps;
+                //    }
+
+                //    prev = c;
+                //}
+
+                //Console.WriteLine();
+
+                //Console.WriteLine($"{total} vs {walker.Steps}");
+
+                //Console.WriteLine();
 
                 if (walker.Steps < minSteps)
                 {
