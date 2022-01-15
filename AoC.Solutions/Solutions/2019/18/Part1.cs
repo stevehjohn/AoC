@@ -11,6 +11,8 @@ public class Part1 : Base
 
         InterrogateMap();
 
+        var result = FindShortestPath();
+
         return "TESTING";
     }
 }
