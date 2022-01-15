@@ -42,7 +42,7 @@ public abstract class Base : Solution
         while (bots.Count > 0)
         {
 #if DUMP && DEBUG
-            //Visualiser.DumpBots(bots);
+            Visualiser.DumpBots(bots);
 #endif
             var newBots = new List<Bot>();
 
