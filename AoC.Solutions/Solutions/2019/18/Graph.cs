@@ -154,10 +154,10 @@ public class NodeWalker
                 continue;
             }
 
-            if (IsBlocked(child.Name))
-            {
-                continue;
-            }
+            //if (IsBlocked(child.Name))
+            //{
+            //    continue;
+            //}
 
             _visited.Add(child.Name);
 
