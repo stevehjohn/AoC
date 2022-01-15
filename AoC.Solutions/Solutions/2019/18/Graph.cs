@@ -60,6 +60,13 @@ public class Graph
                 continue;
             }
 
+            //foreach (var c in walker.Visited)
+            //{
+            //    Console.Write(c);
+            //}
+
+            //Console.WriteLine();
+
             var newWalkers = walker.Walk();
 
             if (newWalkers.Count == 0 && walker.VisitedCount == _nodes.Count)
@@ -85,9 +92,9 @@ public class Graph
                 }
 
                 Console.WriteLine();
-                
+
                 Console.WriteLine($"{total} vs {walker.Steps}");
-                
+
                 Console.WriteLine();
 
                 if (walker.Steps < minSteps)
