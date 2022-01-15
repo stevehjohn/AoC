@@ -13,6 +13,6 @@ public class Part1 : Base
 
         var result = FindShortestPath();
 
-        return "TESTING";
+        return result.ToString();
     }
 }

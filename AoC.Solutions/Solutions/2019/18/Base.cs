@@ -61,7 +61,7 @@ public abstract class Base : Solution
     {
         var graph = new Graph();
 
-        graph.Build(_distances);
+        graph.Build(_distances, _paths, _itemLocations);
 
         var result = graph.Solve();
 
