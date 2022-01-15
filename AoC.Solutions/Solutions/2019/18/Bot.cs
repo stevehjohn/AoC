@@ -191,9 +191,11 @@ public class Bot
 
         if (historyLength > 2)
         {
+            var first = _itemHistory[0].Item;
+
             var last = _itemHistory[^1].Item;
 
-            if (! char.IsLower(last))
+            if (! char.IsLower(first) || ! char.IsLower(last))
             {
                 return;
             }
@@ -202,16 +204,19 @@ public class Bot
 
             var blockerBuilder = new StringBuilder();
 
-            while (index < historyLength && char.IsUpper(_itemHistory[^index].Item))
+            while (index < historyLength)
             {
-                blockerBuilder.Append(_itemHistory[^index].Item);
+                if (char.IsUpper(_itemHistory[^index].Item))
+                {
+                    blockerBuilder.Append(_itemHistory[^index].Item);
+                }
 
                 index++;
             }
 
             var blockers = blockerBuilder.ToString();
 
-            if (char.IsUpper(_itemHistory[^index].Item))
+            if (blockers.Length == 0)
             {
                 return;
             }

@@ -27,7 +27,7 @@ public abstract class Base : Solution
     protected void InterrogateMap()
     {
 #if DUMP && DEBUG
-        //Visualiser.DumpMap(_map);
+        Visualiser.DumpMap(_map);
 #endif
         var bots = new List<Bot>
                    {
@@ -55,7 +55,7 @@ public abstract class Base : Solution
         }
 
 #if DUMP && DEBUG
-        //Visualiser.DumpBots(bots);
+        Visualiser.DumpBots(bots);
 #endif
     }
 
