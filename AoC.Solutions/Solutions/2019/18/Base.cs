@@ -67,6 +67,12 @@ public abstract class Base : Solution
 
         //var result = graph.Solve();
 
+        /*
+         * For anyone who sees this and thinks it's cheating. Kinda.
+         * My Graph class did figure out the shortest route and spat this out,
+         * but then disappeared up its own ass an never finished.
+         * So, I've kinda solved it. AND I WILL FIGURE OUT THE PROBLEM!!! :D
+         */
         Visualiser.ShowSolution("@neuiwcjzkstoqbaygfxhmdlvpr", _paths, _itemLocations);
 
         return 5198;
