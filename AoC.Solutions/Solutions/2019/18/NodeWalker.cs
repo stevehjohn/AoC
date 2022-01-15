@@ -24,7 +24,7 @@ public class NodeWalker
                    };
     }
 
-    public NodeWalker(NodeWalker previous, Node node, int distance)
+    private NodeWalker(NodeWalker previous, Node node, int distance)
     {
         _node = node;
 
