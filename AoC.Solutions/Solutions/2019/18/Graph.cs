@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using AoC.Solutions.Common;
 
 namespace AoC.Solutions.Solutions._2019._18;
 
@@ -8,9 +9,17 @@ public class Graph
 
     private Dictionary<string, int> _distances;
 
-    public void Build(Dictionary<string, int> distances)
+    private Dictionary<string, List<Point>> _paths;
+
+    private Dictionary<char, Point> _itemLocations;
+
+    public void Build(Dictionary<string, int> distances, Dictionary<string, List<Point>> paths, Dictionary<char, Point> itemLocations)
     {
         _distances = distances;
+
+        _paths = paths;
+
+        _itemLocations = itemLocations;
 
         _nodes.Add('@', new Node('@'));
 
@@ -41,7 +50,7 @@ public class Graph
     {
         var queue = new PriorityQueue<NodeWalker, int>();
 
-        queue.Enqueue(new NodeWalker(_nodes['@']), 0);
+        queue.Enqueue(new NodeWalker(_nodes['@'], _paths, _itemLocations), 0);
 
         var minSteps = int.MaxValue;
 
@@ -58,7 +67,7 @@ public class Graph
 
             var newWalkers = walker.Walk();
 
-            if (newWalkers.Count == 0)
+            if (newWalkers.Count == 0 && walker.VisitedCount == 27)
             {
                 if (walker.Steps < minSteps)
                 {
@@ -68,7 +77,7 @@ public class Graph
                 continue;
             }
 
-            newWalkers.ForEach(w => queue.Enqueue(w, int.MaxValue - w.Steps));
+            newWalkers.ForEach(w => queue.Enqueue(w, int.MaxValue - w.VisitedCount));
         }
 
         sw.Stop();
@@ -99,11 +108,21 @@ public class NodeWalker
 
     private readonly HashSet<char> _visited;
 
+    private readonly Dictionary<string, List<Point>> _paths;
+
+    private readonly Dictionary<char, Point> _itemLocations;
+
     public int Steps { get; private set; }
 
-    public NodeWalker(Node node)
+    public int VisitedCount => _visited.Count;
+
+    public NodeWalker(Node node, Dictionary<string, List<Point>> paths, Dictionary<char, Point> itemLocations)
     {
         _node = node;
+
+        _paths = paths;
+
+        _itemLocations = itemLocations;
 
         _visited = new HashSet<char>
                    {
@@ -114,6 +133,10 @@ public class NodeWalker
     public NodeWalker(NodeWalker previous, Node node)
     {
         _node = node;
+
+        _paths = previous._paths;
+
+        _itemLocations = previous._itemLocations;
 
         _visited = new HashSet<char>(previous._visited);
 
@@ -131,6 +154,11 @@ public class NodeWalker
                 continue;
             }
 
+            if (IsBlocked(child.Name))
+            {
+                continue;
+            }
+
             _visited.Add(child.Name);
 
             Steps += distance;
@@ -139,5 +167,25 @@ public class NodeWalker
         }
 
         return newWalkers;
+    }
+
+    private bool IsBlocked(char target)
+    {
+        var pathKey = new string(new[] { _node.Name, target }.OrderBy(x => x).ToArray());
+
+        var path = _paths[pathKey];
+
+        foreach (var itemLocation in _itemLocations)
+        {
+            if (itemLocation.Key < 'a' && ! _visited.Contains(char.ToLower(itemLocation.Key)))
+            {
+                if (path.Contains(itemLocation.Value))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }
