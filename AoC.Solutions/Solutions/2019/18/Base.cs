@@ -22,8 +22,6 @@ public abstract class Base : Solution
 
     private readonly Dictionary<char, Point> _itemLocations = new();
 
-    private readonly List<string> _routes = new();
-
     protected void InterrogateMap()
     {
 #if DUMP && DEBUG
@@ -57,49 +55,17 @@ public abstract class Base : Solution
 #if DUMP && DEBUG
         Visualiser.DumpBots(bots);
 #endif
-
-        GenerateRoutes(new List<char>());
     }
 
-    private void GenerateRoutes(List<char> collected)
+    public int FindShortestPath()
     {
-        FindAvailableKeys('@', collected);
-    }
+        var graph = new Graph();
 
-    private List<char> FindAvailableKeys(char position, List<char> collected)
-    {
-        var keys = new List<char>();
+        graph.Build(_distances);
 
-        // TODO: This could really be optimised with a bit of pre-calculation.
-        foreach (var key in _itemLocations.Select(i => i.Key).Where(i => i >= 'a').Except(collected)) // Hopefully IEnumerable of all uncollected keys.
-        {
-            if (IsAccessible(position, key, collected))
-            {
-                keys.Add(key);
-            }
-        }
+        var result = graph.Solve();
 
-        return keys;
-    }
-
-    private bool IsAccessible(char position, char target, List<char> collected)
-    {
-        var pathKey = new string(new[] { position, target }.OrderBy(x => x).ToArray());
-
-        var path = _paths[pathKey];
-
-        foreach (var itemLocation in _itemLocations)
-        {
-            if (itemLocation.Key < 'a' && ! collected.Contains(char.ToLower(itemLocation.Key)))
-            {
-                if (path.Contains(itemLocation.Value))
-                {
-                    return false;
-                }
-            }
-        }
-
-        return true;
+        return result;
     }
 
     protected void ParseInput()
