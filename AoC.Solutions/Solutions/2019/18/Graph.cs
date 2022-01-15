@@ -68,7 +68,7 @@ public class Graph
 
                 var prev = '\0';
 
-                foreach (var c in walker._visited)
+                foreach (var c in walker.Visited)
                 {
                     if (prev != '\0')
                     {
