@@ -7,19 +7,15 @@ public class Graph
 {
     private readonly Dictionary<char, Node> _nodes = new();
 
+    private Dictionary<string, string> _doors;
+
     private Dictionary<string, int> _distances;
 
-    private Dictionary<string, List<Point>> _paths;
-
-    private Dictionary<char, Point> _itemLocations;
-
-    public void Build(Dictionary<string, int> distances, Dictionary<string, List<Point>> paths, Dictionary<char, Point> itemLocations)
+    public void Build(Dictionary<string, int> distances, Dictionary<string, string> doors)
     {
         _distances = distances;
 
-        _paths = paths;
-
-        _itemLocations = itemLocations;
+        _doors = doors;
 
         _nodes.Add('@', new Node('@'));
 
@@ -50,7 +46,7 @@ public class Graph
     {
         var queue = new PriorityQueue<NodeWalker, int>();
 
-        queue.Enqueue(new NodeWalker(_nodes['@'], _paths, _itemLocations), 0);
+        queue.Enqueue(new NodeWalker(_nodes['@'], _doors), 0);
 
         var minSteps = int.MaxValue;
 
@@ -108,7 +104,7 @@ public class NodeWalker
 
     private readonly HashSet<char> _visited;
 
-    private readonly Dictionary<string, List<Point>> _paths;
+    private readonly Dictionary<string, string> _doors;
 
     private readonly Dictionary<char, Point> _itemLocations;
 
@@ -116,13 +112,11 @@ public class NodeWalker
 
     public int VisitedCount => _visited.Count;
 
-    public NodeWalker(Node node, Dictionary<string, List<Point>> paths, Dictionary<char, Point> itemLocations)
+    public NodeWalker(Node node, Dictionary<string, string> doors)
     {
         _node = node;
 
-        _paths = paths;
-
-        _itemLocations = itemLocations;
+        _doors = doors;
 
         _visited = new HashSet<char>
                    {
@@ -134,7 +128,7 @@ public class NodeWalker
     {
         _node = node;
 
-        _paths = previous._paths;
+        _doors = previous._doors;
 
         _itemLocations = previous._itemLocations;
 
@@ -154,10 +148,10 @@ public class NodeWalker
                 continue;
             }
 
-            //if (IsBlocked(child.Name))
-            //{
-            //    continue;
-            //}
+            if (IsBlocked(child.Name))
+            {
+                continue;
+            }
 
             _visited.Add(child.Name);
 
@@ -171,21 +165,24 @@ public class NodeWalker
 
     private bool IsBlocked(char target)
     {
-        var pathKey = new string(new[] { _node.Name, target }.OrderBy(x => x).ToArray());
-
-        var path = _paths[pathKey];
-
-        foreach (var itemLocation in _itemLocations)
+        if (! _doors.TryGetValue($"{target}{_node.Name}", out var blockers))
         {
-            if (itemLocation.Key < 'a' && ! _visited.Contains(char.ToLower(itemLocation.Key)))
-            {
-                if (path.Contains(itemLocation.Value))
-                {
-                    return false;
-                }
-            }
+            _doors.TryGetValue($"{_node.Name}{target}", out blockers);
         }
 
-        return true;
+        if (blockers == null)
+        {
+            return false;
+        }
+
+        foreach (var door in blockers)
+        {
+            if (! _visited.Contains(char.ToLower(door)))
+            {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }
