@@ -1,6 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using AoC.Solutions.Common;
 using System.Text;
-using AoC.Solutions.Common;
 
 namespace AoC.Solutions.Solutions._2019._18;
 
@@ -59,7 +58,7 @@ public class Bot
         Steps = 0;
     }
 
-    protected Bot(Bot bot, Point direction)
+    private Bot(Bot bot, Point direction)
     {
         Name = bot.Name;
 
@@ -195,7 +194,7 @@ public class Bot
 
             var last = _itemHistory[^1].Item;
 
-            if (! char.IsLower(first) || ! char.IsLower(last))
+            if (char.IsUpper(first) && first != '@' || ! char.IsLower(last))
             {
                 return;
             }
@@ -206,7 +205,8 @@ public class Bot
 
             while (index < historyLength)
             {
-                if (char.IsUpper(_itemHistory[^index].Item))
+                //if (char.IsUpper(_itemHistory[^index].Item))
+                if (_itemHistory[^index].Item != '@')
                 {
                     blockerBuilder.Append(_itemHistory[^index].Item);
                 }
