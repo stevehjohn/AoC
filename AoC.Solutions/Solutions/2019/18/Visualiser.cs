@@ -12,14 +12,16 @@ public static class Visualiser
 
     private static List<Point> _previousBots = new();
 
-    public static void ShowSolution(string solution, Dictionary<string, List<Point>> paths, Dictionary<char, Point> itemLocations)
+    public static void ShowSolution(string solution, Dictionary<string, List<Point>> paths, Dictionary<char, Point> itemLocations, List<Point> starts)
     {
-        // TODO: Get rid.
-        itemLocations.Add('@', new Point(40, 40));
+        foreach (var start in starts)
+        {
+            itemLocations.Add('@', new Point(start));
+        }
 
         for (var i = 0; i < solution.Length - 1; i++)
         {
-            var pathKey = new string(new[] { solution[i], solution[ i + 1] }.OrderBy(x => x).ToArray());
+            var pathKey = new string(new[] { solution[i], solution[i + 1] }.OrderBy(x => x).ToArray());
 
             var path = paths[pathKey];
 
@@ -57,11 +59,11 @@ public static class Visualiser
                 }
 
                 Console.SetCursorPosition(itemLocations[solution[i + 1]].X + 1, itemLocations[solution[i + 1]].Y + 1);
-                
+
                 Console.Write(solution[i + 1]);
 
                 Console.SetCursorPosition(itemLocations[char.ToUpper(solution[i + 1])].X + 1, itemLocations[char.ToUpper(solution[i + 1])].Y + 1);
-                
+
                 Console.Write(char.ToUpper(solution[i + 1]));
 
                 Thread.Sleep(200);
@@ -72,11 +74,11 @@ public static class Visualiser
             Console.BackgroundColor = ConsoleColor.Black;
 
             Console.SetCursorPosition(itemLocations[solution[i + 1]].X + 1, itemLocations[solution[i + 1]].Y + 1);
-                
+
             Console.Write(' ');
 
             Console.SetCursorPosition(itemLocations[char.ToUpper(solution[i + 1])].X + 1, itemLocations[char.ToUpper(solution[i + 1])].Y + 1);
-                
+
             Console.Write(' ');
 
             foreach (var point in path)

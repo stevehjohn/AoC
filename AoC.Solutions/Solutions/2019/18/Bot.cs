@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Common;
+﻿using System.Diagnostics;
+using AoC.Solutions.Common;
 using System.Text;
 
 namespace AoC.Solutions.Solutions._2019._18;
@@ -98,7 +99,6 @@ public class Bot
         var moves = GetPossibleMoves();
 
         var bots = new List<Bot>();
-
 
         if (moves.Count == 0)
         {
