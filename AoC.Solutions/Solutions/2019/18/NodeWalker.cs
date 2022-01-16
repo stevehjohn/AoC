@@ -14,6 +14,8 @@ public class NodeWalker
 
     public int VisitedCount => Visited.Count;
 
+    public bool IsDeadEnd { get; private set; }
+
     public string Signature 
     {
         get
@@ -57,7 +59,7 @@ public class NodeWalker
                       };
     }
 
-    private NodeWalker(NodeWalker previous, Node node, int distance)
+    private NodeWalker(NodeWalker previous, Node node, int distance, bool isDeadEnd = false)
     {
         _node = node;
 
@@ -72,6 +74,8 @@ public class NodeWalker
                       {
                           node.Name
                       };
+
+        IsDeadEnd = isDeadEnd || IsDeadEnd;
 
         Steps = previous.Steps + distance;
     }
@@ -89,6 +93,10 @@ public class NodeWalker
 
             if (IsBlocked(child.Name))
             {
+                IsDeadEnd = true;
+
+                newWalkers.Add(new NodeWalker(this, child, distance, true));
+
                 continue;
             }
 

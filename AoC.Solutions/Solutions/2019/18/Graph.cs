@@ -78,7 +78,7 @@ public class Graph
 
             var newWalkers = walker.Walk();
 
-            if (newWalkers.Count == 0 && walker.VisitedCount == _nodes.Count)
+            if (newWalkers.Count == 0 && walker.VisitedCount == _nodes.Count && ! walker.IsDeadEnd)
             {
                 foreach (var c in walker.Visited)
                 {
@@ -146,7 +146,10 @@ public class Graph
                     signatures.Add(signature, newWalker.Steps);
                 }
 
-                queue.Enqueue(newWalker, int.MaxValue - walker.VisitedCount);
+                if (! newWalker.IsDeadEnd)
+                {
+                    queue.Enqueue(newWalker, walker.Steps);
+                }
             }
         }
 
