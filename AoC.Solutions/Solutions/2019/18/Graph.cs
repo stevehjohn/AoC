@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Text;
 
 namespace AoC.Solutions.Solutions._2019._18;
 
@@ -41,13 +42,21 @@ public class Graph
         }
     }
 
-    public int Solve()
+    public (int Steps, string Path) Solve()
     {
         var queue = new PriorityQueue<NodeWalker, int>();
 
-        queue.Enqueue(new NodeWalker(_nodes['@'], _doors), 0);
+        var signatures = new Dictionary<string, int>();
+
+        var startWalker = new NodeWalker(_nodes['@'], _doors);
+
+        signatures.Add(startWalker.Signature, 0);
+
+        queue.Enqueue(startWalker, 0);
 
         var minSteps = int.MaxValue;
+
+        var path = string.Empty;
 
         var sw = Stopwatch.StartNew();
 
@@ -106,19 +115,45 @@ public class Graph
 
                 if (walker.Steps < minSteps)
                 {
+                    var pathBuilder = new StringBuilder();
+
+                    foreach (var c in walker.Visited)
+                    {
+                        pathBuilder.Append(c);
+                    }
+
+                    path = pathBuilder.ToString();
+
                     minSteps = walker.Steps;
                 }
 
                 continue;
             }
 
-            newWalkers.ForEach(w => queue.Enqueue(w, int.MaxValue - w.VisitedCount));
+            foreach (var newWalker in newWalkers)
+            {
+                var signature = newWalker.Signature;
+
+                if (signatures.ContainsKey(signature))
+                {
+                    if (signatures[signature] < newWalker.Steps)
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    signatures.Add(signature, newWalker.Steps);
+                }
+
+                queue.Enqueue(newWalker, int.MaxValue - walker.VisitedCount);
+            }
         }
 
         sw.Stop();
 
         Console.WriteLine(sw.Elapsed);
 
-        return minSteps;
+        return (Steps: minSteps, Path: path);
     }
 }

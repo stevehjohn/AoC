@@ -8,13 +8,13 @@ public abstract class Base : Solution
 {
     public override string Description => "Maze and keys";
 
-    private char[,] _map;
+    protected char[,] Map;
 
     private int _width;
 
     private int _height;
 
-    private Point _start;
+    private readonly List<Point> _starts = new();
 
     private readonly Dictionary<string, int> _distances = new();
 
@@ -27,22 +27,26 @@ public abstract class Base : Solution
     protected void InterrogateMap()
     {
 #if DUMP && DEBUG
-        Visualiser.DumpMap(_map);
+        Visualiser.DumpMap(Map);
 #endif
-        var bots = new List<Bot>
-                   {
-                       new('@', _start, _map, _distances, _paths, _doors)
-                   };
+        FindStarts();
+
+        var bots = new List<Bot>();
+
+        foreach (var start in _starts)
+        {
+            bots.Add(new Bot('@', start, Map, _distances, _paths, _doors));
+        }
 
         foreach (var node in _itemLocations)
         {
-            bots.Add(new Bot(node.Key, node.Value, _map, _distances, _paths, _doors));
+            bots.Add(new Bot(node.Key, node.Value, Map, _distances, _paths, _doors));
         }
 
         while (bots.Count > 0)
         {
 #if DUMP && DEBUG
-            Visualiser.DumpBots(bots);
+            //Visualiser.DumpBots(bots);
 #endif
             var newBots = new List<Bot>();
 
@@ -61,23 +65,17 @@ public abstract class Base : Solution
 
     public int FindShortestPath()
     {
-        //var graph = new Graph();
+        var graph = new Graph();
 
-        //graph.Build(_distances, _doors);
+        graph.Build(_distances, _doors);
 
-        //var result = graph.Solve();
+        var result = graph.Solve();
 
-        /*
-         * For anyone who sees this and thinks it's cheating. Kinda.
-         * My Graph class did figure out the shortest route and spat this out,
-         * but then disappeared up its own ass an never finished.
-         * So, I've kinda solved it. AND I WILL FIGURE OUT THE PROBLEM!!! :D
-         */
 #if DUMP && DEBUG
-        Visualiser.ShowSolution("@neuiwcjzkstoqbaygfxhmdlvpr", _paths, _itemLocations);
+        Visualiser.ShowSolution(result.Path, _paths, _itemLocations, _starts);
 #endif
 
-        return 5198;
+        return result.Steps;
     }
 
     protected void ParseInput()
@@ -86,7 +84,7 @@ public abstract class Base : Solution
 
         _height = Input.Length;
 
-        _map = new char[_width, _height];
+        Map = new char[_width, _height];
 
         for (var y = 0; y < _height; y++)
         {
@@ -94,16 +92,25 @@ public abstract class Base : Solution
             {
                 var c = Input[y][x];
 
-                _map[x, y] = c;
-
-                if (c == '@')
-                {
-                    _start = new Point(x, y);
-                }
+                Map[x, y] = c;
 
                 if (char.IsLetter(c))
                 {
                     _itemLocations.Add(c, new Point(x, y));
+                }
+            }
+        }
+    }
+
+    private void FindStarts()
+    {
+        for (var y = 0; y < _height; y++)
+        {
+            for (var x = 0; x < _width; x++)
+            {
+                if (Map[x, y] == '@')
+                {
+                    _starts.Add(new Point(x, y));
                 }
             }
         }
