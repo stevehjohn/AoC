@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using AoC.Solutions.Common;
+﻿using AoC.Solutions.Common;
 using System.Text;
 
 namespace AoC.Solutions.Solutions._2019._18;

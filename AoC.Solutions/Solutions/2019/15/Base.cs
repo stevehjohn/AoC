@@ -56,11 +56,7 @@ public abstract class Base : Solution
 #if DEBUG && DUMP
         if (XOffset > int.MinValue)
         {
-            CheatDump(x, y);
-        }
-        else
-        {
-            Dump();
+            Dump(x, y);
         }
 #endif
 
@@ -115,13 +111,9 @@ public abstract class Base : Solution
 #if DEBUG && DUMP
             if (XOffset > int.MinValue)
             {
-                CheatDump(x, y);
+                Dump(x, y);
 
                 Thread.Sleep(10);
-            }
-            else
-            {
-                Dump();
             }
 #endif
         }
@@ -129,11 +121,7 @@ public abstract class Base : Solution
 #if DEBUG && DUMP
         if (XOffset > int.MinValue)
         {
-            CheatDump(x, y);
-        }
-        else
-        {
-            Dump();
+            Dump(x, y);
         }
 #endif
 
@@ -257,7 +245,7 @@ public abstract class Base : Solution
 
     private int _previousY = int.MinValue;
 
-    private void CheatDump(int x = int.MinValue, int y = int.MinValue)
+    private void Dump(int x = int.MinValue, int y = int.MinValue)
     {
         Console.ForegroundColor = ConsoleColor.White;
 
@@ -339,63 +327,6 @@ public abstract class Base : Solution
         _previousX = x;
 
         _previousY = y;
-    }
-
-    private void Dump(int pX = int.MinValue, int pY = int.MinValue)
-    {
-        Console.CursorTop = 1;
-
-        var xMin = _map.Min(m => m.Key);
-
-        var xMax = _map.Max(m => m.Key);
-
-        var yMin = _map.SelectMany(m => m.Value.Keys).Min();
-
-        var yMax = _map.SelectMany(m => m.Value.Keys).Max();
-
-        for (var y = yMin; y <= yMax; y++)
-        {
-            Console.Write(' ');
-
-            for (var x = xMin; x <= xMax; x++)
-            {
-                if (x == 0 && y == 0)
-                {
-                    Console.Write('S');
-
-                    continue;
-                }
-
-                if (x == pX && y == pY)
-                {
-                    Console.Write('⧱');
-
-                    continue;
-                }
-
-                if (x == _oxygenX && y == _oxygenY)
-                {
-                    Console.Write('O');
-
-                    continue;
-                }
-
-                var type = GetCellType(x, y);
-
-                var c = (int) type switch
-                {
-                    (int) CellType.Wall => '█',
-                    (int) CellType.Unknown => '?',
-                    _ => ' ' //(char) ('0' + type)
-                };
-
-                Console.Write(c);
-            }
-
-            Console.WriteLine();
-        }
-
-        Console.WriteLine();
     }
 #endif
 }

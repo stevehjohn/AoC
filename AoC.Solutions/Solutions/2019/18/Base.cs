@@ -1,5 +1,4 @@
-﻿#define DUMP
-using AoC.Solutions.Common;
+﻿using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2019._18;
@@ -46,7 +45,7 @@ public abstract class Base : Solution
         while (bots.Count > 0)
         {
 #if DUMP && DEBUG
-            //Visualiser.DumpBots(bots);
+            Visualiser.DumpBots(bots);
 #endif
             var newBots = new List<Bot>();
 
