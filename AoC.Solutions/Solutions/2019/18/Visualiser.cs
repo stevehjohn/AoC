@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Common;
+﻿#if DUMP && DEBUG
+using AoC.Solutions.Common;
 
 namespace AoC.Solutions.Solutions._2019._18;
 
@@ -196,3 +197,4 @@ public static class Visualiser
         }
     }
 }
+#endif

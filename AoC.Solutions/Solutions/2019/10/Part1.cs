@@ -27,11 +27,6 @@ public class Part1 : Base
         // ReSharper disable once PossibleNullReferenceException
         File.WriteAllText("2019.10.1.result", $"{bestScanner.X}, {bestScanner.Y}");
 
-#if DEBUG && DUMP
-        // ReSharper disable once PossibleNullReferenceException
-        Debug.WriteLine($"{bestScanner.X}, {bestScanner.Y}");
-#endif
-
         return maxDetectable.ToString();
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Text;
+﻿using System.Text;
 
 namespace AoC.Solutions.Solutions._2019._18;
 
@@ -58,8 +57,6 @@ public class Graph
 
         var path = string.Empty;
 
-        var sw = Stopwatch.StartNew();
-
         while (queue.Count > 0)
         {
             var walker = queue.Dequeue();
@@ -69,50 +66,10 @@ public class Graph
                 continue;
             }
 
-            //foreach (var c in walker.Visited)
-            //{
-            //    Console.Write(c);
-            //}
-
-            //Console.WriteLine();
-
             var newWalkers = walker.Walk();
 
-            if (newWalkers.Count == 0 && walker.VisitedCount == _nodes.Count && ! walker.IsDeadEnd)
+            if (newWalkers.Count == 0 && walker.VisitedCount == _nodes.Count)
             {
-                foreach (var c in walker.Visited)
-                {
-                    Console.Write(c);
-                }
-
-                Console.WriteLine($" {walker.Steps}");
-
-                //var total = 0;
-
-                //var prev = '\0';
-
-                //foreach (var c in walker.Visited)
-                //{
-                //    if (prev != '\0')
-                //    {
-                //        var pair = new string(new[] { prev, c }.OrderBy(x => x).ToArray());
-
-                //        var steps = _distances[pair];
-
-                //        Console.WriteLine($"{prev} -> {c}: {steps}");
-
-                //        total += steps;
-                //    }
-
-                //    prev = c;
-                //}
-
-                //Console.WriteLine();
-
-                //Console.WriteLine($"{total} vs {walker.Steps}");
-
-                //Console.WriteLine();
-
                 if (walker.Steps < minSteps)
                 {
                     var pathBuilder = new StringBuilder();
@@ -146,16 +103,9 @@ public class Graph
                     signatures.Add(signature, newWalker.Steps);
                 }
 
-                if (! newWalker.IsDeadEnd)
-                {
-                    queue.Enqueue(newWalker, walker.Steps);
-                }
+                queue.Enqueue(newWalker, walker.Steps);
             }
         }
-
-        sw.Stop();
-
-        Console.WriteLine(sw.Elapsed);
 
         return (Steps: minSteps, Path: path);
     }
