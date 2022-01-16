@@ -18,7 +18,7 @@ public class Graph
 
         _nodes.Add('@', new Node('@'));
 
-        foreach (var c in _distances.Select(d => char.ToLower(d.Key[1])).Distinct())
+        foreach (var c in _distances.Select(d => d.Key[1]).Where(char.IsLower).Distinct())
         {
             _nodes.Add(c, new Node(c));
         }
