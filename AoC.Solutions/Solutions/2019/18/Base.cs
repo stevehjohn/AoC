@@ -73,7 +73,9 @@ public abstract class Base : Solution
          * but then disappeared up its own ass an never finished.
          * So, I've kinda solved it. AND I WILL FIGURE OUT THE PROBLEM!!! :D
          */
+#if DUMP && DEBUG
         Visualiser.ShowSolution("@neuiwcjzkstoqbaygfxhmdlvpr", _paths, _itemLocations);
+#endif
 
         return 5198;
     }
