@@ -6,26 +6,47 @@ public abstract class Base : Solution
 {
     public override string Description => "Tobogganing through the trees";
 
-    protected bool[,] Map;
+    private bool[,] _map;
 
-    protected int Width;
+    private int _width;
 
-    protected int Height;
+    private int _height;
 
     protected void ParseInput()
     {
-        Width = Input[0].Length;
+        _width = Input[0].Length;
 
-        Height = Input.Length;
+        _height = Input.Length;
 
-        Map = new bool[Width, Height];
+        _map = new bool[_width, _height];
 
-        for (var y = 0; y < Height; y++)
+        for (var y = 0; y < _height; y++)
         {
-            for (var x = 0; x < Width; x++)
+            for (var x = 0; x < _width; x++)
             {
-                Map[x, y] = Input[y][x] == '#';
+                _map[x, y] = Input[y][x] == '#';
             }
         }
+    }
+
+    protected int CountTrees(int right, int down)
+    {
+        var trees = 0;
+
+        var x = 0;
+
+        for (var y = down; y < _height; y += down)
+        {
+            x += right;
+
+            if (x >= _width)
+            {
+                x -= _width;
+            }
+
+            trees += _map[x, y] ? 1 : 0;
+        }
+
+        return trees;
     }
 }
