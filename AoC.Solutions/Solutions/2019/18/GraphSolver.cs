@@ -4,24 +4,31 @@ namespace AoC.Solutions.Solutions._2019._18;
 
 public class GraphSolver
 {
-    private readonly Graph _graph;
+    private readonly Graph[] _graphs;
 
-    public GraphSolver(Graph graph)
+    public GraphSolver(Graph[] graphs)
     {
-        _graph = graph;
+        _graphs = graphs;
     }
 
     public (int Steps, string Path) Solve()
     {
-        var queue = new PriorityQueue<NodeWalker, int>();
+        var queue = new PriorityQueue<INodeWalker, int>();
 
         var signatures = new Dictionary<string, int>();
 
-        var startWalker = new NodeWalker(_graph.Nodes['@'], _graph);
+        var target = 0;
 
-        signatures.Add(startWalker.Signature, 0);
+        if (_graphs.Length == 1)
+        {
+            var startWalker = new NodeWalker(_graphs[0].Nodes['@'], _graphs[0]);
 
-        queue.Enqueue(startWalker, 0);
+            signatures.Add(startWalker.Signature, 0);
+
+            queue.Enqueue(startWalker, 0);
+
+            target = _graphs[0].Nodes.Count;
+        }
 
         var minSteps = int.MaxValue;
 
@@ -38,7 +45,7 @@ public class GraphSolver
 
             var newWalkers = walker.Walk();
 
-            if (newWalkers.Count == 0 && walker.VisitedCount == _graph.Nodes.Count)
+            if (newWalkers.Count == 0 && walker.VisitedCount == target)
             {
                 if (walker.Steps < minSteps)
                 {

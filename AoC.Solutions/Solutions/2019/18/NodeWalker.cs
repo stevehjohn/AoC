@@ -2,7 +2,7 @@
 
 namespace AoC.Solutions.Solutions._2019._18;
 
-public class NodeWalker
+public class NodeWalker : INodeWalker
 {
     private readonly Node _node;
 
