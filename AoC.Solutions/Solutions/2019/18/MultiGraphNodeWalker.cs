@@ -4,8 +4,6 @@ namespace AoC.Solutions.Solutions._2019._18;
 
 public class MultiGraphNodeWalker : INodeWalker
 {
-    private readonly Node _node;
-
     public HashSet<char> Visited { get; }
 
     private readonly Graph[] _graphs;
@@ -40,28 +38,43 @@ public class MultiGraphNodeWalker : INodeWalker
 
     private readonly List<char> _allVisited;
 
-    public MultiGraphNodeWalker(Node node, Graph[] graphs, int startGraphIndex)
-    {
-        _node = node;
+    private readonly int _graphIndex;
 
+    private readonly Node[] _graphNodes;
+
+    public MultiGraphNodeWalker(Graph[] graphs, int startGraphIndex)
+    {
         _graphs = graphs;
+        
+        _graphNodes = new Node[_graphs.Length];
+
+        for (var i = 0; i < graphs.Length; i++)
+        {
+            _graphNodes[i] = _graphs[i].Nodes.Single(kvp => char.IsNumber(kvp.Key)).Value;
+        }
+
+        _graphIndex = startGraphIndex;
 
         Visited = new HashSet<char>
                    {
-                       node.Name
+                       _graphNodes[_graphIndex].Name
                    };
 
         _allVisited = new List<char>
                       {
-                          node.Name
+                          _graphNodes[_graphIndex].Name
                       };
     }
 
     private MultiGraphNodeWalker(MultiGraphNodeWalker previous, Node node, int distance)
     {
-        _node = node;
-
         _graphs = previous._graphs;
+     
+        _graphNodes = previous._graphNodes.ToArray();
+
+        _graphIndex = previous._graphIndex;
+       
+        _graphNodes[_graphIndex] = node;
 
         Visited = new HashSet<char>(previous.Visited)
                    {
@@ -76,27 +89,52 @@ public class MultiGraphNodeWalker : INodeWalker
         Steps = previous.Steps + distance;
     }
 
+    private MultiGraphNodeWalker(MultiGraphNodeWalker previous, int newGraphIndex)
+    {
+        _graphs = previous._graphs;
+     
+        _graphNodes = previous._graphNodes.ToArray();
+
+        _graphIndex = newGraphIndex;
+
+        Visited = new HashSet<char>(previous.Visited)
+                  {
+                      (char) ('1' + newGraphIndex)
+                  };
+
+        _allVisited = new List<char>(previous._allVisited)
+                      {
+                          (char) ('1' + newGraphIndex)
+                      };
+
+        Steps = previous.Steps;
+    }
+
     public List<INodeWalker> Walk()
     {
         var newWalkers = new List<INodeWalker>();
 
-        foreach (var (child, distance) in _node.Children)
+        var alternatesAdded = false;
+
+        foreach (var (child, distance) in _graphNodes[_graphIndex].Children)
         {
             if (Visited.Contains(child.Name))
             {
                 continue;
             }
 
-            if (IsBlocked(child.Name))
+            if (IsBlocked(child.Name) && ! alternatesAdded)
             {
+                newWalkers.AddRange(AddAlternateGraphWalkers());
+
+                alternatesAdded = true;
+
                 continue;
             }
 
-            // TODO
-            if (! _graphs[0].Doors.TryGetValue($"{child.Name}{_node.Name}", out var blockers))
+            if (! _graphs[_graphIndex].Doors.TryGetValue($"{child.Name}{_graphNodes[_graphIndex].Name}", out var blockers))
             {
-                // TODO
-                _graphs[0].Doors.TryGetValue($"{_node.Name}{child.Name}", out blockers);
+                _graphs[_graphIndex].Doors.TryGetValue($"{_graphNodes[_graphIndex].Name}{child.Name}", out blockers);
             }
 
             if (blockers != null)
@@ -112,14 +150,29 @@ public class MultiGraphNodeWalker : INodeWalker
 
         return newWalkers;
     }
-    
+
+    private List<INodeWalker> AddAlternateGraphWalkers()
+    {
+        var newWalkers = new List<INodeWalker>();
+
+        for (var i = 0; i < _graphs.Length; i++)
+        {
+            if (i == _graphIndex)
+            {
+                continue;
+            }
+
+            newWalkers.Add(new MultiGraphNodeWalker(this, i));
+        }
+
+        return newWalkers;
+    }
+
     private bool IsBlocked(char target)
     {
-        // TODO
-        if (! _graphs[0].Doors.TryGetValue($"{target}{_node.Name}", out var blockers))
+        if (! _graphs[_graphIndex].Doors.TryGetValue($"{target}{_graphNodes[_graphIndex].Name}", out var blockers))
         {
-            // TODO
-            _graphs[0].Doors.TryGetValue($"{_node.Name}{target}", out blockers);
+            _graphs[_graphIndex].Doors.TryGetValue($"{_graphNodes[_graphIndex].Name}{target}", out blockers);
         }
 
         if (blockers == null)
