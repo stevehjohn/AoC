@@ -68,7 +68,9 @@ public abstract class Base : Solution
 
         graph.Build(_distances, _doors);
 
-        var result = graph.Solve();
+        var solver = new GraphSolver(graph);
+
+        var result = solver.Solve();
 
 #if DUMP && DEBUG
         Visualiser.ShowSolution(result.Path, _paths, _itemLocations, _starts);
