@@ -4,11 +4,11 @@ public class Graph
 {
     public Dictionary<char, Node> Nodes { get; private set; }
 
-    public Dictionary<string, string> Doors { get; private set; }
+    public Dictionary<string, HashSet<char>> Doors { get; private set; }
 
     private Dictionary<string, int> _distances;
 
-    public void Build(Dictionary<string, int> distances, Dictionary<string, string> doors)
+    public void Build(Dictionary<string, int> distances, Dictionary<string, HashSet<char>> doors)
     {
         Nodes = new Dictionary<char, Node>();
 

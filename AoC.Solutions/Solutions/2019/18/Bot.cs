@@ -1,5 +1,4 @@
 ﻿using AoC.Solutions.Common;
-using System.Text;
 
 namespace AoC.Solutions.Solutions._2019._18;
 
@@ -21,13 +20,13 @@ public class Bot
 
     private readonly Dictionary<string, List<Point>> _paths;
 
-    private readonly Dictionary<string, string> _doors;
-    
+    private readonly Dictionary<string, HashSet<char>> _doors;
+
     private readonly List<Point> _positionsSinceLastItem;
 
     private static readonly HashSet<int> AllHistory = new();
 
-    public Bot(char name, Point position, char[,] map, Dictionary<string, int> distances, Dictionary<string, List<Point>> paths, Dictionary<string, string> doors)
+    public Bot(char name, Point position, char[,] map, Dictionary<string, int> distances, Dictionary<string, List<Point>> paths, Dictionary<string, HashSet<char>> doors)
     {
         Name = name;
 
@@ -45,7 +44,7 @@ public class Bot
 
         _itemHistory = new List<(char Item, int Steps)>
                        {
-                           ( Item: _map[Position.X, Position.Y], Steps: 0 )
+                           (Item: _map[Position.X, Position.Y], Steps: 0)
                        };
 
         AllHistory.Add(HashCode.Combine(Name, Position));
@@ -101,6 +100,8 @@ public class Bot
 
         if (moves.Count == 0)
         {
+            AddBlockerData();
+
             return bots;
         }
 
@@ -116,7 +117,7 @@ public class Bot
             Position.Y += _direction.Y;
 
             AllHistory.Add(HashCode.Combine(Name, Position));
-            
+
             _positionsSinceLastItem.Add(new Point(Position));
 
             Steps++;
@@ -176,8 +177,6 @@ public class Bot
                     }
                 }
             }
-        
-            AddBlockerData();
         }
     }
 
@@ -189,46 +188,34 @@ public class Bot
         {
             var first = _itemHistory[0].Item;
 
-            var last = _itemHistory[^1].Item;
-
-            if (char.IsUpper(first) && first != '@' && ! char.IsNumber(first) || ! char.IsLower(last))
+            if (char.IsUpper(first))
             {
                 return;
             }
 
-            var index = 2;
-
-            var blockerBuilder = new StringBuilder();
-
-            while (index < historyLength)
+            for (var i = 2; i < historyLength; i++)
             {
-                if (_itemHistory[^index].Item != '@' && ! char.IsNumber(_itemHistory[^index].Item))
+                var current = _itemHistory[i].Item;
+
+                var pair = new string(new[] { first, current }.OrderBy(x => x).ToArray());
+
+                HashSet<char> doors;
+
+                if (_doors.ContainsKey(pair))
                 {
-                    blockerBuilder.Append(_itemHistory[^index].Item);
+                    doors = _doors[pair];
+                }
+                else
+                {
+                    doors = new HashSet<char>();
+
+                    _doors.Add(pair, doors);
                 }
 
-                index++;
-            }
-
-            var blockers = blockerBuilder.ToString();
-
-            if (blockers.Length == 0)
-            {
-                return;
-            }
-
-            var path = $"{_itemHistory[^index].Item}{last}";
-
-            if (_doors.ContainsKey(path))
-            {
-                if (_doors[path].Length < blockers.Length)
+                for (var d = 1; d < i; d++)
                 {
-                    _doors[path] = blockers;
+                    doors.Add(_itemHistory[d].Item);
                 }
-            }
-            else
-            {
-                _doors.Add(path, blockers);
             }
         }
     }

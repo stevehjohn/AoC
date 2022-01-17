@@ -14,6 +14,8 @@ public class NodeWalker : INodeWalker
 
     public int VisitedCount => Visited.Count;
 
+    public bool IsGraphSwitch => false;
+
     public string Signature 
     {
         get
