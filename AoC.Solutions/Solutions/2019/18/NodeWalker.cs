@@ -2,14 +2,14 @@
 
 namespace AoC.Solutions.Solutions._2019._18;
 
-public class NodeWalker
+public class NodeWalker : INodeWalker
 {
     private readonly Node _node;
 
-    public HashSet<char> Visited { get; }
+    private readonly Graph _graph;
 
-    private readonly Dictionary<string, string> _doors;
-
+    public List<char> AllVisited { get; }
+    
     public int Steps { get; }
 
     public int VisitedCount => Visited.Count;
@@ -20,11 +20,11 @@ public class NodeWalker
         {
             var builder = new StringBuilder();
 
-            builder.Append(_allVisited.First());
+            builder.Append(AllVisited.First());
 
-            if (_allVisited.Count > 2)
+            if (AllVisited.Count > 2)
             {
-                var ordered = _allVisited.GetRange(1, _allVisited.Count - 2).Distinct().OrderBy(c => c).ToArray();
+                var ordered = AllVisited.GetRange(1, AllVisited.Count - 2).Distinct().OrderBy(c => c).ToArray();
 
                 for (var i = 0; i < ordered.Length; i++)
                 {
@@ -32,53 +32,53 @@ public class NodeWalker
                 }
             }
             
-            builder.Append(_allVisited.Last());
+            builder.Append(AllVisited.Last());
 
             return builder.ToString();
         }
     }
 
-    private readonly List<char> _allVisited;
+    private HashSet<char> Visited { get; }
 
-    public NodeWalker(Node node, Dictionary<string, string> doors)
+    public NodeWalker(Node node, Graph graph)
     {
         _node = node;
 
-        _doors = doors;
+        _graph = graph;
 
         Visited = new HashSet<char>
                    {
                        node.Name
                    };
 
-        _allVisited = new List<char>
-                      {
-                          node.Name
-                      };
+        AllVisited = new List<char>
+                     {
+                         node.Name
+                     };
     }
 
     private NodeWalker(NodeWalker previous, Node node, int distance)
     {
         _node = node;
 
-        _doors = previous._doors;
+        _graph = previous._graph;
 
         Visited = new HashSet<char>(previous.Visited)
                    {
                        node.Name
                    };
 
-        _allVisited = new List<char>(previous._allVisited)
-                      {
-                          node.Name
-                      };
+        AllVisited = new List<char>(previous.AllVisited)
+                     {
+                         node.Name
+                     };
 
         Steps = previous.Steps + distance;
     }
 
-    public List<NodeWalker> Walk()
+    public List<INodeWalker> Walk()
     {
-        var newWalkers = new List<NodeWalker>();
+        var newWalkers = new List<INodeWalker>();
 
         foreach (var (child, distance) in _node.Children)
         {
@@ -92,16 +92,16 @@ public class NodeWalker
                 continue;
             }
 
-            if (! _doors.TryGetValue($"{child.Name}{_node.Name}", out var blockers))
+            if (! _graph.Doors.TryGetValue($"{child.Name}{_node.Name}", out var blockers))
             {
-                _doors.TryGetValue($"{_node.Name}{child.Name}", out blockers);
+                _graph.Doors.TryGetValue($"{_node.Name}{child.Name}", out blockers);
             }
 
             if (blockers != null)
             {
                 foreach (var blocker in blockers)
                 {
-                    _allVisited.Add(blocker);
+                    AllVisited.Add(blocker);
                 }
             }
 
@@ -113,9 +113,9 @@ public class NodeWalker
     
     private bool IsBlocked(char target)
     {
-        if (! _doors.TryGetValue($"{target}{_node.Name}", out var blockers))
+        if (! _graph.Doors.TryGetValue($"{target}{_node.Name}", out var blockers))
         {
-            _doors.TryGetValue($"{_node.Name}{target}", out blockers);
+            _graph.Doors.TryGetValue($"{_node.Name}{target}", out blockers);
         }
 
         if (blockers == null)

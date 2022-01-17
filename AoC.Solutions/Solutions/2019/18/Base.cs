@@ -13,33 +13,32 @@ public abstract class Base : Solution
 
     private int _height;
 
-    private readonly List<Point> _starts = new();
+    protected readonly Dictionary<string, int> Distances = new();
 
-    private readonly Dictionary<string, int> _distances = new();
+    protected readonly Dictionary<string, List<Point>> Paths = new();
 
-    private readonly Dictionary<string, List<Point>> _paths = new();
+    protected readonly Dictionary<string, HashSet<char>> Doors = new();
 
-    private readonly Dictionary<string, string> _doors = new();
-
-    private readonly Dictionary<char, Point> _itemLocations = new();
+    protected readonly Dictionary<char, Point> ItemLocations = new();
 
     protected void InterrogateMap()
     {
 #if DUMP && DEBUG
         Visualiser.DumpMap(Map);
 #endif
-        FindStarts();
-
         var bots = new List<Bot>();
 
-        foreach (var start in _starts)
+        // TODO: Don't really like this. Should probably pass around a pointer to AllHistory.
+        Bot.ResetStaticHistory();
+
+        foreach (var start in ItemLocations.Where(l => char.IsNumber(l.Key) || l.Key == '@'))
         {
-            bots.Add(new Bot('@', start, Map, _distances, _paths, _doors));
+            bots.Add(new Bot(start.Key, start.Value, Map, Distances, Paths, Doors));
         }
 
-        foreach (var node in _itemLocations)
+        foreach (var node in ItemLocations)
         {
-            bots.Add(new Bot(node.Key, node.Value, Map, _distances, _paths, _doors));
+            bots.Add(new Bot(node.Key, node.Value, Map, Distances, Paths, Doors));
         }
 
         while (bots.Count > 0)
@@ -62,21 +61,6 @@ public abstract class Base : Solution
 #endif
     }
 
-    public int FindShortestPath()
-    {
-        var graph = new Graph();
-
-        graph.Build(_distances, _doors);
-
-        var result = graph.Solve();
-
-#if DUMP && DEBUG
-        Visualiser.ShowSolution(result.Path, _paths, _itemLocations, _starts);
-#endif
-
-        return result.Steps;
-    }
-
     protected void ParseInput()
     {
         _width = Input[0].Length;
@@ -89,27 +73,22 @@ public abstract class Base : Solution
         {
             for (var x = 0; x < _width; x++)
             {
-                var c = Input[y][x];
-
-                Map[x, y] = c;
-
-                if (char.IsLetter(c))
-                {
-                    _itemLocations.Add(c, new Point(x, y));
-                }
+                Map[x, y] = Input[y][x];
             }
         }
     }
 
-    private void FindStarts()
+    protected void FindItemLocations()
     {
         for (var y = 0; y < _height; y++)
         {
             for (var x = 0; x < _width; x++)
             {
-                if (Map[x, y] == '@' || char.IsNumber(Map[x, y]))
+                var c = Map[x, y];
+
+                if (char.IsLetter(c) || char.IsNumber(c) || c == '@')
                 {
-                    _starts.Add(new Point(x, y));
+                    ItemLocations.Add(c, new Point(x, y));
                 }
             }
         }
