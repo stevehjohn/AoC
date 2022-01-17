@@ -29,7 +29,7 @@ public class Part1 : Base
         var result = solver.Solve();
 
 #if DUMP && DEBUG
-        var pathToVisualise = result.Path.Where(c => ! char.IsUpper(c)).ToArray();
+        var pathToVisualise = result.Path.Distinct().Where(c => ! char.IsUpper(c)).ToArray();
 
         Visualiser.ShowSolution(new string(pathToVisualise), Paths, ItemLocations);
 #endif
