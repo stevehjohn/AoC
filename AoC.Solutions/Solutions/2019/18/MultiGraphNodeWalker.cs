@@ -4,13 +4,13 @@ namespace AoC.Solutions.Solutions._2019._18;
 
 public class MultiGraphNodeWalker : INodeWalker
 {
-    public HashSet<char> Visited { get; }
+    public List<char> AllVisited { get; }
 
     private readonly Graph[] _graphs;
 
     public int Steps { get; }
 
-    public int VisitedCount => Visited.Count;
+    public int VisitedCount => _visited.Count;
 
     public string Signature 
     {
@@ -18,11 +18,11 @@ public class MultiGraphNodeWalker : INodeWalker
         {
             var builder = new StringBuilder();
 
-            builder.Append(_allVisited.First());
+            builder.Append(AllVisited.First());
 
-            if (_allVisited.Count > 2)
+            if (AllVisited.Count > 2)
             {
-                var ordered = _allVisited.GetRange(1, _allVisited.Count - 2).Distinct().OrderBy(c => c).ToArray();
+                var ordered = AllVisited.GetRange(1, AllVisited.Count - 2).Distinct().OrderBy(c => c).ToArray();
 
                 for (var i = 0; i < ordered.Length; i++)
                 {
@@ -30,13 +30,13 @@ public class MultiGraphNodeWalker : INodeWalker
                 }
             }
             
-            builder.Append(_allVisited.Last());
+            builder.Append(AllVisited.Last());
 
             return builder.ToString();
         }
     }
 
-    private readonly List<char> _allVisited;
+    private readonly HashSet<char> _visited;
 
     private readonly int _graphIndex;
 
@@ -55,12 +55,12 @@ public class MultiGraphNodeWalker : INodeWalker
 
         _graphIndex = startGraphIndex;
 
-        Visited = new HashSet<char>
+        _visited = new HashSet<char>
                    {
                        _graphNodes[_graphIndex].Name
                    };
 
-        _allVisited = new List<char>
+        AllVisited = new List<char>
                       {
                           _graphNodes[_graphIndex].Name
                       };
@@ -76,12 +76,12 @@ public class MultiGraphNodeWalker : INodeWalker
        
         _graphNodes[_graphIndex] = node;
 
-        Visited = new HashSet<char>(previous.Visited)
+        _visited = new HashSet<char>(previous._visited)
                    {
                        node.Name
                    };
 
-        _allVisited = new List<char>(previous._allVisited)
+        AllVisited = new List<char>(previous.AllVisited)
                       {
                           node.Name
                       };
@@ -97,12 +97,12 @@ public class MultiGraphNodeWalker : INodeWalker
 
         _graphIndex = newGraphIndex;
 
-        Visited = new HashSet<char>(previous.Visited)
+        _visited = new HashSet<char>(previous._visited)
                   {
                       (char) ('1' + newGraphIndex)
                   };
 
-        _allVisited = new List<char>(previous._allVisited)
+        AllVisited = new List<char>(previous.AllVisited)
                       {
                           (char) ('1' + newGraphIndex)
                       };
@@ -116,7 +116,7 @@ public class MultiGraphNodeWalker : INodeWalker
 
         foreach (var (child, distance) in _graphNodes[_graphIndex].Children)
         {
-            if (Visited.Contains(child.Name))
+            if (_visited.Contains(child.Name))
             {
                 continue;
             }
@@ -135,7 +135,7 @@ public class MultiGraphNodeWalker : INodeWalker
             {
                 foreach (var blocker in blockers)
                 {
-                    _allVisited.Add(blocker);
+                    AllVisited.Add(blocker);
                 }
             }
 
@@ -178,7 +178,7 @@ public class MultiGraphNodeWalker : INodeWalker
 
         foreach (var door in blockers)
         {
-            if (! Visited.Contains(char.ToLower(door)))
+            if (! _visited.Contains(char.ToLower(door)))
             {
                 return true;
             }

@@ -13,7 +13,7 @@ public static class Visualiser
 
     private static List<Point> _previousBots = new();
 
-    public static void ShowSolution(string solution, Dictionary<string, List<Point>> paths, Dictionary<char, Point> itemLocations)
+    public static void ShowSolution(string solution, Dictionary<string, List<Point>> paths, Dictionary<char, Point> itemLocations, bool leaveBot = false)
     {
         for (var i = 0; i < solution.Length - 1; i++)
         {
@@ -86,6 +86,15 @@ public static class Visualiser
                 Console.Write('█');
             }
 
+            if (leaveBot)
+            {
+                Console.SetCursorPosition(path[^1].X + 1, path[^1].Y + 1);
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+
+                Console.Write('█');
+            }
+            
             Console.ForegroundColor = ConsoleColor.Green;
         }
 
