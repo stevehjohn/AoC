@@ -147,7 +147,7 @@ public class Bot
     {
         var c = _map[Position.X, Position.Y];
 
-        if (char.IsLetter(c) || c == '@')
+        if (char.IsLetter(c) || c == '@' || char.IsNumber(c))
         {
             _itemHistory.Add((Item: c, Steps));
 
@@ -193,7 +193,7 @@ public class Bot
 
             var last = _itemHistory[^1].Item;
 
-            if (char.IsUpper(first) && first != '@' || ! char.IsLower(last))
+            if (char.IsUpper(first) && first != '@' && ! char.IsNumber(first) || ! char.IsLower(last))
             {
                 return;
             }
@@ -204,7 +204,7 @@ public class Bot
 
             while (index < historyLength)
             {
-                if (_itemHistory[^index].Item != '@')
+                if (_itemHistory[^index].Item != '@' && ! char.IsNumber(_itemHistory[^index].Item))
                 {
                     blockerBuilder.Append(_itemHistory[^index].Item);
                 }
