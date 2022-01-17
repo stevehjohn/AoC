@@ -1,29 +1,29 @@
-﻿using System.Text;
-
-namespace AoC.Solutions.Solutions._2019._18;
+﻿namespace AoC.Solutions.Solutions._2019._18;
 
 public class Graph
 {
-    private readonly Dictionary<char, Node> _nodes = new();
+    public Dictionary<char, Node> Nodes { get; private set; }
 
-    private Dictionary<string, string> _doors;
+    public Dictionary<string, string> Doors { get; private set; }
 
     private Dictionary<string, int> _distances;
 
     public void Build(Dictionary<string, int> distances, Dictionary<string, string> doors)
     {
+        Nodes = new Dictionary<char, Node>();
+
         _distances = distances;
 
-        _doors = doors;
+        Doors = doors;
 
-        _nodes.Add('@', new Node('@'));
+        Nodes.Add('@', new Node('@'));
 
         foreach (var c in _distances.Select(d => d.Key[1]).Where(char.IsLower).Distinct())
         {
-            _nodes.Add(c, new Node(c));
+            Nodes.Add(c, new Node(c));
         }
 
-        foreach (var (parentKey, node) in _nodes)
+        foreach (var (parentKey, node) in Nodes)
         {
             var connections = _distances.Where(d => d.Key.Contains(parentKey));
 
@@ -36,77 +36,8 @@ public class Graph
                     continue;
                 }
 
-                node.Children.Add(_nodes[child], distance);
+                node.Children.Add(Nodes[child], distance);
             }
         }
-    }
-
-    public (int Steps, string Path) Solve()
-    {
-        var queue = new PriorityQueue<NodeWalker, int>();
-
-        var signatures = new Dictionary<string, int>();
-
-        var startWalker = new NodeWalker(_nodes['@'], _doors);
-
-        signatures.Add(startWalker.Signature, 0);
-
-        queue.Enqueue(startWalker, 0);
-
-        var minSteps = int.MaxValue;
-
-        var path = string.Empty;
-
-        while (queue.Count > 0)
-        {
-            var walker = queue.Dequeue();
-
-            if (walker.Steps >= minSteps)
-            {
-                continue;
-            }
-
-            var newWalkers = walker.Walk();
-
-            if (newWalkers.Count == 0 && walker.VisitedCount == _nodes.Count)
-            {
-                if (walker.Steps < minSteps)
-                {
-                    var pathBuilder = new StringBuilder();
-
-                    foreach (var c in walker.Visited)
-                    {
-                        pathBuilder.Append(c);
-                    }
-
-                    path = pathBuilder.ToString();
-
-                    minSteps = walker.Steps;
-                }
-
-                continue;
-            }
-
-            foreach (var newWalker in newWalkers)
-            {
-                var signature = newWalker.Signature;
-
-                if (signatures.ContainsKey(signature))
-                {
-                    if (signatures[signature] < newWalker.Steps)
-                    {
-                        continue;
-                    }
-                }
-                else
-                {
-                    signatures.Add(signature, newWalker.Steps);
-                }
-
-                queue.Enqueue(newWalker, walker.Steps);
-            }
-        }
-
-        return (Steps: minSteps, Path: path);
     }
 }
