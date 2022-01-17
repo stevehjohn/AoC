@@ -33,6 +33,10 @@ public class Part2 : Base
         graphs[1].Build(Distances.Where(d => GetQuadrant(d.Key[0]) == 2 && GetQuadrant(d.Key[1]) == 2).ToDictionary(kvp => kvp.Key, kvp => kvp.Value), Doors);
         graphs[2].Build(Distances.Where(d => GetQuadrant(d.Key[0]) == 3 && GetQuadrant(d.Key[1]) == 3).ToDictionary(kvp => kvp.Key, kvp => kvp.Value), Doors);
         graphs[3].Build(Distances.Where(d => GetQuadrant(d.Key[0]) == 4 && GetQuadrant(d.Key[1]) == 4).ToDictionary(kvp => kvp.Key, kvp => kvp.Value), Doors);
+
+        var solver = new GraphSolver(graphs);
+
+        var result = solver.Solve();
     }
 
     private int GetQuadrant(char item)

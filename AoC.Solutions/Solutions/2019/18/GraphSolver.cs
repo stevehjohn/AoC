@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using AoC.Solutions.Exceptions;
 
 namespace AoC.Solutions.Solutions._2019._18;
 
@@ -29,39 +30,38 @@ public class GraphSolver
 
             target = _graphs[0].Nodes.Count;
         }
+        else
+        {
+            for (var i = 0; i < _graphs.Length; i++)
+            {
+                var startWalker = new MultiGraphNodeWalker(_graphs[i].Nodes.Single(kvp => char.IsNumber(kvp.Key)).Value, _graphs, i);
 
-        var minSteps = int.MaxValue;
+                signatures.Add(startWalker.Signature, 0);
 
-        var path = string.Empty;
+                queue.Enqueue(startWalker, 0);
+
+                target += _graphs[i].Nodes.Count;
+            }
+        }
 
         while (queue.Count > 0)
         {
             var walker = queue.Dequeue();
 
-            if (walker.Steps >= minSteps)
-            {
-                continue;
-            }
-
             var newWalkers = walker.Walk();
 
             if (newWalkers.Count == 0 && walker.VisitedCount == target)
             {
-                if (walker.Steps < minSteps)
+                var pathBuilder = new StringBuilder();
+
+                foreach (var c in walker.Visited)
                 {
-                    var pathBuilder = new StringBuilder();
-
-                    foreach (var c in walker.Visited)
-                    {
-                        pathBuilder.Append(c);
-                    }
-
-                    path = pathBuilder.ToString();
-
-                    minSteps = walker.Steps;
+                    pathBuilder.Append(c);
                 }
 
-                continue;
+                var path = pathBuilder.ToString();
+
+                return (walker.Steps, Path: path);
             }
 
             foreach (var newWalker in newWalkers)
@@ -84,6 +84,6 @@ public class GraphSolver
             }
         }
 
-        return (Steps: minSteps, Path: path);
+        throw new PuzzleException("No solution found.");
     }
 }
