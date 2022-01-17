@@ -28,6 +28,11 @@ public abstract class Base : Solution
 #endif
         var bots = new List<Bot>();
 
+        foreach (var start in ItemLocations.Where(l => char.IsNumber(l.Key) || l.Key == '@'))
+        {
+            bots.Add(new Bot(start.Key, start.Value, Map, Distances, Paths, Doors));
+        }
+
         foreach (var node in ItemLocations)
         {
             bots.Add(new Bot(node.Key, node.Value, Map, Distances, Paths, Doors));
@@ -36,7 +41,7 @@ public abstract class Base : Solution
         while (bots.Count > 0)
         {
 #if DUMP && DEBUG
-            Visualiser.DumpBots(bots);
+            //Visualiser.DumpBots(bots);
 #endif
             var newBots = new List<Bot>();
 
@@ -65,9 +70,18 @@ public abstract class Base : Solution
         {
             for (var x = 0; x < _width; x++)
             {
-                var c = Input[y][x];
+                Map[x, y] = Input[y][x];
+            }
+        }
+    }
 
-                Map[x, y] = c;
+    protected void FindItemLocations()
+    {
+        for (var y = 0; y < _height; y++)
+        {
+            for (var x = 0; x < _width; x++)
+            {
+                var c = Map[x, y];
 
                 if (char.IsLetter(c) || char.IsNumber(c) || c == '@')
                 {

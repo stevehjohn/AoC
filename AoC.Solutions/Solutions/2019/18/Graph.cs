@@ -16,9 +16,7 @@ public class Graph
 
         Doors = doors;
 
-        Nodes.Add('@', new Node('@'));
-
-        foreach (var c in _distances.Select(d => d.Key[1]).Where(char.IsLower).Distinct())
+        foreach (var c in _distances.SelectMany(d => new [] { d.Key[0], d.Key[1] }).Where(c => char.IsLower(c) || char.IsNumber(c) || c == '@').Distinct())
         {
             Nodes.Add(c, new Node(c));
         }
