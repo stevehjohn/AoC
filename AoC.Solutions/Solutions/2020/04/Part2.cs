@@ -109,7 +109,7 @@ public class Part2 : Base
 
     private static bool ValidatePassportId(string value)
     {
-        if (! int.TryParse(value, out var year))
+        if (! int.TryParse(value, out _))
         {
             return false;
         }
