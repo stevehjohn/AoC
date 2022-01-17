@@ -127,11 +127,14 @@ public class MultiGraphNodeWalker : INodeWalker
                 continue;
             }
 
-            if (IsBlocked(child.Name) && ! alternatesAdded)
+            if (IsBlocked(child.Name))
             {
-                newWalkers.AddRange(AddAlternateGraphWalkers());
+                //if (! alternatesAdded)
+                //{
+                //    newWalkers.AddRange(AddAlternateGraphWalkers());
 
-                alternatesAdded = true;
+                //    alternatesAdded = true;
+                //}
 
                 continue;
             }
@@ -150,9 +153,9 @@ public class MultiGraphNodeWalker : INodeWalker
             }
 
             newWalkers.Add(new MultiGraphNodeWalker(this, child, distance));
-
-            //newWalkers.AddRange(AddAlternateGraphWalkers());
         }
+        
+        newWalkers.AddRange(AddAlternateGraphWalkers());
 
         return newWalkers;
     }
