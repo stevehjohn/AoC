@@ -8,7 +8,7 @@ public class MultiGraphNodeWalker : INodeWalker
 
     public HashSet<char> Visited { get; }
 
-    private readonly Graph _graph;
+    private readonly Graph[] _graphs;
 
     public int Steps { get; }
 
@@ -40,11 +40,11 @@ public class MultiGraphNodeWalker : INodeWalker
 
     private readonly List<char> _allVisited;
 
-    public MultiGraphNodeWalker(Node node, Graph graph)
+    public MultiGraphNodeWalker(Node node, Graph[] graphs, int startGraphIndex)
     {
         _node = node;
 
-        _graph = graph;
+        _graphs = graphs;
 
         Visited = new HashSet<char>
                    {
@@ -61,7 +61,7 @@ public class MultiGraphNodeWalker : INodeWalker
     {
         _node = node;
 
-        _graph = previous._graph;
+        _graphs = previous._graphs;
 
         Visited = new HashSet<char>(previous.Visited)
                    {
@@ -92,9 +92,11 @@ public class MultiGraphNodeWalker : INodeWalker
                 continue;
             }
 
-            if (! _graph.Doors.TryGetValue($"{child.Name}{_node.Name}", out var blockers))
+            // TODO
+            if (! _graphs[0].Doors.TryGetValue($"{child.Name}{_node.Name}", out var blockers))
             {
-                _graph.Doors.TryGetValue($"{_node.Name}{child.Name}", out blockers);
+                // TODO
+                _graphs[0].Doors.TryGetValue($"{_node.Name}{child.Name}", out blockers);
             }
 
             if (blockers != null)
@@ -113,9 +115,11 @@ public class MultiGraphNodeWalker : INodeWalker
     
     private bool IsBlocked(char target)
     {
-        if (! _graph.Doors.TryGetValue($"{target}{_node.Name}", out var blockers))
+        // TODO
+        if (! _graphs[0].Doors.TryGetValue($"{target}{_node.Name}", out var blockers))
         {
-            _graph.Doors.TryGetValue($"{_node.Name}{target}", out blockers);
+            // TODO
+            _graphs[0].Doors.TryGetValue($"{_node.Name}{target}", out blockers);
         }
 
         if (blockers == null)
