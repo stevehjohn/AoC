@@ -65,7 +65,6 @@ public static class Program
                 answer = matrixParser.Parse(answer);
             }
 
-            CheckAnswer(instance.GetType(), answer);
 
             var year = int.Parse(solution.Namespace?.Split('.')[3].Replace("_", string.Empty) ?? "0");
 
@@ -81,6 +80,8 @@ public static class Program
 
                 yearMs = 0;
             }
+            
+            CheckAnswer(instance.GetType(), answer);
 
             var displayAnswer = answer.Length < 26
                                     ? answer
