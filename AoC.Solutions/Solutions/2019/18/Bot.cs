@@ -166,8 +166,6 @@ public class Bot
                             _distances[pair] = currentSteps;
 
                             _paths[pair] = _positionsSinceLastItem.ToList();
-
-                            AddBlockerData();
                         }
                     }
                     else
@@ -175,11 +173,11 @@ public class Bot
                         _distances.Add(pair, currentSteps);
 
                         _paths.Add(pair, _positionsSinceLastItem.ToList());
-
-                        AddBlockerData();
                     }
                 }
             }
+        
+            AddBlockerData();
         }
     }
 
@@ -223,7 +221,10 @@ public class Bot
 
             if (_doors.ContainsKey(path))
             {
-                _doors[path] = blockers;
+                if (_doors[path].Length < blockers.Length)
+                {
+                    _doors[path] = blockers;
+                }
             }
             else
             {
