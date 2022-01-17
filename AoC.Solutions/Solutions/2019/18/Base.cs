@@ -17,7 +17,7 @@ public abstract class Base : Solution
 
     protected readonly Dictionary<string, List<Point>> Paths = new();
 
-    protected readonly Dictionary<string, string> Doors = new();
+    protected readonly Dictionary<string, HashSet<char>> Doors = new();
 
     protected readonly Dictionary<char, Point> ItemLocations = new();
 
@@ -37,6 +37,8 @@ public abstract class Base : Solution
         {
             bots.Add(new Bot(node.Key, node.Value, Map, Distances, Paths, Doors));
         }
+
+        //bots.Add(new Bot('n', ItemLocations['n'], Map, Distances, Paths, Doors));
 
         while (bots.Count > 0)
         {

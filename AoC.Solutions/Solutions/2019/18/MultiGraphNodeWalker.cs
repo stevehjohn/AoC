@@ -12,6 +12,8 @@ public class MultiGraphNodeWalker : INodeWalker
 
     public int VisitedCount => Visited.Count;
 
+    public bool IsGraphSwitch { get; }
+
     public string Signature 
     {
         get
@@ -108,6 +110,8 @@ public class MultiGraphNodeWalker : INodeWalker
                       };
 
         Steps = previous.Steps;
+
+        IsGraphSwitch = true;
     }
 
     public List<INodeWalker> Walk()
@@ -146,6 +150,8 @@ public class MultiGraphNodeWalker : INodeWalker
             }
 
             newWalkers.Add(new MultiGraphNodeWalker(this, child, distance));
+
+            //newWalkers.AddRange(AddAlternateGraphWalkers());
         }
 
         return newWalkers;
