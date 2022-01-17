@@ -8,7 +8,7 @@ public class NodeWalker
 
     public HashSet<char> Visited { get; }
 
-    private readonly Dictionary<string, string> _doors;
+    private readonly Graph _graph;
 
     public int Steps { get; }
 
@@ -40,11 +40,11 @@ public class NodeWalker
 
     private readonly List<char> _allVisited;
 
-    public NodeWalker(Node node, Dictionary<string, string> doors)
+    public NodeWalker(Node node, Graph graph)
     {
         _node = node;
 
-        _doors = doors;
+        _graph = graph;
 
         Visited = new HashSet<char>
                    {
@@ -61,7 +61,7 @@ public class NodeWalker
     {
         _node = node;
 
-        _doors = previous._doors;
+        _graph = previous._graph;
 
         Visited = new HashSet<char>(previous.Visited)
                    {
@@ -92,9 +92,9 @@ public class NodeWalker
                 continue;
             }
 
-            if (! _doors.TryGetValue($"{child.Name}{_node.Name}", out var blockers))
+            if (! _graph.Doors.TryGetValue($"{child.Name}{_node.Name}", out var blockers))
             {
-                _doors.TryGetValue($"{_node.Name}{child.Name}", out blockers);
+                _graph.Doors.TryGetValue($"{_node.Name}{child.Name}", out blockers);
             }
 
             if (blockers != null)
@@ -113,9 +113,9 @@ public class NodeWalker
     
     private bool IsBlocked(char target)
     {
-        if (! _doors.TryGetValue($"{target}{_node.Name}", out var blockers))
+        if (! _graph.Doors.TryGetValue($"{target}{_node.Name}", out var blockers))
         {
-            _doors.TryGetValue($"{_node.Name}{target}", out blockers);
+            _graph.Doors.TryGetValue($"{_node.Name}{target}", out blockers);
         }
 
         if (blockers == null)

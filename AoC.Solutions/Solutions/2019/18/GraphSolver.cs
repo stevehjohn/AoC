@@ -17,7 +17,7 @@ public class GraphSolver
 
         var signatures = new Dictionary<string, int>();
 
-        var startWalker = new NodeWalker(_graph.Nodes['@'], _graph.Doors);
+        var startWalker = new NodeWalker(_graph.Nodes['@'], _graph);
 
         signatures.Add(startWalker.Signature, 0);
 
