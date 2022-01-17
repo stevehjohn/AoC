@@ -9,10 +9,31 @@ public class Part1 : Base
     {
         ParseInput();
 
+        FindItemLocations();
+
         InterrogateMap();
 
         var result = FindShortestPath();
 
         return result.ToString();
+    }
+
+    public int FindShortestPath()
+    {
+        var graph = new Graph();
+
+        graph.Build(Distances, Doors);
+
+        var solver = new GraphSolver(new[] { graph });
+
+        var result = solver.Solve();
+
+#if DUMP && DEBUG
+        var pathToVisualise = result.Path.Distinct().Where(c => ! char.IsUpper(c)).ToArray();
+
+        Visualiser.ShowSolution(new string(pathToVisualise), Paths, ItemLocations);
+#endif
+
+        return result.Steps;
     }
 }
