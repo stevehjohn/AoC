@@ -15,12 +15,12 @@ public class Part2 : Base
 
         InterrogateMap();
 
-        FindShortestPath();
+        var result = FindShortestPath();
 
-        return "TESTING";
+        return result.ToString();
     }
 
-    private void FindShortestPath()
+    private int FindShortestPath()
     {
         var graphs = new Graph[4];
 
@@ -36,7 +36,7 @@ public class Part2 : Base
 
         var solver = new GraphSolver(graphs);
 
-        var result = solver.Solve();
+        return solver.Solve().Steps;
     }
 
     private int GetQuadrant(char item)

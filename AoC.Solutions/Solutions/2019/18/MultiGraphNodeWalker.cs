@@ -12,8 +12,6 @@ public class MultiGraphNodeWalker : INodeWalker
 
     public int VisitedCount => Visited.Count;
 
-    public bool IsGraphSwitch { get; }
-
     public string Signature 
     {
         get
@@ -110,15 +108,11 @@ public class MultiGraphNodeWalker : INodeWalker
                       };
 
         Steps = previous.Steps;
-
-        IsGraphSwitch = true;
     }
 
     public List<INodeWalker> Walk()
     {
         var newWalkers = new List<INodeWalker>();
-
-        var alternatesAdded = false;
 
         foreach (var (child, distance) in _graphNodes[_graphIndex].Children)
         {
@@ -129,13 +123,6 @@ public class MultiGraphNodeWalker : INodeWalker
 
             if (IsBlocked(child.Name))
             {
-                //if (! alternatesAdded)
-                //{
-                //    newWalkers.AddRange(AddAlternateGraphWalkers());
-
-                //    alternatesAdded = true;
-                //}
-
                 continue;
             }
 
