@@ -8,5 +8,7 @@ public interface INodeWalker
 
     int VisitedCount { get; }
 
-    List<NodeWalker> Walk();
+    string Signature { get; }
+
+    List<INodeWalker> Walk();
 }
