@@ -13,24 +13,8 @@ public static class Visualiser
 
     private static List<Point> _previousBots = new();
 
-    public static void ShowSolution(string solution, Dictionary<string, List<Point>> paths, Dictionary<char, Point> itemLocations, List<Point> starts)
+    public static void ShowSolution(string solution, Dictionary<string, List<Point>> paths, Dictionary<char, Point> itemLocations)
     {
-        if (starts.Count == 1)
-        {
-            itemLocations.Add('@', new Point(starts[0]));
-        }
-        else
-        {
-            var s = '1';
-
-            foreach (var start in starts)
-            {
-                itemLocations.Add(s, new Point(start));
-
-                s++;
-            }
-        }
-
         for (var i = 0; i < solution.Length - 1; i++)
         {
             var pathKey = new string(new[] { solution[i], solution[i + 1] }.OrderBy(x => x).ToArray());
