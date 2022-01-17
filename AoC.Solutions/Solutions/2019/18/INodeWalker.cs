@@ -4,7 +4,7 @@ public interface INodeWalker
 {
     int Steps { get; }
 
-    HashSet<char> Visited { get; }
+    List<char> AllVisited { get; }
 
     int VisitedCount { get; }
 

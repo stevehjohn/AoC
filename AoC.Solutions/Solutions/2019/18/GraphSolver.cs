@@ -59,7 +59,7 @@ public class GraphSolver
                 {
                     var pathBuilder = new StringBuilder();
 
-                    foreach (var c in walker.Visited)
+                    foreach (var c in walker.AllVisited)
                     {
                         pathBuilder.Append(c);
                     }

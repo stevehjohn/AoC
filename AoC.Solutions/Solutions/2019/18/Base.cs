@@ -38,12 +38,10 @@ public abstract class Base : Solution
             bots.Add(new Bot(node.Key, node.Value, Map, Distances, Paths, Doors));
         }
 
-        //bots.Add(new Bot('n', ItemLocations['n'], Map, Distances, Paths, Doors));
-
         while (bots.Count > 0)
         {
 #if DUMP && DEBUG
-            //Visualiser.DumpBots(bots);
+            Visualiser.DumpBots(bots);
 #endif
             var newBots = new List<Bot>();
 
