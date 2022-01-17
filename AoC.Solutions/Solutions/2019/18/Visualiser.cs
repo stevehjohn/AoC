@@ -15,9 +15,20 @@ public static class Visualiser
 
     public static void ShowSolution(string solution, Dictionary<string, List<Point>> paths, Dictionary<char, Point> itemLocations, List<Point> starts)
     {
-        foreach (var start in starts)
+        if (starts.Count == 1)
         {
-            itemLocations.Add('@', new Point(start));
+            itemLocations.Add('@', new Point(starts[0]));
+        }
+        else
+        {
+            var s = '1';
+
+            foreach (var start in starts)
+            {
+                itemLocations.Add(s, new Point(start));
+
+                s++;
+            }
         }
 
         for (var i = 0; i < solution.Length - 1; i++)
@@ -123,7 +134,7 @@ public static class Visualiser
 
             var c = _map[position.X, position.Y];
 
-            if (char.IsLetter(c) || c == '@')
+            if (char.IsLetter(c) || c == '@' || char.IsNumber(c))
             {
                 Console.BackgroundColor = ConsoleColor.DarkBlue;
 
@@ -177,7 +188,7 @@ public static class Visualiser
                     continue;
                 }
 
-                if (char.IsLetter(c) || c == '@')
+                if (char.IsLetter(c) || c == '@' || char.IsNumber(c))
                 {
                     Console.BackgroundColor = ConsoleColor.DarkBlue;
 
