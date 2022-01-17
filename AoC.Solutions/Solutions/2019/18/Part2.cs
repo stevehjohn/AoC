@@ -13,9 +13,7 @@ public class Part2 : Base
 
         InterrogateMap();
 
-        var result = FindShortestPath();
-
-        return result.ToString();
+        return "TESTING";
     }
 
     private void ModifyMap()

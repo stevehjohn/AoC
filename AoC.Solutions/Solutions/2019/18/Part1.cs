@@ -15,4 +15,21 @@ public class Part1 : Base
 
         return result.ToString();
     }
+
+    public int FindShortestPath()
+    {
+        var graph = new Graph();
+
+        graph.Build(Distances, Doors);
+
+        var solver = new GraphSolver(graph);
+
+        var result = solver.Solve();
+
+#if DUMP && DEBUG
+        Visualiser.ShowSolution(result.Path, Paths, ItemLocations, Starts);
+#endif
+
+        return result.Steps;
+    }
 }

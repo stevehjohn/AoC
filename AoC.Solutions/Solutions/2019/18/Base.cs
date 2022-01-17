@@ -13,15 +13,15 @@ public abstract class Base : Solution
 
     private int _height;
 
-    private readonly List<Point> _starts = new();
+    protected readonly List<Point> Starts = new();
 
-    private readonly Dictionary<string, int> _distances = new();
+    protected readonly Dictionary<string, int> Distances = new();
 
-    private readonly Dictionary<string, List<Point>> _paths = new();
+    protected readonly Dictionary<string, List<Point>> Paths = new();
 
-    private readonly Dictionary<string, string> _doors = new();
+    protected readonly Dictionary<string, string> Doors = new();
 
-    private readonly Dictionary<char, Point> _itemLocations = new();
+    protected readonly Dictionary<char, Point> ItemLocations = new();
 
     protected void InterrogateMap()
     {
@@ -32,14 +32,14 @@ public abstract class Base : Solution
 
         var bots = new List<Bot>();
 
-        foreach (var start in _starts)
+        foreach (var start in Starts)
         {
-            bots.Add(new Bot('@', start, Map, _distances, _paths, _doors));
+            bots.Add(new Bot('@', start, Map, Distances, Paths, Doors));
         }
 
-        foreach (var node in _itemLocations)
+        foreach (var node in ItemLocations)
         {
-            bots.Add(new Bot(node.Key, node.Value, Map, _distances, _paths, _doors));
+            bots.Add(new Bot(node.Key, node.Value, Map, Distances, Paths, Doors));
         }
 
         while (bots.Count > 0)
@@ -62,23 +62,6 @@ public abstract class Base : Solution
 #endif
     }
 
-    public int FindShortestPath()
-    {
-        var graph = new Graph();
-
-        graph.Build(_distances, _doors);
-
-        var solver = new GraphSolver(graph);
-
-        var result = solver.Solve();
-
-#if DUMP && DEBUG
-        Visualiser.ShowSolution(result.Path, _paths, _itemLocations, _starts);
-#endif
-
-        return result.Steps;
-    }
-
     protected void ParseInput()
     {
         _width = Input[0].Length;
@@ -97,7 +80,7 @@ public abstract class Base : Solution
 
                 if (char.IsLetter(c))
                 {
-                    _itemLocations.Add(c, new Point(x, y));
+                    ItemLocations.Add(c, new Point(x, y));
                 }
             }
         }
@@ -111,7 +94,7 @@ public abstract class Base : Solution
             {
                 if (Map[x, y] == '@' || char.IsNumber(Map[x, y]))
                 {
-                    _starts.Add(new Point(x, y));
+                    Starts.Add(new Point(x, y));
                 }
             }
         }
