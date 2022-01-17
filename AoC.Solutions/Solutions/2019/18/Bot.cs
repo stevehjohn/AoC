@@ -144,6 +144,11 @@ public class Bot
         return bots;
     }
 
+    public static void ResetStaticHistory()
+    {
+        AllHistory.Clear();
+    }
+
     private void AddItemHistory()
     {
         var c = _map[Position.X, Position.Y];

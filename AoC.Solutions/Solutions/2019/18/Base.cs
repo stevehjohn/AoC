@@ -28,6 +28,9 @@ public abstract class Base : Solution
 #endif
         var bots = new List<Bot>();
 
+        // TODO: Don't really like this. Should probably pass around a pointer to AllHistory.
+        Bot.ResetStaticHistory();
+
         foreach (var start in ItemLocations.Where(l => char.IsNumber(l.Key) || l.Key == '@'))
         {
             bots.Add(new Bot(start.Key, start.Value, Map, Distances, Paths, Doors));
