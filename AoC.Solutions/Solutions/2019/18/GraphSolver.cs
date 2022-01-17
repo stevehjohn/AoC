@@ -32,9 +32,9 @@ public class GraphSolver
         }
         else
         {
-            for (var i = 0; i < _graphs.Length; i++)
+            for (var i = 2; i < _graphs.Length - 1; i++)
             {
-                var startWalker = new MultiGraphNodeWalker(_graphs[i].Nodes.Single(kvp => char.IsNumber(kvp.Key)).Value, _graphs, i);
+                var startWalker = new MultiGraphNodeWalker(_graphs, i);
 
                 signatures.Add(startWalker.Signature, 0);
 
@@ -47,6 +47,8 @@ public class GraphSolver
         while (queue.Count > 0)
         {
             var walker = queue.Dequeue();
+
+            Console.WriteLine(walker.Signature);
 
             var newWalkers = walker.Walk();
 
@@ -70,7 +72,7 @@ public class GraphSolver
 
                 if (signatures.ContainsKey(signature))
                 {
-                    if (signatures[signature] < newWalker.Steps)
+                    if (signatures[signature] <= newWalker.Steps)
                     {
                         continue;
                     }
