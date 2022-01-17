@@ -24,12 +24,14 @@ public class Part1 : Base
 
         graph.Build(Distances, Doors);
 
-        var solver = new GraphSolver(new [] { graph });
+        var solver = new GraphSolver(new[] { graph });
 
         var result = solver.Solve();
 
 #if DUMP && DEBUG
-        Visualiser.ShowSolution(result.Path, Paths, ItemLocations);
+        var pathToVisualise = result.Path.Where(c => ! char.IsUpper(c)).ToArray();
+
+        Visualiser.ShowSolution(new string(pathToVisualise), Paths, ItemLocations);
 #endif
 
         return result.Steps;
