@@ -43,34 +43,17 @@ public class GraphSolver
                     queue.Enqueue(startWalker, 0);
                 }
 
-                // TODO: This may need a + 1 after the loop? Actually, should probably be 30 after all
-                target += _graphs[i].Nodes.Count - 1;
+                target += _graphs[i].Nodes.Count;
             }
         }
-
-        var vc = 0;
 
         while (queue.Count > 0)
         {
             var walker = queue.Dequeue();
 
-            //Console.WriteLine(walker.Signature);
-
-            if (walker.Visited.Count >= vc)
-            {
-                foreach (var c in walker.Visited)
-                {
-                    Console.Write(c);
-                }
-
-                Console.WriteLine();
-
-                vc = walker.Visited.Count;
-            }
-
             var newWalkers = walker.Walk();
 
-            if (newWalkers.Count == 0)
+            if (newWalkers.Count == 0 || _graphs.Length > 1)
             {
                 if (walker.VisitedCount == target)
                 {
@@ -105,7 +88,7 @@ public class GraphSolver
                     signatures.Add(signature, newWalker.Steps);
                 }
 
-                queue.Enqueue(newWalker, (newWalker.Steps + 1) * (newWalker.IsGraphSwitch ? 1000 : 1));
+                queue.Enqueue(newWalker, newWalker.Steps);
             }
         }
 

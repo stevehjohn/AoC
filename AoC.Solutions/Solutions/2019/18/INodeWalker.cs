@@ -10,7 +10,5 @@ public interface INodeWalker
 
     string Signature { get; }
 
-    bool IsGraphSwitch { get; }
-
     List<INodeWalker> Walk();
 }
