@@ -2,7 +2,7 @@
 
 namespace AoC.Solutions.Solutions._2019._18;
 
-public class NodeWalker : INodeWalker
+public class MultiGraphNodeWalker : INodeWalker
 {
     private readonly Node _node;
 
@@ -40,7 +40,7 @@ public class NodeWalker : INodeWalker
 
     private readonly List<char> _allVisited;
 
-    public NodeWalker(Node node, Graph graph)
+    public MultiGraphNodeWalker(Node node, Graph graph)
     {
         _node = node;
 
@@ -57,7 +57,7 @@ public class NodeWalker : INodeWalker
                       };
     }
 
-    private NodeWalker(NodeWalker previous, Node node, int distance)
+    private MultiGraphNodeWalker(MultiGraphNodeWalker previous, Node node, int distance)
     {
         _node = node;
 
@@ -105,7 +105,7 @@ public class NodeWalker : INodeWalker
                 }
             }
 
-            newWalkers.Add(new NodeWalker(this, child, distance));
+            newWalkers.Add(new MultiGraphNodeWalker(this, child, distance));
         }
 
         return newWalkers;
