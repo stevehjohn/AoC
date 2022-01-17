@@ -13,7 +13,43 @@ public class Part2 : Base
 
         InterrogateMap();
 
+        FindShortestPath();
+
         return "TESTING";
+    }
+
+    private void FindShortestPath()
+    {
+        var graphs = new Graph[4];
+
+        for (var i = 0; i < 4; i++)
+        {
+            graphs[i] = new Graph();
+        }
+
+        graphs[0].Build(null, Doors);
+    }
+
+    private int GetQuadrant(char item)
+    {
+        var location = ItemLocations[item];
+
+        if (location.Y < 40)
+        {
+            if (location.X < 40)
+            {
+                return 1;
+            }
+
+            return 2;
+        }
+
+        if (location.X < 40)
+        {
+            return 3;
+        }
+
+        return 4;
     }
 
     private void ModifyMap()

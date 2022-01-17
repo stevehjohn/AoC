@@ -13,8 +13,6 @@ public abstract class Base : Solution
 
     private int _height;
 
-    protected readonly List<Point> Starts = new();
-
     protected readonly Dictionary<string, int> Distances = new();
 
     protected readonly Dictionary<string, List<Point>> Paths = new();
@@ -28,14 +26,7 @@ public abstract class Base : Solution
 #if DUMP && DEBUG
         Visualiser.DumpMap(Map);
 #endif
-        FindStarts();
-
         var bots = new List<Bot>();
-
-        foreach (var start in Starts)
-        {
-            bots.Add(new Bot('@', start, Map, Distances, Paths, Doors));
-        }
 
         foreach (var node in ItemLocations)
         {
@@ -78,23 +69,9 @@ public abstract class Base : Solution
 
                 Map[x, y] = c;
 
-                if (char.IsLetter(c))
+                if (char.IsLetter(c) || char.IsNumber(c) || c == '@')
                 {
                     ItemLocations.Add(c, new Point(x, y));
-                }
-            }
-        }
-    }
-
-    private void FindStarts()
-    {
-        for (var y = 0; y < _height; y++)
-        {
-            for (var x = 0; x < _width; x++)
-            {
-                if (Map[x, y] == '@' || char.IsNumber(Map[x, y]))
-                {
-                    Starts.Add(new Point(x, y));
                 }
             }
         }

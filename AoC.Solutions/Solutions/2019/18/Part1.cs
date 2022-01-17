@@ -27,7 +27,7 @@ public class Part1 : Base
         var result = solver.Solve();
 
 #if DUMP && DEBUG
-        Visualiser.ShowSolution(result.Path, Paths, ItemLocations, Starts);
+        Visualiser.ShowSolution(result.Path, Paths, ItemLocations);
 #endif
 
         return result.Steps;
