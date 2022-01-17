@@ -107,7 +107,7 @@ public abstract class Base : Solution
         {
             for (var x = 0; x < _width; x++)
             {
-                if (Map[x, y] == '@')
+                if (Map[x, y] == '@' || char.IsNumber(Map[x, y]))
                 {
                     _starts.Add(new Point(x, y));
                 }
