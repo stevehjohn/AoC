@@ -48,11 +48,11 @@ public abstract class Base : Solution
                 case 'L':
                     if (useWaypoint)
                     {
-                        var dX = shipPosition.X - waypointPosition.X;
-                        var dY = shipPosition.Y - waypointPosition.Y;
+                        var dX = waypointPosition.X - shipPosition.X;
+                        var dY = waypointPosition.Y - shipPosition.Y;
 
-                        waypointPosition.X = shipPosition.X - dY;
-                        waypointPosition.Y = shipPosition.Y + dX;
+                        waypointPosition.X = dY + shipPosition.X;
+                        waypointPosition.Y = -dX + shipPosition.Y;
                     }
                     else
                     {
@@ -69,11 +69,11 @@ public abstract class Base : Solution
                 case 'R':
                     if (useWaypoint)
                     {
-                        var dX = shipPosition.X - waypointPosition.X;
-                        var dY = shipPosition.Y - waypointPosition.Y;
+                        var dX = waypointPosition.X - shipPosition.X;
+                        var dY = waypointPosition.Y - shipPosition.Y;
 
-                        waypointPosition.X = shipPosition.X + dY;
-                        waypointPosition.Y = shipPosition.Y - dX;
+                        waypointPosition.X = -dY + shipPosition.X;
+                        waypointPosition.Y = dX + shipPosition.Y;
                     }
                     else
                     {
