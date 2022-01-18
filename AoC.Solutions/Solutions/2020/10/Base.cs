@@ -23,12 +23,17 @@ public abstract class Base : Solution
     {
         var ordered = Data.OrderBy(n => n).ToList();
 
-        var differences = new List<long>();
+        var differences = new List<long>
+                          {
+                              1
+                          };
 
         for (var i = 1; i < ordered.Count; i++)
         {
             differences.Add(ordered[i] - ordered[i - 1]);
         }
+
+        differences.Add(3);
 
         return differences;
     }
