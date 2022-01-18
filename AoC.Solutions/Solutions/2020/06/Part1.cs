@@ -7,7 +7,7 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var unique = new HashSet<char>();
+        var uniqueCharacters = new HashSet<char>();
 
         var total = 0;
 
@@ -15,17 +15,17 @@ public class Part1 : Base
         {
             if (string.IsNullOrWhiteSpace(line))
             {
-                total += unique.Count;
+                total += uniqueCharacters.Count;
 
-                unique.Clear();
+                uniqueCharacters.Clear();
 
                 continue;
             }
 
-            line.ToList().ForEach(c => unique.Add(c));
+            line.ToList().ForEach(c => uniqueCharacters.Add(c));
         }
 
-        total += unique.Count;
+        total += uniqueCharacters.Count;
 
         return total.ToString();
     }

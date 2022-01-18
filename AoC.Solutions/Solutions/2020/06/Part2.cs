@@ -1,5 +1,4 @@
-﻿using System.Text;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2020._06;
 
@@ -8,32 +7,34 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        var builder = new StringBuilder();
+        var allCharacters = new HashSet<char>();
+
+        for (var c = 'a'; c <= 'z'; c++)
+        {
+            allCharacters.Add(c);
+        }
+
+        var commonCharacters = new HashSet<char>(allCharacters);
 
         var total = 0;
-
-        var lines = 0;
 
         foreach (var line in Input)
         {
             if (string.IsNullOrWhiteSpace(line))
             {
-                if (lines == 1)
-                {
-                    total += builder.ToString().Distinct().Count();
-                }
+                total += commonCharacters.Count;
 
-                builder.Clear();
+                commonCharacters = new HashSet<char>(allCharacters);
 
-                lines = 0;
+                continue;
             }
 
-            builder.Append(line);
+            var lineCharacters = line.ToHashSet();
 
-            lines++;
+            commonCharacters = commonCharacters.Intersect(lineCharacters).ToHashSet();
         }
 
-        total += builder.ToString().Distinct().Count();
+        total += commonCharacters.Count;
 
         return total.ToString();
     }
