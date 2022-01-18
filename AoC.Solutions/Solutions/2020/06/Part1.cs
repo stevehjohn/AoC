@@ -1,5 +1,4 @@
-﻿using System.Text;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2020._06;
 
@@ -8,7 +7,7 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var builder = new StringBuilder();
+        var unique = new HashSet<char>();
 
         var total = 0;
 
@@ -16,15 +15,17 @@ public class Part1 : Base
         {
             if (string.IsNullOrWhiteSpace(line))
             {
-                total += builder.ToString().Distinct().Count();
+                total += unique.Count;
 
-                builder.Clear();
+                unique.Clear();
+
+                continue;
             }
 
-            builder.Append(line);
+            line.ToList().ForEach(c => unique.Add(c));
         }
 
-        total += builder.ToString().Distinct().Count();
+        total += unique.Count;
 
         return total.ToString();
     }
