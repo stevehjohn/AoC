@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Exceptions;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2020._09;
 
@@ -17,6 +18,8 @@ public class Part1 : Base
             {
                 if (! IsInPossibleNumbers(possibleNumbers, Data[i]))
                 {
+                    File.WriteAllText(Part1ResultFile, Data[i].ToString());
+
                     return Data[i].ToString();
                 }
             }
@@ -29,7 +32,7 @@ public class Part1 : Base
             }
         }
 
-        return "TESTING";
+        throw new PuzzleException("Solution not found.");
     }
 
     private HashSet<long> CalculateNextPossibleNumbers(int index)

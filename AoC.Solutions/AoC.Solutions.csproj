@@ -29,7 +29,6 @@
     <Folder Include="Solutions\2019\22\" />
     <Folder Include="Solutions\2019\24\" />
     <Folder Include="Solutions\2019\25\" />
-    <Folder Include="Solutions\2020\09\" />
     <Folder Include="Solutions\2021\08\" />
     <Folder Include="Solutions\2021\10\" />
     <Folder Include="Solutions\2021\16\" />
@@ -149,6 +148,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Solutions\2020\08\input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Solutions\2020\09\2020.09.1.result">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Solutions\2020\09\input.txt">
