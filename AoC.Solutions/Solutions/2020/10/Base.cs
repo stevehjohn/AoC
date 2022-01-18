@@ -18,4 +18,18 @@ public abstract class Base : Solution
             Data.Add(long.Parse(line));
         }
     }
+
+    protected List<long> GetDifferences()
+    {
+        var ordered = Data.OrderBy(n => n).ToList();
+
+        var differences = new List<long>();
+
+        for (var i = 1; i < ordered.Count; i++)
+        {
+            differences.Add(ordered[i] - ordered[i - 1]);
+        }
+
+        return differences;
+    }
 }

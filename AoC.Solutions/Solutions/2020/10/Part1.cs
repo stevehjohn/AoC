@@ -9,36 +9,8 @@ public class Part1 : Base
     {
         ParseData();
 
-        var voltage = 0;
+        var differences = GetDifferences();
 
-        var ones = 0;
-
-        var threes = 1;
-
-        while (true)
-        {
-            var adapters = Data.Where(v => v > voltage && v < voltage + 4).ToList();
-
-            if (adapters.Count == 0)
-            {
-                break;
-            }
-
-            var adapter = (int) adapters.Min();
-
-            if (adapter - voltage == 3)
-            {
-                threes++;
-            }
-
-            if (adapter - voltage == 1)
-            {
-                ones++;
-            }
-
-            voltage = adapter;
-        }
-
-        return (ones * threes).ToString();
+        return ((differences.Count(d => d == 1) + 1) * (differences.Count(d => d == 3) + 1)).ToString();
     }
 }
