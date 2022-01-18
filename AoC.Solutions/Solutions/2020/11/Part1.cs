@@ -1,5 +1,4 @@
-﻿using AoC.Solutions.Common;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2020._11;
 
@@ -10,60 +9,12 @@ public class Part1 : Base
     {
         ParseInput();
 
-        var flips = new List<Point>();
+        var result = RunGame(4);
 
-        do
-        {
-            flips.Clear();
-
-            for (var y = 1; y <= Height; y++)
-            {
-                for (var x = 1; x <= Width; x++)
-                {
-                    if (Map[x, y] == '.' )
-                    {
-                        continue;
-                    }
-
-                    var occupiedNeighbors = CountOccupiedNeighbors(x, y);
-
-                    if (Map[x, y] == 'L')
-                    {
-                        if (occupiedNeighbors == 0)
-                        {
-                            flips.Add(new Point(x, y));
-                        }
-
-                        continue;
-                    }
-
-                    if (occupiedNeighbors > 3)
-                    {
-                        flips.Add(new Point(x, y));
-                    }
-                }
-            }
-
-            foreach (var flip in flips)
-            {
-                Map[flip.X, flip.Y] = Map[flip.X, flip.Y] == '#' ? 'L' : '#';
-            }
-        } while (flips.Count > 0);
-
-        var occupied = 0;
-
-        for (var y = 1; y <= Height; y++)
-        {
-            for (var x = 1; x <= Width; x++)
-            {
-                occupied += Map[x, y] == '#' ? 1 : 0;
-            }
-        }
-
-        return occupied.ToString();
+        return result.ToString();
     }
 
-    private int CountOccupiedNeighbors(int x, int y)
+    protected override int CountOccupiedNeighbors(int x, int y)
     {
         var count = 0;
 
