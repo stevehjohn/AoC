@@ -18,7 +18,7 @@ public class Part1 : Base
             {
                 if (! IsInPossibleNumbers(possibleNumbers, Data[i]))
                 {
-                    File.WriteAllText(Part1ResultFile, Data[i].ToString());
+                    File.WriteAllText(Part1ResultFile, i.ToString());
 
                     return Data[i].ToString();
                 }
@@ -52,7 +52,7 @@ public class Part1 : Base
         return possibleNumbers;
     }
 
-    private bool IsInPossibleNumbers(List<HashSet<long>> possibleNumbers, long value)
+    private static bool IsInPossibleNumbers(List<HashSet<long>> possibleNumbers, long value)
     {
         foreach (var item in possibleNumbers)
         {
