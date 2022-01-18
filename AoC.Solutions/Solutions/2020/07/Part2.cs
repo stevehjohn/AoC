@@ -9,32 +9,28 @@ public class Part2 : Base
     {
         ParseInput();
 
-        var goldBagsInBags = BagData.Where(b => b.Contains == "shiny gold").ToList();
+        var queue = new Queue<(string Container, long Multiplier)>();
 
-        var queue = new PriorityQueue<(string Container, int level), int>();
+        queue.Enqueue(("shiny gold", 1));
 
-        goldBagsInBags.ForEach(b => queue.Enqueue((b.Container, 0), int.MaxValue));
-
-        var topLevelBags = new HashSet<string>();
+        var containedCount = 0L;
 
         while (queue.Count > 0)
         {
             var container = queue.Dequeue();
 
-            Console.WriteLine($"{new string(' ', container.level * 2)}{container.Container}");
+            var containerContains = BagData.Where(b => b.Container == container.Container).ToList();
 
-            var containerContainedIn = BagData.Where(b => b.Contains == container.Container).ToList();
-
-            topLevelBags.Add(container.Container);
-
-            if (containerContainedIn.Count == 0)
+            foreach (var bag in containerContains)
             {
-                continue;
-            }
+                var bagCount = container.Multiplier * bag.Count;
 
-            containerContainedIn.ForEach(b => queue.Enqueue((b.Container, container.level + 1), int.MaxValue - (container.level + 1)));
+                containedCount += bagCount;
+
+                queue.Enqueue((bag.Contains, bagCount));
+            }
         }
 
-        return topLevelBags.Count.ToString();
+        return containedCount.ToString();
     }
 }
