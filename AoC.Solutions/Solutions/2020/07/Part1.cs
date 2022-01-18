@@ -11,9 +11,9 @@ public class Part1 : Base
 
         var goldBagsInBags = BagData.Where(b => b.Contains == "shiny gold").ToList();
 
-        var queue = new PriorityQueue<(string Container, int level), int>();
+        var queue = new Queue<string>();
 
-        goldBagsInBags.ForEach(b => queue.Enqueue((b.Container, 0), int.MaxValue));
+        goldBagsInBags.ForEach(b => queue.Enqueue(b.Container));
 
         var topLevelBags = new HashSet<string>();
 
@@ -21,18 +21,16 @@ public class Part1 : Base
         {
             var container = queue.Dequeue();
 
-            Console.WriteLine($"{new string(' ', container.level * 2)}{container.Container}");
+            var containerContainedIn = BagData.Where(b => b.Contains == container).ToList();
 
-            var containerContainedIn = BagData.Where(b => b.Contains == container.Container).ToList();
-
-            topLevelBags.Add(container.Container);
+            topLevelBags.Add(container);
 
             if (containerContainedIn.Count == 0)
             {
                 continue;
             }
 
-            containerContainedIn.ForEach(b => queue.Enqueue((b.Container, container.level + 1), int.MaxValue - (container.level + 1)));
+            containerContainedIn.ForEach(b => queue.Enqueue(b.Container));
         }
 
         return topLevelBags.Count.ToString();
