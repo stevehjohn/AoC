@@ -11,6 +11,6 @@ public class Part1 : Base
 
         var differences = GetDifferences();
 
-        return ((differences.Count(d => d == 1) + 1) * (differences.Count(d => d == 3) + 1)).ToString();
+        return (differences.Count(d => d == 1) * differences.Count(d => d == 3)).ToString();
     }
 }
