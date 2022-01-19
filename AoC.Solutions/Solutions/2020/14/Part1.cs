@@ -39,18 +39,7 @@ public class Part1 : Base
         return result.ToString();
     }
 
-    private (int Location, long Value) ParseInstruction(string instruction)
-    {
-        var split = instruction[4..].Split('=', StringSplitOptions.TrimEntries);
-
-        var locationString = split[0];
-
-        locationString = locationString[..locationString.IndexOf(']')];
-
-        return (int.Parse(locationString), long.Parse(split[1]));
-    }
-
-    private (long Or, long And) ParseMask(string mask)
+    private static (long Or, long And) ParseMask(string mask)
     {
         var or = 0L;
 
