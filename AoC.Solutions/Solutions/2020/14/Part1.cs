@@ -1,0 +1,83 @@
+﻿using JetBrains.Annotations;
+
+namespace AoC.Solutions.Solutions._2020._14;
+
+[UsedImplicitly]
+public class Part1 : Base
+{
+    public override string GetAnswer()
+    {
+        (long Or, long And) mask = (0, int.MaxValue);
+
+        var memory = new Dictionary<int, long>();
+
+        foreach (var line in Input)
+        {
+            if (line.StartsWith("ma"))
+            {
+                mask = ParseMask(line);
+
+                continue;
+            }
+
+            var instruction = ParseInstruction(line);
+
+            var value = (instruction.Value & mask.And) | mask.Or;
+
+            if (memory.ContainsKey(instruction.Location))
+            {
+                memory[instruction.Location] = value;
+            }
+            else
+            {
+                memory.Add(instruction.Location, value);
+            }
+        }
+
+        var result = memory.Sum(kvp => kvp.Value);
+
+        return result.ToString();
+    }
+
+    private (int Location, long Value) ParseInstruction(string instruction)
+    {
+        var split = instruction[4..].Split('=', StringSplitOptions.TrimEntries);
+
+        var locationString = split[0];
+
+        locationString = locationString[..locationString.IndexOf(']')];
+
+        return (int.Parse(locationString), long.Parse(split[1]));
+    }
+
+    private (long Or, long And) ParseMask(string mask)
+    {
+        var or = 0L;
+
+        var and = long.MaxValue;
+
+        mask = mask.Split('=', StringSplitOptions.TrimEntries)[1];
+
+        var bit = 1L;
+
+        for (var i = mask.Length - 1; i >= 0; i--)
+        {
+            switch (mask[i])
+            {
+                case '0':
+                    and ^= bit;
+
+                    break;
+
+                case '1':
+                    or |= bit;
+
+                    break;
+            }
+
+            bit <<= 1;
+        }
+
+        return (or, and);
+    }
+}
