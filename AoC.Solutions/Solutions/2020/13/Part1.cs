@@ -17,7 +17,7 @@ public class Part1 : Base
 
             var time = busTimes[i].Time;
 
-            busTimes[i] = (Id: id, Time: (departTime / time) * time + time);
+            busTimes[i] = (Id: id, Time: departTime / time * time + time);
         }
 
         var soonest = busTimes.MinBy(b => b.Time);
