@@ -115,12 +115,24 @@ public abstract class Base : Solution
 
     private int CountNeighbors(Point4D point)
     {
-        var neighbors = ActiveCubes.Where(p => p.X >= point.X - 1 && p.X <= point.X + 1 &&
-                                               p.Y >= point.Y - 1 && p.Y <= point.Y + 1 &&
-                                               p.Z >= point.Z - 1 && p.Z <= point.Z + 1 &&
-                                               p.W >= point.W - 1 && p.W <= point.W + 1 &&
-                                               ! (p.X == point.X && p.Y == point.Y && p.Z == point.Z && p.W == point.W));
+        var neighbors = 0;
 
-        return neighbors.Count();
+        foreach (var p in ActiveCubes)
+        {
+            neighbors += p.X >= point.X - 1 && p.X <= point.X + 1 &&
+                         p.Y >= point.Y - 1 && p.Y <= point.Y + 1 &&
+                         p.Z >= point.Z - 1 && p.Z <= point.Z + 1 &&
+                         p.W >= point.W - 1 && p.W <= point.W + 1 &&
+                         ! (p.X == point.X && p.Y == point.Y && p.Z == point.Z && p.W == point.W)
+                             ? 1
+                             : 0;
+
+            if (neighbors > 4)
+            {
+                return 4;
+            }
+        }
+        
+        return neighbors;
     }
 }
