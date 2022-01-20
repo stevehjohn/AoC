@@ -6,37 +6,41 @@ public abstract class Base : Solution
 {
     public override string Description => "Operator precedence";
 
-    protected static long CalculateResult(List<string> operations)
+    protected static long CalculateResult(List<char> operations)
     {
         var stack = new Stack<long>();
 
         foreach (var operation in operations)
         {
-            var value = operation[0] == 'X' ? stack.Pop() : operation[0] - '0';
-
-            for (var i = 1; i < operation.Length; i += 2)
+            if (char.IsNumber(operation))
             {
-                if (operation[i] == '+')
-                {
-                    value += operation[i + 1] == 'X' ? stack.Pop() : operation[i + 1] - '0';
-                }
-                else
-                {
-                    value *= operation[i + 1] == 'X' ? stack.Pop() : operation[i + 1] - '0';
-                }
+                stack.Push(operation - '0');
+
+                continue;
             }
 
-            stack.Push(value);
+            var left = stack.Pop();
+
+            var right = stack.Pop();
+
+            if (operation == '+')
+            {
+                stack.Push(left + right);
+            }
+            else
+            {
+                stack.Push(left * right);
+            }
         }
 
         return stack.Pop();
     }
 
-    protected static List<string> ParseLine(string line)
+    protected static List<char> ParseLine(string line)
     {
         line = line.Replace(" ", string.Empty);
 
-        var operations = new List<string>();
+        var operations = new List<char>();
 
         while (true)
         {
@@ -44,7 +48,7 @@ public abstract class Base : Solution
 
             if (start == -1)
             {
-                operations.Add(line);
+                operations.AddRange(ToReversePolish(line));
 
                 break;
             }
@@ -53,11 +57,27 @@ public abstract class Base : Solution
 
             var component = line.Substring(start + 1, end - start - 1);
 
-            operations.Add(component);
+            operations.AddRange(ToReversePolish(component));
 
-            line = $"{line[..start]}X{line[(end + 1)..]}";
+            line = $"{line[..start]}{line[(end + 1)..]}";
         }
 
         return operations;
+    }
+
+    private static char[] ToReversePolish(string input)
+    {
+        var result = new char[input.Length];
+
+        result[0] = input[0];
+
+        for (var i = 1; i < input.Length - 1; i += 2)
+        {
+            result[i] = input[i + 1];
+
+            result[i + 1] = input[i];
+        }
+
+        return result;
     }
 }
