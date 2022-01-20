@@ -3,10 +3,10 @@
 namespace AoC.Solutions.Solutions._2020._15;
 
 [UsedImplicitly]
-public class Part1 : Base
+public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        return GetAnswer(2020).ToString();
+        return GetAnswer(30000000).ToString();
     }
 }
