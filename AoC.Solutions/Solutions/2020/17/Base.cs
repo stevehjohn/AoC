@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Conway cubes";
 
-    protected List<Point4D> ActiveCubes = new();
+    protected HashSet<Point4D> ActiveCubes = new();
 
     protected int XMin;
     
@@ -79,13 +79,13 @@ public abstract class Base : Solution
 
                         var neighbors = CountNeighbors(position);
 
-                        var cube = ActiveCubes.SingleOrDefault(c => c.Equals(position));
+                        var cube = ActiveCubes.Contains(position);
 
-                        if (cube != null)
+                        if (cube)
                         {
                             if (neighbors != 2 && neighbors != 3)
                             {
-                                remove.Add(cube);
+                                remove.Add(position);
                             }
                         }
                         else
@@ -105,7 +105,10 @@ public abstract class Base : Solution
             ActiveCubes.Remove(point);
         }
 
-        ActiveCubes.AddRange(add);
+        foreach (var item in add)
+        {
+            ActiveCubes.Add(item);
+        }
     }
 
     private int CountNeighbors(Point4D point)
