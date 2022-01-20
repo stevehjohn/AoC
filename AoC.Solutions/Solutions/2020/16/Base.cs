@@ -112,35 +112,3 @@ public abstract class Base : Solution
         return new Rule(split[0], rule1, rule2);
     }
 }
-
-public class Rule
-{
-    public string Name { get; }
-
-    public Range Rule1 { get; }
-
-    public Range Rule2 { get; }
-
-    public Rule(string name, Range rule1, Range rule2)
-    {
-        Name = name;
-
-        Rule1 = rule1;
-
-        Rule2 = rule2;
-    }
-}
-
-public class Range
-{
-    public int Minimum { get; }
-
-    public int Maximum { get; }
-
-    public Range(int minimum, int maximum)
-    {
-        Minimum = minimum;
-
-        Maximum = maximum;
-    }
-}
