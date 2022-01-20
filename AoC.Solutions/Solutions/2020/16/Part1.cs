@@ -7,6 +7,33 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        return "TESTING";
+        ParseInput();
+
+        var invalid = 0;
+
+        foreach (var ticket in OtherTickets)
+        {
+            foreach (var field in ticket)
+            {
+                var valid = false;
+
+                foreach (var rule in Rules)
+                {
+                    if (field >= rule.Rule1.Minimum && field <= rule.Rule1.Maximum || field >= rule.Rule2.Minimum && field <= rule.Rule2.Maximum)
+                    {
+                        valid = true;
+
+                        break;
+                    }
+                }
+
+                if (! valid)
+                {
+                    invalid += field;
+                }
+            }
+        }
+
+        return invalid.ToString();
     }
 }
