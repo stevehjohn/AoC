@@ -7,13 +7,29 @@ public abstract class Base : Solution
 {
     public override string Description => "Conway cubes";
 
-    protected List<Point> ActiveCubes;
+    protected List<Point> ActiveCubes = new();
+
+    protected int XMin;
+    
+    protected int XMax;
+    
+    protected int YMin;
+
+    protected int YMax;
+    
+    protected int ZMin;
+
+    protected int ZMax = 1;
 
     protected void ParseInput()
     {
-        for (var y = 0; y < Input.Length; y++)
+        XMax = Input[0].Length;
+
+        YMax = Input.Length;
+
+        for (var y = 0; y < XMax; y++)
         {
-            for (var x = 0; x < Input[0].Length; x++)
+            for (var x = 0; x < YMax; x++)
             {
                 if (Input[y][x] == '#')
                 {
