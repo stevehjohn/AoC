@@ -63,7 +63,9 @@ public abstract class Base : Solution
             WMin--;
         }
 
-        var flip = new List<Point4D>();
+        var add = new List<Point4D>();
+        
+        var remove = new List<Point4D>();
 
         for (var w = WMin; w < WMax; w++)
         {
@@ -83,14 +85,14 @@ public abstract class Base : Solution
                         {
                             if (neighbors != 2 && neighbors != 3)
                             {
-                                flip.Add(cube);
+                                remove.Add(cube);
                             }
                         }
                         else
                         {
                             if (neighbors == 3)
                             {
-                                flip.Add(position);
+                                add.Add(position);
                             }
                         }
                     }
@@ -98,19 +100,12 @@ public abstract class Base : Solution
             }
         }
 
-        foreach (var point in flip)
+        foreach (var point in remove)
         {
-            var cube = ActiveCubes.SingleOrDefault(c => c.Equals(point));
-
-            if (cube == null)
-            {
-                ActiveCubes.Add(point);
-            }
-            else
-            {
-                ActiveCubes.Remove(cube);
-            }
+            ActiveCubes.Remove(point);
         }
+
+        ActiveCubes.AddRange(add);
     }
 
     private int CountNeighbors(Point4D point)
