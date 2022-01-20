@@ -4,7 +4,7 @@ namespace AoC.Solutions.Solutions._2020._15;
 
 public abstract class Base : Solution
 {
-    public override string Description => "";
+    public override string Description => "Number memory game";
 
     public int GetAnswer(int turns)
     {
@@ -12,9 +12,14 @@ public abstract class Base : Solution
 
         var numbers = split.Select(int.Parse).ToList();
 
-        var whenSpoken = numbers.Select((n, i) => (Number: n, Index: i + 1)).ToDictionary(kvp => kvp.Number, kvp => new[] { 0, kvp.Index });
+        var lastSpoken = new int[turns];
 
-        var firstSpoken = numbers.Select((n, i) => (Number: n, Index: i + 1)).ToDictionary(kvp => kvp.Number, _ => true);
+        var penultimateSpoken = new int[turns];
+
+        for (var i = 1; i <= numbers.Count; i++)
+        {
+            lastSpoken[numbers[i - 1]] = i;
+        }
 
         var lastNumber = numbers.Last();
 
@@ -24,29 +29,14 @@ public abstract class Base : Solution
         {
             speak = 0;
 
-            if (firstSpoken[lastNumber])
+            if (penultimateSpoken[lastNumber] != 0)
             {
-                firstSpoken[lastNumber] = false;
-            }
-            else
-            {
-                speak = whenSpoken[lastNumber][1] - whenSpoken[lastNumber][0];
+                speak = lastSpoken[lastNumber] - penultimateSpoken[lastNumber];
             }
 
-            if (whenSpoken.ContainsKey(speak))
-            {
-                whenSpoken[speak] = new [] { whenSpoken[speak][1], t };
+            penultimateSpoken[speak] = lastSpoken[speak];
 
-                firstSpoken[speak] = false;
-            }
-            else
-            {
-                numbers.Add(speak);
-
-                firstSpoken.Add(speak, true);
-
-                whenSpoken.Add(speak, new[] { 0, t });
-            }
+            lastSpoken[speak] = t;
 
             lastNumber = speak;
         }
