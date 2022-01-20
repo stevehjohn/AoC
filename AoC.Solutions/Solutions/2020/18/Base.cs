@@ -69,13 +69,25 @@ public abstract class Base : Solution
     {
         var result = new char[input.Length];
 
-        result[0] = input[0];
-
-        for (var i = 1; i < input.Length - 1; i += 2)
+        if (input.Length % 2 != 0)
         {
-            result[i] = input[i + 1];
+            result[0] = input[0];
 
-            result[i + 1] = input[i];
+            for (var i = 1; i < input.Length - 1; i += 2)
+            {
+                result[i] = input[i + 1];
+
+                result[i + 1] = input[i];
+            }
+        }
+        else
+        {
+            for (var i = 0; i < input.Length - 1; i += 2)
+            {
+                result[i] = input[i + 1];
+
+                result[i + 1] = input[i];
+            }
         }
 
         return result;
