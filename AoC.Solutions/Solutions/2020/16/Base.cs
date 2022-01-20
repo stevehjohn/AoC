@@ -47,6 +47,49 @@ public abstract class Base : Solution
         }
     }
 
+    protected int ValidateOtherTickets()
+    {
+        var invalid = 0;
+
+        var toRemove = new List<List<int>>();
+
+        foreach (var ticket in OtherTickets)
+        {
+            var ticketValid = true;
+
+            foreach (var field in ticket)
+            {
+                var fieldValid = false;
+
+                foreach (var rule in Rules)
+                {
+                    if (field >= rule.Rule1.Minimum && field <= rule.Rule1.Maximum || field >= rule.Rule2.Minimum && field <= rule.Rule2.Maximum)
+                    {
+                        fieldValid = true;
+
+                        break;
+                    }
+                }
+
+                if (! fieldValid)
+                {
+                    invalid += field;
+
+                    ticketValid = false;
+                }
+            }
+
+            if (! ticketValid)
+            {
+                toRemove.Add(ticket);
+            }
+        }
+
+        toRemove.ForEach(t => OtherTickets.Remove(t));
+
+        return invalid;
+    }
+
     private static List<int> ParseTicket(string input)
     {
         return input.Split(',', StringSplitOptions.TrimEntries).Select(int.Parse).ToList();
