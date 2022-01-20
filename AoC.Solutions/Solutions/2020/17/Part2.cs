@@ -3,7 +3,7 @@
 namespace AoC.Solutions.Solutions._2020._17;
 
 [UsedImplicitly]
-public class Part1 : Base
+public class Part2 : Base
 {
     public override string GetAnswer()
     {
@@ -11,7 +11,7 @@ public class Part1 : Base
 
         for (var i = 0; i < 6; i++)
         {
-            RunCycle();
+            RunCycle(true);
         }
 
         return ActiveCubes.Count.ToString();
