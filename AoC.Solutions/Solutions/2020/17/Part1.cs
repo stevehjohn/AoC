@@ -15,28 +15,77 @@ public class Part1 : Base
             RunCycle();
         }
 
-        return "TESTING";
+        return ActiveCubes.Count.ToString();
     }
 
     private void RunCycle()
     {
+        XMax++;
+
+        XMin--;
+
+        YMax++;
+
+        YMin--;
+
+        ZMax++;
+
+        ZMin--;
+
         var flip = new List<Point>();
 
-        foreach (var cube in ActiveCubes)
+        for (var z = ZMin; z < ZMax; z++)
         {
-            
+            for (var y = YMin; y < YMax; y++)
+            {
+                for (var x = XMin; x < XMax; x++)
+                {
+                    var position = new Point(x, y, z);
+
+                    var neighbors = CountNeighbors(position);
+
+                    var cube = ActiveCubes.SingleOrDefault(c => c.Equals(position));
+
+                    if (cube != null)
+                    {
+                        if (neighbors is not 2 or 3)
+                        {
+                            flip.Add(cube);
+                        }
+                    }
+                    else
+                    {
+                        if (neighbors == 3)
+                        {
+                            flip.Add(position);
+                        }
+                    }
+                }
+            }
         }
 
         foreach (var point in flip)
         {
-            if (ActiveCubes.Contains(point))
-            {
-                ActiveCubes.Remove(point);
-            }
-            else
+            var cube = ActiveCubes.SingleOrDefault(c => c.Equals(point));
+
+            if (cube == null)
             {
                 ActiveCubes.Add(point);
             }
+            else
+            {
+                ActiveCubes.Remove(cube);
+            }
         }
+    }
+
+    private int CountNeighbors(Point point)
+    {
+        var neighbors = ActiveCubes.Where(p => p.X >= point.X - 1 && p.X <= point.X + 1 &&
+                                               p.Y >= point.Y - 1 && p.Y <= point.Y + 1 &&
+                                               p.Z >= point.Z - 1 && p.Z <= point.Z + 1 &&
+                                               ! (p.X == point.X && p.Y == point.Y && p.Z == point.Z));
+
+        return neighbors.Count();
     }
 }
