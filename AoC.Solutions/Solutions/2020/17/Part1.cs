@@ -48,7 +48,7 @@ public class Part1 : Base
 
                     if (cube != null)
                     {
-                        if (neighbors is not 2 or 3)
+                        if (neighbors != 2 && neighbors != 3)
                         {
                             flip.Add(cube);
                         }
@@ -76,6 +76,26 @@ public class Part1 : Base
             {
                 ActiveCubes.Remove(cube);
             }
+        }
+
+        //Dump();
+    }
+
+    private void Dump()
+    {
+        for (var z = ZMin; z < ZMax; z++)
+        {
+            for (var y = YMin; y < YMax; y++)
+            {
+                for (var x = XMin; x < XMax; x++)
+                {
+                    Console.Write(ActiveCubes.Any(p => p.Equals(new Point(x, y, z))) ? '#' : ' ');
+                }
+
+                Console.WriteLine();
+            }
+
+            Console.WriteLine();
         }
     }
 
