@@ -40,14 +40,6 @@ public class Tile
             right.Append(data[y][9]);
         }
 
-        Top = data[1].GetHashCode();
-
-        Right = right.ToString().GetHashCode();
-
-        Bottom = data[10].GetHashCode();
-
-        Left = left.ToString().GetHashCode();
-
         TopEdge = data[1];
 
         RightEdge = right.ToString();
@@ -56,15 +48,7 @@ public class Tile
 
         LeftEdge = left.ToString();
 
-        var edges = new HashSet<int>
-                    {
-                        Top,
-                        Right,
-                        Bottom,
-                        Left
-                    };
-
-        Edges = edges.ToImmutableHashSet();
+        RecalculateHashes();
     }
 
     public void RotateClockwise()
@@ -119,7 +103,11 @@ public class Tile
                         Top,
                         Right,
                         Bottom,
-                        Left
+                        Left,
+                        new string(TopEdge.Reverse().ToArray()).GetHashCode(),
+                        new string(RightEdge.Reverse().ToArray()).GetHashCode(),
+                        new string(BottomEdge.Reverse().ToArray()).GetHashCode(),
+                        new string(LeftEdge.Reverse().ToArray()).GetHashCode()
                     };
 
         Edges = edges.ToImmutableHashSet();
