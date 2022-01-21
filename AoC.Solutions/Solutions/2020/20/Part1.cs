@@ -203,20 +203,13 @@ public class Part1 : Base
 
             HighlightEdge(jigsaw.Value, (jigsaw.Key.X + Math.Abs(xMin)) * 11 + 1, (jigsaw.Key.Y + Math.Abs(yMin)) * 11 + 1, jigsaw.Value.Edges.First(e => queue.Edges.Any(qe => qe == e)), f % 2 == 0);
 
-            if (f % 2 == 0)
-            {
-                Thread.Sleep(400);
-            }
-            else
-            {
-                Thread.Sleep(200);
-            }
+            Thread.Sleep(f % 2 == 0 ? 400 : 200);
         }
 
         Console.BackgroundColor = ConsoleColor.Black;
     }
 
-    private void HighlightEdge(Tile tile, int x, int y, int edge, bool on)
+    private static void HighlightEdge(Tile tile, int x, int y, int edge, bool on)
     {
         if (edge == tile.Top || edge == tile.TopFlipped)
         {
@@ -330,7 +323,7 @@ public class Part1 : Base
         }
     }
 
-    private void DumpTile(Tile tile, int x, int y)
+    private static void DumpTile(Tile tile, int x, int y)
     {
         Console.SetCursorPosition(x, y);
 
