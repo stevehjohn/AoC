@@ -6,41 +6,25 @@ public abstract class Base : Solution
 {
     public override string Description => "Operator precedence";
 
-    protected static long CalculateResult(List<char> operations)
+    protected static long CalculateResult(List<string> operations)
     {
         var stack = new Stack<long>();
 
         foreach (var operation in operations)
         {
-            if (char.IsNumber(operation))
-            {
-                stack.Push(operation - '0');
+            var value = PerformOperation(stack, operation);
 
-                continue;
-            }
-
-            var left = stack.Pop();
-
-            var right = stack.Pop();
-
-            if (operation == '+')
-            {
-                stack.Push(left + right);
-            }
-            else
-            {
-                stack.Push(left * right);
-            }
+            stack.Push(value);
         }
 
         return stack.Pop();
     }
 
-    protected static List<char> ParseLine(string line)
+    protected static List<string> ParseLine(string line)
     {
         line = line.Replace(" ", string.Empty);
 
-        var operations = new List<char>();
+        var operations = new List<string>();
 
         while (true)
         {
@@ -48,7 +32,7 @@ public abstract class Base : Solution
 
             if (start == -1)
             {
-                operations.AddRange(ToReversePolish(line));
+                operations.Add(line);
 
                 break;
             }
@@ -57,39 +41,31 @@ public abstract class Base : Solution
 
             var component = line.Substring(start + 1, end - start - 1);
 
-            operations.AddRange(ToReversePolish(component));
+            operations.Add(component);
 
-            line = $"{line[..start]}{line[(end + 1)..]}";
+            line = $"{line[..start]}X{line[(end + 1)..]}";
         }
 
         return operations;
     }
 
-    private static char[] ToReversePolish(string input)
+    private static long PerformOperation(Stack<long> stack, string operation)
     {
-        var result = new char[input.Length];
+        var value = operation[0] == 'X' ? stack.Pop() : operation[0] - '0';
 
-        if (input.Length % 2 != 0)
+        for (var i = 1; i < operation.Length; i += 2)
         {
-            result[0] = input[0];
-
-            for (var i = 1; i < input.Length - 1; i += 2)
+            if (operation[i] == '+')
             {
-                result[i] = input[i + 1];
-
-                result[i + 1] = input[i];
+                value += operation[i + 1] == 'X' ? stack.Pop() : operation[i + 1] - '0';
             }
-        }
-        else
-        {
-            for (var i = 0; i < input.Length - 1; i += 2)
+            else
             {
-                result[i] = input[i + 1];
-
-                result[i + 1] = input[i];
+                value *= operation[i + 1] == 'X' ? stack.Pop() : operation[i + 1] - '0';
             }
         }
 
-        return result;
+        return value;
     }
+
 }

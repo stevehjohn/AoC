@@ -11,7 +11,7 @@ public class Part1 : Base
 
         foreach (var line in Input)
         {
-            var operations = ParseLine("((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2");
+            var operations = ParseLine(line);
 
             result += CalculateResult(operations);
         }
