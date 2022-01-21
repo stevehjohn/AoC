@@ -16,7 +16,30 @@ public class Part1 : Base
 
         Solve();
 
-        return "TESTING";
+        var result = CalculateAnswer();
+
+        return result.ToString();
+    }
+
+    private long CalculateAnswer()
+    {
+        var minX = _jigsaw.Min(t => t.Key.X);
+        
+        var maxX = _jigsaw.Max(t => t.Key.X);
+
+        var minY = _jigsaw.Min(t => t.Key.Y);
+
+        var maxY = _jigsaw.Max(t => t.Key.Y);
+
+        var answer = (long) _jigsaw.Single(j => j.Key.X == minX && j.Key.Y == minY).Value.Id;
+
+        answer *= _jigsaw.Single(j => j.Key.X == minX && j.Key.Y == maxY).Value.Id;
+        
+        answer *= _jigsaw.Single(j => j.Key.X == maxX && j.Key.Y == minY).Value.Id;
+        
+        answer *= _jigsaw.Single(j => j.Key.X == maxX && j.Key.Y == maxY).Value.Id;
+
+        return answer;
     }
 
     private void Solve()
@@ -189,5 +212,7 @@ public class Part1 : Base
                 }
             }
         }
+
+        Console.WriteLine("\n");
     }
 }
