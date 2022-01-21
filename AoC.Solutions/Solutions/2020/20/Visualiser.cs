@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Common;
+﻿#if DUMP && DEBUG
+using AoC.Solutions.Common;
 
 namespace AoC.Solutions.Solutions._2020._20;
 
@@ -203,3 +204,4 @@ public static class Visualiser
         Console.Write(tile.BottomEdge.Replace('.', ' '));
     }
 }
+#endif
