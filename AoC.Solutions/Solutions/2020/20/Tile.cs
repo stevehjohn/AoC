@@ -69,6 +69,16 @@ public class Tile
 
     public void RotateClockwise()
     {
+        var sTemp = RightEdge;
+
+        RightEdge = TopEdge;
+
+        TopEdge = new string(LeftEdge.Reverse().ToArray());
+
+        LeftEdge = BottomEdge;
+
+        BottomEdge = new string(sTemp.Reverse().ToArray());
+
         var temp = Right;
 
         Right = Top;
@@ -79,14 +89,5 @@ public class Tile
 
         Bottom = temp;
 
-        var sTemp = RightEdge;
-
-        RightEdge = TopEdge;
-
-        TopEdge = LeftEdge;
-
-        LeftEdge = BottomEdge;
-
-        BottomEdge = sTemp;
     }
 }

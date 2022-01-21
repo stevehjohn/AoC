@@ -36,7 +36,7 @@ public class Part1 : Base
             {
                 if (! _jigsaw.ContainsKey(new Point(tile.Key.X, tile.Key.Y - 1)))
                 {
-                    if (FindTileMatch(tile.Value.Top, tile.Key.X, tile.Key.Y - 1))
+                    if (FindTileMatch(tile.Value, tile.Value.Top, tile.Key.X, tile.Key.Y - 1))
                     {
                         break;
                     }
@@ -44,7 +44,7 @@ public class Part1 : Base
 
                 if (! _jigsaw.ContainsKey(new Point(tile.Key.X + 1, tile.Key.Y)))
                 {
-                    if (FindTileMatch(tile.Value.Right, tile.Key.X + 1, tile.Key.Y))
+                    if (FindTileMatch(tile.Value, tile.Value.Right, tile.Key.X + 1, tile.Key.Y))
                     {
                         break;
                     }
@@ -52,7 +52,7 @@ public class Part1 : Base
 
                 if (! _jigsaw.ContainsKey(new Point(tile.Key.X, tile.Key.Y + 1)))
                 {
-                    if (FindTileMatch(tile.Value.Bottom, tile.Key.X, tile.Key.Y + 1))
+                    if (FindTileMatch(tile.Value, tile.Value.Bottom, tile.Key.X, tile.Key.Y + 1))
                     {
                         break;
                     }
@@ -60,7 +60,7 @@ public class Part1 : Base
 
                 if (! _jigsaw.ContainsKey(new Point(tile.Key.X - 1, tile.Key.Y)))
                 {
-                    if (FindTileMatch(tile.Value.Left, tile.Key.X - 1, tile.Key.Y))
+                    if (FindTileMatch(tile.Value, tile.Value.Left, tile.Key.X - 1, tile.Key.Y))
                     {
                         break;
                     }
@@ -69,6 +69,48 @@ public class Part1 : Base
 
             Dump();
         }
+    }
+
+    private bool FindTileMatch(Tile tile, int edge, int x, int y)
+    {
+        var match = _tiles.SingleOrDefault(t => t.Edges.Contains(edge));
+
+        if (match == null)
+        {
+            return false;
+        }
+
+        _jigsaw.Add(new Point(x, y), match);
+
+        _tiles.Remove(match);
+
+        while (tile.Left != match.Right && tile.Right != match.Left && tile.Top != match.Bottom && tile.Bottom != match.Top)
+        {
+            match.RotateClockwise();
+        }
+
+        return true;
+    }
+
+    private void ParseInput()
+    {
+        var tileLines = new List<string>();
+
+        foreach (var line in Input)
+        {
+            if (! string.IsNullOrWhiteSpace(line))
+            {
+                tileLines.Add(line);
+
+                continue;
+            }
+
+            _tiles.Add(new Tile(tileLines));
+
+            tileLines.Clear();
+        }
+
+        _tiles.Add(new Tile(tileLines));
     }
 
     private void Dump()
@@ -129,42 +171,5 @@ public class Part1 : Base
                 }
             }
         }
-    }
-
-    private bool FindTileMatch(int edge, int x, int y)
-    {
-        var match = _tiles.SingleOrDefault(t => t.Edges.Contains(edge));
-
-        if (match == null)
-        {
-            return false;
-        }
-
-        _jigsaw.Add(new Point(x, y), match);
-
-        _tiles.Remove(match);
-
-        return true;
-    }
-
-    private void ParseInput()
-    {
-        var tileLines = new List<string>();
-
-        foreach (var line in Input)
-        {
-            if (! string.IsNullOrWhiteSpace(line))
-            {
-                tileLines.Add(line);
-
-                continue;
-            }
-
-            _tiles.Add(new Tile(tileLines));
-
-            tileLines.Clear();
-        }
-
-        _tiles.Add(new Tile(tileLines));
     }
 }
