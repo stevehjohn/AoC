@@ -198,6 +198,31 @@ public class Part1 : Base
 
     private void DumpTiles()
     {
+        var x = 150;
+
+        var y = 1;
+
+        foreach (var tile in _tiles)
+        {
+            DumpTile(tile, x, y);
+
+            x += 11;
+
+            if (x > 280)
+            {
+                x = 150;
+
+                y += 11;
+            }
+        }
+
+        for (var ty = 0; ty < 10; ty++)
+        {
+            Console.SetCursorPosition(x, y + ty);
+
+            Console.Write("          ");
+        }
+
     }
 
     private void DumpTile(Tile tile, int x, int y)
