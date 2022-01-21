@@ -7,7 +7,7 @@ public class Tile
 {
     public int Id { get; }
 
-    public ImmutableHashSet<int> Edges { get; }
+    public ImmutableHashSet<int> Edges { get; private set; }
 
     public int Top { get; private set; }
 
@@ -48,13 +48,13 @@ public class Tile
 
         Left = left.ToString().GetHashCode();
 
-        TopEdge = data[1].Replace('.', ' ');
+        TopEdge = data[1];
 
-        RightEdge = right.ToString().Replace('.', ' ');
+        RightEdge = right.ToString();
 
-        BottomEdge = data[10].Replace('.', ' ');
+        BottomEdge = data[10];
 
-        LeftEdge = left.ToString().Replace('.', ' ');
+        LeftEdge = left.ToString();
 
         var edges = new HashSet<int>
                     {
@@ -69,7 +69,7 @@ public class Tile
 
     public void RotateClockwise()
     {
-        var sTemp = RightEdge;
+        var temp = RightEdge;
 
         RightEdge = TopEdge;
 
@@ -77,17 +77,24 @@ public class Tile
 
         LeftEdge = BottomEdge;
 
-        BottomEdge = new string(sTemp.Reverse().ToArray());
+        BottomEdge = new string(temp.Reverse().ToArray());
 
-        var temp = Right;
+        Right = RightEdge.GetHashCode();
 
-        Right = Top;
+        Top = TopEdge.GetHashCode();
 
-        Top = Left;
+        Left = LeftEdge.GetHashCode();
 
-        Left = Bottom;
+        Bottom = BottomEdge.GetHashCode();
 
-        Bottom = temp;
+        var edges = new HashSet<int>
+                    {
+                        Top,
+                        Right,
+                        Bottom,
+                        Left
+                    };
 
+        Edges = edges.ToImmutableHashSet();
     }
 }
