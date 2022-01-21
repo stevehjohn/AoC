@@ -6,66 +6,90 @@ public abstract class Base : Solution
 {
     public override string Description => "Operator precedence";
 
-    protected static long CalculateResult(List<string> operations)
+    protected static long CalculateResult(List<char> operations)
     {
         var stack = new Stack<long>();
 
         foreach (var operation in operations)
         {
-            var value = PerformOperation(stack, operation);
+            if (char.IsNumber(operation))
+            {
+                stack.Push(operation - '0');
 
-            stack.Push(value);
+                continue;
+            }
+
+            var left = stack.Pop();
+
+            var right = stack.Pop();
+
+            if (operation == '+')
+            {
+                stack.Push(left + right);
+            }
+            else
+            {
+                stack.Push(left * right);
+            }
         }
 
         return stack.Pop();
     }
 
-    protected static List<string> ParseLine(string line)
+    protected static List<char> ParseLineToReverePolish(string line)
     {
         line = line.Replace(" ", string.Empty);
 
-        var operations = new List<string>();
+        var output = new List<char>();
 
-        while (true)
+        var operatorStack = new Stack<char>();
+
+        foreach (var c in line)
         {
-            var start = line.LastIndexOf('(');
-
-            if (start == -1)
+            if (char.IsNumber(c))
             {
-                operations.Add(line);
+                output.Add(c);
 
-                break;
+                continue;
             }
 
-            var end = line.IndexOf(')', start);
+            if (c == '+' || c == '*')
+            {
+                while (operatorStack.Count > 0 && operatorStack.Peek() is '+' or '*')
+                {
+                    output.Add(operatorStack.Pop());
+                }
 
-            var component = line.Substring(start + 1, end - start - 1);
+                operatorStack.Push(c);
 
-            operations.Add(component);
+                continue;
+            }
 
-            line = $"{line[..start]}X{line[(end + 1)..]}";
+            if (c == '(')
+            {
+                operatorStack.Push(c);
+
+                continue;
+            }
+
+            if (c == ')')
+            {
+                var p = operatorStack.Pop();
+
+                while (p != '(')
+                {
+                    output.Add(p);
+
+                    p = operatorStack.Pop();
+                }
+            }
         }
 
-        return operations;
-    }
-
-    private static long PerformOperation(Stack<long> stack, string operation)
-    {
-        var value = operation[0] == 'X' ? stack.Pop() : operation[0] - '0';
-
-        for (var i = 1; i < operation.Length; i += 2)
+        while (operatorStack.Count > 0)
         {
-            if (operation[i] == '+')
-            {
-                value += operation[i + 1] == 'X' ? stack.Pop() : operation[i + 1] - '0';
-            }
-            else
-            {
-                value *= operation[i + 1] == 'X' ? stack.Pop() : operation[i + 1] - '0';
-            }
+            output.Add(operatorStack.Pop());
         }
 
-        return value;
+        return output;
     }
-
 }
