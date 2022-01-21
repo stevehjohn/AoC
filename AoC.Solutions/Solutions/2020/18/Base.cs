@@ -36,7 +36,7 @@ public abstract class Base : Solution
         return stack.Pop();
     }
 
-    protected static List<char> ParseLineToReverePolish(string line)
+    protected static List<char> ParseLineToReverePolish(string line, bool additionPrecedent = false)
     {
         line = line.Replace(" ", string.Empty);
 
@@ -55,7 +55,7 @@ public abstract class Base : Solution
 
             if (c == '+' || c == '*')
             {
-                while (operatorStack.Count > 0 && operatorStack.Peek() is '+' or '*')
+                while (operatorStack.Count > 0 && (operatorStack.Peek() == '+' || operatorStack.Peek() == '*' && ! additionPrecedent))
                 {
                     output.Add(operatorStack.Pop());
                 }
