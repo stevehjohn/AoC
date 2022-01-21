@@ -200,6 +200,8 @@ public class Part1 : Base
 
         HighlightEdge(queue, x, y, jigsaw.Value.Edges.First(e => queue.Edges.Any(qe => qe == e)));
 
+        HighlightEdge(jigsaw.Value, (jigsaw.Key.X + Math.Abs(xMin)) * 11 + 1, (jigsaw.Key.Y + Math.Abs(yMin)) * 11 + 1, jigsaw.Value.Edges.First(e => queue.Edges.Any(qe => qe == e)));
+
         Console.BackgroundColor = ConsoleColor.Black;
     }
 
