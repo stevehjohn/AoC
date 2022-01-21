@@ -17,6 +17,14 @@ public class Tile
 
     public int Left { get; private set; }
 
+    public int TopFlipped { get; private set; }
+
+    public int RightFlipped { get; private set; }
+
+    public int BottomFlipped { get; private set; }
+
+    public int LeftFlipped { get; private set; }
+
     public string TopEdge { get; private set; }
 
     public string RightEdge { get; private set; }
@@ -98,16 +106,24 @@ public class Tile
 
         Bottom = BottomEdge.GetHashCode();
 
+        RightFlipped = new string(RightEdge.Reverse().ToArray()).GetHashCode();
+        
+        TopFlipped = new string(TopEdge.Reverse().ToArray()).GetHashCode();
+        
+        LeftFlipped = new string(LeftEdge.Reverse().ToArray()).GetHashCode();
+        
+        BottomFlipped = new string(BottomEdge.Reverse().ToArray()).GetHashCode();
+
         var edges = new HashSet<int>
                     {
                         Top,
                         Right,
                         Bottom,
                         Left,
-                        new string(TopEdge.Reverse().ToArray()).GetHashCode(),
-                        new string(RightEdge.Reverse().ToArray()).GetHashCode(),
-                        new string(BottomEdge.Reverse().ToArray()).GetHashCode(),
-                        new string(LeftEdge.Reverse().ToArray()).GetHashCode()
+                        TopFlipped,
+                        RightFlipped,
+                        BottomFlipped,
+                        LeftFlipped
                     };
 
         Edges = edges.ToImmutableHashSet();

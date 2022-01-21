@@ -198,9 +198,67 @@ public class Part1 : Base
 
         DumpTile(jigsaw.Value, (jigsaw.Key.X + Math.Abs(xMin)) * 11 + 1, (jigsaw.Key.Y + Math.Abs(yMin)) * 11 + 1);
 
-        Console.BackgroundColor = ConsoleColor.Black;
+        HighlightEdge(queue, x, y, jigsaw.Value.Edges.First(e => queue.Edges.Any(qe => qe == e)));
 
-        Thread.Sleep(500);
+        Console.BackgroundColor = ConsoleColor.Black;
+    }
+
+    private void HighlightEdge(Tile tile, int x, int y, int edge)
+    {
+        for (var i = 0; i < 3; i++)
+        {
+            if (edge == tile.Top || edge == tile.TopFlipped)
+            {
+                Console.SetCursorPosition(x, y);
+
+                Console.BackgroundColor = i % 2 == 0 ? ConsoleColor.Red : ConsoleColor.DarkBlue;
+
+                Console.Write(tile.TopEdge);
+
+                Console.BackgroundColor = ConsoleColor.Black;
+            }
+
+            if (edge == tile.Bottom || edge == tile.BottomFlipped)
+            {
+                Console.SetCursorPosition(x, y + 9);
+
+                Console.BackgroundColor = i % 2 == 0 ? ConsoleColor.Red : ConsoleColor.DarkBlue;
+
+                Console.Write(tile.BottomEdge);
+
+                Console.BackgroundColor = ConsoleColor.Black;
+            }
+
+            if (edge == tile.Left || edge == tile.LeftFlipped)
+            {
+                for (var ty = 0; ty < 10; ty++)
+                {
+                    Console.SetCursorPosition(x, y + ty);
+
+                    Console.BackgroundColor = i % 2 == 0 ? ConsoleColor.Red : ConsoleColor.DarkBlue;
+
+                    Console.Write(tile.LeftEdge[ty]);
+
+                    Console.BackgroundColor = ConsoleColor.Black;
+                }
+            }
+
+            if (edge == tile.Right || edge == tile.RightFlipped)
+            {
+                for (var ty = 0; ty < 10; ty++)
+                {
+                    Console.SetCursorPosition(x, y + ty);
+
+                    Console.BackgroundColor = i % 2 == 0 ? ConsoleColor.Red : ConsoleColor.DarkBlue;
+
+                    Console.Write(tile.RightEdge[ty]);
+
+                    Console.BackgroundColor = ConsoleColor.Black;
+                }
+            }
+
+            Thread.Sleep(200);
+        }
     }
 
     private void Dump()
