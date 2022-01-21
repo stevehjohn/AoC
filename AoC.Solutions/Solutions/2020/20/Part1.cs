@@ -30,6 +30,8 @@ public class Part1 : Base
 
         _tiles.RemoveAt(0);
 
+        Dump();
+
         while (_jigsaw.Count < tileCount)
         {
             foreach (var tile in _jigsaw)
@@ -133,13 +135,13 @@ public class Part1 : Base
 
                     Console.SetCursorPosition((x + Math.Abs(xMin)) * 11 + 1, (y + Math.Abs(yMin)) * 11 + 1);
 
-                    Console.Write(tile.TopEdge);
+                    Console.Write(tile.TopEdge.Replace('.', ' '));
 
                     for (var ty = 1; ty < tile.LeftEdge.Length - 1; ty++)
                     {
                         Console.SetCursorPosition((x + Math.Abs(xMin)) * 11 + 1, (y + Math.Abs(yMin)) * 11 + ty + 1);
 
-                        Console.Write(tile.LeftEdge[ty]);
+                        Console.Write(tile.LeftEdge[ty] == '#' ? '#' : ' ');
 
                         Console.ForegroundColor = ConsoleColor.DarkGray;
 
@@ -162,12 +164,12 @@ public class Part1 : Base
 
                         Console.ForegroundColor = ConsoleColor.Green;
 
-                        Console.Write(tile.RightEdge[ty]);
+                        Console.Write(tile.RightEdge[ty] == '#' ? '#' : ' ');
                     }
 
                     Console.SetCursorPosition((x + Math.Abs(xMin)) * 11 + 1, (y + Math.Abs(yMin)) * 11 + 10);
 
-                    Console.Write(tile.BottomEdge);
+                    Console.Write(tile.BottomEdge.Replace('.', ' '));
                 }
             }
         }
