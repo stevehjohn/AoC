@@ -14,6 +14,8 @@ public class Part1 : Base
     {
         Console.Clear();
 
+        Console.CursorVisible = false;
+
         ParseInput();
 
         Solve();
@@ -26,7 +28,7 @@ public class Part1 : Base
     private long CalculateAnswer()
     {
         var minX = _jigsaw.Min(t => t.Key.X);
-        
+
         var maxX = _jigsaw.Max(t => t.Key.X);
 
         var minY = _jigsaw.Min(t => t.Key.Y);
@@ -36,9 +38,9 @@ public class Part1 : Base
         var answer = (long) _jigsaw.Single(j => j.Key.X == minX && j.Key.Y == minY).Value.Id;
 
         answer *= _jigsaw.Single(j => j.Key.X == minX && j.Key.Y == maxY).Value.Id;
-        
+
         answer *= _jigsaw.Single(j => j.Key.X == maxX && j.Key.Y == minY).Value.Id;
-        
+
         answer *= _jigsaw.Single(j => j.Key.X == maxX && j.Key.Y == maxY).Value.Id;
 
         return answer;
@@ -163,7 +165,7 @@ public class Part1 : Base
 
     private void Dump()
     {
-        Console.CursorVisible = false;
+        DumpTiles();
 
         var yMin = _jigsaw.Min(t => t.Key.Y);
 
@@ -175,45 +177,7 @@ public class Part1 : Base
             {
                 if (_jigsaw.ContainsKey(new Point(x, y)))
                 {
-                    var tile = _jigsaw[new Point(x, y)];
-
-                    Console.SetCursorPosition((x + Math.Abs(xMin)) * 11 + 1, (y + Math.Abs(yMin)) * 11 + 1);
-
-                    Console.Write(tile.TopEdge.Replace('.', ' '));
-
-                    for (var ty = 1; ty < tile.LeftEdge.Length - 1; ty++)
-                    {
-                        Console.SetCursorPosition((x + Math.Abs(xMin)) * 11 + 1, (y + Math.Abs(yMin)) * 11 + ty + 1);
-
-                        Console.Write(tile.LeftEdge[ty] == '#' ? '#' : ' ');
-
-                        Console.ForegroundColor = ConsoleColor.DarkGray;
-
-                        if (ty == 4)
-                        {
-                            Console.Write("..");
-
-                            Console.ForegroundColor = ConsoleColor.Blue;
-
-                            Console.Write(tile.Id);
-
-                            Console.ForegroundColor = ConsoleColor.DarkGray;
-
-                            Console.Write("..");
-                        }
-                        else
-                        {
-                            Console.Write("........");
-                        }
-
-                        Console.ForegroundColor = ConsoleColor.Green;
-
-                        Console.Write(tile.RightEdge[ty] == '#' ? '#' : ' ');
-                    }
-
-                    Console.SetCursorPosition((x + Math.Abs(xMin)) * 11 + 1, (y + Math.Abs(yMin)) * 11 + 10);
-
-                    Console.Write(tile.BottomEdge.Replace('.', ' '));
+                    DumpTile(x, y, xMin, yMin);
                 }
                 else
                 {
@@ -228,5 +192,52 @@ public class Part1 : Base
         }
 
         Console.WriteLine("\n");
+    }
+
+    private void DumpTiles()
+    {
+    }
+
+    private void DumpTile(int x, int y, int xMin, int yMin)
+    {
+        var tile = _jigsaw[new Point(x, y)];
+
+        Console.SetCursorPosition((x + Math.Abs(xMin)) * 11 + 1, (y + Math.Abs(yMin)) * 11 + 1);
+
+        Console.Write(tile.TopEdge.Replace('.', ' '));
+
+        for (var ty = 1; ty < tile.LeftEdge.Length - 1; ty++)
+        {
+            Console.SetCursorPosition((x + Math.Abs(xMin)) * 11 + 1, (y + Math.Abs(yMin)) * 11 + ty + 1);
+
+            Console.Write(tile.LeftEdge[ty] == '#' ? '#' : ' ');
+
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+
+            if (ty == 4)
+            {
+                Console.Write("..");
+
+                Console.ForegroundColor = ConsoleColor.Blue;
+
+                Console.Write(tile.Id);
+
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+
+                Console.Write("..");
+            }
+            else
+            {
+                Console.Write("........");
+            }
+
+            Console.ForegroundColor = ConsoleColor.Green;
+
+            Console.Write(tile.RightEdge[ty] == '#' ? '#' : ' ');
+        }
+
+        Console.SetCursorPosition((x + Math.Abs(xMin)) * 11 + 1, (y + Math.Abs(yMin)) * 11 + 10);
+
+        Console.Write(tile.BottomEdge.Replace('.', ' '));
     }
 }
