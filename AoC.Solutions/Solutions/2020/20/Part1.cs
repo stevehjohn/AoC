@@ -177,7 +177,9 @@ public class Part1 : Base
             {
                 if (_jigsaw.ContainsKey(new Point(x, y)))
                 {
-                    DumpTile(x, y, xMin, yMin);
+                    var tile = _jigsaw[new Point(x, y)];
+
+                    DumpTile(tile, (x + Math.Abs(xMin)) * 11 + 1, (y + Math.Abs(yMin)) * 11 + 1);
                 }
                 else
                 {
@@ -198,17 +200,15 @@ public class Part1 : Base
     {
     }
 
-    private void DumpTile(int x, int y, int xMin, int yMin)
+    private void DumpTile(Tile tile, int x, int y)
     {
-        var tile = _jigsaw[new Point(x, y)];
-
-        Console.SetCursorPosition((x + Math.Abs(xMin)) * 11 + 1, (y + Math.Abs(yMin)) * 11 + 1);
+        Console.SetCursorPosition(x, y);
 
         Console.Write(tile.TopEdge.Replace('.', ' '));
 
         for (var ty = 1; ty < tile.LeftEdge.Length - 1; ty++)
         {
-            Console.SetCursorPosition((x + Math.Abs(xMin)) * 11 + 1, (y + Math.Abs(yMin)) * 11 + ty + 1);
+            Console.SetCursorPosition(x, y + ty);
 
             Console.Write(tile.LeftEdge[ty] == '#' ? '#' : ' ');
 
@@ -236,7 +236,7 @@ public class Part1 : Base
             Console.Write(tile.RightEdge[ty] == '#' ? '#' : ' ');
         }
 
-        Console.SetCursorPosition((x + Math.Abs(xMin)) * 11 + 1, (y + Math.Abs(yMin)) * 11 + 10);
+        Console.SetCursorPosition(x, y + 9);
 
         Console.Write(tile.BottomEdge.Replace('.', ' '));
     }
