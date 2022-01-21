@@ -65,7 +65,7 @@ public class Part1 : Base
             {
                 if (! _jigsaw.ContainsKey(new Point(tile.Key.X, tile.Key.Y - 1)))
                 {
-                    if (FindTileMatch(tile.Value, tile.Value.Top, tile.Key.X, tile.Key.Y - 1))
+                    if (FindTileMatch(tile, tile.Value.Top, tile.Key.X, tile.Key.Y - 1))
                     {
                         break;
                     }
@@ -73,7 +73,7 @@ public class Part1 : Base
 
                 if (! _jigsaw.ContainsKey(new Point(tile.Key.X + 1, tile.Key.Y)))
                 {
-                    if (FindTileMatch(tile.Value, tile.Value.Right, tile.Key.X + 1, tile.Key.Y))
+                    if (FindTileMatch(tile, tile.Value.Right, tile.Key.X + 1, tile.Key.Y))
                     {
                         break;
                     }
@@ -81,7 +81,7 @@ public class Part1 : Base
 
                 if (! _jigsaw.ContainsKey(new Point(tile.Key.X, tile.Key.Y + 1)))
                 {
-                    if (FindTileMatch(tile.Value, tile.Value.Bottom, tile.Key.X, tile.Key.Y + 1))
+                    if (FindTileMatch(tile, tile.Value.Bottom, tile.Key.X, tile.Key.Y + 1))
                     {
                         break;
                     }
@@ -89,7 +89,7 @@ public class Part1 : Base
 
                 if (! _jigsaw.ContainsKey(new Point(tile.Key.X - 1, tile.Key.Y)))
                 {
-                    if (FindTileMatch(tile.Value, tile.Value.Left, tile.Key.X - 1, tile.Key.Y))
+                    if (FindTileMatch(tile, tile.Value.Left, tile.Key.X - 1, tile.Key.Y))
                     {
                         break;
                     }
@@ -100,7 +100,7 @@ public class Part1 : Base
         }
     }
 
-    private bool FindTileMatch(Tile tile, int edge, int x, int y)
+    private bool FindTileMatch(KeyValuePair<Point, Tile> tile, int edge, int x, int y)
     {
         var match = _tiles.SingleOrDefault(t => t.Edges.Contains(edge));
 
@@ -109,29 +109,31 @@ public class Part1 : Base
             return false;
         }
 
+        HighlightMatch(tile, match);
+
         _jigsaw.Add(new Point(x, y), match);
 
         _tiles.Remove(match);
 
         var count = 0;
 
-        while (count < 4 && tile.Left != match.Right && tile.Right != match.Left && tile.Top != match.Bottom && tile.Bottom != match.Top)
+        while (count < 4 && tile.Value.Left != match.Right && tile.Value.Right != match.Left && tile.Value.Top != match.Bottom && tile.Value.Bottom != match.Top)
         {
             match.RotateClockwise();
 
-            if (tile.Left != match.Right && tile.Right != match.Left && tile.Top != match.Bottom && tile.Bottom != match.Top)
+            if (tile.Value.Left != match.Right && tile.Value.Right != match.Left && tile.Value.Top != match.Bottom && tile.Value.Bottom != match.Top)
             {
                 match.FlipHorizontal();
             }
 
-            if (tile.Left != match.Right && tile.Right != match.Left && tile.Top != match.Bottom && tile.Bottom != match.Top)
+            if (tile.Value.Left != match.Right && tile.Value.Right != match.Left && tile.Value.Top != match.Bottom && tile.Value.Bottom != match.Top)
             {
                 match.FlipHorizontal();
 
                 match.FlipVertical();
             }
 
-            if (tile.Left != match.Right && tile.Right != match.Left && tile.Top != match.Bottom && tile.Bottom != match.Top)
+            if (tile.Value.Left != match.Right && tile.Value.Right != match.Left && tile.Value.Top != match.Bottom && tile.Value.Bottom != match.Top)
             {
                 match.FlipVertical();
             }
@@ -161,6 +163,44 @@ public class Part1 : Base
         }
 
         _tiles.Add(new Tile(tileLines));
+    }
+
+    private void HighlightMatch(KeyValuePair<Point, Tile> jigsaw, Tile queue)
+    {
+        var i =_tiles.IndexOf(queue);
+
+        var x = 150;
+
+        var y = 1;
+
+        while (i > 0)
+        {
+
+            x += 11;
+
+            if (x > 280)
+            {
+                x = 150;
+
+                y += 11;
+            }
+
+            i--;
+        }
+
+        Console.BackgroundColor = ConsoleColor.DarkBlue;
+
+        DumpTile(queue, x, y);
+
+        var yMin = _jigsaw.Min(t => t.Key.Y);
+
+        var xMin = _jigsaw.Min(t => t.Key.X);
+
+        DumpTile(jigsaw.Value, (jigsaw.Key.X + Math.Abs(xMin)) * 11 + 1, (jigsaw.Key.Y + Math.Abs(yMin)) * 11 + 1);
+
+        Console.BackgroundColor = ConsoleColor.Black;
+
+        Thread.Sleep(500);
     }
 
     private void Dump()
