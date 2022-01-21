@@ -12,6 +12,8 @@ public class Part1 : Base
 
     public override string GetAnswer()
     {
+        Console.Clear();
+
         ParseInput();
 
         Solve();
@@ -115,19 +117,24 @@ public class Part1 : Base
         {
             match.RotateClockwise();
 
+            if (tile.Left != match.Right && tile.Right != match.Left && tile.Top != match.Bottom && tile.Bottom != match.Top)
+            {
+                match.FlipHorizontal();
+            }
+
+            if (tile.Left != match.Right && tile.Right != match.Left && tile.Top != match.Bottom && tile.Bottom != match.Top)
+            {
+                match.FlipHorizontal();
+
+                match.FlipVertical();
+            }
+
+            if (tile.Left != match.Right && tile.Right != match.Left && tile.Top != match.Bottom && tile.Bottom != match.Top)
+            {
+                match.FlipVertical();
+            }
+
             count++;
-        }
-
-        if (tile.Left != match.Right && tile.Right != match.Left && tile.Top != match.Bottom && tile.Bottom != match.Top)
-        {
-            match.FlipHorizontal();
-        }
-
-        if (tile.Left != match.Right && tile.Right != match.Left && tile.Top != match.Bottom && tile.Bottom != match.Top)
-        {
-            match.FlipHorizontal();
-
-            match.FlipVertical();
         }
 
         return true;
@@ -157,8 +164,6 @@ public class Part1 : Base
     private void Dump()
     {
         Console.CursorVisible = false;
-
-        Console.Clear();
 
         var yMin = _jigsaw.Min(t => t.Key.Y);
 
@@ -209,6 +214,15 @@ public class Part1 : Base
                     Console.SetCursorPosition((x + Math.Abs(xMin)) * 11 + 1, (y + Math.Abs(yMin)) * 11 + 10);
 
                     Console.Write(tile.BottomEdge.Replace('.', ' '));
+                }
+                else
+                {
+                    for (var ty = 0; ty < 11 - 1; ty++)
+                    {
+                        Console.SetCursorPosition((x + Math.Abs(xMin)) * 11 + 1, (y + Math.Abs(yMin)) * 11 + ty + 1);
+
+                        Console.Write("          ");
+                    }
                 }
             }
         }
