@@ -11,7 +11,7 @@ public class Part1 : Base
 
         foreach (var line in Input)
         {
-            var operations = ParseLine(line);
+            var operations = ParseLineToReverePolish(line);
 
             result += CalculateResult(operations);
         }
