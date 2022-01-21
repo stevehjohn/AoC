@@ -258,7 +258,7 @@ public class Part1 : Base
         {
             for (var ty = 0; ty < 10; ty++)
             {
-                Console.SetCursorPosition(x, y + ty);
+                Console.SetCursorPosition(x + 9, y + ty);
 
                 Console.BackgroundColor = on ? ConsoleColor.Red : ConsoleColor.DarkBlue;
 
