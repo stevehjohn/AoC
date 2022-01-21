@@ -167,7 +167,7 @@ public class Part1 : Base
 
     private void HighlightMatch(KeyValuePair<Point, Tile> jigsaw, Tile queue)
     {
-        var i =_tiles.IndexOf(queue);
+        var i = _tiles.IndexOf(queue);
 
         var x = 150;
 
@@ -175,7 +175,6 @@ public class Part1 : Base
 
         while (i > 0)
         {
-
             x += 11;
 
             if (x > 280)
@@ -198,68 +197,75 @@ public class Part1 : Base
 
         DumpTile(jigsaw.Value, (jigsaw.Key.X + Math.Abs(xMin)) * 11 + 1, (jigsaw.Key.Y + Math.Abs(yMin)) * 11 + 1);
 
-        HighlightEdge(queue, x, y, jigsaw.Value.Edges.First(e => queue.Edges.Any(qe => qe == e)));
+        for (var f = 0; f < 3; f++)
+        {
+            HighlightEdge(queue, x, y, jigsaw.Value.Edges.First(e => queue.Edges.Any(qe => qe == e)), f % 2 == 0);
 
-        HighlightEdge(jigsaw.Value, (jigsaw.Key.X + Math.Abs(xMin)) * 11 + 1, (jigsaw.Key.Y + Math.Abs(yMin)) * 11 + 1, jigsaw.Value.Edges.First(e => queue.Edges.Any(qe => qe == e)));
+            HighlightEdge(jigsaw.Value, (jigsaw.Key.X + Math.Abs(xMin)) * 11 + 1, (jigsaw.Key.Y + Math.Abs(yMin)) * 11 + 1, jigsaw.Value.Edges.First(e => queue.Edges.Any(qe => qe == e)), f % 2 == 0);
+
+            if (f % 2 == 0)
+            {
+                Thread.Sleep(400);
+            }
+            else
+            {
+                Thread.Sleep(200);
+            }
+        }
 
         Console.BackgroundColor = ConsoleColor.Black;
     }
 
-    private void HighlightEdge(Tile tile, int x, int y, int edge)
+    private void HighlightEdge(Tile tile, int x, int y, int edge, bool on)
     {
-        for (var i = 0; i < 3; i++)
+        if (edge == tile.Top || edge == tile.TopFlipped)
         {
-            if (edge == tile.Top || edge == tile.TopFlipped)
+            Console.SetCursorPosition(x, y);
+
+            Console.BackgroundColor = on ? ConsoleColor.Red : ConsoleColor.DarkBlue;
+
+            Console.Write(tile.TopEdge);
+
+            Console.BackgroundColor = ConsoleColor.Black;
+        }
+
+        if (edge == tile.Bottom || edge == tile.BottomFlipped)
+        {
+            Console.SetCursorPosition(x, y + 9);
+
+            Console.BackgroundColor = on ? ConsoleColor.Red : ConsoleColor.DarkBlue;
+
+            Console.Write(tile.BottomEdge);
+
+            Console.BackgroundColor = ConsoleColor.Black;
+        }
+
+        if (edge == tile.Left || edge == tile.LeftFlipped)
+        {
+            for (var ty = 0; ty < 10; ty++)
             {
-                Console.SetCursorPosition(x, y);
+                Console.SetCursorPosition(x, y + ty);
 
-                Console.BackgroundColor = i % 2 == 0 ? ConsoleColor.Red : ConsoleColor.DarkBlue;
+                Console.BackgroundColor = on ? ConsoleColor.Red : ConsoleColor.DarkBlue;
 
-                Console.Write(tile.TopEdge);
+                Console.Write(tile.LeftEdge[ty]);
 
                 Console.BackgroundColor = ConsoleColor.Black;
             }
+        }
 
-            if (edge == tile.Bottom || edge == tile.BottomFlipped)
+        if (edge == tile.Right || edge == tile.RightFlipped)
+        {
+            for (var ty = 0; ty < 10; ty++)
             {
-                Console.SetCursorPosition(x, y + 9);
+                Console.SetCursorPosition(x, y + ty);
 
-                Console.BackgroundColor = i % 2 == 0 ? ConsoleColor.Red : ConsoleColor.DarkBlue;
+                Console.BackgroundColor = on ? ConsoleColor.Red : ConsoleColor.DarkBlue;
 
-                Console.Write(tile.BottomEdge);
+                Console.Write(tile.RightEdge[ty]);
 
                 Console.BackgroundColor = ConsoleColor.Black;
             }
-
-            if (edge == tile.Left || edge == tile.LeftFlipped)
-            {
-                for (var ty = 0; ty < 10; ty++)
-                {
-                    Console.SetCursorPosition(x, y + ty);
-
-                    Console.BackgroundColor = i % 2 == 0 ? ConsoleColor.Red : ConsoleColor.DarkBlue;
-
-                    Console.Write(tile.LeftEdge[ty]);
-
-                    Console.BackgroundColor = ConsoleColor.Black;
-                }
-            }
-
-            if (edge == tile.Right || edge == tile.RightFlipped)
-            {
-                for (var ty = 0; ty < 10; ty++)
-                {
-                    Console.SetCursorPosition(x, y + ty);
-
-                    Console.BackgroundColor = i % 2 == 0 ? ConsoleColor.Red : ConsoleColor.DarkBlue;
-
-                    Console.Write(tile.RightEdge[ty]);
-
-                    Console.BackgroundColor = ConsoleColor.Black;
-                }
-            }
-
-            Thread.Sleep(200);
         }
     }
 
@@ -322,7 +328,6 @@ public class Part1 : Base
 
             Console.Write("          ");
         }
-
     }
 
     private void DumpTile(Tile tile, int x, int y)
