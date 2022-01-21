@@ -79,6 +79,33 @@ public class Tile
 
         BottomEdge = new string(temp.Reverse().ToArray());
 
+        RecalculateHashes();
+    }
+
+    public void FlipVertical()
+    {
+        (BottomEdge, TopEdge) = (TopEdge, BottomEdge);
+
+        LeftEdge = new string(LeftEdge.Reverse().ToArray());
+
+        RightEdge = new string(RightEdge.Reverse().ToArray());
+
+        RecalculateHashes();
+    }
+
+    public void FlipHorizontal()
+    {
+        (RightEdge, LeftEdge) = (LeftEdge, RightEdge);
+
+        TopEdge = new string(TopEdge.Reverse().ToArray());
+
+        BottomEdge = new string(BottomEdge.Reverse().ToArray());
+
+        RecalculateHashes();
+    }
+
+    private void RecalculateHashes()
+    {
         Right = RightEdge.GetHashCode();
 
         Top = TopEdge.GetHashCode();

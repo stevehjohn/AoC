@@ -86,9 +86,25 @@ public class Part1 : Base
 
         _tiles.Remove(match);
 
-        while (tile.Left != match.Right && tile.Right != match.Left && tile.Top != match.Bottom && tile.Bottom != match.Top)
+        var count = 0;
+
+        while (count < 4 && tile.Left != match.Right && tile.Right != match.Left && tile.Top != match.Bottom && tile.Bottom != match.Top)
         {
             match.RotateClockwise();
+
+            count++;
+        }
+
+        if (tile.Left != match.Right && tile.Right != match.Left && tile.Top != match.Bottom && tile.Bottom != match.Top)
+        {
+            match.FlipHorizontal();
+        }
+
+        if (tile.Left != match.Right && tile.Right != match.Left && tile.Top != match.Bottom && tile.Bottom != match.Top)
+        {
+            match.FlipHorizontal();
+
+            match.FlipVertical();
         }
 
         return true;
