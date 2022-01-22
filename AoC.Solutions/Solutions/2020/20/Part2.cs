@@ -27,7 +27,6 @@ public class Part2 : Base
         Console.CursorVisible = false;
 #endif
 
-
         ParseMonster();
 
         List<Point> monsters = null;
