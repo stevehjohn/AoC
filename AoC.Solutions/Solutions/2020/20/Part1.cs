@@ -159,7 +159,7 @@ public class Part1 : Base
 
         while (count < 4 && tile.Value.Left != match.Right && tile.Value.Right != match.Left && tile.Value.Top != match.Bottom && tile.Value.Bottom != match.Top)
         {
-            match.RotateClockwise();
+            match.Rotate();
 
             if (tile.Value.Left != match.Right && tile.Value.Right != match.Left && tile.Value.Top != match.Bottom && tile.Value.Bottom != match.Top)
             {
