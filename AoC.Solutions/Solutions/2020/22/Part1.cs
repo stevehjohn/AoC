@@ -16,20 +16,6 @@ public class Part1 : Base
         return score.ToString();
     }
 
-    private int CalculateScore()
-    {
-        var winnerDeck = (Player1Cards.Count == 0 ? Player2Cards : Player1Cards).Reverse().ToArray();
-
-        var score = 0;
-
-        for (var i = 1; i <= winnerDeck.Length; i++)
-        {
-            score += i * winnerDeck[i - 1];
-        }
-
-        return score;
-    }
-
     private void Play()
     {
         while (Player1Cards.Count > 0 && Player2Cards.Count > 0)

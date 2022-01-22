@@ -10,6 +10,20 @@ public abstract class Base : Solution
 
     protected readonly Queue<int> Player2Cards = new();
 
+    protected int CalculateScore()
+    {
+        var winnerDeck = (Player1Cards.Count == 0 ? Player2Cards : Player1Cards).Reverse().ToArray();
+
+        var score = 0;
+
+        for (var i = 1; i <= winnerDeck.Length; i++)
+        {
+            score += i * winnerDeck[i - 1];
+        }
+
+        return score;
+    }
+
     protected void ParseInput()
     {
         var player1 = true;
