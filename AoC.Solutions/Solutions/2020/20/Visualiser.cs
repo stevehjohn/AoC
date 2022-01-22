@@ -5,6 +5,31 @@ namespace AoC.Solutions.Solutions._2020._20;
 
 public static class Visualiser
 {
+    public static void DumpImage(char[,] image)
+    {
+        Console.Clear();
+
+        Console.SetCursorPosition(0, 1);
+
+        for (var y = 0; y < image.GetLength(1); y++)
+        {
+            Console.Write(' ');
+
+            for (var x = 0; x < image.GetLength(0); x++)
+            {
+                Console.ForegroundColor = image[x, y] == '#' ? ConsoleColor.Green : ConsoleColor.DarkGray;
+
+                Console.Write(image[x, y]);
+            }
+
+            Console.WriteLine();
+        }
+
+        Console.WriteLine();
+
+        Console.ForegroundColor = ConsoleColor.Green;
+    }
+
     public static void Dump(Dictionary<Point, Tile> jigsaw, List<Tile> tiles)
     {
         DumpTiles(tiles);
