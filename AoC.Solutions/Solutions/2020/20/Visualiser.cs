@@ -76,7 +76,7 @@ public static class Visualiser
 
             HighlightEdge(jigsaw.Value, (jigsaw.Key.X + Math.Abs(xMin)) * 11 + 1, (jigsaw.Key.Y + Math.Abs(yMin)) * 11 + 1, jigsaw.Value.Edges.First(e => queue.Edges.Any(qe => qe == e)), f % 2 == 0);
 
-            //Thread.Sleep(f % 2 == 0 ? 400 : 200);
+            Thread.Sleep(f % 2 == 0 ? 400 : 200);
         }
 
         Console.BackgroundColor = ConsoleColor.Black;
@@ -171,23 +171,33 @@ public static class Visualiser
         {
             Console.SetCursorPosition(x, y + ty);
 
-            for (var tx = 0; tx < 10; tx++)
-            {
-                Console.ForegroundColor = ty != 0 && ty != 9 && tx != 0 && tx != 9
-                                              ? ConsoleColor.DarkGray
-                                              : ConsoleColor.Green;
+            var line = $"{tile.Image[0, ty]}{tile.Image[1, ty]}{tile.Image[2, ty]}{tile.Image[3, ty]}{tile.Image[4, ty]}{tile.Image[5, ty]}{tile.Image[6, ty]}{tile.Image[7, ty]}{tile.Image[8, ty]}{tile.Image[9, ty]}";
 
-                Console.Write(tile.Image[tx, ty]);
+            if (ty == 0 || ty == 9)
+            {
+                Console.WriteLine(line);
+
+                continue;
             }
 
-            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write(line[0]);
 
-            Console.SetCursorPosition(x + 3, y + 4);
+            Console.ForegroundColor = ConsoleColor.DarkGray;
 
-            Console.Write(tile.Id);
+            Console.Write(line.Substring(1, 8));
 
             Console.ForegroundColor = ConsoleColor.Green;
+
+            Console.Write(line[9]);
         }
+
+        Console.ForegroundColor = ConsoleColor.Blue;
+
+        Console.SetCursorPosition(x + 3, y + 4);
+
+        Console.Write(tile.Id);
+
+        Console.ForegroundColor = ConsoleColor.Green;
     }
 }
 #endif
