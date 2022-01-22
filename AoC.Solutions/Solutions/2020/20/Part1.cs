@@ -13,9 +13,11 @@ public class Part1 : Base
 
     public override string GetAnswer()
     {
+#if DEBUG && DUMP
         Console.Clear();
 
         Console.CursorVisible = false;
+#endif
 
         ParseInput();
 
@@ -41,7 +43,7 @@ public class Part1 : Base
             for (var ty = 1; ty < 9; ty++)
             {
                 var builder = new StringBuilder();
-            
+
                 for (var x = xMin; x <= _jigsaw.Max(t => t.Key.X); x++)
                 {
                     var tile = _jigsaw[new Point(x, y)];
@@ -51,7 +53,7 @@ public class Part1 : Base
                         builder.Append(tile.Image[tx, ty]);
                     }
                 }
-         
+
                 lines.Add(builder.ToString());
             }
         }
