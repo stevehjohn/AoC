@@ -73,7 +73,7 @@ public class Tile
         Image = image;
     }
 
-    public void RotateClockwise()
+    public void Rotate()
     {
         var temp = RightEdge;
 

@@ -7,8 +7,6 @@ public static class Visualiser
 {
     public static void DumpImage(char[,] image)
     {
-        Console.Clear();
-
         Console.SetCursorPosition(0, 1);
 
         for (var y = 0; y < image.GetLength(1); y++)
@@ -30,36 +28,59 @@ public static class Visualiser
         Console.ForegroundColor = ConsoleColor.Green;
     }
 
-    private static Point PreviousMonster;
+    public static void FoundMonster(List<Point> monster, char[,] image, int x, int y)
+    {
+        for (var t = 0; t < 5; t++)
+        {
+            Console.ForegroundColor = t % 2 == 0 ? ConsoleColor.White : ConsoleColor.DarkGray;
 
-    public static void ShowMonsterScan(List<Point> monster, char[,] image, int x, int y)
+            foreach (var point in monster)
+            {
+                Console.SetCursorPosition(x + point.X + 1, y + point.Y + 1);
+
+                Console.Write('O');
+            }
+
+            if (t < 4)
+            {
+                Thread.Sleep(250);
+            }
+        }
+    }
+
+    public static Point PreviousMonster;
+
+    public static void ShowMonster(List<Point> monster, char[,] image, int x, int y, bool eraseOnly = false)
     {
         Console.ForegroundColor = ConsoleColor.White;
 
-        foreach (var point in monster)
+        if (! eraseOnly)
         {
-            Console.SetCursorPosition(x + point.X + 1, y + point.Y + 1);
+            foreach (var point in monster)
+            {
+                Console.SetCursorPosition(x + point.X + 1, y + point.Y + 1);
 
-            Console.Write('O');
+                Console.Write('O');
+            }
         }
 
         if (PreviousMonster != null)
         {
             foreach (var point in monster)
             {
-                Console.ForegroundColor = ConsoleColor.DarkGray;
+                var c = image[PreviousMonster.X + point.X, PreviousMonster.Y + point.Y];
+
+                Console.ForegroundColor = c == 'O' ? ConsoleColor.White : c == '#' ? ConsoleColor.Green : ConsoleColor.DarkGray;
 
                 Console.SetCursorPosition(PreviousMonster.X + point.X + 1, PreviousMonster.Y + point.Y + 1);
 
-                Console.Write(image[PreviousMonster.X + point.X, PreviousMonster.Y + point.Y]);
+                Console.Write(c);
             }
         }
 
         PreviousMonster = new Point(x, y);
 
         Console.ForegroundColor = ConsoleColor.Green;
-
-        //Console.SetCursorPosition(0, image.GetLength(1) + 2);
     }
 
     public static void Dump(Dictionary<Point, Tile> jigsaw, List<Tile> tiles)
