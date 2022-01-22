@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Common;
+﻿using System.Text;
+using AoC.Solutions.Common;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2020._20;
@@ -22,7 +23,40 @@ public class Part1 : Base
 
         var result = CalculateAnswer();
 
+        SaveResultForPart2();
+
         return result.ToString();
+    }
+
+    private void SaveResultForPart2()
+    {
+        var yMin = _jigsaw.Min(t => t.Key.Y);
+
+        var xMin = _jigsaw.Min(t => t.Key.X);
+
+        var lines = new List<string>();
+
+        for (var y = yMin; y <= _jigsaw.Max(t => t.Key.Y); y++)
+        {
+            for (var ty = 1; ty < 9; ty++)
+            {
+                var builder = new StringBuilder();
+            
+                for (var x = xMin; x <= _jigsaw.Max(t => t.Key.X); x++)
+                {
+                    var tile = _jigsaw[new Point(x, y)];
+
+                    for (var tx = 1; tx < 9; tx++)
+                    {
+                        builder.Append(tile.Image[tx, ty]);
+                    }
+                }
+         
+                lines.Add(builder.ToString());
+            }
+        }
+
+        File.WriteAllLines(Part1ResultFile, lines);
     }
 
     private long CalculateAnswer()
