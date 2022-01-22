@@ -33,6 +33,8 @@ public class Tile
 
     public string LeftEdge { get; private set; }
 
+    public char[,] Image { get; private set; }
+
     public Tile(List<string> data)
     {
         Id = int.Parse(data[0].Substring(5, 4));
@@ -57,6 +59,18 @@ public class Tile
         LeftEdge = left.ToString();
 
         RecalculateHashes();
+
+        var image = new char[10, 10];
+
+        for (var y = 0; y < 10; y++)
+        {
+            for (var x = 0; x < 10; x++)
+            {
+                image[x, y] = data[y + 1][x];
+            }
+        }
+
+        Image = image;
     }
 
     public void RotateClockwise()
@@ -72,6 +86,18 @@ public class Tile
         BottomEdge = new string(temp.Reverse().ToArray());
 
         RecalculateHashes();
+
+        var image = new char[10, 10];
+
+        for (var y = 0; y < 10; y++)
+        {
+            for (var x = 0; x < 10; x++)
+            {
+                image[x, y] = Image[y, 9 - x];
+            }
+        }
+
+        Image = image;
     }
 
     public void FlipVertical()
@@ -83,6 +109,18 @@ public class Tile
         RightEdge = new string(RightEdge.Reverse().ToArray());
 
         RecalculateHashes();
+
+        var image = new char[10, 10];
+
+        for (var y = 0; y < 10; y++)
+        {
+            for (var x = 0; x < 10; x++)
+            {
+                image[x, y] = Image[x, 9 - y];
+            }
+        }
+
+        Image = image;
     }
 
     public void FlipHorizontal()
@@ -94,6 +132,18 @@ public class Tile
         BottomEdge = new string(BottomEdge.Reverse().ToArray());
 
         RecalculateHashes();
+
+        var image = new char[10, 10];
+
+        for (var y = 0; y < 10; y++)
+        {
+            for (var x = 0; x < 10; x++)
+            {
+                image[x, y] = Image[9 - x, y];
+            }
+        }
+
+        Image = image;
     }
 
     private void RecalculateHashes()

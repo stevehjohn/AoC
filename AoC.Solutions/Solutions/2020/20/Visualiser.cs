@@ -35,7 +35,7 @@ public static class Visualiser
             }
         }
 
-        Console.WriteLine("\n");
+        Console.SetCursorPosition(0, 11 * (int) Math.Sqrt(jigsaw.Count) + 1);
     }
 
     public static void HighlightMatch(KeyValuePair<Point, Tile> jigsaw, Tile queue, List<Tile> tiles, Dictionary<Point, Tile> wholeJigsaw)
@@ -76,7 +76,7 @@ public static class Visualiser
 
             HighlightEdge(jigsaw.Value, (jigsaw.Key.X + Math.Abs(xMin)) * 11 + 1, (jigsaw.Key.Y + Math.Abs(yMin)) * 11 + 1, jigsaw.Value.Edges.First(e => queue.Edges.Any(qe => qe == e)), f % 2 == 0);
 
-            Thread.Sleep(f % 2 == 0 ? 400 : 200);
+            //Thread.Sleep(f % 2 == 0 ? 400 : 200);
         }
 
         Console.BackgroundColor = ConsoleColor.Black;
@@ -167,41 +167,27 @@ public static class Visualiser
     {
         Console.SetCursorPosition(x, y);
 
-        Console.Write(tile.TopEdge.Replace('.', ' '));
-
-        for (var ty = 1; ty < tile.LeftEdge.Length - 1; ty++)
+        for (var ty = 0; ty < 10; ty++)
         {
             Console.SetCursorPosition(x, y + ty);
 
-            Console.Write(tile.LeftEdge[ty] == '#' ? '#' : ' ');
-
-            Console.ForegroundColor = ConsoleColor.DarkGray;
-
-            if (ty == 4)
+            for (var tx = 0; tx < 10; tx++)
             {
-                Console.Write("..");
+                Console.ForegroundColor = ty != 0 && ty != 9 && tx != 0 && tx != 9
+                                              ? ConsoleColor.DarkGray
+                                              : ConsoleColor.Green;
 
-                Console.ForegroundColor = ConsoleColor.Blue;
-
-                Console.Write(tile.Id);
-
-                Console.ForegroundColor = ConsoleColor.DarkGray;
-
-                Console.Write("..");
+                Console.Write(tile.Image[tx, ty]);
             }
-            else
-            {
-                Console.Write("........");
-            }
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+
+            Console.SetCursorPosition(x + 3, y + 4);
+
+            Console.Write(tile.Id);
 
             Console.ForegroundColor = ConsoleColor.Green;
-
-            Console.Write(tile.RightEdge[ty] == '#' ? '#' : ' ');
         }
-
-        Console.SetCursorPosition(x, y + 9);
-
-        Console.Write(tile.BottomEdge.Replace('.', ' '));
     }
 }
 #endif
