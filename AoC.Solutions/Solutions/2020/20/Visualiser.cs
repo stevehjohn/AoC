@@ -30,6 +30,38 @@ public static class Visualiser
         Console.ForegroundColor = ConsoleColor.Green;
     }
 
+    private static Point PreviousMonster;
+
+    public static void ShowMonsterScan(List<Point> monster, char[,] image, int x, int y)
+    {
+        Console.ForegroundColor = ConsoleColor.White;
+
+        foreach (var point in monster)
+        {
+            Console.SetCursorPosition(x + point.X + 1, y + point.Y + 1);
+
+            Console.Write('O');
+        }
+
+        if (PreviousMonster != null)
+        {
+            foreach (var point in monster)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+
+                Console.SetCursorPosition(PreviousMonster.X + point.X + 1, PreviousMonster.Y + point.Y + 1);
+
+                Console.Write(image[PreviousMonster.X + point.X, PreviousMonster.Y + point.Y]);
+            }
+        }
+
+        PreviousMonster = new Point(x, y);
+
+        Console.ForegroundColor = ConsoleColor.Green;
+
+        //Console.SetCursorPosition(0, image.GetLength(1) + 2);
+    }
+
     public static void Dump(Dictionary<Point, Tile> jigsaw, List<Tile> tiles)
     {
         DumpTiles(tiles);
