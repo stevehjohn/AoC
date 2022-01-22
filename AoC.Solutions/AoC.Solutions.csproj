@@ -33,6 +33,7 @@
     <Folder Include="Solutions\2020\14\" />
     <Folder Include="Solutions\2020\19\" />
     <Folder Include="Solutions\2020\21\" />
+    <Folder Include="Solutions\2020\22\" />
     <Folder Include="Solutions\2021\08\" />
     <Folder Include="Solutions\2021\10\" />
     <Folder Include="Solutions\2021\16\" />
@@ -194,6 +195,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Solutions\2020\21\input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Solutions\2020\22\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Solutions\2021\01\input.txt">
