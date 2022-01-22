@@ -39,6 +39,10 @@ public class Part2 : Base
         {
             for (var x = 0; x < _width - 19; x++)
             {
+#if DUMP && DEBUG
+                Visualiser.ShowMonsterScan(_monster, _image, x, y);
+#endif
+
                 if (IsMonsterAt(x, y))
                 {
                     result.Add(new Point(x, y));
