@@ -5,48 +5,29 @@ namespace AoC.Solutions.Solutions._2020._21;
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private readonly Dictionary<string, List<string>> _allergens = new();
-
     public override string GetAnswer()
     {
         ParseInput();
 
-        DetermineAllergens();
+        var allergens = GetAllergens();
 
-        return "TESTING";
-    }
+        var result = 0;
 
-    private void DetermineAllergens()
-    {
-    }
-
-    private void ParseInput()
-    {
-        foreach (var line in Input)
+        foreach (var ingredient in IngredientOccurrences)
         {
-            var split = line[..^1].Split("(contains", StringSplitOptions.TrimEntries);
-
-            var ingredients = split[0].Split(' ');
-
-            var allergens = split[1].Split(", ");
-
-            foreach (var allergen in allergens)
+            if (! allergens.Contains(ingredient.Key))
             {
-                if (! _allergens.TryGetValue(allergen, out var allergenIngredients))
-                {
-                    allergenIngredients = new List<string>();
-
-                    _allergens.Add(allergen, allergenIngredients);
-                }
-
-                foreach (var ingredient in ingredients)
-                {
-                    if (! allergenIngredients.Contains(ingredient))
-                    {
-                        allergenIngredients.Add(ingredient);
-                    }
-                }
+                result += ingredient.Value;
             }
         }
+
+        return result.ToString();
+    }
+
+    private List<string> GetAllergens()
+    {
+        var allergens = Allergens.SelectMany(a => a.Value).Distinct().ToList();
+
+        return allergens;
     }
 }
