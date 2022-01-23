@@ -51,8 +51,15 @@ public class Part2 : Base
 
             if (neighbors == 1)
             {
-                // Check neighbors for white tile candidates
+                var emptyNeighbors = GetEmptyNeighbors(tile);
 
+                foreach (var emptyNeighbor in emptyNeighbors)
+                {
+                    if (CountNeighbors(emptyNeighbor) == 2)
+                    {
+                        flips.Add(emptyNeighbor);
+                    }
+                }
             }
             else if (neighbors is 0 or > 2)
             {
@@ -60,35 +67,7 @@ public class Part2 : Base
             }
         }
 
-        //for (var z = BlackTiles.Min(p => p.Z) - 1; z <= BlackTiles.Max(p => p.Z) + 1; z++)
-        //{
-        //    for (var y = BlackTiles.Min(p => p.Y) - 1; y <= BlackTiles.Max(p => p.Y) + 1; y++)
-        //    {
-        //        for (var x = BlackTiles.Min(p => p.X) - 1; x <= BlackTiles.Max(p => p.X) + 1; x++)
-        //        {
-        //            var position = new Point(x, y, z);
-
-        //            var neighbors = CountNeighbors(position);
-
-        //            if (BlackTiles.Contains(position))
-        //            {
-        //                if (neighbors is 0 or > 2)
-        //                {
-        //                    flips.Add(position);
-        //                }
-        //            }
-        //            else
-        //            {
-        //                if (neighbors == 2)
-        //                {
-        //                    flips.Add(position);
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
-
-        foreach (var point in flips)
+        foreach (var point in flips.Distinct())
         {
             if (BlackTiles.Contains(point))
             {
@@ -111,5 +90,22 @@ public class Part2 : Base
         }
 
         return neighbors;
+    }
+
+    private List<Point> GetEmptyNeighbors(Point position)
+    {
+        var emptyNeighbors = new List<Point>();
+
+        foreach (var neighborOffset in _neighbors)
+        {
+            var neighbor = new Point(position.X + neighborOffset.X, position.Y + neighborOffset.Y, position.Z + neighborOffset.Z);
+
+            if (! BlackTiles.Contains(neighbor))
+            {
+                emptyNeighbors.Add(neighbor);
+            }
+        }
+
+        return emptyNeighbors;
     }
 }
