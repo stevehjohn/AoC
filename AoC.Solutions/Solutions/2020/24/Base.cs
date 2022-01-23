@@ -25,6 +25,8 @@ public abstract class Base : Solution
                 position.X += movement.X;
 
                 position.Y += movement.Y;
+             
+                position.Z += movement.Z;
             }
 
             if (BlackTiles.Contains(position))
