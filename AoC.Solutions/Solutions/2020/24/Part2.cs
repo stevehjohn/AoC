@@ -16,11 +16,9 @@ public class Part2 : Base
 
         InitialiseNeighbors();
 
-        for (var i = 0; i < 10; i++)
+        for (var i = 0; i < 100; i++)
         {
             PlayGameOfLife();
-
-            Console.WriteLine(BlackTiles.Count);
         }
 
         return BlackTiles.Count.ToString();
