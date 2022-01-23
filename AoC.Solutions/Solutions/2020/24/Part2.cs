@@ -45,8 +45,6 @@ public class Part2 : Base
     {
         var flips = new List<Point>();
 
-        Dump();
-
         foreach (var tile in BlackTiles)
         {
             var neighbors = CountNeighbors(tile);
@@ -79,31 +77,6 @@ public class Part2 : Base
             {
                 BlackTiles.Add(point);
             }
-        }
-    }
-
-    private void Dump()
-    {
-        Console.Clear();
-
-        Console.CursorVisible = false;
-
-        var points = new List<Point>();
-
-        foreach (var tile in BlackTiles)
-        {
-            points.Add(new Point((int) (Math.Sqrt(3) * tile.X + Math.Sqrt(3) / 2 * tile.Y), 3 / 2 * tile.Y));
-        }
-
-        var xMin = points.Min(p => p.X);
-
-        var yMin = points.Min(p => p.Y);
-
-        foreach (var point in points)
-        {
-            Console.SetCursorPosition(-xMin + 1 + point.X, -yMin + 1 + point.Y);
-
-            Console.Write('#');
         }
     }
 
