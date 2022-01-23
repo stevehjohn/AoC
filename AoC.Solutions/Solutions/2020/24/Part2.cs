@@ -49,19 +49,17 @@ public class Part2 : Base
         {
             var neighbors = CountNeighbors(tile);
 
-            if (neighbors == 1)
-            {
-                var emptyNeighbors = GetEmptyNeighbors(tile);
+            var emptyNeighbors = GetEmptyNeighbors(tile);
 
-                foreach (var emptyNeighbor in emptyNeighbors)
+            foreach (var emptyNeighbor in emptyNeighbors)
+            {
+                if (CountNeighbors(emptyNeighbor) == 2)
                 {
-                    if (CountNeighbors(emptyNeighbor) == 2)
-                    {
-                        flips.Add(emptyNeighbor);
-                    }
+                    flips.Add(emptyNeighbor);
                 }
             }
-            else if (neighbors is 0 or > 2)
+
+            if (neighbors is 0 or > 2)
             {
                 flips.Add(tile);
             }
