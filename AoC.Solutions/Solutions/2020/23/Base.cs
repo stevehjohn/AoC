@@ -7,6 +7,8 @@ public abstract class Base : Solution
     public override string Description => "Crab cups";
 
     protected int[] Cups;
+    
+    protected int Max;
 
     private int _cup;
 
@@ -20,14 +22,11 @@ public abstract class Base : Solution
 
         var removed = new int[3];
 
-        for (i = 0; i < 4; i++)
+        for (i = 0; i < 3; i++)
         {
             targetCup = Cups[targetCup];
 
-            if (i < 3)
-            {
-                removed[i] = targetCup;
-            }
+            removed[i] = targetCup;
 
             if (i == 2)
             {
@@ -39,7 +38,7 @@ public abstract class Base : Solution
 
         if (targetCup == 0)
         {
-            targetCup = 9;
+            targetCup = Max;
         }
 
         while (targetCup == removed[0] || targetCup == removed[1] || targetCup == removed[2])
@@ -48,7 +47,7 @@ public abstract class Base : Solution
 
             if (targetCup < 1)
             {
-                targetCup = 9;
+                targetCup = Max;
             }
         }
 
@@ -77,5 +76,7 @@ public abstract class Base : Solution
         Cups[data[^1] - '0'] = data[0] - '0';
 
         _cup = Input[0][0] - '0';
+
+        Max = data.Length;
     }
 }
