@@ -16,11 +16,10 @@ public class Part1 : Base
         for (var i = 0; i < 10; i++)
         {
             PerformMove();
-
-            Console.WriteLine(GetCupsFromOne());
+            //Console.WriteLine(GetCupsFromOne());
         }
 
-        return "TESTING";
+        return GetCupsFromOne();
     }
 
     private string GetCupsFromOne()
@@ -65,7 +64,7 @@ public class Part1 : Base
 
             byte highestLower = 0;
 
-            while (i < 4)
+            while (i < 5)
             {
                 targetCup = _cups[targetCup];
 
@@ -85,44 +84,15 @@ public class Part1 : Base
             targetCup = highestLower == 0 ? highest : highestLower;
         }
 
-        // Remember what was right of current cup 'r'
         var nextCup = _cups[_cup];
-
-        // Shift everything after current cup << 3
-
-        /*
-            (3) 8  9  1  2  5  4  6  7
-            Update 3 with what 1 points at
-        */
 
         _cups[_cup] = _cups[sequenceToShift];
 
-        // Find target
         _cups[sequenceToShift] = _cups[targetCup];
 
-        // Point target ar 'r'
         _cups[targetCup] = nextCup;
 
         _cup = _cups[_cup];
-
-        // How to determine what 1 should point at?
-        // 1 points at cup after target
-
-        //for (i = 1; i < 10; i++)
-        //{
-        //    if (_cups[i] == targetCup)
-        //    {
-        //        _cups[i] = nextCup;
-
-        //        break;
-        //    }
-        //}
-
-        //_cups[targetCup] = _cups[_cup]; // move 8 to after 2
-
-        //_cups[_cup] = targetCup; // move 2 to after 3
-
-        //_cup = targetCup;
     }
 
     private void ParseInput()
