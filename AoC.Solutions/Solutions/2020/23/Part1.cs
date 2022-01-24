@@ -6,24 +6,42 @@ namespace AoC.Solutions.Solutions._2020._23;
 public class Part1 : Base
 {
     private readonly byte[] _cups = new byte[10];
-    
-    private int _cupLabel;
+
+    private byte _cup;
 
     public override string GetAnswer()
     {
         ParseInput();
 
-        //for (var i = 0; i < 10; i++)
+        for (var i = 0; i < 10; i++)
         {
             PerformMove();
+
+            Console.WriteLine(GetCupsFromOne());
         }
 
         return "TESTING";
     }
 
+    private string GetCupsFromOne()
+    {
+        var cups = new char[9];
+
+        var cup = 1;
+
+        for (var i = 0; i < 9; i++)
+        {
+            cups[i] = (char) (_cups[cup] + '0');
+
+            cup = _cups[cup];
+        }
+
+        return new string(cups);
+    }
+
     private void PerformMove()
     {
-        var targetCup = _cupLabel;
+        var targetCup = _cup;
 
         int i;
 
@@ -32,13 +50,13 @@ public class Part1 : Base
             targetCup = _cups[targetCup];
         }
 
-        if (targetCup != _cupLabel - 1)
+        if (targetCup != _cup - 1)
         {
             i = 0;
 
             var highest = targetCup;
 
-            var highestLower = 0;
+            byte highestLower = 0;
 
             while (i < 4)
             {
@@ -49,7 +67,7 @@ public class Part1 : Base
                     highest = targetCup;
                 }
 
-                if (targetCup < _cupLabel && targetCup > highestLower)
+                if (targetCup < _cup && targetCup > highestLower)
                 {
                     highestLower = targetCup;
                 }
@@ -60,7 +78,23 @@ public class Part1 : Base
             targetCup = highestLower == 0 ? highest : highestLower;
         }
 
-        Console.WriteLine(targetCup);
+        var nextCup = _cups[targetCup];
+
+        for (i = 1; i < 10; i++)
+        {
+            if (_cups[i] == targetCup)
+            {
+                _cups[i] = nextCup;
+
+                break;
+            }
+        }
+
+        _cups[targetCup] = _cups[_cup]; // move 8 to after 2
+
+        _cups[_cup] = targetCup; // move 2 to after 3
+
+        _cup = targetCup;
     }
 
     private void ParseInput()
@@ -69,11 +103,11 @@ public class Part1 : Base
 
         for (var i = 0; i < data.Length - 1; i++)
         {
-            _cups[(byte)(data[i] - '0')] = (byte)(data[i + 1] - '0');
+            _cups[(byte) (data[i] - '0')] = (byte) (data[i + 1] - '0');
         }
 
-        _cups[(byte)(data[^1] - '0')] = (byte)(data[0] - '0');
+        _cups[(byte) (data[^1] - '0')] = (byte) (data[0] - '0');
 
-        _cupLabel = (byte)(Input[0][0] - '0');
+        _cup = (byte) (Input[0][0] - '0');
     }
 }
