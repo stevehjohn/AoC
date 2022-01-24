@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Crab cups";
 
-    protected readonly byte[] Cups = new byte[10];
+    protected byte[] Cups;
 
     private byte _cup;
 
@@ -66,6 +66,8 @@ public abstract class Base : Solution
     protected void ParseInput()
     {
         var data = Input[0];
+
+        Cups = new byte[data.Length + 1];
 
         for (var i = 0; i < data.Length - 1; i++)
         {

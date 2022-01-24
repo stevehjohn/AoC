@@ -19,11 +19,11 @@ public class Part1 : Base
 
     private string GetCupsFromOne()
     {
-        var cups = new char[8];
+        var cups = new char[Cups.Length - 2];
 
         var cup = 1;
 
-        for (var i = 0; i < 8; i++)
+        for (var i = 0; i < Cups.Length - 2; i++)
         {
             cups[i] = (char) (Cups[cup] + '0');
 
