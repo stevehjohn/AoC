@@ -45,9 +45,16 @@ public class Part1 : Base
 
         int i;
 
+        var sequenceToShift = 0;
+
         for (i = 0; i < 4; i++)
         {
             targetCup = _cups[targetCup];
+
+            if (i == 2)
+            {
+                sequenceToShift = targetCup;
+            }
         }
 
         if (targetCup != _cup - 1)
@@ -78,23 +85,44 @@ public class Part1 : Base
             targetCup = highestLower == 0 ? highest : highestLower;
         }
 
-        var nextCup = _cups[targetCup];
+        // Remember what was right of current cup 'r'
+        var nextCup = _cups[_cup];
 
-        for (i = 1; i < 10; i++)
-        {
-            if (_cups[i] == targetCup)
-            {
-                _cups[i] = nextCup;
+        // Shift everything after current cup << 3
 
-                break;
-            }
-        }
+        /*
+            (3) 8  9  1  2  5  4  6  7
+            Update 3 with what 1 points at
+        */
 
-        _cups[targetCup] = _cups[_cup]; // move 8 to after 2
+        _cups[_cup] = _cups[sequenceToShift];
 
-        _cups[_cup] = targetCup; // move 2 to after 3
+        // Find target
+        _cups[sequenceToShift] = _cups[targetCup];
 
-        _cup = targetCup;
+        // Point target ar 'r'
+        _cups[targetCup] = nextCup;
+
+        _cup = _cups[_cup];
+
+        // How to determine what 1 should point at?
+        // 1 points at cup after target
+
+        //for (i = 1; i < 10; i++)
+        //{
+        //    if (_cups[i] == targetCup)
+        //    {
+        //        _cups[i] = nextCup;
+
+        //        break;
+        //    }
+        //}
+
+        //_cups[targetCup] = _cups[_cup]; // move 8 to after 2
+
+        //_cups[_cup] = targetCup; // move 2 to after 3
+
+        //_cup = targetCup;
     }
 
     private void ParseInput()
