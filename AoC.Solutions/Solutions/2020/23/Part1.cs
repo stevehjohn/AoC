@@ -56,9 +56,37 @@ public class Part1 : Base
             }
         }
 
-        if (targetCup != _cup - 1)
+        if (targetCup != _cup - 1 && (targetCup != 9 && _cup != 1))
         {
-            i = 0;
+            //var temp = targetCup;
+
+            //var target = _cup;
+
+            //while (targetCup != target)
+            //{
+            //    targetCup = temp;
+
+            //    target--;
+
+            //    if (target < 1)
+            //    {
+            //        target = 9;
+            //    }
+
+            //    i = 0;
+
+            //    while (i < 5)
+            //    {
+            //        targetCup = _cups[targetCup];
+
+            //        if (targetCup == target)
+            //        {
+            //            break;
+            //        }
+
+            //        i++;
+            //    }
+            //}
 
             var highest = targetCup;
 
