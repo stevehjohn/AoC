@@ -22,7 +22,7 @@ public class Part2 : Base
 
         var result = (long) first * second;
 
-        return "TESTING";
+        return result.ToString();
     }
 
     private void ExpandInput()
@@ -36,10 +36,12 @@ public class Part2 : Base
             input[i] = i + 1;
         }
 
-        input[Input[0][Input[0].Length - 1] - '0'] = 10;
+        input[Input[0][Input[0].Length - 1] - '0'] = Cups.Length;
 
         input[1_000_000] = Input[0][0] - '0';
 
         Cups = input;
+
+        Max = 1_000_000;
     }
 }
