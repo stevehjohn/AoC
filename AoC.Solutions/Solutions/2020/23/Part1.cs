@@ -13,10 +13,9 @@ public class Part1 : Base
     {
         ParseInput();
 
-        for (var i = 0; i < 10; i++)
+        for (var i = 0; i < 100; i++)
         {
             PerformMove();
-            //Console.WriteLine(GetCupsFromOne());
         }
 
         return GetCupsFromOne();
@@ -28,7 +27,7 @@ public class Part1 : Base
 
         var cup = 1;
 
-        for (var i = 0; i < 9; i++)
+        for (var i = 0; i < 8; i++)
         {
             cups[i] = (char) (_cups[cup] + '0');
 
@@ -46,9 +45,16 @@ public class Part1 : Base
 
         var sequenceToShift = 0;
 
+        var removed = new byte[3];
+
         for (i = 0; i < 4; i++)
         {
             targetCup = _cups[targetCup];
+
+            if (i < 3)
+            {
+                removed[i] = targetCup;
+            }
 
             if (i == 2)
             {
@@ -56,60 +62,21 @@ public class Part1 : Base
             }
         }
 
-        if (targetCup != _cup - 1 && (targetCup != 9 && _cup != 1))
+        targetCup = (byte) (_cup - 1);
+
+        if (targetCup == 0)
         {
-            //var temp = targetCup;
+            targetCup = 9;
+        }
 
-            //var target = _cup;
+        while (targetCup == removed[0] || targetCup == removed[1] || targetCup == removed[2])
+        {
+            targetCup--;
 
-            //while (targetCup != target)
-            //{
-            //    targetCup = temp;
-
-            //    target--;
-
-            //    if (target < 1)
-            //    {
-            //        target = 9;
-            //    }
-
-            //    i = 0;
-
-            //    while (i < 5)
-            //    {
-            //        targetCup = _cups[targetCup];
-
-            //        if (targetCup == target)
-            //        {
-            //            break;
-            //        }
-
-            //        i++;
-            //    }
-            //}
-
-            var highest = targetCup;
-
-            byte highestLower = 0;
-
-            while (i < 5)
+            if (targetCup < 1)
             {
-                targetCup = _cups[targetCup];
-
-                if (targetCup > highest)
-                {
-                    highest = targetCup;
-                }
-
-                if (targetCup < _cup && targetCup > highestLower)
-                {
-                    highestLower = targetCup;
-                }
-
-                i++;
+                targetCup = 9;
             }
-
-            targetCup = highestLower == 0 ? highest : highestLower;
         }
 
         var nextCup = _cups[_cup];
