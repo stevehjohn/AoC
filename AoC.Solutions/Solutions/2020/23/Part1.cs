@@ -23,7 +23,7 @@ public class Part1 : Base
 
     private string GetCupsFromOne()
     {
-        var cups = new char[9];
+        var cups = new char[8];
 
         var cup = 1;
 
