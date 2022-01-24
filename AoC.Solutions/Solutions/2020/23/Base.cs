@@ -6,9 +6,9 @@ public abstract class Base : Solution
 {
     public override string Description => "Crab cups";
 
-    protected byte[] Cups;
+    protected int[] Cups;
 
-    private byte _cup;
+    private int _cup;
 
     protected void PerformMove()
     {
@@ -18,7 +18,7 @@ public abstract class Base : Solution
 
         var sequenceToShift = 0;
 
-        var removed = new byte[3];
+        var removed = new int[3];
 
         for (i = 0; i < 4; i++)
         {
@@ -35,7 +35,7 @@ public abstract class Base : Solution
             }
         }
 
-        targetCup = (byte) (_cup - 1);
+        targetCup = _cup - 1;
 
         if (targetCup == 0)
         {
@@ -67,15 +67,15 @@ public abstract class Base : Solution
     {
         var data = Input[0];
 
-        Cups = new byte[data.Length + 1];
+        Cups = new int[data.Length + 1];
 
         for (var i = 0; i < data.Length - 1; i++)
         {
-            Cups[(byte) (data[i] - '0')] = (byte) (data[i + 1] - '0');
+            Cups[data[i] - '0'] = data[i + 1] - '0';
         }
 
-        Cups[(byte) (data[^1] - '0')] = (byte) (data[0] - '0');
+        Cups[data[^1] - '0'] = data[0] - '0';
 
-        _cup = (byte) (Input[0][0] - '0');
+        _cup = Input[0][0] - '0';
     }
 }
