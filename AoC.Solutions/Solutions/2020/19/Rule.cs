@@ -26,6 +26,11 @@ public class Rule
 
     public (bool IsValid, string Remaining) Validate(string input)
     {
+        if (input.Length == 0)
+        {
+            return (true, string.Empty);
+        }
+
         if (SubRules != null)
         {
             return ValidateSubRules(input);
@@ -79,7 +84,7 @@ public class Rule
                 return (true, result.Remaining);
             }
         }
-        
+
         return (false, input);
     }
 
