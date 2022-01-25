@@ -12,7 +12,7 @@ public abstract class Base : Solution
 
     protected Rule RootRule;
 
-    protected void ParseInput()
+    protected void ParseInput(bool replaceRules = false)
     {
         var i = 0;
 
@@ -21,6 +21,19 @@ public abstract class Base : Solution
             var split = Input[i].Split(':', StringSplitOptions.TrimEntries);
 
             var ruleId = int.Parse(split[0]);
+
+            if (replaceRules)
+            {
+                if (ruleId == 8)
+                {
+                    split[1] = "42 | 42 8";
+                }
+
+                if (ruleId == 11)
+                {
+                    split[1] = "42 31 | 42 11 31";
+                }
+            }
 
             var isLeaf = split[1][0] == '"';
 
