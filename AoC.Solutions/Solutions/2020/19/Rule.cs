@@ -79,6 +79,18 @@ public class Rule
 
             result = RightRules[1].Validate(result.Remaining);
 
+            if (RightRules.Count == 2)
+            {
+                if (result.IsValid)
+                {
+                    return (true, result.Remaining);
+                }
+
+                return (false, input);
+            }
+
+            result = RightRules[2].Validate(result.Remaining);
+
             if (result.IsValid)
             {
                 return (true, result.Remaining);
