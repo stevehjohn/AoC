@@ -39,7 +39,24 @@ public class Part1 : Base
             {
                 rule.Character = split[1][1];
 
+                i++;
+
                 continue;
+            }
+
+            var ruleString = split[1];
+
+            if (ruleString.Contains('|'))
+            {
+                var orRules = ruleString.Split('|', StringSplitOptions.TrimEntries);
+
+                rule.LeftRules = ParseRuleString(orRules[0]);
+
+                rule.RightRules = ParseRuleString(orRules[1]);
+            }
+            else
+            {
+                rule.SubRules = ParseRuleString(ruleString);
             }
 
             i++;
@@ -54,6 +71,27 @@ public class Part1 : Base
             i++;
         }
     }
+
+    private List<Rule> ParseRuleString(string rules)
+    {
+        var ids = rules.Split(' ', StringSplitOptions.TrimEntries).Select(int.Parse);
+
+        var result = new List<Rule>();
+
+        foreach (var id in ids)
+        {
+            if (_rules.ContainsKey(id))
+            {
+                result.Add(_rules[id]);
+            }
+            else
+            {
+                result.Add(new Rule(id));
+            }
+        }
+
+        return result;
+    }
 }
 
 public class Rule
@@ -62,20 +100,29 @@ public class Rule
 
     public char Character { get; set;  }
 
-    public List<Rule> SubRules { get; }
+    public List<Rule> SubRules { get; set; }
 
-    public List<Rule> LeftRules { get; }
+    public List<Rule> LeftRules { get; set; }
 
-    public List<Rule> RightRules { get; }
+    public List<Rule> RightRules { get; set; }
 
     public Rule(int id)
     {
         Id = id;
+    }
 
-        SubRules = new List<Rule>();
+    public override string ToString()
+    {
+        if (Character != '\0')
+        {
+            return $"{Id}: \"{Character}\"";
+        }
 
-        LeftRules = new List<Rule>();
+        if (SubRules != null)
+        {
+            return $"{Id}: {string.Join(", ", SubRules.Select(r => r.Id))}";
+        }
 
-        RightRules = new List<Rule>();
+        return $"{Id}: {string.Join(", ", LeftRules.Select(r => r.Id))} | {string.Join(", ", RightRules.Select(r => r.Id))}";
     }
 }
