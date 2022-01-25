@@ -46,24 +46,40 @@ public class Rule
 
     private (bool IsValid, string Remaining) ValidateOrRule(string input)
     {
-        foreach (var leftRule in LeftRules)
+        var result = LeftRules[0].Validate(input);
+
+        if (result.IsValid)
         {
-            var leftResult = leftRule.Validate(input);
-
-            if (leftResult.IsValid)
+            if (LeftRules.Count == 1)
             {
-                foreach (var rightRule in RightRules)
-                {
-                    var rightResult = rightRule.Validate(leftResult.Remaining);
+                return (true, result.Remaining);
+            }
 
-                    if (rightResult.IsValid)
-                    {
-                        return (true, rightResult.Remaining);
-                    }
-                }
+            result = LeftRules[1].Validate(result.Remaining);
+
+            if (result.IsValid)
+            {
+                return (true, result.Remaining);
             }
         }
 
+        result = RightRules[0].Validate(input);
+
+        if (result.IsValid)
+        {
+            if (RightRules.Count == 1)
+            {
+                return (true, result.Remaining);
+            }
+
+            result = RightRules[1].Validate(result.Remaining);
+
+            if (result.IsValid)
+            {
+                return (true, result.Remaining);
+            }
+        }
+        
         return (false, input);
     }
 
