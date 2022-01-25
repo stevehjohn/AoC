@@ -17,12 +17,12 @@ public class Part1 : Base
 
         var validCount = 0;
 
-        foreach (var message in _messages)
-        {
-            validCount += _rootRule.IsValid(message) ? 1 : 0;
-        }
+        //foreach (var message in _messages)
+        //{
+        //    validCount += _rootRule.IsValid(message) ? 1 : 0;
+        //}
 
-        //validCount = _rootRule.IsValid("ababbb") ? 1 : 0;
+        validCount = _rootRule.IsValid("aaabbb") ? 1 : 0;
 
         return validCount.ToString();
     }
