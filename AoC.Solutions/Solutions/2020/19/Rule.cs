@@ -4,7 +4,7 @@ public class Rule
 {
     public int Id { get; }
 
-    public char Character { get; set;  }
+    public char Character { get; set; }
 
     public List<Rule> SubRules { get; set; }
 
@@ -18,19 +18,14 @@ public class Rule
     }
 
     public bool IsValid(string input)
-    { 
-        input = Validate(input);
+    {
+        var result = Validate(input);
 
-        return input.Length == 0;
+        return result.IsValid && result.Remaining.Length == 0;
     }
 
-    public string Validate(string input)
+    public (bool IsValid, string Remaining) Validate(string input)
     {
-        if (input.Length == 0)
-        {
-            return input;
-        }
-
         if (SubRules != null)
         {
             return ValidateSubRules(input);
@@ -44,50 +39,51 @@ public class Rule
         return ValidateCharacterRule(input);
     }
 
-    private string ValidateCharacterRule(string input)
+    private (bool IsValid, string Remaining) ValidateCharacterRule(string input)
     {
-        return input[0] == Character ? input[1..] : input;
+        return (input[0] == Character, input[0] == Character ? input[1..] : input);
     }
 
-    // Hmm. If no matches, string will never decrease in length. Maybe.
-    // How to deal with that?
-    private string ValidateOrRule(string input)
+    private (bool IsValid, string Remaining) ValidateOrRule(string input)
     {
-        var inputCopy1 = input;
-
         foreach (var leftRule in LeftRules)
         {
-            input = inputCopy1;
+            var leftResult = leftRule.Validate(input);
 
-            input = leftRule.Validate(input);
-
-            if (input.Length < inputCopy1.Length)
+            if (leftResult.IsValid)
             {
-                var inputCopy2 = input;
-
                 foreach (var rightRule in RightRules)
                 {
-                    input = rightRule.Validate(inputCopy2);
+                    var rightResult = rightRule.Validate(leftResult.Remaining);
 
-                    if (input.Length < inputCopy2.Length)
+                    if (rightResult.IsValid)
                     {
-                        return input;
+                        return (true, rightResult.Remaining);
                     }
                 }
             }
         }
 
-        return inputCopy1;
+        return (false, input);
     }
 
-    private string ValidateSubRules(string input)
+    private (bool IsValid, string Remaining) ValidateSubRules(string input)
     {
+        (bool IsValid, string Remaining) result = (false, input);
+
         foreach (var rule in SubRules)
         {
-            input = rule.Validate(input);
+            result = rule.Validate(input);
+
+            if (! result.IsValid)
+            {
+                return result;
+            }
+
+            input = result.Remaining;
         }
 
-        return input;
+        return result;
     }
 
     public override string ToString()
