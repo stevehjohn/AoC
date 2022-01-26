@@ -7,7 +7,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Safe coordinates";
 
-    protected readonly List<Point> Points = new();
+    protected Point[] Points;
 
     protected int Width;
 
@@ -31,9 +31,11 @@ public abstract class Base : Solution
 
         var yMin = points.Min(p => p.Y);
 
-        foreach (var point in points)
+        Points = new Point[points.Count];
+
+        for (var i = 0; i < points.Count; i++)
         {
-            Points.Add(new Point(point.X - xMin, point.Y - yMin));
+            Points[i] = new Point(points[i].X - xMin, points[i].Y - yMin);
         }
 
         Width = Points.Max(p => p.X) + 1;

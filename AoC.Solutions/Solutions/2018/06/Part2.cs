@@ -25,10 +25,14 @@ public class Part2 : Base
             {
                 var position = new Point(x, y);
 
-                // This could probably be sped up by: https://www.youtube.com/watch?v=BK5x7IUTIyU&t=666s
-                var distances = Points.Select(p => ManhattanDistance(p, position));
+                var totalDistance = 0;
 
-                if (distances.Sum() < 10_000)
+                for (var i = 0; i < Points.Length; i++)
+                {
+                    totalDistance += ManhattanDistance(Points[i], position);
+                }
+
+                if (totalDistance < 10_000)
                 {
                     count++;
                 }
