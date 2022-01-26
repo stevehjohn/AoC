@@ -13,7 +13,40 @@ public class Part1 : Base
 
         var guard = GetSleepiestGuard();
 
-        return "TESTING";
+        var mostAsleep = GetMinuteMostAsleep(guard);
+
+        return (guard * mostAsleep).ToString();
+    }
+
+    private int GetMinuteMostAsleep(int guardId)
+    {
+        var minutes = new int[60];
+
+        var events = _data.Where(d => d.GuardId == guardId).ToList();
+
+        var previousTime = DateTime.MaxValue;
+
+        foreach (var @event in events)
+        {
+            if (@event.Event == Event.FallAsleep)
+            {
+                previousTime = @event.Time;
+
+                continue;
+            }
+
+            if (@event.Event == Event.WakeUp)
+            {
+                while (previousTime < @event.Time)
+                {
+                    minutes[previousTime.Minute]++;
+
+                    previousTime = previousTime.AddMinutes(1);
+                }
+            }
+        }
+
+        return minutes.Select((m, i) => (Minute: m, Index: i)).MaxBy(m => m.Minute).Index;
     }
 
     private int GetSleepiestGuard()
