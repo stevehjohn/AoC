@@ -6,8 +6,6 @@ namespace AoC.Solutions.Solutions._2018._07;
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private readonly Dictionary<char, List<char>> _steps = new();
-
     public override string GetAnswer()
     {
         var startSteps = ParseInput();
@@ -34,7 +32,7 @@ public class Part1 : Base
             
             result.Append(step);
 
-            foreach (var item in _steps.Where(s => s.Value.Count > 0))
+            foreach (var item in Steps.Where(s => s.Value.Count > 0))
             {
                 item.Value.Remove(step);
 
@@ -46,38 +44,5 @@ public class Part1 : Base
         }
 
         return result.ToString();
-    }
-
-    private IEnumerable<char> ParseInput()
-    {
-        var allSteps = new HashSet<char>();
-        
-        var allRequires = new HashSet<char>();
-
-        foreach (var line in Input)
-        {
-            var step = line[36];
-
-            var requires = line[5];
-
-            if (! _steps.TryGetValue(step, out var requirements))
-            {
-                requirements = new List<char>();
-
-                _steps.Add(step, requirements);
-            }
-            else
-            {
-                requirements = _steps[step];
-            }
-
-            requirements.Add(requires);
-
-            allSteps.Add(step);
-
-            allRequires.Add(requires);
-        }
-
-        return allRequires.Except(allSteps).OrderBy(s => s);
     }
 }
