@@ -30,6 +30,24 @@ public class Point
     {
     }
 
+    public static Point Parse(string input)
+    {
+        var split = input.Split(',', StringSplitOptions.TrimEntries);
+
+        var point = new Point
+                    {
+                        X = int.Parse(split[0]),
+                        Y = int.Parse(split[1])
+                    };
+
+        if (split.Length > 2)
+        {
+            point.X = int.Parse(split[2]);
+        }
+
+        return point;
+    }
+
     public override string ToString()
     {
         return $"{X,5},{Y,5},{Z,5}";
