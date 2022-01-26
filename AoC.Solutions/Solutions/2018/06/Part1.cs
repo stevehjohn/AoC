@@ -29,23 +29,45 @@ public class Part1 : Base
             {
                 var position = new Point(x, y);
 
-                // This could probably be sped up by: https://www.youtube.com/watch?v=BK5x7IUTIyU&t=666s
-                var distances = Points.Select(p => (Distance: ManhattanDistance(p, position), Point: p)).OrderBy(d => d.Distance).ToList();
+                // This could probably be sped up by: https://www.youtube.com/watch?v=BK5x7IUTIyU
+                var lowestDistance = int.MaxValue;
 
-                if (distances[0].Distance != distances[1].Distance)
+                var secondLowestDistance = int.MaxValue;
+
+                var closestPoint = new Point();
+
+                for (var i = 0; i < Points.Length; i++)
                 {
-                    if (_counts.ContainsKey(distances[0].Point))
+                    var distance = ManhattanDistance(Points[i], position);
+
+                    if (distance < lowestDistance)
                     {
-                        _counts[distances[0].Point]++;
+                        secondLowestDistance = lowestDistance;
+
+                        lowestDistance = distance;
+
+                        closestPoint = Points[i];
+                    }
+                    else if (distance < secondLowestDistance)
+                    {
+                        secondLowestDistance = distance;
+                    }
+                }
+
+                if (lowestDistance != secondLowestDistance)
+                {
+                    if (_counts.ContainsKey(closestPoint))
+                    {
+                        _counts[closestPoint]++;
                     }
                     else
                     {
-                        _counts.Add(distances[0].Point, 1);
+                        _counts.Add(closestPoint, 1);
                     }
 
                     if (position.X == 0 || position.X == Width - 1 || position.Y == 0 || position.Y == Height - 1)
                     {
-                        _infinitePoints.Add(distances[0].Point);
+                        _infinitePoints.Add(closestPoint);
                     }
                 }
             }
