@@ -19,15 +19,11 @@ public class Part2 : Base
         return validCount.ToString();
     }
 
-    private static readonly List<string> Results = new();
-
     private bool CheckMessage(string message)
     {
         var matchRuns42 = CheckRule(Rules[42], message);
 
         var matchRuns31 = CheckRule(Rules[31], message);
-
-        Results.Add($"({matchRuns42}, {matchRuns31})");
 
         return matchRuns42.RunCount == 1 && matchRuns31.RunCount == 1 && matchRuns42.MatchCount > matchRuns31.MatchCount;
     }
