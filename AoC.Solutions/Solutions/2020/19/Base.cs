@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Message pattern matching";
 
-    private readonly Dictionary<int, Rule> _rules = new();
+    protected readonly Dictionary<int, Rule> Rules = new();
 
     protected readonly List<string> Messages = new();
 
@@ -37,11 +37,11 @@ public abstract class Base : Solution
 
             var isLeaf = split[1][0] == '"';
 
-            if (! _rules.TryGetValue(ruleId, out var rule))
+            if (! Rules.TryGetValue(ruleId, out var rule))
             {
                 rule = new Rule(ruleId);
 
-                _rules.Add(rule.Id, rule);
+                Rules.Add(rule.Id, rule);
             }
 
             if (isLeaf)
@@ -71,7 +71,7 @@ public abstract class Base : Solution
             i++;
         }
 
-        RootRule = _rules[0];
+        RootRule = Rules[0];
 
         i++;
 
@@ -91,9 +91,9 @@ public abstract class Base : Solution
 
         foreach (var id in ids)
         {
-            if (_rules.ContainsKey(id))
+            if (Rules.ContainsKey(id))
             {
-                result.Add(_rules[id]);
+                result.Add(Rules[id]);
             }
             else
             {
@@ -101,7 +101,7 @@ public abstract class Base : Solution
 
                 result.Add(newRule);
 
-                _rules.Add(id, newRule);
+                Rules.Add(id, newRule);
             }
         }
 
