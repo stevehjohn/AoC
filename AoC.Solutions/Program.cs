@@ -85,7 +85,7 @@ public static class Program
 
             var displayAnswer = answer.Length < 26
                                     ? answer
-                                    : $"{answer[..27]}...";
+                                    : $"{answer[..26]}...";
 
             var description = string.Empty;
 
