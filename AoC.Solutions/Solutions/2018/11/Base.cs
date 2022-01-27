@@ -20,9 +20,23 @@ public abstract class Base : Solution
 
         for (var y = squareSize - 1; y < GridSize - squareSize; y++)
         {
-            for (var x = squareSize - 1; x < GridSize - squareSize; x++)
+            var sum = GetSumAtPoint(squareSize - 1, y, squareSize);
+
+            if (sum > max)
             {
-                var sum = GetSumAtPoint(x, y, squareSize);
+                max = sum;
+
+                position = new Point(squareSize - 1, y);
+            }
+
+            for (var x = squareSize; x < GridSize - squareSize; x++)
+            {
+                for (var oY = 0; oY < squareSize; oY++)
+                {
+                    sum += _grid[x + squareSize - 1, y + oY];
+
+                    sum -= _grid[x - 1, y + oY];
+                }
 
                 if (sum > max)
                 {

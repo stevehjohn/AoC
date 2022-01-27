@@ -19,8 +19,6 @@ public class Part2 : Base
 
         for (var s = 1; s <= GridSize; s++)
         {
-            Console.WriteLine(s);
-
             var result = GetMaxPower(s);
 
             if (result.Max > max)
