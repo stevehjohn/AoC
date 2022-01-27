@@ -29,7 +29,7 @@ public static class Program
 
         var previousDesc = string.Empty;
 
-        var matrixParser = new MatrixParser();
+        var matrixParser = new MatrixParser(Variant.Small);
 
         foreach (var solution in solutions)
         {

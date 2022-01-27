@@ -1,5 +1,4 @@
-﻿#define DUMP
-using AoC.Solutions.Solutions._2019.Computer;
+﻿using AoC.Solutions.Solutions._2019.Computer;
 using JetBrains.Annotations;
 using System.Text;
 
@@ -91,11 +90,6 @@ public class Part1 : Base
         return PassCheckpoint(output.Items);
     }
 
-    /*
-     * A loud, robotic voice says "Analysis complete! You may proceed." and you enter the cockpit.
-       Santa notices your small droid, looks puzzled for a moment, realizes what has happened, and radios your ship directly.
-       "Oh, hello! You should be able to get in by typing 16810049 on the keypad at the main airlock."
-     */
     private string PassCheckpoint(List<string> items)
     {
         var i = 1;

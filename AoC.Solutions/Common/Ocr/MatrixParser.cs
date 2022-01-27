@@ -7,9 +7,26 @@ public class MatrixParser
 {
     private readonly List<CharacterTemplate> _templates = new();
 
-    public MatrixParser()
+    private int _width;
+
+    private int _height;
+
+    public MatrixParser(Variant variant)
     {
-        var templateData = File.ReadAllLines($"Common{Path.DirectorySeparatorChar}Ocr{Path.DirectorySeparatorChar}OcrTemplate.txt");
+        var templateData = File.ReadAllLines($"Common{Path.DirectorySeparatorChar}Ocr{Path.DirectorySeparatorChar}OcrTemplate-{variant}.txt");
+
+        if (variant == Variant.Small)
+        {
+            _width = 5;
+
+            _height = 6;
+        }
+        else
+        {
+            _width = 6;
+
+            _height = 10;
+        }
 
         var line = 0;
 
@@ -21,11 +38,11 @@ public class MatrixParser
 
             var template = templateData.Skip(line).Take(6).ToArray();
 
-            var characterTemplate = new CharacterTemplate(character, template);
+            var characterTemplate = new CharacterTemplate(character, template, _width, _height);
 
             _templates.Add(characterTemplate);
 
-            line += 7;
+            line += _height + 1;
         }
     }
 
@@ -38,16 +55,16 @@ public class MatrixParser
         return result;
     }
 
-    private static bool[,] ConvertToMatrix(string input)
+    private bool[,] ConvertToMatrix(string input)
     {
         var length = input.IndexOf('\0');
 
-        if (length % 5 != 0)
+        if (length % _width != 0)
         {
-            length += 5 - length % 5;
+            length += _width - length % _width;
         }
 
-        var matrix = new bool[length, 6];
+        var matrix = new bool[length, _height];
 
         var x = 0;
 
@@ -90,9 +107,9 @@ public class MatrixParser
         {
             var matched = true;
 
-            for (var y = 0; y < 6; y++)
+            for (var y = 0; y < _height; y++)
             {
-                for (var x = 0; x < 5; x++)
+                for (var x = 0; x < _width; x++)
                 {
                     if (matrix[position + x, y] != template.Template[x, y])
                     {
