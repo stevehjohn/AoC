@@ -10,25 +10,23 @@ public abstract class Base : Solution
 
     private int[,] _grid;
 
-    private const int GridSize = 300;
+    protected const int GridSize = 300;
     
-    protected Point GetMaxPower(int squareSize)
+    protected (Point Position, int Max) GetMaxPower(int squareSize)
     {
         var max = 0;
 
         Point position = null;
 
-        for (var y = 1; y < GridSize - 1; y++)
+        for (var y = 0; y < GridSize - squareSize + 1; y++)
         {
-            for (var x = 1; x < GridSize - 1; x++)
+            for (var x = 0; x < GridSize - squareSize + 1; x++)
             {
                 var sum = 0;
 
-                var halfSquare = squareSize / 2;
-
-                for (var oX = -halfSquare; oX <= halfSquare; oX++)
+                for (var oX = 0; oX < squareSize; oX++)
                 {
-                    for (var oY = -halfSquare; oY <= halfSquare; oY++)
+                    for (var oY = 0; oY < squareSize; oY++)
                     {
                         sum += _grid[x + oX, y + oY];
                     }
@@ -38,17 +36,12 @@ public abstract class Base : Solution
                 {
                     max = sum;
 
-                    position = new Point(x - halfSquare, y - halfSquare);
+                    position = new Point(x, y);
                 }
             }
         }
 
-        if (position == null)
-        {
-            throw new PuzzleException("Solution not found.");
-        }
-
-        return position;
+        return (position, max);
     }
 
     protected void CalculateCellPowers(int serial)
