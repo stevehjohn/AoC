@@ -2,15 +2,82 @@
 
 public class Part1 : Base
 {
-    private readonly List<int> _potsWithPlants = new();
+    private List<int> _potsWithPlants = new();
 
-    private readonly List<(bool[], bool)> _rules = new();
+    private readonly List<(bool[] Pattern, bool Spawn)> _rules = new();
 
     public override string GetAnswer()
     {
         ParseInput();
 
-        return "TESTING";
+        Dump();
+
+        for (var g = 0; g < 20; g++)
+        {
+            RunGeneration();
+
+            Dump();
+        }
+
+        return _potsWithPlants.Sum().ToString();
+    }
+
+    private void RunGeneration()
+    {
+        var newState = new List<int>();
+
+        for (var i = _potsWithPlants.Min() - 2; i < _potsWithPlants.Max() + 3; i++)
+        {
+            if (ShouldContainPlant(i))
+            {
+                newState.Add(i);
+            }
+        }
+
+        _potsWithPlants = newState;
+    }
+
+    private bool ShouldContainPlant(int pot)
+    {
+        foreach (var rule in _rules)
+        {
+            if (RuleMatches(rule.Pattern, pot))
+            {
+                return rule.Spawn;
+            }
+        }
+
+        return false;
+    }
+
+    private bool RuleMatches(bool[] pattern, int pot)
+    {
+        for (var x = 0; x < 5; x++)
+        {
+            if (pattern[x] && ! _potsWithPlants.Contains(pot - 2 + x) || ! pattern[x] && _potsWithPlants.Contains(pot - 2 + x))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private void Dump()
+    {
+        for (var i = _potsWithPlants.Min() - 2; i < _potsWithPlants.Max() + 3; i++)
+        {
+            if (_potsWithPlants.Contains(i))
+            {
+                Console.Write('#');
+            }
+            else
+            {
+                Console.Write('.');
+            }
+        }
+
+        Console.WriteLine();
     }
 
     private void ParseInput()
