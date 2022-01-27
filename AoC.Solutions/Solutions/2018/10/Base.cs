@@ -7,7 +7,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Writing in the stars";
 
-    private (Point Position, Point Velocity)[] _stars;
+    protected (Point Position, Point Velocity)[] Stars;
 
     protected int Solve()
     {
@@ -32,14 +32,14 @@ public abstract class Base : Solution
 
     protected bool SpellsWord()
     {
-        var height = _stars.Max(s => s.Position.Y) - _stars.Min(s => s.Position.Y);
+        var height = Stars.Max(s => s.Position.Y) - Stars.Min(s => s.Position.Y);
 
         return height < 10;
     }
 
     protected void Cycle()
     {
-        foreach (var star in _stars)
+        foreach (var star in Stars)
         {
             star.Position.X += star.Velocity.X;
 
@@ -47,39 +47,15 @@ public abstract class Base : Solution
         }
     }
 
-    protected void Dump()
-    {
-        Console.Clear();
-
-        Console.CursorVisible = false;
-
-        var xMin = _stars.Min(s => s.Position.X);
-
-        var yMin = _stars.Min(s => s.Position.Y);
-
-        Console.ForegroundColor = ConsoleColor.Yellow;
-
-        foreach (var star in _stars)
-        {
-            Console.SetCursorPosition(star.Position.X - xMin + 1, star.Position.Y - yMin + 1);
-
-            Console.Write('*');
-        }
-
-        Console.ForegroundColor = ConsoleColor.Green;
-
-        Console.SetCursorPosition(0, 12);
-    }
-
     protected void ParseInput()
     {
-        _stars = new (Point Position, Point Velocity)[Input.Length];
+        Stars = new (Point Position, Point Velocity)[Input.Length];
 
         var i = 0;
 
         foreach (var line in Input)
         {
-            _stars[i] = ParseLine(line);
+            Stars[i] = ParseLine(line);
 
             i++;
         }

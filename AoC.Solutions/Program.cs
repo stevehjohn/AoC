@@ -29,8 +29,6 @@ public static class Program
 
         var previousDesc = string.Empty;
 
-        var matrixParser = new MatrixParser(Variant.Small);
-
         foreach (var solution in solutions)
         {
             if (arguments.Length == 1)
@@ -60,11 +58,12 @@ public static class Program
 
             stopwatch.Stop();
 
-            if (instance.OcrOutput)
+            if (instance.OcrOutput.HasValue)
             {
+                var matrixParser = new MatrixParser(instance.OcrOutput.Value);
+
                 answer = matrixParser.Parse(answer);
             }
-
 
             var year = int.Parse(solution.Namespace?.Split('.')[3].Replace("_", string.Empty) ?? "0");
 

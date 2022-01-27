@@ -1,7 +1,5 @@
-﻿#if DEBUG
-using System.Diagnostics;
-#endif
-using System.Text;
+﻿using System.Text;
+using AoC.Solutions.Common.Ocr;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2019._08;
@@ -9,7 +7,7 @@ namespace AoC.Solutions.Solutions._2019._08;
 [UsedImplicitly]
 public class Part2 : Base
 {
-    public override bool OcrOutput => true;
+    public override Variant? OcrOutput => Variant.Small;
 
     public override string GetAnswer()
     {
@@ -33,18 +31,6 @@ public class Part2 : Base
 
             index += 150;
         }
-
-#if DEBUG
-        if (Debugger.IsAttached)
-        {
-            Debug.WriteLine(new string(image.Take(25).ToArray()));
-            Debug.WriteLine(new string(image.Skip(25).Take(25).ToArray()));
-            Debug.WriteLine(new string(image.Skip(50).Take(25).ToArray()));
-            Debug.WriteLine(new string(image.Skip(75).Take(25).ToArray()));
-            Debug.WriteLine(new string(image.Skip(100).Take(25).ToArray()));
-            Debug.WriteLine(new string(image.Skip(125).Take(25).ToArray()));
-        }
-#endif
 
         var result = new StringBuilder();
 

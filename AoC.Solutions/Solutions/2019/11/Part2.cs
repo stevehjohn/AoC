@@ -1,7 +1,5 @@
-﻿#if DEBUG
-using System.Diagnostics;
-#endif
-using System.Text;
+﻿using System.Text;
+using AoC.Solutions.Common.Ocr;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2019._11;
@@ -9,7 +7,7 @@ namespace AoC.Solutions.Solutions._2019._11;
 [UsedImplicitly]
 public class Part2 : Base
 {
-    public override bool OcrOutput => true;
+    public override Variant? OcrOutput => Variant.Small;
 
     public override string GetAnswer()
     {
@@ -47,26 +45,12 @@ public class Part2 : Base
         {
             for (var x = 0; x <= width; x++)
             {
-#if DEBUG
-                if (Debugger.IsAttached)
-                {
-                    Debug.Write(image[x, y]);
-                }
-#endif
-
                 answer.Append(image[x, y]);
             }
 
             answer = new StringBuilder(answer.ToString().TrimEnd());
 
             answer.Append('\0');
-
-#if DEBUG
-            if (Debugger.IsAttached)
-            {
-                Debug.WriteLine(string.Empty);
-            }
-#endif
         }
 
         return answer.ToString();
