@@ -4,7 +4,7 @@ public class CharacterTemplate
 {
     public char Character { get; }
 
-    public readonly bool[,] Template = new bool[5, 6];
+    public readonly bool[,] Template = new bool[5, 6]; // 6 x 10
 
     public CharacterTemplate(char character, string[] template)
     {
