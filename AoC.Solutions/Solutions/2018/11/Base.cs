@@ -18,19 +18,11 @@ public abstract class Base : Solution
 
         Point position = null;
 
-        for (var y = 0; y < GridSize - squareSize + 1; y++)
+        for (var y = squareSize - 1; y < GridSize - squareSize; y++)
         {
-            for (var x = 0; x < GridSize - squareSize + 1; x++)
+            for (var x = squareSize - 1; x < GridSize - squareSize; x++)
             {
-                var sum = 0;
-
-                for (var oX = 0; oX < squareSize; oX++)
-                {
-                    for (var oY = 0; oY < squareSize; oY++)
-                    {
-                        sum += _grid[x + oX, y + oY];
-                    }
-                }
+                var sum = GetSumAtPoint(x, y, squareSize);
 
                 if (sum > max)
                 {
@@ -42,6 +34,21 @@ public abstract class Base : Solution
         }
 
         return (position, max);
+    }
+
+    private int GetSumAtPoint(int x, int y, int squareSize)
+    {
+        var sum = 0;
+
+        for (var oX = 0; oX < squareSize; oX++)
+        {
+            for (var oY = 0; oY < squareSize; oY++)
+            {
+                sum += _grid[x + oX, y + oY];
+            }
+        }
+
+        return sum;
     }
 
     protected void CalculateCellPowers(int serial)
