@@ -1,4 +1,5 @@
 ﻿using AoC.Solutions.Common;
+using AoC.Solutions.Infrastructure;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2018._13;
@@ -14,9 +15,25 @@ public class Part1 : Base
 
     private readonly List<Point> _carts = new();
 
+    private readonly IVisualiser<PuzzleState> _visualiser;
+
+    public Part1()
+    {
+    }
+
+    public Part1(IVisualiser<PuzzleState> visualiser)
+    {
+        _visualiser = visualiser;
+    }
+
     public override string GetAnswer()
     {
         ParseInput();
+
+        if (_visualiser != null)
+        {
+            _visualiser.PuzzleStateChanged(new PuzzleState { Map = _map });
+        }
 
         return "TESTING";
     }
