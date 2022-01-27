@@ -11,6 +11,6 @@ public class Part1 : Base
 
         var result = GetMaxPower(3);
 
-        return $"{result.X},{result.Y}";
+        return $"{result.Position.X},{result.Position.Y}";
     }
 }
