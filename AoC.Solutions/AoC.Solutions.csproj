@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <Folder Include="Infrastructure\" />
-    <Folder Include="Solutions\2018\12\" />
     <Folder Include="Solutions\2019\06\" />
     <Folder Include="Solutions\2019\11\" />
     <Folder Include="Solutions\2019\14\" />
