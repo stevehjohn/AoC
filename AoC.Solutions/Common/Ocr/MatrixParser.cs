@@ -7,9 +7,9 @@ public class MatrixParser
 {
     private readonly List<CharacterTemplate> _templates = new();
 
-    private int _width;
+    private readonly int _width;
 
-    private int _height;
+    private readonly int _height;
 
     public MatrixParser(Variant variant)
     {
@@ -23,7 +23,7 @@ public class MatrixParser
         }
         else
         {
-            _width = 6;
+            _width = 8;
 
             _height = 10;
         }
@@ -36,7 +36,7 @@ public class MatrixParser
 
             line += 2;
 
-            var template = templateData.Skip(line).Take(6).ToArray();
+            var template = templateData.Skip(line).Take(_height).ToArray();
 
             var characterTemplate = new CharacterTemplate(character, template, _width, _height);
 
@@ -93,7 +93,7 @@ public class MatrixParser
     {
         var result = new StringBuilder();
 
-        for (var x = 0; x < matrix.GetLength(0); x += 5)
+        for (var x = 0; x < matrix.GetLength(0); x += _width)
         {
             result.Append(MatchCharacter(matrix, x));
         }

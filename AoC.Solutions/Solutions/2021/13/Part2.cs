@@ -1,15 +1,13 @@
 ﻿using JetBrains.Annotations;
-#if DEBUG
-using System.Diagnostics;
-#endif
 using System.Text;
+using AoC.Solutions.Common.Ocr;
 
 namespace AoC.Solutions.Solutions._2021._13;
 
 [UsedImplicitly]
 public class Part2 : Base
 {
-    public override bool OcrOutput => true;
+    public override Variant? OcrOutput => Variant.Small;
 
     public override string GetAnswer()
     {
@@ -42,24 +40,10 @@ public class Part2 : Base
         {
             for (var x = 0; x < width; x++)
             {
-#if DEBUG
-                if (Debugger.IsAttached)
-                {
-                    Debug.Write(image[x, y]);
-                }
-#endif
-
                 answer.Append(image[x, y]);
             }
 
             answer.Append('\0');
-
-#if DEBUG
-            if (Debugger.IsAttached)
-            {
-                Debug.WriteLine(string.Empty);
-            }
-#endif
         }
 
         return answer.ToString();

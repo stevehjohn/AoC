@@ -1,4 +1,6 @@
-﻿namespace AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Common.Ocr;
+
+namespace AoC.Solutions.Infrastructure;
 
 public abstract class Solution
 {
@@ -6,7 +8,7 @@ public abstract class Solution
 
     public abstract string Description { get; }
 
-    public virtual bool OcrOutput => false;
+    public virtual Variant? OcrOutput => null;
 
     protected Solution()
     {
