@@ -2,7 +2,9 @@
 
 public class Part1 : Base
 {
-    private List<int> _potsWithPlants = new();
+    private readonly List<int> _potsWithPlants = new();
+
+    private readonly List<(bool[], bool)> _rules = new();
 
     public override string GetAnswer()
     {
@@ -25,7 +27,21 @@ public class Part1 : Base
 
         foreach (var line in Input.Skip(2))
         {
-            
+            _rules.Add(ParseRule(line));
         }
+    }
+
+    private (bool[], bool) ParseRule(string line)
+    {
+        var split = line.Split("=>", StringSplitOptions.TrimEntries);
+
+        var pots = new bool[5];
+
+        for (var i = 0; i < split[0].Length; i++)
+        {
+            pots[i] = split[0][i] == '#';
+        }
+
+        return (pots, split[1] == "#");
     }
 }
