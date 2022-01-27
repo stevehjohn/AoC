@@ -4,10 +4,12 @@ public class CharacterTemplate
 {
     public char Character { get; }
 
-    public readonly bool[,] Template = new bool[5, 6]; // 6 x 10
+    public readonly bool[,] Template;
 
-    public CharacterTemplate(char character, string[] template)
+    public CharacterTemplate(char character, string[] template, int width, int height)
     {
+        Template = new bool[width, height];
+
         Character = character;
 
         for (var y = 0; y < template.Length; y++)

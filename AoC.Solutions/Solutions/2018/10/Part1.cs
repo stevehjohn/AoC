@@ -9,8 +9,6 @@ public class Part1 : Base
     {
         Solve();
 
-        Dump();
-
-        return "BFFZCNXE";
+        return "TESTING";
     }
 }
