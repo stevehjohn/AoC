@@ -22,7 +22,6 @@
   <ItemGroup>
     <Folder Include="Common\Ocr\" />
     <Folder Include="Infrastructure\" />
-    <Folder Include="Solutions\2018\10\" />
     <Folder Include="Solutions\2019\06\" />
     <Folder Include="Solutions\2019\11\" />
     <Folder Include="Solutions\2019\14\" />
