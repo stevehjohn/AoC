@@ -17,9 +17,11 @@ public abstract class Base : Solution
 
         Point position = null;
 
+        var ySums = new int[GridSize];
+
         for (var y = squareSize - 1; y < GridSize - squareSize; y++)
         {
-            var sum = GetSumAtPoint(squareSize - 1, y, squareSize);
+            var sum = GetSumAtPoint(squareSize - 1, y, squareSize, ySums);
 
             if (sum > max)
             {
@@ -30,12 +32,18 @@ public abstract class Base : Solution
 
             for (var x = squareSize; x < GridSize - squareSize; x++)
             {
+                var ySum = 0;
+
                 for (var oY = 0; oY < squareSize; oY++)
                 {
-                    sum += _grid[x + squareSize - 1, y + oY];
-
-                    sum -= _grid[x - 1, y + oY];
+                    ySum += _grid[x + squareSize - 1, y + oY];
                 }
+
+                sum += ySum;
+
+                sum -= ySums[x - 1];
+
+                ySums[x + squareSize - 1] = ySum;
 
                 if (sum > max)
                 {
@@ -49,16 +57,22 @@ public abstract class Base : Solution
         return (position, max);
     }
 
-    private int GetSumAtPoint(int x, int y, int squareSize)
+    private int GetSumAtPoint(int x, int y, int squareSize, int[] ySums)
     {
         var sum = 0;
 
         for (var oX = 0; oX < squareSize; oX++)
         {
+            var ySum = 0;
+
             for (var oY = 0; oY < squareSize; oY++)
             {
-                sum += _grid[x + oX, y + oY];
+                ySum += _grid[x + oX, y + oY];
             }
+
+            sum += ySum;
+
+            ySums[x + oX] = ySum;
         }
 
         return sum;
