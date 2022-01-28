@@ -112,13 +112,13 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
             {
                 _collisions.Add(new Collision { Position = _state.Carts.Single().Position, Ticks = int.MaxValue, SpriteOffset = 10, IsFinal = true });
                 
-                _collisions.Add(new Collision { Position = _state.CollisionPoint, Ticks = 300, SpriteOffset = 5 });
+                _collisions.Add(new Collision { Position = _state.CollisionPoint, Ticks = 200, SpriteOffset = 5 });
 
                 _state.CollisionPoint = null;
             }
             else
             {
-                _collisions.Add(new Collision { Position = _state.CollisionPoint, Ticks = 300, SpriteOffset = 5 });
+                _collisions.Add(new Collision { Position = _state.CollisionPoint, Ticks = 200, SpriteOffset = 5 });
             }
         }
 
@@ -126,7 +126,7 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
 
         foreach (var collision in _collisions)
         {
-            for (var i = 0; i < 8; i++)
+            for (var i = 0; i < 4; i++)
             {
                 _sparks.Add(new Spark
                             {
