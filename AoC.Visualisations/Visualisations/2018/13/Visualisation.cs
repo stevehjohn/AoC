@@ -3,7 +3,6 @@ using AoC.Solutions.Solutions._2018._13;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Color = Microsoft.Xna.Framework.Color;
-using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace AoC.Visualisations.Visualisations._2018._13;
@@ -31,7 +30,9 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
 
     private Thread _puzzleThread;
 
-    private List<Point> _carts;
+    private List<Solutions.Common.Point> _carts;
+
+    private List<Solutions.Common.Point> _nextCarts;
 
     public Visualisation()
     {
@@ -62,7 +63,7 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
     protected override void Initialize()
     {
         IsMouseVisible = true;
-        
+
         _puzzleThread = new Thread(() => _puzzle.GetAnswer());
 
         _puzzleThread.Start();
@@ -158,19 +159,62 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
         base.OnExiting(sender, args);
     }
 
-    private double _lastMilliseconds;
+    private bool MoveCarts()
+    {
+        if (_carts == null || _carts.Count == 0)
+        {
+            return false;
+        }
+
+        var moved = false;
+
+        for (var i = 0; i < _carts.Count; i++)
+        {
+            var cart = _carts[i];
+
+            var target = _nextCarts[i];
+
+            if (! cart.Equals(target))
+            {
+                cart.X += Math.Sign(target.X - cart.X);
+
+                cart.Y += Math.Sign(target.Y - cart.Y);
+
+                moved = true;
+            }
+        }
+
+        return moved;
+    }
+
+    private List<Solutions.Common.Point> GetTranslatedCarts()
+    {
+        _state = _stateQueue.Dequeue();
+
+        return _state.Carts.Select(c => new Solutions.Common.Point(c.Position.X * 7 + 51, c.Position.Y * 7 + 51)).ToList();
+    }
 
     protected override void Draw(GameTime gameTime)
     {
         if (_stateQueue.Count > 0)
         {
-            if (_state == null || gameTime.TotalGameTime.TotalMilliseconds - _lastMilliseconds > 100)
+            if (_carts == null || _carts.Count > 0)
             {
-                _state = _stateQueue.Dequeue();
+                if (! MoveCarts())
+                {
+                    _carts = _nextCarts;
 
-                _carts = _state.Carts.Select(c => new Point(c.Position.X * 7 + 51, c.Position.Y * 7 + 51)).ToList();
+                    _nextCarts = GetTranslatedCarts();
 
-                _lastMilliseconds = gameTime.TotalGameTime.TotalMilliseconds;
+                    if (_carts == null)
+                    {
+                        _carts = _nextCarts;
+
+                        _nextCarts = GetTranslatedCarts();
+                    }
+
+                    MoveCarts();
+                }
             }
         }
 

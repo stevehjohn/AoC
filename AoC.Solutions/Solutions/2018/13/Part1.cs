@@ -35,6 +35,8 @@ public class Part1 : Base
             _visualiser.PuzzleStateChanged(new PuzzleState { Map = _map, Carts = _carts.Select(c => new Cart(c)).ToList() });
         }
 
+        Point collisionPoint;
+
         while (true)
         {
             MoveCarts();
@@ -43,9 +45,37 @@ public class Part1 : Base
             {
                 _visualiser.PuzzleStateChanged(new PuzzleState { Map = _map, Carts = _carts.Select(c => new Cart(c)).ToList() });
             }
+
+            collisionPoint = CheckForCollision();
+
+            if (collisionPoint != null)
+            {
+                break;
+            }
         }
 
-        return "TESTING";
+        return $"{collisionPoint.X},{collisionPoint.Y}";
+    }
+
+    private Point CheckForCollision()
+    {
+        foreach (var cart in _carts)
+        {
+            foreach (var other in _carts)
+            {
+                if (cart == other)
+                {
+                    continue;
+                }
+
+                if (cart.Position.Equals(other.Position))
+                {
+                    return cart.Position;
+                }
+            }
+        }
+
+        return null;
     }
 
     private void MoveCarts()
