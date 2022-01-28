@@ -10,7 +10,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AoC.Tests", "AoC.Tests\AoC.Tests.csproj", "{089B5EFB-DE90-43ED-AB28-82C357793548}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AoC.Tests", "AoC.Tests\AoC.Tests.csproj", "{089B5EFB-DE90-43ED-AB28-82C357793548}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AoC.Visualisations", "AoC.Visualisations\AoC.Visualisations.csproj", "{715DD69F-477F-488F-8E9D-A7BA6A6452DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +28,10 @@ Global
 		{089B5EFB-DE90-43ED-AB28-82C357793548}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{089B5EFB-DE90-43ED-AB28-82C357793548}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{089B5EFB-DE90-43ED-AB28-82C357793548}.Release|Any CPU.Build.0 = Release|Any CPU
+		{715DD69F-477F-488F-8E9D-A7BA6A6452DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{715DD69F-477F-488F-8E9D-A7BA6A6452DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{715DD69F-477F-488F-8E9D-A7BA6A6452DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{715DD69F-477F-488F-8E9D-A7BA6A6452DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  
+  <Import Project="$(MSBuildProgramFiles32)\MSBuild\MonoGame\v3.0\MonoGame.Common.props" Condition="Exists('$(MSBuildProgramFiles32)\MSBuild\MonoGame\v3.0\MonoGame.Common.props')" />
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="_Content\2020\13\obj\**" />
+    <EmbeddedResource Remove="_Content\2020\13\obj\**" />
+    <None Remove="_Content\2020\13\obj\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="_Content\2020\13\sprites.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.0.1641" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Visualisations\2018\13\" />
+    <DesignData Include="_Content\2020\13\Content.mgcb" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <MonoGameContentReference Include="_Content\2020\13\sprites.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AoC.Solutions\AoC.Solutions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="_Content\2020\13\bin\Windows\map-tiles.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="_Content\2020\13\bin\Windows\spark.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="_Content\2020\13\bin\Windows\sprites.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <Import Project="$(MSBuildProgramFiles32)\MSBuild\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
+
+</Project>
