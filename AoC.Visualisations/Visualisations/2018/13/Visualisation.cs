@@ -1,5 +1,6 @@
 ﻿using AoC.Solutions.Infrastructure;
 using AoC.Solutions.Solutions._2018._13;
+using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Color = Microsoft.Xna.Framework.Color;
@@ -75,11 +76,41 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
     {
         foreach (var cart in _carts)
         {
+            if (_state.CollisionPoint != null)
+            {
+                if (_carts.Count(c => c.X == cart.X && c.Y == cart.Y) > 1)
+                {
+                    continue;
+                }
+            }
+
             _spriteBatch.Draw(_spark, new Vector2(cart.X, cart.Y), new Rectangle(0, 0, 5, 5), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
 
             if (_rng.Next(2) == 0)
             {
-                _sparks.Add(new Spark { Position = new PointFloat { X = cart.X, Y = cart.Y }, Vector = new PointFloat { X = (-5f + _rng.Next(11)) / 10, Y = (-10f + _rng.Next(21)) / 10 } });
+                _sparks.Add(new Spark
+                            {
+                                Position = new PointFloat { X = cart.X, Y = cart.Y },
+                                Vector = new PointFloat { X = (-5f + _rng.Next(11)) / 10, Y = (-10f + _rng.Next(21)) / 10 },
+                                Ticks = 20,
+                                StartTicks = 20
+                            });
+            }
+        }
+
+        if (_state.CollisionPoint != null)
+        {
+            for (var i = 0; i < 5; i++)
+            {
+                _sparks.Add(new Spark
+                            {
+                                SpriteOffset = 5,
+                                Position = new PointFloat { X = _state.CollisionPoint.X * 7 + 50, Y = _state.CollisionPoint.Y * 7 + 50 },
+                                Vector = new PointFloat { X = (-10f + _rng.Next(21)) / 10, Y = -_rng.Next(41) / 10f },
+                                Ticks = 120,
+                                StartTicks = 120,
+                                YGravity = 0.025f
+                            });
             }
         }
 
@@ -87,11 +118,11 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
 
         foreach (var spark in _sparks)
         {
-            _spriteBatch.Draw(_spark, new Vector2(spark.Position.X, spark.Position.Y), new Rectangle(0, 0, 5, 5), Color.White * (1 - spark.Ticks / 20f), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
+            _spriteBatch.Draw(_spark, new Vector2(spark.Position.X, spark.Position.Y), new Rectangle(spark.SpriteOffset, 0, 5, 5), Color.White * ((float) spark.Ticks / spark.StartTicks), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
 
-            spark.Ticks++;
+            spark.Ticks--;
 
-            if (spark.Ticks > 20)
+            if (spark.Ticks < 0)
             {
                 toRemove.Add(spark);
 
@@ -102,7 +133,7 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
 
             spark.Position.Y += spark.Vector.Y;
 
-            spark.Vector.Y += 0.1f;
+            spark.Vector.Y += spark.YGravity;
         }
 
         foreach (var spark in toRemove)
