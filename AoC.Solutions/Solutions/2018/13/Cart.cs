@@ -4,6 +4,10 @@ namespace AoC.Solutions.Solutions._2018._13;
 
 public class Cart
 {
+    private static int _nextCartId = 1;
+
+    public int Id { get; }
+
     public Point Position { get; set; }
 
     public Point Direction { get; set; }
@@ -17,6 +21,8 @@ public class Cart
         Direction = new Point(direction);
 
         LastMove = Move.Right;
+
+        Id = _nextCartId++;
     }
 
     public Cart(Cart cart)
@@ -26,5 +32,7 @@ public class Cart
         Direction = new Point(cart.Direction);
 
         LastMove = cart.LastMove;
+
+        Id = cart.Id;
     }
 }
