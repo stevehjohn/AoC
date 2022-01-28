@@ -32,7 +32,7 @@ public class Part1 : Base
 
         if (_visualiser != null)
         {
-            _visualiser.PuzzleStateChanged(new PuzzleState { Map = _map });
+            _visualiser.PuzzleStateChanged(new PuzzleState { Map = _map, Carts = _carts });
         }
 
         return "TESTING";
