@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using System.Diagnostics;
+using AoC.Solutions.Infrastructure;
 using AoC.Solutions.Solutions._2018._13;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -24,7 +25,11 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
 
     private readonly Random _rng = new();
 
+    private readonly Queue<PuzzleState> _stateQueue = new();
+
     private PuzzleState _state;
+
+    private Thread _puzzleThread;
 
     public Visualisation()
     {
@@ -44,14 +49,23 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
     // TODO: Base class for easier future visualisations.
     public void PuzzleStateChanged(PuzzleState state)
     {
-        _state = state;
+        Debug.WriteLine(_stateQueue.Count);
+
+        if (_stateQueue.Count > 1000)
+        {
+            Thread.Sleep(1000);
+        }
+
+        _stateQueue.Enqueue(state);
     }
 
     protected override void Initialize()
     {
         IsMouseVisible = true;
         
-        _puzzle.GetAnswer();
+        _puzzleThread = new Thread(() => _puzzle.GetAnswer());
+
+        _puzzleThread.Start();
 
         base.Initialize();
     }
@@ -139,6 +153,11 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
 
     protected override void Draw(GameTime gameTime)
     {
+        if (_stateQueue.Count > 0)
+        {
+            _state = _stateQueue.Dequeue();
+        }
+
         if (_state != null)
         {
             GraphicsDevice.Clear(Color.Black);
