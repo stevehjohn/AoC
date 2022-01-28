@@ -1,44 +1,44 @@
-﻿using AoC.Solutions.Common;
-using AoC.Solutions.Infrastructure;
-using JetBrains.Annotations;
+﻿//using AoC.Solutions.Common;
+//using AoC.Solutions.Infrastructure;
+//using JetBrains.Annotations;
 
-namespace AoC.Solutions.Solutions._2018._13;
+//namespace AoC.Solutions.Solutions._2018._13;
 
-[UsedImplicitly]
-public class Part1 : Base
-{
-    public Part1()
-    {
-    }
+//[UsedImplicitly]
+//public class Part1 : Base
+//{
+//    public Part1()
+//    {
+//    }
 
-    public Part1(IVisualiser<PuzzleState> visualiser) : base(visualiser)
-    {
-    }
+//    public Part1(IVisualiser<PuzzleState> visualiser) : base(visualiser)
+//    {
+//    }
 
-    public override string GetAnswer()
-    {
-        ParseInput();
+//    public override string GetAnswer()
+//    {
+//        ParseInput();
 
-        Visualise();
+//        Visualise();
 
-        Point collisionPoint;
+//        Point collisionPoint;
 
-        while (true)
-        {
-            MoveCarts();
+//        while (true)
+//        {
+//            MoveCarts();
 
-            Visualise();
+//            Visualise();
 
-            collisionPoint = CheckForCollision();
+//            collisionPoint = CheckForCollision();
 
-            if (collisionPoint != null)
-            {
-                break;
-            }
-        }
+//            if (collisionPoint != null)
+//            {
+//                break;
+//            }
+//        }
 
-        Visualise(collisionPoint);
+//        Visualise(collisionPoint);
 
-        return $"{collisionPoint.X},{collisionPoint.Y}";
-    }
-}
+//        return $"{collisionPoint.X},{collisionPoint.Y}";
+//    }
+//}

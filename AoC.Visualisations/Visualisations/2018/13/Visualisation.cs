@@ -18,7 +18,7 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
 
     private Texture2D _spark;
 
-    private readonly Part1 _puzzle;
+    private readonly Part2 _puzzle;
 
     private readonly List<Spark> _sparks = new();
 
@@ -36,7 +36,7 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
 
     public Visualisation()
     {
-        _puzzle = new Part1(this);
+        _puzzle = new Part2(this);
 
         _graphicsDeviceManager = new GraphicsDeviceManager(this)
                                  {
