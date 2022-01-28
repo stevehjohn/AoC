@@ -4,6 +4,7 @@ using AoC.Solutions.Solutions._2018._13;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Color = Microsoft.Xna.Framework.Color;
+using Point = AoC.Solutions.Common.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace AoC.Visualisations.Visualisations._2018._13;
@@ -108,22 +109,36 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
     {
         if (_state.CollisionPoint != null)
         {
-            _collisions.Add(new Collision { Position = _state.CollisionPoint, Ticks = 300 });
+            if (_state.IsFinalState)
+            {
+                _collisions.Add(new Collision { Position = _state.Carts.Single().Position, Ticks = int.MaxValue, SpriteOffset = 10, IsFinal = true });
+                
+                _collisions.Add(new Collision { Position = _state.CollisionPoint, Ticks = 300, SpriteOffset = 5 });
+
+                _state.CollisionPoint = null;
+            }
+            else
+            {
+                _collisions.Add(new Collision { Position = _state.CollisionPoint, Ticks = 300, SpriteOffset = 5 });
+            }
         }
 
         var toRemove = new List<Collision>();
 
         foreach (var collision in _collisions)
         {
-            _sparks.Add(new Spark
-                        {
-                            SpriteOffset = 5,
-                            Position = new PointFloat { X = collision.Position.X * 7 + 50, Y = collision.Position.Y * 7 + 50 },
-                            Vector = new PointFloat { X = (-10f + _rng.Next(21)) / 10, Y = -_rng.Next(41) / 10f },
-                            Ticks = 120,
-                            StartTicks = 120,
-                            YGravity = 0.025f
-                        });
+            for (var i = 0; i < 8; i++)
+            {
+                _sparks.Add(new Spark
+                            {
+                                SpriteOffset = collision.SpriteOffset,
+                                Position = new PointFloat { X = collision.Position.X * 7 + 50, Y = collision.Position.Y * 7 + 50 },
+                                Vector = new PointFloat { X = (-10f + _rng.Next(21)) / 10, Y = -_rng.Next(41) / 10f },
+                                Ticks = 120,
+                                StartTicks = 120,
+                                YGravity = collision.IsFinal ? -0.1f : 0.025f
+                            });
+            }
 
             collision.Ticks--;
 
@@ -225,14 +240,14 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
 
     //    foreach (var cart in _carts)
     //    {
-    //        if (! _nextCarts.ContainsKey(cart.Key))
+    //        if (!_nextCarts.ContainsKey(cart.Key))
     //        {
     //            continue;
     //        }
 
     //        var target = _nextCarts[cart.Key];
 
-    //        if (! cart.Value.Equals(target))
+    //        if (!cart.Value.Equals(target))
     //        {
     //            cart.Value.X += Math.Sign(target.X - cart.Value.X);
 
@@ -254,7 +269,7 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
 
         foreach (var cart in _carts)
         {
-            if (! _nextCarts.ContainsKey(cart.Key))
+            if (!_nextCarts.ContainsKey(cart.Key))
             {
                 continue;
             }

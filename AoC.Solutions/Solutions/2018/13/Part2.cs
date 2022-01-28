@@ -40,11 +40,11 @@ public class Part2 : Base
 
                 MoveCarts();
 
-                Visualise(collisionPoint, false);
+                Visualise(collisionPoint);
             }
         }
 
-        Visualise(collisionPoint);
+        Visualise(collisionPoint, true);
 
         return $"{Carts[0].Position.X},{Carts[0].Position.Y}";
     }
