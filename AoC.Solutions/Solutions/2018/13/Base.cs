@@ -5,7 +5,7 @@ namespace AoC.Solutions.Solutions._2018._13;
 
 public abstract class Base : Solution
 {
-    public override string Description => "";
+    public override string Description => "Crashing carts";
 
     private int _width;
 
