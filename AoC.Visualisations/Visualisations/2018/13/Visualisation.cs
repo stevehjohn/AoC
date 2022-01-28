@@ -3,6 +3,7 @@ using AoC.Solutions.Solutions._2018._13;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Color = Microsoft.Xna.Framework.Color;
+using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace AoC.Visualisations.Visualisations._2018._13;
@@ -29,6 +30,8 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
     private PuzzleState _state;
 
     private Thread _puzzleThread;
+
+    private List<Point> _carts;
 
     public Visualisation()
     {
@@ -67,15 +70,15 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
         base.Initialize();
     }
 
-    private void DrawCarts(PuzzleState state)
+    private void DrawCarts()
     {
-        foreach (var cart in state.Carts)
+        foreach (var cart in _carts)
         {
-            _spriteBatch.Draw(_spark, new Vector2(cart.Position.X * 7 + 51, cart.Position.Y * 7 + 51), new Rectangle(0, 0, 5, 5), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
+            _spriteBatch.Draw(_spark, new Vector2(cart.X, cart.Y), new Rectangle(0, 0, 5, 5), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
 
             if (_rng.Next(2) == 0)
             {
-                _sparks.Add(new Spark { Position = new PointFloat { X = cart.Position.X, Y = cart.Position.Y }, Vector = new PointFloat { X = (-5f + _rng.Next(11)) / 10, Y = (-10f + _rng.Next(21)) / 10 } });
+                _sparks.Add(new Spark { Position = new PointFloat { X = cart.X, Y = cart.Y }, Vector = new PointFloat { X = (-5f + _rng.Next(11)) / 10, Y = (-10f + _rng.Next(21)) / 10 } });
             }
         }
 
@@ -83,7 +86,7 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
 
         foreach (var spark in _sparks)
         {
-            _spriteBatch.Draw(_spark, new Vector2(spark.Position.X * 7 + 51, spark.Position.Y * 7 + 51), new Rectangle(0, 0, 5, 5), Color.White * (1 - spark.Ticks / 20f), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
+            _spriteBatch.Draw(_spark, new Vector2(spark.Position.X, spark.Position.Y), new Rectangle(0, 0, 5, 5), Color.White * (1 - spark.Ticks / 20f), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
 
             spark.Ticks++;
 
@@ -164,6 +167,8 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
             if (_state == null || gameTime.TotalGameTime.TotalMilliseconds - _lastMilliseconds > 100)
             {
                 _state = _stateQueue.Dequeue();
+
+                _carts = _state.Carts.Select(c => new Point(c.Position.X * 7 + 51, c.Position.Y * 7 + 51)).ToList();
 
                 _lastMilliseconds = gameTime.TotalGameTime.TotalMilliseconds;
             }

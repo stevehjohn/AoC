@@ -83,28 +83,18 @@ public class Part1 : Base
 
         if (track is '┐' or '└')
         {
-            if (cart.Direction.Y != 0)
-            {
-                cart.Direction = new Point(cart.Direction.Y, -cart.Direction.X);
-            }
-            else
-            {
-                cart.Direction = new Point(-cart.Direction.Y, cart.Direction.X);
-            }
+            cart.Direction = cart.Direction.Y != 0 
+                                 ? new Point(cart.Direction.Y, -cart.Direction.X) 
+                                 : new Point(-cart.Direction.Y, cart.Direction.X);
 
             return;
         }
 
         if (track is '┘' or '┌')
         {
-            if (cart.Direction.Y != 0)
-            {
-                cart.Direction = new Point(-cart.Direction.Y, cart.Direction.X);
-            }
-            else
-            {
-                cart.Direction = new Point(cart.Direction.Y, -cart.Direction.X);
-            }
+            cart.Direction = cart.Direction.Y != 0 
+                                 ? new Point(-cart.Direction.Y, cart.Direction.X) 
+                                 : new Point(cart.Direction.Y, -cart.Direction.X);
         }
     }
 
