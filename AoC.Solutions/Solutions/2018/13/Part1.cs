@@ -55,6 +55,56 @@ public class Part1 : Base
             cart.Position.X += cart.Direction.X;
 
             cart.Position.Y += cart.Direction.Y;
+
+            CheckDirectionChange(cart);
+        }
+    }
+
+    // ┐ └ ┼ ┘ ┌ ─ │
+    private void CheckDirectionChange(Cart cart)
+    {
+        var track = _map[cart.Position.X, cart.Position.Y];
+
+        if (track == '┼')
+        {
+            cart.LastMove = (Move) (((int) cart.LastMove + 1) % 3);
+
+            if (cart.LastMove == Move.Left)
+            {
+                cart.Direction = new Point(cart.Direction.Y, -cart.Direction.X);
+            }
+            else if (cart.LastMove == Move.Right)
+            {
+                cart.Direction = new Point(-cart.Direction.Y, cart.Direction.X);
+            }
+
+            return;
+        }
+
+        if (track is '┐' or '└')
+        {
+            if (cart.Direction.Y != 0)
+            {
+                cart.Direction = new Point(cart.Direction.Y, -cart.Direction.X);
+            }
+            else
+            {
+                cart.Direction = new Point(-cart.Direction.Y, cart.Direction.X);
+            }
+
+            return;
+        }
+
+        if (track is '┘' or '┌')
+        {
+            if (cart.Direction.Y != 0)
+            {
+                cart.Direction = new Point(-cart.Direction.Y, cart.Direction.X);
+            }
+            else
+            {
+                cart.Direction = new Point(cart.Direction.Y, -cart.Direction.X);
+            }
         }
     }
 
@@ -134,7 +184,6 @@ public class Part1 : Base
         }
     }
 
-    // ┐ └ ┼ ┘ ┌ ─ │
     private char DetermineCornerType(char piece, int x, int y)
     {
         if (piece == '\\')
@@ -172,11 +221,15 @@ public class Cart
 
     public Point Direction { get; set; }
 
+    public Move LastMove { get; set; }
+
     public Cart(Point position, Point direction)
     {
         Position = new Point(position);
 
         Direction = new Point(direction);
+
+        LastMove = Move.Right;
     }
 
     public Cart(Cart cart)
@@ -184,5 +237,15 @@ public class Cart
         Position = new Point(cart.Position);
 
         Direction = new Point(cart.Direction);
+
+        LastMove = cart.LastMove;
     }
+}
+
+public enum Move
+{
+    Left = 0,
+    // ReSharper disable once UnusedMember.Global
+    Straight = 1,
+    Right = 2
 }
