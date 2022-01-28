@@ -39,6 +39,10 @@ public abstract class Base : Solution
 
                 if (cart.Position.Equals(other.Position))
                 {
+                    _carts.Remove(cart);
+
+                    _carts.Remove(other);
+
                     return cart.Position;
                 }
             }

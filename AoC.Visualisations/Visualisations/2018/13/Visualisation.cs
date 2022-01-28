@@ -30,9 +30,9 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
 
     private Thread _puzzleThread;
 
-    private List<Solutions.Common.Point> _carts;
+    private Dictionary<int, Solutions.Common.Point> _carts;
 
-    private List<Solutions.Common.Point> _nextCarts;
+    private Dictionary<int, Solutions.Common.Point> _nextCarts;
 
     public Visualisation()
     {
@@ -77,19 +77,19 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
         {
             if (_state.CollisionPoint != null)
             {
-                if (_carts.Count(c => c.X == cart.X && c.Y == cart.Y) > 1)
+                if (_carts.Count(c => c.Value.X == cart.Value.X && c.Value.Y == cart.Value.Y) > 1)
                 {
                     continue;
                 }
             }
 
-            _spriteBatch.Draw(_spark, new Vector2(cart.X, cart.Y), new Rectangle(0, 0, 5, 5), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
+            _spriteBatch.Draw(_spark, new Vector2(cart.Value.X, cart.Value.Y), new Rectangle(0, 0, 5, 5), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
 
             if (_rng.Next(2) == 0)
             {
                 _sparks.Add(new Spark
                             {
-                                Position = new PointFloat { X = cart.X, Y = cart.Y },
+                                Position = new PointFloat { X = cart.Value.X, Y = cart.Value.Y },
                                 Vector = new PointFloat { X = (-5f + _rng.Next(11)) / 10, Y = (-10f + _rng.Next(21)) / 10 },
                                 Ticks = 20,
                                 StartTicks = 20
@@ -198,17 +198,20 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
 
         var moved = false;
 
-        for (var i = 0; i < _carts.Count; i++)
+        foreach (var cart in _carts)
         {
-            var cart = _carts[i];
-
-            var target = _nextCarts[i];
-
-            if (! cart.Equals(target))
+            if (! _nextCarts.ContainsKey(cart.Key))
             {
-                cart.X += Math.Sign(target.X - cart.X);
+                continue;
+            }
 
-                cart.Y += Math.Sign(target.Y - cart.Y);
+            var target = _nextCarts[cart.Key];
+
+            if (! cart.Value.Equals(target))
+            {
+                cart.Value.X += Math.Sign(target.X - cart.Value.X);
+
+                cart.Value.Y += Math.Sign(target.Y - cart.Value.Y);
 
                 moved = true;
             }
@@ -217,11 +220,11 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
         return moved;
     }
 
-    private List<Solutions.Common.Point> GetTranslatedCarts()
+    private Dictionary<int, Solutions.Common.Point> GetTranslatedCarts()
     {
         _state = _stateQueue.Dequeue();
 
-        return _state.Carts.Select(c => new Solutions.Common.Point(c.Position.X * 7 + 51, c.Position.Y * 7 + 51)).ToList();
+        return _state.Carts.ToDictionary(c => c.Id ,c => new Solutions.Common.Point(c.Position.X * 7 + 51, c.Position.Y * 7 + 51));
     }
 
     protected override void Draw(GameTime gameTime)
