@@ -13,7 +13,7 @@ public class Part1 : Base
 
     private char[,] _map;
 
-    private readonly List<(Point Position, Point Direction)> _carts = new();
+    private readonly List<Cart> _carts = new();
 
     private readonly IVisualiser<PuzzleState> _visualiser;
 
@@ -32,7 +32,7 @@ public class Part1 : Base
 
         if (_visualiser != null)
         {
-            _visualiser.PuzzleStateChanged(new PuzzleState { Map = _map, Carts = _carts });
+            _visualiser.PuzzleStateChanged(new PuzzleState { Map = _map, Carts = _carts.Select(c => new Cart(c)).ToList() });
         }
 
         while (true)
@@ -41,7 +41,7 @@ public class Part1 : Base
 
             if (_visualiser != null)
             {
-                _visualiser.PuzzleStateChanged(new PuzzleState { Map = _map, Carts = _carts });
+                _visualiser.PuzzleStateChanged(new PuzzleState { Map = _map, Carts = _carts.Select(c => new Cart(c)).ToList() });
             }
         }
 
@@ -54,7 +54,7 @@ public class Part1 : Base
         {
             cart.Position.X += cart.Direction.X;
 
-            cart.Position.Y += cart.Position.Y;
+            cart.Position.Y += cart.Direction.Y;
         }
     }
 
@@ -75,28 +75,28 @@ public class Part1 : Base
                 switch (Input[y][x])
                 {
                     case '>':
-                        _carts.Add((new Point(x, y), new Point(1, 0)));
+                        _carts.Add(new Cart(new Point(x, y), new Point(1, 0)));
 
                         piece = '─';
 
                         break;
 
                     case '<':
-                        _carts.Add((new Point(x, y), new Point(-1, 0)));
+                        _carts.Add(new Cart(new Point(x, y), new Point(-1, 0)));
 
                         piece = '─';
 
                         break;
 
                     case '^':
-                        _carts.Add((new Point(x, y), new Point(0, -1)));
+                        _carts.Add(new Cart(new Point(x, y), new Point(0, -1)));
 
                         piece = '│';
 
                         break;
 
                     case 'v':
-                        _carts.Add((new Point(x, y), new Point(0, 1)));
+                        _carts.Add(new Cart(new Point(x, y), new Point(0, 1)));
 
                         piece = '│';
 
@@ -163,5 +163,26 @@ public class Part1 : Base
         }
 
         return Input[y][x];
+    }
+}
+
+public class Cart
+{
+    public Point Position { get; set; }
+
+    public Point Direction { get; set; }
+
+    public Cart(Point position, Point direction)
+    {
+        Position = new Point(position);
+
+        Direction = new Point(direction);
+    }
+
+    public Cart(Cart cart)
+    {
+        Position = new Point(cart.Position);
+
+        Direction = new Point(cart.Direction);
     }
 }

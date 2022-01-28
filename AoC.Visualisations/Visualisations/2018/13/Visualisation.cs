@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Infrastructure;
 using AoC.Solutions.Solutions._2018._13;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -49,8 +48,6 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
     // TODO: Base class for easier future visualisations.
     public void PuzzleStateChanged(PuzzleState state)
     {
-        Debug.WriteLine(_stateQueue.Count);
-
         if (_stateQueue.Count > 1000)
         {
             Thread.Sleep(1000);
@@ -151,11 +148,25 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
         }
     }
 
+    protected override void OnExiting(object sender, EventArgs args)
+    {
+        // TODO: Stop puzzle thread
+
+        base.OnExiting(sender, args);
+    }
+
+    private double _lastMilliseconds;
+
     protected override void Draw(GameTime gameTime)
     {
         if (_stateQueue.Count > 0)
         {
-            _state = _stateQueue.Dequeue();
+            if (_state == null || gameTime.TotalGameTime.TotalMilliseconds - _lastMilliseconds > 100)
+            {
+                _state = _stateQueue.Dequeue();
+
+                _lastMilliseconds = gameTime.TotalGameTime.TotalMilliseconds;
+            }
         }
 
         if (_state != null)
