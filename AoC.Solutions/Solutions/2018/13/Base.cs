@@ -25,7 +25,7 @@ public abstract class Base : Solution
     {
         _visualiser = visualiser;
     }
-    
+
     protected Point CheckForCollision()
     {
         foreach (var cart in Carts)
@@ -51,11 +51,11 @@ public abstract class Base : Solution
         return null;
     }
 
-    protected void Visualise(Point collisionPoint = null, bool isEndState = true)
+    protected void Visualise(Point collisionPoint = null, bool isFinalState = false)
     {
         if (_visualiser != null)
         {
-            _visualiser.PuzzleStateChanged(new PuzzleState { Map = _map, Carts = Carts.Select(c => new Cart(c)).ToList(), CollisionPoint = collisionPoint });
+            _visualiser.PuzzleStateChanged(new PuzzleState { Map = _map, Carts = Carts.Select(c => new Cart(c)).ToList(), CollisionPoint = collisionPoint, IsFinalState = isFinalState });
         }
     }
 
@@ -95,8 +95,8 @@ public abstract class Base : Solution
 
         if (track is '┐' or '└')
         {
-            cart.Direction = cart.Direction.Y != 0 
-                                 ? new Point(cart.Direction.Y, -cart.Direction.X) 
+            cart.Direction = cart.Direction.Y != 0
+                                 ? new Point(cart.Direction.Y, -cart.Direction.X)
                                  : new Point(-cart.Direction.Y, cart.Direction.X);
 
             return;
@@ -104,8 +104,8 @@ public abstract class Base : Solution
 
         if (track is '┘' or '┌')
         {
-            cart.Direction = cart.Direction.Y != 0 
-                                 ? new Point(-cart.Direction.Y, cart.Direction.X) 
+            cart.Direction = cart.Direction.Y != 0
+                                 ? new Point(-cart.Direction.Y, cart.Direction.X)
                                  : new Point(cart.Direction.Y, -cart.Direction.X);
         }
     }
