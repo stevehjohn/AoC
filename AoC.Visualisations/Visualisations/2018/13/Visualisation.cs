@@ -34,6 +34,8 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
 
     private Dictionary<int, Solutions.Common.Point> _nextCarts;
 
+    private readonly List<Collision> _collisions = new();
+
     public Visualisation()
     {
         _puzzle = new Part2(this);
@@ -71,48 +73,8 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
         base.Initialize();
     }
 
-    private void DrawCarts()
+    private void DrawSparks()
     {
-        foreach (var cart in _carts)
-        {
-            if (_state.CollisionPoint != null)
-            {
-                if (_carts.Count(c => c.Value.X == cart.Value.X && c.Value.Y == cart.Value.Y) > 1)
-                {
-                    continue;
-                }
-            }
-
-            _spriteBatch.Draw(_spark, new Vector2(cart.Value.X, cart.Value.Y), new Rectangle(0, 0, 5, 5), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
-
-            if (_rng.Next(2) == 0)
-            {
-                _sparks.Add(new Spark
-                            {
-                                Position = new PointFloat { X = cart.Value.X, Y = cart.Value.Y },
-                                Vector = new PointFloat { X = (-5f + _rng.Next(11)) / 10, Y = (-10f + _rng.Next(21)) / 10 },
-                                Ticks = 20,
-                                StartTicks = 20
-                            });
-            }
-        }
-
-        if (_state.CollisionPoint != null)
-        {
-            for (var i = 0; i < 5; i++)
-            {
-                _sparks.Add(new Spark
-                            {
-                                SpriteOffset = 5,
-                                Position = new PointFloat { X = _state.CollisionPoint.X * 7 + 50, Y = _state.CollisionPoint.Y * 7 + 50 },
-                                Vector = new PointFloat { X = (-10f + _rng.Next(21)) / 10, Y = -_rng.Next(41) / 10f },
-                                Ticks = 120,
-                                StartTicks = 120,
-                                YGravity = 0.025f
-                            });
-            }
-        }
-
         var toRemove = new List<Spark>();
 
         foreach (var spark in _sparks)
@@ -138,6 +100,68 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
         foreach (var spark in toRemove)
         {
             _sparks.Remove(spark);
+        }
+    }
+
+    private void DrawCollisions()
+    {
+        if (_state.CollisionPoint != null)
+        {
+            _collisions.Add(new Collision { Position = _state.CollisionPoint, Ticks = 300 });
+        }
+
+        var toRemove = new List<Collision>();
+
+        foreach (var collision in _collisions)
+        {
+            _sparks.Add(new Spark
+                        {
+                            SpriteOffset = 5,
+                            Position = new PointFloat { X = collision.Position.X * 7 + 50, Y = collision.Position.Y * 7 + 50 },
+                            Vector = new PointFloat { X = (-10f + _rng.Next(21)) / 10, Y = -_rng.Next(41) / 10f },
+                            Ticks = 120,
+                            StartTicks = 120,
+                            YGravity = 0.025f
+                        });
+
+            collision.Ticks--;
+
+            if (collision.Ticks < 0)
+            {
+                toRemove.Add(collision);
+            }
+        }
+
+        foreach (var collision in toRemove)
+        {
+            _collisions.Remove(collision);
+        }
+    }
+
+    private void DrawCarts()
+    {
+        foreach (var cart in _carts)
+        {
+            if (_state.CollisionPoint != null)
+            {
+                if (_carts.Count(c => c.Value.X == cart.Value.X && c.Value.Y == cart.Value.Y) > 1)
+                {
+                    continue;
+                }
+            }
+
+            _spriteBatch.Draw(_spark, new Vector2(cart.Value.X, cart.Value.Y), new Rectangle(0, 0, 5, 5), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
+
+            if (_rng.Next(2) == 0)
+            {
+                _sparks.Add(new Spark
+                            {
+                                Position = new PointFloat { X = cart.Value.X, Y = cart.Value.Y },
+                                Vector = new PointFloat { X = (-5f + _rng.Next(11)) / 10, Y = (-10f + _rng.Next(21)) / 10 },
+                                Ticks = 20,
+                                StartTicks = 20
+                            });
+            }
         }
     }
 
@@ -224,7 +248,7 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
     {
         _state = _stateQueue.Dequeue();
 
-        return _state.Carts.ToDictionary(c => c.Id ,c => new Solutions.Common.Point(c.Position.X * 7 + 51, c.Position.Y * 7 + 51));
+        return _state.Carts.ToDictionary(c => c.Id, c => new Solutions.Common.Point(c.Position.X * 7 + 51, c.Position.Y * 7 + 51));
     }
 
     protected override void Draw(GameTime gameTime)
@@ -260,6 +284,10 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
             DrawMap(_state);
 
             DrawCarts();
+
+            DrawSparks();
+
+            DrawCollisions();
 
             _spriteBatch.End();
         }

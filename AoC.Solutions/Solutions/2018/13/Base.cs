@@ -51,7 +51,7 @@ public abstract class Base : Solution
         return null;
     }
 
-    protected void Visualise(Point collisionPoint = null)
+    protected void Visualise(Point collisionPoint = null, bool isEndState = true)
     {
         if (_visualiser != null)
         {
