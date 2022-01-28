@@ -35,15 +35,15 @@ public class Part1 : Base
             _visualiser.PuzzleStateChanged(new PuzzleState { Map = _map, Carts = _carts });
         }
 
-        //while (true)
-        //{
-        //    MoveCarts();
+        while (true)
+        {
+            MoveCarts();
 
-        //    if (_visualiser != null)
-        //    {
-        //        _visualiser.PuzzleStateChanged(new PuzzleState { Map = _map, Carts = _carts });
-        //    }
-        //}
+            if (_visualiser != null)
+            {
+                _visualiser.PuzzleStateChanged(new PuzzleState { Map = _map, Carts = _carts });
+            }
+        }
 
         return "TESTING";
     }
