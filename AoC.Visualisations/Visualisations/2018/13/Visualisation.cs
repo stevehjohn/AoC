@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Common;
+using AoC.Solutions.Infrastructure;
 using AoC.Solutions.Solutions._2018._13;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -213,14 +214,43 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
         base.OnExiting(sender, args);
     }
 
+    //private bool MoveCarts()
+    //{
+    //    if (_carts == null || _carts.Count == 0)
+    //    {
+    //        return false;
+    //    }
+
+    //    var moved = false;
+
+    //    foreach (var cart in _carts)
+    //    {
+    //        if (! _nextCarts.ContainsKey(cart.Key))
+    //        {
+    //            continue;
+    //        }
+
+    //        var target = _nextCarts[cart.Key];
+
+    //        if (! cart.Value.Equals(target))
+    //        {
+    //            cart.Value.X += Math.Sign(target.X - cart.Value.X);
+
+    //            cart.Value.Y += Math.Sign(target.Y - cart.Value.Y);
+
+    //            moved = true;
+    //        }
+    //    }
+
+    //    return moved;
+    //}
+
     private bool MoveCarts()
     {
         if (_carts == null || _carts.Count == 0)
         {
             return false;
         }
-
-        var moved = false;
 
         foreach (var cart in _carts)
         {
@@ -231,17 +261,12 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
 
             var target = _nextCarts[cart.Key];
 
-            if (! cart.Value.Equals(target))
-            {
-                cart.Value.X += Math.Sign(target.X - cart.Value.X);
+            cart.Value.X = target.X;
 
-                cart.Value.Y += Math.Sign(target.Y - cart.Value.Y);
-
-                moved = true;
-            }
+            cart.Value.Y = target.Y;
         }
 
-        return moved;
+        return false;
     }
 
     private Dictionary<int, Solutions.Common.Point> GetTranslatedCarts()
