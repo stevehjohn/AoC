@@ -13,7 +13,7 @@ public class Part1 : Base
 
     private char[,] _map;
 
-    private readonly List<Point> _carts = new();
+    private readonly List<(Point Position, Point Direction)> _carts = new();
 
     private readonly IVisualiser<PuzzleState> _visualiser;
 
@@ -35,7 +35,27 @@ public class Part1 : Base
             _visualiser.PuzzleStateChanged(new PuzzleState { Map = _map, Carts = _carts });
         }
 
+        //while (true)
+        //{
+        //    MoveCarts();
+
+        //    if (_visualiser != null)
+        //    {
+        //        _visualiser.PuzzleStateChanged(new PuzzleState { Map = _map, Carts = _carts });
+        //    }
+        //}
+
         return "TESTING";
+    }
+
+    private void MoveCarts()
+    {
+        foreach (var cart in _carts)
+        {
+            cart.Position.X += cart.Direction.X;
+
+            cart.Position.Y += cart.Position.Y;
+        }
     }
 
     private void ParseInput()
@@ -55,16 +75,28 @@ public class Part1 : Base
                 switch (Input[y][x])
                 {
                     case '>':
+                        _carts.Add((new Point(x, y), new Point(1, 0)));
+
+                        piece = '─';
+
+                        break;
+
                     case '<':
-                        _carts.Add(new Point(x, y));
+                        _carts.Add((new Point(x, y), new Point(-1, 0)));
 
                         piece = '─';
 
                         break;
 
                     case '^':
+                        _carts.Add((new Point(x, y), new Point(0, -1)));
+
+                        piece = '│';
+
+                        break;
+
                     case 'v':
-                        _carts.Add(new Point(x, y));
+                        _carts.Add((new Point(x, y), new Point(0, 1)));
 
                         piece = '│';
 
@@ -107,7 +139,7 @@ public class Part1 : Base
     {
         if (piece == '\\')
         {
-            if (SafeGetInput(x, y - 1) is '|' or '+' && SafeGetInput(x + 1, y) is '-' or '+')
+            if (SafeGetInput(x, y - 1) is '|' or '+' or '^' or 'v' && SafeGetInput(x + 1, y) is '-' or '+' or '<' or '>')
             {
                 return '└';
             }
@@ -115,7 +147,7 @@ public class Part1 : Base
             return '┐';
         }
 
-        if (SafeGetInput(x + 1, y) is '-' or '+' && SafeGetInput(x, y + 1) is '|' or '+')
+        if (SafeGetInput(x + 1, y) is '-' or '+' or '<' or '>' && SafeGetInput(x, y + 1) is '|' or '+' or '^' or 'v')
         {
             return '┌';
         }

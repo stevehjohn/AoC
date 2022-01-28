@@ -1,16 +1,15 @@
-﻿using System.Diagnostics;
-using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Infrastructure;
 using AoC.Solutions.Solutions._2018._13;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Color = Microsoft.Xna.Framework.Color;
-using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace AoC.Visualisations.Visualisations._2018._13;
 
 public class Visualisation : Game, IVisualiser<PuzzleState>
 {
+    // ReSharper disable once NotAccessedField.Local
     private readonly GraphicsDeviceManager _graphicsDeviceManager;
 
     private SpriteBatch _spriteBatch;
@@ -25,14 +24,16 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
 
     private readonly Random _rng = new();
 
+    private PuzzleState _state;
+
     public Visualisation()
     {
         _puzzle = new Part1(this);
 
         _graphicsDeviceManager = new GraphicsDeviceManager(this)
                                  {
-                                     PreferredBackBufferWidth = 1050,
-                                     PreferredBackBufferHeight = 1050
+                                     PreferredBackBufferWidth = 1150,
+                                     PreferredBackBufferHeight = 1150
                                  };
 
         // TODO: Make a base class that does this stuff.
@@ -43,24 +44,27 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
     // TODO: Base class for easier future visualisations.
     public void PuzzleStateChanged(PuzzleState state)
     {
-        GraphicsDevice.Clear(Color.Black);
+        _state = state;
+    }
 
-        _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
+    protected override void Initialize()
+    {
+        IsMouseVisible = true;
+        
+        _puzzle.GetAnswer();
 
-        DrawMap(state);
-
-        DrawCarts(state);
-
-        _spriteBatch.End();
+        base.Initialize();
     }
 
     private void DrawCarts(PuzzleState state)
     {
         foreach (var cart in state.Carts)
         {
-            if (_rng.Next(100) == 0)
+            _spriteBatch.Draw(_spark, new Vector2(cart.Position.X * 7 + 51, cart.Position.Y * 7 + 51), new Rectangle(0, 0, 5, 5), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
+
+            if (_rng.Next(2) == 0)
             {
-                _sparks.Add(new Spark { Position = new PointFloat { X = cart.X, Y = cart.Y }, Vector = new PointFloat { X = (-5f + _rng.Next(11)) / 10, Y = (-10f + _rng.Next(21)) / 10 } });
+                _sparks.Add(new Spark { Position = new PointFloat { X = cart.Position.X, Y = cart.Position.Y }, Vector = new PointFloat { X = (-5f + _rng.Next(11)) / 10, Y = (-10f + _rng.Next(21)) / 10 } });
             }
         }
 
@@ -68,13 +72,15 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
 
         foreach (var spark in _sparks)
         {
-            _spriteBatch.Draw(_spark, new Vector2(spark.Position.X * 7, spark.Position.Y * 7), new Rectangle(0, 0, 5, 5), Color.White * (1 - spark.Ticks / 20f), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
+            _spriteBatch.Draw(_spark, new Vector2(spark.Position.X * 7 + 51, spark.Position.Y * 7 + 51), new Rectangle(0, 0, 5, 5), Color.White * (1 - spark.Ticks / 20f), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
 
             spark.Ticks++;
 
             if (spark.Ticks > 20)
             {
                 toRemove.Add(spark);
+
+                continue;
             }
 
             spark.Position.X += spark.Vector.X;
@@ -88,8 +94,6 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
         {
             _sparks.Remove(spark);
         }
-
-        Debug.WriteLine(_sparks.Count);
     }
 
     private void DrawMap(PuzzleState state)
@@ -101,31 +105,31 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
                 switch (state.Map[x, y])
                 {
                     case '─':
-                        _spriteBatch.Draw(_mapTiles, new Vector2(x * 7, y * 7), new Rectangle(0, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        _spriteBatch.Draw(_mapTiles, new Vector2(x * 7 + 50, y * 7 + 50), new Rectangle(0, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
 
                         break;
                     case '│':
-                        _spriteBatch.Draw(_mapTiles, new Vector2(x * 7, y * 7), new Rectangle(7, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        _spriteBatch.Draw(_mapTiles, new Vector2(x * 7 + 50, y * 7 + 50), new Rectangle(7, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
 
                         break;
                     case '└':
-                        _spriteBatch.Draw(_mapTiles, new Vector2(x * 7, y * 7), new Rectangle(14, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        _spriteBatch.Draw(_mapTiles, new Vector2(x * 7 + 50, y * 7 + 50), new Rectangle(14, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
 
                         break;
                     case '┌':
-                        _spriteBatch.Draw(_mapTiles, new Vector2(x * 7, y * 7), new Rectangle(21, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        _spriteBatch.Draw(_mapTiles, new Vector2(x * 7 + 50, y * 7 + 50), new Rectangle(21, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
 
                         break;
                     case '┐':
-                        _spriteBatch.Draw(_mapTiles, new Vector2(x * 7, y * 7), new Rectangle(28, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        _spriteBatch.Draw(_mapTiles, new Vector2(x * 7 + 50, y * 7 + 50), new Rectangle(28, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
 
                         break;
                     case '┘':
-                        _spriteBatch.Draw(_mapTiles, new Vector2(x * 7, y * 7), new Rectangle(35, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        _spriteBatch.Draw(_mapTiles, new Vector2(x * 7 + 50, y * 7 + 50), new Rectangle(35, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
 
                         break;
                     case '┼':
-                        _spriteBatch.Draw(_mapTiles, new Vector2(x * 7, y * 7), new Rectangle(42, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        _spriteBatch.Draw(_mapTiles, new Vector2(x * 7 + 50, y * 7 + 50), new Rectangle(42, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
 
                         break;
                 }
@@ -135,7 +139,22 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
 
     protected override void Draw(GameTime gameTime)
     {
-        _puzzle.GetAnswer();
+        if (_state != null)
+        {
+            GraphicsDevice.Clear(Color.Black);
+
+            _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
+
+            DrawMap(_state);
+
+            DrawCarts(_state);
+
+            _spriteBatch.End();
+        }
+        else
+        {
+            GraphicsDevice.Clear(Color.Black);
+        }
     }
 
     protected override void LoadContent()
@@ -146,20 +165,4 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
 
         _spark = Content.Load<Texture2D>("spark");
     }
-}
-
-public class Spark
-{
-    public PointFloat Position { get; set; }
-
-    public PointFloat Vector { get; set; }
-
-    public int Ticks { get; set; }
-}
-
-public class PointFloat
-{
-    public float X { get; set; }
-
-    public float Y { get; set; }
 }

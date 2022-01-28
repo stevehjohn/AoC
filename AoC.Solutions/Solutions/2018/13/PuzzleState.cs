@@ -6,5 +6,5 @@ public class PuzzleState
 {
     public char[,] Map { get; set; }
 
-    public List<Point> Carts { get; set; }
+    public List<(Point Position, Point Direction)> Carts { get; set; }
 }
