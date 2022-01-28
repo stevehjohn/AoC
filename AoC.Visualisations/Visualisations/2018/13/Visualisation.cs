@@ -314,6 +314,10 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
                 }
             }
         }
+        else if (_nextCarts != null)
+        {
+            _carts = _nextCarts;
+        }
 
         if (_state != null)
         {
