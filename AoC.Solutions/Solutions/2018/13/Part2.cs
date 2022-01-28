@@ -37,6 +37,10 @@ public class Part2 : Base
                 {
                     break;
                 }
+
+                MoveCarts();
+
+                Visualise(collisionPoint, false);
             }
         }
 
