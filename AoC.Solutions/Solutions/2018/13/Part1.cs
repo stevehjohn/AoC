@@ -60,7 +60,6 @@ public class Part1 : Base
         }
     }
 
-    // ┐ └ ┼ ┘ ┌ ─ │
     private void CheckDirectionChange(Cart cart)
     {
         var track = _map[cart.Position.X, cart.Position.Y];

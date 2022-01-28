@@ -182,7 +182,7 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
 
             DrawMap(_state);
 
-            DrawCarts(_state);
+            DrawCarts();
 
             _spriteBatch.End();
         }
