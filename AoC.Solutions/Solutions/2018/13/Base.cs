@@ -15,7 +15,7 @@ public abstract class Base : Solution
 
     protected readonly List<Cart> Carts = new();
 
-    protected readonly IVisualiser<PuzzleState> Visualiser;
+    private readonly IVisualiser<PuzzleState> _visualiser;
 
     protected Base()
     {
@@ -23,7 +23,12 @@ public abstract class Base : Solution
 
     protected Base(IVisualiser<PuzzleState> visualiser)
     {
-        Visualiser = visualiser;
+        _visualiser = visualiser;
+    }
+
+    protected void Visualise(Point collisionPoint = null)
+    {
+        _visualiser.PuzzleStateChanged(new PuzzleState { Map = Map, Carts = Carts.Select(c => new Cart(c)).ToList(), CollisionPoint = collisionPoint });
     }
 
     protected void MoveCarts()

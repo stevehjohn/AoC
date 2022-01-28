@@ -19,10 +19,7 @@ public class Part1 : Base
     {
         ParseInput();
 
-        if (Visualiser != null)
-        {
-            Visualiser.PuzzleStateChanged(new PuzzleState { Map = Map, Carts = Carts.Select(c => new Cart(c)).ToList() });
-        }
+        Visualise();
 
         Point collisionPoint;
 
@@ -30,10 +27,7 @@ public class Part1 : Base
         {
             MoveCarts();
 
-            if (Visualiser != null)
-            {
-                Visualiser.PuzzleStateChanged(new PuzzleState { Map = Map, Carts = Carts.Select(c => new Cart(c)).ToList() });
-            }
+            Visualise();
 
             collisionPoint = CheckForCollision();
 
@@ -43,10 +37,7 @@ public class Part1 : Base
             }
         }
 
-        if (Visualiser != null)
-        {
-            Visualiser.PuzzleStateChanged(new PuzzleState { Map = Map, Carts = Carts.Select(c => new Cart(c)).ToList(), CollisionPoint = collisionPoint });
-        }
+        Visualise(collisionPoint);
 
         return $"{collisionPoint.X},{collisionPoint.Y}";
     }
