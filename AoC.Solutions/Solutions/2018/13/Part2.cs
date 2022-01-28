@@ -1,44 +1,47 @@
-﻿//using AoC.Solutions.Common;
-//using AoC.Solutions.Infrastructure;
-//using JetBrains.Annotations;
+﻿using AoC.Solutions.Common;
+using AoC.Solutions.Infrastructure;
+using JetBrains.Annotations;
 
-//namespace AoC.Solutions.Solutions._2018._13;
+namespace AoC.Solutions.Solutions._2018._13;
 
-//[UsedImplicitly]
-//public class Part2 : Base
-//{
-//    public Part2()
-//    {
-//    }
+[UsedImplicitly]
+public class Part2 : Base
+{
+    public Part2()
+    {
+    }
 
-//    public Part2(IVisualiser<PuzzleState> visualiser) : base(visualiser)
-//    {
-//    }
+    public Part2(IVisualiser<PuzzleState> visualiser) : base(visualiser)
+    {
+    }
 
-//    public override string GetAnswer()
-//    {
-//        ParseInput();
+    public override string GetAnswer()
+    {
+        ParseInput();
 
-//        Visualise();
+        Visualise();
 
-//        Point collisionPoint;
+        Point collisionPoint;
 
-//        while (true)
-//        {
-//            MoveCarts();
+        while (true)
+        {
+            MoveCarts();
 
-//            Visualise();
+            Visualise();
 
-//            collisionPoint = CheckForCollision();
+            collisionPoint = CheckForCollision();
 
-//            if (collisionPoint != null)
-//            {
-//                break;
-//            }
-//        }
+            if (collisionPoint != null)
+            {
+                if (Carts.Count == 1)
+                {
+                    break;
+                }
+            }
+        }
 
-//        Visualise(collisionPoint);
+        Visualise(collisionPoint);
 
-//        return $"{collisionPoint.X},{collisionPoint.Y}";
-//    }
-//}
+        return $"{Carts[0].Position.X},{Carts[0].Position.Y}";
+    }
+}

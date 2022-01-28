@@ -13,7 +13,7 @@ public abstract class Base : Solution
 
     private char[,] _map;
 
-    private readonly List<Cart> _carts = new();
+    protected readonly List<Cart> Carts = new();
 
     private readonly IVisualiser<PuzzleState> _visualiser;
 
@@ -28,9 +28,9 @@ public abstract class Base : Solution
     
     protected Point CheckForCollision()
     {
-        foreach (var cart in _carts)
+        foreach (var cart in Carts)
         {
-            foreach (var other in _carts)
+            foreach (var other in Carts)
             {
                 if (cart == other)
                 {
@@ -39,9 +39,9 @@ public abstract class Base : Solution
 
                 if (cart.Position.Equals(other.Position))
                 {
-                    _carts.Remove(cart);
+                    Carts.Remove(cart);
 
-                    _carts.Remove(other);
+                    Carts.Remove(other);
 
                     return cart.Position;
                 }
@@ -53,12 +53,15 @@ public abstract class Base : Solution
 
     protected void Visualise(Point collisionPoint = null)
     {
-        _visualiser.PuzzleStateChanged(new PuzzleState { Map = _map, Carts = _carts.Select(c => new Cart(c)).ToList(), CollisionPoint = collisionPoint });
+        if (_visualiser != null)
+        {
+            _visualiser.PuzzleStateChanged(new PuzzleState { Map = _map, Carts = Carts.Select(c => new Cart(c)).ToList(), CollisionPoint = collisionPoint });
+        }
     }
 
     protected void MoveCarts()
     {
-        foreach (var cart in _carts)
+        foreach (var cart in Carts)
         {
             cart.Position.X += cart.Direction.X;
 
@@ -122,28 +125,28 @@ public abstract class Base : Solution
                 switch (Input[y][x])
                 {
                     case '>':
-                        _carts.Add(new Cart(new Point(x, y), new Point(1, 0)));
+                        Carts.Add(new Cart(new Point(x, y), new Point(1, 0)));
 
                         piece = '─';
 
                         break;
 
                     case '<':
-                        _carts.Add(new Cart(new Point(x, y), new Point(-1, 0)));
+                        Carts.Add(new Cart(new Point(x, y), new Point(-1, 0)));
 
                         piece = '─';
 
                         break;
 
                     case '^':
-                        _carts.Add(new Cart(new Point(x, y), new Point(0, -1)));
+                        Carts.Add(new Cart(new Point(x, y), new Point(0, -1)));
 
                         piece = '│';
 
                         break;
 
                     case 'v':
-                        _carts.Add(new Cart(new Point(x, y), new Point(0, 1)));
+                        Carts.Add(new Cart(new Point(x, y), new Point(0, 1)));
 
                         piece = '│';
 
