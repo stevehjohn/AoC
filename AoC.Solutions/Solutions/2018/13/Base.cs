@@ -11,9 +11,9 @@ public abstract class Base : Solution
 
     private int _height;
 
-    private char[,] Map;
+    private char[,] _map;
 
-    private readonly List<Cart> Carts = new();
+    private readonly List<Cart> _carts = new();
 
     private readonly IVisualiser<PuzzleState> _visualiser;
 
@@ -28,9 +28,9 @@ public abstract class Base : Solution
     
     protected Point CheckForCollision()
     {
-        foreach (var cart in Carts)
+        foreach (var cart in _carts)
         {
-            foreach (var other in Carts)
+            foreach (var other in _carts)
             {
                 if (cart == other)
                 {
@@ -49,12 +49,12 @@ public abstract class Base : Solution
 
     protected void Visualise(Point collisionPoint = null)
     {
-        _visualiser.PuzzleStateChanged(new PuzzleState { Map = Map, Carts = Carts.Select(c => new Cart(c)).ToList(), CollisionPoint = collisionPoint });
+        _visualiser.PuzzleStateChanged(new PuzzleState { Map = _map, Carts = _carts.Select(c => new Cart(c)).ToList(), CollisionPoint = collisionPoint });
     }
 
     protected void MoveCarts()
     {
-        foreach (var cart in Carts)
+        foreach (var cart in _carts)
         {
             cart.Position.X += cart.Direction.X;
 
@@ -66,7 +66,7 @@ public abstract class Base : Solution
 
     private void CheckDirectionChange(Cart cart)
     {
-        var track = Map[cart.Position.X, cart.Position.Y];
+        var track = _map[cart.Position.X, cart.Position.Y];
 
         if (track == '┼')
         {
@@ -107,7 +107,7 @@ public abstract class Base : Solution
 
         _height = Input.Length;
 
-        Map = new char[_width, _height];
+        _map = new char[_width, _height];
 
         for (var y = 0; y < _height; y++)
         {
@@ -118,28 +118,28 @@ public abstract class Base : Solution
                 switch (Input[y][x])
                 {
                     case '>':
-                        Carts.Add(new Cart(new Point(x, y), new Point(1, 0)));
+                        _carts.Add(new Cart(new Point(x, y), new Point(1, 0)));
 
                         piece = '─';
 
                         break;
 
                     case '<':
-                        Carts.Add(new Cart(new Point(x, y), new Point(-1, 0)));
+                        _carts.Add(new Cart(new Point(x, y), new Point(-1, 0)));
 
                         piece = '─';
 
                         break;
 
                     case '^':
-                        Carts.Add(new Cart(new Point(x, y), new Point(0, -1)));
+                        _carts.Add(new Cart(new Point(x, y), new Point(0, -1)));
 
                         piece = '│';
 
                         break;
 
                     case 'v':
-                        Carts.Add(new Cart(new Point(x, y), new Point(0, 1)));
+                        _carts.Add(new Cart(new Point(x, y), new Point(0, 1)));
 
                         piece = '│';
 
@@ -172,7 +172,7 @@ public abstract class Base : Solution
                         break;
                 }
 
-                Map[x, y] = piece;
+                _map[x, y] = piece;
             }
         }
     }
