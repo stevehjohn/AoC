@@ -61,6 +61,8 @@ public abstract class Base : Solution
 
     protected void MoveCarts()
     {
+        // TODO: Carts.OrderBy(c => c.Position.Y).ThenBy(c => c.Position.X)
+        // Then check for collision here, so 1st collision is reported?
         foreach (var cart in Carts)
         {
             cart.Position.X += cart.Direction.X;
