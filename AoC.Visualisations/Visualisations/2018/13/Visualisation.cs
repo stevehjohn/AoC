@@ -1,5 +1,4 @@
-﻿using AoC.Solutions.Common;
-using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Infrastructure;
 using AoC.Solutions.Solutions._2018._13;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -32,9 +31,9 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
 
     private Thread _puzzleThread;
 
-    private Dictionary<int, Solutions.Common.Point> _carts;
+    private Dictionary<int, Point> _carts;
 
-    private Dictionary<int, Solutions.Common.Point> _nextCarts;
+    private Dictionary<int, Point> _nextCarts;
 
     private readonly List<Collision> _collisions = new();
 
@@ -284,11 +283,11 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
         return false;
     }
 
-    private Dictionary<int, Solutions.Common.Point> GetTranslatedCarts()
+    private Dictionary<int, Point> GetTranslatedCarts()
     {
         _state = _stateQueue.Dequeue();
 
-        return _state.Carts.ToDictionary(c => c.Id, c => new Solutions.Common.Point(c.Position.X * 7 + 51, c.Position.Y * 7 + 51));
+        return _state.Carts.ToDictionary(c => c.Id, c => new Point(c.Position.X * 7 + 51, c.Position.Y * 7 + 51));
     }
 
     protected override void Draw(GameTime gameTime)
