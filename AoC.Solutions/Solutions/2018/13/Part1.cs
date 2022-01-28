@@ -41,25 +41,4 @@ public class Part1 : Base
 
         return $"{collisionPoint.X},{collisionPoint.Y}";
     }
-
-    private Point CheckForCollision()
-    {
-        foreach (var cart in Carts)
-        {
-            foreach (var other in Carts)
-            {
-                if (cart == other)
-                {
-                    continue;
-                }
-
-                if (cart.Position.Equals(other.Position))
-                {
-                    return cart.Position;
-                }
-            }
-        }
-
-        return null;
-    }
 }

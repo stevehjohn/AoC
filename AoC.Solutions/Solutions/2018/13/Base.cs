@@ -11,9 +11,9 @@ public abstract class Base : Solution
 
     private int _height;
 
-    protected char[,] Map;
+    private char[,] Map;
 
-    protected readonly List<Cart> Carts = new();
+    private readonly List<Cart> Carts = new();
 
     private readonly IVisualiser<PuzzleState> _visualiser;
 
@@ -24,6 +24,27 @@ public abstract class Base : Solution
     protected Base(IVisualiser<PuzzleState> visualiser)
     {
         _visualiser = visualiser;
+    }
+    
+    protected Point CheckForCollision()
+    {
+        foreach (var cart in Carts)
+        {
+            foreach (var other in Carts)
+            {
+                if (cart == other)
+                {
+                    continue;
+                }
+
+                if (cart.Position.Equals(other.Position))
+                {
+                    return cart.Position;
+                }
+            }
+        }
+
+        return null;
     }
 
     protected void Visualise(Point collisionPoint = null)
