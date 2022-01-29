@@ -87,6 +87,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
         _mapTiles = Content.Load<Texture2D>("map-tiles");
 
         _spark = Content.Load<Texture2D>("spark");
+
+        base.LoadContent();
     }
 
     protected override void Update(GameTime gameTime)
@@ -122,9 +124,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
         }
 
         // These should work in either order, but they don't. As it works, gonna leave for now.
-        UpdateCollisions();
-
         UpdateSparks();
+
+        UpdateCollisions();
 
         base.Update(gameTime);
     }
