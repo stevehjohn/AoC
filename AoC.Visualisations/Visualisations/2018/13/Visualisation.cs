@@ -228,43 +228,14 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
         base.OnExiting(sender, args);
     }
 
-    //private bool MoveCarts()
-    //{
-    //    if (_carts == null || _carts.Count == 0)
-    //    {
-    //        return false;
-    //    }
-
-    //    var moved = false;
-
-    //    foreach (var cart in _carts)
-    //    {
-    //        if (!_nextCarts.ContainsKey(cart.Key))
-    //        {
-    //            continue;
-    //        }
-
-    //        var target = _nextCarts[cart.Key];
-
-    //        if (!cart.Value.Equals(target))
-    //        {
-    //            cart.Value.X += Math.Sign(target.X - cart.Value.X);
-
-    //            cart.Value.Y += Math.Sign(target.Y - cart.Value.Y);
-
-    //            moved = true;
-    //        }
-    //    }
-
-    //    return moved;
-    //}
-
-    private bool MoveCarts()
+    private bool MoveCarts(bool fast)
     {
         if (_carts == null || _carts.Count == 0)
         {
             return false;
         }
+
+        var moved = false;
 
         foreach (var cart in _carts)
         {
@@ -275,12 +246,26 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
 
             var target = _nextCarts[cart.Key];
 
-            cart.Value.X = target.X;
+            if (fast)
+            {
+                cart.Value.X = target.X;
 
-            cart.Value.Y = target.Y;
+                cart.Value.Y = target.Y;
+            }
+            else
+            {
+                if (! cart.Value.Equals(target))
+                {
+                    cart.Value.X += Math.Sign(target.X - cart.Value.X);
+
+                    cart.Value.Y += Math.Sign(target.Y - cart.Value.Y);
+
+                    moved = true;
+                }
+            }
         }
 
-        return false;
+        return moved;
     }
 
     private Dictionary<int, Point> GetTranslatedCarts()
@@ -296,7 +281,7 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
         {
             if (_carts == null || _carts.Count > 0)
             {
-                if (! MoveCarts())
+                if (! MoveCarts(true))
                 {
                     _carts = _nextCarts;
 
@@ -309,7 +294,7 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
                         _nextCarts = GetTranslatedCarts();
                     }
 
-                    MoveCarts();
+                    MoveCarts(true);
                 }
             }
         }
