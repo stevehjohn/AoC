@@ -12,13 +12,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="_Content\2020\13\obj\**" />
-    <EmbeddedResource Remove="_Content\2020\13\obj\**" />
-    <None Remove="_Content\2020\13\obj\**" />
+    <Compile Remove="_Content\2018\13\obj\**" />
+    <EmbeddedResource Remove="_Content\2018\13\obj\**" />
+    <None Remove="_Content\2018\13\obj\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="_Content\2020\13\sprites.png" />
+    <None Remove="_Content\2018\13\sprites.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,11 +29,11 @@
   <ItemGroup>
     <Folder Include="Exceptions\" />
     <Folder Include="Visualisations\2018\13\" />
-    <DesignData Include="_Content\2020\13\Content.mgcb" />
+    <DesignData Include="_Content\2018\13\Content.mgcb" />
   </ItemGroup>
 
   <ItemGroup>
-    <MonoGameContentReference Include="_Content\2020\13\sprites.png" />
+    <MonoGameContentReference Include="_Content\2018\13\sprites.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,10 +41,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="_Content\2020\13\bin\Windows\map-tiles.xnb">
+    <None Update="_Content\2018\13\bin\Windows\map-tiles.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="_Content\2020\13\bin\Windows\spark.xnb">
+    <None Update="_Content\2018\13\bin\Windows\spark.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="_Content\2020\13\bin\Windows\sprites.xnb">
