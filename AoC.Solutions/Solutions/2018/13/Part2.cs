@@ -5,13 +5,13 @@ using JetBrains.Annotations;
 namespace AoC.Solutions.Solutions._2018._13;
 
 [UsedImplicitly]
-public class Part1 : Base
+public class Part2 : Base
 {
-    public Part1()
+    public Part2()
     {
     }
 
-    public Part1(IVisualiser<PuzzleState> visualiser) : base(visualiser)
+    public Part2(IVisualiser<PuzzleState> visualiser) : base(visualiser)
     {
     }
 
@@ -33,12 +33,19 @@ public class Part1 : Base
 
             if (collisionPoint != null)
             {
-                break;
+                if (Carts.Count == 1)
+                {
+                    break;
+                }
+
+                MoveCarts();
+
+                Visualise(collisionPoint);
             }
         }
 
-        Visualise(collisionPoint);
+        Visualise(collisionPoint, true);
 
-        return $"{collisionPoint.X},{collisionPoint.Y}";
+        return $"{Carts[0].Position.X},{Carts[0].Position.Y}";
     }
 }

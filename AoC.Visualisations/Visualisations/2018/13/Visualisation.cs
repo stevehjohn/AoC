@@ -1,14 +1,16 @@
-﻿using AoC.Solutions.Infrastructure;
-using AoC.Solutions.Solutions._2018._13;
+﻿using AoC.Solutions.Solutions._2018._13;
+using AoC.Visualisations.Infrastructure;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Color = Microsoft.Xna.Framework.Color;
+using Point = AoC.Solutions.Common.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace AoC.Visualisations.Visualisations._2018._13;
 
-public class Visualisation : Game, IVisualiser<PuzzleState>
+[UsedImplicitly]
+public class Visualisation : VisualisationBase<PuzzleState>
 {
     // ReSharper disable once NotAccessedField.Local
     private readonly GraphicsDeviceManager _graphicsDeviceManager;
@@ -19,136 +21,154 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
 
     private Texture2D _spark;
 
-    private readonly Part1 _puzzle;
-
     private readonly List<Spark> _sparks = new();
 
     private readonly Random _rng = new();
 
-    private readonly Queue<PuzzleState> _stateQueue = new();
-
     private PuzzleState _state;
 
-    private Thread _puzzleThread;
+    private Dictionary<int, Point> _carts;
 
-    private List<Solutions.Common.Point> _carts;
+    private Dictionary<int, Point> _nextCarts;
 
-    private List<Solutions.Common.Point> _nextCarts;
+    private readonly List<Collision> _collisions = new();
+
+    private bool _fast;
 
     public Visualisation()
     {
-        _puzzle = new Part1(this);
-
         _graphicsDeviceManager = new GraphicsDeviceManager(this)
                                  {
                                      PreferredBackBufferWidth = 1150,
                                      PreferredBackBufferHeight = 1150
                                  };
 
-        // TODO: Make a base class that does this stuff.
-        // Also, something funky going on with having to add \bin\Windows - investigate.
+        // Something funky going on with having to add \bin\Windows - investigate.
         Content.RootDirectory = "_Content\\2020\\13\\bin\\Windows";
     }
 
-    // TODO: Base class for easier future visualisations.
-    public void PuzzleStateChanged(PuzzleState state)
+    public override void SetPart(int part)
     {
-        if (_stateQueue.Count > 1000)
+        switch (part)
         {
-            Thread.Sleep(1000);
-        }
+            case 1:
+                Puzzle = new Part1(this);
 
-        _stateQueue.Enqueue(state);
+                break;
+            case 2:
+                Puzzle = new Part2(this);
+
+                _fast = true;
+
+                break;
+        }
     }
 
     protected override void Initialize()
     {
         IsMouseVisible = true;
 
-        _puzzleThread = new Thread(() => _puzzle.GetAnswer());
-
-        _puzzleThread.Start();
-
         base.Initialize();
+    }
+
+    protected override void LoadContent()
+    {
+        _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+        _mapTiles = Content.Load<Texture2D>("map-tiles");
+
+        _spark = Content.Load<Texture2D>("spark");
+
+        base.LoadContent();
+    }
+
+    protected override void Update(GameTime gameTime)
+    {
+        if (HasNextState)
+        {
+            if (_carts == null || _carts.Count > 0)
+            {
+                if (! UpdateCarts())
+                {
+                    _carts = _nextCarts;
+
+                    _state = GetNextState();
+
+                    _nextCarts = GetTranslatedCarts();
+
+                    if (_carts == null)
+                    {
+                        _carts = _nextCarts;
+
+                        _state = GetNextState();
+
+                        _nextCarts = GetTranslatedCarts();
+                    }
+
+                    UpdateCarts();
+                }
+            }
+        }
+        else if (_nextCarts != null)
+        {
+            _carts = _nextCarts;
+        }
+
+        // In an ideal world, these should work in either order, but they don't. As it works, gonna leave for now.
+        UpdateSparks();
+
+        UpdateCollisions();
+
+        base.Update(gameTime);
+    }
+
+    protected override void Draw(GameTime gameTime)
+    {
+        if (_state != null)
+        {
+            GraphicsDevice.Clear(Color.Black);
+
+            _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
+
+            DrawMap();
+
+            DrawCarts();
+
+            DrawSparks();
+
+            _spriteBatch.End();
+        }
+        else
+        {
+            GraphicsDevice.Clear(Color.Black);
+        }
+
+        base.Draw(gameTime);
+    }
+    
+    private void DrawSparks()
+    {
+        foreach (var spark in _sparks)
+        {
+            _spriteBatch.Draw(_spark, new Vector2(spark.Position.X, spark.Position.Y), new Rectangle(spark.SpriteOffset, 0, 5, 5), Color.White * ((float) spark.Ticks / spark.StartTicks), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
+        }
     }
 
     private void DrawCarts()
     {
         foreach (var cart in _carts)
         {
-            if (_state.CollisionPoint != null)
-            {
-                if (_carts.Count(c => c.X == cart.X && c.Y == cart.Y) > 1)
-                {
-                    continue;
-                }
-            }
-
-            _spriteBatch.Draw(_spark, new Vector2(cart.X, cart.Y), new Rectangle(0, 0, 5, 5), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
-
-            if (_rng.Next(2) == 0)
-            {
-                _sparks.Add(new Spark
-                            {
-                                Position = new PointFloat { X = cart.X, Y = cart.Y },
-                                Vector = new PointFloat { X = (-5f + _rng.Next(11)) / 10, Y = (-10f + _rng.Next(21)) / 10 },
-                                Ticks = 20,
-                                StartTicks = 20
-                            });
-            }
-        }
-
-        if (_state.CollisionPoint != null)
-        {
-            for (var i = 0; i < 5; i++)
-            {
-                _sparks.Add(new Spark
-                            {
-                                SpriteOffset = 5,
-                                Position = new PointFloat { X = _state.CollisionPoint.X * 7 + 50, Y = _state.CollisionPoint.Y * 7 + 50 },
-                                Vector = new PointFloat { X = (-10f + _rng.Next(21)) / 10, Y = -_rng.Next(41) / 10f },
-                                Ticks = 120,
-                                StartTicks = 120,
-                                YGravity = 0.025f
-                            });
-            }
-        }
-
-        var toRemove = new List<Spark>();
-
-        foreach (var spark in _sparks)
-        {
-            _spriteBatch.Draw(_spark, new Vector2(spark.Position.X, spark.Position.Y), new Rectangle(spark.SpriteOffset, 0, 5, 5), Color.White * ((float) spark.Ticks / spark.StartTicks), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
-
-            spark.Ticks--;
-
-            if (spark.Ticks < 0)
-            {
-                toRemove.Add(spark);
-
-                continue;
-            }
-
-            spark.Position.X += spark.Vector.X;
-
-            spark.Position.Y += spark.Vector.Y;
-
-            spark.Vector.Y += spark.YGravity;
-        }
-
-        foreach (var spark in toRemove)
-        {
-            _sparks.Remove(spark);
+            _spriteBatch.Draw(_spark, new Vector2(cart.Value.X, cart.Value.Y), new Rectangle(0, 0, 5, 5), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
         }
     }
 
-    private void DrawMap(PuzzleState state)
+    private void DrawMap()
     {
-        for (var y = 0; y < state.Map.GetLength(1); y++)
+        for (var y = 0; y < _state.Map.GetLength(1); y++)
         {
-            for (var x = 0; x < state.Map.GetLength(0); x++)
+            for (var x = 0; x < _state.Map.GetLength(0); x++)
             {
-                switch (state.Map[x, y])
+                switch (_state.Map[x, y])
                 {
                     case '─':
                         _spriteBatch.Draw(_mapTiles, new Vector2(x * 7 + 50, y * 7 + 50), new Rectangle(0, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
@@ -183,14 +203,7 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
         }
     }
 
-    protected override void OnExiting(object sender, EventArgs args)
-    {
-        // TODO: Stop puzzle thread
-
-        base.OnExiting(sender, args);
-    }
-
-    private bool MoveCarts()
+    private bool UpdateCarts()
     {
         if (_carts == null || _carts.Count == 0)
         {
@@ -199,80 +212,147 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
 
         var moved = false;
 
-        for (var i = 0; i < _carts.Count; i++)
+        foreach (var cart in _carts)
         {
-            var cart = _carts[i];
-
-            var target = _nextCarts[i];
-
-            if (! cart.Equals(target))
+            if (! _nextCarts.ContainsKey(cart.Key))
             {
-                cart.X += Math.Sign(target.X - cart.X);
+                continue;
+            }
 
-                cart.Y += Math.Sign(target.Y - cart.Y);
+            var target = _nextCarts[cart.Key];
 
-                moved = true;
+            if (_fast)
+            {
+                cart.Value.X = target.X;
+
+                cart.Value.Y = target.Y;
+            }
+            else
+            {
+                if (! cart.Value.Equals(target))
+                {
+                    cart.Value.X += Math.Sign(target.X - cart.Value.X);
+
+                    cart.Value.Y += Math.Sign(target.Y - cart.Value.Y);
+
+                    moved = true;
+                }
             }
         }
 
         return moved;
     }
-
-    private List<Solutions.Common.Point> GetTranslatedCarts()
+    
+    private void UpdateCollisions()
     {
-        _state = _stateQueue.Dequeue();
-
-        return _state.Carts.Select(c => new Solutions.Common.Point(c.Position.X * 7 + 51, c.Position.Y * 7 + 51)).ToList();
-    }
-
-    protected override void Draw(GameTime gameTime)
-    {
-        if (_stateQueue.Count > 0)
+        if (_state.CollisionPoint != null)
         {
-            if (_carts == null || _carts.Count > 0)
+            if (_state.IsFinalState)
             {
-                if (! MoveCarts())
+                _collisions.Add(new Collision { Position = _state.Carts.Single().Position, Ticks = int.MaxValue, SpriteOffset = 10, IsFinal = true });
+
+                _collisions.Add(new Collision { Position = _state.CollisionPoint, Ticks = 200, SpriteOffset = 5 });
+
+                _state.CollisionPoint = null;
+            }
+            else
+            {
+                if (Puzzle is Part1)
                 {
-                    _carts = _nextCarts;
+                    _collisions.Add(new Collision { Position = _state.CollisionPoint, Ticks = int.MaxValue, SpriteOffset = 5 });
 
-                    _nextCarts = GetTranslatedCarts();
-
-                    if (_carts == null)
-                    {
-                        _carts = _nextCarts;
-
-                        _nextCarts = GetTranslatedCarts();
-                    }
-
-                    MoveCarts();
+                    _state.CollisionPoint = null;
+                }
+                else
+                {
+                    _collisions.Add(new Collision { Position = _state.CollisionPoint, Ticks = 200, SpriteOffset = 5 });
                 }
             }
         }
 
-        if (_state != null)
+        var toRemove = new List<Collision>();
+
+        foreach (var collision in _collisions)
         {
-            GraphicsDevice.Clear(Color.Black);
+            for (var i = 0; i < 4; i++)
+            {
+                _sparks.Add(new Spark
+                            {
+                                SpriteOffset = collision.SpriteOffset,
+                                Position = new PointFloat { X = collision.Position.X * 7 + 50, Y = collision.Position.Y * 7 + 50 },
+                                Vector = new PointFloat { X = (-10f + _rng.Next(21)) / 10, Y = -_rng.Next(41) / 10f },
+                                Ticks = 120,
+                                StartTicks = 120,
+                                YGravity = collision.IsFinal ? -0.1f : 0.025f
+                            });
+            }
 
-            _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
+            collision.Ticks--;
 
-            DrawMap(_state);
-
-            DrawCarts();
-
-            _spriteBatch.End();
+            if (collision.Ticks < 0)
+            {
+                toRemove.Add(collision);
+            }
         }
-        else
+
+        foreach (var collision in toRemove)
         {
-            GraphicsDevice.Clear(Color.Black);
+            _collisions.Remove(collision);
         }
     }
 
-    protected override void LoadContent()
+    private void UpdateSparks()
     {
-        _spriteBatch = new SpriteBatch(GraphicsDevice);
+        var toRemove = new List<Spark>();
 
-        _mapTiles = Content.Load<Texture2D>("map-tiles");
+        foreach (var spark in _sparks)
+        {
+            spark.Ticks--;
 
-        _spark = Content.Load<Texture2D>("spark");
+            if (spark.Ticks < 0)
+            {
+                toRemove.Add(spark);
+
+                continue;
+            }
+
+            spark.Position.X += spark.Vector.X;
+
+            spark.Position.Y += spark.Vector.Y;
+
+            spark.Vector.Y += spark.YGravity;
+        }
+
+        foreach (var spark in toRemove)
+        {
+            _sparks.Remove(spark);
+        }
+
+        foreach (var cart in _carts)
+        {
+            if (_state.CollisionPoint != null)
+            {
+                if (_carts.Count(c => c.Value.X == cart.Value.X && c.Value.Y == cart.Value.Y) > 1)
+                {
+                    continue;
+                }
+            }
+
+            if (_rng.Next(2) == 0)
+            {
+                _sparks.Add(new Spark
+                            {
+                                Position = new PointFloat { X = cart.Value.X, Y = cart.Value.Y },
+                                Vector = new PointFloat { X = (-5f + _rng.Next(11)) / 10, Y = (-10f + _rng.Next(21)) / 10 },
+                                Ticks = 20,
+                                StartTicks = 20
+                            });
+            }
+        }
+    }
+
+    private Dictionary<int, Point> GetTranslatedCarts()
+    {
+        return _state.Carts.ToDictionary(c => c.Id, c => new Point(c.Position.X * 7 + 51, c.Position.Y * 7 + 51));
     }
 }
