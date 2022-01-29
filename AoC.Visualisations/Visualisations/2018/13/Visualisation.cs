@@ -124,64 +124,6 @@ public class Visualisation : VisualisationBase, IVisualiser<PuzzleState>
         }
     }
 
-    private void DrawCollisions()
-    {
-        if (_state.CollisionPoint != null)
-        {
-            if (_state.IsFinalState)
-            {
-                _collisions.Add(new Collision { Position = _state.Carts.Single().Position, Ticks = int.MaxValue, SpriteOffset = 10, IsFinal = true });
-
-                _collisions.Add(new Collision { Position = _state.CollisionPoint, Ticks = 200, SpriteOffset = 5 });
-
-                _state.CollisionPoint = null;
-            }
-            else
-            {
-                if (_puzzle is Part1)
-                {
-                    _collisions.Add(new Collision { Position = _state.CollisionPoint, Ticks = int.MaxValue, SpriteOffset = 5 });
-
-                    _state.CollisionPoint = null;
-                }
-                else
-                {
-                    _collisions.Add(new Collision { Position = _state.CollisionPoint, Ticks = 200, SpriteOffset = 5 });
-                }
-            }
-        }
-
-        var toRemove = new List<Collision>();
-
-        foreach (var collision in _collisions)
-        {
-            for (var i = 0; i < 4; i++)
-            {
-                _sparks.Add(new Spark
-                            {
-                                SpriteOffset = collision.SpriteOffset,
-                                Position = new PointFloat { X = collision.Position.X * 7 + 50, Y = collision.Position.Y * 7 + 50 },
-                                Vector = new PointFloat { X = (-10f + _rng.Next(21)) / 10, Y = -_rng.Next(41) / 10f },
-                                Ticks = 120,
-                                StartTicks = 120,
-                                YGravity = collision.IsFinal ? -0.1f : 0.025f
-                            });
-            }
-
-            collision.Ticks--;
-
-            if (collision.Ticks < 0)
-            {
-                toRemove.Add(collision);
-            }
-        }
-
-        foreach (var collision in toRemove)
-        {
-            _collisions.Remove(collision);
-        }
-    }
-
     private void DrawCarts()
     {
         foreach (var cart in _carts)
@@ -303,8 +245,66 @@ public class Visualisation : VisualisationBase, IVisualiser<PuzzleState>
 
         return _state.Carts.ToDictionary(c => c.Id, c => new Point(c.Position.X * 7 + 51, c.Position.Y * 7 + 51));
     }
+    
+    private void UpdateCollisions()
+    {
+        if (_state.CollisionPoint != null)
+        {
+            if (_state.IsFinalState)
+            {
+                _collisions.Add(new Collision { Position = _state.Carts.Single().Position, Ticks = int.MaxValue, SpriteOffset = 10, IsFinal = true });
 
-    protected override void Draw(GameTime gameTime)
+                _collisions.Add(new Collision { Position = _state.CollisionPoint, Ticks = 200, SpriteOffset = 5 });
+
+                _state.CollisionPoint = null;
+            }
+            else
+            {
+                if (_puzzle is Part1)
+                {
+                    _collisions.Add(new Collision { Position = _state.CollisionPoint, Ticks = int.MaxValue, SpriteOffset = 5 });
+
+                    _state.CollisionPoint = null;
+                }
+                else
+                {
+                    _collisions.Add(new Collision { Position = _state.CollisionPoint, Ticks = 200, SpriteOffset = 5 });
+                }
+            }
+        }
+
+        var toRemove = new List<Collision>();
+
+        foreach (var collision in _collisions)
+        {
+            for (var i = 0; i < 4; i++)
+            {
+                _sparks.Add(new Spark
+                            {
+                                SpriteOffset = collision.SpriteOffset,
+                                Position = new PointFloat { X = collision.Position.X * 7 + 50, Y = collision.Position.Y * 7 + 50 },
+                                Vector = new PointFloat { X = (-10f + _rng.Next(21)) / 10, Y = -_rng.Next(41) / 10f },
+                                Ticks = 120,
+                                StartTicks = 120,
+                                YGravity = collision.IsFinal ? -0.1f : 0.025f
+                            });
+            }
+
+            collision.Ticks--;
+
+            if (collision.Ticks < 0)
+            {
+                toRemove.Add(collision);
+            }
+        }
+
+        foreach (var collision in toRemove)
+        {
+            _collisions.Remove(collision);
+        }
+    }
+
+    protected override void Update(GameTime gameTime)
     {
         if (_stateQueue.Count > 0)
         {
@@ -332,6 +332,13 @@ public class Visualisation : VisualisationBase, IVisualiser<PuzzleState>
             _carts = _nextCarts;
         }
 
+        UpdateCollisions();
+
+        base.Update(gameTime);
+    }
+
+    protected override void Draw(GameTime gameTime)
+    {
         if (_state != null)
         {
             GraphicsDevice.Clear(Color.Black);
@@ -344,14 +351,14 @@ public class Visualisation : VisualisationBase, IVisualiser<PuzzleState>
 
             DrawSparks();
 
-            DrawCollisions();
-
             _spriteBatch.End();
         }
         else
         {
             GraphicsDevice.Clear(Color.Black);
         }
+
+        base.Draw(gameTime);
     }
 
     protected override void LoadContent()
