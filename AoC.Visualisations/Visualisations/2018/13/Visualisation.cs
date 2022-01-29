@@ -1,5 +1,4 @@
-﻿using AoC.Solutions.Infrastructure;
-using AoC.Solutions.Solutions._2018._13;
+﻿using AoC.Solutions.Solutions._2018._13;
 using AoC.Visualisations.Infrastructure;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
@@ -22,15 +21,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private Texture2D _spark;
 
-    private Solution _puzzle;
-
     private readonly List<Spark> _sparks = new();
 
     private readonly Random _rng = new();
 
     private PuzzleState _state;
-
-    private Thread _puzzleThread;
 
     private Dictionary<int, Point> _carts;
 
@@ -57,11 +52,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
         switch (part)
         {
             case 1:
-                _puzzle = new Part1(this);
+                Puzzle = new Part1(this);
 
                 break;
             case 2:
-                _puzzle = new Part2(this);
+                Puzzle = new Part2(this);
 
                 _fast = true;
 
@@ -72,10 +67,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
     protected override void Initialize()
     {
         IsMouseVisible = true;
-
-        _puzzleThread = new Thread(() => _puzzle.GetAnswer());
-
-        _puzzleThread.Start();
 
         base.Initialize();
     }
@@ -97,7 +88,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             if (_carts == null || _carts.Count > 0)
             {
-                if (! MoveCarts())
+                if (! UpdateCarts())
                 {
                     _carts = _nextCarts;
 
@@ -114,7 +105,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                         _nextCarts = GetTranslatedCarts();
                     }
 
-                    MoveCarts();
+                    UpdateCarts();
                 }
             }
         }
@@ -123,7 +114,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             _carts = _nextCarts;
         }
 
-        // These should work in either order, but they don't. As it works, gonna leave for now.
+        // In an ideal world, these should work in either order, but they don't. As it works, gonna leave for now.
         UpdateSparks();
 
         UpdateCollisions();
@@ -139,7 +130,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
             _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
 
-            DrawMap(_state);
+            DrawMap();
 
             DrawCarts();
 
@@ -155,13 +146,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
         base.Draw(gameTime);
     }
     
-    protected override void OnExiting(object sender, EventArgs args)
-    {
-        // TODO: Stop puzzle thread
-
-        base.OnExiting(sender, args);
-    }
-
     private void DrawSparks()
     {
         foreach (var spark in _sparks)
@@ -178,13 +162,13 @@ public class Visualisation : VisualisationBase<PuzzleState>
         }
     }
 
-    private void DrawMap(PuzzleState state)
+    private void DrawMap()
     {
-        for (var y = 0; y < state.Map.GetLength(1); y++)
+        for (var y = 0; y < _state.Map.GetLength(1); y++)
         {
-            for (var x = 0; x < state.Map.GetLength(0); x++)
+            for (var x = 0; x < _state.Map.GetLength(0); x++)
             {
-                switch (state.Map[x, y])
+                switch (_state.Map[x, y])
                 {
                     case '─':
                         _spriteBatch.Draw(_mapTiles, new Vector2(x * 7 + 50, y * 7 + 50), new Rectangle(0, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
@@ -219,7 +203,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         }
     }
 
-    private bool MoveCarts()
+    private bool UpdateCarts()
     {
         if (_carts == null || _carts.Count == 0)
         {
@@ -258,11 +242,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         return moved;
     }
-
-    private Dictionary<int, Point> GetTranslatedCarts()
-    {
-        return _state.Carts.ToDictionary(c => c.Id, c => new Point(c.Position.X * 7 + 51, c.Position.Y * 7 + 51));
-    }
     
     private void UpdateCollisions()
     {
@@ -278,7 +257,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             }
             else
             {
-                if (_puzzle is Part1)
+                if (Puzzle is Part1)
                 {
                     _collisions.Add(new Collision { Position = _state.CollisionPoint, Ticks = int.MaxValue, SpriteOffset = 5 });
 
@@ -370,5 +349,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
                             });
             }
         }
+    }
+
+    private Dictionary<int, Point> GetTranslatedCarts()
+    {
+        return _state.Carts.ToDictionary(c => c.Id, c => new Point(c.Position.X * 7 + 51, c.Position.Y * 7 + 51));
     }
 }
