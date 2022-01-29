@@ -122,7 +122,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         if (_state != null)
         {
-            GraphicsDevice.Clear(Color.Black); // TODO: Pick a better colour/background.
+            GraphicsDevice.Clear(new Color(40, 40, 40)); // TODO: Pick a better colour/background.
 
             _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
 
@@ -158,13 +158,15 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             if (_transformPhase == 0)
             {
-                var x = _tiles[_transformTileId.Value].ScreenPosition.X;
+                var tile = _tiles[_transformTileId.Value];
 
-                var y = _tiles[_transformTileId.Value].ScreenPosition.Y;
+                var x = tile.ScreenPosition.X;
 
-                x += Math.Sign(Width / 2 - _tiles[_transformTileId.Value].ScreenPosition.X) * MovementStep;
+                var y = tile.ScreenPosition.Y;
 
-                y += Math.Sign(Height / 2 - _tiles[_transformTileId.Value].ScreenPosition.Y) * MovementStep;
+                x += Math.Sign(Width / 2 - x) * MovementStep;
+
+                y += Math.Sign(Height / 2 - y) * MovementStep;
 
                 if (Math.Abs(x - Width / 2) < MovementStep)
                 {
@@ -180,7 +182,41 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                 if (x == Width / 2 && y == Height / 2)
                 {
-                    _transformPhase = 1;
+                    _transformPhase = 2;
+
+                    tile.Transform = string.Empty;
+                }
+            }
+
+            if (_transformPhase == 2)
+            {
+                var tile = _tiles[_transformTileId.Value];
+
+                var x = tile.ScreenPosition.X;
+
+                var y = tile.ScreenPosition.Y;
+
+                x += Math.Sign(Width / 2 - x) * MovementStep;
+
+                y += Math.Sign(Height / 2 - y) * MovementStep;
+
+                if (Math.Abs(x - Width / 2) < MovementStep)
+                {
+                    x = Width / 2;
+                }
+
+                if (Math.Abs(y - Height / 2) < MovementStep)
+                {
+                    y = Height / 2;
+                }
+
+                _tiles[_transformTileId.Value].ScreenPosition = new Point(x, y);
+
+                if (x == Width / 2 && y == Height / 2)
+                {
+                    _transformPhase = 2;
+
+                    tile.Transform = string.Empty;
                 }
             }
         }
