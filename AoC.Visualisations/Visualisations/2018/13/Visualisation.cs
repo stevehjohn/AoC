@@ -1,5 +1,6 @@
 ﻿using AoC.Solutions.Infrastructure;
 using AoC.Solutions.Solutions._2018._13;
+using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Color = Microsoft.Xna.Framework.Color;
@@ -8,6 +9,7 @@ using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace AoC.Visualisations.Visualisations._2018._13;
 
+[UsedImplicitly]
 public class Visualisation : Game, IVisualiser<PuzzleState>
 {
     // ReSharper disable once NotAccessedField.Local
