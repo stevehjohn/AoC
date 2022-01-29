@@ -69,7 +69,14 @@ public static class EntryPoint
         try
         {
             ((IMultiPartVisualiser) visualisation).SetPart(int.Parse(part));
+        }
+        catch
+        {
+            throw new VisualisationParameterException($"Unable to find visualisation for {year}.{day}.{part}.");
+        }
 
+        try
+        {
             visualisation.Run();
         }
         finally

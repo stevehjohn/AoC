@@ -1,6 +1,7 @@
-﻿using System.Text;
-using AoC.Solutions.Common;
+﻿using AoC.Solutions.Common;
+using AoC.Solutions.Infrastructure;
 using JetBrains.Annotations;
+using System.Text;
 
 namespace AoC.Solutions.Solutions._2020._20;
 
@@ -10,6 +11,25 @@ public class Part1 : Base
     private readonly List<Tile> _tiles = new();
 
     private Dictionary<Point, Tile> _jigsaw;
+
+    private readonly IVisualiser<PuzzleState> _visualiser;
+
+    public Part1()
+    {
+    }
+
+    public Part1(IVisualiser<PuzzleState> visualiser)
+    {
+        _visualiser = visualiser;
+    }
+
+    protected void Visualise(int tileId, string transform)
+    {
+        if (_visualiser != null)
+        {
+            _visualiser.PuzzleStateChanged(new PuzzleState { Tiles = _tiles.Select(t => t.Id).ToList(), Jigsaw = _jigsaw.ToDictionary(kvp => kvp.Value.Id, kvp => kvp.Key), TileId = tileId, Transform = transform });
+        }
+    }
 
     public override string GetAnswer()
     {
@@ -159,29 +179,43 @@ public class Part1 : Base
 
         var count = 0;
 
+        var transform = new StringBuilder();
+
         while (count < 4 && tile.Value.Left != match.Right && tile.Value.Right != match.Left && tile.Value.Top != match.Bottom && tile.Value.Bottom != match.Top)
         {
             match.Rotate();
 
+            transform.Append('R');
+
             if (tile.Value.Left != match.Right && tile.Value.Right != match.Left && tile.Value.Top != match.Bottom && tile.Value.Bottom != match.Top)
             {
                 match.FlipHorizontal();
+
+                transform.Append('H');
             }
 
             if (tile.Value.Left != match.Right && tile.Value.Right != match.Left && tile.Value.Top != match.Bottom && tile.Value.Bottom != match.Top)
             {
                 match.FlipHorizontal();
 
+                transform.Remove(transform.Length - 1, 1);
+
                 match.FlipVertical();
+
+                transform.Append('V');
             }
 
             if (tile.Value.Left != match.Right && tile.Value.Right != match.Left && tile.Value.Top != match.Bottom && tile.Value.Bottom != match.Top)
             {
                 match.FlipVertical();
+
+                transform.Remove(transform.Length - 1, 1);
             }
 
             count++;
         }
+
+        Visualise(match.Id, transform.ToString());
 
         return true;
     }

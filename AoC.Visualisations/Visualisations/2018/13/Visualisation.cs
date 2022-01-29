@@ -1,4 +1,5 @@
 ﻿using AoC.Solutions.Solutions._2018._13;
+using AoC.Visualisations.Exceptions;
 using AoC.Visualisations.Infrastructure;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
@@ -44,7 +45,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                                  };
 
         // Something funky going on with having to add \bin\Windows - investigate.
-        Content.RootDirectory = "_Content\\2020\\13\\bin\\Windows";
+        Content.RootDirectory = "_Content\\2018\\13\\bin\\Windows";
     }
 
     public override void SetPart(int part)
@@ -62,6 +63,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                 break;
         }
+
+        throw new VisualisationParameterException();
     }
 
     protected override void Initialize()
