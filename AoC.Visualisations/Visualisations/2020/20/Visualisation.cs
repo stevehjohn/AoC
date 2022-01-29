@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Solutions._2020._20;
+﻿using System.Diagnostics;
+using AoC.Solutions.Solutions._2020._20;
 using AoC.Visualisations.Exceptions;
 using AoC.Visualisations.Infrastructure;
 using JetBrains.Annotations;
@@ -28,19 +29,21 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private Part1 _preVisualisationPuzzle;
 
-    private Dictionary<int, string> _transforms;
-
     private Texture2D _image;
+
+    private Texture2D _scanner;
 
     private bool _needNewState = true;
 
     private readonly Dictionary<int, Tile> _tiles = new();
 
+    private readonly VisualisationState _visualisationState = new();
+
     public Visualisation()
     {
         _graphicsDeviceManager = new GraphicsDeviceManager(this)
                                  {
-                                     PreferredBackBufferWidth = 2048,
+                                     PreferredBackBufferWidth = 2198,
                                      PreferredBackBufferHeight = 1080
                                  };
 
@@ -74,6 +77,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         CalculateImageSegments();
 
+        _visualisationState.Mode = Mode.Scanning;
+
+        _visualisationState.Position = GetQueuedTilePosition(0, 0);
+
         base.BeginRun();
     }
 
@@ -82,6 +89,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         _image = Content.Load<Texture2D>("image");
+
+        _scanner = Content.Load<Texture2D>("scanner");
 
         base.LoadContent();
     }
@@ -104,7 +113,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         if (_state != null)
         {
-            GraphicsDevice.Clear(Color.Gray); // TODO: Pick a better colour.
+            GraphicsDevice.Clear(Color.Black); // TODO: Pick a better colour/background.
 
             _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
 
@@ -121,6 +130,17 @@ public class Visualisation : VisualisationBase<PuzzleState>
     }
 
     private void Update()
+    {
+        switch (_visualisationState.Mode)
+        {
+            case Mode.Scanning:
+                UpdateScan();
+
+                break;
+        }
+    }
+
+    private void UpdateScan()
     {
     }
 
@@ -144,6 +164,19 @@ public class Visualisation : VisualisationBase<PuzzleState>
                               spriteEffects,
                               1);
         }
+
+        if (_visualisationState.Mode == Mode.Scanning)
+        {
+            _spriteBatch.Draw(_scanner,
+                              new Vector2(_visualisationState.Position.X - 5, _visualisationState.Position.Y - 5),
+                              new Rectangle(0, 0, 85, 85),
+                              Color.White,
+                              0,
+                              new Vector2(TileSize / 2f, TileSize / 2f),
+                              Vector2.One,
+                              SpriteEffects.None,
+                              1);
+        }
     }
 
     private void CalculateImageSegments()
@@ -158,34 +191,62 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         var tilePositions = _preVisualisationPuzzle.Jigsaw.Select(t => (t.Value.Id, Position: new Point(t.Key.X - oX, t.Key.Y - oY))).ToList();
 
-        var top = _graphicsDeviceManager.PreferredBackBufferHeight / 2 - (TileSize + TileSpacing) * JigsawSize / 2 + TileSize / 2;
-
-        var i = 0;
+        int x = 0, y = 0;
 
         var transforms = _preVisualisationPuzzle.Transforms;
 
-        for (var y = 0; y < JigsawSize; y++)
+        var initialOrder = _preVisualisationPuzzle.InitialTileOrder;
+
+        (int Id, Point Position) jigsawTile;
+
+        Tile tile;
+
+        foreach (var id in initialOrder.Skip(1))
         {
-            for (var x = 0; x < JigsawSize; x++)
+            jigsawTile = tilePositions.Single(p => p.Id == id);
+
+            if (! transforms.TryGetValue(jigsawTile.Id, out var transform))
             {
-                var jigsawTile = tilePositions[i];
+                transform = string.Empty;
+            }
 
-                if (! transforms.TryGetValue(jigsawTile.Id, out var transform))
-                {
-                    transform = string.Empty;
-                }
+            tile = new Tile
+                   {
+                       ScreenPosition = GetQueuedTilePosition(x, y),
+                       ImageSegment = new Rectangle(jigsawTile.Position.X * TileSize, jigsawTile.Position.Y * TileSize, TileSize, TileSize),
+                       Transform = transform
+                   };
 
-                var tile = new Tile
-                           {
-                               ScreenPosition = new Point(_graphicsDeviceManager.PreferredBackBufferWidth - (x + 1) * (TileSize + TileSpacing), top + TileSpacing + y * (TileSize + TileSpacing)),
-                               ImageSegment = new Rectangle(jigsawTile.Position.X * TileSize, jigsawTile.Position.Y * TileSize, TileSize, TileSize),
-                               Transform = transform
-                           };
+            _tiles.Add(id, tile);
 
-                _tiles.Add(jigsawTile.Id, tile);
+            x++;
 
-                i++;
+            if (x > 11)
+            {
+                x = 0;
+
+                y++;
             }
         }
+
+        jigsawTile = tilePositions.Single(p => p.Id == initialOrder.First());
+
+        tile = new Tile
+               {
+                   ScreenPosition = new Point(_graphicsDeviceManager.PreferredBackBufferWidth / 4, _graphicsDeviceManager.PreferredBackBufferHeight / 2),
+                   ImageSegment = new Rectangle(jigsawTile.Position.X * TileSize, jigsawTile.Position.Y * TileSize, TileSize, TileSize),
+                   Transform = string.Empty
+               };
+
+        _tiles.Add(jigsawTile.Id, tile);
+    }
+
+    private Point GetQueuedTilePosition(int x, int y)
+    {
+        var top = _graphicsDeviceManager.PreferredBackBufferHeight / 2 - (TileSize + TileSpacing) * JigsawSize / 2 + TileSize / 2;
+
+        var left = _graphicsDeviceManager.PreferredBackBufferWidth / 2 + TileSize * 2;
+
+        return new Point(left + x * (TileSize + TileSpacing), top + TileSpacing + y * (TileSize + TileSpacing));
     }
 }

@@ -12,6 +12,8 @@ public class Part1 : Base
 
     public Dictionary<int, string> Transforms { get; } = new();
 
+    public List<int> InitialTileOrder { get; private set; } = new();
+
     private readonly List<Tile> _tiles = new();
 
     private readonly IVisualiser<PuzzleState> _visualiser;
@@ -42,6 +44,8 @@ public class Part1 : Base
 #endif
 
         ParseInput();
+
+        InitialTileOrder = _tiles.Select(t => t.Id).ToList();
 
         Solve();
 
