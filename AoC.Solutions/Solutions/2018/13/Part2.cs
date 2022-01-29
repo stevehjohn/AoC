@@ -25,11 +25,9 @@ public class Part2 : Base
 
         while (true)
         {
-            MoveCarts();
+            collisionPoint = MoveCarts();
 
             Visualise();
-
-            collisionPoint = CheckForCollision();
 
             if (collisionPoint != null)
             {
