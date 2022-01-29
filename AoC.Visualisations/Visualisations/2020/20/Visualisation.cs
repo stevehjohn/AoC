@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using AoC.Solutions.Solutions._2020._20;
+﻿using AoC.Solutions.Solutions._2020._20;
 using AoC.Visualisations.Exceptions;
 using AoC.Visualisations.Infrastructure;
 using JetBrains.Annotations;
@@ -20,6 +19,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private const int TileSpacing = 5;
 
+    private const int MovementStep = 5;
+
+    private const int Width = 2198;
+
+    private const int Height = 1080;
+
     // ReSharper disable once NotAccessedField.Local
     private readonly GraphicsDeviceManager _graphicsDeviceManager;
 
@@ -37,14 +42,20 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private readonly Dictionary<int, Tile> _tiles = new();
 
-    private readonly VisualisationState _visualisationState = new();
+    private Point _scannerPosition;
+
+    private int? _transformTileId;
+
+    private readonly Queue<int> _transformQueue = new();
+
+    private int _transformPhase;
 
     public Visualisation()
     {
         _graphicsDeviceManager = new GraphicsDeviceManager(this)
                                  {
-                                     PreferredBackBufferWidth = 2198,
-                                     PreferredBackBufferHeight = 1080
+                                     PreferredBackBufferWidth = Width,
+                                     PreferredBackBufferHeight = Height
                                  };
 
         // Something funky going on with having to add \bin\Windows - investigate.
@@ -77,9 +88,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         CalculateImageSegments();
 
-        _visualisationState.Mode = Mode.Scanning;
-
-        _visualisationState.ScannerPosition = GetQueuedTilePosition(0, 0);
+        _scannerPosition = GetQueuedTilePosition(0, 0);
 
         base.BeginRun();
     }
@@ -131,63 +140,112 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private void Update()
     {
-        switch (_visualisationState.Mode)
-        {
-            case Mode.Scanning:
-                UpdateScan();
+        UpdateScan();
 
-                break;
+        UpdateTransformTile();
+    }
+
+    private void UpdateTransformTile()
+    {
+        if (_transformTileId == null && _transformQueue.Count > 0)
+        {
+            _transformTileId = _transformQueue.Dequeue();
+
+            _transformPhase = 0;
+        }
+
+        if (_transformTileId != null)
+        {
+            if (_transformPhase == 0)
+            {
+                var x = _tiles[_transformTileId.Value].ScreenPosition.X;
+
+                var y = _tiles[_transformTileId.Value].ScreenPosition.Y;
+
+                x += Math.Sign(Width / 2 - _tiles[_transformTileId.Value].ScreenPosition.X) * MovementStep;
+
+                y += Math.Sign(Height / 2 - _tiles[_transformTileId.Value].ScreenPosition.Y) * MovementStep;
+
+                if (Math.Abs(x - Width / 2) < MovementStep)
+                {
+                    x = Width / 2;
+                }
+
+                if (Math.Abs(y - Height / 2) < MovementStep)
+                {
+                    y = Height / 2;
+                }
+
+                _tiles[_transformTileId.Value].ScreenPosition = new Point(x, y);
+
+                if (x == Width / 2 && y == Height / 2)
+                {
+                    _transformPhase = 1;
+                }
+            }
         }
     }
 
     private void UpdateScan()
     {
-        var scannerPosition = _visualisationState.ScannerPosition;
-
         var target = _tiles[_state.TileId];
 
-        if (target.ScreenPosition.X == scannerPosition.X && target.ScreenPosition.Y == scannerPosition.Y)
+        if (target.ScreenPosition.X == _scannerPosition.X && target.ScreenPosition.Y == _scannerPosition.Y && _transformQueue.Count < 1)
         {
+            _transformQueue.Enqueue(_state.TileId);
+
+            _needNewState = true;
+
             return;
         }
 
-        _visualisationState.ScannerPosition = new Point(_visualisationState.ScannerPosition.X + Math.Sign(target.ScreenPosition.X - _visualisationState.ScannerPosition.X) * 5,
-                                                        _visualisationState.ScannerPosition.Y + Math.Sign(target.ScreenPosition.Y - _visualisationState.ScannerPosition.Y) * 5);
+        _scannerPosition = new Point(_scannerPosition.X + Math.Sign(target.ScreenPosition.X - _scannerPosition.X) * MovementStep,
+                                     _scannerPosition.Y + Math.Sign(target.ScreenPosition.Y - _scannerPosition.Y) * MovementStep);
     }
 
     private void Draw()
     {
         foreach (var tile in _tiles)
         {
-            var spriteEffects = tile.Value.Transform.Contains('H') ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-
-            spriteEffects |= tile.Value.Transform.Contains('V') ? SpriteEffects.FlipVertically : SpriteEffects.None;
-
-            var rotation = Math.PI / 2 * tile.Value.Transform.Count(c => c == 'R');
-
-            _spriteBatch.Draw(_image,
-                              new Vector2(tile.Value.ScreenPosition.X, tile.Value.ScreenPosition.Y),
-                              new Rectangle(tile.Value.ImageSegment.X, tile.Value.ImageSegment.Y, tile.Value.ImageSegment.Width, tile.Value.ImageSegment.Height),
-                              Color.White,
-                              (float) rotation,
-                              new Vector2(TileSize / 2f, TileSize / 2f),
-                              Vector2.One,
-                              spriteEffects,
-                              1);
+            DrawTile(tile.Value);
         }
 
-        if (_visualisationState.Mode == Mode.Scanning)
+        _spriteBatch.Draw(_scanner,
+                          new Vector2(_scannerPosition.X - TileSpacing, _scannerPosition.Y - TileSpacing),
+                          new Rectangle(0, 0, 85, 85),
+                          Color.White,
+                          0,
+                          new Vector2(TileSize / 2f, TileSize / 2f),
+                          Vector2.One,
+                          SpriteEffects.None,
+                          1);
+
+
+        if (_transformTileId != null)
         {
-            _spriteBatch.Draw(_scanner,
-                              new Vector2(_visualisationState.ScannerPosition.X - TileSpacing, _visualisationState.ScannerPosition.Y - TileSpacing),
-                              new Rectangle(0, 0, 85, 85),
-                              Color.White,
-                              0,
-                              new Vector2(TileSize / 2f, TileSize / 2f),
-                              Vector2.One,
-                              SpriteEffects.None,
-                              1);
+            var tile = _tiles[_transformTileId.Value];
+
+            DrawTile(tile);
         }
+    }
+
+    private void DrawTile(Tile tile)
+    {
+        var spriteEffects = tile.Transform.Contains('H') ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+
+        spriteEffects |= tile.Transform.Contains('V') ? SpriteEffects.FlipVertically : SpriteEffects.None;
+
+        var rotation = Math.PI / 2 * tile.Transform.Count(c => c == 'R');
+
+        _spriteBatch.Draw(_image,
+                          new Vector2(tile.ScreenPosition.X, tile.ScreenPosition.Y),
+                          new Rectangle(tile.ImageSegment.X, tile.ImageSegment.Y, tile.ImageSegment.Width, tile.ImageSegment.Height),
+                          Color.White,
+                          (float) rotation,
+                          new Vector2(TileSize / 2f, TileSize / 2f),
+                          Vector2.One,
+                          spriteEffects,
+                          1);
     }
 
     private void CalculateImageSegments()
@@ -244,7 +302,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         tile = new Tile
                {
-                   ScreenPosition = new Point(_graphicsDeviceManager.PreferredBackBufferWidth / 4, _graphicsDeviceManager.PreferredBackBufferHeight / 2),
+                   ScreenPosition = new Point(Width / 4, Height / 2),
                    ImageSegment = new Rectangle(jigsawTile.Position.X * TileSize, jigsawTile.Position.Y * TileSize, TileSize, TileSize),
                    Transform = string.Empty
                };
@@ -254,9 +312,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private Point GetQueuedTilePosition(int x, int y)
     {
-        var top = _graphicsDeviceManager.PreferredBackBufferHeight / 2 - (TileSize + TileSpacing) * JigsawSize / 2 + TileSize / 2;
+        var top = Height / 2 - (TileSize + TileSpacing) * JigsawSize / 2 + TileSize / 2;
 
-        var left = _graphicsDeviceManager.PreferredBackBufferWidth / 2 + TileSize * 2;
+        var left = Width / 2 + TileSize * 2;
 
         return new Point(left + x * (TileSize + TileSpacing), top + TileSpacing + y * (TileSize + TileSpacing));
     }
