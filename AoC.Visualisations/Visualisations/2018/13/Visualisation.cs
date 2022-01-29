@@ -62,9 +62,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 _fast = true;
 
                 break;
+            default:
+                throw new VisualisationParameterException();
         }
-
-        throw new VisualisationParameterException();
     }
 
     protected override void Initialize()

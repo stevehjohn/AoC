@@ -13,12 +13,16 @@
 
   <ItemGroup>
     <Compile Remove="_Content\2018\13\obj\**" />
+    <Compile Remove="_Content\2020\20\obj\**" />
     <EmbeddedResource Remove="_Content\2018\13\obj\**" />
+    <EmbeddedResource Remove="_Content\2020\20\obj\**" />
     <None Remove="_Content\2018\13\obj\**" />
+    <None Remove="_Content\2020\20\obj\**" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="_Content\2018\13\sprites.png" />
+    <None Remove="_Content\2020\20\Content.mgcb" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,10 +34,7 @@
     <Folder Include="Exceptions\" />
     <Folder Include="Visualisations\2018\13\" />
     <DesignData Include="_Content\2018\13\Content.mgcb" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <MonoGameContentReference Include="_Content\2018\13\sprites.png" />
+    <DesignData Include="_Content\2020\20\Content.mgcb" />
   </ItemGroup>
 
   <ItemGroup>
@@ -48,6 +49,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="_Content\2020\13\bin\Windows\sprites.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="_Content\2020\20\bin\Windows\image.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
