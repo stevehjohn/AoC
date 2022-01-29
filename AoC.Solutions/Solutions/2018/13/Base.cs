@@ -26,7 +26,35 @@ public abstract class Base : Solution
         _visualiser = visualiser;
     }
 
-    protected Point CheckForCollision()
+    protected void Visualise(Point collisionPoint = null, bool isFinalState = false)
+    {
+        if (_visualiser != null)
+        {
+            _visualiser.PuzzleStateChanged(new PuzzleState { Map = _map, Carts = Carts.Select(c => new Cart(c)).ToList(), CollisionPoint = collisionPoint, IsFinalState = isFinalState });
+        }
+    }
+
+    protected Point MoveCarts()
+    {
+        Point collision = null;
+
+        // TODO: Carts.OrderBy(c => c.Position.Y).ThenBy(c => c.Position.X)
+        // Then check for collision here, so 1st collision is reported?
+        foreach (var cart in Carts.OrderBy(c => c.Position.Y).ThenBy(c => c.Position.X))
+        {
+            cart.Position.X += cart.Direction.X;
+
+            cart.Position.Y += cart.Direction.Y;
+
+            CheckDirectionChange(cart);
+
+            collision ??= CheckForCollision();
+        }
+
+        return collision;
+    }
+
+    private Point CheckForCollision()
     {
         foreach (var cart in Carts)
         {
@@ -49,28 +77,6 @@ public abstract class Base : Solution
         }
 
         return null;
-    }
-
-    protected void Visualise(Point collisionPoint = null, bool isFinalState = false)
-    {
-        if (_visualiser != null)
-        {
-            _visualiser.PuzzleStateChanged(new PuzzleState { Map = _map, Carts = Carts.Select(c => new Cart(c)).ToList(), CollisionPoint = collisionPoint, IsFinalState = isFinalState });
-        }
-    }
-
-    protected void MoveCarts()
-    {
-        // TODO: Carts.OrderBy(c => c.Position.Y).ThenBy(c => c.Position.X)
-        // Then check for collision here, so 1st collision is reported?
-        foreach (var cart in Carts)
-        {
-            cart.Position.X += cart.Direction.X;
-
-            cart.Position.Y += cart.Direction.Y;
-
-            CheckDirectionChange(cart);
-        }
     }
 
     private void CheckDirectionChange(Cart cart)
