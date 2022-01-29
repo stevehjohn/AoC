@@ -9,7 +9,29 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
 
     private readonly Queue<T> _stateQueue = new();
 
+    protected Solution Puzzle { get; set; }
+
+    private Task _puzzleTask;
+
+    private readonly CancellationTokenSource _cancellationTokenSource = new();
+
     public abstract void SetPart(int part);
+
+    protected override void Initialize()
+    {
+        _puzzleTask = new Task(() => Puzzle.GetAnswer(), _cancellationTokenSource.Token);
+
+        _puzzleTask.Start();
+
+        base.Initialize();
+    }
+
+    protected override void OnExiting(object sender, EventArgs args)
+    {
+        _cancellationTokenSource.Cancel();
+
+        base.OnExiting(sender, args);
+    }
 
     public void PuzzleStateChanged(T state)
     {
