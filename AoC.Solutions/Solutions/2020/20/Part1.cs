@@ -8,13 +8,13 @@ namespace AoC.Solutions.Solutions._2020._20;
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private readonly List<Tile> _tiles = new();
-
-    private Dictionary<Point, Tile> _jigsaw;
-
-    private readonly IVisualiser<PuzzleState> _visualiser;
+    public Dictionary<Point, Tile> Jigsaw { get; private set; }
 
     public Dictionary<int, string> Transforms { get; } = new();
+
+    private readonly List<Tile> _tiles = new();
+
+    private readonly IVisualiser<PuzzleState> _visualiser;
 
     public Part1()
     {
@@ -29,7 +29,7 @@ public class Part1 : Base
     {
         if (_visualiser != null)
         {
-            _visualiser.PuzzleStateChanged(new PuzzleState { Tiles = _tiles.Select(t => t.Id).ToList(), Jigsaw = _jigsaw.ToDictionary(kvp => kvp.Value.Id, kvp => kvp.Key), TileId = tileId, Transform = transform });
+            _visualiser.PuzzleStateChanged(new PuzzleState { Tiles = _tiles.Select(t => t.Id).ToList(), Jigsaw = Jigsaw.ToDictionary(kvp => kvp.Value.Id, kvp => kvp.Key), TileId = tileId, Transform = transform });
         }
     }
 
@@ -54,21 +54,21 @@ public class Part1 : Base
 
     private void SaveResultForPart2()
     {
-        var yMin = _jigsaw.Min(t => t.Key.Y);
+        var yMin = Jigsaw.Min(t => t.Key.Y);
 
-        var xMin = _jigsaw.Min(t => t.Key.X);
+        var xMin = Jigsaw.Min(t => t.Key.X);
 
         var lines = new List<string>();
 
-        for (var y = yMin; y <= _jigsaw.Max(t => t.Key.Y); y++)
+        for (var y = yMin; y <= Jigsaw.Max(t => t.Key.Y); y++)
         {
             for (var ty = 1; ty < 9; ty++)
             {
                 var builder = new StringBuilder();
 
-                for (var x = xMin; x <= _jigsaw.Max(t => t.Key.X); x++)
+                for (var x = xMin; x <= Jigsaw.Max(t => t.Key.X); x++)
                 {
-                    var tile = _jigsaw[new Point(x, y)];
+                    var tile = Jigsaw[new Point(x, y)];
 
                     for (var tx = 1; tx < 9; tx++)
                     {
@@ -85,21 +85,21 @@ public class Part1 : Base
 
     private long CalculateAnswer()
     {
-        var minX = _jigsaw.Min(t => t.Key.X);
+        var minX = Jigsaw.Min(t => t.Key.X);
 
-        var maxX = _jigsaw.Max(t => t.Key.X);
+        var maxX = Jigsaw.Max(t => t.Key.X);
 
-        var minY = _jigsaw.Min(t => t.Key.Y);
+        var minY = Jigsaw.Min(t => t.Key.Y);
 
-        var maxY = _jigsaw.Max(t => t.Key.Y);
+        var maxY = Jigsaw.Max(t => t.Key.Y);
 
-        var answer = (long) _jigsaw.Single(j => j.Key.X == minX && j.Key.Y == minY).Value.Id;
+        var answer = (long) Jigsaw.Single(j => j.Key.X == minX && j.Key.Y == minY).Value.Id;
 
-        answer *= _jigsaw.Single(j => j.Key.X == minX && j.Key.Y == maxY).Value.Id;
+        answer *= Jigsaw.Single(j => j.Key.X == minX && j.Key.Y == maxY).Value.Id;
 
-        answer *= _jigsaw.Single(j => j.Key.X == maxX && j.Key.Y == minY).Value.Id;
+        answer *= Jigsaw.Single(j => j.Key.X == maxX && j.Key.Y == minY).Value.Id;
 
-        answer *= _jigsaw.Single(j => j.Key.X == maxX && j.Key.Y == maxY).Value.Id;
+        answer *= Jigsaw.Single(j => j.Key.X == maxX && j.Key.Y == maxY).Value.Id;
 
         return answer;
     }
@@ -108,7 +108,7 @@ public class Part1 : Base
     {
         var tileCount = _tiles.Count;
 
-        _jigsaw = new Dictionary<Point, Tile>
+        Jigsaw = new Dictionary<Point, Tile>
                   {
                       { new Point(), _tiles[0] }
                   };
@@ -119,11 +119,11 @@ public class Part1 : Base
         Visualiser.Dump(_jigsaw, _tiles);
 #endif
 
-        while (_jigsaw.Count < tileCount)
+        while (Jigsaw.Count < tileCount)
         {
-            foreach (var tile in _jigsaw)
+            foreach (var tile in Jigsaw)
             {
-                if (! _jigsaw.ContainsKey(new Point(tile.Key.X, tile.Key.Y - 1)))
+                if (! Jigsaw.ContainsKey(new Point(tile.Key.X, tile.Key.Y - 1)))
                 {
                     if (FindTileMatch(tile, tile.Value.Top, tile.Key.X, tile.Key.Y - 1))
                     {
@@ -131,7 +131,7 @@ public class Part1 : Base
                     }
                 }
 
-                if (! _jigsaw.ContainsKey(new Point(tile.Key.X + 1, tile.Key.Y)))
+                if (! Jigsaw.ContainsKey(new Point(tile.Key.X + 1, tile.Key.Y)))
                 {
                     if (FindTileMatch(tile, tile.Value.Right, tile.Key.X + 1, tile.Key.Y))
                     {
@@ -139,7 +139,7 @@ public class Part1 : Base
                     }
                 }
 
-                if (! _jigsaw.ContainsKey(new Point(tile.Key.X, tile.Key.Y + 1)))
+                if (! Jigsaw.ContainsKey(new Point(tile.Key.X, tile.Key.Y + 1)))
                 {
                     if (FindTileMatch(tile, tile.Value.Bottom, tile.Key.X, tile.Key.Y + 1))
                     {
@@ -147,7 +147,7 @@ public class Part1 : Base
                     }
                 }
 
-                if (! _jigsaw.ContainsKey(new Point(tile.Key.X - 1, tile.Key.Y)))
+                if (! Jigsaw.ContainsKey(new Point(tile.Key.X - 1, tile.Key.Y)))
                 {
                     if (FindTileMatch(tile, tile.Value.Left, tile.Key.X - 1, tile.Key.Y))
                     {
@@ -175,7 +175,7 @@ public class Part1 : Base
         Visualiser.HighlightMatch(tile, match, _tiles, _jigsaw);
 #endif
 
-        _jigsaw.Add(new Point(x, y), match);
+        Jigsaw.Add(new Point(x, y), match);
 
         _tiles.Remove(match);
 
