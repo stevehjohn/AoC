@@ -94,33 +94,86 @@ public class Visualisation : VisualisationBase, IVisualiser<PuzzleState>
         base.Initialize();
     }
 
+    protected override void LoadContent()
+    {
+        _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+        _mapTiles = Content.Load<Texture2D>("map-tiles");
+
+        _spark = Content.Load<Texture2D>("spark");
+    }
+
+    protected override void Update(GameTime gameTime)
+    {
+        if (_stateQueue.Count > 0)
+        {
+            if (_carts == null || _carts.Count > 0)
+            {
+                if (! MoveCarts())
+                {
+                    _carts = _nextCarts;
+
+                    _nextCarts = GetTranslatedCarts();
+
+                    if (_carts == null)
+                    {
+                        _carts = _nextCarts;
+
+                        _nextCarts = GetTranslatedCarts();
+                    }
+
+                    MoveCarts();
+                }
+            }
+        }
+        else if (_nextCarts != null)
+        {
+            _carts = _nextCarts;
+        }
+
+        UpdateCollisions();
+
+        UpdateSparks();
+
+        base.Update(gameTime);
+    }
+
+    protected override void Draw(GameTime gameTime)
+    {
+        if (_state != null)
+        {
+            GraphicsDevice.Clear(Color.Black);
+
+            _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
+
+            DrawMap(_state);
+
+            DrawCarts();
+
+            DrawSparks();
+
+            _spriteBatch.End();
+        }
+        else
+        {
+            GraphicsDevice.Clear(Color.Black);
+        }
+
+        base.Draw(gameTime);
+    }
+    
+    protected override void OnExiting(object sender, EventArgs args)
+    {
+        // TODO: Stop puzzle thread
+
+        base.OnExiting(sender, args);
+    }
+
     private void DrawSparks()
     {
-        var toRemove = new List<Spark>();
-
         foreach (var spark in _sparks)
         {
             _spriteBatch.Draw(_spark, new Vector2(spark.Position.X, spark.Position.Y), new Rectangle(spark.SpriteOffset, 0, 5, 5), Color.White * ((float) spark.Ticks / spark.StartTicks), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
-
-            spark.Ticks--;
-
-            if (spark.Ticks < 0)
-            {
-                toRemove.Add(spark);
-
-                continue;
-            }
-
-            spark.Position.X += spark.Vector.X;
-
-            spark.Position.Y += spark.Vector.Y;
-
-            spark.Vector.Y += spark.YGravity;
-        }
-
-        foreach (var spark in toRemove)
-        {
-            _sparks.Remove(spark);
         }
     }
 
@@ -190,13 +243,6 @@ public class Visualisation : VisualisationBase, IVisualiser<PuzzleState>
                 }
             }
         }
-    }
-
-    protected override void OnExiting(object sender, EventArgs args)
-    {
-        // TODO: Stop puzzle thread
-
-        base.OnExiting(sender, args);
     }
 
     private bool MoveCarts()
@@ -304,69 +350,31 @@ public class Visualisation : VisualisationBase, IVisualiser<PuzzleState>
         }
     }
 
-    protected override void Update(GameTime gameTime)
+    private void UpdateSparks()
     {
-        if (_stateQueue.Count > 0)
+        var toRemove = new List<Spark>();
+
+        foreach (var spark in _sparks)
         {
-            if (_carts == null || _carts.Count > 0)
+            spark.Ticks--;
+
+            if (spark.Ticks < 0)
             {
-                if (! MoveCarts())
-                {
-                    _carts = _nextCarts;
+                toRemove.Add(spark);
 
-                    _nextCarts = GetTranslatedCarts();
-
-                    if (_carts == null)
-                    {
-                        _carts = _nextCarts;
-
-                        _nextCarts = GetTranslatedCarts();
-                    }
-
-                    MoveCarts();
-                }
+                continue;
             }
+
+            spark.Position.X += spark.Vector.X;
+
+            spark.Position.Y += spark.Vector.Y;
+
+            spark.Vector.Y += spark.YGravity;
         }
-        else if (_nextCarts != null)
+
+        foreach (var spark in toRemove)
         {
-            _carts = _nextCarts;
+            _sparks.Remove(spark);
         }
-
-        UpdateCollisions();
-
-        base.Update(gameTime);
-    }
-
-    protected override void Draw(GameTime gameTime)
-    {
-        if (_state != null)
-        {
-            GraphicsDevice.Clear(Color.Black);
-
-            _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
-
-            DrawMap(_state);
-
-            DrawCarts();
-
-            DrawSparks();
-
-            _spriteBatch.End();
-        }
-        else
-        {
-            GraphicsDevice.Clear(Color.Black);
-        }
-
-        base.Draw(gameTime);
-    }
-
-    protected override void LoadContent()
-    {
-        _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-        _mapTiles = Content.Load<Texture2D>("map-tiles");
-
-        _spark = Content.Load<Texture2D>("spark");
     }
 }
