@@ -9,4 +9,6 @@ public class PuzzleState
     public List<Cart> Carts { get; set; }
 
     public Point CollisionPoint { get; set; }
+
+    public bool IsFinalState { get; set; }
 }
