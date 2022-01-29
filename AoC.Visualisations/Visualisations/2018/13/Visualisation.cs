@@ -48,8 +48,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                                      PreferredBackBufferHeight = 1150
                                  };
 
-        // TODO: Make a base class that does this stuff.
-        // Also, something funky going on with having to add \bin\Windows - investigate.
+        // Something funky going on with having to add \bin\Windows - investigate.
         Content.RootDirectory = "_Content\\2020\\13\\bin\\Windows";
     }
 
@@ -118,9 +117,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
             _carts = _nextCarts;
         }
 
-        UpdateCollisions();
-
         UpdateSparks();
+
+        UpdateCollisions();
 
         base.Update(gameTime);
     }
@@ -168,26 +167,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         foreach (var cart in _carts)
         {
-            if (_state.CollisionPoint != null)
-            {
-                if (_carts.Count(c => c.Value.X == cart.Value.X && c.Value.Y == cart.Value.Y) > 1)
-                {
-                    continue;
-                }
-            }
-
             _spriteBatch.Draw(_spark, new Vector2(cart.Value.X, cart.Value.Y), new Rectangle(0, 0, 5, 5), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
-
-            if (_rng.Next(2) == 0)
-            {
-                _sparks.Add(new Spark
-                            {
-                                Position = new PointFloat { X = cart.Value.X, Y = cart.Value.Y },
-                                Vector = new PointFloat { X = (-5f + _rng.Next(11)) / 10, Y = (-10f + _rng.Next(21)) / 10 },
-                                Ticks = 20,
-                                StartTicks = 20
-                            });
-            }
         }
     }
 
@@ -362,6 +342,28 @@ public class Visualisation : VisualisationBase<PuzzleState>
         foreach (var spark in toRemove)
         {
             _sparks.Remove(spark);
+        }
+
+        foreach (var cart in _carts)
+        {
+            if (_state.CollisionPoint != null)
+            {
+                if (_carts.Count(c => c.Value.X == cart.Value.X && c.Value.Y == cart.Value.Y) > 1)
+                {
+                    continue;
+                }
+            }
+
+            if (_rng.Next(2) == 0)
+            {
+                _sparks.Add(new Spark
+                            {
+                                Position = new PointFloat { X = cart.Value.X, Y = cart.Value.Y },
+                                Vector = new PointFloat { X = (-5f + _rng.Next(11)) / 10, Y = (-10f + _rng.Next(21)) / 10 },
+                                Ticks = 20,
+                                StartTicks = 20
+                            });
+            }
         }
     }
 }
