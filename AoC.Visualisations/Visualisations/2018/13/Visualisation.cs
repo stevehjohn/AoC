@@ -138,7 +138,9 @@ public class Visualisation : VisualisationBase, IVisualiser<PuzzleState>
             }
             else
             {
-                _collisions.Add(new Collision { Position = _state.CollisionPoint, Ticks = 200, SpriteOffset = 5 });
+                _collisions.Add(new Collision { Position = _state.CollisionPoint, Ticks = int.MaxValue, SpriteOffset = 5 });
+
+                _state.CollisionPoint = null;
             }
         }
 
