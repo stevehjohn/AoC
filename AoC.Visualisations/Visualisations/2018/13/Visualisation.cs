@@ -1,5 +1,6 @@
 ﻿using AoC.Solutions.Infrastructure;
 using AoC.Solutions.Solutions._2018._13;
+using AoC.Visualisations.Infrastructure;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,7 +11,7 @@ using Rectangle = Microsoft.Xna.Framework.Rectangle;
 namespace AoC.Visualisations.Visualisations._2018._13;
 
 [UsedImplicitly]
-public class Visualisation : Game, IVisualiser<PuzzleState>
+public class Visualisation : VisualisationBase, IVisualiser<PuzzleState>
 {
     // ReSharper disable once NotAccessedField.Local
     private readonly GraphicsDeviceManager _graphicsDeviceManager;
@@ -21,7 +22,7 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
 
     private Texture2D _spark;
 
-    private readonly Part2 _puzzle;
+    private Solution _puzzle;
 
     private readonly List<Spark> _sparks = new();
 
@@ -39,10 +40,10 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
 
     private readonly List<Collision> _collisions = new();
 
+    private bool _fast;
+
     public Visualisation()
     {
-        _puzzle = new Part2(this);
-
         _graphicsDeviceManager = new GraphicsDeviceManager(this)
                                  {
                                      PreferredBackBufferWidth = 1150,
@@ -52,6 +53,23 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
         // TODO: Make a base class that does this stuff.
         // Also, something funky going on with having to add \bin\Windows - investigate.
         Content.RootDirectory = "_Content\\2020\\13\\bin\\Windows";
+    }
+
+    public override void SetPart(int part)
+    {
+        switch (part)
+        {
+            case 1:
+                _puzzle = new Part1(this);
+
+                break;
+            case 2:
+                _puzzle = new Part2(this);
+
+                _fast = true;
+
+                break;
+        }
     }
 
     // TODO: Base class for easier future visualisations.
@@ -113,7 +131,7 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
             if (_state.IsFinalState)
             {
                 _collisions.Add(new Collision { Position = _state.Carts.Single().Position, Ticks = int.MaxValue, SpriteOffset = 10, IsFinal = true });
-                
+
                 _collisions.Add(new Collision { Position = _state.CollisionPoint, Ticks = 200, SpriteOffset = 5 });
 
                 _state.CollisionPoint = null;
@@ -230,7 +248,7 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
         base.OnExiting(sender, args);
     }
 
-    private bool MoveCarts(bool fast)
+    private bool MoveCarts()
     {
         if (_carts == null || _carts.Count == 0)
         {
@@ -241,14 +259,14 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
 
         foreach (var cart in _carts)
         {
-            if (!_nextCarts.ContainsKey(cart.Key))
+            if (! _nextCarts.ContainsKey(cart.Key))
             {
                 continue;
             }
 
             var target = _nextCarts[cart.Key];
 
-            if (fast)
+            if (_fast)
             {
                 cart.Value.X = target.X;
 
@@ -283,7 +301,7 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
         {
             if (_carts == null || _carts.Count > 0)
             {
-                if (! MoveCarts(true))
+                if (! MoveCarts())
                 {
                     _carts = _nextCarts;
 
@@ -296,7 +314,7 @@ public class Visualisation : Game, IVisualiser<PuzzleState>
                         _nextCarts = GetTranslatedCarts();
                     }
 
-                    MoveCarts(true);
+                    MoveCarts();
                 }
             }
         }
