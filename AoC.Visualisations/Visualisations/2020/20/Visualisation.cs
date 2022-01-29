@@ -90,7 +90,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         if (_state != null)
         {
-            GraphicsDevice.Clear(new Color(40, 40, 40)); // TODO: Pick a better colour/background.
+            GraphicsDevice.Clear(Color.Black); // TODO: Pick a better colour/background.
 
             _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
 
