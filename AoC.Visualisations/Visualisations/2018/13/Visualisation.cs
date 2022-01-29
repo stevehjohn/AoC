@@ -11,7 +11,7 @@ using Rectangle = Microsoft.Xna.Framework.Rectangle;
 namespace AoC.Visualisations.Visualisations._2018._13;
 
 [UsedImplicitly]
-public class Visualisation : VisualisationBase, IVisualiser<PuzzleState>
+public class Visualisation : VisualisationBase<PuzzleState>
 {
     // ReSharper disable once NotAccessedField.Local
     private readonly GraphicsDeviceManager _graphicsDeviceManager;
@@ -27,8 +27,6 @@ public class Visualisation : VisualisationBase, IVisualiser<PuzzleState>
     private readonly List<Spark> _sparks = new();
 
     private readonly Random _rng = new();
-
-    private readonly Queue<PuzzleState> _stateQueue = new();
 
     private PuzzleState _state;
 
@@ -72,17 +70,6 @@ public class Visualisation : VisualisationBase, IVisualiser<PuzzleState>
         }
     }
 
-    // TODO: Base class for easier future visualisations.
-    public void PuzzleStateChanged(PuzzleState state)
-    {
-        if (_stateQueue.Count > 1000)
-        {
-            Thread.Sleep(1000);
-        }
-
-        _stateQueue.Enqueue(state);
-    }
-
     protected override void Initialize()
     {
         IsMouseVisible = true;
@@ -105,7 +92,7 @@ public class Visualisation : VisualisationBase, IVisualiser<PuzzleState>
 
     protected override void Update(GameTime gameTime)
     {
-        if (_stateQueue.Count > 0)
+        if (StateQueue.Count > 0)
         {
             if (_carts == null || _carts.Count > 0)
             {
@@ -287,7 +274,7 @@ public class Visualisation : VisualisationBase, IVisualiser<PuzzleState>
 
     private Dictionary<int, Point> GetTranslatedCarts()
     {
-        _state = _stateQueue.Dequeue();
+        _state = StateQueue.Dequeue();
 
         return _state.Carts.ToDictionary(c => c.Id, c => new Point(c.Position.X * 7 + 51, c.Position.Y * 7 + 51));
     }

@@ -1,4 +1,5 @@
 using AoC.Visualisations.Exceptions;
+using Microsoft.Xna.Framework;
 
 namespace AoC.Visualisations.Infrastructure;
 
@@ -48,12 +49,12 @@ public static class EntryPoint
 
         var visualisationClass = $"AoC.Visualisations.Visualisations._{year}._{day}.Visualisation";
 
-        VisualisationBase visualisation;
+        Game visualisation;
 
         try
         {
             // ReSharper disable once PossibleNullReferenceException - that's what the try... catch is for.
-            visualisation = (VisualisationBase) Activator.CreateInstance(null, visualisationClass).Unwrap();
+            visualisation = (Game) Activator.CreateInstance(null, visualisationClass).Unwrap();
         }
         catch
         {
@@ -67,7 +68,7 @@ public static class EntryPoint
 
         try
         {
-            visualisation.SetPart(int.Parse(part));
+            ((IMultiPartVisualiser) visualisation).SetPart(int.Parse(part));
 
             visualisation.Run();
         }
