@@ -79,7 +79,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         _visualisationState.Mode = Mode.Scanning;
 
-        _visualisationState.Position = GetQueuedTilePosition(0, 0);
+        _visualisationState.ScannerPosition = GetQueuedTilePosition(0, 0);
 
         base.BeginRun();
     }
@@ -142,6 +142,17 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private void UpdateScan()
     {
+        var scannerPosition = _visualisationState.ScannerPosition;
+
+        var target = _tiles[_state.TileId];
+
+        if (target.ScreenPosition.X == scannerPosition.X && target.ScreenPosition.Y == scannerPosition.Y)
+        {
+            return;
+        }
+
+        _visualisationState.ScannerPosition = new Point(_visualisationState.ScannerPosition.X + Math.Sign(target.ScreenPosition.X - _visualisationState.ScannerPosition.X) * 5,
+                                                        _visualisationState.ScannerPosition.Y + Math.Sign(target.ScreenPosition.Y - _visualisationState.ScannerPosition.Y) * 5);
     }
 
     private void Draw()
@@ -168,7 +179,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         if (_visualisationState.Mode == Mode.Scanning)
         {
             _spriteBatch.Draw(_scanner,
-                              new Vector2(_visualisationState.Position.X - 5, _visualisationState.Position.Y - 5),
+                              new Vector2(_visualisationState.ScannerPosition.X - TileSpacing, _visualisationState.ScannerPosition.Y - TileSpacing),
                               new Rectangle(0, 0, 85, 85),
                               Color.White,
                               0,

@@ -8,7 +8,7 @@ public class VisualisationState
 
     public int Elapsed { get; set; }
 
-    public Point Position { get; set; }
+    public Point ScannerPosition { get; set; }
 }
 
 public enum Mode
