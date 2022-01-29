@@ -117,9 +117,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
             _carts = _nextCarts;
         }
 
-        UpdateSparks();
-
+        // These should work in either order, but they don't. As it works, gonna leave for now.
         UpdateCollisions();
+
+        UpdateSparks();
 
         base.Update(gameTime);
     }
