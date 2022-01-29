@@ -18,6 +18,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private PuzzleState _state;
 
+    private Part1 _preVisualisationPuzzle;
+
+    private Dictionary<int, string> _transforms;
+
     public Visualisation()
     {
         _graphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -37,6 +41,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
             case 1:
                 Puzzle = new Part1(this);
 
+                _preVisualisationPuzzle = new Part1();
+
                 break;
         }
 
@@ -46,6 +52,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
     protected override void Initialize()
     {
         IsMouseVisible = true;
+
+        _preVisualisationPuzzle.GetAnswer();
+
+        _transforms = _preVisualisationPuzzle.Transforms;
 
         base.Initialize();
     }
@@ -75,7 +85,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
             _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
 
-            // Draw here
+            Draw();
 
             _spriteBatch.End();
         }
@@ -85,5 +95,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
         }
 
         base.Draw(gameTime);
+    }
+
+    private void Draw()
+    {
     }
 }

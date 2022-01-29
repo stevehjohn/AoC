@@ -14,6 +14,8 @@ public class Part1 : Base
 
     private readonly IVisualiser<PuzzleState> _visualiser;
 
+    public Dictionary<int, string> Transforms { get; } = new();
+
     public Part1()
     {
     }
@@ -215,7 +217,11 @@ public class Part1 : Base
             count++;
         }
 
-        Visualise(match.Id, transform.ToString());
+        var transformString = transform.ToString();
+
+        Transforms.Add(match.Id, transformString);
+
+        Visualise(match.Id, transformString);
 
         return true;
     }
