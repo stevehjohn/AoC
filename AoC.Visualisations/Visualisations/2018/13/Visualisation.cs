@@ -91,7 +91,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     protected override void Update(GameTime gameTime)
     {
-        if (StateQueue.Count > 0)
+        if (HasNextState)
         {
             if (_carts == null || _carts.Count > 0)
             {
@@ -99,11 +99,15 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 {
                     _carts = _nextCarts;
 
+                    _state = GetNextState();
+
                     _nextCarts = GetTranslatedCarts();
 
                     if (_carts == null)
                     {
                         _carts = _nextCarts;
+
+                        _state = GetNextState();
 
                         _nextCarts = GetTranslatedCarts();
                     }
@@ -255,8 +259,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private Dictionary<int, Point> GetTranslatedCarts()
     {
-        _state = StateQueue.Dequeue();
-
         return _state.Carts.ToDictionary(c => c.Id, c => new Point(c.Position.X * 7 + 51, c.Position.Y * 7 + 51));
     }
     
