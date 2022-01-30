@@ -103,8 +103,22 @@ public class TileQueue
     public void Draw(SpriteBatch spriteBatch)
     {
         DrawQueue(spriteBatch);
+
+        DrawScanner(spriteBatch);
     }
 
+    private void DrawScanner(SpriteBatch spriteBatch)
+    {
+        var x = _scannerIndex % Constants.JigsawSize;
+        
+        var y = _scannerIndex / Constants.JigsawSize;
+
+        var (screenX, screenY) = GetScreenCoordinates(x, y);
+
+        spriteBatch.Draw(_scanner, new Vector2(0, 0), new Rectangle(0, 0, Constants.TileSize, Constants.TileSize), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 2);
+
+        spriteBatch.Draw(_scanner, new Vector2(screenX, screenY), new Rectangle(0, 0, Constants.TileSize, Constants.TileSize), Color.White * 0.7f, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 2);
+    }
     private void DrawQueue(SpriteBatch spriteBatch)
     {
         var i = 0;
@@ -117,9 +131,7 @@ public class TileQueue
         {
             for (var x = 0; x < Constants.JigsawSize; x++)
             {
-                var screenX = Left + x * (Constants.TileSize + Constants.TilePadding);
-
-                var screenY = Top + y * (Constants.TileSize + Constants.TilePadding);
+                var (screenX, screenY) = GetScreenCoordinates(x, y);
 
                 spriteBatch.Draw(_cell, new Vector2(screenX, screenY), new Rectangle(0, 0, Constants.TileSize + Constants.TilePadding * 2, Constants.TileSize + Constants.TilePadding * 2), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
 
@@ -141,5 +153,10 @@ public class TileQueue
                 i++;
             }
         }
+    }
+
+    private (int X, int Y) GetScreenCoordinates(int x, int y)
+    {
+        return (Left + x * (Constants.TileSize + Constants.TilePadding), Top + y * (Constants.TileSize + Constants.TilePadding));
     }
 }
