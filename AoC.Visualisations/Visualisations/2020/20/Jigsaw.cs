@@ -34,6 +34,8 @@ public class Jigsaw
     private Point _puzzleSize;
 
     private Point _puzzleOrigin = new(CentreX, CentreY);
+    
+    private Point? _targetOrigin;
 
     public Jigsaw(Texture2D image, Texture2D mat, Texture2D border)
     {
@@ -60,13 +62,25 @@ public class Jigsaw
         var height = (_jigsaw.Max(t => t.PositionInPuzzle.Y) - _jigsaw.Min(t => t.PositionInPuzzle.Y)) * Constants.TileSize;
 
         _puzzleSize = new Point(width, height);
+
+        _targetOrigin = new Point(CentreX - _puzzleSize.X / 2, CentreY - _puzzleSize.Y / 2);
     }
 
     public void Update()
     {
-        _currentTile = null;
+        if (_targetOrigin != null)
+        {
+            if (! _puzzleOrigin.Equals(_targetOrigin))
+            {
+                _puzzleOrigin.X += Math.Sign(_targetOrigin.Value.X - _puzzleOrigin.X);
 
-        _puzzleOrigin = new Point(CentreX - _puzzleSize.X / 2, CentreY - _puzzleSize.Y / 2);
+                _puzzleOrigin.Y += Math.Sign(_targetOrigin.Value.Y - _puzzleOrigin.Y);
+
+                return;
+            }
+        }
+
+        _currentTile = null;
     }
 
     public void Draw(SpriteBatch spriteBatch)
