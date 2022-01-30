@@ -1,4 +1,5 @@
-﻿using AoC.Visualisations.Exceptions;
+﻿using System.Text.RegularExpressions;
+using AoC.Visualisations.Exceptions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Color = Microsoft.Xna.Framework.Color;
@@ -34,7 +35,7 @@ public class Jigsaw
     private Point _puzzleSize;
 
     private Point _puzzleOrigin = new(CentreX, CentreY);
-    
+
     private Point? _targetOrigin;
 
     public Jigsaw(Texture2D image, Texture2D mat, Texture2D border)
@@ -80,15 +81,6 @@ public class Jigsaw
         }
     }
 
-    public Vector2 GetTilePosition(Tile tile)
-    {
-        var xMin = _jigsaw.Count == 0 ? -1 : _jigsaw.Min(t => t.PositionInPuzzle.X);
-
-        var yMin = _jigsaw.Count == 0 ? -1 : _jigsaw.Min(t => t.PositionInPuzzle.Y);
-
-        return new Vector2(_puzzleOrigin.X + (tile.PositionInPuzzle.X - xMin) * Constants.TileSize, _puzzleOrigin.Y + (tile.PositionInPuzzle.Y - yMin) * Constants.TileSize);
-    }
-
     public void Update()
     {
         if (_targetOrigin != null)
@@ -114,6 +106,45 @@ public class Jigsaw
 
         spriteBatch.Draw(_border, new Vector2(Left - Constants.TileSize, Top - Constants.TileSize), new Rectangle(0, 0, MatSize + Constants.TileSize * 2, MatSize + Constants.TileSize * 2), Color.White, 0, Vector2.Zero, Vector2.One,
                          SpriteEffects.None, 0.1f);
+    }
+
+    public Vector2 GetNextTilePosition(Tile tile)
+    {
+        var xOffset = 0f;
+
+        var yOffset = 0f;
+
+        var xMin = tile.PositionInPuzzle.X;
+
+        var yMin = tile.PositionInPuzzle.Y;
+
+        if (_jigsaw.Count > 0)
+        {
+            xMin = Math.Min(_jigsaw.Min(t => t.PositionInPuzzle.X), tile.PositionInPuzzle.X);
+
+            yMin = Math.Min(_jigsaw.Min(t => t.PositionInPuzzle.Y), tile.PositionInPuzzle.Y);
+
+            if (_jigsaw.Min(t => t.PositionInPuzzle.X) < xMin)
+            {
+                xOffset = -Constants.TileSize / 2f;
+            }
+
+            if (_jigsaw.Min(t => t.PositionInPuzzle.Y) < yMin)
+            {
+                yOffset = -Constants.TileSize / 2f;
+            }
+        }
+
+        return new Vector2(_puzzleOrigin.X - xOffset + (tile.PositionInPuzzle.X - xMin) * Constants.TileSize, _puzzleOrigin.Y - yOffset + (tile.PositionInPuzzle.Y - yMin) * Constants.TileSize);
+    }
+
+    public Vector2 GetTilePosition(Tile tile)
+    {
+        var xMin = _jigsaw.Count == 0 ? -1 : _jigsaw.Min(t => t.PositionInPuzzle.X);
+
+        var yMin = _jigsaw.Count == 0 ? -1 : _jigsaw.Min(t => t.PositionInPuzzle.Y);
+
+        return new Vector2(_puzzleOrigin.X + (tile.PositionInPuzzle.X - xMin) * Constants.TileSize, _puzzleOrigin.Y + (tile.PositionInPuzzle.Y - yMin) * Constants.TileSize);
     }
 
 
