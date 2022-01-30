@@ -145,15 +145,24 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         _transformer.Update();
 
-        // This will change when the transform step happens.
-        //if (_jigsaw.CanTakeTile && _tileQueue.MatchedTile != null)
-        //{
-        //    _jigsaw.AddTile(_tileQueue.MatchedTiles.Dequeue());
-        //}
-
-        if (_transformer.CanTakeTile && _tileQueue.MatchedTile != null)
+        if (_jigsaw.CanTakeTile)
         {
-            _transformer.AddTile(_tileQueue.MatchedTile.Value.Tile, _tileQueue.MatchedTile.Value.ScreenPosition);
+            var transformedTile = _transformer.TransformedTile;
+
+            if (transformedTile != null)
+            {
+                _jigsaw.AddTile(transformedTile);
+            }
+        }
+
+        if (_transformer.CanTakeTile)
+        {
+            var matchedTile = _tileQueue.MatchedTile;
+
+            if (matchedTile != null)
+            {
+                _transformer.AddTile(matchedTile.Value.Tile, matchedTile.Value.ScreenPosition, _jigsaw.GetTilePosition(matchedTile.Value.Tile));
+            }
         }
 
         if (_state != null)
