@@ -80,6 +80,15 @@ public class Jigsaw
         }
     }
 
+    public Vector2 GetTilePosition(Tile tile)
+    {
+        var xMin = _jigsaw.Count == 0 ? -1 : _jigsaw.Min(t => t.PositionInPuzzle.X);
+
+        var yMin = _jigsaw.Count == 0 ? -1 : _jigsaw.Min(t => t.PositionInPuzzle.Y);
+
+        return new Vector2(_puzzleOrigin.X + (tile.PositionInPuzzle.X - xMin) * Constants.TileSize, _puzzleOrigin.Y + (tile.PositionInPuzzle.Y - yMin) * Constants.TileSize);
+    }
+
     public void Update()
     {
         if (_targetOrigin != null)
@@ -122,7 +131,7 @@ public class Jigsaw
         foreach (var tile in _jigsaw)
         {
             spriteBatch.Draw(_image,
-                             new Vector2(_puzzleOrigin.X + (tile.PositionInPuzzle.X - minX) * Constants.TileSize, _puzzleOrigin.Y + (tile.PositionInPuzzle.Y - minY) * Constants.TileSize),
+                             GetTilePosition(tile),
                              new Rectangle(tile.PositionInPuzzle.X * Constants.TileSize, tile.PositionInPuzzle.Y * Constants.TileSize, Constants.TileSize, Constants.TileSize),
                              Color.White,
                              0,
