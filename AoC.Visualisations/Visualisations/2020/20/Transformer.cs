@@ -11,7 +11,7 @@ public class Transformer
 {
     private const int MoveFrames = 50;
 
-    private const int TransformFrames = 50;
+    private const int TransformFrames = 40;
 
     public bool IsClear => _phase > 2 || _currentTile == null;
 
@@ -57,6 +57,14 @@ public class Transformer
 
     private float _rotationDelta;
 
+    private float _hScale = 1;
+
+    private float _hScaleDelta;
+
+    private float _vScale = 1;
+
+    private float _vScaleDelta;
+
     public Transformer(Texture2D image, Texture2D cell)
     {
         _image = image;
@@ -76,7 +84,8 @@ public class Transformer
         _position = new Vector2(position.X + Constants.TileSize / 2f, position.Y + Constants.TileSize / 2f);
 
         // The magic number 6 is to account for the mat being smaller than the queue.
-        _vector = new Vector2((Constants.ScreenWidth / 2f - Constants.TilePadding * 2 - position.X - 6 - Constants.TileSize / 2f) / MoveFrames, (Constants.ScreenHeight / 2f - Constants.TilePadding * 2 - position.Y - Constants.TileSize / 2f) / MoveFrames);
+        _vector = new Vector2((Constants.ScreenWidth / 2f - Constants.TilePadding * 2 - position.X - 6 - Constants.TileSize / 2f) / MoveFrames,
+                              (Constants.ScreenHeight / 2f - Constants.TilePadding * 2 - position.Y - Constants.TileSize / 2f) / MoveFrames);
 
         _frame = MoveFrames;
 
@@ -121,14 +130,24 @@ public class Transformer
                 {
                     _transform = _currentTile.Transform[^1];
 
-                    _currentTile.Transform = _currentTile.Transform[..^1];
-
                     switch (_transform)
                     {
+                        case 'H':
+                            _hScaleDelta = -(1f / TransformFrames) * 2;
+
+                            break;
+
+                        case 'V':
+                            _vScaleDelta = -(1f / TransformFrames) * 2;
+
+                            break;
+
                         case 'R':
                             _rotation = (float) Math.PI / 2f;
 
                             _rotationDelta = -_rotation / TransformFrames;
+
+                            _currentTile.Transform = _currentTile.Transform[..^1];
 
                             break;
                     }
@@ -153,6 +172,22 @@ public class Transformer
                             _rotation += _rotationDelta;
 
                             break;
+                        case 'H':
+                        case 'V':
+                            _hScale += _hScaleDelta;
+
+                            _vScale += _vScaleDelta;
+
+                            if (_frame == TransformFrames / 2)
+                            {
+                                _currentTile.Transform = _currentTile.Transform[..^1];
+
+                                _hScaleDelta = -_hScaleDelta;
+
+                                _vScaleDelta = -_vScaleDelta;
+                            }
+
+                            break;
                     }
 
                     _frame--;
@@ -161,6 +196,14 @@ public class Transformer
                 }
 
                 _rotation = 0;
+
+                _hScale = 1;
+
+                _hScaleDelta = 0;
+
+                _vScale = 1;
+
+                _vScaleDelta = 0;
 
                 if (_currentTile.Transform.Length > 0)
                 {
@@ -209,15 +252,17 @@ public class Transformer
 
         var origin = new Vector2(offset, offset);
 
+        var rotation = (float) Math.PI / 2f * _currentTile.Transform.Count(c => c == 'R') + _rotation;
+
         if (_phase < 3)
         {
             spriteBatch.Draw(_cell,
                              new Vector2(_position.X + Constants.TilePadding * _scale, _position.Y + Constants.TilePadding * _scale),
                              new Rectangle(0, 0, Constants.TileSize + Constants.TilePadding * 2, Constants.TileSize + Constants.TilePadding * 2),
                              Color.White,
-                             _rotation,
+                             rotation,
                              cellOrigin,
-                             _scale,
+                             new Vector2(_scale * _hScale, _scale * _vScale),
                              SpriteEffects.None,
                              0.5f);
         }
@@ -226,15 +271,13 @@ public class Transformer
 
         spriteEffects |= _currentTile.Transform.Contains('V') ? SpriteEffects.FlipVertically : SpriteEffects.None;
 
-        var rotation = (float) Math.PI / 2f * _currentTile.Transform.Count(c => c == 'R') + _rotation;
-
         spriteBatch.Draw(_image,
                          new Vector2(_position.X + Constants.TilePadding * _scale, _position.Y + Constants.TilePadding * _scale),
                          new Rectangle(_currentTile.PositionInPuzzle.X * Constants.TileSize, _currentTile.PositionInPuzzle.Y * Constants.TileSize, Constants.TileSize, Constants.TileSize),
                          Color.White,
                          rotation,
                          origin,
-                         _scale,
+                         new Vector2(_scale * _hScale, _scale * _vScale),
                          spriteEffects,
                          0.55f);
     }
