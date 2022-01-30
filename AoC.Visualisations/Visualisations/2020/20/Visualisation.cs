@@ -161,7 +161,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
             if (matchedTile != null)
             {
-                _transformer.AddTile(matchedTile.Value.Tile, matchedTile.Value.ScreenPosition, _jigsaw.GetNextTilePosition(matchedTile.Value.Tile));
+                _transformer.AddTile(matchedTile.Value.Tile, matchedTile.Value.ScreenPosition, _jigsaw.GetTilePosition(matchedTile.Value.Tile));
             }
         }
 

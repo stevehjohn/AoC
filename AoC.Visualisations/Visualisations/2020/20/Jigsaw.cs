@@ -110,10 +110,6 @@ public class Jigsaw
 
     public Vector2 GetNextTilePosition(Tile tile)
     {
-        var xOffset = 0f;
-
-        var yOffset = 0f;
-
         int xMin;
 
         int yMin;
@@ -123,16 +119,6 @@ public class Jigsaw
             xMin = _jigsaw.Min(t => t.PositionInPuzzle.X);
 
             yMin = _jigsaw.Min(t => t.PositionInPuzzle.Y);
-
-            if (Math.Min(_jigsaw.Min(t => t.PositionInPuzzle.X), tile.PositionInPuzzle.X) < xMin)
-            {
-                //xOffset = Constants.TileSize;
-            }
-
-            if (Math.Min(_jigsaw.Min(t => t.PositionInPuzzle.Y), tile.PositionInPuzzle.Y) < yMin)
-            {
-                //yOffset = -Constants.TileSize;
-            }
         }
         else
         {
@@ -141,7 +127,7 @@ public class Jigsaw
             yMin = tile.PositionInPuzzle.Y;
         }
 
-        return new Vector2(_puzzleOrigin.X - xOffset + (tile.PositionInPuzzle.X - xMin) * Constants.TileSize, _puzzleOrigin.Y - yOffset + (tile.PositionInPuzzle.Y - yMin) * Constants.TileSize);
+        return new Vector2(_puzzleOrigin.X + (tile.PositionInPuzzle.X - xMin) * Constants.TileSize, _puzzleOrigin.Y + (tile.PositionInPuzzle.Y - yMin) * Constants.TileSize);
     }
 
     public Vector2 GetTilePosition(Tile tile)
