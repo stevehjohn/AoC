@@ -1,13 +1,21 @@
-﻿using Point = Microsoft.Xna.Framework.Point;
-using Rectangle = Microsoft.Xna.Framework.Rectangle;
+﻿using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace AoC.Visualisations.Visualisations._2020._20;
 
 public class Tile
 {
-    public Point ScreenPosition { get; set; }
+    public int Id { get; }
 
-    public Rectangle ImageSegment { get; set; }
+    public Rectangle ImageSegment { get; }
 
-    public string Transform { get; set; }
+    public string Transform { get; }
+
+    public Tile(int id, Rectangle imageSegment, string transform)
+    {
+        Id = id;
+
+        ImageSegment = imageSegment;
+
+        Transform = transform;
+    }
 }
