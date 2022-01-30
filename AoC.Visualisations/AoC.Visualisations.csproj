@@ -57,6 +57,9 @@
     <None Update="_Content\2020\20\bin\Windows\image.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="_Content\2020\20\bin\Windows\jigsaw-mat-border.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="_Content\2020\20\bin\Windows\jigsaw-mat.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

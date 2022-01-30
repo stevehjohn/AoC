@@ -11,7 +11,7 @@ public class TileQueue
 
     private const float ScannerDefaultAlpha = 0.5f;
 
-    private const int ScannerDefaultFlashTicks = 100;
+    private const int ScannerDefaultFlashTicks = 1;
 
     private readonly List<Tile> _imageSegments;
 
@@ -77,7 +77,7 @@ public class TileQueue
 
                 _scannerFlashTicks--;
 
-                if (MatchedTiles.Count < 2 && _scannerFlashTicks < 0)
+                if (MatchedTiles.Count == 0 && _scannerFlashTicks < 0)
                 {
                     MatchedTiles.Enqueue(_scanningFor);
 
@@ -139,7 +139,7 @@ public class TileQueue
 
         var (screenX, screenY) = GetScreenCoordinates(x, y);
 
-        spriteBatch.Draw(_scanner, new Vector2(screenX + Constants.TilePadding, screenY + Constants.TilePadding), new Rectangle(0, 0, Constants.TileSize, Constants.TileSize), Color.White * _scannerAlpha, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1f);
+        spriteBatch.Draw(_scanner, new Vector2(screenX + Constants.TilePadding, screenY + Constants.TilePadding), new Rectangle(0, 0, Constants.TileSize, Constants.TileSize), Color.White * _scannerAlpha, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0.1f);
     }
     private void DrawQueue(SpriteBatch spriteBatch)
     {
@@ -170,7 +170,7 @@ public class TileQueue
 
                 var rotation = (float) Math.PI / 2f * tile.Transform.Count(c => c == 'R');
 
-                spriteBatch.Draw(_image, new Vector2(screenX + Constants.TilePadding + offset, screenY + Constants.TilePadding + offset), tile.ImageSegment, Color.White, rotation, origin, Vector2.One, spriteEffects, 0.5f);
+                spriteBatch.Draw(_image, new Vector2(screenX + Constants.TilePadding + offset, screenY + Constants.TilePadding + offset), tile.ImageSegment, Color.White, rotation, origin, Vector2.One, spriteEffects, 0.05f);
 
                 i++;
             }
