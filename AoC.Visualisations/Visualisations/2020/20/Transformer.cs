@@ -11,7 +11,7 @@ public class Transformer
 {
     private const int MoveFrames = 50;
 
-    private const int TransformFrames = 200;
+    private const int TransformFrames = 50;
 
     public bool CanTakeTile => _currentTile == null;
 
