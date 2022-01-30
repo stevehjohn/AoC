@@ -55,6 +55,10 @@ public class Jigsaw
 
         _currentTile = tile;
 
+        var xMin = _jigsaw.Count == 0 ? -1 : _jigsaw.Min(t => t.PositionInPuzzle.X);
+
+        var yMin = _jigsaw.Count == 0 ? -1 : _jigsaw.Min(t => t.PositionInPuzzle.Y);
+
         _jigsaw.Add(tile);
 
         var width = (_jigsaw.Max(t => t.PositionInPuzzle.X) - _jigsaw.Min(t => t.PositionInPuzzle.X)) * Constants.TileSize;
@@ -64,6 +68,16 @@ public class Jigsaw
         _puzzleSize = new Point(width, height);
 
         _targetOrigin = new Point(CentreX - _puzzleSize.X / 2, CentreY - _puzzleSize.Y / 2);
+
+        if (_jigsaw.Min(t => t.PositionInPuzzle.X) < xMin)
+        {
+            _puzzleOrigin.X -= Constants.TileSize;
+        }
+
+        if (_jigsaw.Min(t => t.PositionInPuzzle.Y) < yMin)
+        {
+            _puzzleOrigin.Y -= Constants.TileSize;
+        }
     }
 
     public void Update()
