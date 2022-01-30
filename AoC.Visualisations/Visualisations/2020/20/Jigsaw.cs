@@ -86,10 +86,14 @@ public class Jigsaw
 
     private void DrawPieces(SpriteBatch spriteBatch)
     {
+        var minX = _jigsaw.Min(t => t.PositionInPuzzle.X);
+
+        var minY = _jigsaw.Min(t => t.PositionInPuzzle.Y);
+
         foreach (var tile in _jigsaw)
         {
             spriteBatch.Draw(_image,
-                             new Vector2(_puzzleOrigin.X + tile.PositionInPuzzle.X * Constants.TileSize, _puzzleOrigin.Y + tile.PositionInPuzzle.Y * Constants.TileSize),
+                             new Vector2(_puzzleOrigin.X + (tile.PositionInPuzzle.X - minX) * Constants.TileSize, _puzzleOrigin.Y + (tile.PositionInPuzzle.Y - minY) * Constants.TileSize),
                              new Rectangle(tile.PositionInPuzzle.X * Constants.TileSize, tile.PositionInPuzzle.Y * Constants.TileSize, Constants.TileSize, Constants.TileSize),
                              Color.White,
                              0,
