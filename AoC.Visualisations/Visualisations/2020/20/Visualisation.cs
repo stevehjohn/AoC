@@ -28,7 +28,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private Jigsaw _jigsaw;
 
-    private Transformer _transformer;
+    private Transformer _transformer1;
+
+    private Transformer _transformer2;
 
     private Texture2D _image;
 
@@ -88,7 +90,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         _jigsaw = new Jigsaw(_image, _jigsawMat, _jigsawMatBorder);
 
-        _transformer = new Transformer(_image, _queueCell);
+        _transformer1 = new Transformer(_image, _queueCell);
+
+        _transformer2 = new Transformer(_image, _queueCell);
 
         base.BeginRun();
     }
@@ -143,11 +147,13 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         _jigsaw.Update();
 
-        _transformer.Update();
+        _transformer1.Update();
+        
+        _transformer2.Update();
 
         if (_jigsaw.CanTakeTile)
         {
-            var transformedTile = _transformer.TransformedTile;
+            var transformedTile = _transformer1.TransformedTile ?? _transformer2.TransformedTile;
 
             if (transformedTile != null)
             {
@@ -155,13 +161,23 @@ public class Visualisation : VisualisationBase<PuzzleState>
             }
         }
 
-        if (_transformer.CanTakeTile && _jigsaw.CanTakeTile)
+        if (_transformer1.CanTakeTile && _jigsaw.CanTakeTile && _transformer2.IsClear)
         {
             var matchedTile = _tileQueue.MatchedTile;
 
             if (matchedTile != null)
             {
-                _transformer.AddTile(matchedTile.Value.Tile, matchedTile.Value.ScreenPosition, _jigsaw.GetTilePosition(matchedTile.Value.Tile));
+                _transformer1.AddTile(matchedTile.Value.Tile, matchedTile.Value.ScreenPosition, _jigsaw.GetTilePosition(matchedTile.Value.Tile));
+            }
+        }
+
+        if (_transformer2.CanTakeTile && _jigsaw.CanTakeTile && _transformer1.IsClear)
+        {
+            var matchedTile = _tileQueue.MatchedTile;
+
+            if (matchedTile != null)
+            {
+                _transformer2.AddTile(matchedTile.Value.Tile, matchedTile.Value.ScreenPosition, _jigsaw.GetTilePosition(matchedTile.Value.Tile));
             }
         }
 
@@ -181,6 +197,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         _jigsaw.Draw(_spriteBatch);
 
-        _transformer.Draw(_spriteBatch);
+        _transformer1.Draw(_spriteBatch);
+
+        _transformer2.Draw(_spriteBatch);
     }
 }

@@ -13,6 +13,8 @@ public class Transformer
 
     private const int TransformFrames = 50;
 
+    public bool IsClear => _phase > 2 || _currentTile == null;
+
     public bool CanTakeTile => _currentTile == null;
 
     public Tile TransformedTile
