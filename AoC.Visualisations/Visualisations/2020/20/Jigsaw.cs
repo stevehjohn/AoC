@@ -9,7 +9,7 @@ namespace AoC.Visualisations.Visualisations._2020._20;
 
 public class Jigsaw
 {
-    public bool CanTakeTile => _currentTile == null;
+    public bool CanTakeTile => _currentTile == null && _puzzleOrigin.Equals(_targetOrigin);
 
     private readonly List<Tile> _jigsaw = new();
 
@@ -35,7 +35,7 @@ public class Jigsaw
 
     private Point _puzzleOrigin = new(CentreX, CentreY);
 
-    private Point? _targetOrigin;
+    private Point? _targetOrigin = new(CentreX, CentreY);
 
     public Jigsaw(Texture2D image, Texture2D mat, Texture2D border)
     {
