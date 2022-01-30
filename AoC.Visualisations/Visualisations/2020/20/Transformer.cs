@@ -11,6 +11,8 @@ public class Transformer
 {
     private const int MoveFrames = 50;
 
+    private const int TransformFrames = 200;
+
     public bool CanTakeTile => _currentTile == null;
 
     public Tile TransformedTile
@@ -46,6 +48,12 @@ public class Transformer
     private int _phase;
 
     private Tile _transformedTile;
+
+    private char _transform;
+
+    private float _rotation;
+
+    private float _rotationDelta;
 
     public Transformer(Texture2D image, Texture2D cell)
     {
@@ -107,13 +115,65 @@ public class Transformer
                 return;
 
             case 1:
-                _currentTile.Transform = string.Empty;
+                if (_currentTile.Transform.Length > 0)
+                {
+                    _transform = _currentTile.Transform[^1];
 
-                _phase = 2;
+                    switch (_transform)
+                    {
+                        case 'R':
+                            _rotation = -(float) Math.PI / 2f;
+
+                            _rotationDelta = _rotation / TransformFrames;
+
+                            break;
+                    }
+
+                    _frame = MoveFrames;
+
+                    _phase = 2;
+                }
+                else
+                {
+                    _phase = 3;
+                }
 
                 return;
 
             case 2:
+                if (_frame > 0)
+                {
+                    switch (_transform)
+                    {
+                        case 'R':
+                            _rotation += _rotationDelta;
+
+                            break;
+                    }
+
+                    _frame--;
+
+                    return;
+                }
+
+                _currentTile.Transform = _currentTile.Transform[..^1];
+
+                _rotation = 0;
+
+                if (_currentTile.Transform.Length > 0)
+                {
+                    _phase = 1;
+                }
+                else
+                {
+                    _frame = MoveFrames;
+
+                    _phase = 3;
+                }
+
+                return;
+
+            case 3:
                 if (_frame > 0)
                 {
                     MoveTile();
@@ -121,11 +181,11 @@ public class Transformer
                     return;
                 }
 
-                _phase = 3;
+                _phase = 4;
 
                 return;
 
-            case 3:
+            case 4:
                 _transformedTile = _currentTile;
 
                 _currentTile = null;
@@ -143,16 +203,18 @@ public class Transformer
 
         var offset = Constants.TileSize / 2f;
 
+        var cellOrigin = new Vector2(offset + Constants.TilePadding, offset + Constants.TilePadding);
+
         var origin = new Vector2(offset, offset);
 
-        if (_phase < 2)
+        if (_phase < 3)
         {
             spriteBatch.Draw(_cell,
-                             new Vector2(_position.X, _position.Y),
+                             new Vector2(_position.X + Constants.TilePadding * _scale, _position.Y + Constants.TilePadding * _scale),
                              new Rectangle(0, 0, Constants.TileSize + Constants.TilePadding * 2, Constants.TileSize + Constants.TilePadding * 2),
                              Color.White,
-                             0,
-                             origin,
+                             _rotation,
+                             cellOrigin,
                              _scale,
                              SpriteEffects.None,
                              0.5f);
@@ -162,7 +224,7 @@ public class Transformer
 
         spriteEffects |= _currentTile.Transform.Contains('V') ? SpriteEffects.FlipVertically : SpriteEffects.None;
 
-        var rotation = (float) Math.PI / 2f * _currentTile.Transform.Count(c => c == 'R');
+        var rotation = (float) Math.PI / 2f * _currentTile.Transform.Count(c => c == 'R') + _rotation;
 
         spriteBatch.Draw(_image,
                          new Vector2(_position.X + Constants.TilePadding * _scale, _position.Y + Constants.TilePadding * _scale),
