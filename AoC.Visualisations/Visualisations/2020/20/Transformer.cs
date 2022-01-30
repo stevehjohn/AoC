@@ -13,9 +13,9 @@ public class Transformer
 
     private const int TransformFrames = 40;
 
-    public bool IsClear => _phase > 2 || _currentTile == null;
-
     public bool CanTakeTile => _currentTile == null;
+
+    public Transformer OtherTransformer { private get; set; }
 
     public Tile TransformedTile
     {
@@ -65,13 +65,17 @@ public class Transformer
 
     private readonly Jigsaw _jigsaw;
 
-    public Transformer(Texture2D image, Texture2D cell, Jigsaw jigsaw)
+    private readonly int _screenYOffset;
+
+    public Transformer(Texture2D image, Texture2D cell, Jigsaw jigsaw, int screenYOffset)
     {
         _image = image;
 
         _cell = cell;
 
         _jigsaw = jigsaw;
+
+        _screenYOffset = screenYOffset;
     }
 
     public void AddTile(Tile tile, Point position)
@@ -87,7 +91,7 @@ public class Transformer
 
         // The magic number 6 is to account for the mat being smaller than the queue.
         _vector = new Vector2((Constants.ScreenWidth / 2f - Constants.TilePadding * 2 - position.X - 6 - Constants.TileSize / 2f) / MoveFrames,
-                              (Constants.ScreenHeight / 2f - Constants.TilePadding * 2 - position.Y - Constants.TileSize / 2f) / MoveFrames);
+                              (Constants.ScreenHeight / 2f - Constants.TilePadding * 2 - position.Y - Constants.TileSize / 2f - _screenYOffset) / MoveFrames);
 
         _frame = MoveFrames;
 
@@ -156,6 +160,11 @@ public class Transformer
                 }
                 else
                 {
+                    if (OtherTransformer._phase is > 2 and < 5 || ! _jigsaw.CanTakeTile)
+                    {
+                        return;
+                    }
+
                     var jigsawPosition = _jigsaw.GetTilePosition(_currentTile);
 
                     _vector = new Vector2((jigsawPosition.X - _position.X + Constants.TileSize / 2f) / MoveFrames, (jigsawPosition.Y - _position.Y + Constants.TileSize / 2f) / MoveFrames);
@@ -213,6 +222,11 @@ public class Transformer
                 }
                 else
                 {
+                    if (OtherTransformer._phase is > 2 and < 5 || ! _jigsaw.CanTakeTile)
+                    {
+                        return;
+                    }
+
                     var jigsawPosition = _jigsaw.GetTilePosition(_currentTile);
 
                     _vector = new Vector2((jigsawPosition.X - _position.X + Constants.TileSize / 2f) / MoveFrames, (jigsawPosition.Y - _position.Y + Constants.TileSize / 2f) / MoveFrames);
@@ -240,6 +254,8 @@ public class Transformer
                 _transformedTile = _currentTile;
 
                 _currentTile = null;
+
+                _phase++;
 
                 return;
         }
