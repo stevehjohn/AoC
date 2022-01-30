@@ -34,6 +34,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private Texture2D _jigsawMat;
 
+    private Texture2D _scanHighlight;
+
     public Visualisation()
     {
         _graphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -76,7 +78,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     protected override void BeginRun()
     {
-        _tileQueue = new TileQueue(_imageSegments, _image, _queueCell);
+        _tileQueue = new TileQueue(_imageSegments, _image, _queueCell, _scanHighlight);
+        
+        _tileQueue.StartScan(-1);
 
         _jigsaw = new Jigsaw(_imageSegments, _image, _jigsawMat);
 
@@ -92,6 +96,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
         _queueCell = Content.Load<Texture2D>("queue-cell");
 
         _jigsawMat = Content.Load<Texture2D>("jigsaw-mat");
+
+        _scanHighlight = Content.Load<Texture2D>("scan-highlight");
 
         base.LoadContent();
     }
@@ -112,26 +118,29 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     protected override void Draw(GameTime gameTime)
     {
-        if (_state != null)
-        {
-            GraphicsDevice.Clear(Color.Black);
+        GraphicsDevice.Clear(Color.Black);
 
-            _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
+        _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
 
-            Draw();
+        Draw();
 
-            _spriteBatch.End();
-        }
-        else
-        {
-            GraphicsDevice.Clear(Color.Black);
-        }
+        _spriteBatch.End();
 
         base.Draw(gameTime);
     }
 
     private void Update()
     {
+        _tileQueue.Update();
+
+        if (_state != null)
+        {
+            _tileQueue.StartScan(_state.TileId);
+
+            _state = null;
+
+            _needNewState = true;
+        }
     }
 
     private void Draw()
