@@ -63,7 +63,7 @@ public class Transformer
 
     private float _vScaleDelta;
 
-    private Jigsaw _jigsaw;
+    private readonly Jigsaw _jigsaw;
 
     public Transformer(Texture2D image, Texture2D cell, Jigsaw jigsaw)
     {
