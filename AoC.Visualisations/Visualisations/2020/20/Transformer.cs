@@ -65,6 +65,7 @@ public class Transformer
 
         _position = new Vector2(position.X, position.Y);
 
+        // The magic number 6 is to account for the mat being smaller than the queue.
         _vector = new Vector2((Constants.ScreenWidth / 2f - Constants.TilePadding * 2 - position.X - 6) / MoveFrames, (Constants.ScreenHeight / 2f - Constants.TilePadding * 2 - position.Y) / MoveFrames);
 
         _frame = MoveFrames;
@@ -125,10 +126,6 @@ public class Transformer
                 return;
 
             case 3:
-                _currentTile.Transform = string.Empty;
-
-                _position = _jigsawPosition;
-
                 _transformedTile = _currentTile;
 
                 _currentTile = null;

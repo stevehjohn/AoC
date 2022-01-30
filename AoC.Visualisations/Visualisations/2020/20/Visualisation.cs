@@ -155,7 +155,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             }
         }
 
-        if (_transformer.CanTakeTile)
+        if (_transformer.CanTakeTile && _jigsaw.CanTakeTile)
         {
             var matchedTile = _tileQueue.MatchedTile;
 
