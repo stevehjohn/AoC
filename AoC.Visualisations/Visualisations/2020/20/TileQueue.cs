@@ -1,13 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Color = Microsoft.Xna.Framework.Color;
+using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace AoC.Visualisations.Visualisations._2020._20;
 
 public class TileQueue
 {
-    public Queue<Tile> MatchedTiles { get; } = new();
+    public (Tile Tile, Point ScreenPosition)? MatchedTile { get; set; }
 
     private const float ScannerDefaultAlpha = 0.5f;
 
@@ -72,9 +73,11 @@ public class TileQueue
 
                 _scannerFlashTicks--;
 
-                if (MatchedTiles.Count == 0 && _scannerFlashTicks < 0)
+                if (MatchedTile == null && _scannerFlashTicks < 0)
                 {
-                    MatchedTiles.Enqueue(_scanningFor);
+                    var (screenX, screenY) = GetScreenCoordinates(_scannerIndex % Constants.JigsawSize, _scannerIndex / Constants.JigsawSize);
+
+                    MatchedTile = (_scanningFor, new Point(screenX, screenY));
 
                     _imageSegments.Remove(_scanningFor);
 

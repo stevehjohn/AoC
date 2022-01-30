@@ -11,7 +11,7 @@ public class Tile
 
     public Point PositionInPuzzle { get; }
 
-    public string Transform { get; }
+    public string Transform { get; set;  }
 
     public Tile(int id, Rectangle imageSegment, string transform, Point positionInPuzzle)
     {
