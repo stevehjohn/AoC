@@ -128,7 +128,10 @@ public class TileQueue
     {
         DrawQueue(spriteBatch);
 
-        DrawScanner(spriteBatch);
+        if (_scanQueue.Count > 0)
+        {
+            DrawScanner(spriteBatch);
+        }
     }
 
     private void DrawScanner(SpriteBatch spriteBatch)
