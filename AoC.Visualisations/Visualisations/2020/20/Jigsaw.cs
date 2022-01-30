@@ -84,11 +84,20 @@ public class Jigsaw
     {
         if (_targetOrigin != null)
         {
+            if (Math.Abs(_puzzleOrigin.X - _targetOrigin.Value.X) < 2 && Math.Abs(_puzzleOrigin.Y - _targetOrigin.Value.Y) < 2)
+            {
+                _puzzleOrigin = _targetOrigin.Value;
+
+                _currentTile = null;
+
+                return;
+            }
+
             if (! _puzzleOrigin.Equals(_targetOrigin))
             {
-                _puzzleOrigin.X += Math.Sign(_targetOrigin.Value.X - _puzzleOrigin.X);
+                _puzzleOrigin.X += Math.Sign(_targetOrigin.Value.X - _puzzleOrigin.X) * 2;
 
-                _puzzleOrigin.Y += Math.Sign(_targetOrigin.Value.Y - _puzzleOrigin.Y);
+                _puzzleOrigin.Y += Math.Sign(_targetOrigin.Value.Y - _puzzleOrigin.Y) * 2;
 
                 return;
             }
