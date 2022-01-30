@@ -12,9 +12,20 @@ public class TileQueue
     {
         get
         {
+            if (_matchedTile == null)
+            {
+                return null;
+            }
+
             var matchedTile = _matchedTile;
 
+            _imageSegments.Remove(_matchedTile.Value.Tile);
+
             _matchedTile = null;
+
+            _scanningFor = null;
+
+            _scannerFlashTicks = ScannerDefaultFlashTicks;
 
             return matchedTile;
         }
@@ -22,7 +33,7 @@ public class TileQueue
 
     private const float ScannerDefaultAlpha = 0.5f;
 
-    private const int ScannerDefaultFlashTicks = 1;
+    private const int ScannerDefaultFlashTicks = 50;
 
     private readonly List<Tile> _imageSegments;
 
@@ -90,12 +101,6 @@ public class TileQueue
                     var (screenX, screenY) = GetScreenCoordinates(_scannerIndex % Constants.JigsawSize, _scannerIndex / Constants.JigsawSize);
 
                     _matchedTile = (_scanningFor, new Point(screenX, screenY));
-
-                    _imageSegments.Remove(_scanningFor);
-
-                    _scanningFor = null;
-
-                    _scannerFlashTicks = ScannerDefaultFlashTicks;
                 }
             }
             else
