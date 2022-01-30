@@ -95,15 +95,22 @@ public class Transformer
                     return;
                 }
 
-                _vector = new Vector2((_jigsawPosition.X - _position.X) / MoveFrames, (_jigsawPosition.Y - _position.Y) / MoveFrames);
+                _vector = new Vector2((_jigsawPosition.X - _position.X + Constants.TileSize / 2f) / MoveFrames, (_jigsawPosition.Y - _position.Y + Constants.TileSize / 2f) / MoveFrames);
 
                 _frame = MoveFrames;
 
                 _scaleDelta = -_scaleDelta;
 
+                _phase = 1;
+
+                return;
+
+            case 1:
+                _currentTile.Transform = string.Empty;
+
                 _phase = 2;
 
-                break;
+                return;
 
             case 2:
                 if (_frame > 0)
@@ -115,7 +122,7 @@ public class Transformer
 
                 _phase = 3;
 
-                break;
+                return;
 
             case 3:
                 _currentTile.Transform = string.Empty;
@@ -126,7 +133,7 @@ public class Transformer
 
                 _currentTile = null;
 
-                break;
+                return;
         }
     }
 
@@ -141,15 +148,18 @@ public class Transformer
 
         var origin = new Vector2(offset, offset);
 
-        spriteBatch.Draw(_cell, 
-                         new Vector2(_position.X, _position.Y), 
-                         new Rectangle(0, 0, Constants.TileSize + Constants.TilePadding * 2, Constants.TileSize + Constants.TilePadding * 2), 
-                         Color.White, 
-                         0, 
-                         origin, 
-                         _scale, 
-                         SpriteEffects.None,
-                         0.5f);
+        if (_phase < 2)
+        {
+            spriteBatch.Draw(_cell,
+                             new Vector2(_position.X, _position.Y),
+                             new Rectangle(0, 0, Constants.TileSize + Constants.TilePadding * 2, Constants.TileSize + Constants.TilePadding * 2),
+                             Color.White,
+                             0,
+                             origin,
+                             _scale,
+                             SpriteEffects.None,
+                             0.5f);
+        }
 
         var spriteEffects = _currentTile.Transform.Contains('H') ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 
