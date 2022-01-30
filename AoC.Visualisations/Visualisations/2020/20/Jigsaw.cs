@@ -110,6 +110,11 @@ public class Jigsaw
 
     private void DrawPieces(SpriteBatch spriteBatch)
     {
+        if (_jigsaw.Count == 0)
+        {
+            return;
+        }
+
         var minX = _jigsaw.Min(t => t.PositionInPuzzle.X);
 
         var minY = _jigsaw.Min(t => t.PositionInPuzzle.Y);

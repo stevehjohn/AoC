@@ -28,6 +28,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private Jigsaw _jigsaw;
 
+    private Transformer _transformer;
+
     private Texture2D _image;
 
     private Texture2D _queueCell;
@@ -86,6 +88,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         _jigsaw = new Jigsaw(_image, _jigsawMat, _jigsawMatBorder);
 
+        _transformer = new Transformer(_image, _queueCell);
+
         base.BeginRun();
     }
 
@@ -139,10 +143,17 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         _jigsaw.Update();
 
+        _transformer.Update();
+
         // This will change when the transform step happens.
-        if (_jigsaw.CanTakeTile && _tileQueue.MatchedTiles.Count > 0)
+        //if (_jigsaw.CanTakeTile && _tileQueue.MatchedTile != null)
+        //{
+        //    _jigsaw.AddTile(_tileQueue.MatchedTiles.Dequeue());
+        //}
+
+        if (_transformer.CanTakeTile && _tileQueue.MatchedTile != null)
         {
-            _jigsaw.AddTile(_tileQueue.MatchedTiles.Dequeue());
+            _transformer.AddTile(_tileQueue.MatchedTile.Value.Tile, _tileQueue.MatchedTile.Value.ScreenPosition);
         }
 
         if (_state != null)
@@ -160,5 +171,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         _tileQueue.Draw(_spriteBatch);
 
         _jigsaw.Draw(_spriteBatch);
+
+        _transformer.Draw(_spriteBatch);
     }
 }
