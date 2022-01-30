@@ -119,17 +119,19 @@ public class Transformer
                 {
                     _transform = _currentTile.Transform[^1];
 
+                    _currentTile.Transform = _currentTile.Transform[..^1];
+
                     switch (_transform)
                     {
                         case 'R':
-                            _rotation = -(float) Math.PI / 2f;
+                            _rotation = (float) Math.PI / 2f;
 
-                            _rotationDelta = _rotation / TransformFrames;
+                            _rotationDelta = -_rotation / TransformFrames;
 
                             break;
                     }
 
-                    _frame = MoveFrames;
+                    _frame = TransformFrames;
 
                     _phase = 2;
                 }
@@ -155,8 +157,6 @@ public class Transformer
 
                     return;
                 }
-
-                _currentTile.Transform = _currentTile.Transform[..^1];
 
                 _rotation = 0;
 
