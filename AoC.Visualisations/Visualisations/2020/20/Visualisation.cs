@@ -11,10 +11,6 @@ namespace AoC.Visualisations.Visualisations._2020._20;
 [UsedImplicitly]
 public class Visualisation : VisualisationBase<PuzzleState>
 {
-    private const int Width = 2198;
-
-    private const int Height = 1080;
-
     // ReSharper disable once NotAccessedField.Local
     private readonly GraphicsDeviceManager _graphicsDeviceManager;
 
@@ -26,12 +22,20 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private bool _needNewState = true;
 
+    private List<Tile> _imageSegments;
+
+    private TileQueue _tileQueue;
+
+    private Texture2D _image;
+
+    private Texture2D _queueCell;
+
     public Visualisation()
     {
         _graphicsDeviceManager = new GraphicsDeviceManager(this)
                                  {
-                                     PreferredBackBufferWidth = Width,
-                                     PreferredBackBufferHeight = Height
+                                     PreferredBackBufferWidth = Constants.ScreenWidth,
+                                     PreferredBackBufferHeight = Constants.ScreenHeight
                                  };
 
         // Something funky going on with having to add \bin\Windows - investigate.
@@ -57,17 +61,29 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         IsMouseVisible = true;
 
+        var segmentCalculator = new TileCoordinatesCalculator(_preVisualisationPuzzle);
+
+        segmentCalculator.CalculateTileCoordinatesInImage();
+
+        _imageSegments = segmentCalculator.ImageSegments;
+
         base.Initialize();
     }
 
     protected override void BeginRun()
     {
+        _tileQueue = new TileQueue(_imageSegments, _image, _queueCell);
+
         base.BeginRun();
     }
 
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+        _image = Content.Load<Texture2D>("image");
+
+        _queueCell = Content.Load<Texture2D>("queue-cell");
 
         base.LoadContent();
     }
@@ -90,7 +106,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         if (_state != null)
         {
-            GraphicsDevice.Clear(Color.Black); // TODO: Pick a better colour/background.
+            GraphicsDevice.Clear(Color.Black);
 
             _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
 
@@ -112,5 +128,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private void Draw()
     {
+        _tileQueue.Draw(_spriteBatch);
     }
 }
