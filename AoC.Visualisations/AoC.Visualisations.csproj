@@ -63,6 +63,9 @@
     <None Update="_Content\2020\20\bin\Windows\queue-cell.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="_Content\2020\20\bin\Windows\scan-highlight.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="_Content\2020\20\bin\Windows\scanner.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
