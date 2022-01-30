@@ -84,7 +84,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         
         _tileQueue.StartScan(-1);
 
-        _jigsaw = new Jigsaw(_imageSegments, _image, _jigsawMat, _jigsawMatBorder);
+        _jigsaw = new Jigsaw(_image, _jigsawMat, _jigsawMatBorder);
 
         base.BeginRun();
     }
