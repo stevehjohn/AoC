@@ -9,6 +9,10 @@ public class TileQueue
 {
     public Queue<Tile> MatchedTiles { get; } = new();
 
+    private const float ScannerDefaultAlpha = 0.5f;
+
+    private const int ScannerDefaultFlashTicks = 100;
+
     private readonly List<Tile> _imageSegments;
 
     private readonly Texture2D _image;
@@ -24,6 +28,10 @@ public class TileQueue
     private int _scannerIndex;
 
     private int _scannerDirection;
+
+    private float _scannerAlpha = ScannerDefaultAlpha;
+
+    private int _scannerFlashTicks = ScannerDefaultFlashTicks;
 
     private const int QueueSize = Constants.TileSize * Constants.JigsawSize + Constants.TilePadding * (Constants.JigsawSize + 1);
 
@@ -60,11 +68,25 @@ public class TileQueue
         {
             if (_imageSegments[_scannerIndex] == _scanningFor)
             {
-                MatchedTiles.Enqueue(_scanningFor);
+                _scannerAlpha -= 0.01f;
 
-                _imageSegments.Remove(_scanningFor);
+                if (_scannerAlpha < 0)
+                {
+                    _scannerAlpha = ScannerDefaultAlpha;
+                }
 
-                _scanningFor = null;
+                _scannerFlashTicks--;
+
+                if (MatchedTiles.Count < 2 && _scannerFlashTicks < 0)
+                {
+                    MatchedTiles.Enqueue(_scanningFor);
+
+                    _imageSegments.Remove(_scanningFor);
+
+                    _scanningFor = null;
+
+                    _scannerFlashTicks = ScannerDefaultFlashTicks;
+                }
             }
             else
             {
@@ -97,6 +119,8 @@ public class TileQueue
             {
                 _scannerIndex = _imageSegments.Count - 1;
             }
+
+            _scannerAlpha = ScannerDefaultAlpha;
         }
     }
 
@@ -115,9 +139,7 @@ public class TileQueue
 
         var (screenX, screenY) = GetScreenCoordinates(x, y);
 
-        spriteBatch.Draw(_scanner, new Vector2(0, 0), new Rectangle(0, 0, Constants.TileSize, Constants.TileSize), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 2);
-
-        spriteBatch.Draw(_scanner, new Vector2(screenX, screenY), new Rectangle(0, 0, Constants.TileSize, Constants.TileSize), Color.White * 0.7f, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 2);
+        spriteBatch.Draw(_scanner, new Vector2(screenX + Constants.TilePadding, screenY + Constants.TilePadding), new Rectangle(0, 0, Constants.TileSize, Constants.TileSize), Color.White * _scannerAlpha, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1f);
     }
     private void DrawQueue(SpriteBatch spriteBatch)
     {
@@ -133,7 +155,7 @@ public class TileQueue
             {
                 var (screenX, screenY) = GetScreenCoordinates(x, y);
 
-                spriteBatch.Draw(_cell, new Vector2(screenX, screenY), new Rectangle(0, 0, Constants.TileSize + Constants.TilePadding * 2, Constants.TileSize + Constants.TilePadding * 2), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                spriteBatch.Draw(_cell, new Vector2(screenX, screenY), new Rectangle(0, 0, Constants.TileSize + Constants.TilePadding * 2, Constants.TileSize + Constants.TilePadding * 2), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
 
                 if (i >= _imageSegments.Count)
                 {
@@ -148,7 +170,7 @@ public class TileQueue
 
                 var rotation = (float) Math.PI / 2f * tile.Transform.Count(c => c == 'R');
 
-                spriteBatch.Draw(_image, new Vector2(screenX + Constants.TilePadding + offset, screenY + Constants.TilePadding + offset), tile.ImageSegment, Color.White, rotation, origin, Vector2.One, spriteEffects, 1);
+                spriteBatch.Draw(_image, new Vector2(screenX + Constants.TilePadding + offset, screenY + Constants.TilePadding + offset), tile.ImageSegment, Color.White, rotation, origin, Vector2.One, spriteEffects, 0.5f);
 
                 i++;
             }
