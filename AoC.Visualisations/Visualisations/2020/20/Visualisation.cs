@@ -11,10 +11,6 @@ namespace AoC.Visualisations.Visualisations._2020._20;
 [UsedImplicitly]
 public class Visualisation : VisualisationBase<PuzzleState>
 {
-    private const int Width = 2198;
-
-    private const int Height = 1080;
-
     // ReSharper disable once NotAccessedField.Local
     private readonly GraphicsDeviceManager _graphicsDeviceManager;
 
@@ -26,12 +22,28 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private bool _needNewState = true;
 
+    private List<Tile> _imageSegments;
+
+    private TileQueue _tileQueue;
+
+    private Jigsaw _jigsaw;
+
+    private Texture2D _image;
+
+    private Texture2D _queueCell;
+
+    private Texture2D _jigsawMat;
+    
+    private Texture2D _jigsawMatBorder;
+
+    private Texture2D _scanHighlight;
+
     public Visualisation()
     {
         _graphicsDeviceManager = new GraphicsDeviceManager(this)
                                  {
-                                     PreferredBackBufferWidth = Width,
-                                     PreferredBackBufferHeight = Height
+                                     PreferredBackBufferWidth = Constants.ScreenWidth,
+                                     PreferredBackBufferHeight = Constants.ScreenHeight
                                  };
 
         // Something funky going on with having to add \bin\Windows - investigate.
@@ -57,17 +69,39 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         IsMouseVisible = true;
 
+        var segmentCalculator = new TileCoordinatesCalculator(_preVisualisationPuzzle);
+
+        segmentCalculator.CalculateTileCoordinatesInImage();
+
+        _imageSegments = segmentCalculator.ImageSegments;
+
         base.Initialize();
     }
 
     protected override void BeginRun()
     {
+        _tileQueue = new TileQueue(_imageSegments, _image, _queueCell, _scanHighlight);
+        
+        _tileQueue.StartScan(-1);
+
+        _jigsaw = new Jigsaw(_image, _jigsawMat, _jigsawMatBorder);
+
         base.BeginRun();
     }
 
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+        _image = Content.Load<Texture2D>("image");
+
+        _queueCell = Content.Load<Texture2D>("queue-cell");
+
+        _jigsawMat = Content.Load<Texture2D>("jigsaw-mat");
+
+        _jigsawMatBorder = Content.Load<Texture2D>("jigsaw-mat-border");
+
+        _scanHighlight = Content.Load<Texture2D>("scan-highlight");
 
         base.LoadContent();
     }
@@ -88,29 +122,43 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     protected override void Draw(GameTime gameTime)
     {
-        if (_state != null)
-        {
-            GraphicsDevice.Clear(Color.Black); // TODO: Pick a better colour/background.
+        GraphicsDevice.Clear(Color.Black);
 
-            _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
+        _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
 
-            Draw();
+        Draw();
 
-            _spriteBatch.End();
-        }
-        else
-        {
-            GraphicsDevice.Clear(Color.Black);
-        }
+        _spriteBatch.End();
 
         base.Draw(gameTime);
     }
 
     private void Update()
     {
+        _tileQueue.Update();
+
+        _jigsaw.Update();
+
+        // This will change when the transform step happens.
+        if (_jigsaw.CanTakeTile && _tileQueue.MatchedTiles.Count > 0)
+        {
+            _jigsaw.AddTile(_tileQueue.MatchedTiles.Dequeue());
+        }
+
+        if (_state != null)
+        {
+            _tileQueue.StartScan(_state.TileId);
+
+            _state = null;
+
+            _needNewState = true;
+        }
     }
 
     private void Draw()
     {
+        _tileQueue.Draw(_spriteBatch);
+
+        _jigsaw.Draw(_spriteBatch);
     }
 }
