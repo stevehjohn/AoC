@@ -90,9 +90,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         _jigsaw = new Jigsaw(_image, _jigsawMat, _jigsawMatBorder);
 
-        _transformer1 = new Transformer(_image, _queueCell);
+        _transformer1 = new Transformer(_image, _queueCell, _jigsaw);
 
-        _transformer2 = new Transformer(_image, _queueCell);
+        _transformer2 = new Transformer(_image, _queueCell, _jigsaw);
 
         base.BeginRun();
     }
@@ -167,7 +167,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
             if (matchedTile != null)
             {
-                _transformer1.AddTile(matchedTile.Value.Tile, matchedTile.Value.ScreenPosition, _jigsaw.GetTilePosition(matchedTile.Value.Tile));
+                _transformer1.AddTile(matchedTile.Value.Tile, matchedTile.Value.ScreenPosition);
             }
         }
 
@@ -177,7 +177,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
             if (matchedTile != null)
             {
-                _transformer2.AddTile(matchedTile.Value.Tile, matchedTile.Value.ScreenPosition, _jigsaw.GetTilePosition(matchedTile.Value.Tile));
+                _transformer2.AddTile(matchedTile.Value.Tile, matchedTile.Value.ScreenPosition);
             }
         }
 
