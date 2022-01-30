@@ -26,9 +26,13 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private TileQueue _tileQueue;
 
+    private Jigsaw _jigsaw;
+
     private Texture2D _image;
 
     private Texture2D _queueCell;
+
+    private Texture2D _jigsawMat;
 
     public Visualisation()
     {
@@ -74,6 +78,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         _tileQueue = new TileQueue(_imageSegments, _image, _queueCell);
 
+        _jigsaw = new Jigsaw(_imageSegments, _image, _jigsawMat);
+
         base.BeginRun();
     }
 
@@ -84,6 +90,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
         _image = Content.Load<Texture2D>("image");
 
         _queueCell = Content.Load<Texture2D>("queue-cell");
+
+        _jigsawMat = Content.Load<Texture2D>("jigsaw-mat");
 
         base.LoadContent();
     }
@@ -129,5 +137,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private void Draw()
     {
         _tileQueue.Draw(_spriteBatch);
+
+        _jigsaw.Draw(_spriteBatch);
     }
 }
