@@ -11,8 +11,6 @@ public class Jigsaw
 {
     public bool CanTakeTile => _currentTile == null;
 
-    private readonly List<Tile> _imageSegments;
-
     private readonly List<Tile> _jigsaw = new();
 
     private readonly Texture2D _image;
@@ -37,10 +35,8 @@ public class Jigsaw
 
     private Point _puzzleOrigin = new(CentreX, CentreY);
 
-    public Jigsaw(List<Tile> imageSegments, Texture2D image, Texture2D mat, Texture2D border)
+    public Jigsaw(Texture2D image, Texture2D mat, Texture2D border)
     {
-        _imageSegments = imageSegments;
-
         _image = image;
 
         _mat = mat;

@@ -52,14 +52,9 @@ public class TileQueue
 
     public void StartScan(int tileId)
     {
-        if (tileId == -1)
-        {
-            _scanQueue.Enqueue(_imageSegments[0]);
-        }
-        else
-        {
-            _scanQueue.Enqueue(_imageSegments.Single(s => s.Id == tileId));
-        }
+        _scanQueue.Enqueue(tileId == -1 
+                               ? _imageSegments[0] 
+                               : _imageSegments.Single(s => s.Id == tileId));
     }
 
     public void Update()
@@ -180,7 +175,7 @@ public class TileQueue
         }
     }
 
-    private (int X, int Y) GetScreenCoordinates(int x, int y)
+    private static (int X, int Y) GetScreenCoordinates(int x, int y)
     {
         return (Left + x * (Constants.TileSize + Constants.TilePadding), Top + y * (Constants.TileSize + Constants.TilePadding));
     }
