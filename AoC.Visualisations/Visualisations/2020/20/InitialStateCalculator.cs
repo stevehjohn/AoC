@@ -39,7 +39,10 @@ public class TileCoordinatesCalculator
                 transform = string.Empty;
             }
 
-            ImageSegments.Add(new Tile(id, new Rectangle(jigsawTile.Position.X * Constants.TileSize, jigsawTile.Position.Y * Constants.TileSize, Constants.TileSize, Constants.TileSize), transform));
+            ImageSegments.Add(new Tile(id, 
+                                       new Rectangle(jigsawTile.Position.X * Constants.TileSize, jigsawTile.Position.Y * Constants.TileSize, Constants.TileSize, Constants.TileSize), 
+                                       transform, 
+                                       new Microsoft.Xna.Framework.Point(jigsawTile.Position.X, jigsawTile.Position.Y)));
         }
     }
 }

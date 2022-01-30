@@ -33,6 +33,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private Texture2D _queueCell;
 
     private Texture2D _jigsawMat;
+    
+    private Texture2D _jigsawMatBorder;
 
     private Texture2D _scanHighlight;
 
@@ -82,7 +84,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         
         _tileQueue.StartScan(-1);
 
-        _jigsaw = new Jigsaw(_imageSegments, _image, _jigsawMat);
+        _jigsaw = new Jigsaw(_imageSegments, _image, _jigsawMat, _jigsawMatBorder);
 
         base.BeginRun();
     }
@@ -96,6 +98,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
         _queueCell = Content.Load<Texture2D>("queue-cell");
 
         _jigsawMat = Content.Load<Texture2D>("jigsaw-mat");
+
+        _jigsawMatBorder = Content.Load<Texture2D>("jigsaw-mat-border");
 
         _scanHighlight = Content.Load<Texture2D>("scan-highlight");
 
@@ -132,6 +136,14 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private void Update()
     {
         _tileQueue.Update();
+
+        _jigsaw.Update();
+
+        // This will change when the transform step happens.
+        if (_jigsaw.CanTakeTile && _tileQueue.MatchedTiles.Count > 0)
+        {
+            _jigsaw.AddTile(_tileQueue.MatchedTiles.Dequeue());
+        }
 
         if (_state != null)
         {
