@@ -71,10 +71,10 @@ public class Transformer
 
         _currentTile = tile;
 
-        _position = new Vector2(position.X, position.Y);
+        _position = new Vector2(position.X + Constants.TileSize / 2f, position.Y + Constants.TileSize / 2f);
 
         // The magic number 6 is to account for the mat being smaller than the queue.
-        _vector = new Vector2((Constants.ScreenWidth / 2f - Constants.TilePadding * 2 - position.X - 6) / MoveFrames, (Constants.ScreenHeight / 2f - Constants.TilePadding * 2 - position.Y) / MoveFrames);
+        _vector = new Vector2((Constants.ScreenWidth / 2f - Constants.TilePadding * 2 - position.X - 6 - Constants.TileSize / 2f) / MoveFrames, (Constants.ScreenHeight / 2f - Constants.TilePadding * 2 - position.Y - Constants.TileSize / 2f) / MoveFrames);
 
         _frame = MoveFrames;
 
