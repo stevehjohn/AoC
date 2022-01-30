@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using AoC.Visualisations.Exceptions;
+﻿using AoC.Visualisations.Exceptions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Color = Microsoft.Xna.Framework.Color;
@@ -108,7 +107,7 @@ public class Jigsaw
                          SpriteEffects.None, 0.1f);
     }
 
-    public Vector2 GetNextTilePosition(Tile tile)
+    public Vector2 GetTilePosition(Tile tile)
     {
         int xMin;
 
@@ -130,26 +129,12 @@ public class Jigsaw
         return new Vector2(_puzzleOrigin.X + (tile.PositionInPuzzle.X - xMin) * Constants.TileSize, _puzzleOrigin.Y + (tile.PositionInPuzzle.Y - yMin) * Constants.TileSize);
     }
 
-    public Vector2 GetTilePosition(Tile tile)
-    {
-        var xMin = _jigsaw.Count == 0 ? -1 : _jigsaw.Min(t => t.PositionInPuzzle.X);
-
-        var yMin = _jigsaw.Count == 0 ? -1 : _jigsaw.Min(t => t.PositionInPuzzle.Y);
-
-        return new Vector2(_puzzleOrigin.X + (tile.PositionInPuzzle.X - xMin) * Constants.TileSize, _puzzleOrigin.Y + (tile.PositionInPuzzle.Y - yMin) * Constants.TileSize);
-    }
-
-
     private void DrawPieces(SpriteBatch spriteBatch)
     {
         if (_jigsaw.Count == 0)
         {
             return;
         }
-
-        var minX = _jigsaw.Min(t => t.PositionInPuzzle.X);
-
-        var minY = _jigsaw.Min(t => t.PositionInPuzzle.Y);
 
         foreach (var tile in _jigsaw)
         {
