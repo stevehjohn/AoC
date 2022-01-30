@@ -39,8 +39,6 @@ public class Transformer
 
     private Vector2 _vector;
 
-    private Vector2 _jigsawPosition;
-
     private int _frame;
 
     private float _scale;
@@ -65,14 +63,18 @@ public class Transformer
 
     private float _vScaleDelta;
 
-    public Transformer(Texture2D image, Texture2D cell)
+    private Jigsaw _jigsaw;
+
+    public Transformer(Texture2D image, Texture2D cell, Jigsaw jigsaw)
     {
         _image = image;
 
         _cell = cell;
+
+        _jigsaw = jigsaw;
     }
 
-    public void AddTile(Tile tile, Point position, Vector2 jigsawPosition)
+    public void AddTile(Tile tile, Point position)
     {
         if (_currentTile != null)
         {
@@ -93,8 +95,6 @@ public class Transformer
 
         _scaleDelta = 1f / MoveFrames;
 
-        _jigsawPosition = jigsawPosition;
-
         _phase = 0;
     }
 
@@ -114,8 +114,6 @@ public class Transformer
 
                     return;
                 }
-
-                _vector = new Vector2((_jigsawPosition.X - _position.X + Constants.TileSize / 2f) / MoveFrames, (_jigsawPosition.Y - _position.Y + Constants.TileSize / 2f) / MoveFrames);
 
                 _frame = MoveFrames;
 
@@ -158,6 +156,10 @@ public class Transformer
                 }
                 else
                 {
+                    var jigsawPosition = _jigsaw.GetTilePosition(_currentTile);
+
+                    _vector = new Vector2((jigsawPosition.X - _position.X + Constants.TileSize / 2f) / MoveFrames, (jigsawPosition.Y - _position.Y + Constants.TileSize / 2f) / MoveFrames);
+
                     _phase = 3;
                 }
 
@@ -211,6 +213,10 @@ public class Transformer
                 }
                 else
                 {
+                    var jigsawPosition = _jigsaw.GetTilePosition(_currentTile);
+
+                    _vector = new Vector2((jigsawPosition.X - _position.X + Constants.TileSize / 2f) / MoveFrames, (jigsawPosition.Y - _position.Y + Constants.TileSize / 2f) / MoveFrames);
+
                     _frame = MoveFrames;
 
                     _phase = 3;
