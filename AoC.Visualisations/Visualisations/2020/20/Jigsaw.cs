@@ -114,25 +114,31 @@ public class Jigsaw
 
         var yOffset = 0f;
 
-        var xMin = tile.PositionInPuzzle.X;
+        int xMin;
 
-        var yMin = tile.PositionInPuzzle.Y;
+        int yMin;
 
         if (_jigsaw.Count > 0)
         {
-            xMin = Math.Min(_jigsaw.Min(t => t.PositionInPuzzle.X), tile.PositionInPuzzle.X);
+            xMin = _jigsaw.Min(t => t.PositionInPuzzle.X);
 
-            yMin = Math.Min(_jigsaw.Min(t => t.PositionInPuzzle.Y), tile.PositionInPuzzle.Y);
+            yMin = _jigsaw.Min(t => t.PositionInPuzzle.Y);
 
-            if (_jigsaw.Min(t => t.PositionInPuzzle.X) < xMin)
+            if (Math.Min(_jigsaw.Min(t => t.PositionInPuzzle.X), tile.PositionInPuzzle.X) < xMin)
             {
-                xOffset = -Constants.TileSize / 2f;
+                //xOffset = Constants.TileSize;
             }
 
-            if (_jigsaw.Min(t => t.PositionInPuzzle.Y) < yMin)
+            if (Math.Min(_jigsaw.Min(t => t.PositionInPuzzle.Y), tile.PositionInPuzzle.Y) < yMin)
             {
-                yOffset = -Constants.TileSize / 2f;
+                //yOffset = -Constants.TileSize;
             }
+        }
+        else
+        {
+            xMin = tile.PositionInPuzzle.X;
+
+            yMin = tile.PositionInPuzzle.Y;
         }
 
         return new Vector2(_puzzleOrigin.X - xOffset + (tile.PositionInPuzzle.X - xMin) * Constants.TileSize, _puzzleOrigin.Y - yOffset + (tile.PositionInPuzzle.Y - yMin) * Constants.TileSize);
