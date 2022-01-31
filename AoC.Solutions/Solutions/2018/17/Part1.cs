@@ -5,7 +5,7 @@ namespace AoC.Solutions.Solutions._2018._17;
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private const int SpringX = 500;
+    private int _springX = 500;
 
     private char[,] _map;
 
@@ -13,13 +13,31 @@ public class Part1 : Base
     {
         ParseInput();
 
+        Dump();
+
         return "TESTING";
+    }
+
+    private void Dump()
+    {
+        for (var y = 0; y < _map.GetLength(1); y++)
+        {
+            for (var x = 0; x < _map.GetLength(0); x++)
+            {
+                Console.Write(_map[x, y] == '#' ? '#' : ' ');
+            }
+
+            Console.WriteLine();
+        }
     }
 
     private void ParseInput()
     {
         var boundaries = FindBoundaries();
 
+        _springX -= boundaries.XMin;
+
+        // Need +1 either side for overspill. Account for this when parsing the input.
         _map = new char[boundaries.XMax - boundaries.XMin + 1, boundaries.YMax - boundaries.YMin + 1];
 
         foreach (var line in Input)
