@@ -33,7 +33,7 @@ public class Part2 : Base
     {
         _cpu.SetRegisters(new[] { 0, 0, 0, 0 });
 
-        for (var i = startLine; i < Input.Length; i += 4)
+        for (var i = startLine; i < Input.Length; i++)
         {
             var line = Input[i];
 
