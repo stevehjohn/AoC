@@ -20,11 +20,27 @@ public class Part2 : Base
             _opCodes.Add(opCode, new HashSet<int>());
         }
 
-        RunSamples();
+        var lastSampleLine = RunSamples();
 
         ExactMatchOpCodes();
 
-        return "TESTING";
+        ExecuteTestProgram(lastSampleLine + 2);
+
+        return _cpu.GetRegisters()[0].ToString();
+    }
+
+    private void ExecuteTestProgram(int startLine)
+    {
+        _cpu.SetRegisters(new[] { 0, 0, 0, 0 });
+
+        for (var i = startLine; i < Input.Length; i += 4)
+        {
+            var line = Input[i];
+
+            var parts = line.Split(' ').Select(int.Parse).ToArray();
+
+            _cpu.Execute(_matchedOpCodes[parts[0]], parts[1], parts[2], parts[3]);
+        }
     }
 
     private void ExactMatchOpCodes()
@@ -46,9 +62,11 @@ public class Part2 : Base
         }
     }
 
-    private void RunSamples()
+    private int RunSamples()
     {
-        for (var i = 0; i < Input.Length; i += 4)
+        int i;
+
+        for (i = 0; i < Input.Length; i += 4)
         {
             if (string.IsNullOrWhiteSpace(Input[i]))
             {
@@ -59,6 +77,8 @@ public class Part2 : Base
 
             ExecuteSample(parts[0], parts[1], parts[2], parts[3], ParseRegisters(Input[i]), ParseRegisters(Input[i + 2]));
         }
+
+        return i;
     }
 
     private void ExecuteSample(int code, int a, int b, int c, int[] initial, int[] expected)
