@@ -16,6 +16,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     // ReSharper disable once NotAccessedField.Local
     private readonly GraphicsDeviceManager _graphicsDeviceManager;
 
+    private readonly List<Transformer> _transformers = new();
+
     private SpriteBatch _spriteBatch;
 
     private PuzzleState _state;
@@ -29,8 +31,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private TileQueue _tileQueue;
 
     private Jigsaw _jigsaw;
-
-    private List<Transformer> _transformers = new();
 
     private Texture2D _image;
 
