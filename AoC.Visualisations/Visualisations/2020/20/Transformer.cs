@@ -15,7 +15,7 @@ public class Transformer
 
     public bool CanTakeTile => _currentTile == null;
 
-    public Transformer OtherTransformer { private get; set; }
+    public List<Transformer> OtherTransformers { private get; set; }
 
     public Tile TransformedTile
     {
@@ -160,7 +160,15 @@ public class Transformer
                 }
                 else
                 {
-                    if (OtherTransformer._phase is > 2 and < 5 || ! _jigsaw.CanTakeTile)
+                    foreach (var otherTransformer in OtherTransformers)
+                    {
+                        if (otherTransformer._phase is > 2 and < 5)
+                        {
+                            return;
+                        }
+                    }
+
+                    if (! _jigsaw.CanTakeTile)
                     {
                         return;
                     }
@@ -222,7 +230,15 @@ public class Transformer
                 }
                 else
                 {
-                    if (OtherTransformer._phase is > 2 and < 5 || ! _jigsaw.CanTakeTile)
+                    foreach (var otherTransformer in OtherTransformers)
+                    {
+                        if (otherTransformer._phase is > 2 and < 5)
+                        {
+                            return;
+                        }
+                    }
+
+                    if (! _jigsaw.CanTakeTile)
                     {
                         return;
                     }
