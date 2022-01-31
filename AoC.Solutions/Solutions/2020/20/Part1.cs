@@ -120,7 +120,7 @@ public class Part1 : Base
         _tiles.RemoveAt(0);
 
 #if DUMP && DEBUG
-        Visualiser.Dump(_jigsaw, _tiles);
+        Visualiser.Dump(Jigsaw, _tiles);
 #endif
 
         while (Jigsaw.Count < tileCount)
@@ -161,7 +161,7 @@ public class Part1 : Base
             }
 
 #if DUMP && DEBUG
-            Visualiser.Dump(_jigsaw, _tiles);
+            Visualiser.Dump(Jigsaw, _tiles);
 #endif
         }
     }
@@ -176,7 +176,7 @@ public class Part1 : Base
         }
 
 #if DUMP && DEBUG
-        Visualiser.HighlightMatch(tile, match, _tiles, _jigsaw);
+        Visualiser.HighlightMatch(tile, match, _tiles, Jigsaw);
 #endif
 
         Jigsaw.Add(new Point(x, y), match);
