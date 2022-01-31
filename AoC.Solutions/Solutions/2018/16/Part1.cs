@@ -5,10 +5,6 @@ namespace AoC.Solutions.Solutions._2018._16;
 [UsedImplicitly]
 public class Part1 : Base
 {
-    // ReSharper disable StringLiteralTypo
-    private readonly string[] _opCodes = { "addr", "addi", "mulr", "muli", "banr", "bani", "borr", "bori", "setr", "seti", "gtir", "gtri", "gtrr", "eqir", "eqri", "eqrr" };
-    // ReSharper restore StringLiteralTypo
-    
     private readonly Cpu _cpu = new();
 
     public override string GetAnswer()
@@ -41,22 +37,15 @@ public class Part1 : Base
     {
         var matches = 0;
 
-        for (var i = 0; i < _opCodes.Length; i++)
+        for (var i = 0; i < OpCodes.Length; i++)
         {
             _cpu.SetRegisters(initial);
 
-            _cpu.Execute(_opCodes[i], a, b, c);
+            _cpu.Execute(OpCodes[i], a, b, c);
 
             matches += expected.SequenceEqual(_cpu.GetRegisters()) ? 1 : 0;
         }
 
         return matches;
-    }
-
-    private static int[] ParseRegisters(string line)
-    {
-        line = line[9..][..^1];
-
-        return line.Split(',', StringSplitOptions.TrimEntries).Select(int.Parse).ToArray();
     }
 }
