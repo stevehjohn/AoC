@@ -11,6 +11,8 @@ namespace AoC.Visualisations.Visualisations._2020._20;
 [UsedImplicitly]
 public class Visualisation : VisualisationBase<PuzzleState>
 {
+    private const int Transformers = 3;
+
     // ReSharper disable once NotAccessedField.Local
     private readonly GraphicsDeviceManager _graphicsDeviceManager;
 
@@ -28,9 +30,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private Jigsaw _jigsaw;
 
-    private Transformer _transformer1;
-
-    private Transformer _transformer2;
+    private List<Transformer> _transformers = new();
 
     private Texture2D _image;
 
@@ -90,13 +90,20 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         _jigsaw = new Jigsaw(_image, _jigsawMat, _jigsawMatBorder);
 
-        _transformer1 = new Transformer(_image, _queueCell, _jigsaw, 200);
 
-        _transformer2 = new Transformer(_image, _queueCell, _jigsaw, -200);
+        var y = -300;
 
-        _transformer1.OtherTransformer = _transformer2;
+        for (var i = 0; i < Transformers; i ++)
+        {
+            _transformers.Add(new Transformer(_image, _queueCell, _jigsaw, y));
 
-        _transformer2.OtherTransformer = _transformer1;
+            y += 300;
+        }
+
+        for (var i = 0; i < Transformers; i++)
+        {
+            _transformers[i].OtherTransformers = _transformers.Where(t => t != _transformers[i]).ToList();
+        }
 
         base.BeginRun();
     }
@@ -151,37 +158,41 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         _jigsaw.Update();
 
-        _transformer1.Update();
-        
-        _transformer2.Update();
+        for (var i = 0; i < Transformers; i++)
+        {
+            _transformers[i].Update();
+        }
 
         if (_jigsaw.CanTakeTile)
         {
-            var transformedTile = _transformer1.TransformedTile ?? _transformer2.TransformedTile;
+            Tile tile = null;
 
-            if (transformedTile != null)
+            for (var i = 0; i < Transformers; i++)
             {
-                _jigsaw.AddTile(transformedTile);
+                tile = _transformers[i].TransformedTile;
+
+                if (tile != null)
+                {
+                    break;
+                }
+            }
+
+            if (tile != null)
+            {
+                _jigsaw.AddTile(tile);
             }
         }
 
-        if (_transformer1.CanTakeTile)
+        for (var i = 0; i < Transformers; i++)
         {
-            var matchedTile = _tileQueue.MatchedTile;
-
-            if (matchedTile != null)
+            if (_transformers[i].CanTakeTile)
             {
-                _transformer1.AddTile(matchedTile.Value.Tile, matchedTile.Value.ScreenPosition);
-            }
-        }
+                var matchedTile = _tileQueue.MatchedTile;
 
-        if (_transformer2.CanTakeTile)
-        {
-            var matchedTile = _tileQueue.MatchedTile;
-
-            if (matchedTile != null)
-            {
-                _transformer2.AddTile(matchedTile.Value.Tile, matchedTile.Value.ScreenPosition);
+                if (matchedTile != null)
+                {
+                    _transformers[i].AddTile(matchedTile.Value.Tile, matchedTile.Value.ScreenPosition);
+                }
             }
         }
 
@@ -201,8 +212,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         _jigsaw.Draw(_spriteBatch);
 
-        _transformer1.Draw(_spriteBatch);
-
-        _transformer2.Draw(_spriteBatch);
+        for (var i = 0; i < Transformers; i++)
+        {
+            _transformers[i].Draw(_spriteBatch);
+        }
     }
 }
