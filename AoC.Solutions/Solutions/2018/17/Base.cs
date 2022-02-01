@@ -1,4 +1,4 @@
-﻿using System.Text;
+﻿using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2018._17;
@@ -15,10 +15,10 @@ public abstract class Base : Solution
 
     private int _height;
 
+    private readonly HashSet<Point> _visited = new();
+
     protected int GetAnswer(bool isPart2)
     {
-        Console.CursorVisible = false;
-
         ParseInput();
 
         while (true)
@@ -27,16 +27,7 @@ public abstract class Base : Solution
             {
                 break;
             }
-
-            if (Console.KeyAvailable)
-            {
-                Console.ReadKey();
-
-                Dump();
-            }
         }
-
-        Dump();
 
         return isPart2 ? CountStillWater() : CountAllWater();
     }
@@ -106,15 +97,31 @@ public abstract class Base : Solution
 
             if (direction == 0)
             {
-                var result = DropWater(-1, x, y);
+                var result1 = true;
 
-                result = DropWater(1, x, y) && result;
-
-                if (! result)
+                if (! _visited.Contains(new Point(x, y, -1)))
                 {
+                    result1 = DropWater(-1, x, y);
+
+                    if (result1)
+                    {
+                        _visited.Add(new Point(x, y, -1));
+                    }
                 }
 
-                return result;
+                var result2 = true;
+
+                if (! _visited.Contains(new Point(x, y, 1)))
+                {
+                    result2 = DropWater(1, x, y);
+
+                    if (result2)
+                    {
+                        _visited.Add(new Point(x, y, 1));
+                    }
+                }
+
+                return result1 && result2;
             }
 
             x += direction;
@@ -168,51 +175,6 @@ public abstract class Base : Solution
         }
 
         return true;
-    }
-
-    private void Dump()
-    {
-        Console.Clear();
-
-        Console.SetCursorPosition(0, 1);
-
-        for (var y = 0; y < _height; y++)
-        {
-            var builder = new StringBuilder();
-
-            for (var x = 0; x < _width; x++)
-            {
-                builder.Append(_map[x, y] == '\0' ? ' ' : _map[x, y]);
-            }
-
-            Console.WriteLine($"{builder}|");
-        }
-    }
-
-    private void Dump(int wX, int wY)
-    {
-        Console.SetCursorPosition(0, 1);
-
-        var start = Math.Max(0, wY - 10);
-
-        for (var y = start; y < start + 70; y++)
-        {
-            var builder = new StringBuilder();
-
-            for (var x = 0; x < _width; x++)
-            {
-                if (wX == x && wY == y)
-                {
-                    builder.Append('*');
-
-                    continue;
-                }
-
-                builder.Append(_map[x, y] == '\0' ? ' ' : _map[x, y]);
-            }
-
-            Console.WriteLine($"{builder}|");
-        }
     }
 
     private void ParseInput()
