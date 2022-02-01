@@ -11,24 +11,103 @@ public class Part1 : Base
 
     public override string GetAnswer()
     {
+        Console.CursorVisible = false;
+
         ParseInput();
 
         Dump();
 
+        while (true)
+        {
+            DropWater(1);
+            
+            DropWater(-1);
+         
+            Thread.Sleep(500);
+        }
+
         return "TESTING";
     }
 
-    private void Dump()
+    private void DropWater(int direction)
     {
+        var x = _springX;
+
+        var y = 1;
+
+        while (true)
+        {
+            Dump(x, y);
+
+            if (_map[x, y + 1] == '\0')
+            {
+                y++;
+
+                continue;
+            }
+
+            var left = -1;
+
+            for (var tX = x; tX >= 0; tX--)
+            {
+                if (_map[tX, y] != '\0')
+                {
+                    left = tX + 1;
+
+                    break;
+                }
+            }
+
+            var right = -1;
+
+            for (var tX = x; tX < _map.GetLength(0); tX++)
+            {
+                if (_map[tX, y] != '\0')
+                {
+                    right = tX - 1;
+
+                    break;
+                }
+            }
+
+            if (left == -1 || right == -1)
+            {
+                x += direction;
+
+                continue;
+            }
+
+            for (var i = left; i <= right; i++)
+            {
+                _map[i, y] = '~';
+            }
+
+            return;
+        }
+    }
+
+    private void Dump(int wX = -1, int wY = -1)
+    {
+        Console.SetCursorPosition(0, 1);
+
         for (var y = 0; y < _map.GetLength(1); y++)
         {
             for (var x = 0; x < _map.GetLength(0); x++)
             {
+                if (wX == x && wY == y)
+                {
+                    Console.Write('*');
+
+                    continue;
+                }
+
                 Console.Write(_map[x, y] == '\0' ? ' ' : _map[x, y]);
             }
 
             Console.WriteLine('|');
         }
+
+        Console.WriteLine();
     }
 
     private void ParseInput()
