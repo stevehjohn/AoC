@@ -24,10 +24,10 @@ public class Part1 : Base
         {
             for (var x = 0; x < _map.GetLength(0); x++)
             {
-                Console.Write(_map[x, y] == '#' ? '#' : ' ');
+                Console.Write(_map[x, y] == '\0' ? ' ' : _map[x, y]);
             }
 
-            Console.WriteLine();
+            Console.WriteLine('|');
         }
     }
 
@@ -35,10 +35,12 @@ public class Part1 : Base
     {
         var boundaries = FindBoundaries();
 
-        _springX -= boundaries.XMin;
+        _springX -= boundaries.XMin - 1;
 
         // Need +1 either side for overspill. Account for this when parsing the input.
-        _map = new char[boundaries.XMax - boundaries.XMin + 1, boundaries.YMax - boundaries.YMin + 1];
+        _map = new char[boundaries.XMax - boundaries.XMin + 3, boundaries.YMax + 1];
+
+        _map[_springX, 0] = '+';
 
         foreach (var line in Input)
         {
@@ -48,11 +50,11 @@ public class Part1 : Base
             {
                 if (data.RangeAxis == 'x')
                 {
-                    _map[i - boundaries.XMin, data.Single - boundaries.YMin] = '#';
+                    _map[i - boundaries.XMin + 1, data.Single] = '#';
                 }
                 else
                 {
-                    _map[data.Single - boundaries.XMin, i - boundaries.YMin] = '#';
+                    _map[data.Single - boundaries.XMin + 1, i] = '#';
                 }
             }
         }
