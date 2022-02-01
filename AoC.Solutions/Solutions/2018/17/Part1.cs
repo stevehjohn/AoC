@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System.Text;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2018._17;
 
@@ -40,6 +41,8 @@ public class Part1 : Base
         while (true)
         {
             Dump(x, y);
+
+            Thread.Sleep(10);
 
             if (_map[x, y + 1] == '\0')
             {
@@ -130,21 +133,23 @@ public class Part1 : Base
 
         var start = Math.Max(0, wY - 10);
 
-        for (var y = start; y < start + 20; y++)
+        for (var y = start; y < start + 70; y++)
         {
+            var builder = new StringBuilder();
+
             for (var x = 0; x < _map.GetLength(0); x++)
             {
                 if (wX == x && wY == y)
                 {
-                    Console.Write('*');
+                    builder.Append('*');
 
                     continue;
                 }
 
-                Console.Write(_map[x, y] == '\0' ? ' ' : _map[x, y]);
+                builder.Append(_map[x, y] == '\0' ? ' ' : _map[x, y]);
             }
 
-            Console.WriteLine('|');
+            Console.WriteLine($"{builder}|");
         }
     }
 
@@ -154,7 +159,6 @@ public class Part1 : Base
 
         _springX -= boundaries.XMin - 1;
 
-        // Need +1 either side for overspill. Account for this when parsing the input.
         _map = new char[boundaries.XMax - boundaries.XMin + 3, boundaries.YMax + 1];
 
         _map[_springX, 0] = '+';
