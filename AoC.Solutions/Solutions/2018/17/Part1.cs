@@ -15,25 +15,27 @@ public class Part1 : Base
 
         ParseInput();
 
-        Dump();
-
         while (true)
         {
-            DropWater(1);
-            
-            DropWater(-1);
-         
-            Thread.Sleep(500);
+            DropWater();
         }
 
         return "TESTING";
     }
 
-    private void DropWater(int direction)
+    private void DropWater()
     {
         var x = _springX;
 
         var y = 1;
+
+        var lastX = -1;
+
+        var lastY = -1;
+
+        var direction = -1;
+
+        var changed = false;
 
         while (true)
         {
@@ -43,6 +45,12 @@ public class Part1 : Base
             {
                 y++;
 
+                lastX = x;
+
+                lastY = y;
+
+                changed = false;
+
                 continue;
             }
 
@@ -50,6 +58,11 @@ public class Part1 : Base
 
             for (var tX = x; tX >= 0; tX--)
             {
+                if (_map[tX, y + 1] == '\0')
+                {
+                    break;
+                }
+
                 if (_map[tX, y] != '\0')
                 {
                     left = tX + 1;
@@ -62,6 +75,11 @@ public class Part1 : Base
 
             for (var tX = x; tX < _map.GetLength(0); tX++)
             {
+                if (_map[tX, y + 1] == '\0')
+                {
+                    break;
+                }
+
                 if (_map[tX, y] != '\0')
                 {
                     right = tX - 1;
@@ -82,15 +100,37 @@ public class Part1 : Base
                 _map[i, y] = '~';
             }
 
+            if (y != lastY)
+            {
+                x = lastX;
+
+                direction = -direction;
+
+                continue;
+            }
+
+            if (! changed)
+            {
+                x = lastX;
+
+                direction = -direction;
+
+                changed = true;
+
+                continue;
+            }
+
             return;
         }
     }
 
-    private void Dump(int wX = -1, int wY = -1)
+    private void Dump(int wX, int wY)
     {
         Console.SetCursorPosition(0, 1);
 
-        for (var y = 0; y < _map.GetLength(1); y++)
+        var start = Math.Max(0, wY - 10);
+
+        for (var y = start; y < start + 20; y++)
         {
             for (var x = 0; x < _map.GetLength(0); x++)
             {
@@ -106,8 +146,6 @@ public class Part1 : Base
 
             Console.WriteLine('|');
         }
-
-        Console.WriteLine();
     }
 
     private void ParseInput()
