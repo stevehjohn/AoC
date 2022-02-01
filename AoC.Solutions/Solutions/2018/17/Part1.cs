@@ -12,6 +12,8 @@ public class Part1 : Base
 
     private int _width;
 
+    private int _height;
+
     public override string GetAnswer()
     {
         Console.CursorVisible = false;
@@ -20,27 +22,15 @@ public class Part1 : Base
 
         while (true)
         {
-            DropWater();
+            DropWater(0, _springX, 1);
         }
 
         return "TESTING";
     }
 
-    private void DropWater()
+    private void DropWater(int direction, int x, int y)
     {
-        var x = _springX;
-
-        var y = 1;
-
         _map[x, y] = '|';
-
-        var lastX = -1;
-
-        var lastY = -1;
-
-        var direction = -1;
-
-        var changed = false;
 
         while (true)
         {
@@ -48,11 +38,18 @@ public class Part1 : Base
 
             Thread.Sleep(10);
 
+            if (y + 1 == _height)
+            {
+                return;
+            }
+
             if (_map[x, y + 1] is '\0' or '|')
             {
                 y++;
 
                 _map[x, y] = '|';
+
+                direction = 0;
 
                 continue;
             }
@@ -61,6 +58,17 @@ public class Part1 : Base
             {
                 return;
             }
+
+            if (direction == 0)
+            {
+                DropWater(-1, x, y);
+                
+                DropWater(1, x, y);
+
+                return;
+            }
+
+            x += direction;
         }
     }
 
@@ -138,9 +146,12 @@ public class Part1 : Base
 
         _springX -= boundaries.XMin - 1;
 
+        // TODO: "ignore tiles with a y coordinate smaller than the smallest y coordinate in your scan data"
         _map = new char[boundaries.XMax - boundaries.XMin + 3, boundaries.YMax + 1];
 
         _width = boundaries.XMax - boundaries.XMin + 3;
+
+        _height = boundaries.YMax + 1;
 
         _map[_springX, 0] = '+';
 
