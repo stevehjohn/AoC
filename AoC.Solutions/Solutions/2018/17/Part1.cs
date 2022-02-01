@@ -10,6 +10,8 @@ public class Part1 : Base
 
     private char[,] _map;
 
+    private int _width;
+
     public override string GetAnswer()
     {
         Console.CursorVisible = false;
@@ -30,6 +32,8 @@ public class Part1 : Base
 
         var y = 1;
 
+        _map[x, y] = '|';
+
         var lastX = -1;
 
         var lastY = -1;
@@ -44,87 +48,62 @@ public class Part1 : Base
 
             Thread.Sleep(10);
 
-            if (_map[x, y + 1] == '\0')
+            if (_map[x, y + 1] is '\0' or '|')
             {
                 y++;
 
-                lastX = x;
-
-                lastY = y;
-
-                changed = false;
+                _map[x, y] = '|';
 
                 continue;
             }
 
-            var left = -1;
-
-            for (var tX = x; tX >= 0; tX--)
+            if (Floods(x, y))
             {
-                if (_map[tX, y + 1] == '\0')
-                {
-                    break;
-                }
-
-                if (_map[tX, y] != '\0')
-                {
-                    left = tX + 1;
-
-                    break;
-                }
+                return;
             }
-
-            var right = -1;
-
-            for (var tX = x; tX < _map.GetLength(0); tX++)
-            {
-                if (_map[tX, y + 1] == '\0')
-                {
-                    break;
-                }
-
-                if (_map[tX, y] != '\0')
-                {
-                    right = tX - 1;
-
-                    break;
-                }
-            }
-
-            if (left == -1 || right == -1)
-            {
-                x += direction;
-
-                continue;
-            }
-
-            for (var i = left; i <= right; i++)
-            {
-                _map[i, y] = '~';
-            }
-
-            if (y != lastY)
-            {
-                x = lastX;
-
-                direction = -direction;
-
-                continue;
-            }
-
-            if (! changed)
-            {
-                x = lastX;
-
-                direction = -direction;
-
-                changed = true;
-
-                continue;
-            }
-
-            return;
         }
+    }
+
+    private bool Floods(int x, int y)
+    {
+        int oX;
+
+        for (oX = x; oX >= 0; oX--)
+        {
+            if (_map[oX, y + 1] is '\0' or '|')
+            {
+                return false;
+            }
+
+            if (_map[oX, y] == '#')
+            {
+                break;
+            }
+        }
+
+        var left = oX + 1;
+
+        for (oX = x; oX < _width; oX++)
+        {
+            if (_map[oX, y + 1] is '\0' or '|')
+            {
+                return false;
+            }
+
+            if (_map[oX, y] == '#')
+            {
+                break;
+            }
+        }
+
+        var right = oX - 1;
+
+        for (oX = left; oX <= right; oX++)
+        {
+            _map[oX, y] = '~';
+        }
+
+        return true;
     }
 
     private void Dump(int wX, int wY)
@@ -137,7 +116,7 @@ public class Part1 : Base
         {
             var builder = new StringBuilder();
 
-            for (var x = 0; x < _map.GetLength(0); x++)
+            for (var x = 0; x < _width; x++)
             {
                 if (wX == x && wY == y)
                 {
@@ -160,6 +139,8 @@ public class Part1 : Base
         _springX -= boundaries.XMin - 1;
 
         _map = new char[boundaries.XMax - boundaries.XMin + 3, boundaries.YMax + 1];
+
+        _width = boundaries.XMax - boundaries.XMin + 3;
 
         _map[_springX, 0] = '+';
 
