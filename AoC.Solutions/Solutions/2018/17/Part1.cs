@@ -34,10 +34,6 @@ public class Part1 : Base
 
         while (true)
         {
-            Dump(x, y);
-
-            Thread.Sleep(10);
-
             if (y + 1 == _height)
             {
                 return;
@@ -56,6 +52,10 @@ public class Part1 : Base
 
             if (Floods(x, y))
             {
+                Dump(x, y);
+
+                Thread.Sleep(10);
+
                 return;
             }
 
@@ -69,6 +69,8 @@ public class Part1 : Base
             }
 
             x += direction;
+
+            _map[x, y] = '|';
         }
     }
 
