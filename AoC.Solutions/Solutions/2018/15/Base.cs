@@ -8,13 +8,13 @@ public abstract class Base : Solution
 {
     public override string Description => "Elves vs Goblins";
 
-    private int _width;
+    protected int _width;
 
-    private int _height;
+    protected int _height;
 
-    private bool[,] _map;
+    protected bool[,] _map;
 
-    private readonly List<Unit> _units = new();
+    protected readonly List<Unit> _units = new();
 
     protected int Play()
     {
@@ -29,16 +29,16 @@ public abstract class Base : Solution
                 unit.Play();
             }
 
-            Dump();
+            //Dump();
 
-            Console.WriteLine(round);
+            //Console.WriteLine(round);
 
-            foreach (var unit in _units)
-            {
-                Console.WriteLine($"{(unit.Type == Type.Elf ? 'E' : 'G')}: {unit.Health}    ");
-            }
+            //foreach (var unit in _units)
+            //{
+            //    Console.WriteLine($"{(unit.Type == Type.Elf ? 'E' : 'G')}: {unit.Health}    ");
+            //}
 
-            Console.WriteLine("             ");
+            //Console.WriteLine("             ");
 
             if (_units.DistinctBy(u => u.Type).Count() == 1)
             {
