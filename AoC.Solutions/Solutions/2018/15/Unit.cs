@@ -10,7 +10,7 @@ public class Unit
 
     public int Health { get; set; } = 200;
 
-    private bool[,] _map;
+    private readonly bool[,] _map;
 
     private List<Unit> _otherUnits;
 
