@@ -73,7 +73,7 @@ public class Unit
             return Enumerable.Empty<Unit>();
         }
 
-        var movesOrdered = paths.OrderBy(p => p.Count).ThenBy(p => p.First().Y).ThenBy(p => p.First().X);
+        var movesOrdered = paths.OrderBy(p => p.Count).ThenBy(p => p.Skip(1).First().Y).ThenBy(p => p.Skip(1).First().X);
 
         Position = movesOrdered.First().Skip(1).First();
 

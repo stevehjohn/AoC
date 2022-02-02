@@ -31,8 +31,6 @@ public abstract class Base : Solution
 
             Dump();
 
-            round++;
-
             Console.WriteLine(round);
 
             foreach (var unit in _units)
@@ -46,6 +44,8 @@ public abstract class Base : Solution
             {
                 break;
             }
+
+            round++;
         }
 
         Console.WriteLine(round);
