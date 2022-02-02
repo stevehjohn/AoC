@@ -66,28 +66,26 @@ public class Unit
 
         var targetCells = GetTargetCells(targets);
 
-        var distances = targetCells.Select(t => (Distance: Math.Abs(t.X - Position.X) + Math.Abs(t.Y - Position.Y), Position: t)).OrderBy(t => t.Distance);
+        var reachable = new List<List<Point>>();
 
-        var reachable = new List<(int Distance, Point Position)>();
-
-        foreach (var (distance, position) in distances)
+        foreach (var point in targetCells)
         {
-            if (IsReachable(position))
-            {
-                reachable.Add((distance, position));
-            }
+            var path = IsReachable(point);
 
-            if (reachable.DistinctBy(t => t.Distance).Count() > 1)
+            if (path != null)
             {
-                break;
+                reachable.Add(path);
             }
         }
 
-        var nearestDistance = reachable.MinBy(t => t.Distance);
+        if (reachable.Count == 0)
+        {
+            return Enumerable.Empty<Unit>();
+        }
 
-        reachable = reachable.Where(t => t.Distance == nearestDistance.Distance).OrderBy(t => t.Position.Y).ThenBy(t => t.Position.X).ToList();
+        var movesOrdered = reachable.OrderBy(p => p.Count).ThenBy(p => p.First().Y).ThenBy(p => p.First().X);
 
-        // Move
+        Position = movesOrdered.First().Skip(1).First();
 
         adjacent = targets.Where(t => t.Position.X == Position.X && Math.Abs(t.Position.Y - Position.Y) == 1
                                       || Math.Abs(t.Position.X - Position.X) == 1 && t.Position.Y == Position.Y).ToList();
@@ -95,11 +93,63 @@ public class Unit
         return adjacent;
     }
 
-    private bool IsReachable(Point position)
+    private List<Point> IsReachable(Point position)
     {
-        var explorer = new Explorer(_map, _units);
+        var queue = new Queue<List<Point>>();
 
-        return explorer.CanReach(Position, position);
+        queue.Enqueue(new List<Point> { Position });
+
+        var visited = new List<Point> { Position };
+        
+        while (queue.Count > 0)
+        {
+            var current = queue.Dequeue();
+
+            var point = current[^1];
+
+            if (point.Equals(position))
+            {
+                return current;
+            }
+
+            var newPoint = new Point(point.X, point.Y - 1);
+
+            if (! _map[newPoint.X, newPoint.Y] && ! visited.Any(v => v.Equals(newPoint)) && ! _units.Any(u => u.Position.Equals(newPoint)))
+            {
+                visited.Add(newPoint);
+
+                queue.Enqueue(new List<Point>(current) { newPoint });
+            }
+
+            newPoint = new Point(point.X + 1, point.Y);
+
+            if (! _map[newPoint.X, newPoint.Y] && ! visited.Any(v => v.Equals(newPoint)) && ! _units.Any(u => u.Position.Equals(newPoint)))
+            {
+                visited.Add(newPoint);
+
+                queue.Enqueue(new List<Point>(current) { newPoint });
+            }
+
+            newPoint = new Point(point.X, point.Y + 1);
+
+            if (! _map[newPoint.X, newPoint.Y] && ! visited.Any(v => v.Equals(newPoint)) && ! _units.Any(u => u.Position.Equals(newPoint)))
+            {
+                visited.Add(newPoint);
+
+                queue.Enqueue(new List<Point>(current) { newPoint });
+            }
+
+            newPoint = new Point(point.X - 1, point.Y);
+
+            if (! _map[newPoint.X, newPoint.Y] && ! visited.Any(v => v.Equals(newPoint)) && ! _units.Any(u => u.Position.Equals(newPoint)))
+            {
+                visited.Add(newPoint);
+
+                queue.Enqueue(new List<Point>(current) { newPoint });
+            }
+        }
+
+        return null;
     }
 
     private IEnumerable<Point> GetTargetCells(List<Unit> targets)

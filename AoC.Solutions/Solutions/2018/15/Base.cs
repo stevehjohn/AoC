@@ -28,6 +28,8 @@ public abstract class Base : Solution
                 unit.Play();
             }
 
+            Dump();
+
             if (_units.DistinctBy(u => u.Type).Count() == 1)
             {
                 break;
@@ -37,6 +39,32 @@ public abstract class Base : Solution
         }
 
         return round * _units.Sum(u => u.Health);
+    }
+
+    private void Dump()
+    {
+        Console.SetCursorPosition(0, 1);
+
+        for (var y = 0; y < _height; y++)
+        {
+            for (var x = 0; x < _width; x++)
+            {
+                var unit = _units.SingleOrDefault(u => u.Position.X == x && u.Position.Y == y);
+
+                if (unit != null)
+                {
+                    Console.Write(unit.Type == Type.Elf ? 'E' : 'G');
+
+                    continue;
+                }
+
+                Console.Write(_map[x, y] ? '#' : ' ');
+            }
+
+            Console.WriteLine();
+        }
+
+        //Thread.Sleep(500);
     }
 
     protected void ParseInput()
