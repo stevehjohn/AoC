@@ -65,13 +65,8 @@ public abstract class Base : Solution
                     continue;
                 }
 
-                _units.Add(new Unit(c == 'E' ? Type.Elf : Type.Goblin, new Point(x, y), _map));
+                _units.Add(new Unit(c == 'E' ? Type.Elf : Type.Goblin, new Point(x, y), _map, _units));
             }
-        }
-
-        foreach (var unit in _units)
-        {
-            unit.SetUnits(_units);
         }
     }
 }
