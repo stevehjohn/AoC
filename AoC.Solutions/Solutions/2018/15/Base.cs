@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Common;
+﻿using System.Text;
+using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2018._15;
@@ -30,13 +31,25 @@ public abstract class Base : Solution
 
             Dump();
 
+            round++;
+
+            Console.WriteLine(round);
+
+            foreach (var unit in _units)
+            {
+                Console.WriteLine($"{(unit.Type == Type.Elf ? 'E' : 'G')}: {unit.Health}    ");
+            }
+
+            Console.WriteLine("             ");
+
             if (_units.DistinctBy(u => u.Type).Count() == 1)
             {
                 break;
             }
-
-            round++;
         }
+
+        Console.WriteLine(round);
+        Console.WriteLine(_units.Sum(u => u.Health) + "     ");
 
         return round * _units.Sum(u => u.Health);
     }
@@ -47,21 +60,23 @@ public abstract class Base : Solution
 
         for (var y = 0; y < _height; y++)
         {
+            var builder = new StringBuilder();
+
             for (var x = 0; x < _width; x++)
             {
                 var unit = _units.SingleOrDefault(u => u.Position.X == x && u.Position.Y == y);
 
                 if (unit != null)
                 {
-                    Console.Write(unit.Type == Type.Elf ? 'E' : 'G');
+                    builder.Append(unit.Type == Type.Elf ? 'E' : 'G');
 
                     continue;
                 }
 
-                Console.Write(_map[x, y] ? '#' : ' ');
+                builder.Append(_map[x, y] ? '#' : ' ');
             }
 
-            Console.WriteLine();
+            Console.WriteLine(builder.ToString());
         }
 
         //Thread.Sleep(500);
