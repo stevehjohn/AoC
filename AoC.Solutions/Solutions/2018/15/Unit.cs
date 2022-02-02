@@ -27,7 +27,7 @@ public class Unit
 
     public void Play()
     {
-        var targets = GetTargets().ToList();
+        var targets = Move().ToList();
 
         if (targets.Any())
         {
@@ -47,7 +47,7 @@ public class Unit
         }
     }
 
-    private IEnumerable<Unit> GetTargets()
+    private IEnumerable<Unit> Move()
     {
         var targets = _units.Where(u => u.Type != Type && u != this).ToList();
 
@@ -66,13 +66,40 @@ public class Unit
 
         var targetCells = GetTargetCells(targets);
 
-        // Find reachable target cells
+        var distances = targetCells.Select(t => (Distance: Math.Abs(t.X - Position.X) + Math.Abs(t.Y - Position.Y), Position: t)).OrderBy(t => t.Distance);
 
-        // Find nearest of those
+        var reachable = new List<(int Distance, Point Position)>();
 
-        // Apply reading order to those (if > 1)
+        foreach (var (distance, position) in distances)
+        {
+            if (IsReachable(position))
+            {
+                reachable.Add((distance, position));
+            }
 
-        return Enumerable.Empty<Unit>();
+            if (reachable.DistinctBy(t => t.Distance).Count() > 1)
+            {
+                break;
+            }
+        }
+
+        var nearestDistance = reachable.MinBy(t => t.Distance);
+
+        reachable = reachable.Where(t => t.Distance == nearestDistance.Distance).OrderBy(t => t.Position.Y).ThenBy(t => t.Position.X).ToList();
+
+        // Move
+
+        adjacent = targets.Where(t => t.Position.X == Position.X && Math.Abs(t.Position.Y - Position.Y) == 1
+                                      || Math.Abs(t.Position.X - Position.X) == 1 && t.Position.Y == Position.Y).ToList();
+
+        return adjacent;
+    }
+
+    private bool IsReachable(Point position)
+    {
+        var explorer = new Explorer(_map, _units);
+
+        return explorer.CanReach(Position, position);
     }
 
     private IEnumerable<Point> GetTargetCells(List<Unit> targets)
@@ -82,11 +109,11 @@ public class Unit
         foreach (var target in targets)
         {
             targetCells.AddRange(CheckNeighborCell(new Point(target.Position.X, target.Position.Y - 1), targets));
-            
+
             targetCells.AddRange(CheckNeighborCell(new Point(target.Position.X + 1, target.Position.Y), targets));
-            
+
             targetCells.AddRange(CheckNeighborCell(new Point(target.Position.X, target.Position.Y + 1), targets));
-            
+
             targetCells.AddRange(CheckNeighborCell(new Point(target.Position.X - 1, target.Position.Y), targets));
         }
 
@@ -102,10 +129,4 @@ public class Unit
 
         return new List<Point> { position };
     }
-}
-
-public enum Type
-{
-    Elf,
-    Goblin
 }
