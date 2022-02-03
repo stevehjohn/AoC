@@ -22,6 +22,7 @@
   <ItemGroup>
     <Folder Include="Infrastructure\" />
     <Folder Include="Solutions\2018\13\" />
+    <Folder Include="Solutions\2018\18\" />
     <Folder Include="Solutions\2019\06\" />
     <Folder Include="Solutions\2019\11\" />
     <Folder Include="Solutions\2019\14\" />
@@ -100,6 +101,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Solutions\2018\17\input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Solutions\2018\18\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Solutions\2019\01\input.txt">
