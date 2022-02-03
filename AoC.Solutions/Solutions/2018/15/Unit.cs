@@ -16,6 +16,8 @@ public class Unit
 
     private readonly List<Unit> _units;
 
+    private HashSet<Point> _unitPositions;
+
     public Unit(Type type, Point position, bool[,] map, List<Unit> units)
     {
         Type = type;
@@ -57,6 +59,8 @@ public class Unit
 
     private IEnumerable<Unit> Move()
     {
+        _unitPositions = _units.Select(u => u.Position).ToHashSet();
+
         var targets = _units.Where(u => u.Type != Type && u != this).ToList();
 
         if (targets.Count == 0)
@@ -74,7 +78,7 @@ public class Unit
 
         var targetCells = GetTargetCells(targets).Distinct();
 
-        var paths = IsReachable(targetCells.ToList());
+        var paths = IsReachable(targetCells.ToHashSet());
 
         if (paths.Count == 0)
         {
@@ -91,7 +95,7 @@ public class Unit
         return adjacent;
     }
 
-    private List<List<Point>> IsReachable(List<Point> targets)
+    private List<List<Point>> IsReachable(HashSet<Point> targets)
     {
         var queue = new Queue<List<Point>>();
 
@@ -107,14 +111,14 @@ public class Unit
 
             var point = current[^1];
 
-            if (targets.Any(t => t.Equals(point)))
+            if (targets.Contains(point))
             {
                 paths.Add(current);
             }
 
             var newPoint = new Point(point.X, point.Y - 1);
 
-            if (! _map[newPoint.X, newPoint.Y] && ! visited.Contains(newPoint) && ! _units.Any(u => u.Position.Equals(newPoint)))
+            if (! _map[newPoint.X, newPoint.Y] && ! visited.Contains(newPoint) && ! _unitPositions.Contains(newPoint))
             {
                 visited.Add(newPoint);
 
@@ -123,7 +127,7 @@ public class Unit
 
             newPoint = new Point(point.X - 1, point.Y);
 
-            if (! _map[newPoint.X, newPoint.Y] && ! visited.Contains(newPoint) && ! _units.Any(u => u.Position.Equals(newPoint)))
+            if (! _map[newPoint.X, newPoint.Y] && ! visited.Contains(newPoint) && ! _unitPositions.Contains(newPoint))
             {
                 visited.Add(newPoint);
 
@@ -132,7 +136,7 @@ public class Unit
 
             newPoint = new Point(point.X + 1, point.Y);
 
-            if (! _map[newPoint.X, newPoint.Y] && ! visited.Contains(newPoint) && ! _units.Any(u => u.Position.Equals(newPoint)))
+            if (! _map[newPoint.X, newPoint.Y] && ! visited.Contains(newPoint) && ! _unitPositions.Contains(newPoint))
             {
                 visited.Add(newPoint);
 
@@ -141,7 +145,7 @@ public class Unit
 
             newPoint = new Point(point.X, point.Y + 1);
 
-            if (! _map[newPoint.X, newPoint.Y] && ! visited.Contains(newPoint) && ! _units.Any(u => u.Position.Equals(newPoint)))
+            if (! _map[newPoint.X, newPoint.Y] && ! visited.Contains(newPoint) && ! _unitPositions.Contains(newPoint))
             {
                 visited.Add(newPoint);
 
