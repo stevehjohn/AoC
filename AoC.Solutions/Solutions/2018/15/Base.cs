@@ -1,5 +1,4 @@
-﻿using System.Text;
-using AoC.Solutions.Common;
+﻿using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2018._15;
@@ -8,13 +7,13 @@ public abstract class Base : Solution
 {
     public override string Description => "Elves vs Goblins";
 
-    protected int _width;
+    private int _width;
 
-    protected int _height;
+    private int _height;
 
-    protected bool[,] _map;
+    private bool[,] _map;
 
-    protected readonly List<Unit> _units = new();
+    private readonly List<Unit> _units = new();
 
     protected int Play()
     {
@@ -48,69 +47,12 @@ public abstract class Base : Solution
                 i++;
             }
 
-            //foreach (var unit in unitOrder)
-            //{
-            //    unit.Play();
-            //}
-
-            //Dump();
-
-            //Console.WriteLine(round);
-
-            //foreach (var unit in _units)
-            //{
-            //    Console.WriteLine($"{(unit.Type == Type.Elf ? 'E' : 'G')}: {unit.Health}    ");
-            //}
-
-            //Console.WriteLine("             ");
-
-            //if (_units.DistinctBy(u => u.Type).Count() == 1)
-            //{
-            //    if (i < unitOrder.Count)
-            //    {
-            //        round++;
-            //    }
-
-            //    break;
-            //}
-
             round++;
         }
 
         escape:
 
-        Console.WriteLine(round);
-        Console.WriteLine(_units.Sum(u => u.Health) + "     ");
-
         return round * _units.Sum(u => u.Health);
-    }
-
-    private void Dump()
-    {
-        Console.SetCursorPosition(0, 1);
-
-        for (var y = 0; y < _height; y++)
-        {
-            var builder = new StringBuilder();
-
-            for (var x = 0; x < _width; x++)
-            {
-                var unit = _units.SingleOrDefault(u => u.Position.X == x && u.Position.Y == y);
-
-                if (unit != null)
-                {
-                    builder.Append(unit.Type == Type.Elf ? 'E' : 'G');
-
-                    continue;
-                }
-
-                builder.Append(_map[x, y] ? '#' : ' ');
-            }
-
-            Console.WriteLine(builder.ToString());
-        }
-
-        //Thread.Sleep(500);
     }
 
     protected void ParseInput()
