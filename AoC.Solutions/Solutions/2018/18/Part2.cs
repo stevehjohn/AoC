@@ -14,6 +14,8 @@ public class Part2 : Base
 
         var cycle = 0;
 
+        int repeatIndex;
+
         while (true)
         {
             cycle++;
@@ -24,13 +26,19 @@ public class Part2 : Base
 
             if (_states.ContainsKey(stateHash))
             {
+                repeatIndex = _states[stateHash];
+
                 break;
             }
 
             _states.Add(stateHash, cycle);
         }
 
-        var finalState = _states.Single(s => s.Value == 1000000000 % cycle).Key;
+        var delta = cycle - repeatIndex;
+
+        var remainingCycles = 1_000_000_000  - repeatIndex;
+
+        var finalState = _states.Single(s => s.Value == remainingCycles % delta + repeatIndex).Key;
 
         return GetResourceValue(finalState).ToString();
     }
