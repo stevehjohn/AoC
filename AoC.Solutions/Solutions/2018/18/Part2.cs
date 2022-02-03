@@ -36,7 +36,7 @@ public class Part2 : Base
 
         var delta = cycle - repeatIndex;
 
-        var remainingCycles = 1_000_000_000  - repeatIndex;
+        var remainingCycles = 1_000_000_000 - repeatIndex;
 
         var finalState = _states.Single(s => s.Value == remainingCycles % delta + repeatIndex).Key;
 
