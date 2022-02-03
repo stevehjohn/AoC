@@ -1,5 +1,4 @@
-﻿using AoC.Solutions.Common;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2018._23;
 
@@ -30,10 +29,5 @@ public class Part1 : Base
         }
 
         return count;
-    }
-
-    private static int GetManhattanDistance(Point a, Point b)
-    {
-        return Math.Abs(a.X - b.X) + Math.Abs(a.Y - b.Y) + Math.Abs(a.Z - b.Z);
     }
 }
