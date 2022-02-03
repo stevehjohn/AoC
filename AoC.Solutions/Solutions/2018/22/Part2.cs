@@ -20,14 +20,11 @@ public class Part2 : Base
 
     private int Solve()
     {
-        var queue = new PriorityQueue<(Point Position, char Equipped), int>();
+        var queue = new PriorityQueue<(Point Position, char Equipped, int Cost), int>();
 
-        queue.Enqueue((new Point(0, 0), 'T'), int.MaxValue);
+        queue.Enqueue((new Point(0, 0), 'T', 0), int.MaxValue);
 
-        var costs = new Dictionary<Point, int>
-                    {
-                        { new Point(0, 0), 0 }
-                    };
+        var visited = new HashSet<(Point, char)>();
 
         while (queue.Count > 0)
         {
@@ -35,7 +32,7 @@ public class Part2 : Base
 
             if (state.Position.X == TargetX && state.Position.Y == TargetY)
             {
-                var cost = costs[state.Position];
+                var cost = state.Cost;
 
                 if (state.Equipped != 'T')
                 {
@@ -45,9 +42,16 @@ public class Part2 : Base
                 return cost;
             }
 
+            if (visited.Contains((state.Position, state.Equipped)))
+            {
+                continue;
+            }
+
+            visited.Add((state.Position, state.Equipped));
+
             foreach (var neighbor in GetNeighbors(state.Position))
             {
-                var cost = costs[state.Position] + 1;
+                var cost = state.Cost + 1;
 
                 var equipped = state.Equipped;
 
@@ -62,7 +66,7 @@ public class Part2 : Base
                         }
 
                         options.Add('C');
-                        
+
                         options.Add('T');
 
                         cost += 7;
@@ -75,7 +79,7 @@ public class Part2 : Base
                         }
 
                         options.Add('C');
-                        
+
                         options.Add(' ');
 
                         cost += 7;
@@ -88,7 +92,7 @@ public class Part2 : Base
                         }
 
                         options.Add('T');
-                        
+
                         options.Add(' ');
 
                         cost += 7;
@@ -98,17 +102,14 @@ public class Part2 : Base
 
                 if (options.Count == 0)
                 {
-                    options.Add(equipped);
+                    queue.Enqueue((neighbor, equipped, cost), cost);
+
+                    continue;
                 }
 
-                if (! costs.TryGetValue(neighbor, out var nextCost) || cost < nextCost)
+                foreach (var option in options)
                 {
-                    costs[neighbor] = cost;
-
-                    foreach (var option in options)
-                    {
-                        queue.Enqueue((neighbor, option), cost);
-                    }
+                    queue.Enqueue((neighbor, option, cost), cost);
                 }
             }
         }
