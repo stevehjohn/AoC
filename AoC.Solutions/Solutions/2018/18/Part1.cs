@@ -16,4 +16,31 @@ public class Part1 : Base
 
         return GetResourceValue().ToString();
     }
+
+    private int GetResourceValue()
+    {
+        var wood = 0;
+
+        var yard = 0;
+
+        for (var y = 0; y < Height; y++)
+        {
+            for (var x = 0; x < Width; x++)
+            {
+                if (Map[x, y] == '|')
+                {
+                    wood++;
+
+                    continue;
+                }
+
+                if (Map[x, y] == '#')
+                {
+                    yard++;
+                }
+            }
+        }
+
+        return wood * yard;
+    }
 }
