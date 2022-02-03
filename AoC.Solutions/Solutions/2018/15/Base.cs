@@ -35,6 +35,16 @@ public abstract class Base : Solution
                     unitOrder.Remove(removed);
                 }
 
+                if (_units.DistinctBy(u => u.Type).Count() == 1)
+                {
+                    if (i == unitOrder.Count - 1)
+                    {
+                        round++;
+                    }
+
+                    goto escape;
+                }
+
                 i++;
             }
 
@@ -54,18 +64,20 @@ public abstract class Base : Solution
 
             //Console.WriteLine("             ");
 
-            if (_units.DistinctBy(u => u.Type).Count() == 1)
-            {
-                if (i < unitOrder.Count)
-                {
-                    round++;
-                }
+            //if (_units.DistinctBy(u => u.Type).Count() == 1)
+            //{
+            //    if (i < unitOrder.Count)
+            //    {
+            //        round++;
+            //    }
 
-                break;
-            }
+            //    break;
+            //}
 
             round++;
         }
+
+        escape:
 
         Console.WriteLine(round);
         Console.WriteLine(_units.Sum(u => u.Health) + "     ");
