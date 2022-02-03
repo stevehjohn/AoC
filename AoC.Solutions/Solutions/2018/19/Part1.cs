@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Solutions._2018.TimeMachine;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2018._19;
 
@@ -7,6 +8,14 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        return "TESTING";
+        var cpu = new Cpu(6);
+
+        cpu.Initialise();
+
+        cpu.LoadProgram(Input);
+
+        cpu.Run();
+
+        return cpu.GetRegisters()[0].ToString();
     }
 }

@@ -1,11 +1,12 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Solutions._2018.TimeMachine;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2018._16;
 
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private readonly Cpu _cpu = new();
+    private readonly Cpu _cpu = new(4);
 
     public override string GetAnswer()
     {

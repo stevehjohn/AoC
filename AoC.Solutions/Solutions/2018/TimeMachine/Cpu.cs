@@ -1,10 +1,60 @@
-﻿namespace AoC.Solutions.Solutions._2018._16;
+﻿namespace AoC.Solutions.Solutions._2018.TimeMachine;
 
 public class Cpu
 {
-    private readonly int[] _registers = new int[4];
+    private readonly int[] _registers;
 
     private readonly Dictionary<string, Action<int, int, int, int[]>> _operations = new();
+
+    private readonly List<string> _program = new();
+
+    private int _instructionPointer;
+
+    private int? _instructionPointerBinding;
+
+    public Cpu(int registerCount)
+    {
+        _registers = new int[registerCount];
+    }
+
+    public void Run()
+    {
+        _instructionPointer = 0;
+
+        while (_instructionPointer < _program.Count)
+        {
+            if (_instructionPointerBinding.HasValue)
+            {
+                _registers[_instructionPointerBinding.Value] = _instructionPointer;
+            }
+
+            var instruction = ParseLine(_program[_instructionPointer]);
+
+            _operations[instruction.OpCode].Invoke(instruction.A, instruction.B, instruction.C, _registers);
+
+            if (_instructionPointerBinding.HasValue)
+            {
+                _instructionPointer = _registers[_instructionPointerBinding.Value];
+            }
+
+            _instructionPointer++;
+        }
+    }
+
+    public void LoadProgram(string[] program)
+    {
+        foreach (var line in program)
+        {
+            if (line.StartsWith('#'))
+            {
+                _instructionPointerBinding = line[4] - '0';
+
+                continue;
+            }
+
+            _program.Add(line);
+        }
+    }
 
     public void SetRegisters(int[] values)
     {
@@ -13,7 +63,7 @@ public class Cpu
 
     public int[] GetRegisters()
     {
-        var copy = new int[4];
+        var copy = new int[_registers.Length];
 
         Array.Copy(_registers, 0, copy, 0, _registers.Length);
 
@@ -60,5 +110,12 @@ public class Cpu
 
         _operations.Add("eqrr", (a, b, c, registers) => registers[c] = registers[a] == registers[b] ? 1 : 0);
         // ReSharper restore StringLiteralTypo
+    }
+
+    private static (string OpCode, int A, int B, int C) ParseLine(string line)
+    {
+        var parts = line.Split(' ', StringSplitOptions.TrimEntries);
+
+        return (parts[0], int.Parse(parts[1]), int.Parse(parts[2]), int.Parse(parts[3]));
     }
 }
