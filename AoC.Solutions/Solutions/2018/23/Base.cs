@@ -20,4 +20,9 @@ public abstract class Base : Solution
             Nanobots.Add((new Point(int.Parse(parts[0]), int.Parse(parts[1]), int.Parse(parts[2])), int.Parse(split[1])));
         }
     }
+
+    protected static int GetManhattanDistance(Point a, Point b)
+    {
+        return Math.Abs(a.X - b.X) + Math.Abs(a.Y - b.Y) + Math.Abs(a.Z - b.Z);
+    }
 }
