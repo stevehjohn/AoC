@@ -51,6 +51,8 @@ public class Part2 : Base
 
                 var equipped = state.Equipped;
 
+                var options = new List<char>();
+
                 switch (Map[neighbor.X, neighbor.Y])
                 {
                     case '.':
@@ -59,8 +61,9 @@ public class Part2 : Base
                             break;
                         }
 
-                        // This could cause an issue. Might need to try both (add both to queue?)
-                        equipped = 'C';
+                        options.Add('C');
+                        
+                        options.Add('T');
 
                         cost += 7;
 
@@ -71,7 +74,9 @@ public class Part2 : Base
                             break;
                         }
 
-                        equipped = 'C';
+                        options.Add('C');
+                        
+                        options.Add(' ');
 
                         cost += 7;
 
@@ -82,18 +87,28 @@ public class Part2 : Base
                             break;
                         }
 
-                        equipped = 'T';
+                        options.Add('T');
+                        
+                        options.Add(' ');
 
                         cost += 7;
 
                         break;
                 }
 
-                if (!costs.TryGetValue(neighbor, out var nextCost) || cost < nextCost)
+                if (options.Count == 0)
+                {
+                    options.Add(equipped);
+                }
+
+                if (! costs.TryGetValue(neighbor, out var nextCost) || cost < nextCost)
                 {
                     costs[neighbor] = cost;
 
-                    queue.Enqueue((neighbor, equipped), cost);
+                    foreach (var option in options)
+                    {
+                        queue.Enqueue((neighbor, option), cost);
+                    }
                 }
             }
         }
