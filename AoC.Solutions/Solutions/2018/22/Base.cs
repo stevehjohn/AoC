@@ -32,9 +32,9 @@ public abstract class Base : Solution
 
         Map[TargetX, TargetY] = 'T';
 
-        for (var y = 0; y < Width; y++)
+        for (var y = 0; y < Height; y++)
         {
-            for (var x = 0; x < Height; x++)
+            for (var x = 0; x < Width; x++)
             {
                 if (x == 0 && y == 0 || x == TargetX && y == TargetY)
                 {
