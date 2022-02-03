@@ -8,7 +8,7 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        for (var i = 1; i < 7; i++)
+        for (var i = 1; i < 8; i++)
         {
             var nameSpace = GetType().Namespace ?? string.Empty;
 
@@ -48,6 +48,9 @@ public class Part1 : Base
                     break;
                 case 6:
                     Console.ForegroundColor = result == 18740 ? ConsoleColor.Yellow : ConsoleColor.Red;
+                    break;
+                case 7:
+                    Console.ForegroundColor = result == 243390 ? ConsoleColor.Yellow : ConsoleColor.Red;
                     break;
             }
 

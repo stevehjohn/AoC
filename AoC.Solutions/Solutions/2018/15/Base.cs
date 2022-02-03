@@ -22,12 +22,26 @@ public abstract class Base : Solution
 
         while (true)
         {
-            var unitOrder = _units.OrderBy(u => u.Position.Y).ThenBy(u => u.Position.X);
+            var unitOrder = _units.OrderBy(u => u.Position.Y).ThenBy(u => u.Position.X).ToList();
 
-            foreach (var unit in unitOrder)
+            var i = 0;
+
+            while (i < unitOrder.Count)
             {
-                unit.Play();
+                var removed = unitOrder[i].Play();
+
+                if (removed != null && unitOrder.IndexOf(removed) > i)
+                {
+                    unitOrder.Remove(removed);
+                }
+
+                i++;
             }
+
+            //foreach (var unit in unitOrder)
+            //{
+            //    unit.Play();
+            //}
 
             //Dump();
 
@@ -42,6 +56,11 @@ public abstract class Base : Solution
 
             if (_units.DistinctBy(u => u.Type).Count() == 1)
             {
+                if (i < unitOrder.Count)
+                {
+                    round++;
+                }
+
                 break;
             }
 
