@@ -25,17 +25,19 @@ public class Unit
         _units = units;
     }
 
-    public void Play()
+    public Unit Play()
     {
         var targets = Move().ToList();
 
         if (targets.Any())
         {
-            Attack(targets);
+            return Attack(targets);
         }
+
+        return null;
     }
 
-    private void Attack(IEnumerable<Unit> targets)
+    private Unit Attack(IEnumerable<Unit> targets)
     {
         var target = targets.OrderBy(u => u.Health).ThenBy(u => u.Position.Y).ThenBy(u => u.Position.X).First();
 
@@ -44,7 +46,11 @@ public class Unit
         if (target.Health < 1)
         {
             _units.Remove(target);
+
+            return target;
         }
+
+        return null;
     }
 
     private IEnumerable<Unit> Move()
