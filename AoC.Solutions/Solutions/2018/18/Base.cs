@@ -6,11 +6,11 @@ public abstract class Base : Solution
 {
     public override string Description => "I'm a lumberjack...";
 
-    private const int Width = 50;
+    protected const int Width = 50;
 
-    private const int Height = 50;
+    protected const int Height = 50;
 
-    private char[,] _map;
+    protected char[,] Map;
 
     protected int GetResourceValue()
     {
@@ -22,14 +22,14 @@ public abstract class Base : Solution
         {
             for (var x = 0; x < Width; x++)
             {
-                if (_map[x, y] == '|')
+                if (Map[x, y] == '|')
                 {
                     wood++;
 
                     continue;
                 }
 
-                if (_map[x, y] == '#')
+                if (Map[x, y] == '#')
                 {
                     yard++;
                 }
@@ -43,13 +43,13 @@ public abstract class Base : Solution
     {
         var newMap = new char[Width, Height];
 
-        Buffer.BlockCopy(_map, 0, newMap, 0, Width * Height * sizeof(char));
+        Buffer.BlockCopy(Map, 0, newMap, 0, Width * Height * sizeof(char));
 
         for (var y = 0; y < Height; y++)
         {
             for (var x = 0; x < Width; x++)
             {
-                switch (_map[x, y])
+                switch (Map[x, y])
                 {
                     case '.':
                         if (CountAdjacent(x, y, '|') > 2)
@@ -76,7 +76,7 @@ public abstract class Base : Solution
             }
         }
 
-        _map = newMap;
+        Map = newMap;
     }
 
     private int CountAdjacent(int x, int y, char item)
@@ -85,42 +85,42 @@ public abstract class Base : Solution
 
         if (x > 0 && y > 0)
         {
-            adjacent += _map[x - 1, y - 1] == item ? 1 : 0;
+            adjacent += Map[x - 1, y - 1] == item ? 1 : 0;
         }
 
         if (y > 0)
         {
-            adjacent += _map[x, y - 1] == item ? 1 : 0;
+            adjacent += Map[x, y - 1] == item ? 1 : 0;
         }
 
         if (x < Width - 1 && y > 0)
         {
-            adjacent += _map[x + 1, y - 1] == item ? 1 : 0;
+            adjacent += Map[x + 1, y - 1] == item ? 1 : 0;
         }
 
         if (x > 0)
         {
-            adjacent += _map[x - 1, y] == item ? 1 : 0;
+            adjacent += Map[x - 1, y] == item ? 1 : 0;
         }
 
         if (x < Width - 1)
         {
-            adjacent += _map[x + 1, y] == item ? 1 : 0;
+            adjacent += Map[x + 1, y] == item ? 1 : 0;
         }
 
         if (x > 0 && y < Height - 1)
         {
-            adjacent += _map[x - 1, y + 1] == item ? 1 : 0;
+            adjacent += Map[x - 1, y + 1] == item ? 1 : 0;
         }
 
         if (y < Height - 1)
         {
-            adjacent += _map[x, y + 1] == item ? 1 : 0;
+            adjacent += Map[x, y + 1] == item ? 1 : 0;
         }
 
         if (x < Width - 1 && y < Height - 1)
         {
-            adjacent += _map[x + 1, y + 1] == item ? 1 : 0;
+            adjacent += Map[x + 1, y + 1] == item ? 1 : 0;
         }
 
         return adjacent;
@@ -128,13 +128,13 @@ public abstract class Base : Solution
 
     protected void ParseInput()
     {
-        _map = new char[Width, Height];
+        Map = new char[Width, Height];
 
         for (var y = 0; y < Height; y++)
         {
             for (var x = 0; x < Width; x++)
             {
-                _map[x, y] = Input[y][x];
+                Map[x, y] = Input[y][x];
             }
         }
     }
