@@ -97,7 +97,7 @@ public class Unit
 
         queue.Enqueue(new List<Point> { Position });
 
-        var visited = new List<Point> { Position };
+        var visited = new HashSet<Point> { Position };
 
         var paths = new List<List<Point>>();
 
@@ -114,7 +114,7 @@ public class Unit
 
             var newPoint = new Point(point.X, point.Y - 1);
 
-            if (! _map[newPoint.X, newPoint.Y] && ! visited.Any(v => v.Equals(newPoint)) && ! _units.Any(u => u.Position.Equals(newPoint)))
+            if (! _map[newPoint.X, newPoint.Y] && ! visited.Contains(newPoint) && ! _units.Any(u => u.Position.Equals(newPoint)))
             {
                 visited.Add(newPoint);
 
@@ -123,7 +123,7 @@ public class Unit
 
             newPoint = new Point(point.X - 1, point.Y);
 
-            if (! _map[newPoint.X, newPoint.Y] && ! visited.Any(v => v.Equals(newPoint)) && ! _units.Any(u => u.Position.Equals(newPoint)))
+            if (! _map[newPoint.X, newPoint.Y] && ! visited.Contains(newPoint) && ! _units.Any(u => u.Position.Equals(newPoint)))
             {
                 visited.Add(newPoint);
 
@@ -132,7 +132,7 @@ public class Unit
 
             newPoint = new Point(point.X + 1, point.Y);
 
-            if (! _map[newPoint.X, newPoint.Y] && ! visited.Any(v => v.Equals(newPoint)) && ! _units.Any(u => u.Position.Equals(newPoint)))
+            if (! _map[newPoint.X, newPoint.Y] && ! visited.Contains(newPoint) && ! _units.Any(u => u.Position.Equals(newPoint)))
             {
                 visited.Add(newPoint);
 
@@ -141,7 +141,7 @@ public class Unit
 
             newPoint = new Point(point.X, point.Y + 1);
 
-            if (! _map[newPoint.X, newPoint.Y] && ! visited.Any(v => v.Equals(newPoint)) && ! _units.Any(u => u.Position.Equals(newPoint)))
+            if (! _map[newPoint.X, newPoint.Y] && ! visited.Contains(newPoint) && ! _units.Any(u => u.Position.Equals(newPoint)))
             {
                 visited.Add(newPoint);
 
