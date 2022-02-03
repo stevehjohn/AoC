@@ -79,8 +79,6 @@ public class Unit
             return Enumerable.Empty<Unit>();
         }
 
-        //var movesOrdered = paths.OrderBy(p => p.Count).ThenBy(p => p.Last().Y).ThenBy(p => p.Last().X);
-        //var movesOrdered = paths.OrderBy(p => p.Count).ThenBy(p => p.Skip(1).First().Y).ThenBy(p => p.Skip(1).First().X);
         var movesOrdered = paths.OrderBy(p => p.Count).ThenBy(p => p.Last().Y).ThenBy(p => p.Last().X).ThenBy(p => p.Skip(1).First().Y).ThenBy(p => p.Skip(1).First().X);
 
         Position = movesOrdered.First().Skip(1).First();
@@ -110,8 +108,6 @@ public class Unit
             if (targets.Any(t => t.Equals(point)))
             {
                 paths.Add(current);
-
-                //continue;
             }
 
             var newPoint = new Point(point.X, point.Y - 1);
