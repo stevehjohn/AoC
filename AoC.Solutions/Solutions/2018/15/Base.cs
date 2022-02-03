@@ -15,9 +15,18 @@ public abstract class Base : Solution
 
     private readonly List<Unit> _units = new();
 
-    protected int Play()
+    protected void Reset()
+    {
+        _units.Clear();
+    }
+
+    protected (bool NoElfLosses, int Outcome) Play(int elfPower = 3)
     {
         var round = 0;
+
+        var elves = _units.Count(u => u.Type == Type.Elf);
+
+        _units.ForEach(u => u.Power = u.Type == Type.Elf ? elfPower : 3);
 
         while (true)
         {
@@ -52,7 +61,7 @@ public abstract class Base : Solution
 
         escape:
 
-        return round * _units.Sum(u => u.Health);
+        return (_units.Count(u => u.Type == Type.Elf) == elves, round * _units.Sum(u => u.Health));
     }
 
     protected void ParseInput()
