@@ -10,6 +10,8 @@ public class Unit
 
     public int Health { get; set; } = 200;
 
+    public int Power { get; set; }
+
     private readonly bool[,] _map;
 
     private readonly List<Unit> _units;
@@ -41,7 +43,7 @@ public class Unit
     {
         var target = targets.OrderBy(u => u.Health).ThenBy(u => u.Position.Y).ThenBy(u => u.Position.X).First();
 
-        target.Health -= 3;
+        target.Health -= Power;
 
         if (target.Health < 1)
         {
