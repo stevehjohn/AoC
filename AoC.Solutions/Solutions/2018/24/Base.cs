@@ -22,6 +22,16 @@ public abstract class Base : Solution
             var attacks = TargetSelection();
 
             Attack(attacks);
+
+            if (_groups.DistinctBy(g => g.Type).Count() == 1)
+            {
+                break;
+            }
+        }
+
+        foreach (var group in _groups)
+        {
+            Console.WriteLine($"{group.Type} {group.Id} contains {group.Units} units");
         }
     }
 
@@ -71,21 +81,20 @@ public abstract class Base : Solution
 
     private Group SelectVictim(Group attacker)
     {
-        var target = _groups.Where(g => g.Type != attacker.Type && ! g.ImmuneTo.Contains(attacker.DamageType))
-                            .Where(g => ! g.ImmuneTo.Contains(attacker.DamageType))
-                            .OrderBy(g => g.WeakTo.Contains(attacker.DamageType) ? 0 : 1)
-                            .ThenByDescending(g => g.EffectivePower)
-                            .ThenByDescending(g => g.Initiative)
-                            .FirstOrDefault();
+        var targets = _groups.Where(g => g.Type != attacker.Type && ! g.ImmuneTo.Contains(attacker.DamageType))
+                             .Where(g => ! g.ImmuneTo.Contains(attacker.DamageType))
+                             .OrderBy(g => g.WeakTo.Contains(attacker.DamageType) ? 0 : 1)
+                             .ThenByDescending(g => g.EffectivePower)
+                             .ThenByDescending(g => g.Initiative);
 
-        if (target != null)
+        foreach (var target in targets)
         {
             var damage = attacker.EffectivePower * (target.WeakTo.Contains(attacker.DamageType) ? 2 : 1);
 
             Console.WriteLine($"{attacker.Type} group {attacker.Id} would deal defending group {target.Id} {damage} damage");
         }
 
-        return target;
+        return targets.FirstOrDefault();
     }
 
     protected void ParseInput()
