@@ -2,6 +2,8 @@
 
 public class Group
 {
+    public Type Type { get; }
+
     public int Units { get; set; }
 
     public int HitPoints { get; }
@@ -15,11 +17,15 @@ public class Group
     public string DamageType { get; }
 
     public int Initiative { get; }
+    
+    public int EffectivePower => Units * DamagePoints;
 
-    public Group(string input)
+    public Group(string input, Type type)
     {
         // ReSharper disable StringIndexOfIsCultureSpecific.1
         // ReSharper disable StringLastIndexOfIsCultureSpecific.1
+
+        Type = type;
 
         Units = int.Parse(input[..input.IndexOf(' ')]);
 
