@@ -9,8 +9,8 @@ public class Part1 : Base
     {
         ParseInput();
 
-        Play();
+        var result = Play();
 
-        return "TESTING";
+        return result.ToString();
     }
 }
