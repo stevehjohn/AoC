@@ -32,6 +32,20 @@ public class Group
             input = input[(input.IndexOf("(") + 1)..];
 
             var specialProperties = input[..input.IndexOf(')')];
+
+            var propertyType = specialProperties.Split(';', StringSplitOptions.TrimEntries);
+
+            foreach (var property in propertyType)
+            {
+                if (property.StartsWith("weak"))
+                {
+                    WeakTo = property[8..].Split(',', StringSplitOptions.TrimEntries).ToList();
+                }
+                else
+                {
+                    ImmuneTo = property[10..].Split(',', StringSplitOptions.TrimEntries).ToList();
+                }
+            }
         }
 
         input = input[(input.IndexOf("does") + 5)..];
