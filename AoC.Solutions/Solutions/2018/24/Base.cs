@@ -6,15 +6,23 @@ public abstract class Base : Solution
 {
     public override string Description => "Immune system battle";
 
-    private readonly List<Group> _groups = new();
+    private List<Group> _groups;
 
-    protected int Play()
+    protected (int Units, Type Side) Play(int immuneBoost = 0)
     {
+        foreach (var group in _groups.Where(g => g.Type == Type.ImmuneSystem))
+        {
+            group.DamagePoints += immuneBoost;
+        }
+
         while (true)
         {
             var attacks = TargetSelection();
 
-            Attack(attacks);
+            if (! Attack(attacks))
+            {
+                return (_groups.Sum(g => g.Units), Type.Neither);
+            }
 
             if (_groups.DistinctBy(g => g.Type).Count() == 1)
             {
@@ -22,12 +30,14 @@ public abstract class Base : Solution
             }
         }
 
-        return _groups.Sum(g => g.Units);
+        return (_groups.Sum(g => g.Units), _groups[0].Type);
     }
 
-    private void Attack(List<(Group Attacker, Group Defender)> attacks)
+    private bool Attack(List<(Group Attacker, Group Defender)> attacks)
     {
         var attackOrder = attacks.OrderByDescending(g => g.Attacker.Initiative);
+
+        var totalKills = 0;
 
         foreach (var (attacker, target) in attackOrder)
         {
@@ -40,6 +50,8 @@ public abstract class Base : Solution
 
             var kills = Math.Min(damage / target.HitPoints, target.Units);
 
+            totalKills += kills;
+
             target.Units -= kills;
 
             if (target.Units < 1)
@@ -47,6 +59,13 @@ public abstract class Base : Solution
                 _groups.Remove(target);
             }
         }
+
+        if (totalKills == 0)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     private List<(Group Attacker, Group Defender)> TargetSelection()
@@ -87,6 +106,8 @@ public abstract class Base : Solution
 
     protected void ParseInput()
     {
+        _groups = new List<Group>();
+
         var i = 1;
 
         var isInfection = false;

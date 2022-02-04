@@ -11,6 +11,6 @@ public class Part1 : Base
 
         var result = Play();
 
-        return result.ToString();
+        return result.Units.ToString();
     }
 }
