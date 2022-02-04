@@ -12,26 +12,14 @@ public abstract class Base : Solution
     {
         while (true)
         {
-            foreach (var group in _groups)
-            {
-                Console.WriteLine($"{group.Type} {group.Id} contains {group.Units} units");
-            }
-
             var attacks = TargetSelection();
 
             Attack(attacks);
-
-            Console.WriteLine("\n-------------------\n");
 
             if (_groups.DistinctBy(g => g.Type).Count() == 1)
             {
                 break;
             }
-        }
-
-        foreach (var group in _groups)
-        {
-            Console.WriteLine($"{group.Type} {group.Id} contains {group.Units} units");
         }
 
         return _groups.Sum(g => g.Units);
@@ -40,8 +28,6 @@ public abstract class Base : Solution
     private void Attack(List<(Group Attacker, Group Defender)> attacks)
     {
         var attackOrder = attacks.OrderByDescending(g => g.Attacker.Initiative);
-
-        Console.WriteLine();
 
         foreach (var (attacker, target) in attackOrder)
         {
@@ -60,11 +46,7 @@ public abstract class Base : Solution
             {
                 _groups.Remove(target);
             }
-
-            Console.WriteLine($"{attacker.Type} {attacker.Id} attacks defending group {target.Id} using {attacker.DamageType} killing {kills} units");
         }
-
-        Console.WriteLine();
     }
 
     private List<(Group Attacker, Group Defender)> TargetSelection()
@@ -99,13 +81,6 @@ public abstract class Base : Solution
                             .ThenByDescending(g => g.EffectivePower)
                             .ThenByDescending(g => g.Initiative)
                             .FirstOrDefault();
-
-        if (target != null)
-        {
-            var damage = attacker.EffectivePower * (target.WeakTo.Contains(attacker.DamageType) ? 2 : 1);
-
-            Console.WriteLine($"{attacker.Type} group {attacker.Id} would deal defending group {target.Id} {damage} damage");
-        }
 
         return target;
     }
