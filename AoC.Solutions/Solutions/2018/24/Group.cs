@@ -14,12 +14,12 @@ public class Group
 
     public List<string> ImmuneTo { get; } = new();
 
-    public int DamagePoints { get; }
+    public int DamagePoints { get; set; }
 
     public string DamageType { get; }
 
     public int Initiative { get; }
-    
+
     public int EffectivePower => Units * DamagePoints;
 
     public Group(string input, Type type)
@@ -62,7 +62,7 @@ public class Group
 
         input = input[(input.IndexOf(" ") + 1)..];
 
-        DamageType = input[..(input.IndexOf(" "))];
+        DamageType = input[..input.IndexOf(" ")];
 
         input = input[(input.LastIndexOf(" ") + 1)..];
 

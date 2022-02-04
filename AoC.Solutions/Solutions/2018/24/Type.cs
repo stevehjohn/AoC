@@ -3,5 +3,6 @@
 public enum Type
 {
     ImmuneSystem,
-    Infection
+    Infection,
+    Neither
 }
