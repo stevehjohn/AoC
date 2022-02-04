@@ -8,7 +8,7 @@ public abstract class Base : Solution
 
     private readonly List<Group> _groups = new();
 
-    protected void Play()
+    protected int Play()
     {
         while (true)
         {
@@ -17,11 +17,11 @@ public abstract class Base : Solution
                 Console.WriteLine($"{group.Type} {group.Id} contains {group.Units} units");
             }
 
-            Console.WriteLine();
-
             var attacks = TargetSelection();
 
             Attack(attacks);
+
+            Console.WriteLine("\n-------------------\n");
 
             if (_groups.DistinctBy(g => g.Type).Count() == 1)
             {
@@ -33,6 +33,8 @@ public abstract class Base : Solution
         {
             Console.WriteLine($"{group.Type} {group.Id} contains {group.Units} units");
         }
+
+        return _groups.Sum(g => g.Units);
     }
 
     private void Attack(List<(Group Attacker, Group Defender)> attacks)
@@ -62,39 +64,45 @@ public abstract class Base : Solution
 
     private List<(Group Attacker, Group Defender)> TargetSelection()
     {
+        var selected = new List<Group>();
+
         var selectionOrder = _groups.OrderByDescending(g => g.EffectivePower).ThenBy(g => g.Initiative);
 
         var attacks = new List<(Group Attacker, Group Defender)>();
 
         foreach (var group in selectionOrder)
         {
-            var victim = SelectVictim(group);
+            var victim = SelectVictim(group, selected);
 
             if (victim != null)
             {
                 attacks.Add((group, victim));
+
+                selected.Add(victim);
             }
         }
 
         return attacks;
     }
 
-    private Group SelectVictim(Group attacker)
+    private Group SelectVictim(Group attacker, List<Group> selected)
     {
-        var targets = _groups.Where(g => g.Type != attacker.Type && ! g.ImmuneTo.Contains(attacker.DamageType))
-                             .Where(g => ! g.ImmuneTo.Contains(attacker.DamageType))
-                             .OrderBy(g => g.WeakTo.Contains(attacker.DamageType) ? 0 : 1)
-                             .ThenByDescending(g => g.EffectivePower)
-                             .ThenByDescending(g => g.Initiative);
+        var target = _groups.Where(g => ! selected.Contains(g))
+                            .Where(g => g.Type != attacker.Type)
+                            .Where(g => ! g.ImmuneTo.Contains(attacker.DamageType))
+                            .OrderBy(g => g.WeakTo.Contains(attacker.DamageType) ? 0 : 1)
+                            .ThenByDescending(g => g.EffectivePower)
+                            .ThenByDescending(g => g.Initiative)
+                            .FirstOrDefault();
 
-        foreach (var target in targets)
+        if (target != null)
         {
             var damage = attacker.EffectivePower * (target.WeakTo.Contains(attacker.DamageType) ? 2 : 1);
 
             Console.WriteLine($"{attacker.Type} group {attacker.Id} would deal defending group {target.Id} {damage} damage");
         }
 
-        return targets.FirstOrDefault();
+        return target;
     }
 
     protected void ParseInput()
