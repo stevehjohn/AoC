@@ -11,6 +11,13 @@ public abstract class Base : Solution
     protected void Play()
     {
         var attacks = TargetSelection();
+
+        Attack(attacks);
+    }
+
+    private void Attack(List<(Group Attacker, Group Defender)> attacks)
+    {
+        var attackOrder = attacks.OrderByDescending(g => g.Attacker.Initiative);
     }
 
     private List<(Group Attacker, Group Defender)> TargetSelection()
