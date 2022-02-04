@@ -34,8 +34,6 @@ public class Part2 : Base
 
                 spiral.Add(position, newValue);
 
-                Console.WriteLine(newValue);
-
                 if (newValue > target)
                 {
                     return newValue;
@@ -54,8 +52,6 @@ public class Part2 : Base
 
                 spiral.Add(position, newValue);
 
-                Console.WriteLine(newValue);
-
                 if (newValue > target)
                 {
                     return newValue;
@@ -70,8 +66,6 @@ public class Part2 : Base
 
                 spiral.Add(position, newValue);
 
-                Console.WriteLine(newValue);
-
                 if (newValue > target)
                 {
                     return newValue;
@@ -85,8 +79,6 @@ public class Part2 : Base
                 var newValue = GetValueFor(position, spiral);
 
                 spiral.Add(position, newValue);
-
-                Console.WriteLine(newValue);
 
                 if (newValue > target)
                 {
