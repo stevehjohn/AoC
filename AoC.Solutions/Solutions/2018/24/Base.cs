@@ -45,6 +45,11 @@ public abstract class Base : Solution
 
         foreach (var (attacker, target) in attackOrder)
         {
+            if (attacker.Units == 0)
+            {
+                continue;
+            }
+
             var damage = attacker.EffectivePower * (target.WeakTo.Contains(attacker.DamageType) ? 2 : 1);
 
             var kills = Math.Min(damage / target.HitPoints, target.Units);
@@ -66,7 +71,7 @@ public abstract class Base : Solution
     {
         var selected = new List<Group>();
 
-        var selectionOrder = _groups.OrderByDescending(g => g.EffectivePower).ThenBy(g => g.Initiative);
+        var selectionOrder = _groups.OrderByDescending(g => g.EffectivePower).ThenByDescending(g => g.Initiative);
 
         var attacks = new List<(Group Attacker, Group Defender)>();
 
