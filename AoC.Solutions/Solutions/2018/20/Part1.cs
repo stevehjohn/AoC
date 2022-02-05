@@ -7,8 +7,12 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        Solve();
+        BuildMaze();
 
-        return "TESTING";
+        var furthest = Maze.MaxBy(p => p.Distance);
+
+        var result = Maze.Where(p => p.Position.Equals(furthest.Position)).Min(p => p.Distance);
+
+        return result.ToString();
     }
 }
