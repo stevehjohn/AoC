@@ -14,8 +14,6 @@ public class Part2 : Base
 
     public override string GetAnswer()
     {
-        _cpu.Initialise();
-
         foreach (var opCode in OpCodes)
         {
             _opCodes.Add(opCode, new HashSet<int>());

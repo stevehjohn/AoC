@@ -11,8 +11,6 @@ public class Part1 : Base
     {
         var cpu = new Cpu(6);
 
-        cpu.Initialise();
-
         cpu.LoadProgram(Input);
 
         cpu.Run(-1, "eqrr");

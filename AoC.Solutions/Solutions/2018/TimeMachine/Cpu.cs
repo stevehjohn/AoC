@@ -4,8 +4,6 @@ public class Cpu
 {
     private readonly int[] _registers;
 
-    private readonly Dictionary<string, Action<int, int, int>> _operations = new();
-
     private readonly List<(string OpCode, int A, int B, int C)> _program = new();
 
     private int _instructionPointer;
@@ -43,7 +41,7 @@ public class Cpu
 
             var instruction = _program[_instructionPointer];
 
-            _operations[instruction.OpCode](instruction.A, instruction.B, instruction.C);
+            Execute(instruction.OpCode, instruction.A, instruction.B, instruction.C);
 
             if (_breakAt > -1 && _instructionPointer == _breakAt)
             {
@@ -100,43 +98,74 @@ public class Cpu
 
     public void Execute(string opCode, int a, int b, int c)
     {
-        _operations[opCode](a, b, c);
-    }
-
-    public void Initialise()
-    {
         // ReSharper disable StringLiteralTypo
-        _operations.Add("addr", (a, b, c) => _registers[c] = _registers[a] + _registers[b]);
+        switch (opCode)
+        {
+            case "addr":
+                _registers[c] = _registers[a] + _registers[b];
 
-        _operations.Add("addi", (a, b, c) => _registers[c] = _registers[a] + b);
+                break;
+            case "addi":
+                _registers[c] = _registers[a] + b;
 
-        _operations.Add("mulr", (a, b, c) => _registers[c] = _registers[a] * _registers[b]);
+                break;
+            case "mulr":
+                _registers[c] = _registers[a] * _registers[b];
 
-        _operations.Add("muli", (a, b, c) => _registers[c] = _registers[a] * b);
+                break;
+            case "muli":
+                _registers[c] = _registers[a] * b;
 
-        _operations.Add("banr", (a, b, c) => _registers[c] = _registers[a] & _registers[b]);
+                break;
+            case "banr":
+                _registers[c] = _registers[a] & _registers[b];
 
-        _operations.Add("bani", (a, b, c) => _registers[c] = _registers[a] & b);
+                break;
+            case "bani":
+                _registers[c] = _registers[a] & b;
 
-        _operations.Add("borr", (a, b, c) => _registers[c] = _registers[a] | _registers[b]);
+                break;
+            case "borr":
+                _registers[c] = _registers[a] | _registers[b];
 
-        _operations.Add("bori", (a, b, c) => _registers[c] = _registers[a] | b);
+                break;
+            case "bori":
+                _registers[c] = _registers[a] | b;
 
-        _operations.Add("setr", (a, _, c) => _registers[c] = _registers[a]);
+                break;
+            case "setr":
+                _registers[c] = _registers[a];
 
-        _operations.Add("seti", (a, _, c) => _registers[c] = a);
+                break;
+            case "seti":
+                _registers[c] = a;
 
-        _operations.Add("gtir", (a, b, c) => _registers[c] = a > _registers[b] ? 1 : 0);
+                break;
+            case "gtir":
+                _registers[c] = a > _registers[b] ? 1 : 0;
 
-        _operations.Add("gtri", (a, b, c) => _registers[c] = _registers[a] > b ? 1 : 0);
+                break;
+            case "gtri":
+                _registers[c] = _registers[a] > b ? 1 : 0;
 
-        _operations.Add("gtrr", (a, b, c) => _registers[c] = _registers[a] > _registers[b] ? 1 : 0);
+                break;
+            case "gtrr":
+                _registers[c] = _registers[a] > _registers[b] ? 1 : 0;
 
-        _operations.Add("eqir", (a, b, c) => _registers[c] = a == _registers[b] ? 1 : 0);
+                break;
+            case "eqir":
+                _registers[c] = a == _registers[b] ? 1 : 0;
 
-        _operations.Add("eqri", (a, b, c) => _registers[c] = _registers[a] == b ? 1 : 0);
+                break;
+            case "eqri":
+                _registers[c] = _registers[a] == b ? 1 : 0;
 
-        _operations.Add("eqrr", (a, b, c) => _registers[c] = _registers[a] == _registers[b] ? 1 : 0);
+                break;
+            case "eqrr":
+                _registers[c] = _registers[a] == _registers[b] ? 1 : 0;
+
+                break;
+        }
         // ReSharper restore StringLiteralTypo
     }
 

@@ -10,8 +10,6 @@ public class Part1 : Base
 
     public override string GetAnswer()
     {
-        _cpu.Initialise();
-
         var total = 0;
 
         for (var i = 0; i < Input.Length; i += 4)
