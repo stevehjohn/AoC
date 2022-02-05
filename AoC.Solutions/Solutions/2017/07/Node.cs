@@ -4,7 +4,7 @@ public class Node
 {
     public string Name { get; }
 
-    public int Weight { get; }
+    public int Weight { get; set; }
 
     public Node Parent { get; set; }
 
