@@ -17,7 +17,7 @@ public class Cpu
         _registers = new int[registerCount];
     }
 
-    public void Run(int breakAt = -1)
+    public void Run(int breakAt = -1, string breakOn = "")
     {
         _instructionPointer = 0;
 
@@ -29,6 +29,11 @@ public class Cpu
             }
 
             var instruction = ParseLine(_program[_instructionPointer]);
+
+            if (instruction.OpCode == breakOn)
+            {
+                return;
+            }
 
             _operations[instruction.OpCode].Invoke(instruction.A, instruction.B, instruction.C, _registers);
 
