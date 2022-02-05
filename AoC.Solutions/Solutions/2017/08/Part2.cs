@@ -3,11 +3,11 @@
 namespace AoC.Solutions.Solutions._2017._08;
 
 [UsedImplicitly]
-public class Part1 : Base
+public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        var result = RunProgram();
+        var result = RunProgram(true);
 
         return result.ToString();
     }
