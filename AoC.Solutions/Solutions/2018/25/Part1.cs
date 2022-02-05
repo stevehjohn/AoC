@@ -20,7 +20,30 @@ public class Part1 : Base
 
         foreach (var outer in points)
         {
-            var pairs = new HashSet<((int X, int Y, int Z, int T) Left, (int X, int Y, int Z, int T) Right)>();
+            HashSet<(int X, int Y, int Z, int T)> constellation;
+
+            if (! constellations.Any(c => c.Contains(outer)))
+            {
+                constellation = new HashSet<(int X, int Y, int Z, int T)> { outer };
+                
+                constellations.Add(constellation);
+            }
+            else
+            {
+                var matches = constellations.Where(c => c.Contains(outer)).ToList();
+
+                constellation = matches[0];
+
+                if (matches.Count > 1)
+                {
+                    foreach (var match in matches.Skip(1))
+                    {
+                        match.ToList().ForEach(m => matches[0].Add(m));
+
+                        constellations.Remove(match);
+                    }
+                }
+            }
 
             foreach (var inner in points)
             {
@@ -31,31 +54,8 @@ public class Part1 : Base
 
                 if (GetManhattanDistance(outer, inner) < 4)
                 {
-                    pairs.Add((outer, inner));
+                    constellation.Add(inner);
                 }
-            }
-
-            foreach (var pair in pairs)
-            {
-                if (! constellations.Any(c => c.Contains(pair.Left) || c.Contains(pair.Right)))
-                {
-                    constellations.Add(new HashSet<(int X, int Y, int Z, int T)> { pair.Left, pair.Right });
-
-                    continue;
-                }
-
-                var constellation = constellations.SingleOrDefault(c => c.Contains(pair.Left));
-
-                if (constellation != null)
-                {
-                    constellation.Add(pair.Right);
-
-                    continue;
-                }
-
-                constellation = constellations.Single(c => c.Contains(pair.Right));
-
-                constellation.Add(pair.Left);
             }
         }
 
