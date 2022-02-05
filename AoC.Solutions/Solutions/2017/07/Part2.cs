@@ -11,10 +11,27 @@ public class Part2 : Base
 
         var node = FindUnbalancedNode(RootNode);
 
-        return node.Name;
+        var max = node.Children.Max(c => c.TotalWeight);
+
+        var min = node.Children.Min(c => c.TotalWeight);
+
+        var delta = max - min;
+
+        int correctWeight;
+
+        if (node.Children.Count(c => c.TotalWeight == max) == 1)
+        {
+            correctWeight = node.Children.Single(c => c.TotalWeight == max).Weight - delta;
+        }
+        else
+        {
+            correctWeight = node.Children.Single(c => c.TotalWeight == min).Weight + delta;
+        }
+
+        return correctWeight.ToString();
     }
 
-    private Node FindUnbalancedNode(Node node)
+    private static Node FindUnbalancedNode(Node node)
     {
         foreach (var child in node.Children)
         {
@@ -26,9 +43,9 @@ public class Part2 : Base
             }
         }
 
-        node.Weight += node.Children.Sum(n => n.Weight);
+        node.TotalWeight += node.Children.Sum(n => n.TotalWeight);
 
-        if (node.Children.Select(n => n.Weight).Distinct().Count() > 1)
+        if (node.Children.Select(n => n.TotalWeight).Distinct().Count() > 1)
         {
             return node;
         }
