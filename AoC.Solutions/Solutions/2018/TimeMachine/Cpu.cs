@@ -43,11 +43,6 @@ public class Cpu
 
             var instruction = ParseLine(_program[_instructionPointer]);
 
-            if (instruction.OpCode == _breakOn)
-            {
-                return;
-            }
-
             _operations[instruction.OpCode].Invoke(instruction.A, instruction.B, instruction.C, _registers);
 
             if (_breakAt > -1 && _instructionPointer == _breakAt)
@@ -61,6 +56,11 @@ public class Cpu
             }
 
             _instructionPointer++;
+
+            if (instruction.OpCode == _breakOn)
+            {
+                return;
+            }
         }
     }
 
