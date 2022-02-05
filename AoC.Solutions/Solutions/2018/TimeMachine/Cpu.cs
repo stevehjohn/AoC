@@ -12,6 +12,10 @@ public class Cpu
 
     private int? _instructionPointerBinding;
 
+    private int _breakAt;
+
+    private string _breakOn;
+
     public Cpu(int registerCount)
     {
         _registers = new int[registerCount];
@@ -21,6 +25,15 @@ public class Cpu
     {
         _instructionPointer = 0;
 
+        _breakAt = breakAt;
+
+        _breakOn = breakOn;
+
+        Continue();
+    }
+
+    public void Continue()
+    {
         while (_instructionPointer < _program.Count)
         {
             if (_instructionPointerBinding.HasValue)
@@ -30,14 +43,14 @@ public class Cpu
 
             var instruction = ParseLine(_program[_instructionPointer]);
 
-            if (instruction.OpCode == breakOn)
+            if (instruction.OpCode == _breakOn)
             {
                 return;
             }
 
             _operations[instruction.OpCode].Invoke(instruction.A, instruction.B, instruction.C, _registers);
 
-            if (breakAt > -1 && _instructionPointer == breakAt)
+            if (_breakAt > -1 && _instructionPointer == _breakAt)
             {
                 return;
             }
