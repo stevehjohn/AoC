@@ -7,17 +7,17 @@ public abstract class Base : Solution
 {
     public override string Description => "Regex maze";
 
-    private readonly List<(Point Position, int Distance)> _maze = new();
+    protected readonly List<(Point Position, int Distance)> Maze = new();
 
     private (Point Position, int Distance) _position;
 
-    protected void Solve()
+    protected void BuildMaze()
     {
         var data = Input[0][1..^2];
 
         _position = (new Point(0, 0), 0);
 
-        _maze.Add(_position);
+        Maze.Add(_position);
 
         var stack = new Stack<(Point Position, int Distance)>();
 
@@ -55,16 +55,12 @@ public abstract class Base : Solution
                     break;
             }
         }
-
-        var furthest = _maze.MaxBy(p => p.Distance);
-
-        // Now find shortest path to furthest.
     }
 
     private void AddRoom(int dX, int dY)
     {
         _position = (new Point(_position.Position.X + dX, _position.Position.Y + dY), _position.Distance + 1);
 
-        _maze.Add(_position);
+        Maze.Add(_position);
     }
 }
