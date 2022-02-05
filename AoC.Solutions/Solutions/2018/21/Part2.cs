@@ -23,17 +23,13 @@ public class Part2 : Base
 
         cpu.Run(-1, "eqrr");
 
-        var i = 0;
-
         var last = 0;
 
         while (true)
         {
-            i++;
-
             cpu.Continue();
 
-            var registerValue = cpu.GetRegisters()[register];
+            var registerValue = cpu.GetRegister(register);
 
             if (previousValues.Contains(registerValue))
             {
@@ -43,8 +39,6 @@ public class Part2 : Base
             last = registerValue;
 
             previousValues.Add(registerValue);
-
-            Console.WriteLine($"{i, 5}: {registerValue}");
         }
         
         return last.ToString();
