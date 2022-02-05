@@ -11,8 +11,6 @@ public class Part2 : Base
     {
         var cpu = new Cpu(6);
 
-        cpu.Initialise();
-
         cpu.LoadProgram(Input);
 
         var previousValues = new HashSet<int>();
@@ -40,7 +38,7 @@ public class Part2 : Base
 
             previousValues.Add(registerValue);
         }
-        
+
         return last.ToString();
     }
 }

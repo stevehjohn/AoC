@@ -10,8 +10,6 @@ public class Part2 : Base
     {
         var cpu = new Cpu(6);
 
-        cpu.Initialise();
-
         cpu.LoadProgram(Input);
 
         cpu.SetRegisters(new[] { 1, 0, 0, 0, 0, 0 });
