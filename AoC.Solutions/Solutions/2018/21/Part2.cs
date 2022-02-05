@@ -25,6 +25,8 @@ public class Part2 : Base
 
         var i = 0;
 
+        var last = 0;
+
         while (true)
         {
             i++;
@@ -38,11 +40,13 @@ public class Part2 : Base
                 break;
             }
 
+            last = registerValue;
+
             previousValues.Add(registerValue);
 
             Console.WriteLine($"{i, 5}: {registerValue}");
         }
         
-        return cpu.GetRegisters()[register].ToString();
+        return last.ToString();
     }
 }
