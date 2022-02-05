@@ -9,8 +9,10 @@ public class Part2 : Base
     {
         BuildMaze();
 
-        var result = Maze.Count(p => p.Distance >= 1_000);
+        var result = Maze.Where(p => p.Distance >= 1_000);
 
-        return result.ToString();
+        result = result.DistinctBy(p => p.Position);
+
+        return result.Count().ToString();
     }
 }
