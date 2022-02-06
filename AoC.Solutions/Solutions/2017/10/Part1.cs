@@ -1,5 +1,4 @@
-﻿using System.Runtime.ExceptionServices;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2017._10;
 
@@ -10,23 +9,25 @@ public class Part1 : Base
     {
         var circle = new CircularLinkedList<int>();
 
-        for (var i = 0; i < 256; i++)
+        for (var i = 0; i < 5; i++)
         {
             circle.Add(i);
         }
 
         var current = circle.First;
 
-        var lengths = Input[0].Split(',', StringSplitOptions.TrimEntries).Select(int.Parse).ToList();
+        var lengths = "3, 4, 1, 5".Split(',', StringSplitOptions.TrimEntries).Select(int.Parse).ToList();
 
         var skipLength = 0;
+
+        CircularLinkedListNode<int> node;
 
         foreach (var length in lengths)
         {
             var sectionEnd = current.Skip(length - 1);
 
             // DUMP
-            var node = circle.First;
+            node = circle.First;
 
             do
             {
@@ -48,6 +49,23 @@ public class Part1 : Base
 
             skipLength++;
         }
+
+        // DUMP
+        node = circle.First;
+
+        do
+        {
+            Console.ForegroundColor = node == current ? ConsoleColor.Blue : ConsoleColor.Green;
+
+            Console.Write($"{node.Value, 5} ");
+
+            node = node.Next;
+
+        } while (node != circle.First);
+
+        Console.ForegroundColor = ConsoleColor.Green;
+
+        Console.WriteLine("\n");
 
         var result = circle.First.Value * circle.First.Next.Value;
 
