@@ -9,11 +9,30 @@ public class Part1 : Base
     {
         var circle = new CircularLinkedList<int>();
 
-        for (var i = 0; i < 256; i++)
+        for (var i = 0; i < 5; i++)
         {
             circle.Add(i);
         }
 
-        return "TESTING";
+        var current = circle.First;
+
+        var lengths = "3, 4, 1, 5".Split(',', StringSplitOptions.TrimEntries).Select(int.Parse).ToList();
+
+        var skipLength = 0;
+
+        foreach (var length in lengths)
+        {
+            var sectionEnd = current.Skip(length - 1);
+
+            circle.Swap(current, sectionEnd);
+
+            current = current.Next.Skip(skipLength);
+
+            skipLength++;
+        }
+
+        var result = circle.First.Value * circle.First.Next.Value;
+
+        return result.ToString();
     }
 }
