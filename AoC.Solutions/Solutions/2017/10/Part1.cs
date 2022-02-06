@@ -12,8 +12,15 @@ public class Part1 : Base
         var skipLength = 0;
 
         var position = 0;
+        
+        var data = new int[256];
 
-        var data = RunRound(lengths, ref position, ref skipLength);
+        for (var i = 0; i < 256; i++)
+        {
+            data[i] = i;
+        }
+
+        RunRound(data, lengths, ref position, ref skipLength);
 
         return (data[0] * data[1]).ToString();
     }
