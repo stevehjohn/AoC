@@ -9,14 +9,14 @@ public class Part1 : Base
     {
         var circle = new CircularLinkedList<int>();
 
-        for (var i = 0; i < 5; i++)
+        for (var i = 0; i < 256; i++)
         {
             circle.Add(i);
         }
 
         var current = circle.First;
 
-        var lengths = "3, 4, 1, 5".Split(',', StringSplitOptions.TrimEntries).Select(int.Parse).ToList();
+        var lengths = Input[0].Split(',', StringSplitOptions.TrimEntries).Select(int.Parse).ToList();
 
         var skipLength = 0;
 
