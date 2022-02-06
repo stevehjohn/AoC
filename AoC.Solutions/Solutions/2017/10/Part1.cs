@@ -7,68 +7,47 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var circle = new CircularLinkedList<int>();
+        var lengths = Input[0].Split(',', StringSplitOptions.TrimEntries).Select(int.Parse).ToList();
+
+        var data = new int[256];
 
         for (var i = 0; i < 256; i++)
         {
-            circle.Add(i);
+            data[i] = i;
         }
-
-        var current = circle.First;
-
-        var lengths = Input[0].Split(',', StringSplitOptions.TrimEntries).Select(int.Parse).ToList();
 
         var skipLength = 0;
 
-        CircularLinkedListNode<int> node;
+        var position = 0;
 
         foreach (var length in lengths)
         {
-            var sectionEnd = current.Skip(length - 1);
+            SwapBetween(data, position, length);
 
-            // DUMP
-            node = circle.First;
-
-            do
-            {
-                Console.ForegroundColor = node == current ? ConsoleColor.Blue : node == sectionEnd ? ConsoleColor.Red : ConsoleColor.Green;
-
-                Console.Write($"{node.Value, 5} ");
-
-                node = node.Next;
-
-            } while (node != circle.First);
-
-            Console.ForegroundColor = ConsoleColor.Green;
-
-            Console.WriteLine("\n");
-
-            circle.Swap(current, sectionEnd);
-
-            current = current.Next.Skip(skipLength);
+            position = (position + length + skipLength) % 256;
 
             skipLength++;
         }
 
-        // DUMP
-        node = circle.First;
+        return (data[0] * data[1]).ToString();
+    }
 
-        do
+    private static void SwapBetween(int[] data, int start, int length)
+    {
+        var end = (start + length - 1) % 256;
+
+        for (var i = 0; i < length / 2; i++)
         {
-            Console.ForegroundColor = node == current ? ConsoleColor.Blue : ConsoleColor.Green;
+            (data[start], data[end]) = (data[end], data[start]);
 
-            Console.Write($"{node.Value, 5} ");
+            start = (start + 1) % 256;
 
-            node = node.Next;
+            end--;
 
-        } while (node != circle.First);
-
-        Console.ForegroundColor = ConsoleColor.Green;
-
-        Console.WriteLine("\n");
-
-        var result = circle.First.Value * circle.First.Next.Value;
-
-        return result.ToString();
+            if (end < 0)
+            {
+                end = 255;
+            }
+        }
     }
 }
