@@ -10,14 +10,14 @@ public class Part1 : Base
     {
         var circle = new CircularLinkedList<int>();
 
-        for (var i = 0; i < 5; i++)
+        for (var i = 0; i < 256; i++)
         {
             circle.Add(i);
         }
 
         var current = circle.First;
 
-        var lengths = "3, 4, 1, 5".Split(',', StringSplitOptions.TrimEntries).Select(int.Parse).ToList();
+        var lengths = Input[0].Split(',', StringSplitOptions.TrimEntries).Select(int.Parse).ToList();
 
         var skipLength = 0;
 
@@ -25,24 +25,28 @@ public class Part1 : Base
         {
             var sectionEnd = current.Skip(length - 1);
 
-            circle.Swap(current, sectionEnd);
-
-            current = current.Next.Skip(skipLength);
-
-            skipLength++;
-
             // DUMP
             var node = circle.First;
 
             do
             {
-                Console.Write($"{node.Value} ");
+                Console.ForegroundColor = node == current ? ConsoleColor.Blue : node == sectionEnd ? ConsoleColor.Red : ConsoleColor.Green;
+
+                Console.Write($"{node.Value, 5} ");
 
                 node = node.Next;
 
             } while (node != circle.First);
 
-            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Green;
+
+            Console.WriteLine("\n");
+
+            circle.Swap(current, sectionEnd);
+
+            current = current.Next.Skip(skipLength);
+
+            skipLength++;
         }
 
         var result = circle.First.Value * circle.First.Next.Value;
