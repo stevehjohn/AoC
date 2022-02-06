@@ -14,6 +14,8 @@ public abstract class Base : Solution
 
         var position = new Point();
 
+        var furthest = 0;
+
         foreach (var step in steps)
         {
             var move = GetMovement(step);
@@ -23,9 +25,16 @@ public abstract class Base : Solution
             position.Y += move.Y;
 
             position.Z += move.Z;
+
+            var distance = (Math.Abs(position.X) + Math.Abs(position.Y) + Math.Abs(position.Z)) / 2;
+
+            if (distance > furthest)
+            {
+                furthest = distance;
+            }
         }
 
-        return (position, 0);
+        return (position, furthest);
     }
 
     private static Point GetMovement(string direction)
