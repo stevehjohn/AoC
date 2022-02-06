@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Knot hash";
 
-    protected int[] RunRound(int[] lengths, ref int position, ref int skipLength)
+    public int[] RunRound(int[] lengths, ref int position, ref int skipLength)
     {
         var data = new int[256];
 
