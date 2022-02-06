@@ -2,19 +2,19 @@
 
 public class CircularLinkedList<T>
 {
-    private CircularLinkedListNode<T> _first;
-    
-    private CircularLinkedListNode<T> _last;
+    public CircularLinkedListNode<T> First { get; private set; }
+
+    public CircularLinkedListNode<T> Last { get; private set; }
 
     public CircularLinkedListNode<T> Add(T value)
     {
         var newNode = new CircularLinkedListNode<T>(value);
 
-        if (_first == null)
+        if (First == null)
         {
-            _first = newNode;
+            First = newNode;
 
-            _last = newNode;
+            Last = newNode;
 
             newNode.Next = newNode;
 
@@ -22,18 +22,58 @@ public class CircularLinkedList<T>
         }
         else
         {
-            newNode.Previous = _last;
+            newNode.Previous = Last;
 
-            _last.Next = newNode;
+            Last.Next = newNode;
 
-            _last = newNode;
+            Last = newNode;
 
-            newNode.Next = _first;
+            newNode.Next = First;
 
-            _first.Previous = _last;
+            First.Previous = Last;
         }
 
         return newNode;
+    }
+
+    public void Swap(CircularLinkedListNode<T> left, CircularLinkedListNode<T> right)
+    {
+        var sectionPrevious = left.Previous;
+
+        var sectionNext = right.Next;
+
+        // Detatch
+        left.Previous = null;
+
+        right.Next = null;
+
+        // Reverse
+        var node = left;
+
+        while (node != null)
+        {
+            (node.Previous, node.Next) = (node.Next, node.Previous);
+
+            node = node.Previous;
+        }
+
+        // Reattach
+        if (sectionPrevious == right)
+        {
+            left.Next = right;
+
+            right.Previous = left;
+        }
+        else
+        {
+            sectionPrevious.Next = right;
+
+            right.Previous = sectionPrevious;
+
+            sectionNext.Previous = left;
+
+            left.Next = sectionNext;
+        }
     }
 }
 
@@ -48,5 +88,17 @@ public class CircularLinkedListNode<T>
     public CircularLinkedListNode(T value)
     {
         Value = value;
+    }
+
+    public CircularLinkedListNode<T> Skip(int skip)
+    {
+        var node = this;
+
+        for (var i = 0; i < skip; i++)
+        {
+            node = node.Next;
+        }
+
+        return node;
     }
 }
