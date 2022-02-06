@@ -6,15 +6,8 @@ public abstract class Base : Solution
 {
     public override string Description => "Knot hash";
 
-    public int[] RunRound(int[] lengths, ref int position, ref int skipLength)
+    public int[] RunRound(int[] data, int[] lengths, ref int position, ref int skipLength)
     {
-        var data = new int[256];
-
-        for (var i = 0; i < 256; i++)
-        {
-            data[i] = i;
-        }
-
         foreach (var length in lengths)
         {
             SwapBetween(data, position, length);

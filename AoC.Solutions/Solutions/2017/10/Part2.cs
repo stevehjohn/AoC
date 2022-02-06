@@ -9,17 +9,26 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        var lengths = $"{Input[0]},17,31,73,47,23".Select(c => (int) c).ToArray();
+        var lengthsList = Input[0].Select(c => (int) c).ToList();
+
+        lengthsList.AddRange(new[] { 17, 31, 73, 47, 23 });
+
+        var lengths = lengthsList.ToArray();
 
         var skipLength = 0;
 
         var position = 0;
 
-        int[] data = null;
+        var data = new int[256];
+
+        for (var i = 0; i < 256; i++)
+        {
+            data[i] = i;
+        }
 
         for (var i = 0; i < 64; i++)
         {
-            data = RunRound(lengths, ref position, ref skipLength);
+            data = RunRound(data, lengths, ref position, ref skipLength);
         }
 
         if (data == null)
