@@ -4,8 +4,6 @@ public class CircularLinkedList<T>
 {
     public CircularLinkedListNode<T> First { get; private set; }
 
-    public CircularLinkedListNode<T> Last { get; private set; }
-
     public CircularLinkedListNode<T> Add(T value)
     {
         var newNode = new CircularLinkedListNode<T>(value);
@@ -14,23 +12,19 @@ public class CircularLinkedList<T>
         {
             First = newNode;
 
-            Last = newNode;
-
             newNode.Next = newNode;
 
             newNode.Previous = newNode;
         }
         else
         {
-            newNode.Previous = Last;
-
-            Last.Next = newNode;
-
-            Last = newNode;
+            newNode.Previous = First.Previous;
 
             newNode.Next = First;
 
-            First.Previous = Last;
+            First.Previous.Next = newNode;
+
+            First.Previous = newNode;
         }
 
         return newNode;
