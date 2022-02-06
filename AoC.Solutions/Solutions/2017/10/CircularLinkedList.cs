@@ -32,6 +32,11 @@ public class CircularLinkedList<T>
 
     public void Swap(CircularLinkedListNode<T> left, CircularLinkedListNode<T> right)
     {
+        if (left == right)
+        {
+            return;
+        }
+
         var sectionPrevious = left.Previous;
 
         var sectionNext = right.Next;
@@ -44,11 +49,36 @@ public class CircularLinkedList<T>
         // Reverse
         var node = left;
 
+        var index = 0;
+
+        var firstIndex = -1;
+
         while (node != null)
         {
+            if (node == First)
+            {
+                firstIndex = index;
+            }
+
             (node.Previous, node.Next) = (node.Next, node.Previous);
 
             node = node.Previous;
+
+            index++;
+        }
+
+        if (firstIndex > -1)
+        {
+            First = right;
+
+            firstIndex--;
+
+            while (firstIndex > -1)
+            {
+                First = First.Next;
+
+                firstIndex--;
+            }
         }
 
         // Reattach
@@ -69,6 +99,6 @@ public class CircularLinkedList<T>
             left.Next = sectionNext;
         }
 
-        // TODO: Update First
+        // Update First
     }
 }

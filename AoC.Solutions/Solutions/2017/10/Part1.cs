@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System.Runtime.ExceptionServices;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2017._10;
 
@@ -29,6 +30,19 @@ public class Part1 : Base
             current = current.Next.Skip(skipLength);
 
             skipLength++;
+
+            // DUMP
+            var node = circle.First;
+
+            do
+            {
+                Console.Write($"{node.Value} ");
+
+                node = node.Next;
+
+            } while (node != circle.First);
+
+            Console.WriteLine();
         }
 
         var result = circle.First.Value * circle.First.Next.Value;
