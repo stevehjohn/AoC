@@ -22,4 +22,11 @@ public class Layer
             _direction = -_direction;
         }
     }
+
+    public void ResetScanner()
+    {
+        Position = 0;
+
+        _direction = 1;
+    }
 }
