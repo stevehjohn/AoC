@@ -4,7 +4,9 @@ public class Cpu
 {
     private readonly Dictionary<char, long> _registers = new();
 
-    private long _frequency;
+    private readonly Queue<long> _outputQueue = new();
+
+    public Queue<long> InputQueue { get; set; }
 
     public long RunProgram(string[] program)
     {
@@ -42,13 +44,16 @@ public class Cpu
 
                     break;
                 case "snd":
-                    _frequency = GetRegister(instruction.Register);
+                    _outputQueue.Enqueue(GetRegister(instruction.Register));
 
                     break;
                 case "rcv":
                     if (GetRegister(instruction.Register) != 0)
                     {
-                        return _frequency;
+                        if (InputQueue == null)
+                        {
+                            return _outputQueue.Last();
+                        }
                     }
 
                     break;
@@ -58,7 +63,7 @@ public class Cpu
         }
     }
 
-    private void SetRegister(char name, long value)
+    public void SetRegister(char name, long value)
     {
         if (_registers.ContainsKey(name))
         {
