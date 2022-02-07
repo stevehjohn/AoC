@@ -12,9 +12,33 @@ public class Part2 : Base
     {
         BuildDiskImage();
 
+        IdentifyRegions();
+
         var result = CountRegions();
 
         return result.ToString();
+    }
+
+    private void IdentifyRegions()
+    {
+        var id = 1;
+
+        for (var y = 0; y < 128; y++)
+        {
+            for (var x = 0; x < 128; x++)
+            {
+                if (_disk[x, y] == -1)
+                {
+                    Flood(x, y, id);
+
+                    id++;
+                }
+            }
+        }
+    }
+
+    private void Flood(int x, int y, int id)
+    {
     }
 
     private int CountRegions()
