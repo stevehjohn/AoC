@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Solutions._2017.Common;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2017._10;
 
@@ -20,7 +21,7 @@ public class Part1 : Base
             data[i] = i;
         }
 
-        RunRound(data, lengths, ref position, ref skipLength);
+        KnotHash.RunRound(data, lengths, ref position, ref skipLength);
 
         return (data[0] * data[1]).ToString();
     }
