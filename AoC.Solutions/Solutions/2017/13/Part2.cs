@@ -15,8 +15,6 @@ public class Part2 : Base
         {
             delay++;
 
-            Console.WriteLine(delay);
-
             foreach (var (_, value) in firewall)
             {
                 value.ResetScanner();
