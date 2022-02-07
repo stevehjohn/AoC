@@ -12,14 +12,12 @@ public class Part2 : Base
     {
         BuildDiskImage();
 
-        IdentifyRegions();
-
-        var result = CountRegions();
+        var result = IdentifyRegions();
 
         return result.ToString();
     }
 
-    private void IdentifyRegions()
+    private int IdentifyRegions()
     {
         var id = 1;
 
@@ -35,36 +33,49 @@ public class Part2 : Base
                 }
             }
         }
+
+        return id - 1;
     }
 
     private void Flood(int x, int y, int id)
     {
-    }
+        var queue = new Queue<(int X, int Y)>();
 
-    private int CountRegions()
-    {
-        var distinct = new HashSet<int>();
+        queue.Enqueue((x, y));
 
-        for (var y = 0; y < 128; y++)
+        while (queue.Count > 0)
         {
-            for (var x = 0; x < 128; x++)
+            var current = queue.Dequeue();
+
+            _disk[current.X, current.Y] = id;
+
+            if (current.X > 0 && _disk[current.X - 1, current.Y] == -1)
             {
-                if (_disk[x, y] != 0)
-                {
-                    distinct.Add(_disk[x, y]);
-                }
+                queue.Enqueue((current.X - 1, current.Y));
+            }
+
+            if (current.Y > 0 && _disk[current.X, current.Y - 1] == -1)
+            {
+                queue.Enqueue((current.X, current.Y - 1));
+            }
+
+            if (current.X < 127 && _disk[current.X + 1, current.Y] == -1)
+            {
+                queue.Enqueue((current.X + 1, current.Y));
+            }
+
+            if (current.Y < 127 && _disk[current.X, current.Y + 1] == -1)
+            {
+                queue.Enqueue((current.X, current.Y + 1));
             }
         }
-
-        return distinct.Count;
     }
 
     private void BuildDiskImage()
     {
         for (var y = 0; y < 128; y++)
         {
-            //var rowHash = KnotHash.MakeHash($"{Input[0]}-{y}").ToList();
-            var rowHash = KnotHash.MakeHash($"flqrgnkx-{y}").ToList();
+            var rowHash = KnotHash.MakeHash($"{Input[0]}-{y}").ToList();
 
             var x = 0;
 
