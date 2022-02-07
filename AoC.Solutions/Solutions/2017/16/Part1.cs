@@ -7,8 +7,15 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var result = RunDance(Input[0]);
+        var dancers = new char[16];
 
-        return result;
+        for (var i = 0; i < 16; i++)
+        {
+            dancers[i] = (char) ('a' + i);
+        }
+
+        RunDance(ref dancers, Input[0]);
+
+        return new string(dancers);
     }
 }

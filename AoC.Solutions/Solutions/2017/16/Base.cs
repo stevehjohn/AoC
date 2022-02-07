@@ -6,15 +6,8 @@ public abstract class Base : Solution
 {
     public override string Description => "Permutation promenade";
 
-    protected static string RunDance(string moves)
+    protected static void RunDance(ref char[] dancers, string moves)
     {
-        var dancers = new char[16];
-
-        for (var i = 0; i < 16; i++)
-        {
-            dancers[i] = (char) ('a' + i);
-        }
-
         var steps = moves.Split(',');
 
         foreach (var step in steps)
@@ -59,7 +52,5 @@ public abstract class Base : Solution
                     break;
             }
         }
-
-        return new string(dancers);
     }
 }
