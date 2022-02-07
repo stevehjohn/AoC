@@ -6,6 +6,8 @@ public class Layer
 
     public int Position { get; private set; }
 
+    public int Period => (Depth - 1) * 2;
+
     private int _direction = 1;
 
     public Layer(int depth)
