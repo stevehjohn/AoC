@@ -24,18 +24,14 @@ public class Part1 : Base
 
         while (position <= end)
         {
-            if (! firewall.ContainsKey(position))
+            if (firewall.ContainsKey(position))
             {
-                position++;
+                var layer = firewall[position];
 
-                continue;
-            }
-
-            var layer = firewall[position];
-
-            if (layer.Position == 0)
-            {
-                severity += position * layer.Depth;
+                if (layer.Position == 0)
+                {
+                    severity += position * layer.Depth;
+                }
             }
 
             foreach (var item in firewall)
