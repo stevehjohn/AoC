@@ -42,7 +42,7 @@ public class Point
 
         if (split.Length > 2)
         {
-            point.X = int.Parse(split[2]);
+            point.Z = int.Parse(split[2]);
         }
 
         return point;
