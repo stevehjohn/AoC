@@ -5,42 +5,47 @@ namespace AoC.Solutions.Solutions._2017._12;
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private readonly Dictionary<int, Node> _nodes = new();
-
     public override string GetAnswer()
     {
         ParseInput();
 
-        return "TESTING";
+        var result = CountConnections(Nodes[0]);
+
+        return result.ToString();
     }
 
-    private void ParseInput()
+    private static int CountConnections(Node root)
     {
-        foreach (var line in Input)
+        var visited = new HashSet<Node>();
+
+        var queue = new Queue<Node>();
+
+        queue.Enqueue(root);
+
+        var connections = 1;
+
+        while (queue.Count > 0)
         {
-            var parts = line.Split(" <-> ", StringSplitOptions.TrimEntries);
+            var node = queue.Dequeue();
 
-            var node = new Node(int.Parse(parts[0]));
-
-            _nodes.Add(node.Id, node);
-
-            var connectionsString = parts[1].Split(',', StringSplitOptions.TrimEntries).Select(int.Parse);
-
-            foreach (var connection in connectionsString)
+            if (visited.Contains(node))
             {
-                if (_nodes.ContainsKey(connection))
-                {
-                    node.Connections.Add(_nodes[connection]);
-                }
-                else
-                {
-                    var connectionNode = new Node(connection);
+                continue;
+            }
 
-                    node.Connections.Add(connectionNode);
+            visited.Add(node);
 
-                    _nodes.Add(connectionNode.Id, connectionNode);
+            foreach (var connection in node.Connections)
+            {
+                if (! visited.Contains(connection))
+                {
+                    connections++;
+
+                    queue.Enqueue(connection);
                 }
             }
         }
+
+        return connections;
     }
 }
