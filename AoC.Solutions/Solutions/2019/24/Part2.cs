@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Extensions;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2019._24;
 
@@ -21,7 +22,7 @@ public class Part2 : Base
 
         foreach (var grid in grids)
         {
-            count += CountBits(grid);
+            count += grid.CountBits();
         }
 
         return count.ToString();

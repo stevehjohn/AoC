@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2019._24;
 
@@ -116,22 +117,22 @@ public abstract class Base : Solution
         {
             if (bit == 128)
             {
-                count += CountBits(child & 31);
+                count += (child & 31).CountBits();
             }
 
             if (bit == 2_048)
             {
-                count += CountBits(child & 1_082_401);
+                count += (child & 1_082_401).CountBits();
             }
 
             if (bit == 8_192)
             {
-                count += CountBits(child & 17_318_416);
+                count += (child & 17_318_416).CountBits();
             }
 
             if (bit == 131_072)
             {
-                count += CountBits(child & 32_505_856);
+                count += (child & 32_505_856).CountBits();
             }
         }
 
@@ -156,20 +157,6 @@ public abstract class Base : Solution
             {
                 count += (parent & 131_072) > 0 ? 1 : 0;
             }
-        }
-
-        return count;
-    }
-
-    protected static int CountBits(int value)
-    {
-        var count = 0;
-
-        while (value > 0)
-        {
-            count++;
-
-            value &= value - 1;
         }
 
         return count;
