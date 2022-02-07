@@ -9,7 +9,7 @@ public class Part1 : Base
     {
         var firewall = ParseInput();
 
-        var result = GetSeverity(firewall);
+        var result = GetSeverity(firewall).Severity;
 
         return result.ToString();
     }

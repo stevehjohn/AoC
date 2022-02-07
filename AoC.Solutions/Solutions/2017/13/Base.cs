@@ -6,13 +6,15 @@ public abstract class Base : Solution
 {
     public override string Description => "Firewall run";
 
-    protected static int GetSeverity(Dictionary<int, Layer> firewall)
+    protected static (int Severity, bool Caught) GetSeverity(Dictionary<int, Layer> firewall, int delay = 0)
     {
-        var position = 0;
+        var position = -delay;
 
         var end = firewall.Max(l => l.Key);
 
         var severity = 0;
+
+        var caught = false;
 
         while (position <= end)
         {
@@ -23,6 +25,8 @@ public abstract class Base : Solution
                 if (layer.Position == 0)
                 {
                     severity += position * layer.Depth;
+
+                    caught = true;
                 }
             }
 
@@ -34,7 +38,7 @@ public abstract class Base : Solution
             position++;
         }
 
-        return severity;
+        return (severity, caught);
     }
 
     protected Dictionary<int, Layer> ParseInput()
