@@ -1,20 +1,31 @@
-﻿namespace AoC.Solutions.Solutions._2017._18;
+﻿using System.Collections.Concurrent;
+
+namespace AoC.Solutions.Solutions._2017._18;
 
 public class Cpu
 {
     private readonly Dictionary<char, long> _registers = new();
 
-    private readonly Queue<long> _outputQueue = new();
+    public ConcurrentQueue<long> OutputQueue { get; } = new();
 
-    public Queue<long> InputQueue { get; set; }
+    public ConcurrentQueue<long> InputQueue { get; set; }
+
+    private string[] _program;
+
+    private long _programCounter;
 
     public long RunProgram(string[] program)
     {
-        var programCounter = 0;
+        _program = program;
 
+        return Continue();
+    }
+
+    public long Continue()
+    {
         while (true)
         {
-            var instruction = ParseLine(program[programCounter]);
+            var instruction = ParseLine(_program[_programCounter]);
 
             switch (instruction.OpCode)
             {
@@ -35,31 +46,45 @@ public class Cpu
 
                     break;
                 case "jgz":
-                    if (GetRegister(instruction.Register) > 0)
+                    if ((instruction.Register == '\0' ? instruction.Value : GetRegister(instruction.Register)) > 0)
                     {
-                        programCounter += (int) (instruction.SourceRegister == '\0' ? instruction.Value : GetRegister(instruction.SourceRegister));
+                        _programCounter += instruction.SourceRegister == '\0' ? instruction.Value : GetRegister(instruction.SourceRegister);
 
                         continue;
                     }
 
                     break;
                 case "snd":
-                    _outputQueue.Enqueue(GetRegister(instruction.Register));
+                    OutputQueue.Enqueue(GetRegister(instruction.Register));
 
                     break;
                 case "rcv":
-                    if (GetRegister(instruction.Register) != 0)
+                    if (InputQueue == null)
                     {
-                        if (InputQueue == null)
+                        if (GetRegister(instruction.Register) != 0)
                         {
-                            return _outputQueue.Last();
+                            return OutputQueue.Last();
+                        }
+                    }
+                    else
+                    {
+                        if (InputQueue.Count > 0)
+                        {
+                            if (InputQueue.TryDequeue(out var input))
+                            {
+                                SetRegister(instruction.Register, input);
+                            }
+                        }
+                        else
+                        {
+                            return 0;
                         }
                     }
 
                     break;
             }
 
-            programCounter++;
+            _programCounter++;
         }
     }
 
@@ -87,9 +112,22 @@ public class Cpu
         return 0;
     }
 
-    private static (string OpCode, char Register, char SourceRegister, int Value) ParseLine(string line)
+    private static (string OpCode, char Register, int Literal, char SourceRegister, int Value) ParseLine(string line)
     {
         var parts = line.Split(' ', StringSplitOptions.TrimEntries);
+
+        var register = '\0';
+
+        var literal = 0;
+
+        if (char.IsLetter(parts[1][0]))
+        {
+            register = parts[1][0];
+        }
+        else
+        {
+            literal = int.Parse(parts[1]);
+        }
 
         var sourceRegister = '\0';
 
@@ -97,7 +135,7 @@ public class Cpu
 
         if (parts.Length > 2)
         {
-            if (! char.IsNumber(parts[2][0]) && parts[2][0] != '-')
+            if (char.IsLetter(parts[2][0]))
             {
                 sourceRegister = parts[2][0];
             }
@@ -107,6 +145,6 @@ public class Cpu
             }
         }
 
-        return (parts[0], parts[1][0], sourceRegister, value);
+        return (parts[0], register, literal, sourceRegister, value);
     }
 }
