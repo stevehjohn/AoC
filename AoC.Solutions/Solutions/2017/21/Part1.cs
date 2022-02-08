@@ -1,11 +1,12 @@
-﻿using JetBrains.Annotations;
+﻿using System.Text;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2017._21;
 
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private Dictionary<int, char[,]> _patterns;
+    private Dictionary<string, char[,]> _patterns;
 
     private char[,] _state;
 
@@ -13,7 +14,7 @@ public class Part1 : Base
     {
         _patterns = ParseInput();
 
-        _state = new[,] { { ',', '#', '.' }, { '.', '.', '#' }, { '#', '#', '#' } };
+        _state = new[,] { { '.', '.', '#' }, { '#', '.', '#' }, { '.', '#', '#' } };
 
         RunCycle();
 
@@ -22,12 +23,12 @@ public class Part1 : Base
 
     private void RunCycle()
     {
-        var pattern = _patterns[HashPattern(_state, 3)];
+        var pattern = _patterns[PatternToString(_state, 3)];
     }
 
-    private Dictionary<int, char[,]> ParseInput()
+    private Dictionary<string, char[,]> ParseInput()
     {
-        var patterns = new Dictionary<int, char[,]>();
+        var patterns = new Dictionary<string, char[,]>();
 
         foreach (var line in Input)
         {
@@ -42,33 +43,33 @@ public class Part1 : Base
 
             var pattern = ParsePattern(parts[0], sideLength);
 
-            var result = ParsePattern(parts[1], sideLength);
+            var result = ParsePattern(parts[1], sideLength + 1);
 
-            patterns.TryAdd(HashPattern(pattern, sideLength), result);
-
-            pattern = Rotate(pattern, sideLength);
-
-            patterns.TryAdd(HashPattern(pattern, sideLength), result);
+            patterns.TryAdd(PatternToString(pattern, sideLength), result);
 
             pattern = Rotate(pattern, sideLength);
 
-            patterns.TryAdd(HashPattern(pattern, sideLength), result);
+            patterns.TryAdd(PatternToString(pattern, sideLength), result);
 
             pattern = Rotate(pattern, sideLength);
 
-            patterns.TryAdd(HashPattern(pattern, sideLength), result);
+            patterns.TryAdd(PatternToString(pattern, sideLength), result);
+
+            pattern = Rotate(pattern, sideLength);
+
+            patterns.TryAdd(PatternToString(pattern, sideLength), result);
 
             pattern = Rotate(pattern, sideLength);
 
             pattern = FlipVertical(pattern, sideLength);
 
-            patterns.TryAdd(HashPattern(pattern, sideLength), result);
+            patterns.TryAdd(PatternToString(pattern, sideLength), result);
         
             pattern = FlipVertical(pattern, sideLength);
             
             pattern = FlipHorizontal(pattern, sideLength);
 
-            patterns.TryAdd(HashPattern(pattern, sideLength), result);
+            patterns.TryAdd(PatternToString(pattern, sideLength), result);
         }
 
         return patterns;
@@ -134,18 +135,33 @@ public class Part1 : Base
         return grid;
     }
 
-    private static int HashPattern(char[,] pattern, int sideLength)
+    private static string PatternToString(char[,] pattern, int sideLength)
     {
-        var hash = 0;
+        var builder = new StringBuilder();
 
         for (var y = 0; y < sideLength; y++)
         {
             for (var x = 0; x < sideLength; x++)
             {
-                hash = HashCode.Combine(hash, pattern[x, y]);
+                builder.Append(pattern[x, y]);
             }
         }
 
-        return hash;
+        return builder.ToString();
     }
+
+    //private static int HashPattern(char[,] pattern, int sideLength)
+    //{
+    //    var hash = 0;
+
+    //    for (var y = 0; y < sideLength; y++)
+    //    {
+    //        for (var x = 0; x < sideLength; x++)
+    //        {
+    //            hash = HashCode.Combine(hash, pattern[x, y]);
+    //        }
+    //    }
+
+    //    return hash;
+    //}
 }
