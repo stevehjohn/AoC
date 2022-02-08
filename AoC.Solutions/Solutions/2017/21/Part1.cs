@@ -47,7 +47,7 @@ public class Part1 : Base
         {
             size = 3;
 
-            var newLength = (_state.GetLength(0) / 3 + 1) * 2;
+            var newLength = _state.GetLength(0) / 3 * 4;
 
             newState = new char[newLength, newLength];
         }
