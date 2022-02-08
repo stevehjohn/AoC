@@ -15,9 +15,15 @@ public class Part1 : Base
 
         _state = new[,] { { '.', '.', '#' }, { '#', '.', '#' }, { '.', '#', '#' } };
 
-        for (var i = 0; i < 5; i++)
+        Console.WriteLine("--------\n");
+
+        Dump(_state);
+
+        for (var i = 0; i < 2; i++)
         {
             RunCycle();
+
+            Dump(_state);
         }
 
         return "TESTING";
@@ -66,11 +72,11 @@ public class Part1 : Base
 
             var newTile = _patterns[HashPattern(tile, size)];
 
-            for (var y = 0; y < nextSize; y++)
+            for (var y = 0; y < size + 1; y++)
             {
-                for (var x = 0; x < nextSize; x++)
+                for (var x = 0; x < size + 1; x++)
                 {
-                    newState[i * nextSize + x, i * nextSize + y] = newTile[x, y];
+                    newState[i * (size + 1) + x, i * (size + 1) + y] = newTile[x, y];
                 }
             }
         }
@@ -95,25 +101,35 @@ public class Part1 : Base
 
             var pattern = ParsePattern(parts[0], sideLength);
 
+            Dump(pattern);
+
             var result = ParsePattern(parts[1], sideLength + 1);
 
             patterns.TryAdd(HashPattern(pattern, sideLength), result);
 
             pattern = Rotate(pattern, sideLength);
 
-            patterns.TryAdd(HashPattern(pattern, sideLength), result);
-
-            pattern = Rotate(pattern, sideLength);
+            Dump(pattern);
 
             patterns.TryAdd(HashPattern(pattern, sideLength), result);
 
             pattern = Rotate(pattern, sideLength);
+
+            Dump(pattern);
+
+            patterns.TryAdd(HashPattern(pattern, sideLength), result);
+
+            pattern = Rotate(pattern, sideLength);
+
+            Dump(pattern);
 
             patterns.TryAdd(HashPattern(pattern, sideLength), result);
 
             pattern = Rotate(pattern, sideLength);
 
             pattern = FlipVertical(pattern, sideLength);
+
+            Dump(pattern);
 
             patterns.TryAdd(HashPattern(pattern, sideLength), result);
         
@@ -121,13 +137,30 @@ public class Part1 : Base
             
             pattern = FlipHorizontal(pattern, sideLength);
 
+            Dump(pattern);
+
             patterns.TryAdd(HashPattern(pattern, sideLength), result);
         }
 
         return patterns;
     }
-    
-    public char[,] Rotate(char[,] pattern, int sideLength)
+
+    private void Dump(char[,] tile)
+    {
+        for (var y = 0; y < tile.GetLength(0); y++)
+        {
+            for (var x = 0; x < tile.GetLength(1); x++)
+            {
+                Console.Write(tile[x, y]);
+            }
+
+            Console.WriteLine();
+        }
+
+        Console.WriteLine();
+    }
+
+    private char[,] Rotate(char[,] pattern, int sideLength)
     {
         var newPattern = new char[sideLength, sideLength];
 
@@ -142,7 +175,7 @@ public class Part1 : Base
         return newPattern;
     }
 
-    public char[,] FlipVertical(char[,] pattern, int sideLength)
+    private char[,] FlipVertical(char[,] pattern, int sideLength)
     {
         var newPattern = new char[sideLength, sideLength];
 
@@ -157,7 +190,7 @@ public class Part1 : Base
         return newPattern;
     }
 
-    public char[,] FlipHorizontal(char[,] pattern, int sideLength)
+    private char[,] FlipHorizontal(char[,] pattern, int sideLength)
     {
         var newPattern = new char[sideLength, sideLength];
 
