@@ -5,11 +5,24 @@ namespace AoC.Solutions.Solutions._2017._21;
 [UsedImplicitly]
 public class Part1 : Base
 {
+    private Dictionary<int, char[,]> _patterns;
+
+    private char[,] _state;
+
     public override string GetAnswer()
     {
-        var patterns = ParseInput();
+        _patterns = ParseInput();
+
+        _state = new[,] { { ',', '#', '.' }, { '.', '.', '#' }, { '#', '#', '#' } };
+
+        RunCycle();
 
         return "TESTING";
+    }
+
+    private void RunCycle()
+    {
+        var pattern = _patterns[HashPattern(_state, 3)];
     }
 
     private Dictionary<int, char[,]> ParseInput()
