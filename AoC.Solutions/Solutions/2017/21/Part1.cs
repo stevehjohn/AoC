@@ -1,5 +1,4 @@
-﻿using System.Text;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2017._21;
 
@@ -16,14 +15,67 @@ public class Part1 : Base
 
         _state = new[,] { { '.', '.', '#' }, { '#', '.', '#' }, { '.', '#', '#' } };
 
-        RunCycle();
+        for (var i = 0; i < 5; i++)
+        {
+            RunCycle();
+        }
 
         return "TESTING";
     }
 
     private void RunCycle()
     {
-        var pattern = _patterns[HashPattern(_state, 3)];
+        int size;
+
+        int nextSize;
+
+        char[,] newState;
+
+        if (_state.GetLength(0) % 2 == 0)
+        {
+            size = 2;
+
+            nextSize = 3;
+
+            var newLength = _state.GetLength(0) / 2 * 3;
+
+            newState = new char[newLength, newLength];
+        }
+        else
+        {
+            size = 3;
+
+            nextSize = 2;
+
+            var newLength = (_state.GetLength(0) / 3 + 1) * 2;
+
+            newState = new char[newLength, newLength];
+        }
+
+        var tile = new char[size, size];
+
+        for (var i = 0; i < _state.GetLength(0) / size; i += size)
+        {
+            for (var y = 0; y < size; y++)
+            {
+                for (var x = 0; x < size; x++)
+                {
+                    tile[x, y] = _state[i * size + x, i * size + y];
+                }
+            }
+
+            var newTile = _patterns[HashPattern(tile, size)];
+
+            for (var y = 0; y < nextSize; y++)
+            {
+                for (var x = 0; x < nextSize; x++)
+                {
+                    newState[i * nextSize + x, i * nextSize + y] = newTile[x, y];
+                }
+            }
+        }
+
+        _state = newState;
     }
 
     private Dictionary<int, char[,]> ParseInput()
@@ -134,21 +186,6 @@ public class Part1 : Base
 
         return grid;
     }
-
-    //private static string PatternToString(char[,] pattern, int sideLength)
-    //{
-    //    var builder = new StringBuilder();
-
-    //    for (var y = 0; y < sideLength; y++)
-    //    {
-    //        for (var x = 0; x < sideLength; x++)
-    //        {
-    //            builder.Append(pattern[x, y]);
-    //        }
-    //    }
-
-    //    return builder.ToString();
-    //}
 
     private static int HashPattern(char[,] pattern, int sideLength)
     {
