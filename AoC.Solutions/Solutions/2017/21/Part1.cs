@@ -33,15 +33,11 @@ public class Part1 : Base
     {
         int size;
 
-        int nextSize;
-
         char[,] newState;
 
         if (_state.GetLength(0) % 2 == 0)
         {
             size = 2;
-
-            nextSize = 3;
 
             var newLength = _state.GetLength(0) / 2 * 3;
 
@@ -50,8 +46,6 @@ public class Part1 : Base
         else
         {
             size = 3;
-
-            nextSize = 2;
 
             var newLength = (_state.GetLength(0) / 3 + 1) * 2;
 
