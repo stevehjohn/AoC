@@ -60,23 +60,26 @@ public class Part1 : Base
 
         var tile = new char[size, size];
 
-        for (var i = 0; i < _state.GetLength(0) / size; i += size)
+        for (var iY = 0; iY < _state.GetLength(0) / size; iY++)
         {
-            for (var y = 0; y < size; y++)
+            for (var iX = 0; iX < _state.GetLength(0) / size; iX++)
             {
-                for (var x = 0; x < size; x++)
+                for (var y = 0; y < size; y++)
                 {
-                    tile[x, y] = _state[i * size + x, i * size + y];
+                    for (var x = 0; x < size; x++)
+                    {
+                        tile[x, y] = _state[iX * size + x, iY * size + y];
+                    }
                 }
-            }
 
-            var newTile = _patterns[HashPattern(tile, size)];
+                var newTile = _patterns[HashPattern(tile, size)];
 
-            for (var y = 0; y < size + 1; y++)
-            {
-                for (var x = 0; x < size + 1; x++)
+                for (var y = 0; y < size + 1; y++)
                 {
-                    newState[i * (size + 1) + x, i * (size + 1) + y] = newTile[x, y];
+                    for (var x = 0; x < size + 1; x++)
+                    {
+                        newState[iX * (size + 1) + x, iY * (size + 1) + y] = newTile[x, y];
+                    }
                 }
             }
         }
