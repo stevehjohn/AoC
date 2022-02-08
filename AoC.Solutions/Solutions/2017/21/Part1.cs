@@ -19,7 +19,7 @@ public class Part1 : Base
 
         Dump(_state);
 
-        for (var i = 0; i < 2; i++)
+        for (var i = 0; i < 5; i++)
         {
             RunCycle();
 
@@ -96,47 +96,34 @@ public class Part1 : Base
                 sideLength = 3;
             }
 
-            var pattern = ParsePattern(parts[0], sideLength);
-
-            Dump(pattern);
-
             var result = ParsePattern(parts[1], sideLength + 1);
 
-            patterns.TryAdd(HashPattern(pattern, sideLength), result);
-
-            pattern = Rotate(pattern, sideLength);
-
-            Dump(pattern);
+            var pattern = ParsePattern(parts[0], sideLength);
 
             patterns.TryAdd(HashPattern(pattern, sideLength), result);
 
-            pattern = Rotate(pattern, sideLength);
+            for (var i = 0; i < 4; i++)
+            {
+                // Rotate
+                pattern = Rotate(pattern, sideLength);
 
-            Dump(pattern);
+                patterns.TryAdd(HashPattern(pattern, sideLength), result);
 
-            patterns.TryAdd(HashPattern(pattern, sideLength), result);
+                // Rotated + flip V
+                pattern = FlipVertical(pattern, sideLength);
 
-            pattern = Rotate(pattern, sideLength);
-
-            Dump(pattern);
-
-            patterns.TryAdd(HashPattern(pattern, sideLength), result);
-
-            pattern = Rotate(pattern, sideLength);
-
-            pattern = FlipVertical(pattern, sideLength);
-
-            Dump(pattern);
-
-            patterns.TryAdd(HashPattern(pattern, sideLength), result);
-        
-            pattern = FlipVertical(pattern, sideLength);
+                patterns.TryAdd(HashPattern(pattern, sideLength), result);
             
-            pattern = FlipHorizontal(pattern, sideLength);
+                // Rotated + flip V + H
+                pattern = FlipHorizontal(pattern, sideLength);
 
-            Dump(pattern);
+                patterns.TryAdd(HashPattern(pattern, sideLength), result);
 
-            patterns.TryAdd(HashPattern(pattern, sideLength), result);
+                // Rotated + flip H
+                pattern = FlipVertical(pattern, sideLength);
+
+                patterns.TryAdd(HashPattern(pattern, sideLength), result);
+            }
         }
 
         return patterns;
