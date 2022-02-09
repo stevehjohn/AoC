@@ -22,21 +22,19 @@ public class Part1 : Base
 
     private bool RunCycle()
     {
-        var infected = Infected.SingleOrDefault(i => i.Position.Equals(Position));
-
         var infects = false;
 
-        if (infected != null)
+        if (Infected.Contains(Position))
         {
             Direction = new Point(-Direction.Y, Direction.X);
 
-            Infected.Remove(infected);
+            Infected.Remove(Position);
         }
         else
         {
             Direction = new Point(Direction.Y, -Direction.X);
 
-            Infected.Add(new Cell(new Point(Position)));
+            Infected.Add(new Point(Position));
 
             infects = true;
         }

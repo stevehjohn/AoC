@@ -7,7 +7,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Sporifica virus";
 
-    protected readonly List<Cell> Infected = new();
+    protected readonly HashSet<Point> Infected = new();
 
     protected Point Position;
 
@@ -23,7 +23,7 @@ public abstract class Base : Solution
             {
                 if (line[x] == '#')
                 {
-                    Infected.Add(new Cell(new Point(x, y)));
+                    Infected.Add(new Point(x, y));
                 }
             }
 
