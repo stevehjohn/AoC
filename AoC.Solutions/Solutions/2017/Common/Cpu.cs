@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 
-namespace AoC.Solutions.Solutions._2017._18;
+namespace AoC.Solutions.Solutions._2017.Common;
 
 public class Cpu
 {
