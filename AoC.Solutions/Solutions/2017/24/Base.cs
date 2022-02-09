@@ -16,7 +16,9 @@ public abstract class Base : Solution
 
         foreach (var component in starts)
         {
-            Solve(component.EdgeA == 0 ? component.EdgeB : component.EdgeA, 0, _components.Where(c => c != component).ToList());
+            var edge = component.EdgeA == 0 ? component.EdgeB : component.EdgeA;
+
+            Solve(edge, edge, _components.Where(c => c != component).ToList());
         }
 
         return _maxStrength;
@@ -30,7 +32,7 @@ public abstract class Base : Solution
         {
             if (component.EdgeA == edge || component.EdgeB == edge)
             {
-                Solve(component.EdgeA == edge ? component.EdgeB : component.EdgeA, strength + component.EdgeA + component.EdgeB, remainingEdges.Where(c => c != component).ToList());
+                Solve(component.EdgeA == edge ? component.EdgeB : component.EdgeA, strength + component.EdgeA + component.EdgeB, remainingEdges.Where(c => c != component).ToList(), level + 1);
             }
         }
     }
