@@ -47,14 +47,14 @@ public class Part2 : Base
             Weakened.Remove(Position);
 
             Infected.Add(Position);
+
+            infects = true;
         }
         else
         {
             Direction = new Point(Direction.Y, -Direction.X);
 
             Weakened.Add(new Point(Position));
-
-            infects = true;
         }
 
         Position.X += Direction.X;
