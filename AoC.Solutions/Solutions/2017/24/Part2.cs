@@ -3,13 +3,13 @@
 namespace AoC.Solutions.Solutions._2017._24;
 
 [UsedImplicitly]
-public class Part1 : Base
+public class Part2 : Base
 {
     public override string GetAnswer()
     {
         ParseInput();
 
-        var result = Solve().Strongest;
+        var result = Solve().StrongestLongest;
 
         return result.ToString();
     }

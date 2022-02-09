@@ -10,7 +10,11 @@ public abstract class Base : Solution
 
     private int _maxStrength;
 
-    protected int Solve()
+    private int _maxLength;
+
+    private int _strongestLongest;
+
+    protected (int Strongest, int StrongestLongest) Solve()
     {
         var starts = _components.Where(c => c.EdgeA == 0 || c.EdgeB == 0).ToList();
 
@@ -18,21 +22,33 @@ public abstract class Base : Solution
         {
             var edge = component.EdgeA == 0 ? component.EdgeB : component.EdgeA;
 
-            Solve(edge, edge, _components.Where(c => c != component).ToList());
+            Solve(edge, edge, 0, _components.Where(c => c != component).ToList());
         }
 
-        return _maxStrength;
+        return (_maxStrength, _strongestLongest);
     }
 
-    private void Solve(int edge, int strength, List<(int EdgeA, int EdgeB)> remainingEdges)
+    private void Solve(int edge, int strength, int length, List<(int EdgeA, int EdgeB)> remainingEdges)
     {
         _maxStrength = Math.Max(strength, _maxStrength);
+
+        if (length == _maxLength)
+        {
+            _strongestLongest = Math.Max(strength, _strongestLongest);
+        }
+
+        if (length > _maxLength)
+        {
+            _maxLength = length;
+            
+            _strongestLongest = strength;
+        }
 
         foreach (var component in remainingEdges)
         {
             if (component.EdgeA == edge || component.EdgeB == edge)
             {
-                Solve(component.EdgeA == edge ? component.EdgeB : component.EdgeA, strength + component.EdgeA + component.EdgeB, remainingEdges.Where(c => c != component).ToList(), level + 1);
+                Solve(component.EdgeA == edge ? component.EdgeB : component.EdgeA, strength + component.EdgeA + component.EdgeB, length + 1, remainingEdges.Where(c => c != component).ToList());
             }
         }
     }
