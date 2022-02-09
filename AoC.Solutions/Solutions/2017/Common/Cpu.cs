@@ -37,6 +37,10 @@ public class Cpu
                     SetRegister(instruction.Register, GetRegister(instruction.Register) + (instruction.SourceRegister == '\0' ? instruction.Value : GetRegister(instruction.SourceRegister)));
 
                     break;
+                case "sub":
+                    SetRegister(instruction.Register, GetRegister(instruction.Register) - (instruction.SourceRegister == '\0' ? instruction.Value : GetRegister(instruction.SourceRegister)));
+
+                    break;
                 case "mul":
                     SetRegister(instruction.Register, GetRegister(instruction.Register) * (instruction.SourceRegister == '\0' ? instruction.Value : GetRegister(instruction.SourceRegister)));
 
@@ -47,6 +51,15 @@ public class Cpu
                     break;
                 case "jgz":
                     if ((instruction.Register == '\0' ? instruction.Value : GetRegister(instruction.Register)) > 0)
+                    {
+                        _programCounter += instruction.SourceRegister == '\0' ? instruction.Value : GetRegister(instruction.SourceRegister);
+
+                        continue;
+                    }
+
+                    break;
+                case "jnz":
+                    if ((instruction.Register == '\0' ? instruction.Value : GetRegister(instruction.Register)) != 0)
                     {
                         _programCounter += instruction.SourceRegister == '\0' ? instruction.Value : GetRegister(instruction.SourceRegister);
 
