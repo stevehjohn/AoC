@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Common;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2017._22;
 
@@ -17,5 +18,33 @@ public class Part1 : Base
         }
 
         return infections.ToString();
+    }
+
+    private bool RunCycle()
+    {
+        var infected = Infected.SingleOrDefault(i => i.Position.Equals(Position));
+
+        var infects = false;
+
+        if (infected != null)
+        {
+            Direction = new Point(-Direction.Y, Direction.X);
+
+            Infected.Remove(infected);
+        }
+        else
+        {
+            Direction = new Point(Direction.Y, -Direction.X);
+
+            Infected.Add(new Cell(new Point(Position)));
+
+            infects = true;
+        }
+
+        Position.X += Direction.X;
+
+        Position.Y += Direction.Y;
+
+        return infects;
     }
 }
