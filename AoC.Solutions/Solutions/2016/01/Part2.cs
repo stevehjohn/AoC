@@ -10,7 +10,7 @@ public class Part2 : Base
 
         return result.ToString();
     }
-    
+
     private int GetDistance()
     {
         var steps = Input[0].Split(", ", StringSplitOptions.TrimEntries);
@@ -46,57 +46,62 @@ public class Part2 : Base
 
             y += dY * amount;
 
-            lines.Add((sX, sY, x, y));
+            var newLine = (sX, sY, x, y);
 
-            var intersection = CheckForIntersection(lines);
+            var intersection = CheckForIntersection(lines, newLine);
 
             if (intersection != null)
             {
                 return Math.Abs(intersection.Value.X) + Math.Abs(intersection.Value.Y);
             }
+
+            lines.Add(newLine);
         }
 
         throw new PuzzleException("Solution not found.");
     }
 
-    private static (int X, int Y)? CheckForIntersection(List<(int StartX, int StartY, int EndX, int EndY)> lines)
+    private static (int X, int Y)? CheckForIntersection(List<(int StartX, int StartY, int EndX, int EndY)> lines, (int StartX, int StartY, int EndX, int EndY) newLine)
     {
-        foreach (var line1 in lines)
+        foreach (var line in lines)
         {
-            foreach (var line2 in lines)
+            if (line == newLine)
             {
-                if (line1 == line2)
+                continue;
+            }
+
+            if (line.StartX == line.EndX && newLine.StartX == newLine.EndX)
+            {
+                continue;
+            }
+
+            if (line.StartY == line.EndY && newLine.StartY == newLine.EndY)
+            {
+                continue;
+            }
+
+            if (line.StartX == line.EndX)
+            {
+                if (newLine.StartY > Math.Min(line.StartY, line.EndY) && newLine.StartY < Math.Max(line.StartY, line.EndY)
+                                                                      && Math.Min(newLine.StartY, newLine.EndY) > line.StartY && Math.Max(newLine.StartY, newLine.EndY) < line.StartY)
                 {
-                    continue;
+                    var x = newLine.StartY;
+
+                    var y = line.StartX;
+
+                    return (x, y);
                 }
-
-                if (line1.StartX == line1.EndX && line2.StartX == line2.EndX)
+            }
+            else
+            {
+                if (newLine.StartX > Math.Min(line.StartX, line.EndX) && newLine.StartX < Math.Max(line.StartX, line.EndX)
+                                                                      && Math.Min(newLine.StartX, newLine.EndX) > line.StartY && Math.Max(newLine.StartX, newLine.EndX) < line.StartY)
                 {
-                    continue;
-                }
+                    var x = newLine.StartY;
 
-                if (line1.StartY == line1.EndY && line2.StartY == line2.EndY)
-                {
-                    continue;
-                }
+                    var y = line.StartX;
 
-                if (line1.StartX == line1.EndX)
-                {
-                    if (Math.Min(line2.StartY, line2.EndY) > line1.StartX && Math.Max(line2.StartY, line2.EndY) < line1.StartX)
-                    {
-                        var x = line1.StartX;
-
-                        var y = line2.StartY;
-                    }
-                }
-                else
-                {
-                    if (Math.Min(line2.StartX, line2.EndX) > line1.StartY && Math.Max(line2.StartX, line2.EndX) < line1.StartY)
-                    {
-                        var x = line2.StartX;
-
-                        var y = line1.StartY;
-                    }
+                    return (x, y);
                 }
             }
         }
