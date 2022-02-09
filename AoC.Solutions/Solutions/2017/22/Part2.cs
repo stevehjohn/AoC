@@ -1,50 +1,66 @@
-﻿//using AoC.Solutions.Common;
-//using JetBrains.Annotations;
+﻿using AoC.Solutions.Common;
+using JetBrains.Annotations;
 
-//namespace AoC.Solutions.Solutions._2017._22;
+namespace AoC.Solutions.Solutions._2017._22;
 
-//[UsedImplicitly]
-//public class Part2 : Base
-//{
-//    public override string GetAnswer()
-//    {
-//        ParseInput();
+[UsedImplicitly]
+public class Part2 : Base
+{
+    protected readonly HashSet<Point> Weakened = new();
+    
+    protected readonly HashSet<Point> Flagged = new();
 
-//        var infections = 0;
+    public override string GetAnswer()
+    {
+        ParseInput();
 
-//        for (var i = 0; i < 10_000_000; i++)
-//        {
-//            infections += RunCycle() ? 1 : 0;
-//        }
+        var infections = 0;
 
-//        return infections.ToString();
-//    }
+        for (var i = 0; i < 10_000_000; i++)
+        {
+            infections += RunCycle() ? 1 : 0;
+        }
 
-//    private bool RunCycle()
-//    {
-//        var infected = Infected.SingleOrDefault(i => i.Position.Equals(Position));
+        return infections.ToString();
+    }
 
-//        var infects = false;
+    private bool RunCycle()
+    {
+        var infects = false;
 
-//        if (infected != null)
-//        {
-//            Direction = new Point(-Direction.Y, Direction.X);
+        if (Infected.Contains(Position))
+        {
+            Direction = new Point(-Direction.Y, Direction.X);
 
-//            Infected.Remove(infected);
-//        }
-//        else
-//        {
-//            Direction = new Point(Direction.Y, -Direction.X);
+            Infected.Remove(Position);
 
-//            Infected.Add(new Cell(new Point(Position)));
+            Flagged.Add(Position);
+        }
+        else if (Flagged.Contains(Position))
+        {
+            Direction = new Point(-Direction.X, -Direction.Y);
 
-//            infects = true;
-//        }
+            Flagged.Remove(Position);
+        }
+        else if (Weakened.Contains(Position))
+        {
+            Weakened.Remove(Position);
 
-//        Position.X += Direction.X;
+            Infected.Add(Position);
+        }
+        else
+        {
+            Direction = new Point(Direction.Y, -Direction.X);
 
-//        Position.Y += Direction.Y;
+            Weakened.Add(new Point(Position));
 
-//        return infects;
-//    }
-//}
+            infects = true;
+        }
+
+        Position.X += Direction.X;
+
+        Position.Y += Direction.Y;
+
+        return infects;
+    }
+}
