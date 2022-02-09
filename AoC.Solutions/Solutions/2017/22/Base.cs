@@ -7,7 +7,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Sporifica virus";
 
-    private readonly List<Point> _infected = new();
+    private readonly List<Cell> _infected = new();
 
     private Point _position;
 
@@ -15,7 +15,7 @@ public abstract class Base : Solution
 
     protected bool RunCycle()
     {
-        var infected = _infected.SingleOrDefault(i => i.Equals(_position));
+        var infected = _infected.SingleOrDefault(i => i.Position.Equals(_position));
 
         var infects = false;
 
@@ -29,7 +29,7 @@ public abstract class Base : Solution
         {
             _direction = new Point(_direction.Y, -_direction.X);
 
-            _infected.Add(new Point(_position));
+            _infected.Add(new Cell(new Point(_position)));
 
             infects = true;
         }
@@ -51,7 +51,7 @@ public abstract class Base : Solution
             {
                 if (line[x] == '#')
                 {
-                    _infected.Add(new Point(x, y));
+                    _infected.Add(new Cell(new Point(x, y)));
                 }
             }
 
