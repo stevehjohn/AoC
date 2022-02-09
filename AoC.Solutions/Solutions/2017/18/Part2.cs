@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Solutions._2017.Common;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2017._18;
 
