@@ -10,8 +10,8 @@ public class Part1 : Base
     {
         var cpu = new Cpu();
 
-        cpu.RunProgram(Input);
+        var result = cpu.RunProgram(Input);
 
-        return "TESTING";
+        return result.ToString();
     }
 }

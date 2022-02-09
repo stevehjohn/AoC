@@ -23,8 +23,15 @@ public class Cpu
 
     public long Continue()
     {
+        var mulCount = 0;
+
         while (true)
         {
+            if (_programCounter >= _program.Length)
+            {
+                return mulCount;
+            }
+
             var instruction = ParseLine(_program[_programCounter]);
 
             switch (instruction.OpCode)
@@ -42,6 +49,8 @@ public class Cpu
 
                     break;
                 case "mul":
+                    mulCount++;
+
                     SetRegister(instruction.Register, GetRegister(instruction.Register) * (instruction.SourceRegister == '\0' ? instruction.Value : GetRegister(instruction.SourceRegister)));
 
                     break;
