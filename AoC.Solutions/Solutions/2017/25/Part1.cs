@@ -4,11 +4,42 @@ public class Part1 : Base
 {
     private readonly Dictionary<char, State> _states = new();
 
+    private readonly HashSet<int> _ones = new();
+
+    private int _position;
+
     public override string GetAnswer()
     {
         var parameters = ParseInput();
 
-        return "TESTING";
+        var state = parameters.StartState;
+
+        for (var i = 0; i < parameters.Steps; i++)
+        {
+            state = RunState(state);
+        }
+
+        return _ones.Count.ToString();
+    }
+
+    private char RunState(char state)
+    {
+        var stateDefinition = _states[state];
+
+        var action = _ones.Contains(_position) ? stateDefinition.OneAction : stateDefinition.ZeroAction;
+
+        if (action.Write == 1)
+        {
+            _ones.Add(_position);
+        }
+        else
+        {
+            _ones.Remove(_position);
+        }
+
+        _position += action.Direction;
+
+        return action.NextState;
     }
 
     private (char StartState, int Steps) ParseInput()
