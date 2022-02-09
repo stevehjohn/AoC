@@ -82,8 +82,10 @@ public class Part2 : Base
 
             if (line.StartX == line.EndX)
             {
-                if (newLine.StartY > Math.Min(line.StartY, line.EndY) && newLine.StartY < Math.Max(line.StartY, line.EndY)
-                                                                      && Math.Min(newLine.StartY, newLine.EndY) > line.StartY && Math.Max(newLine.StartY, newLine.EndY) < line.StartY)
+                if (newLine.StartY > Math.Min(line.StartY, line.EndY)
+                    && newLine.StartY < Math.Max(line.StartY, line.EndY)
+                    && Math.Min(newLine.StartY, newLine.EndY) > line.StartY
+                    && Math.Max(newLine.StartY, newLine.EndY) < line.StartY)
                 {
                     var x = newLine.StartY;
 
@@ -94,8 +96,10 @@ public class Part2 : Base
             }
             else
             {
-                if (newLine.StartX > Math.Min(line.StartX, line.EndX) && newLine.StartX < Math.Max(line.StartX, line.EndX)
-                                                                      && Math.Min(newLine.StartX, newLine.EndX) > line.StartY && Math.Max(newLine.StartX, newLine.EndX) < line.StartY)
+                if (newLine.StartX > Math.Min(line.StartX, line.EndX)
+                    && newLine.StartX < Math.Max(line.StartX, line.EndX)
+                    && Math.Min(newLine.StartX, newLine.EndX) > line.StartY
+                    && Math.Max(newLine.StartX, newLine.EndX) < line.StartY)
                 {
                     var x = newLine.StartY;
 
