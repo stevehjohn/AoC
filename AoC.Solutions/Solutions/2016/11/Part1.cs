@@ -76,7 +76,7 @@ public class Part1 : Base
         {
             // Try move 2 things up
 
-            // Tru move 1 thing up
+            // Try move 1 thing up
         }
 
         if (floor > 0)
@@ -118,11 +118,13 @@ public class Part1 : Base
 
         for (var f = 0; f < 3; f++)
         {
-            var floor = 0x100000000 + f;
+            var floor = 0x100000000 << f;
+
+            Console.WriteLine(floor);
 
             if (f == 0)
             {
-                floor |= 0x1000000000000;
+                //floor |= 0x1000000000000;
             }
 
             var line = Input[f][(f == 1 ? 26 : 25)..];
@@ -157,17 +159,17 @@ public class Part1 : Base
 
                 if (item.Length > 1)
                 {
-                    code |= code << 16;
+                    code <<= 16;
                 }
 
                 floor |= code;
 
-                //Console.WriteLine($"{items[i]}    {Convert.ToString(code, 2)}");
+                Console.WriteLine($"{items[i]}    {Convert.ToString(code, 2)}");
             }
 
             floors[f] = floor;
 
-            //Console.WriteLine($"F{f}: {Convert.ToString(floors[f], 2)}");
+            Console.WriteLine($"F{f}: {Convert.ToString(floors[f], 2)}");
         }
 
         return floors;
