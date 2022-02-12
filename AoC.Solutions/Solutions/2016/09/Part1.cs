@@ -30,6 +30,8 @@ public class Part1 : Base
                     decompressed.Append(input[..parameters[0]]);
                 }
 
+                input = input[parameters[0]..];
+
                 continue;
             }
 
