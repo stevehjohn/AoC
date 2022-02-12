@@ -19,9 +19,9 @@ public class Part1 : Base
     {
         var visited = new HashSet<int>();
 
-        var queue = new Queue<long[]>();
+        var queue = new PriorityQueue<long[], int>();
 
-        queue.Enqueue(initialState);
+        queue.Enqueue(initialState, 0);
 
         visited.Add(HashState(initialState));
 
@@ -44,7 +44,7 @@ public class Part1 : Base
 
                 if (! visited.Contains(nextHash))
                 {
-                    queue.Enqueue(next);
+                    queue.Enqueue(next, steps);
 
                     visited.Add(nextHash);
                 }
