@@ -72,6 +72,9 @@ public class Part1 : Base
 
         var states = new List<long[]>();
 
+        // 0xFFFF0000 to mask off chips
+        // 0xFFFF to mask off generators
+
         if (floor < 3)
         {
             // Try move 2 things up
@@ -124,7 +127,7 @@ public class Part1 : Base
 
             if (f == 0)
             {
-                //floor |= 0x1000000000000;
+                floor |= 0x1000000000000;
             }
 
             var line = Input[f][(f == 1 ? 26 : 25)..];
