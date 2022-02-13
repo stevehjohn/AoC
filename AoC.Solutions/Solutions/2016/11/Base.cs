@@ -155,7 +155,7 @@ public abstract class Base : Solution
         return states;
     }
 
-    private static void DumpState(long[] state)
+    protected static void DumpState(long[] state)
     {
         foreach (var item in state)
         {
