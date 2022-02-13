@@ -30,4 +30,12 @@ public static class IntExtensions
 
         return count;
     }
+
+    public static void Repetitions(this int times, Action action)
+    {
+        for (var i = 0; i < times; i++)
+        {
+            action();
+        }
+    }
 }

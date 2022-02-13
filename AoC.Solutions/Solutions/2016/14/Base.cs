@@ -1,5 +1,6 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2016._14;
@@ -22,10 +23,7 @@ public abstract class Base : Solution
         {
             var hash = MD5.HashData(Encoding.ASCII.GetBytes($"{salt}{i}"));
 
-            for (var h = 0; h < additionalHashes; h++)
-            {
-                hash = MD5.HashData(Encoding.ASCII.GetBytes(Convert.ToHexString(hash).ToLower()));
-            }
+            additionalHashes.Repetitions(() => hash = MD5.HashData(Encoding.ASCII.GetBytes(Convert.ToHexString(hash).ToLower())));
 
             var hex = Convert.ToHexString(hash);
 
