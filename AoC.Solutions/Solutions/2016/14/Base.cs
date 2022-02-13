@@ -38,17 +38,19 @@ public abstract class Base : Solution
 
             if (character != '\0')
             {
-                var matches = queued.Where(q => q.Character == character && q.Index >= i - 1_000).ToList();
+                var matches = queued.Where(q => q.Character == character && q.Index >= i - 1_000 && q.Index < i).ToList();
 
                 if (matches.Count > 0)
                 {
+                    var previousFound = found;
+
                     found += matches.Count;
 
-                    queued.RemoveAll(q => q.Character == character && q.Index >= i - 1_000);
+                    queued.RemoveAll(q => q.Character == character && q.Index >= i - 1_000 && q.Index < i);
 
                     if (found > 64)
                     {
-                        return i;
+                        return matches[63 - previousFound].Index;
                     }
                 }
             }
