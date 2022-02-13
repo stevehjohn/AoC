@@ -9,11 +9,7 @@ public class Part2 : Base
     {
         var state = ParseInput();
 
-        DumpState(state);
-
         state[0] |= 32 | 64 | (32 << 16) | (64 << 16);
-        
-        DumpState(state);
 
         var result = Solve(state);
 
