@@ -24,7 +24,7 @@ public abstract class Base : Solution
 
             for (var h = 0; h < additionalHashes; h++)
             {
-                hash = MD5.HashData(hash);
+                hash = MD5.HashData(Encoding.ASCII.GetBytes(Convert.ToHexString(hash).ToLower()));
             }
 
             var hex = Convert.ToHexString(hash);
@@ -40,15 +40,15 @@ public abstract class Base : Solution
 
             if (character != '\0')
             {
-                var matches = queued.Count(q => q.Character == character && q.Index >= i - 1_000);
+                var matches = queued.Where(q => q.Character == character && q.Index >= i - 1_000).ToList();
 
-                if (matches > 0)
+                if (matches.Count > 0)
                 {
-                    found += matches;
+                    found += matches.Count;
 
                     queued.RemoveAll(q => q.Character == character && q.Index >= i - 1_000);
 
-                    if (found >= 64)
+                    if (found > 64)
                     {
                         return i;
                     }

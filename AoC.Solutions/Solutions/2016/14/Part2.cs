@@ -7,7 +7,7 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        var result = RunHashes(2017);
+        var result = RunHashes(2016);
 
         return result.ToString();
     }
