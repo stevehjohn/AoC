@@ -3,7 +3,7 @@
 namespace AoC.Solutions.Solutions._2016._14;
 
 [UsedImplicitly]
-public class Part1 : Base
+public class Part2 : Base
 {
     public override string GetAnswer()
     {
