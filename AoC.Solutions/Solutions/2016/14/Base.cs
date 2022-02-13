@@ -8,7 +8,7 @@ public abstract class Base : Solution
 {
     public override string Description => "One time pad";
 
-    protected int RunHashes()
+    protected int RunHashes(int additionalHashes = 0)
     {
         var salt = Input[0];
 
@@ -21,6 +21,11 @@ public abstract class Base : Solution
         while (true)
         {
             var hash = MD5.HashData(Encoding.ASCII.GetBytes($"{salt}{i}"));
+
+            for (var h = 0; h < additionalHashes; h++)
+            {
+                hash = MD5.HashData(hash);
+            }
 
             var hex = Convert.ToHexString(hash);
 
@@ -45,15 +50,13 @@ public abstract class Base : Solution
 
                     if (found >= 64)
                     {
-                        break;
+                        return i;
                     }
                 }
             }
 
             i++;
         }
-
-        return i;
     }
 
     private static char GetTripleRepeatedCharacter(string hex)
