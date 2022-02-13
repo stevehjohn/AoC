@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Extensions;
+﻿using AoC.Solutions.Common;
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2016._13;
@@ -35,5 +36,69 @@ public abstract class Base : Solution
                 }
             }
         }
+    }
+
+    protected int Solve(int destinationX = 0, int destinationY = 0)
+    {
+        var queue = new PriorityQueue<(Point Position, int Steps), int>();
+
+        queue.Enqueue((new Point(1, 1), 0), 0);
+
+        var visited = new HashSet<Point> { new(1, 1) };
+
+        var steps = 0;
+
+        var locations = 0;
+
+        while (queue.Count > 0)
+        {
+            var item = queue.Dequeue();
+
+            var position = item.Position;
+
+            if (destinationX > 0)
+            {
+                if (position.X == destinationX && position.Y == destinationY)
+                {
+                    steps = item.Steps;
+
+                    break;
+                }
+            }
+            else if (item.Steps <= 50)
+            {
+                locations++;
+            }
+
+            if (position.Y > 0 && ! Maze[position.X, position.Y - 1] && ! visited.Contains(new Point(position.X, position.Y - 1)))
+            {
+                queue.Enqueue((new Point(position.X, position.Y - 1), item.Steps + 1), item.Steps + 1);
+
+                visited.Add(new Point(position.X, position.Y - 1));
+            }
+
+            if (position.X < Width - 1 && ! Maze[position.X + 1, position.Y] && ! visited.Contains(new Point(position.X + 1, position.Y)))
+            {
+                queue.Enqueue((new Point(position.X + 1, position.Y), item.Steps + 1), item.Steps + 1);
+
+                visited.Add(new Point(position.X + 1, position.Y));
+            }
+
+            if (position.Y < Height - 1 && ! Maze[position.X, position.Y + 1] && ! visited.Contains(new Point(position.X, position.Y + 1)))
+            {
+                queue.Enqueue((new Point(position.X, position.Y + 1), item.Steps + 1), item.Steps + 1);
+
+                visited.Add(new Point(position.X, position.Y + 1));
+            }
+
+            if (position.X > 0 && ! Maze[position.X - 1, position.Y] && ! visited.Contains(new Point(position.X - 1, position.Y)))
+            {
+                queue.Enqueue((new Point(position.X - 1, position.Y), item.Steps + 1), item.Steps + 1);
+
+                visited.Add(new Point(position.X - 1, position.Y));
+            }
+        }
+
+        return destinationX > 0 ? steps : locations;
     }
 }
