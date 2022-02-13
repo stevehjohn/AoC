@@ -17,20 +17,11 @@ public abstract class Base : Solution
 
         visited.Add(HashState(initialState));
 
-        var max = 0L;
-
         while (queue.Count > 0)
         {
             var item = queue.Dequeue();
 
             var state = item.State;
-
-            if ((state[3] & 0xFFFFFFFF) > max)
-            {
-                Console.WriteLine(Convert.ToString(state[3] & 0xFFFFFFFF, 2));
-
-                max = state[3] & 0xFFFFFFFF;
-            }
 
             if ((state[0] & 0xFFFFFFFF) == 0 && (state[1] & 0xFFFFFFFF) == 0 && (state[2] & 0xFFFFFFFF) == 0)
             {
@@ -45,7 +36,7 @@ public abstract class Base : Solution
 
                 if (! visited.Contains(nextHash))
                 {
-                    queue.Enqueue((next, item.Steps + 1), item.Steps + 1);
+                    queue.Enqueue((next, item.Steps + 1), -(item.Steps + 1));
 
                     visited.Add(nextHash);
                 }
@@ -73,10 +64,6 @@ public abstract class Base : Solution
         // 0xFFFF to mask off generators
         var items = GetBits(state[floor] & 0xFFFFFFFF);
 
-        //Console.WriteLine("Original:");
-
-        //DumpState(state);
-
         if (floor < 3)
         {
             // Try move 2 things up
@@ -84,7 +71,6 @@ public abstract class Base : Solution
             {
                 for (var j = i + 1; j < items.Length; j++)
                 {
-                    // TODO: Check validity
                     var newState = CopyState(state, floor + 1);
 
                     newState[floor] ^= items[i];
@@ -100,7 +86,6 @@ public abstract class Base : Solution
             // Try move 1 thing up
             for (var i = 0; i < items.Length; i++)
             {
-                // TODO: Check validity
                 var newState = CopyState(state, floor + 1);
 
                 newState[floor] ^= items[i];
@@ -116,7 +101,6 @@ public abstract class Base : Solution
             // Try move 1 thing down
             for (var i = 0; i < items.Length; i++)
             {
-                // TODO: Check validity
                 var newState = CopyState(state, floor - 1);
 
                 newState[floor] ^= items[i];
@@ -126,48 +110,25 @@ public abstract class Base : Solution
                 states.Add(newState);
             }
 
-            // Try move 2 things down (necessary?)
-            //for (var i = 0; i < items.Length - 1; i++)
-            //{
-            //    for (var j = i + 1; j < items.Length; j++)
-            //    {
-            //        // TODO: Check validity
-            //        var newState = CopyState(state, floor - 1);
+            // Try move 2 things down
+            for (var i = 0; i < items.Length - 1; i++)
+            {
+                for (var j = i + 1; j < items.Length; j++)
+                {
+                    var newState = CopyState(state, floor - 1);
 
-            //        newState[floor] ^= items[i];
-            //        newState[floor] ^= items[j];
+                    newState[floor] ^= items[i];
+                    newState[floor] ^= items[j];
 
-            //        newState[floor - 1] |= items[i];
-            //        newState[floor - 1] |= items[j];
+                    newState[floor - 1] |= items[i];
+                    newState[floor - 1] |= items[j];
 
-            //        states.Add(newState);
-            //    }
-            //}
+                    states.Add(newState);
+                }
+            }
         }
-
-        //Console.WriteLine("New:");
-
-        //foreach (var state1 in states)
-        //{
-        //    DumpState(state1);
-        //}
 
         return states;
-    }
-
-    protected static void DumpState(long[] state)
-    {
-        foreach (var item in state)
-        {
-            for (var i = 31; i >= 0; i--)
-            {
-                Console.Write((item & (1L << i)) > 0 ? '1' : '0');
-            }
-
-            Console.WriteLine();
-        }
-
-        Console.WriteLine();
     }
 
     private static long[] GetBits(long value)
@@ -220,8 +181,6 @@ public abstract class Base : Solution
         {
             var floor = 0x100000000 << f;
 
-            Console.WriteLine(floor);
-
             if (f == 0)
             {
                 floor |= 0x1000000000000;
@@ -263,13 +222,9 @@ public abstract class Base : Solution
                 }
 
                 floor |= code;
-
-                Console.WriteLine($"{items[i]}    {Convert.ToString(code, 2)}");
             }
 
             floors[f] = floor;
-
-            Console.WriteLine($"F{f}: {Convert.ToString(floors[f], 2)}");
         }
 
         return floors;
