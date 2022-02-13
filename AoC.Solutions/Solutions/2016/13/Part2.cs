@@ -3,7 +3,7 @@
 namespace AoC.Solutions.Solutions._2016._13;
 
 [UsedImplicitly]
-public class Part1 : Base
+public class Part2 : Base
 {
     public override string GetAnswer()
     {
@@ -13,7 +13,7 @@ public class Part1 : Base
 
         BuildMaze();
 
-        var result = Solve(31, 39);
+        var result = Solve();
 
         return result.ToString();
     }
