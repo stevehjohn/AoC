@@ -1,7 +1,7 @@
-﻿using System.Security.Cryptography;
-using System.Text;
-using AoC.Solutions.Common;
+﻿using AoC.Solutions.Common;
 using JetBrains.Annotations;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace AoC.Solutions.Solutions._2016._17;
 
@@ -27,8 +27,9 @@ public class Part1 : Base
         {
             var item = queue.Dequeue();
 
-            if (item.Position.X == 3 && item.Position.Y == 0)
+            if (item.Position.X == 3 && item.Position.Y == 3)
             {
+                Console.WriteLine(item.Passcode);
                 return item.Steps;
             }
 
