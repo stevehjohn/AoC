@@ -9,27 +9,22 @@ public class Part2 : Base
     {
         var ranges = Input.Select(l => l.Split('-')).Select(s => (Low: uint.Parse(s[0]), High: uint.Parse(s[1]))).OrderBy(r => r.Low).ToList();
 
-        var lowest = ranges[0].High + 1;
+        var allowed = 0u;
 
-        var found = true;
-
-        while (found)
+        for (var i = 0L; i < uint.MaxValue; i++)
         {
-            found = false;
+            var match = ranges.FirstOrDefault(r => i >= r.Low && i <= r.High);
 
-            foreach (var range in ranges)
+            if (match.High == 0)
             {
-                if (lowest >= range.Low && lowest <= range.High)
-                {
-                    lowest = range.High + 1;
-
-                    found = true;
-
-                    break;
-                }
+                allowed++;
+            }
+            else
+            {
+                i = match.High;
             }
         }
 
-        return lowest.ToString();
+        return allowed.ToString();
     }
 }
