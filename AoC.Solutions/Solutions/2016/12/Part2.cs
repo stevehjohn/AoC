@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Solutions._2016.Common;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2016._12;
 
@@ -7,7 +8,7 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        var result = RunProgram(1);
+        var result = Cpu.RunProgram(Input, new Dictionary<char, int> { { 'c', 1 } });
 
         return result.ToString();
     }
