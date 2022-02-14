@@ -58,10 +58,60 @@ public class Cpu
 
                     if (value != 0)
                     {
-                        programCounter += int.Parse(parts[2]);
+                        if (char.IsLetter(parts[2][0]))
+                        {
+                            programCounter += GetRegisterValue(registers, parts[2][0]);
+                        }
+                        else
+                        {
+                            programCounter += int.Parse(parts[2]);
+                        }
 
                         continue;
                     }
+
+                    break;
+                case "tgl":
+                    if (char.IsLetter(parts[1][0]))
+                    {
+                        value = GetRegisterValue(registers, parts[1][0]);
+                    }
+                    else
+                    {
+                        value = int.Parse(parts[1]);
+                    }
+
+                    if (programCounter + value >= input.Length)
+                    {
+                        break;
+                    }
+
+                    var toToggle = input[programCounter + value][..3];
+
+                    var toggled = string.Empty;
+
+                    switch (toToggle)
+                    {
+                        case "inc":
+                            toggled = "dec";
+
+                            break;
+                        case "dec":
+                        case "tgl":
+                            toggled = "inc";
+
+                            break;
+                        case "jnz":
+                            toggled = "cpy";
+
+                            break;
+                        case "cpy":
+                            toggled = "jnz";
+
+                            break;
+                    }
+
+                    input[programCounter + value] = $"{toggled} {input[programCounter + value][4..]}";
 
                     break;
             }
