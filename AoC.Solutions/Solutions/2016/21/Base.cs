@@ -7,11 +7,8 @@ public abstract class Base : Solution
 {
     public override string Description => "Scrambled letters and hash";
 
-    protected string Solve(string[] instructions)
+    protected static string Solve(string state, string[] instructions, bool reverse = false)
     {
-        // ReSharper disable once StringLiteralTypo
-        var state = "abcdefgh";
-
         foreach (var line in instructions)
         {
             var parts = line.Split(' ', StringSplitOptions.TrimEntries);
@@ -32,15 +29,29 @@ public abstract class Base : Solution
                 case "rotate":
                     if (parts[1] == "left")
                     {
-                        state = RotateLeft(state, int.Parse(parts[2]));
+                        if (reverse)
+                        {
+                            state = RotateRight(state, int.Parse(parts[2]));
+                        }
+                        else
+                        {
+                            state = RotateLeft(state, int.Parse(parts[2]));
+                        }
                     }
                     else if (parts[1] == "right")
                     {
-                        state = RotateRight(state, int.Parse(parts[2]));
+                        if (reverse)
+                        {
+                            state = RotateLeft(state, int.Parse(parts[2]));
+                        }
+                        else
+                        {
+                            state = RotateRight(state, int.Parse(parts[2]));
+                        }
                     }
                     else
                     {
-                        state = RotateByIndexOf(state, parts[6][0]);
+                        state = RotateByIndexOf(state, parts[6][0], reverse);
                     }
 
                     break;
@@ -49,7 +60,14 @@ public abstract class Base : Solution
 
                     break;
                 case "move":
-                    state = Move(state, int.Parse(parts[2]), int.Parse(parts[5]));
+                    if (reverse)
+                    {
+                        state = Move(state, int.Parse(parts[5]), int.Parse(parts[2]));
+                    }
+                    else
+                    {
+                        state = Move(state, int.Parse(parts[2]), int.Parse(parts[5]));
+                    }
 
                     break;
             }
@@ -73,22 +91,31 @@ public abstract class Base : Solution
         var character = state[a];
 
         state = $"{state[..a]}{state[b]}{state[(a + 1)..]}";
-        
+
         state = $"{state[..b]}{character}{state[(b + 1)..]}";
 
         return state;
     }
 
-    private static string RotateByIndexOf(string state, char letter)
+    private static string RotateByIndexOf(string state, char letter, bool reverse)
     {
         var index = state.IndexOf(letter);
 
-        state = RotateRight(state, index + 1);
-
-        if (index >= 4)
+        if (reverse)
         {
-            state = RotateRight(state, 1);
+            index = new[] { 1, 3, 5, 7, 2, 4, 6, 0 }[index];
         }
+        else
+        {
+            if (index >= 4)
+            {
+                index++;
+            }
+
+            index++;
+        }
+
+        state = RotateRight(state, index);
 
         return state;
     }
