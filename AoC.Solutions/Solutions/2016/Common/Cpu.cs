@@ -1,10 +1,14 @@
-﻿namespace AoC.Solutions.Solutions._2016.Common;
+﻿using System.Text;
+
+namespace AoC.Solutions.Solutions._2016.Common;
 
 public class Cpu
 {
     public static int RunProgram(string[] input, Dictionary<char, int> registers)
     {
         var programCounter = 0;
+
+        var output = new StringBuilder();
 
         while (true)
         {
@@ -116,6 +120,34 @@ public class Cpu
                     break;
                 case "mul":
                     SetRegisterValue(registers, parts[3][0], GetRegisterValue(registers, parts[1][0]) * GetRegisterValue(registers, parts[2][0]));
+
+                    break;
+                case "out": 
+                    if (char.IsLetter(parts[1][0]))
+                    {
+                        value = GetRegisterValue(registers, parts[1][0]);
+                    }
+                    else
+                    {
+                        value = int.Parse(parts[1]);
+                    }
+
+                    output.Append(value);
+
+                    if (output.Length == 1 && output[0] == '1')
+                    {
+                        return -1;
+                    }
+
+                    if (output.Length > 1 && output[^1] == output[^2])
+                    {
+                        return -1;
+                    }
+
+                    if (output.Length > 100)
+                    {
+                        return 1;
+                    }
 
                     break;
             }
