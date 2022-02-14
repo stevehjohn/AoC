@@ -30,8 +30,6 @@ public class Part1 : Base
 
             if (item.Position.X == 3 && item.Position.Y == 3)
             {
-                //Console.WriteLine(item.Passcode);
-                
                 return item.Directions;
             }
 
