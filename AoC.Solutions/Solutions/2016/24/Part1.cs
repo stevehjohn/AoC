@@ -1,5 +1,6 @@
 ﻿using AoC.Solutions.Common;
 using AoC.Solutions.Exceptions;
+using AoC.Solutions.Extensions;
 
 namespace AoC.Solutions.Solutions._2016._24;
 
@@ -13,7 +14,7 @@ public class Part1 : Base
 
     private readonly List<(char Id, Point Position)> _pointsOfInterest = new();
 
-    private readonly List<(string Ids, int Distance)> _distancePairs = new();
+    private readonly Dictionary<string, int> _distancePairs = new();
 
     public override string GetAnswer()
     {
@@ -21,7 +22,40 @@ public class Part1 : Base
 
         GetDistancePairs();
 
-        return "TESTING";
+        var result = GetShortestPath();
+
+        return result.ToString();
+    }
+
+    private int GetShortestPath()
+    {
+        var points = _pointsOfInterest.Select(p => p.Id).ToArray();
+
+        var permutations = points.GetPermutations();
+
+        var min = int.MaxValue;
+
+        foreach (var permutation in permutations)
+        {
+            var totalDistance = 0;
+
+            for (var i = 0; i < permutation.Length - 1; i++)
+            {
+                if (! _distancePairs.TryGetValue($"{permutation[i]}{permutation[i + 1]}", out var distance))
+                {
+                    distance = _distancePairs[$"{permutation[i + 1]}{permutation[i]}"];
+                }
+
+                totalDistance += distance;
+            }
+
+            if (totalDistance < min)
+            {
+                min = totalDistance;
+            }
+        }
+
+        return min;
     }
 
     private void GetDistancePairs()
@@ -30,7 +64,7 @@ public class Part1 : Base
         {
             for (var i = o + 1; i < _pointsOfInterest.Count; i++)
             {
-                _distancePairs.Add(($"{_pointsOfInterest[o].Id}{_pointsOfInterest[i].Id}", GetShortestDistance(_pointsOfInterest[o].Position, _pointsOfInterest[i].Position)));
+                _distancePairs.Add($"{_pointsOfInterest[o].Id}{_pointsOfInterest[i].Id}", GetShortestDistance(_pointsOfInterest[o].Position, _pointsOfInterest[i].Position));
             }
         }
     }
