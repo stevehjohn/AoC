@@ -19,11 +19,11 @@ public abstract class Base : Solution
 
     private readonly Dictionary<string, int> _distancePairs = new();
 
-    protected int GetShortestPath()
+    protected int GetShortestPath(bool isPart2 = false)
     {
         var points = _pointsOfInterest.Select(p => p.Id).ToArray();
 
-        var permutations = points.GetPermutations();
+        var permutations = points.GetPermutations().Where(p => p[0] == '0');
 
         var min = int.MaxValue;
 
@@ -39,6 +39,16 @@ public abstract class Base : Solution
                 }
 
                 totalDistance += distance;
+            }
+
+            if (isPart2)
+            {
+                if (! _distancePairs.TryGetValue($"{permutation[^1]}0", out var d))
+                {
+                    d = _distancePairs[$"0{permutation[^1]}"];
+                }
+
+                totalDistance += d;
             }
 
             if (totalDistance < min)
