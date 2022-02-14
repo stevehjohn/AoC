@@ -114,6 +114,10 @@ public class Cpu
                     input[programCounter + value] = $"{toggled} {input[programCounter + value][4..]}";
 
                     break;
+                case "mul":
+                    SetRegisterValue(registers, parts[3][0], GetRegisterValue(registers, parts[1][0]) * GetRegisterValue(registers, parts[2][0]));
+
+                    break;
             }
 
             programCounter++;
