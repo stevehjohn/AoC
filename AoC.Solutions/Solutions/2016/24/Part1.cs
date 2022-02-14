@@ -1,0 +1,132 @@
+﻿using AoC.Solutions.Common;
+using AoC.Solutions.Exceptions;
+
+namespace AoC.Solutions.Solutions._2016._24;
+
+public class Part1 : Base
+{
+    private bool[,] _map;
+
+    private int _width;
+
+    private int _height;
+
+    private readonly List<(char Id, Point Position)> _pointsOfInterest = new();
+
+    private readonly List<(string Ids, int Distance)> _distancePairs = new();
+
+    public override string GetAnswer()
+    {
+        ParseInput();
+
+        GetDistancePairs();
+
+        return "TESTING";
+    }
+
+    private void GetDistancePairs()
+    {
+        for (var o = 0; o < _pointsOfInterest.Count - 1; o++)
+        {
+            for (var i = o + 1; i < _pointsOfInterest.Count; i++)
+            {
+                _distancePairs.Add(($"{_pointsOfInterest[o].Id}{_pointsOfInterest[i].Id}", GetShortestDistance(_pointsOfInterest[o].Position, _pointsOfInterest[i].Position)));
+            }
+        }
+    }
+
+    private int GetShortestDistance(Point a, Point b)
+    {
+        var queue = new PriorityQueue<(Point Position, int Steps), int>();
+
+        queue.Enqueue((a, 0), 0);
+
+        var visited = new HashSet<Point> { a };
+
+        while (queue.Count > 0)
+        {
+            var item = queue.Dequeue();
+
+            var position = item.Position;
+
+            if (position.Equals(b))
+            {
+                return item.Steps;
+            }
+
+            if (! _map[position.X, position.Y - 1])
+            {
+                var newPosition = new Point(position.X, position.Y - 1);
+
+                if (! visited.Contains(newPosition))
+                {
+                    queue.Enqueue((newPosition, item.Steps + 1), item.Steps + 1);
+
+                    visited.Add(newPosition);
+                }
+            }
+
+            if (! _map[position.X + 1, position.Y])
+            {
+                var newPosition = new Point(position.X + 1, position.Y);
+
+                if (! visited.Contains(newPosition))
+                {
+                    queue.Enqueue((newPosition, item.Steps + 1), item.Steps + 1);
+
+                    visited.Add(newPosition);
+                }
+            }
+
+            if (! _map[position.X, position.Y + 1])
+            {
+                var newPosition = new Point(position.X, position.Y + 1);
+
+                if (! visited.Contains(newPosition))
+                {
+                    queue.Enqueue((newPosition, item.Steps + 1), item.Steps + 1);
+
+                    visited.Add(newPosition);
+                }
+            }
+
+            if (! _map[position.X - 1, position.Y])
+            {
+                var newPosition = new Point(position.X - 1, position.Y);
+
+                if (! visited.Contains(newPosition))
+                {
+                    queue.Enqueue((newPosition, item.Steps + 1), item.Steps + 1);
+
+                    visited.Add(newPosition);
+                }
+            }
+        }
+
+        throw new PuzzleException("Solution not found.");
+    }
+
+    private void ParseInput()
+    {
+        _width = Input[0].Length;
+
+        _height = Input.Length;
+
+        _map = new bool[_width, _height];
+
+        for (var y = 0; y < _height; y++)
+        {
+            for (var x = 0; x < _width; x++)
+            {
+                var c = Input[y][x];
+
+                if (char.IsNumber(c))
+                {
+                    _pointsOfInterest.Add((c, new Point(x, y)));
+                }
+
+                _map[x, y] = c == '#';
+            }
+        }
+    }
+}
