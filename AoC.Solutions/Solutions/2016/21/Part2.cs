@@ -8,7 +8,7 @@ public class Part2 : Base
     public override string GetAnswer()
     {
         // ReSharper disable once StringLiteralTypo
-        var endState = Solve("fbgdceah", Input.Reverse().ToArray(), true);
+        var endState = Solve("aefgbcdh", Input.Reverse().ToArray(), true);
 
         return endState;
     }
