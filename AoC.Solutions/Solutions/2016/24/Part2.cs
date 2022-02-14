@@ -8,7 +8,7 @@ public class Part2 : Base
 
         GetDistancePairs();
 
-        var result = GetShortestPath();
+        var result = GetShortestPath(true);
 
         return result.ToString();
     }
