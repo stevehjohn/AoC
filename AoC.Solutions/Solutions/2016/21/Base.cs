@@ -9,10 +9,6 @@ public abstract class Base : Solution
 
     protected static string Solve(string state, string[] instructions, bool reverse = false)
     {
-        var steps = new List<string>();
-
-        steps.Add(state);
-
         foreach (var line in instructions)
         {
             var parts = line.Split(' ', StringSplitOptions.TrimEntries);
@@ -75,18 +71,6 @@ public abstract class Base : Solution
 
                     break;
             }
-
-            steps.Add(state);
-        }
-
-        if (reverse)
-        {
-            steps.Reverse();
-        }
-
-        foreach (var step in steps)
-        {
-            Console.WriteLine(step);
         }
 
         return new string(state);
@@ -119,7 +103,7 @@ public abstract class Base : Solution
 
         if (reverse)
         {
-            index = new[] { 1, 3, 5, 7, 2, 4, 6, 0 }[index];
+            index = new[] { 1, 1, 6, 2, 7, 3, 0, 4 }[index];
 
             state = RotateLeft(state, index);
         }
