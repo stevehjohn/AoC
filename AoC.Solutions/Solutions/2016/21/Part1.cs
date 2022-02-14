@@ -21,25 +21,17 @@ public class Part1 : Base
         {
             var parts = line.Split(' ', StringSplitOptions.TrimEntries);
 
-            int leftIdx;
-
-            int rightIdx;
-
             switch (parts[0])
             {
                 case "swap":
-                    //if (parts[1] == "position")
-                    //{
-                    //    leftIdx = int.Parse(parts[2]);
-
-                    //    rightIdx = int.Parse(parts[5]);
-
-                    //    (state[leftIdx], state[rightIdx]) = (state[rightIdx], state[leftIdx]);
-                    //}
-                    //else
-                    //{
-                    //    state = new string(state).Replace(parts[2][0], '-').Replace(parts[5][0], parts[2][0]).Replace('-', parts[5][0]).ToCharArray();
-                    //}
+                    if (parts[1] == "position")
+                    {
+                        state = SwapPosition(state, int.Parse(parts[2]), int.Parse(parts[5]));
+                    }
+                    else
+                    {
+                        state = SwapLetter(state, parts[2][0], parts[5][0]);
+                    }
 
                     break;
                 case "rotate":
@@ -69,14 +61,21 @@ public class Part1 : Base
         return new string(state);
     }
 
-    //private static string SwapPosition(string state, int a, int b)
-    //{
-    //    var character = state[a];
+    private static string SwapLetter(string state, char a, char b)
+    {
+        return state.Replace(a, '-').Replace(b, a).Replace('-', b);
+    }
 
-    //    state = $"{state[..a]}{state[(a + 1)..]}";
+    private static string SwapPosition(string state, int a, int b)
+    {
+        var character = state[a];
 
+        state = $"{state[..a]}{state[b]}{state[(a + 1)..]}";
+        
+        state = $"{state[..b]}{character}{state[(b + 1)..]}";
 
-    //}
+        return state;
+    }
 
     private static string RotateLeft(string state)
     {
