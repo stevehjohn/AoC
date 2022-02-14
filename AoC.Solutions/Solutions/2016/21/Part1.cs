@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Extensions;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2016._21;
 
@@ -37,19 +38,21 @@ public class Part1 : Base
                 case "rotate":
                     if (parts[1] == "left")
                     {
-                        state = RotateLeft(state);
+                        state = RotateLeft(state, int.Parse(parts[2]));
                     }
                     else if (parts[1] == "right")
                     {
-                        state = RotateRight(state);
+                        state = RotateRight(state, int.Parse(parts[2]));
                     }
                     else
                     {
-
+                        state = RotateByIndexOf(state, parts[6][0]);
                     }
 
                     break;
                 case "reverse":
+                    state = Reverse(state, int.Parse(parts[2]), int.Parse(parts[4]));
+
                     break;
                 case "move":
                     state = Move(state, int.Parse(parts[2]), int.Parse(parts[5]));
@@ -59,6 +62,11 @@ public class Part1 : Base
         }
 
         return new string(state);
+    }
+
+    private static string Reverse(string state, int startIndex, int endIndex)
+    {
+        return $"{state[..startIndex]}{string.Join(string.Empty, state[startIndex..(endIndex + 1)].Reverse())}{state[(endIndex + 1)..]}";
     }
 
     private static string SwapLetter(string state, char a, char b)
@@ -77,14 +85,32 @@ public class Part1 : Base
         return state;
     }
 
-    private static string RotateLeft(string state)
+    private static string RotateByIndexOf(string state, char letter)
     {
-        return $"{state[1..]}{state[0]}";
+        var index = state.IndexOf(letter);
+
+        state = RotateRight(state, index + 1);
+
+        if (index >= 4)
+        {
+            state = RotateRight(state, 1);
+        }
+
+        return state;
     }
 
-    private static string RotateRight(string state)
+    private static string RotateLeft(string state, int steps)
     {
-        return $"{state[..^1]}{state[^1]}";
+        steps.Repetitions(() => state = $"{state[1..]}{state[0]}");
+
+        return state;
+    }
+
+    private static string RotateRight(string state, int steps)
+    {
+        steps.Repetitions(() => state = $"{state[^1]}{state[..^1]}");
+
+        return state;
     }
 
     private static string Move(string state, int removeAt, int insertAt)
