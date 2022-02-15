@@ -45,4 +45,14 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         base.LoadContent();
     }
+
+    protected override void Update(GameTime gameTime)
+    {
+        base.Update(gameTime);
+    }
+
+    protected override void Draw(GameTime gameTime)
+    {
+        base.Draw(gameTime);
+    }
 }
