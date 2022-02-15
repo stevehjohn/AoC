@@ -1,4 +1,6 @@
-﻿namespace AoC.Visualisations.Visualisations._2018._17;
+﻿using SharpDX.Direct2D1.Effects;
+
+namespace AoC.Visualisations.Visualisations._2018._17;
 
 public class Map
 {
@@ -89,6 +91,13 @@ public class Map
         for (var x = leftX + 1; x < rightX; x++)
         {
             _map[x, bottom] = tileRow + 1;
+
+            if (tileRow == 1 && bottom < Height && Random.Next(20) == 0)
+            {
+                _map[x, bottom + 1] = 40;
+
+                _map[x + 1, bottom + 1] = 41;
+            }
         }
 
         _map[rightX, bottom] = tileRow + 2;
