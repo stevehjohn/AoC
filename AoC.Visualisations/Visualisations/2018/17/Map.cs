@@ -1,6 +1,4 @@
-﻿using SharpDX.Direct2D1.Effects;
-
-namespace AoC.Visualisations.Visualisations._2018._17;
+﻿namespace AoC.Visualisations.Visualisations._2018._17;
 
 public class Map
 {
