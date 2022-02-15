@@ -33,7 +33,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private float _y;
 
-    private int _frame;
+    private int _frame = 4;
 
     private int _waterFrame;
 
@@ -80,7 +80,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     protected override void Update(GameTime gameTime)
     {
-        if (HasNextState && _frame == 0)
+        if (HasNextState && _frame == 4)
         {
             _state = GetNextState();
 
@@ -91,10 +91,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 _map.CreateMap(_state.Map);
             }
 
-            _frame = 4;
+            _frame = 0;
         }
 
-        _frame--;
+        _frame++;
 
         if (_y < 0)
         {
@@ -173,12 +173,16 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                 if (tile == '~')
                 {
-                    _spriteBatch.Draw(_tiles, new Vector2(x * TileSize, y * TileSize), new Rectangle(4 * TileSize, 5 * TileSize, TileSize, TileSize), Color.White * 0.6f, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
-
                     if (_state.Map[x, y + (int) _y - 1] == '\0')
                     {
+                        _spriteBatch.Draw(_tiles, new Vector2(x * TileSize, y * TileSize), new Rectangle(4 * TileSize, 5 * TileSize, TileSize, TileSize), Color.White * 0.6f, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
+
                         _spriteBatch.Draw(_tiles, new Vector2(x * TileSize, (y - 1) * TileSize), new Rectangle((5 + _waterFrame / 10) * TileSize, 5 * TileSize, TileSize, TileSize), Color.White * 0.6f, 0, Vector2.Zero, Vector2.One,
                                           SpriteEffects.None, 1);
+                    }
+                    else
+                    {
+                        _spriteBatch.Draw(_tiles, new Vector2(x * TileSize, y * TileSize), new Rectangle(4 * TileSize, 5 * TileSize, TileSize, TileSize), Color.White * 0.6f, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
                     }
 
                     if (y > lastY)
