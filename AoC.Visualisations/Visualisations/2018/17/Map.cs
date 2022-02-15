@@ -6,7 +6,7 @@ public class Map
 
     public int Width { get; private set; }
 
-    private int _height;
+    public int Height { get; private set; }
 
     private int _originX;
 
@@ -16,9 +16,9 @@ public class Map
     {
         Width = puzzleMap.GetLength(0);
 
-        _height = puzzleMap.GetLength(1);
+        Height = puzzleMap.GetLength(1);
 
-        _map = new int[Width, _height];
+        _map = new int[Width, Height];
 
         FindOrigin(puzzleMap);
 
@@ -47,7 +47,7 @@ public class Map
     {
         var containers = new List<Rectangle>();
 
-        for (var y = 1; y < _height; y++)
+        for (var y = 1; y < Height; y++)
         {
             for (var x = 0; x < Width; x++)
             {
@@ -161,7 +161,7 @@ public class Map
 
     private void AddBackgroundBricks()
     {
-        for (var y = 1; y < _height; y++)
+        for (var y = 1; y < Height; y++)
         {
             for (var x = 0; x < Width; x++)
             {
@@ -232,7 +232,7 @@ public class Map
 
     private void SafeSetMap(int x, int y, int value)
     {
-        if (x >= 0 && x < Width && y >= 0 && y < _height)
+        if (x >= 0 && x < Width && y >= 0 && y < Height)
         {
             _map[x, y] = value;
         }

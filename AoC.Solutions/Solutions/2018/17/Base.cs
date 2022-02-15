@@ -32,7 +32,7 @@ public abstract class Base : Solution
     {
         ParseInput();
 
-        _visualiser.PuzzleStateChanged(new PuzzleState { Map = _map });
+        _visualiser.PuzzleStateChanged(new PuzzleState(_map));
 
         while (true)
         {
@@ -40,6 +40,8 @@ public abstract class Base : Solution
             {
                 break;
             }
+
+            _visualiser.PuzzleStateChanged(new PuzzleState(_map));
         }
 
         return isPart2 ? CountStillWater() : CountAllWater();
@@ -186,6 +188,8 @@ public abstract class Base : Solution
         {
             _map[oX, y] = '~';
         }
+
+        _visualiser.PuzzleStateChanged(new PuzzleState(_map));
 
         return true;
     }
