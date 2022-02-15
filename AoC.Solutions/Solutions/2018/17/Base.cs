@@ -17,9 +17,30 @@ public abstract class Base : Solution
 
     private readonly HashSet<Point> _visited = new();
 
+    private readonly IVisualiser<PuzzleState> _visualiser;
+
+    protected Base()
+    {
+    }
+
+    protected Base(IVisualiser<PuzzleState> visualiser)
+    {
+        _visualiser = visualiser;
+    }
+
+    protected void Visualise()
+    {
+        if (_visualiser != null)
+        {
+            _visualiser.PuzzleStateChanged(new PuzzleState(_map));
+        }
+    }
+
     protected int GetAnswer(bool isPart2)
     {
         ParseInput();
+
+        Visualise();
 
         while (true)
         {
@@ -27,6 +48,8 @@ public abstract class Base : Solution
             {
                 break;
             }
+
+            Visualise();
         }
 
         return isPart2 ? CountStillWater() : CountAllWater();
@@ -173,6 +196,8 @@ public abstract class Base : Solution
         {
             _map[oX, y] = '~';
         }
+
+        Visualise();
 
         return true;
     }
