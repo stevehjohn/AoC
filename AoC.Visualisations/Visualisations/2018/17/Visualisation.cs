@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using AoC.Solutions.Solutions._2018._17;
+﻿using AoC.Solutions.Solutions._2018._17;
 using AoC.Visualisations.Exceptions;
 using AoC.Visualisations.Infrastructure;
 using JetBrains.Annotations;
@@ -15,7 +14,6 @@ namespace AoC.Visualisations.Visualisations._2018._17;
 [UsedImplicitly]
 public class Visualisation : VisualisationBase<PuzzleState>
 {
-    // ReSharper disable once NotAccessedField.Local
     private const int ScreenWidth = 1536;
 
     private const int ScreenHeight = 1152;
@@ -24,6 +22,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private const int TileMapWidth = 11;
 
+    // ReSharper disable once NotAccessedField.Local
     private readonly GraphicsDeviceManager _graphicsDeviceManager;
 
     private SpriteBatch _spriteBatch;
@@ -37,6 +36,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private int _y;
 
     private MouseState? _previousMouseState;
+
+    private int _frame;
+
+    private int _waterFrame;
 
     public Visualisation()
     {
@@ -81,7 +84,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     protected override void Update(GameTime gameTime)
     {
-        if (HasNextState)
+        if (HasNextState && _frame == 0)
         {
             _state = GetNextState();
 
@@ -91,7 +94,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                 _map.CreateMap(_state.Map);
             }
+
+            _frame = 1;
         }
+
+        _frame--;
 
         var mouseState = Mouse.GetState();
 
@@ -104,7 +111,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 _y = 0;
             }
 
-            Debug.WriteLine(_y);
+            if (_y >= _map.Height - ScreenHeight / TileSize)
+            {
+                _y = _map.Height - ScreenHeight / TileSize;
+            }
         }
 
         _previousMouseState = mouseState;
@@ -120,6 +130,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         DrawMap();
 
+        DrawWater();
+
         _spriteBatch.End();
 
         base.Draw(gameTime);
@@ -127,21 +139,73 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private void DrawMap()
     {
-        for (var y = 0; y < ScreenHeight / TileSize; y ++)
+        for (var y = 0; y < ScreenHeight / TileSize; y++)
         {
             for (var x = 0; x < _map.Width; x++)
             {
                 var tile = _map[x, y + _y];
-                
+
                 if (tile > 0)
                 {
                     var row = (tile - 1) / TileMapWidth;
-                    
+
                     var column = (tile - 1) % TileMapWidth;
 
-                    _spriteBatch.Draw(_tiles, new Vector2(x * TileSize, y * TileSize), new Rectangle(column * TileSize, row * TileSize, TileSize, TileSize), Color.White);
+                    _spriteBatch.Draw(_tiles, new Vector2(x * TileSize, y * TileSize), new Rectangle(column * TileSize, row * TileSize, TileSize, TileSize), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
                 }
             }
+        }
+    }
+
+    private void DrawWater()
+    {
+        var lastY = 0;
+
+        for (var y = 0; y < ScreenHeight / TileSize; y++)
+        {
+            for (var x = 0; x < _map.Width; x++)
+            {
+                var tile = _state.Map[x, y + _y];
+
+                if (tile == '|')
+                {
+                    if (_state.Map[x, y + _y - 1] == '|')
+                    {
+                        _spriteBatch.Draw(_tiles, new Vector2(x * TileSize, y * TileSize), new Rectangle(_waterFrame / 10 * TileSize, 5 * TileSize, TileSize, TileSize), Color.White * 0.75f, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
+                    }
+                    else
+                    {
+                        _spriteBatch.Draw(_tiles, new Vector2(x * TileSize, y * TileSize), new Rectangle(5 * TileSize, 5 * TileSize, TileSize, TileSize), Color.White * 0.75f, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
+                    }
+
+                    if (y > lastY)
+                    {
+                        lastY = y;
+                    }
+                }
+
+                if (tile == '~')
+                {
+                    _spriteBatch.Draw(_tiles, new Vector2(x * TileSize, y * TileSize), new Rectangle(4 * TileSize, 5 * TileSize, TileSize, TileSize), Color.White * 0.75f, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
+
+                    if (y > lastY)
+                    {
+                        lastY = y;
+                    }
+                }
+            }
+        }
+
+        //if (_y + lastY > ScreenHeight / 3 / TileSize)
+        //{
+        //    _y = lastY + ScreenHeight / 3 / TileSize;
+        //}
+
+        _waterFrame++;
+
+        if (_waterFrame > 39)
+        {
+            _waterFrame = 0;
         }
     }
 }
