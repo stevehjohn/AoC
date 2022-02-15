@@ -90,7 +90,7 @@ public class Map
         {
             _map[x, bottom] = tileRow + 1;
 
-            if (tileRow == 1 && bottom < Height && Random.Next(20) == 0)
+            if (tileRow == 1 && bottom < Height - 1 && Random.Next(20) == 0)
             {
                 _map[x, bottom + 1] = 40;
 
