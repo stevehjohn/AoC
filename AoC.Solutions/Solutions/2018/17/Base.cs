@@ -28,11 +28,19 @@ public abstract class Base : Solution
         _visualiser = visualiser;
     }
 
+    protected void Visualise()
+    {
+        if (_visualiser != null)
+        {
+            _visualiser.PuzzleStateChanged(new PuzzleState(_map));
+        }
+    }
+
     protected int GetAnswer(bool isPart2)
     {
         ParseInput();
 
-        _visualiser.PuzzleStateChanged(new PuzzleState(_map));
+        Visualise();
 
         while (true)
         {
@@ -41,7 +49,7 @@ public abstract class Base : Solution
                 break;
             }
 
-            _visualiser.PuzzleStateChanged(new PuzzleState(_map));
+            Visualise();
         }
 
         return isPart2 ? CountStillWater() : CountAllWater();
@@ -189,7 +197,7 @@ public abstract class Base : Solution
             _map[oX, y] = '~';
         }
 
-        _visualiser.PuzzleStateChanged(new PuzzleState(_map));
+        Visualise();
 
         return true;
     }
