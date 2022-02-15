@@ -77,10 +77,10 @@ public class Map
             }
         }
 
-        AddContainerToMap(leftX, rightX, leftTopY, rightTopY, bottomY);
+        AddContainerToMap(leftX, rightX, leftTopY, rightTopY, bottomY, puzzleMap[leftX + 1, leftTopY] == '#');
     }
 
-    private void AddContainerToMap(int leftX, int rightX, int leftTop, int rightTop, int bottom)
+    private void AddContainerToMap(int leftX, int rightX, int leftTop, int rightTop, int bottom, bool closed)
     {
         var tileRow = Random.Next(3) * 11 + 1;
 
@@ -131,6 +131,14 @@ public class Map
                 {
                     _map[x, y] += 11;
                 }
+            }
+        }
+
+        if (closed)
+        {
+            for (var x = leftX + 1; x < rightX; x++)
+            {
+                _map[x, leftTop] = tileRow + 1;
             }
         }
     }
