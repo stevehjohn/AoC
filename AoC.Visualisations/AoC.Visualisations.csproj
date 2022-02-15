@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <None Remove="_Content\2018\13\sprites.png" />
+    <None Remove="_Content\2018\17\Content.mgcb" />
     <None Remove="_Content\2020\20\Content.mgcb" />
   </ItemGroup>
 
@@ -34,7 +35,9 @@
     <Folder Include="Exceptions\" />
     <Folder Include="Visualisations\2018\13\" />
     <DesignData Include="_Content\2018\13\Content.mgcb" />
+    <DesignData Include="_Content\2018\17\Content.mgcb" />
     <DesignData Include="_Content\2020\20\Content.mgcb" />
+    <Folder Include="Visualisations\2018\17\" />
   </ItemGroup>
 
   <ItemGroup>
