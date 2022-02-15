@@ -51,6 +51,9 @@
     <None Update="_Content\2018\13\bin\Windows\spark.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="_Content\2018\17\bin\Windows\tiles.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="_Content\2020\13\bin\Windows\sprites.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
