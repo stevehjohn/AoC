@@ -158,11 +158,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 {
                     if (_state.Map[x, y + (int) _y - 1] == '|')
                     {
-                        _spriteBatch.Draw(_tiles, new Vector2(x * TileSize, y * TileSize), new Rectangle(_waterFrame / 5 * TileSize, 5 * TileSize, TileSize, TileSize), Color.White * 0.6f, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
+                        _spriteBatch.Draw(_tiles, new Vector2(x * TileSize, y * TileSize), new Rectangle(_waterFrame / 5 * TileSize, 5 * TileSize, TileSize, TileSize), Color.White * 0.6f, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0.5f);
                     }
                     else
                     {
-                        _spriteBatch.Draw(_tiles, new Vector2(x * TileSize, y * TileSize), new Rectangle((5 + _waterFrame / 10) * TileSize, 5 * TileSize, TileSize, TileSize), Color.White * 0.6f, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
+                        _spriteBatch.Draw(_tiles, new Vector2(x * TileSize, y * TileSize), new Rectangle((5 + _waterFrame / 10) * TileSize, 5 * TileSize, TileSize, TileSize), Color.White * 0.6f, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0.5f);
                     }
 
                     if (y > lastY)
@@ -175,14 +175,14 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 {
                     if (_state.Map[x, y + (int) _y - 1] == '\0')
                     {
-                        _spriteBatch.Draw(_tiles, new Vector2(x * TileSize, y * TileSize), new Rectangle(4 * TileSize, 5 * TileSize, TileSize, TileSize), Color.White * 0.6f, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
+                        _spriteBatch.Draw(_tiles, new Vector2(x * TileSize, y * TileSize), new Rectangle(4 * TileSize, 5 * TileSize, TileSize, TileSize), Color.White * 0.6f, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0.5f);
 
                         _spriteBatch.Draw(_tiles, new Vector2(x * TileSize, (y - 1) * TileSize), new Rectangle((5 + _waterFrame / 10) * TileSize, 5 * TileSize, TileSize, TileSize), Color.White * 0.6f, 0, Vector2.Zero, Vector2.One,
-                                          SpriteEffects.None, 1);
+                                          SpriteEffects.None, .5f);
                     }
                     else
                     {
-                        _spriteBatch.Draw(_tiles, new Vector2(x * TileSize, y * TileSize), new Rectangle(4 * TileSize, 5 * TileSize, TileSize, TileSize), Color.White * 0.6f, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
+                        _spriteBatch.Draw(_tiles, new Vector2(x * TileSize, y * TileSize), new Rectangle(4 * TileSize, 5 * TileSize, TileSize, TileSize), Color.White * 0.6f, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0.5f);
                     }
 
                     if (y > lastY)
