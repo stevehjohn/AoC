@@ -68,10 +68,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         IsMouseVisible = true;
 
-        //IsFixedTimeStep = true;
-
-        //TargetElapsedTime = TimeSpan.FromMilliseconds(500);
-
         base.Initialize();
     }
 
