@@ -8,8 +8,6 @@ public class Map
 
     public int Height { get; private set; }
 
-    private int _originX;
-
     private Random Random { get; } = new();
 
     public void CreateMap(char[,] puzzleMap)
@@ -20,48 +18,28 @@ public class Map
 
         _map = new int[Width, Height];
 
-        FindOrigin(puzzleMap);
-
         AddBackgroundBricks();
 
-        // Use this to not place torches in containers? Or just have them extinguish?
-        var containers = AddContainers(puzzleMap);
+        AddContainers(puzzleMap);
     }
 
     public int this[int x, int y] => _map[x, y];
 
-    private void FindOrigin(char[,] puzzleMap)
+    private void AddContainers(char[,] puzzleMap)
     {
-        for (var x = 0; x < Width; x++)
-        {
-            if (puzzleMap[x, 0] == '+')
-            {
-                _originX = x;
-
-                break;
-            }
-        }
-    }
-
-    private List<Rectangle> AddContainers(char[,] puzzleMap)
-    {
-        var containers = new List<Rectangle>();
-
         for (var y = 1; y < Height; y++)
         {
             for (var x = 0; x < Width; x++)
             {
                 if (puzzleMap[x, y] == '#' && puzzleMap[x, y - 1] == '#' && puzzleMap[x + 1, y] == '#')
                 {
-                    containers.Add(AddContainer(puzzleMap, x, y));
+                    AddContainer(puzzleMap, x, y);
                 }
             }
         }
-
-        return containers;
     }
 
-    private Rectangle AddContainer(char[,] puzzleMap, int leftX, int bottomY)
+    private void AddContainer(char[,] puzzleMap, int leftX, int bottomY)
     {
         var leftTopY = 0;
 
@@ -100,8 +78,6 @@ public class Map
         }
 
         AddContainerToMap(leftX, rightX, leftTopY, rightTopY, bottomY);
-
-        return new Rectangle(leftX, Math.Min(leftTopY, rightTopY), rightX - leftX + 1, Math.Max(leftTopY, rightTopY) - bottomY + 1);
     }
 
     private void AddContainerToMap(int leftX, int rightX, int leftTop, int rightTop, int bottom)
