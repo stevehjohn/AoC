@@ -29,6 +29,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private PuzzleState _state;
 
+    private char[,] _previousPuzzleState;
+
     private Map _map;
 
     private float _y;
@@ -66,6 +68,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         IsMouseVisible = true;
 
+        //IsFixedTimeStep = true;
+
+        //TargetElapsedTime = TimeSpan.FromMilliseconds(500);
+
         base.Initialize();
     }
 
@@ -82,6 +88,13 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         if (HasNextState && _frame == 4)
         {
+            if (_state != null)
+            {
+                _previousPuzzleState = new char[_map.Width, _map.Height];
+
+                Buffer.BlockCopy(_state.Map, 0, _previousPuzzleState, 0, sizeof(char) * _map.Width *_map.Height);
+            }
+
             _state = GetNextState();
 
             if (_map == null)
@@ -173,16 +186,23 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                 if (tile == '~')
                 {
-                    if (_state.Map[x, y + (int) _y - 1] == '\0')
+                    if (_previousPuzzleState != null && _previousPuzzleState[x, y + (int) _y] == '\0')
                     {
-                        _spriteBatch.Draw(_tiles, new Vector2(x * TileSize, y * TileSize), new Rectangle(4 * TileSize, 5 * TileSize, TileSize, TileSize), Color.White * 0.6f, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0.5f);
-
-                        _spriteBatch.Draw(_tiles, new Vector2(x * TileSize, (y - 1) * TileSize), new Rectangle((5 + _waterFrame / 10) * TileSize, 5 * TileSize, TileSize, TileSize), Color.White * 0.6f, 0, Vector2.Zero, Vector2.One,
-                                          SpriteEffects.None, .5f);
+                        _spriteBatch.Draw(_tiles, new Vector2(x * TileSize, y * TileSize), new Rectangle((6 + _frame) * TileSize, 5 * TileSize, TileSize, TileSize), Color.White * 0.6f, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0.5f);
                     }
                     else
                     {
-                        _spriteBatch.Draw(_tiles, new Vector2(x * TileSize, y * TileSize), new Rectangle(4 * TileSize, 5 * TileSize, TileSize, TileSize), Color.White * 0.6f, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0.5f);
+                        if (_state.Map[x, y + (int)_y - 1] == '\0')
+                        {
+                            _spriteBatch.Draw(_tiles, new Vector2(x * TileSize, y * TileSize), new Rectangle(4 * TileSize, 5 * TileSize, TileSize, TileSize), Color.White * 0.6f, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0.5f);
+
+                            _spriteBatch.Draw(_tiles, new Vector2(x * TileSize, (y - 1) * TileSize), new Rectangle((5 + _waterFrame / 10) * TileSize, 5 * TileSize, TileSize, TileSize), Color.White * 0.6f, 0, Vector2.Zero, Vector2.One,
+                                              SpriteEffects.None, .5f);
+                        }
+                        else
+                        {
+                            _spriteBatch.Draw(_tiles, new Vector2(x * TileSize, y * TileSize), new Rectangle(4 * TileSize, 5 * TileSize, TileSize, TileSize), Color.White * 0.6f, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0.5f);
+                        }
                     }
 
                     if (y > lastY)
