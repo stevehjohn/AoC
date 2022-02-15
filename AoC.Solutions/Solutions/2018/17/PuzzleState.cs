@@ -2,5 +2,5 @@
 
 public class PuzzleState
 {
-    
+    public char[,] Map { get; set; }
 }

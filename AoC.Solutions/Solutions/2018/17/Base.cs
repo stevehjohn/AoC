@@ -32,6 +32,8 @@ public abstract class Base : Solution
     {
         ParseInput();
 
+        _visualiser.PuzzleStateChanged(new PuzzleState { Map = _map });
+
         while (true)
         {
             if (DropWater(0, _springX, 1))
