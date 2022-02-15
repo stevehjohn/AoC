@@ -22,6 +22,8 @@ public class Map
 
         FindOrigin(puzzleMap);
 
+        AddBackgroundBricks();
+
         // Use this to not place torches in containers? Or just have them extinguish?
         var containers = AddContainers(puzzleMap);
     }
@@ -118,15 +120,121 @@ public class Map
         for (var y = bottom - 1; y >= leftTop; y--)
         {
             _map[leftX, y] = tileRow + 3;
+
+            if (Random.Next(5) == 0 && rightX - leftX > 3)
+            {
+                _map[leftX + 1, y] = tileRow + 4;
+            }
+
+            if (Random.Next(5) == 0 && leftX > 0)
+            {
+                _map[leftX - 1, y] = tileRow + 7;
+            }
         }
 
         for (var y = bottom - 1; y >= rightTop; y--)
         {
             _map[rightX, y] = tileRow + 6;
+
+            if (Random.Next(5) == 0 && rightX - leftX > 3)
+            {
+                _map[rightX - 1, y] = tileRow + 5;
+            }
+
+            if (Random.Next(5) == 0 && rightX < Width)
+            {
+                _map[rightX + 1, y] = tileRow + 8;
+            }
+        }
+
+        for (var y = bottom - 1; y >= Math.Max(leftTop, rightTop); y--)
+        {
+            for (var x = leftX + 1; x < rightX; x++)
+            {
+                if (_map[x, y] > 33 && _map[x, y] < 40)
+                {
+                    _map[x, y] += 11;
+                }
+            }
         }
     }
 
-    private void AddBackground()
+    private void AddBackgroundBricks()
     {
+        for (var y = 1; y < _height; y++)
+        {
+            for (var x = 0; x < Width; x++)
+            {
+                if (Random.Next(50) == 0)
+                {
+                    AddBrickClump(x, y);
+                }
+            }
+        }
+    }
+
+    private void AddBrickClump(int x, int y)
+    {
+        var startLeft = x - 1 - Random.Next(8);
+
+        var startRight = x + 1 + Random.Next(8);
+
+        AddClumpRow(startLeft, startRight, y);
+
+        var left = startLeft;
+
+        var right = startRight;
+
+        for (var mY = y; mY > y - Random.Next(4); mY++)
+        {
+            left += Random.Next(3);
+        
+            right -= Random.Next(3);
+
+            if (left > right)
+            {
+                break;
+            }
+
+            AddClumpRow(left, right, mY);
+        }
+
+        left = startLeft;
+
+        right = startRight;
+
+        for (var mY = y; mY < y + Random.Next(4); mY--)
+        {
+            left += Random.Next(3);
+        
+            right -= Random.Next(3);
+
+            if (left > right)
+            {
+                break;
+            }
+
+            AddClumpRow(left, right, mY);
+        }
+    }
+
+    private void AddClumpRow(int left, int right, int y)
+    {
+        SafeSetMap(left, y, 34 + Random.Next(6));
+
+        SafeSetMap(right, y, 34 + Random.Next(6));
+
+        for (var x = left + 1; x <= right - 1; x++)
+        {
+            SafeSetMap(x, y, 34);
+        }
+    }
+
+    private void SafeSetMap(int x, int y, int value)
+    {
+        if (x >= 0 && x < Width && y >= 0 && y < _height)
+        {
+            _map[x, y] = value;
+        }
     }
 }
