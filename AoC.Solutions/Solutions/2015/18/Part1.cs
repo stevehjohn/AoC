@@ -8,7 +8,7 @@ public class Part1 : Base
 {
     private const int GridSize = 100;
 
-    private List<Point> _lights = new();
+    private HashSet<Point> _lights = new();
 
     public override string GetAnswer()
     {
@@ -17,8 +17,6 @@ public class Part1 : Base
         for (var i = 0; i < 100; i++)
         {
             RunStep();
-
-            Console.WriteLine(i);
         }
 
         return _lights.Count.ToString();
@@ -26,7 +24,7 @@ public class Part1 : Base
 
     private void RunStep()
     {
-        var newLights = new List<Point>();
+        var newLights = new HashSet<Point>();
 
         for (var y = 0; y < GridSize; y++)
         {
