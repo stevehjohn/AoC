@@ -11,8 +11,19 @@ public abstract class Base : Solution
 
     protected HashSet<Point> Lights = new();
 
-    protected void RunStep()
+    protected void RunStep(bool isPart2 = false)
     {
+        if (isPart2)
+        {
+            Lights.Add(new Point(0, 0));
+
+            Lights.Add(new Point(0, 99));
+
+            Lights.Add(new Point(99, 0));
+
+            Lights.Add(new Point(99, 99));
+        }
+
         var newLights = new HashSet<Point>();
 
         for (var y = 0; y < GridSize; y++)
