@@ -7,13 +7,13 @@ public abstract class Base : Solution
 {
     public override string Description => "Knights of the dinner table";
 
-    private string[] _people;
+    protected string[] People;
 
-    private readonly Dictionary<string, int> _happiness = new();
+    protected readonly Dictionary<string, int> Happiness = new();
 
     protected int Solve()
     {
-        var permutations = _people.GetPermutations();
+        var permutations = People.GetPermutations();
 
         var happiest = int.MinValue;
 
@@ -25,25 +25,25 @@ public abstract class Base : Solution
             {
                 if (i == 0)
                 {
-                    happiness += _happiness[$"{permutation[i]}{permutation[^1]}"];
+                    happiness += Happiness[$"{permutation[i]}{permutation[^1]}"];
 
-                    happiness += _happiness[$"{permutation[i]}{permutation[i + 1]}"];
+                    happiness += Happiness[$"{permutation[i]}{permutation[i + 1]}"];
 
                     continue;
                 }
 
                 if (i == permutation.Length - 1)
                 {
-                    happiness += _happiness[$"{permutation[i]}{permutation[i - 1]}"];
+                    happiness += Happiness[$"{permutation[i]}{permutation[i - 1]}"];
 
-                    happiness += _happiness[$"{permutation[i]}{permutation[0]}"];
+                    happiness += Happiness[$"{permutation[i]}{permutation[0]}"];
 
                     continue;
                 }
 
-                happiness += _happiness[$"{permutation[i]}{permutation[i - 1]}"];
+                happiness += Happiness[$"{permutation[i]}{permutation[i - 1]}"];
 
-                happiness += _happiness[$"{permutation[i]}{permutation[i + 1]}"];
+                happiness += Happiness[$"{permutation[i]}{permutation[i + 1]}"];
             }
 
             if (happiness > happiest)
@@ -57,13 +57,13 @@ public abstract class Base : Solution
 
     protected void ParseInput()
     {
-        _people = Input.Select(l => l.Split(' ', StringSplitOptions.TrimEntries)[0]).Distinct().ToArray();
+        People = Input.Select(l => l.Split(' ', StringSplitOptions.TrimEntries)[0]).Distinct().ToArray();
 
         foreach (var line in Input)
         {
             var parts = line[..^1].Split(' ', StringSplitOptions.TrimEntries);
 
-            _happiness.Add($"{parts[0]}{parts[10]}", int.Parse(parts[3]) * (parts[2] == "gain" ? 1 : -1));
+            Happiness.Add($"{parts[0]}{parts[10]}", int.Parse(parts[3]) * (parts[2] == "gain" ? 1 : -1));
         }
     }
 }
