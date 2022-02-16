@@ -13,17 +13,6 @@ public abstract class Base : Solution
 
     protected void RunStep(bool isPart2 = false)
     {
-        if (isPart2)
-        {
-            Lights.Add(new Point(0, 0));
-
-            Lights.Add(new Point(0, 99));
-
-            Lights.Add(new Point(99, 0));
-
-            Lights.Add(new Point(99, 99));
-        }
-
         var newLights = new HashSet<Point>();
 
         for (var y = 0; y < GridSize; y++)
@@ -50,6 +39,17 @@ public abstract class Base : Solution
         }
 
         Lights = newLights;
+
+        if (isPart2)
+        {
+            Lights.Add(new Point(0, 0));
+
+            Lights.Add(new Point(0, 99));
+
+            Lights.Add(new Point(99, 0));
+
+            Lights.Add(new Point(99, 99));
+        }
     }
 
     private int CountNeighbors(Point position)
