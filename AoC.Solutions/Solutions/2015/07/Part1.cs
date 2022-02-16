@@ -9,7 +9,25 @@ public class Part1 : Base
     {
         var wires = ParseInput();
 
-        return "TESTING";
+        var result = FindOutputValue(wires, "a");
+
+        return result.ToString();
+    }
+
+    private int FindOutputValue(Dictionary<string, (string LeftWire, int LeftValue, string Operation, string RightWire, int RightValue, string OutputWire)> wires, string outputWire)
+    {
+        var stack = new Stack<(string LeftWire, int LeftValue, string Operation, string RightWire, int RightValue, string OutputWire)>();
+
+        var result = 0;
+
+        stack.Push(wires["a"]);
+
+        while (stack.Count > 0)
+        {
+            var evaluate = stack.Pop();
+        }
+
+        return result;
     }
 
     private Dictionary<string, (string LeftWire, int LeftValue, string Operation, string RightWire, int RightValue, string OutputWire)> ParseInput()
@@ -34,7 +52,12 @@ public class Part1 : Base
 
         if (parts.Length == 3)
         {
-            return (null, int.Parse(parts[0]), null, null, 0, outputWire);
+            if (int.TryParse(parts[0], out var value))
+            {
+                return (null, value, null, null, 0, outputWire);
+            }
+
+            return (parts[0], 0, null, null, 0, outputWire);
         }
 
         if (parts.Length == 4)
