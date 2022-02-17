@@ -21,15 +21,18 @@ public class Part1 : Base
 
     private static int Sigma(int n)
     {
-        var sum = n;
+        var sum = 0;
 
-        var maxDivisor = n % 2 == 0 ? n / 2 : n / 3;
-
-        for (var i = maxDivisor; i > 0; i--)
+        for (var i = 1; i <= Math.Sqrt(n); i++)
         {
             if (n % i == 0)
             {
                 sum += i;
+
+                if (n / i != i)
+                {
+                    sum += n / i;
+                }
             }
         }
 
