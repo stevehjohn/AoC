@@ -11,7 +11,6 @@ public class Part2 : Base
 
         var house = int.Parse(File.ReadAllText("2015.20.1.result")) + 1;
 
-        //while (Sigma(house) * 10 < input)
         while (true)
         {
             var factors = GetFactors(house).TakeLast(50);
