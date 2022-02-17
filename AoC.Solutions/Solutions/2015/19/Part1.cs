@@ -25,9 +25,9 @@ public class Part1 : Base
 
             while (index > -1)
             {
-                molecules.Add($"{molecule[..index]}{replacement}{molecule[(index + 1)..]}");
+                molecules.Add($"{molecule[..index]}{replacement}{molecule[(index + target.Length)..]}");
 
-                index += replacement.Length;
+                index++;
 
                 if (index >= molecule.Length)
                 {
