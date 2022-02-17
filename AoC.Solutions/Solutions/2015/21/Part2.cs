@@ -3,11 +3,11 @@
 namespace AoC.Solutions.Solutions._2015._21;
 
 [UsedImplicitly]
-public class Part1 : Base
+public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        var cost = int.MaxValue;
+        var cost = int.MinValue;
 
         InitialiseStore();
 
@@ -22,9 +22,9 @@ public class Part1 : Base
                 break;
             }
 
-            if (ExecuteFight() == 0)
+            if (ExecuteFight() == 1)
             {
-                cost = Math.Min(cost, newCost);
+                cost = Math.Max(cost, newCost);
             }
 
             InitialisePlayers();
