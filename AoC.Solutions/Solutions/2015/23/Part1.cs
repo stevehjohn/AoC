@@ -20,6 +20,8 @@ public class Part1 : Base
 
         while (true)
         {
+            Console.WriteLine($"A: {registers['a']}    B: {registers['b']}");
+
             if (programCounter >= Input.Length)
             {
                 break;
@@ -46,7 +48,7 @@ public class Part1 : Base
                 case "jmp":
                     programCounter += int.Parse(parts[1]);
 
-                    break;
+                    continue;
                 case "jie":
                     if (registers[parts[1][0]] % 2 == 0)
                     {
@@ -70,6 +72,6 @@ public class Part1 : Base
             programCounter++;
         }
 
-        return registers['a'];
+        return registers['b'];
     }
 }
