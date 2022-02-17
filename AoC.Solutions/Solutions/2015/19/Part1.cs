@@ -7,11 +7,13 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var molecule = Input[44];
+        var reactions = Input.Length - 2;
+
+        var molecule = Input[^1];
 
         var molecules = new HashSet<string>();
 
-        for (var i = 0; i < 43; i++)
+        for (var i = 0; i < reactions; i++)
         {
             var parts = Input[i].Split(" => ", StringSplitOptions.TrimEntries);
 
@@ -19,23 +21,23 @@ public class Part1 : Base
 
             var replacement = parts[1];
 
-            var index = molecule.IndexOf(target, StringComparison.InvariantCultureIgnoreCase);
+            var index = molecule.IndexOf(target, StringComparison.InvariantCulture);
 
             while (index > -1)
             {
                 molecules.Add($"{molecule[..index]}{replacement}{molecule[(index + 1)..]}");
 
-                index += replacement.Length + 1;
+                index += replacement.Length;
 
                 if (index >= molecule.Length)
                 {
                     break;
                 }
 
-                index = molecule.IndexOf(target, index, StringComparison.InvariantCultureIgnoreCase);
+                index = molecule.IndexOf(target, index, StringComparison.InvariantCulture);
             }
         }
 
-        return molecules.Count.ToString();;
+        return molecules.Count.ToString();
     }
 }
