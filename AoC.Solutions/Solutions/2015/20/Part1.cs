@@ -20,4 +20,24 @@ public class Part1 : Base
 
         return house.ToString();
     }
+
+    private static int Sigma(int n)
+    {
+        var sum = 0;
+
+        for (var i = 1; i <= Math.Sqrt(n); i++)
+        {
+            if (n % i == 0)
+            {
+                sum += i;
+
+                if (n / i != i)
+                {
+                    sum += n / i;
+                }
+            }
+        }
+
+        return sum;
+    }
 }
