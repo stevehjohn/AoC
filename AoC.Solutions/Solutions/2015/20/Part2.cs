@@ -9,40 +9,28 @@ public class Part2 : Base
     {
         var input = int.Parse(Input[0]);
 
-        var house = int.Parse(File.ReadAllText("2015.20.1.result")) + 1;
+        var house = int.Parse(File.ReadAllText("2015.20.1.result"));
 
-        while (true)
+        while (Sigma(house) * 11 < input)
         {
-            var factors = GetFactors(house).TakeLast(50);
-
-            if (factors.Sum() * 11 >= input)
-            {
-                break;
-            }
-
             house++;
         }
 
         return house.ToString();
     }
 
-    private static List<int> GetFactors(int n)
+    private static int Sigma(int n)
     {
-        var result = new List<int>();
+        var sum = 0;
 
-        for (var i = 1; i <= Math.Sqrt(n); i++)
+        for (var i = 1; i <= 50 && i <= n; i++)
         {
             if (n % i == 0)
             {
-                result.Add(i);
-
-                if (n / i != i)
-                {
-                    result.Add(n / i);
-                }
+                sum += n / i;
             }
         }
 
-        return result;
+        return sum;
     }
 }
