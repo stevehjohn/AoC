@@ -6,5 +6,5 @@ public class Player
 
     public int Damage { get; set; }
 
-    public int Armor { get; set; }
+    public int Armour { get; set; }
 }
