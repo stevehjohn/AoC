@@ -13,7 +13,8 @@ public class Part1 : Base
 
         InitialiseSpells();
 
-        while (true)
+        // TODO: Don't like this approach. 
+        for (var i = 0; i < 100_000; i++)
         {
             var result = ExecuteFight();
 
@@ -25,6 +26,6 @@ public class Part1 : Base
             InitialisePlayers();
         }
 
-        return "TESTING";
+        return cost.ToString();
     }
 }
