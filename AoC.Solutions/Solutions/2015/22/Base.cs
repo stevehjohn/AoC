@@ -10,7 +10,7 @@ public abstract class Base : Solution
 
     private (int Cost, string Name, int Turns)[] _spells;
 
-    private readonly List<(string Spell, int Turns)> _activeSpells = new();
+    private readonly Dictionary<string, int> _activeSpells = new();
 
     private readonly Random _random = new();
 
@@ -26,7 +26,9 @@ public abstract class Base : Solution
 
             foreach (var spell in _activeSpells)
             {
-                switch (spell.Spell)
+                Console.WriteLine(spell);
+
+                switch (spell.Key)
                 {
                     case "MagicMissile":
                         _players[1].HitPoints = Math.Max(_players[1].HitPoints - 4, 0);
@@ -53,9 +55,19 @@ public abstract class Base : Solution
                 }
             }
 
-            _activeSpells.ForEach(s => s.Turns--);
+            var toRemove = new List<string>();
 
-            _activeSpells.RemoveAll(s => s.Turns <= 0);
+            foreach (var spell in _activeSpells.Keys)
+            {
+                _activeSpells[spell]--;
+
+                if (_activeSpells[spell] <= 0)
+                {
+                    toRemove.Add(spell);
+                }
+            }
+
+            toRemove.ForEach(s => _activeSpells.Remove(s));
 
             if (player == 0)
             {
@@ -69,6 +81,8 @@ public abstract class Base : Solution
             }
 
             player = 1 - player;
+
+            Console.WriteLine($"P1: {_players[0].HitPoints}    P2: {_players[1].HitPoints}");
         }
 
         return (_players[0].HitPoints == 0 ? 1 : 0, cost);
@@ -76,24 +90,29 @@ public abstract class Base : Solution
 
     private int CastSpell()
     {
-        var canAfford = _spells.Where(s => s.Cost <= _players[0].Mana).ToList();
+        var canAfford = _spells.Where(s => s.Cost <= _players[0].Mana && ! _activeSpells.ContainsKey(s.Name)).ToList();
 
         if (canAfford.Count == 0)
         {
             return 0;
         }
-        
+
         // TODO: Don't like this approach. 
         var spell = canAfford[_random.Next(canAfford.Count)];
 
-        _activeSpells.Add((spell.Name, spell.Turns));
+        _players[0].Mana -= spell.Cost;
+
+        Console.WriteLine($"Casting {spell.Name}: {spell.Cost}");
+
+        _activeSpells.Add(spell.Name, spell.Turns);
 
         return spell.Cost;
     }
 
     protected void InitialiseSpells()
     {
-        _spells = new[] { (0, "Nothing", 0), (53, "MagicMissile", 1), (73, "Drain", 1), (113, "Shield", 6), (173, "Poison", 6), (229, "Recharge", 5) };
+        //_spells = new[] { (0, "Nothing", 0), (53, "MagicMissile", 1), (73, "Drain", 1), (113, "Shield", 6), (173, "Poison", 6), (229, "Recharge", 5) };
+        _spells = new[] { (53, "MagicMissile", 1), (73, "Drain", 1), (113, "Shield", 6), (173, "Poison", 6), (229, "Recharge", 5) };
     }
 
     protected void InitialisePlayers()
