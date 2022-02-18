@@ -28,11 +28,11 @@ public abstract class Base : Solution
     {
         _players[0].Damage = _weapons[_weapon].Value;
         
-        _players[0].Armor = _armours[_armour].Value;
+        _players[0].Armour = _armours[_armour].Value;
 
         _players[0].Damage += _damageRings[_damageRing].Value;
         
-        _players[0].Armor += _defenceRings[_defenceRing].Value;
+        _players[0].Armour += _defenceRings[_defenceRing].Value;
 
         var cost = _weapons[_weapon].Cost + _armours[_armour].Cost + _damageRings[_damageRing].Cost + _defenceRings[_defenceRing].Cost;
 
@@ -84,7 +84,7 @@ public abstract class Base : Solution
 
         while (_players.All(p => p.HitPoints > 0))
         {
-            var damage = Math.Max(_players[player].Damage - _players[1 - player].Armor, 1);
+            var damage = Math.Max(_players[player].Damage - _players[1 - player].Armour, 1);
 
             _players[1 - player].HitPoints = Math.Max(_players[1 - player].HitPoints - damage, 0);
 
@@ -102,7 +102,7 @@ public abstract class Base : Solution
                       {
                           HitPoints = 100,
                           Damage = 0,
-                          Armor = 0
+                          Armour = 0
                       };
 
         var inputData = Input.Select(l => l.Split(':', StringSplitOptions.TrimEntries)[1]).Select(int.Parse).ToArray();
@@ -111,7 +111,7 @@ public abstract class Base : Solution
                       {
                           HitPoints = inputData[0],
                           Damage = inputData[1],
-                          Armor = inputData[2]
+                          Armour = inputData[2]
                       };
     }
 }
