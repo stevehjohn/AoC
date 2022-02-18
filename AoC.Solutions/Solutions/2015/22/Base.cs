@@ -12,6 +12,8 @@ public abstract class Base : Solution
 
     private readonly List<(string Spell, int Turns)> _activeSpells = new();
 
+    private readonly Random _random = new();
+
     protected (int Winner, int ManaCost) ExecuteFight()
     {
         var player = 0;
@@ -74,9 +76,19 @@ public abstract class Base : Solution
 
     private int CastSpell()
     {
-        _activeSpells.Add(("MagicMissile", 1));
+        var canAfford = _spells.Where(s => s.Cost <= _players[0].Mana).ToList();
 
-        return 0;
+        if (canAfford.Count == 0)
+        {
+            return 0;
+        }
+        
+        // TODO: Don't like this approach. 
+        var spell = canAfford[_random.Next(canAfford.Count)];
+
+        _activeSpells.Add((spell.Name, spell.Turns));
+
+        return spell.Cost;
     }
 
     protected void InitialiseSpells()
