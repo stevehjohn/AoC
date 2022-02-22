@@ -6,130 +6,118 @@ public abstract class Base : Solution
 {
     public override string Description => "Wizard simulator 2015";
 
-    private Player[] _players;
-
     private (int Cost, string Name, int Turns)[] _spells;
 
-    private readonly Dictionary<string, int> _activeSpells = new();
-
-    private readonly Random _random = new();
-
-    protected (int Winner, int ManaCost) ExecuteFight()
+    protected int GetManaCostToWin()
     {
-        var player = 0;
+        var queue = new PriorityQueue<(Player Player, Player Boss, Dictionary<string, int> ActiveSpells, int PlayerTurn, int TotalCost), int>();
 
-        var cost = 0;
+        var inputData = Input.Select(l => l.Split(':', StringSplitOptions.TrimEntries)[1]).Select(int.Parse).ToArray();
 
-        while (_players.All(p => p.HitPoints > 0))
+        queue.Enqueue((new Player { HitPoints = 50, Mana = 500 }, new Player { HitPoints = inputData[0], Damage = inputData[1] }, new Dictionary<string, int>(), 0, 0), 0);
+
+        while (queue.Count > 0)
         {
-            _players[0].Armour = 0;
-
-            foreach (var spell in _activeSpells)
-            {
-                switch (spell.Key)
-                {
-                    case "MagicMissile":
-                        _players[1].HitPoints = Math.Max(_players[1].HitPoints - 4, 0);
-
-                        break;
-                    case "Drain":
-                        _players[1].HitPoints = Math.Max(_players[1].HitPoints - 2, 0);
-
-                        _players[0].HitPoints += 2;
-
-                        break;
-                    case "Shield":
-                        _players[0].Armour = 7;
-
-                        break;
-                    case "Poison":
-                        _players[1].HitPoints = Math.Max(_players[1].HitPoints - 3, 0);
-
-                        break;
-                    case "Recharge":
-                        _players[0].Mana += 101;
-
-                        break;
-                }
-            }
+            var round = queue.Dequeue();
 
             var toRemove = new List<string>();
 
-            foreach (var spell in _activeSpells.Keys)
-            {
-                _activeSpells[spell]--;
+            round.Player.Armour = 0;
 
-                if (_activeSpells[spell] <= 0)
+            foreach (var spell in round.ActiveSpells)
+            {
+                switch (spell.Key)
                 {
-                    toRemove.Add(spell);
+                    case "Shield":
+                        round.Player.Armour = 7;
+
+                        break;
+                    case "Poison":
+                        round.Boss.HitPoints -= 3;
+
+                        break;
+                    case "Recharge":
+                        round.Player.Mana += 101;
+
+                        break;
+                }
+
+                round.ActiveSpells[spell.Key]--;
+
+                if (round.ActiveSpells[spell.Key] <= 0)
+                {
+                    toRemove.Add(spell.Key);
                 }
             }
 
-            toRemove.ForEach(s => _activeSpells.Remove(s));
-
-            if (player == 0)
+            foreach (var item in toRemove)
             {
-                cost += CastSpell();
+                round.ActiveSpells.Remove(item);
+            }
+
+            if (round.Boss.HitPoints <= 0)
+            {
+                return round.TotalCost;
+            }
+
+            if (round.PlayerTurn == 0)
+            {
+                var canCast = _spells.Where(s => ! round.ActiveSpells.ContainsKey(s.Name) && s.Cost <= round.Player.Mana).ToList();
+
+                foreach (var spell in canCast)
+                {
+                    var player = new Player(round.Player);
+
+                    player.Mana -= spell.Cost;
+
+                    var activeSpells = round.ActiveSpells.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
+                    var boss = new Player(round.Boss);
+
+                    switch (spell.Name)
+                    {
+                        case "Shield":
+                        case "Poison":
+                        case "Recharge":
+                            activeSpells.Add(spell.Name, spell.Turns);
+
+                            queue.Enqueue((player, boss, activeSpells, 1, round.TotalCost + spell.Cost), round.TotalCost + spell.Cost);
+
+                            break;
+                        case "MagicMissile":
+                            boss.HitPoints -= 4;
+
+                            queue.Enqueue((player, boss, activeSpells, 1, round.TotalCost + spell.Cost), round.TotalCost + spell.Cost);
+                            
+                            break;
+                        case "Drain":
+                            boss.HitPoints -= 2;
+
+                            player.HitPoints += 2;
+
+                            queue.Enqueue((player, boss, activeSpells, 1, round.TotalCost + spell.Cost), round.TotalCost + spell.Cost);
+
+                            break;
+                    }
+
+                }
             }
             else
             {
-                var damage = Math.Max(_players[1].Damage - _players[0].Armour, 1);
-
-                _players[0].HitPoints = Math.Max(_players[0].HitPoints - damage, 0);
+                round.Player.HitPoints -= Math.Max(round.Boss.Damage - round.Player.Armour, 1);
+                
+                if (round.Player.HitPoints > 0)
+                {
+                    queue.Enqueue((new Player(round.Player), new Player(round.Boss), round.ActiveSpells.ToDictionary(kvp => kvp.Key, kvp => kvp.Value), 0, round.TotalCost), round.TotalCost);
+                }
             }
-
-            player = 1 - player;
         }
 
-        return (_players[0].HitPoints == 0 ? 1 : 0, cost);
-    }
-
-    private int CastSpell()
-    {
-        var canAfford = _spells.Where(s => s.Cost <= _players[0].Mana && ! _activeSpells.ContainsKey(s.Name)).ToList();
-
-        if (canAfford.Count == 0)
-        {
-            return 0;
-        }
-
-        // TODO: Don't like this approach. 
-        var spell = canAfford[_random.Next(canAfford.Count)];
-
-        _players[0].Mana -= spell.Cost;
-
-        _activeSpells.Add(spell.Name, spell.Turns);
-
-        return spell.Cost;
+        return int.MaxValue;
     }
 
     protected void InitialiseSpells()
     {
         _spells = new[] { (53, "MagicMissile", 1), (73, "Drain", 1), (113, "Shield", 6), (173, "Poison", 6), (229, "Recharge", 5) };
-    }
-
-    protected void InitialisePlayers()
-    {
-        _players = new Player[2];
-
-        _players[0] = new Player
-                      {
-                          HitPoints = 50,
-                          Damage = 0,
-                          Armour = 0,
-                          Mana = 500
-                      };
-
-        var inputData = Input.Select(l => l.Split(':', StringSplitOptions.TrimEntries)[1]).Select(int.Parse).ToArray();
-
-        _players[1] = new Player
-                      {
-                          HitPoints = inputData[0],
-                          Damage = inputData[1],
-                          Armour = 0,
-                          Mana = 0
-                      };
-
-        _activeSpells.Clear();
     }
 }
