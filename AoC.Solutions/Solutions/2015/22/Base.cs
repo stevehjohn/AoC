@@ -26,8 +26,6 @@ public abstract class Base : Solution
 
             foreach (var spell in _activeSpells)
             {
-                Console.WriteLine(spell);
-
                 switch (spell.Key)
                 {
                     case "MagicMissile":
@@ -81,8 +79,6 @@ public abstract class Base : Solution
             }
 
             player = 1 - player;
-
-            Console.WriteLine($"P1: {_players[0].HitPoints}    P2: {_players[1].HitPoints}");
         }
 
         return (_players[0].HitPoints == 0 ? 1 : 0, cost);
@@ -102,8 +98,6 @@ public abstract class Base : Solution
 
         _players[0].Mana -= spell.Cost;
 
-        Console.WriteLine($"Casting {spell.Name}: {spell.Cost}");
-
         _activeSpells.Add(spell.Name, spell.Turns);
 
         return spell.Cost;
@@ -111,7 +105,6 @@ public abstract class Base : Solution
 
     protected void InitialiseSpells()
     {
-        //_spells = new[] { (0, "Nothing", 0), (53, "MagicMissile", 1), (73, "Drain", 1), (113, "Shield", 6), (173, "Poison", 6), (229, "Recharge", 5) };
         _spells = new[] { (53, "MagicMissile", 1), (73, "Drain", 1), (113, "Shield", 6), (173, "Poison", 6), (229, "Recharge", 5) };
     }
 
