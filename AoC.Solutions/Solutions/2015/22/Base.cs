@@ -14,7 +14,8 @@ public abstract class Base : Solution
 
         var inputData = Input.Select(l => l.Split(':', StringSplitOptions.TrimEntries)[1]).Select(int.Parse).ToArray();
 
-        queue.Enqueue((new Player { HitPoints = 50, Mana = 500 }, new Player { HitPoints = inputData[0], Damage = inputData[1] }, new Dictionary<string, int>(), 0, 0), 0);
+        //queue.Enqueue((new Player { HitPoints = 50, Mana = 500 }, new Player { HitPoints = inputData[0], Damage = inputData[1] }, new Dictionary<string, int>(), 0, 0), 0);
+        queue.Enqueue((new Player { HitPoints = 10, Mana = 250 }, new Player { HitPoints = 14, Damage = 8 }, new Dictionary<string, int>(), 0, 0), 0);
 
         while (queue.Count > 0)
         {
