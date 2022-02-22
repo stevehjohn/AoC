@@ -2,38 +2,40 @@
 
 public static class ArrayExtensions
 {
-    public static List<T[]> GetPermutations<T>(this T[] array)
+    public static IEnumerable<T[]> GetPermutations<T>(this T[] array)
     {
-        var permutations = new List<T[]>();
-
-        GetPermutationsInternal(array.Length, array, permutations);
-
-        return permutations;
+        return GetPermutationsInternal(array.Length, array);
     }
 
-    private static void GetPermutationsInternal<T>(int remainingIterations, T[] array, List<T[]> permutations)
+    private static IEnumerable<T[]> GetPermutationsInternal<T>(int remainingIterations, T[] array)
     {
-        if (remainingIterations == 1)
+        while (remainingIterations > 0)
         {
-            permutations.Add((T[]) array.Clone());
-
-            return;
-        }
-
-        for (var i = 0; i < remainingIterations - 1; i++)
-        {
-            GetPermutationsInternal(remainingIterations - 1, array, permutations);
-
-            if (remainingIterations % 2 == 0)
+            if (remainingIterations == 1)
             {
-                (array[i], array[remainingIterations - 1]) = (array[remainingIterations - 1], array[i]);
+                yield return (T[]) array.Clone();
             }
-            else
-            {
-                (array[0], array[remainingIterations - 1]) = (array[remainingIterations - 1], array[0]);
-            }
-        }
 
-        GetPermutationsInternal(remainingIterations - 1, array, permutations);
+            for (var i = 0; i < remainingIterations - 1; i++)
+            {
+                var permutations = GetPermutationsInternal(remainingIterations - 1, array);
+
+                foreach (var permutation in permutations)
+                {
+                    yield return permutation;
+                }
+
+                if (remainingIterations % 2 == 0)
+                {
+                    (array[i], array[remainingIterations - 1]) = (array[remainingIterations - 1], array[i]);
+                }
+                else
+                {
+                    (array[0], array[remainingIterations - 1]) = (array[remainingIterations - 1], array[0]);
+                }
+            }
+
+            remainingIterations -= 1;
+        }
     }
 }
