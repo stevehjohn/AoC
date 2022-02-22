@@ -10,21 +10,15 @@ public abstract class Base : Solution
 
     protected int GetManaCostToWin()
     {
-        var queue = new PriorityQueue<(Player Player, Player Boss, Dictionary<string, int> ActiveSpells, int PlayerTurn, int TotalCost), int>();
+        var queue = new PriorityQueue<(Player Player, Player Boss, Dictionary<string, int> ActiveSpells, int PlayerTurn, int TotalCost, List<string> History), int>();
 
         var inputData = Input.Select(l => l.Split(':', StringSplitOptions.TrimEntries)[1]).Select(int.Parse).ToArray();
 
-        //queue.Enqueue((new Player { HitPoints = 50, Mana = 500 }, new Player { HitPoints = inputData[0], Damage = inputData[1] }, new Dictionary<string, int>(), 0, 0), 0);
-        queue.Enqueue((new Player { HitPoints = 10, Mana = 250 }, new Player { HitPoints = 14, Damage = 8 }, new Dictionary<string, int>(), 0, 0), 0);
+        queue.Enqueue((new Player { HitPoints = 50, Mana = 500 }, new Player { HitPoints = inputData[0], Damage = inputData[1] }, new Dictionary<string, int>(), 0, 0, new List<string>()), 0);
 
         while (queue.Count > 0)
         {
             var round = queue.Dequeue();
-
-            if (round.Boss.HitPoints <= 0)
-            {
-                return round.TotalCost;
-            }
 
             var toRemove = new List<string>();
 
@@ -43,12 +37,14 @@ public abstract class Base : Solution
 
                         break;
                     case "Recharge":
-                        round.Player.Mana += 229;
+                        round.Player.Mana += 101;
 
                         break;
                 }
 
                 round.ActiveSpells[spell.Key]--;
+
+                round.History.Add($"{spell.Key}, turns left: {spell.Value}");
 
                 if (round.ActiveSpells[spell.Key] <= 0)
                 {
@@ -59,6 +55,16 @@ public abstract class Base : Solution
             foreach (var item in toRemove)
             {
                 round.ActiveSpells.Remove(item);
+            }
+
+            if (round.Boss.HitPoints <= 0)
+            {
+                foreach (var line in round.History)
+                {
+                    Console.WriteLine(line);
+                }
+
+                return round.TotalCost;
             }
 
             if (round.PlayerTurn == 0)
@@ -73,6 +79,8 @@ public abstract class Base : Solution
 
                     var activeSpells = round.ActiveSpells.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
+                    var history = round.History.ToList();
+
                     var boss = new Player(round.Boss);
 
                     switch (spell.Name)
@@ -82,13 +90,17 @@ public abstract class Base : Solution
                         case "Recharge":
                             activeSpells.Add(spell.Name, spell.Turns);
 
-                            queue.Enqueue((player, boss, activeSpells, 1, round.TotalCost + spell.Cost), round.TotalCost + spell.Cost);
+                            history.Add($"\nCasting {spell.Name}. Mana remaining: {player.Mana}. Player HP: {player.HitPoints}    Boss HP: {boss.HitPoints}");
+
+                            queue.Enqueue((player, boss, activeSpells, 1, round.TotalCost + spell.Cost, history), round.TotalCost + spell.Cost);
 
                             break;
                         case "MagicMissile":
                             boss.HitPoints -= 4;
 
-                            queue.Enqueue((player, boss, activeSpells, 1, round.TotalCost + spell.Cost), round.TotalCost + spell.Cost);
+                            history.Add($"\nCasting {spell.Name}. Mana remaining: {player.Mana}. Player HP: {player.HitPoints}    Boss HP: {boss.HitPoints}");
+                            
+                            queue.Enqueue((player, boss, activeSpells, 1, round.TotalCost + spell.Cost, history), round.TotalCost + spell.Cost);
                             
                             break;
                         case "Drain":
@@ -96,24 +108,29 @@ public abstract class Base : Solution
 
                             player.HitPoints += 2;
 
-                            queue.Enqueue((player, boss, activeSpells, 1, round.TotalCost + spell.Cost), round.TotalCost + spell.Cost);
+                            history.Add($"\nCasting {spell.Name}. Mana remaining: {player.Mana}. Player HP: {player.HitPoints}    Boss HP: {boss.HitPoints}");
+                            
+                            queue.Enqueue((player, boss, activeSpells, 1, round.TotalCost + spell.Cost, history), round.TotalCost + spell.Cost);
 
                             break;
                     }
+
                 }
             }
             else
             {
                 round.Player.HitPoints -= Math.Max(round.Boss.Damage - round.Player.Armour, 1);
+                
+                round.History.Add($"\nBoss attacks. Player HP: {round.Player.HitPoints}    Boss HP: {round.Boss.HitPoints}");
 
                 if (round.Player.HitPoints > 0)
                 {
-                    queue.Enqueue((new Player(round.Player), new Player(round.Boss), round.ActiveSpells.ToDictionary(kvp => kvp.Key, kvp => kvp.Value), 0, round.TotalCost), round.TotalCost);
+                    queue.Enqueue((new Player(round.Player), new Player(round.Boss), round.ActiveSpells.ToDictionary(kvp => kvp.Key, kvp => kvp.Value), 0, round.TotalCost, round.History.ToList()), round.TotalCost);
                 }
             }
         }
 
-        return 0;
+        return int.MaxValue;
     }
 
     protected void InitialiseSpells()
