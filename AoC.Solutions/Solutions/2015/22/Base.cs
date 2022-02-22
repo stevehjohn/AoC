@@ -8,7 +8,7 @@ public abstract class Base : Solution
 
     private (int Cost, string Name, int Turns)[] _spells;
 
-    protected int GetManaCostToWin()
+    protected int GetManaCostToWin(bool isPart2 = false)
     {
         var queue = new PriorityQueue<(Player Player, Player Boss, Dictionary<string, int> ActiveSpells, int PlayerTurn, int TotalCost), int>();
 
@@ -23,6 +23,16 @@ public abstract class Base : Solution
             var toRemove = new List<string>();
 
             round.Player.Armour = 0;
+
+            if (isPart2 && round.PlayerTurn == 0)
+            {
+                round.Player.HitPoints--;
+
+                if (round.Player.HitPoints <= 0)
+                {
+                    continue;
+                }
+            }
 
             foreach (var spell in round.ActiveSpells)
             {
