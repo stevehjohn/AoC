@@ -81,13 +81,13 @@ public abstract class Base : Solution
                         case "Recharge":
                             activeSpells.Add(spell.Name, spell.Turns);
 
-                            queue.Enqueue((player, boss, activeSpells, 0, round.TotalCost + spell.Cost), round.TotalCost + spell.Cost);
+                            queue.Enqueue((player, boss, activeSpells, 1, round.TotalCost + spell.Cost), round.TotalCost + spell.Cost);
 
                             break;
                         case "MagicMissile":
                             boss.HitPoints -= 4;
 
-                            queue.Enqueue((player, boss, activeSpells, 0, round.TotalCost + spell.Cost), round.TotalCost + spell.Cost);
+                            queue.Enqueue((player, boss, activeSpells, 1, round.TotalCost + spell.Cost), round.TotalCost + spell.Cost);
                             
                             break;
                         case "Drain":
@@ -95,7 +95,7 @@ public abstract class Base : Solution
 
                             player.HitPoints += 2;
 
-                            queue.Enqueue((player, boss, activeSpells, 0, round.TotalCost + spell.Cost), round.TotalCost + spell.Cost);
+                            queue.Enqueue((player, boss, activeSpells, 1, round.TotalCost + spell.Cost), round.TotalCost + spell.Cost);
 
                             break;
                     }
