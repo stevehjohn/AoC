@@ -7,25 +7,10 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var cost = int.MaxValue;
-
-        InitialisePlayers();
-
         InitialiseSpells();
 
-        // TODO: Don't like this approach. 
-        for (var i = 0; i < 1_000_000_000; i++)
-        {
-            var result = ExecuteFight();
+        var result = GetManaCostToWin();
 
-            if (result.Winner == 0)
-            {
-                cost = Math.Min(cost, result.ManaCost);
-            }
-
-            InitialisePlayers();
-        }
-
-        return cost.ToString();
+        return result.ToString();
     }
 }
