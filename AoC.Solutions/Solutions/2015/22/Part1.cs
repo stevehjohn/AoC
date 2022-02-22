@@ -14,7 +14,7 @@ public class Part1 : Base
         InitialiseSpells();
 
         // TODO: Don't like this approach. 
-        for (var i = 0; i < 1_000; i++)
+        for (var i = 0; i < 1_000_000_000; i++)
         {
             var result = ExecuteFight();
 
