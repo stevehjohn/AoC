@@ -1,7 +1,7 @@
 ﻿<ProjectConfiguration>
   <Settings>
     <CopyReferencedAssembliesToWorkspace>True</CopyReferencedAssembliesToWorkspace>
-    <DefaultTestTimeout>60000</DefaultTestTimeout>
+    <DefaultTestTimeout>240000</DefaultTestTimeout>
     <DetectStackOverflow>True</DetectStackOverflow>
   </Settings>
 </ProjectConfiguration>
