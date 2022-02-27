@@ -15,4 +15,8 @@
     <ProjectReference Include="..\AoC.Solutions\AoC.Solutions.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Exceptions\" />
+  </ItemGroup>
+
 </Project>
