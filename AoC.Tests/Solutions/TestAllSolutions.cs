@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Common.Ocr;
+using AoC.Solutions.Infrastructure;
 using AoC.Solutions.Solutions._2019._01;
 using AoC.Tests.Exceptions;
 using Xunit;
@@ -29,7 +30,19 @@ public class TestAllSolutions
 
         var instance = Activator.CreateInstance(solution) as Solution;
 
-        var answer = instance?.GetAnswer();
+        if (instance == null)
+        {
+            throw new TestException($"Could not instantiate {solution.FullName}.");
+        }
+
+        var answer = instance.GetAnswer();
+
+        if (instance.OcrOutput.HasValue)
+        {
+            var matrixParser = new MatrixParser(instance.OcrOutput.Value);
+
+            answer = matrixParser.Parse(answer);
+        }
 
         var split = correctAnswerLine.Split(": ");
 
