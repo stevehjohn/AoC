@@ -1,6 +1,6 @@
 ﻿<ProjectConfiguration>
   <Settings>
-    <DefaultTestTimeout>0</DefaultTestTimeout>
+    <DefaultTestTimeout>60000</DefaultTestTimeout>
     <DetectStackOverflow>True</DetectStackOverflow>
   </Settings>
 </ProjectConfiguration>
