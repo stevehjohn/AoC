@@ -3,15 +3,20 @@ using AoC.Solutions.Infrastructure;
 using AoC.Solutions.Solutions._2019._01;
 using AoC.Tests.Exceptions;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace AoC.Tests.Solutions;
 
 public class TestAllSolutions
 {
+    private readonly ITestOutputHelper _testOutputHelper;
+
     private readonly string[] _answers;
 
-    public TestAllSolutions()
+    public TestAllSolutions(ITestOutputHelper testOutputHelper)
     {
+        _testOutputHelper = testOutputHelper;
+
         _answers = File.ReadAllLines($"Solutions{Path.DirectorySeparatorChar}AllAnswers.txt");
     }
 
@@ -50,6 +55,8 @@ public class TestAllSolutions
         {
             throw new TestException($"Incorrect answer for {key}. Expected {split[1]}, actual {answer}.");
         }
+
+        _testOutputHelper.WriteLine($"Test of '{instance.Description}' passed.");
     }
 
     public static IEnumerable<object[]> Solutions
