@@ -17,6 +17,29 @@
 
   <ItemGroup>
     <None Remove=".gitignore" />
+    <None Remove="Solutions\2015\20\2015.20.1.result" />
+    <None Remove="Solutions\2019\10\2019.10.1.result" />
+    <None Remove="Solutions\2019\15\2019.15.1.result" />
+    <None Remove="Solutions\2020\09\2020.09.1.result" />
+    <None Remove="Solutions\2020\20\2020.20.1.result" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Solutions\2015\20\2015.20.1.result">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Solutions\2019\10\2019.10.1.result">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Solutions\2019\15\2019.15.1.result">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Solutions\2020\09\2020.09.1.result">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Solutions\2020\20\2020.20.1.result">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -114,9 +137,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Solutions\2015\19\input.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Solutions\2015\20\2015.20.1.result">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Solutions\2015\20\input.txt">
@@ -392,9 +412,6 @@
     <None Update="Solutions\2019\10\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Solutions\2019\10\2019.10.1.result">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Solutions\2019\11\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -408,9 +425,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Solutions\2019\15\input.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Solutions\2019\15\2019.15.1.result">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Solutions\2019\16\input.txt">
@@ -467,9 +481,6 @@
     <None Update="Solutions\2020\08\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Solutions\2020\09\2020.09.1.result">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Solutions\2020\09\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -501,9 +512,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Solutions\2020\19\input.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Solutions\2020\20\2020.20.1.result">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Solutions\2020\20\input.txt">
