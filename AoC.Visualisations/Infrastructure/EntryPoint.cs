@@ -8,7 +8,7 @@ public static class EntryPoint
     [STAThread]
     private static void Main(string[] arguments)
     {
-        if (arguments.Length != 1)
+        if (arguments.Length is not 1 or 2)
         {
             throw new VisualisationParameterException("Please specify the visualisation to run, format: year.day.part, e.g. 2021.05.2.");
         }
@@ -58,12 +58,12 @@ public static class EntryPoint
         }
         catch (Exception exception)
         {
-            throw new VisualisationParameterException($"Unable to find visualisation for {year}.{day}.{part}.", exception);
+            throw new VisualisationParameterException($"Unable to instantiate visualisation for {year}.{day}.{part}.", exception);
         }
 
         if (visualisation == null)
         {
-            throw new VisualisationParameterException($"Unable to find visualisation for {year}.{day}.{part}.");
+            throw new VisualisationParameterException($"Unable to instantiate visualisation for {year}.{day}.{part}.");
         }
 
         try
@@ -72,7 +72,19 @@ public static class EntryPoint
         }
         catch (Exception exception)
         {
-            throw new VisualisationParameterException($"Unable to find visualisation for {year}.{day}.{part}.", exception);
+            throw new VisualisationParameterException($"Unable to call SetPart on visualisation for {year}.{day}.{part}.", exception);
+        }
+
+        if (arguments.Length == 2)
+        {
+            try
+            {
+                ((IRecordableVisualiser) visualisation).OutputAviPath = arguments[1];
+            }
+            catch (Exception exception)
+            {
+                throw new VisualisationParameterException($"Unable to set OutputAviPath on visualisation for {year}.{day}.{part}.", exception);
+            }
         }
 
         try

@@ -13,9 +13,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
 {
     private const int Transformers = 3;
 
-    // ReSharper disable once NotAccessedField.Local
-    private readonly GraphicsDeviceManager _graphicsDeviceManager;
-
     private readonly List<Transformer> _transformers = new();
 
     private SpriteBatch _spriteBatch;
@@ -44,7 +41,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     public Visualisation()
     {
-        _graphicsDeviceManager = new GraphicsDeviceManager(this)
+        GraphicsDeviceManager = new GraphicsDeviceManager(this)
                                  {
                                      PreferredBackBufferWidth = Constants.ScreenWidth,
                                      PreferredBackBufferHeight = Constants.ScreenHeight
