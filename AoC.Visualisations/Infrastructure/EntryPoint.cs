@@ -56,9 +56,9 @@ public static class EntryPoint
             // ReSharper disable once PossibleNullReferenceException - that's what the try... catch is for.
             visualisation = (Game) Activator.CreateInstance(null, visualisationClass).Unwrap();
         }
-        catch
+        catch (Exception exception)
         {
-            throw new VisualisationParameterException($"Unable to find visualisation for {year}.{day}.{part}.");
+            throw new VisualisationParameterException($"Unable to find visualisation for {year}.{day}.{part}.", exception);
         }
 
         if (visualisation == null)
@@ -70,9 +70,9 @@ public static class EntryPoint
         {
             ((IMultiPartVisualiser) visualisation).SetPart(int.Parse(part));
         }
-        catch
+        catch (Exception exception)
         {
-            throw new VisualisationParameterException($"Unable to find visualisation for {year}.{day}.{part}.");
+            throw new VisualisationParameterException($"Unable to find visualisation for {year}.{day}.{part}.", exception);
         }
 
         try
