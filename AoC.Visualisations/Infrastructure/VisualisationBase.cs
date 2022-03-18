@@ -9,7 +9,18 @@ namespace AoC.Visualisations.Infrastructure;
 
 public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVisualiser, IRecordableVisualiser
 {
-    protected bool HasNextState => _stateQueue.Count > 0;
+    protected bool HasNextState
+    {
+        get
+        {
+            if (_quitWhenQueueEmpty && _stateQueue.Count == 0)
+            {
+                Task.Delay(new TimeSpan(0, 0, 10)).ContinueWith(_ => EndVideo());
+            }
+
+            return _stateQueue.Count > 0;
+        }
+    }
 
     protected GraphicsDeviceManager GraphicsDeviceManager;
 
@@ -28,6 +39,8 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
     private AviWriter _aviWriter;
 
     private IAviVideoStream _aviStream;
+
+    private bool _quitWhenQueueEmpty;
 
     protected override void Initialize()
     {
@@ -84,13 +97,17 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
     {
         if (_aviWriter != null)
         {
+            _aviStream = null;
+
             _aviWriter.Close();
+            
+            Application.Exit();
         }
     }
 
     public void PuzzleComplete()
     {
-        // TODO: Cause visualisation to end in 10, 20 seconds or so.
+        _quitWhenQueueEmpty = true;
     }
 
     protected override void OnExiting(object sender, EventArgs args)
