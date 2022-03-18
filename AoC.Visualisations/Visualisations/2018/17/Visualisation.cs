@@ -20,9 +20,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private const int TileMapWidth = 11;
 
-    // ReSharper disable once NotAccessedField.Local
-    private readonly GraphicsDeviceManager _graphicsDeviceManager;
-
     private SpriteBatch _spriteBatch;
 
     private Texture2D _tiles;
@@ -41,7 +38,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     public Visualisation()
     {
-        _graphicsDeviceManager = new GraphicsDeviceManager(this)
+        GraphicsDeviceManager = new GraphicsDeviceManager(this)
                                  {
                                      PreferredBackBufferWidth = ScreenWidth,
                                      PreferredBackBufferHeight = ScreenHeight

@@ -1,13 +1,16 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using System.Drawing.Imaging;
+using AoC.Solutions.Infrastructure;
 using Microsoft.Xna.Framework;
+using SharpAvi;
 using SharpAvi.Output;
+using Point = System.Drawing.Point;
 
 namespace AoC.Visualisations.Infrastructure;
 
 public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVisualiser, IRecordableVisualiser
 {
     protected bool HasNextState => _stateQueue.Count > 0;
-    
+
     protected GraphicsDeviceManager GraphicsDeviceManager;
 
     private readonly Queue<T> _stateQueue = new();
@@ -45,6 +48,8 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
             _aviStream.Width = GraphicsDeviceManager.PreferredBackBufferWidth;
 
             _aviStream.Height = GraphicsDeviceManager.PreferredBackBufferHeight;
+
+            _aviStream.BitsPerPixel = BitsPerPixel.Bpp24;
         }
 
         base.Initialize();
@@ -54,9 +59,33 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
     {
         if (_aviStream != null)
         {
+            using (var bitmap = new Bitmap(GraphicsDeviceManager.PreferredBackBufferWidth, GraphicsDeviceManager.PreferredBackBufferHeight, PixelFormat.Format24bppRgb))
+            {
+                using (Graphics graphics = Graphics.FromImage(bitmap))
+                {
+                    var bounds = Window.ClientBounds;
+
+                    graphics.CopyFromScreen(new Point(bounds.Left, bounds.Top), Point.Empty, new Size(bounds.Size.X, bounds.Size.Y));
+                }
+
+                using (var stream = new MemoryStream())
+                {
+                    bitmap.Save(stream, ImageFormat.Bmp);
+
+                    _aviStream.WriteFrame(true, stream.ToArray());
+                }
+            }
         }
 
         base.EndDraw();
+    }
+
+    private void EndVideo()
+    {
+        if (_aviWriter != null)
+        {
+            _aviWriter.Close();
+        }
     }
 
     public void PuzzleComplete()
@@ -66,6 +95,8 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
 
     protected override void OnExiting(object sender, EventArgs args)
     {
+        EndVideo();
+
         _cancellationTokenSource.Cancel();
 
         base.OnExiting(sender, args);
