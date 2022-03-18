@@ -8,7 +8,7 @@ public static class EntryPoint
     [STAThread]
     private static void Main(string[] arguments)
     {
-        if (arguments.Length is not 1 or 2)
+        if (arguments.Length < 1 || arguments.Length > 2)
         {
             throw new VisualisationParameterException("Please specify the visualisation to run, format: year.day.part, e.g. 2021.05.2.");
         }
