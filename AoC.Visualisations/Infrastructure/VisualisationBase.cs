@@ -1,11 +1,14 @@
 ﻿using AoC.Solutions.Infrastructure;
 using Microsoft.Xna.Framework;
+using SharpAvi.Output;
 
 namespace AoC.Visualisations.Infrastructure;
 
-public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVisualiser
+public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVisualiser, IRecordableVisualiser
 {
     protected bool HasNextState => _stateQueue.Count > 0;
+    
+    protected GraphicsDeviceManager GraphicsDeviceManager;
 
     private readonly Queue<T> _stateQueue = new();
 
@@ -17,13 +20,48 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
 
     public abstract void SetPart(int part);
 
+    public string OutputAviPath { get; set; }
+
+    private AviWriter _aviWriter;
+
+    private IAviVideoStream _aviStream;
+
     protected override void Initialize()
     {
         _puzzleTask = new Task(() => Puzzle.GetAnswer(), _cancellationTokenSource.Token);
 
         _puzzleTask.Start();
 
+        if (! string.IsNullOrWhiteSpace(OutputAviPath))
+        {
+            _aviWriter = new AviWriter(OutputAviPath)
+                         {
+                             FramesPerSecond = 30,
+                             EmitIndex1 = true
+                         };
+
+            _aviStream = _aviWriter.AddVideoStream();
+
+            _aviStream.Width = GraphicsDeviceManager.PreferredBackBufferWidth;
+
+            _aviStream.Height = GraphicsDeviceManager.PreferredBackBufferHeight;
+        }
+
         base.Initialize();
+    }
+
+    protected override void EndDraw()
+    {
+        if (_aviStream != null)
+        {
+        }
+
+        base.EndDraw();
+    }
+
+    public void PuzzleComplete()
+    {
+        // TODO: Cause visualisation to end in 10, 20 seconds or so.
     }
 
     protected override void OnExiting(object sender, EventArgs args)

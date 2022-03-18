@@ -44,6 +44,8 @@ public class Part2 : Base
 
         Visualise(collisionPoint, true);
 
+        EndVisualisation();
+
         return $"{Carts[0].Position.X},{Carts[0].Position.Y}";
     }
 }

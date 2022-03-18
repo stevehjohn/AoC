@@ -34,6 +34,14 @@ public class Part1 : Base
             _visualiser.PuzzleStateChanged(new PuzzleState { Tiles = _tiles.Select(t => t.Id).ToList(), Jigsaw = Jigsaw.ToDictionary(kvp => kvp.Value.Id, kvp => kvp.Key), TileId = tileId, Transform = transform });
         }
     }
+    
+    protected void EndVisualisation()
+    {
+        if (_visualiser != null)
+        {
+            _visualiser.PuzzleComplete();
+        }
+    }
 
     public override string GetAnswer()
     {
@@ -52,6 +60,8 @@ public class Part1 : Base
         var result = CalculateAnswer();
 
         SaveResultForPart2();
+
+        EndVisualisation();
 
         return result.ToString();
     }

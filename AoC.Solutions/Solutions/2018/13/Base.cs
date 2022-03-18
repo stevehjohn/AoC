@@ -34,6 +34,14 @@ public abstract class Base : Solution
         }
     }
 
+    protected void EndVisualisation()
+    {
+        if (_visualiser != null)
+        {
+            _visualiser.PuzzleComplete();
+        }
+    }
+
     protected Point MoveCarts()
     {
         Point collision = null;
