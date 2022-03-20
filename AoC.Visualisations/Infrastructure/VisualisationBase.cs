@@ -15,7 +15,14 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
         {
             if (_quitWhenQueueEmpty && _stateQueue.Count == 0)
             {
-                Task.Delay(new TimeSpan(0, 0, 10)).ContinueWith(_ => EndVideo());
+                Task.Delay(new TimeSpan(0, 0, 10)).ContinueWith(_ =>
+                {
+                    _cancellationTokenSource.Cancel();
+
+                    EndVideo();
+
+                    Exit();
+                });
             }
 
             return _stateQueue.Count > 0;
@@ -45,7 +52,7 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
     protected override void Initialize()
     {
         _puzzleTask = new Task(() => Puzzle.GetAnswer(), _cancellationTokenSource.Token);
-
+        
         _puzzleTask.Start();
 
         if (! string.IsNullOrWhiteSpace(OutputAviPath))
@@ -72,21 +79,20 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
     {
         if (_aviStream != null)
         {
-            using (var bitmap = new Bitmap(GraphicsDeviceManager.PreferredBackBufferWidth, GraphicsDeviceManager.PreferredBackBufferHeight, PixelFormat.Format24bppRgb))
+            using var bitmap = new Bitmap(GraphicsDeviceManager.PreferredBackBufferWidth, GraphicsDeviceManager.PreferredBackBufferHeight, PixelFormat.Format24bppRgb);
+
+            using (var graphics = Graphics.FromImage(bitmap))
             {
-                using (Graphics graphics = Graphics.FromImage(bitmap))
-                {
-                    var bounds = Window.ClientBounds;
+                var bounds = Window.ClientBounds;
 
-                    graphics.CopyFromScreen(new Point(bounds.Left, bounds.Top), Point.Empty, new Size(bounds.Size.X, bounds.Size.Y));
-                }
+                graphics.CopyFromScreen(new Point(bounds.Left, bounds.Top), Point.Empty, new Size(bounds.Size.X, bounds.Size.Y));
+            }
 
-                using (var stream = new MemoryStream())
-                {
-                    bitmap.Save(stream, ImageFormat.Bmp);
+            using (var stream = new MemoryStream())
+            {
+                bitmap.Save(stream, ImageFormat.Bmp);
 
-                    _aviStream.WriteFrame(true, stream.ToArray());
-                }
+                _aviStream?.WriteFrame(true, stream.ToArray());
             }
         }
 
@@ -100,8 +106,6 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
             _aviStream = null;
 
             _aviWriter.Close();
-            
-            Application.Exit();
         }
     }
 
@@ -112,9 +116,9 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
 
     protected override void OnExiting(object sender, EventArgs args)
     {
-        EndVideo();
-
         _cancellationTokenSource.Cancel();
+
+        EndVideo();
 
         base.OnExiting(sender, args);
     }
