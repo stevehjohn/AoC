@@ -122,6 +122,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
         base.LoadContent();
     }
 
+    protected override bool VisualisationFinished => _tileQueue.IsEmpty;
+
     protected override void Update(GameTime gameTime)
     {
         if (HasNextState && _needNewState)

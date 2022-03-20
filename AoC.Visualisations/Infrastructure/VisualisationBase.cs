@@ -13,7 +13,7 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
     {
         get
         {
-            if (_quitWhenQueueEmpty && _stateQueue.Count == 0)
+            if (_quitWhenQueueEmpty && _stateQueue.Count == 0 && VisualisationFinished)
             {
                 Task.Delay(new TimeSpan(0, 0, 10)).ContinueWith(_ =>
                 {
@@ -28,6 +28,8 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
             return _stateQueue.Count > 0;
         }
     }
+
+    protected virtual bool VisualisationFinished => true;
 
     protected GraphicsDeviceManager GraphicsDeviceManager;
 
