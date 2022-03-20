@@ -208,7 +208,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         if (lastY > ScreenHeight / TileSize / 4 * 3)
         {
-            _y += 0.5f;
+            _y++;
         }
 
         _waterFrame++;
