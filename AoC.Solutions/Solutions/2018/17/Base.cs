@@ -35,6 +35,14 @@ public abstract class Base : Solution
             _visualiser.PuzzleStateChanged(new PuzzleState(_map));
         }
     }
+    
+    protected void EndVisualisation()
+    {
+        if (_visualiser != null)
+        {
+            _visualiser.PuzzleComplete();
+        }
+    }
 
     protected int GetAnswer(bool isPart2)
     {
@@ -51,6 +59,8 @@ public abstract class Base : Solution
 
             Visualise();
         }
+
+        EndVisualisation();
 
         return isPart2 ? CountStillWater() : CountAllWater();
     }

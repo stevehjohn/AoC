@@ -37,6 +37,8 @@ public class Part1 : Base
 
         Visualise(collisionPoint);
 
+        EndVisualisation();
+
         return $"{collisionPoint.X},{collisionPoint.Y}";
     }
 }
