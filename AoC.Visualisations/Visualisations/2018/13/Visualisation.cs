@@ -13,9 +13,6 @@ namespace AoC.Visualisations.Visualisations._2018._13;
 [UsedImplicitly]
 public class Visualisation : VisualisationBase<PuzzleState>
 {
-    // ReSharper disable once NotAccessedField.Local
-    private readonly GraphicsDeviceManager _graphicsDeviceManager;
-
     private SpriteBatch _spriteBatch;
 
     private Texture2D _mapTiles;
@@ -38,7 +35,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     public Visualisation()
     {
-        _graphicsDeviceManager = new GraphicsDeviceManager(this)
+        GraphicsDeviceManager = new GraphicsDeviceManager(this)
                                  {
                                      PreferredBackBufferWidth = 1150,
                                      PreferredBackBufferHeight = 1150

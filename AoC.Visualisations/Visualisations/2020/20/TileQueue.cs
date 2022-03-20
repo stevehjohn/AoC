@@ -31,6 +31,8 @@ public class TileQueue
         }
     }
 
+    public bool IsEmpty => _scanQueue.Count == 0;
+
     private const float ScannerDefaultAlpha = 0.5f;
 
     private const int ScannerDefaultFlashTicks = 50;
