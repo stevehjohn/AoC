@@ -1,9 +1,8 @@
-﻿using System.Drawing.Imaging;
-using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Infrastructure;
 using Microsoft.Xna.Framework;
-using SharpAvi;
 using SharpAvi.Codecs;
 using SharpAvi.Output;
+using System.Drawing.Imaging;
 using Point = System.Drawing.Point;
 using Rectangle = System.Drawing.Rectangle;
 
