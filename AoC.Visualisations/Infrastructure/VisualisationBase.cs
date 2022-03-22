@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using SharpAvi;
 using SharpAvi.Output;
 using Point = System.Drawing.Point;
+using Rectangle = System.Drawing.Rectangle;
 
 namespace AoC.Visualisations.Infrastructure;
 
@@ -77,25 +78,26 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
         base.Initialize();
     }
 
-    protected override void EndDraw()
+    protected override unsafe void EndDraw()
     {
         if (_aviStream != null)
         {
             using var bitmap = new Bitmap(GraphicsDeviceManager.PreferredBackBufferWidth, GraphicsDeviceManager.PreferredBackBufferHeight, PixelFormat.Format24bppRgb);
 
+            var bounds = Window.ClientBounds;
+
             using (var graphics = Graphics.FromImage(bitmap))
             {
-                var bounds = Window.ClientBounds;
-
                 graphics.CopyFromScreen(new Point(bounds.Left, bounds.Top), Point.Empty, new Size(bounds.Size.X, bounds.Size.Y));
             }
 
-            using (var stream = new MemoryStream())
-            {
-                bitmap.Save(stream, ImageFormat.Bmp);
+            var bitmapData = bitmap.LockBits(new Rectangle(0, 0, bounds.Size.X, bounds.Size.Y), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
 
-                _aviStream?.WriteFrame(true, stream.ToArray());
-            }
+            var span = new Span<byte>(bitmapData.Scan0.ToPointer(), bitmapData.Stride * bitmapData.Height);
+
+            _aviStream?.WriteFrame(true, span);
+
+            bitmap.UnlockBits(bitmapData);
         }
 
         base.EndDraw();
