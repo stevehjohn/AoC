@@ -2,6 +2,7 @@
 using AoC.Solutions.Infrastructure;
 using Microsoft.Xna.Framework;
 using SharpAvi;
+using SharpAvi.Codecs;
 using SharpAvi.Output;
 using Point = System.Drawing.Point;
 using Rectangle = System.Drawing.Rectangle;
@@ -66,13 +67,9 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
                              EmitIndex1 = true
                          };
 
-            _aviStream = _aviWriter.AddVideoStream();
-
-            _aviStream.Width = GraphicsDeviceManager.PreferredBackBufferWidth;
-
-            _aviStream.Height = GraphicsDeviceManager.PreferredBackBufferHeight;
-
-            _aviStream.BitsPerPixel = BitsPerPixel.Bpp24;
+            _aviStream = _aviWriter.AddEncodingVideoStream(new UncompressedVideoEncoder(GraphicsDeviceManager.PreferredBackBufferWidth, GraphicsDeviceManager.PreferredBackBufferHeight),
+                                                           true,
+                                                           GraphicsDeviceManager.PreferredBackBufferWidth, GraphicsDeviceManager.PreferredBackBufferHeight);
         }
 
         base.Initialize();
@@ -82,7 +79,7 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
     {
         if (_aviStream != null)
         {
-            using var bitmap = new Bitmap(GraphicsDeviceManager.PreferredBackBufferWidth, GraphicsDeviceManager.PreferredBackBufferHeight, PixelFormat.Format24bppRgb);
+            using var bitmap = new Bitmap(GraphicsDeviceManager.PreferredBackBufferWidth, GraphicsDeviceManager.PreferredBackBufferHeight, PixelFormat.Format32bppRgb);
 
             var bounds = Window.ClientBounds;
 
@@ -91,7 +88,7 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
                 graphics.CopyFromScreen(new Point(bounds.Left, bounds.Top), Point.Empty, new Size(bounds.Size.X, bounds.Size.Y));
             }
 
-            var bitmapData = bitmap.LockBits(new Rectangle(0, 0, bounds.Size.X, bounds.Size.Y), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
+            var bitmapData = bitmap.LockBits(new Rectangle(0, 0, bounds.Size.X, bounds.Size.Y), ImageLockMode.ReadOnly, PixelFormat.Format32bppRgb);
 
             var span = new Span<byte>(bitmapData.Scan0.ToPointer(), bitmapData.Stride * bitmapData.Height);
 
