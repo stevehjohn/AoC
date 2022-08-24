@@ -34,7 +34,7 @@ public class Part2 : Base
                     continue;
                 }
 
-                var closest = asteroidsInLine.OrderBy(a => Math.Sqrt(Math.Pow(Math.Abs(a.Point.X - station.X), 2) + Math.Pow(Math.Abs(a.Point.Y - station.Y), 2))).First();
+                var closest = asteroidsInLine.MinBy(a => Math.Sqrt(Math.Pow(Math.Abs(a.Point.X - station.X), 2) + Math.Pow(Math.Abs(a.Point.Y - station.Y), 2)));
 
                 asteroidsWithAngle.Remove(closest);
 
