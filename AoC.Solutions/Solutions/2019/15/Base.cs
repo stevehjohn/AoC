@@ -198,7 +198,7 @@ public abstract class Base : Solution
                             (x, y + 1, GetCellType(x, y + 1), 2)
                         };
 
-        var best = neighbors.OrderBy(n => (int) n.CellType).First();
+        var best = neighbors.MinBy(n => (int) n.CellType);
 
         if (neighbors.Count(n => n.CellType == CellType.Wall) == 3)
         {
