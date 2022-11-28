@@ -1,8 +1,6 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿namespace AoC.Solutions.Solutions._2022._01;
 
-namespace AoC.Solutions.Solutions._2022._01;
-
-public class Part1 : Solution
+public class Part1 : Base
 {
     public override string Description => "";
 
