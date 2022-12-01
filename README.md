@@ -54,6 +54,7 @@ Stevo's Advent of Code Repo.
  2015 25.1: 19980801                       77ms    Let it snow
                                            ------- -------
                                            11556ms 11556ms
+
  2016  1.1: 278                            1ms     Manhattan distance
  2016  1.2: 161                            1ms     
  2016  2.1: 33444                          0ms     Bathroom security
@@ -105,6 +106,7 @@ Stevo's Advent of Code Repo.
  2016 25.1: 158                            423ms   Clock signal
                                            ------- -------
                                            39719ms 51275ms
+
  2017  1.1: 1119                           0ms     Captcha
  2017  1.2: 1420                           0ms     
  2017  2.1: 30994                          0ms     Spreadsheet checksum
@@ -156,6 +158,7 @@ Stevo's Advent of Code Repo.
  2017 25.1: 3745                           311ms   Turing tape
                                            ------- -------
                                            4642ms  55917ms
+
  2018  1.1: 435                            0ms     Tardis calibration
  2018  1.2: 245                            6ms     
  2018  2.1: 8892                           1ms     Warehouse checksum
@@ -207,6 +210,7 @@ Stevo's Advent of Code Repo.
  2018 25.1: 407                            61ms    4D chocolate teleportation
                                            ------- -------
                                            43059ms 98976ms
+
  2019  1.1: 3325347                        0ms     Calculate launch fuel
  2019  1.2: 4985145                        0ms     
  2019  2.1: 4484226                        3ms     Gravity assist (CPU start)
@@ -258,6 +262,7 @@ Stevo's Advent of Code Repo.
  2019 25.1: 35332                          755ms   Airlock password (CPU used unmodified)*
                                            ------- -------
                                            4210ms  103186ms
+
  2020  1.1: 73371                          0ms     Expenses
  2020  1.2: 127642310                      0ms     
  2020  2.1: 493                            0ms     Password policy
@@ -309,6 +314,7 @@ Stevo's Advent of Code Repo.
  2020 25.1: 17673381                       59ms    Door cryptography
                                            ------- -------
                                            4170ms  107356ms
+
  2021  1.1: 1466                           0ms     Depth scan
  2021  1.2: 1491                           1ms     
  2021  2.1: 1746616                        0ms     Navigate forward
@@ -361,4 +367,6 @@ Stevo's Advent of Code Repo.
  2021 25.1: 504                            206ms   Landing among the cucumbers
                                            ------- -------
                                            11366ms 118722ms
+
+ 2022  1.1: 66487                          0ms     Calorie Counting
 ```
