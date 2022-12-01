@@ -4,5 +4,26 @@ namespace AoC.Solutions.Solutions._2022._01;
 
 public abstract class Base : Solution
 {
-    public override string Description => "";
+    public override string Description => "Calorie Counting";
+
+    protected List<int> Calories = new();
+
+    protected void ParseInput()
+    {
+        var total = 0;
+
+        foreach (var line in Input)
+        {
+            if (string.IsNullOrWhiteSpace(line))
+            {
+                Calories.Add(total);
+
+                total = 0;
+
+                continue;
+            }
+
+            total += int.Parse(line);
+        }
+    }
 }
