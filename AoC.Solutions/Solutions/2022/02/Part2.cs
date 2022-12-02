@@ -11,36 +11,13 @@ public class Part2 : Base
             switch (line[2])
             {
                 case 'X':
-                    switch (line[0])
-                    {
-                        case 'A':
-                            score += 3;
-                            break;
-                        case 'B':
-                            score++;
-                            break;
-                        case 'C':
-                            score += 2;
-                            break;
-                    }
+                    score += (line[0] - 'A' + 2) % 3 + 1;
                     break;
                 case 'Y':
                     score += line[0] - '@' + 3;
                     break;
                 case 'Z':
-                    switch (line[0])
-                    {
-                        case 'A':
-                            score += 2;
-                            break;
-                        case 'B':
-                            score += 3;
-                            break;
-                        case 'C':
-                            score++;
-                            break;
-                    }
-                    score += 6;
+                    score += (line[0] - 'A' + 1) % 3 + 7;
                     break;
             }
         }
