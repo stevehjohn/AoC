@@ -2,7 +2,7 @@
 using BenchmarkDotNet.Reports;
 using BenchmarkDotNet.Running;
 
-namespace AoC.Benchmark;
+namespace AoC.Benchmark.Infrastructure;
 
 public class NameColumn : IColumn
 {

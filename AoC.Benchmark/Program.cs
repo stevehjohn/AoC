@@ -1,4 +1,5 @@
-﻿using BenchmarkDotNet.Running;
+﻿using AoC.Benchmark.Infrastructure;
+using BenchmarkDotNet.Running;
 
 namespace AoC.Benchmark;
 

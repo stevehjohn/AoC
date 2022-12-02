@@ -1,11 +1,10 @@
 ﻿using BenchmarkDotNet.Columns;
 using BenchmarkDotNet.Reports;
-using BenchmarkDotNet.Running;
 using JetBrains.Annotations;
 using Perfolizer.Mathematics.Common;
 using System.Collections.Immutable;
 
-namespace AoC.Benchmark;
+namespace AoC.Benchmark.Infrastructure;
 
 public class CustomColumnProviders
 {
@@ -42,7 +41,7 @@ public class CustomColumnProviders
                 {
                     if (s.N < 3)
                         return false;
-                    return ! s.GetConfidenceInterval(ConfidenceLevel.L99, s.N).Contains(s.Median) ||
+                    return !s.GetConfidenceInterval(ConfidenceLevel.L99, s.N).Contains(s.Median) ||
                            Math.Abs(s.Median - s.Mean) > s.Mean * 0.2;
                 }))
                 yield return StatisticColumn.Median;
@@ -52,7 +51,7 @@ public class CustomColumnProviders
             {
                 yield return BaselineRatioColumn.RatioMean;
                 IColumn stdDevColumn = BaselineRatioColumn.RatioStdDev;
-                if (! summary.BenchmarksCases.Select((Func<BenchmarkCase, string>) (b => stdDevColumn.GetValue(summary, b))).All((Func<string, bool>) (value => value == "0.00" || value == "0.01")))
+                if (!summary.BenchmarksCases.Select(b => stdDevColumn.GetValue(summary, b)).All(value => value == "0.00" || value == "0.01"))
                     yield return BaselineRatioColumn.RatioStdDev;
                 if (HasMemoryDiagnoser(summary))
                     yield return BaselineAllocationRatioColumn.RatioMean;
@@ -60,19 +59,19 @@ public class CustomColumnProviders
         }
 
         private static bool NeedToShow(Summary summary, Func<BenchmarkDotNet.Mathematics.Statistics, bool> check) => summary.Reports != new ImmutableArray<BenchmarkReport>?() &&
-                                                                                                                     summary.Reports.Any((Func<BenchmarkReport, bool>) (r => r.ResultStatistics != null && check(r.ResultStatistics)));
+                                                                                                                     summary.Reports.Any(r => r.ResultStatistics != null && check(r.ResultStatistics));
 
-        private static bool HasMemoryDiagnoser(Summary summary) => summary.BenchmarksCases.Any((Func<BenchmarkCase, bool>) (c => c.Config.HasMemoryDiagnoser()));
+        private static bool HasMemoryDiagnoser(Summary summary) => summary.BenchmarksCases.Any(c => c.Config.HasMemoryDiagnoser());
     }
 
     private class MetricsColumnProvider : IColumnProvider
     {
         public IEnumerable<IColumn> GetColumns(Summary summary) => summary.Reports
                                                                           .SelectMany(
-                                                                              (Func<BenchmarkReport, IEnumerable<IMetricDescriptor>>) (report =>
-                                                                                                                                              report.Metrics.Values.Select(
-                                                                                                                                                  (Func<Metric, IMetricDescriptor>) (metric => metric.Descriptor))))
+                                                                              report =>
+                                                                                  report.Metrics.Values.Select(
+                                                                                      metric => metric.Descriptor))
                                                                           .Distinct(MetricDescriptorEqualityComparer.Instance)
-                                                                          .Select((Func<IMetricDescriptor, MetricColumn>) (descriptor => new MetricColumn(descriptor)));
+                                                                          .Select(descriptor => new MetricColumn(descriptor));
     }
 }
