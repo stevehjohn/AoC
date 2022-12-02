@@ -12,7 +12,7 @@ using BenchmarkDotNet.Reports;
 using BenchmarkDotNet.Validators;
 using System.Globalization;
 
-namespace AoC.Benchmark;
+namespace AoC.Benchmark.Infrastructure;
 
 public class CustomConfig : IConfig
 {
