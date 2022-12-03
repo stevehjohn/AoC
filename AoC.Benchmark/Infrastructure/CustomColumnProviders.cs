@@ -26,6 +26,7 @@ public class CustomColumnProviders
         public IEnumerable<IColumn> GetColumns(Summary summary)
         {
             yield return new NameColumn();
+            yield return new DescriptionColumn();
         }
     }
 

@@ -10,7 +10,7 @@ public class Program
         Benchmarks.SetArguments(arguments);
 
         var config = CustomConfig.Instance;
-        
+
         BenchmarkRunner.Run<Benchmarks>(config);
     }
 }
