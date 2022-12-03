@@ -8,7 +8,12 @@ public class NameColumn : IColumn
 {
     public string GetValue(Summary summary, BenchmarkCase benchmarkCase)
     {
-        var fullName = benchmarkCase.Parameters[0].Value.GetType().FullName;
+        if (benchmarkCase.Parameters.Count == 0 || benchmarkCase.Parameters[0].Value == null)
+        {
+            return "Unknown";
+        }
+
+        var fullName = ((Type) benchmarkCase.Parameters[0].Value).FullName;
 
         if (string.IsNullOrWhiteSpace(fullName))
         {

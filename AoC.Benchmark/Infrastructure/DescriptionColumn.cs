@@ -14,7 +14,7 @@ public class DescriptionColumn : IColumn
             return "Unknown";
         }
 
-        var instance = Activator.CreateInstance(benchmarkCase.Parameters[0].Value.GetType()) as Solution;
+        var instance = Activator.CreateInstance((Type) benchmarkCase.Parameters[0].Value) as Solution;
 
         if (instance == null)
         {

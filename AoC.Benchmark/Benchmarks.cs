@@ -6,6 +6,7 @@ namespace AoC.Benchmark;
 
 [MemoryDiagnoser]
 //[SimpleJob(RunStrategy.Throughput, invocationCount: 1, warmupCount: 1, launchCount: 1, targetCount: 1)]
+[ShortRunJob]
 public class Benchmarks
 {
     private static string[] _arguments;
