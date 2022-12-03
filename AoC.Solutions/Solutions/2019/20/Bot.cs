@@ -10,6 +10,8 @@ public class Bot
 
     public bool IsHome => Position.Equals(_destination) && (Level == 0 || ! _recursive);
 
+    public static HashSet<int> DeadEnds = new();
+
     private readonly Point _destination;
 
     private Point _direction;
@@ -27,8 +29,6 @@ public class Bot
     private readonly bool _recursive;
 
     private readonly Dictionary<int, int> _visitedPortals;
-
-    private static readonly HashSet<int> DeadEnds = new();
 
     private readonly Point _splitAt;
 

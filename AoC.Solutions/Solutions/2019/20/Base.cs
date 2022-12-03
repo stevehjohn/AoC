@@ -22,6 +22,8 @@ public abstract class Base : Solution
 
     protected string TravelMaze(bool recursive = false)
     {
+        Bot.DeadEnds = new();
+
         ParseInput();
 
 #if DEBUG && DUMP
