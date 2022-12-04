@@ -364,10 +364,12 @@
                                            ------- -------
                                            25228ms 200947ms
 
- 2022  1.1: 66487                          0ms     Calorie Counting
- 2022  1.2: 197301                         1ms
+ 2022  1.1: 66487                          5ms     Calorie Counting
+ 2022  1.2: 197301                         6ms
  2022  2.1: 10310                          0ms     Rock Paper Scissors
  2022  2.2: 14859                          0ms
-                                           ------- -------
-                                           1ms     200948ms
+ 2022  3.1: 7597                           1ms     Rucksack Reorganization
+ 2022  3.2: 2607                           2ms
+                                           -------
+                                           14ms
 ```
