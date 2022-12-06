@@ -602,6 +602,9 @@
     <None Update="Solutions\2022\06\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Solutions\2022\07\input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Solutions\AllAnswers.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
