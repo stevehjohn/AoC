@@ -4,6 +4,6 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        return "";
+        return FindMarker(4).ToString();
     }
 }
