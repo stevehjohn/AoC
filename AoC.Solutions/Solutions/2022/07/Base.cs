@@ -14,8 +14,12 @@ public abstract class Base : Solution
     {
         var location = "/";
 
+        var idx = 0;
+
         foreach (var line in Input)
         {
+            idx++;
+
             if (line[..4] == "$ cd")
             {
                 if (line[5] == '/')
@@ -24,14 +28,9 @@ public abstract class Base : Solution
                 }
                 else if (line.Length > 6 && line[5..7] == "..")
                 {
-                    if (location == "/")
-                    {
-                        continue;
-                    }
-
                     var dirs = location.Split('/', StringSplitOptions.RemoveEmptyEntries);
 
-                    location = $"/{string.Join('/', dirs[..^1])}";
+                    location = $"/{string.Join('/', dirs[..^1])}/".Replace("//", "/");
                 }
                 else
                 {
@@ -48,7 +47,7 @@ public abstract class Base : Solution
 
             var parts = line.Split(' ');
 
-            var size = int.Parse(parts[0]);
+            var size = long.Parse(parts[0]);
 
             _fileSizes.TryAdd($"{location}{parts[1]}", size);
         }
@@ -58,7 +57,7 @@ public abstract class Base : Solution
     {
         foreach (var file in _fileSizes)
         {
-            var dir = file.Key.Substring(0, file.Key.LastIndexOf('/'));
+            var dir = file.Key[..file.Key.LastIndexOf('/')];
 
             if (string.IsNullOrWhiteSpace(dir))
             {
