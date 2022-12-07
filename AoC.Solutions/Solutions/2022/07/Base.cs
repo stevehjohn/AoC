@@ -36,7 +36,7 @@ public abstract class Base : Solution
                 continue;
             }
 
-            var path = level.ToArray().Reverse();
+            var path = level.ToArray().Reverse().ToList();
 
             var i = path.Count();
 
