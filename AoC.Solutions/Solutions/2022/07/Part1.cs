@@ -6,10 +6,6 @@ public class Part1 : Base
     {
         ProcessCommands();
 
-        CalculateDirectorySizes();
-
-        SumDirectorySizes();
-
         var oneHundredK = DirectorySizes.Where(ds => ds.Value <= 100_000);
 
         return oneHundredK.Sum(ds => ds.Value).ToString();

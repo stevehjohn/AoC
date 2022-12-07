@@ -6,110 +6,56 @@ public abstract class Base : Solution
 {
     public override string Description => "No Space Left On Device";
 
-    private readonly Dictionary<string, long> _fileSizes = new();
-
     protected readonly Dictionary<string, long> DirectorySizes = new();
 
     protected void ProcessCommands()
     {
-        var location = "/";
+        var level = new Stack<string>();
 
-        var idx = 0;
-
-        foreach (var line in Input)
+        foreach (var line in Input.Skip(1))
         {
-            idx++;
-
-            if (line[..4] == "$ cd")
+            if (line[0] == '$')
             {
-                if (line[5] == '/')
+                if (line[2..4] == "cd")
                 {
-                    location = "/";
+                    if (line[5] == '.')
+                    {
+                        level.Pop();
+                    }
+                    else
+                    {
+                        level.Push(line[5..]);
+                    }
                 }
-                else if (line.Length > 6 && line[5..7] == "..")
-                {
-                    var dirs = location.Split('/', StringSplitOptions.RemoveEmptyEntries);
 
-                    location = $"/{string.Join('/', dirs[..^1])}/".Replace("//", "/");
+                continue;
+            }
+
+            if (line.StartsWith("dir"))
+            {
+                continue;
+            }
+
+            var path = level.ToArray().Reverse();
+
+            var i = path.Count();
+
+            while (i >= 0)
+            {
+                var key = $"/{string.Join("/", path.Take(i))}";
+
+                var value = long.Parse(line.Split(' ')[0]);
+
+                if (DirectorySizes.ContainsKey(key))
+                {
+                    DirectorySizes[key] += value;
                 }
                 else
                 {
-                    location = $"{location}{line[5..]}/";
+                    DirectorySizes.Add(key, value);
                 }
 
-                continue;
-            }
-
-            if (line == "$ ls" || line[..3] == "dir")
-            {
-                continue;
-            }
-
-            var parts = line.Split(' ');
-
-            var size = long.Parse(parts[0]);
-
-            _fileSizes.TryAdd($"{location}{parts[1]}", size);
-        }
-    }
-
-    protected void CalculateDirectorySizes()
-    {
-        foreach (var file in _fileSizes)
-        {
-            var dir = file.Key[..file.Key.LastIndexOf('/')];
-
-            if (string.IsNullOrWhiteSpace(dir))
-            {
-                dir = "/";
-            }
-
-            if (DirectorySizes.ContainsKey(dir))
-            {
-                DirectorySizes[dir] += file.Value;
-            }
-            else
-            {
-                DirectorySizes.Add(dir, file.Value);
-            }
-        }
-    }
-
-    protected void SumDirectorySizes()
-    {
-        for (var i = 0; i < DirectorySizes.Count; i++)
-        {
-            var dir = DirectorySizes.ElementAt(i);
-
-            if (dir.Key == "/")
-            {
-                continue;
-            }
-
-            var up = dir.Key;
-
-            while (true)
-            {
-                up = up[..up.LastIndexOf('/')];
-
-                if (string.IsNullOrWhiteSpace(up))
-                {
-                    up = "/";
-                }
-
-                if (DirectorySizes.ContainsKey(up))
-                {
-                    DirectorySizes[up] += dir.Value;
-                }
-                else
-                {
-                    DirectorySizes.Add(up, dir.Value);
-                }
-
-                if (up == "/")
-                {
-                    break;
-                }
+                i--;
             }
         }
     }
