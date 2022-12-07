@@ -38,7 +38,7 @@ public abstract class Base : Solution
 
             var path = level.ToArray().Reverse().ToList();
 
-            var i = path.Count();
+            var i = path.Count;
 
             while (i >= 0)
             {
