@@ -11,7 +11,7 @@ public abstract class Base : Solution
 
     private int _size;
 
-    protected int ProcessInput()
+    protected void ProcessInput()
     {
         if (Input.Length != Input[0].Length)
         {
@@ -19,8 +19,6 @@ public abstract class Base : Solution
         }
 
         _size = Input.Length;
-
-        var visible = _size * 4 - 4;
 
         _matrix = new char[_size, _size];
 
@@ -31,6 +29,11 @@ public abstract class Base : Solution
                 _matrix[x, y] = Input[y][x];
             }
         }
+    }
+
+    protected int GetVisibleCount()
+    {
+        var visible = _size * 4 - 4;
 
         for (var y = 1; y < _size - 1; y++)
         {
