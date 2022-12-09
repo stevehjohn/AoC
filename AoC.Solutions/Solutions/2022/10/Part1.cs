@@ -4,6 +4,6 @@
 //{
 //    public override string GetAnswer()
 //    {
-//        throw new NotImplementedException();
+//        return "";
 //    }
 //}
