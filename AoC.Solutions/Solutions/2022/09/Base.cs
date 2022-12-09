@@ -103,14 +103,23 @@ public abstract class Base : Solution
             }
         }
 
-        var closest = distances.Select((d, i) => new { Distance = d, Index = i })
-                               .OrderBy(i => i.Distance)
-                               .First()
-                               .Index;
+        var min = double.MaxValue;
 
-        var dX = closest % 3 - 1;
+        var minIndex = 0;
 
-        var dY = closest / 3 - 1;
+        for (var i = 0; i < 9; i++)
+        {
+            if (distances[i] < min)
+            {
+                min = distances[i];
+
+                minIndex = i;
+            }
+        }
+
+        var dX = minIndex % 3 - 1;
+
+        var dY = minIndex / 3 - 1;
 
         _knots[currentKnot + 1].X += dX;
 
