@@ -9,19 +9,24 @@ public abstract class Base : Solution
 
     private const int Width = 10_000;
 
+    private int _knotCount;
+
     private Point[] _knots;
 
     protected readonly HashSet<int> TailVisited = new();
 
-    protected void ProcessInput()
+    protected void ProcessInput(int knots = 2)
     {
-        _knots = new Point[2];
+        _knotCount = knots;
 
-        _knots[0] = new Point(0, 0);
+        _knots = new Point[_knotCount];
 
-        _knots[1] = new Point(0, 0);
+        for (var i = 0; i < _knotCount; i++)
+        {
+            _knots[i] = new Point(0, 0);
+        }
 
-        TailVisited.Add(_knots[1].X + _knots[1].Y * Width);
+        TailVisited.Add(_knots[_knotCount - 1].X + _knots[_knotCount - 1].Y * Width);
 
         foreach (var line in Input)
         {
@@ -75,13 +80,15 @@ public abstract class Base : Solution
                 y++;
             }
 
-            MoveTail();
+            MoveNextKnot();
+
+            TailVisited.Add(_knots[_knotCount - 1].X + _knots[_knotCount - 1].Y * Width);
         }
     }
 
-    private void MoveTail()
+    private void MoveNextKnot(int currentKnot = 0)
     {
-        if (Math.Abs(_knots[0].X - _knots[1].X) < 2 && Math.Abs(_knots[0].Y - _knots[1].Y) < 2)
+        if (Math.Abs(_knots[currentKnot].X - _knots[currentKnot + 1].X) < 2 && Math.Abs(_knots[currentKnot].Y - _knots[currentKnot + 1].Y) < 2)
         {
             return;
         }
@@ -92,7 +99,7 @@ public abstract class Base : Solution
         {
             for (var y = -1; y < 2; y++)
             {
-                distances[x + 1 + (y + 1) * 3] = Math.Sqrt(Math.Pow(Math.Abs(_knots[0].X - (_knots[1].X + x)), 2) + Math.Pow(Math.Abs(_knots[0].Y - (_knots[1].Y + y)), 2));
+                distances[x + 1 + (y + 1) * 3] = Math.Sqrt(Math.Pow(Math.Abs(_knots[currentKnot].X - (_knots[currentKnot + 1].X + x)), 2) + Math.Pow(Math.Abs(_knots[currentKnot].Y - (_knots[currentKnot + 1].Y + y)), 2));
             }
         }
 
@@ -105,10 +112,13 @@ public abstract class Base : Solution
 
         var dY = closest / 3 - 1;
 
-        _knots[1].X += dX;
+        _knots[currentKnot + 1].X += dX;
 
-        _knots[1].Y += dY;
+        _knots[currentKnot + 1].Y += dY;
 
-        TailVisited.Add(_knots[1].X + _knots[1].Y * Width);
+        if (currentKnot < _knotCount - 2)
+        {
+            MoveNextKnot(currentKnot + 1);
+        }
     }
 }
