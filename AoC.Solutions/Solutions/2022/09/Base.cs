@@ -101,7 +101,7 @@ public abstract class Base : Solution
             {
                 for (var y = -1; y < 2; y++)
                 {
-                    distances[x + 1 + (y + 1) * 3] = Math.Sqrt(Math.Pow(Math.Abs(_knots[currentKnot].X - (_knots[currentKnot + 1].X + x)), 2) + Math.Pow(Math.Abs(_knots[currentKnot].Y - (_knots[currentKnot + 1].Y + y)), 2));
+                    distances[x + 1 + (y + 1) * 3] = Math.Sqrt(Square(Math.Abs(_knots[currentKnot].X - (_knots[currentKnot + 1].X + x))) + Square(Math.Abs(_knots[currentKnot].Y - (_knots[currentKnot + 1].Y + y))));
                 }
             }
 
@@ -136,5 +136,10 @@ public abstract class Base : Solution
 
             break;
         }
+    }
+
+    private static double Square(double value)
+    {
+        return value * value;
     }
 }
