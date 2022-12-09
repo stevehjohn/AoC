@@ -88,46 +88,53 @@ public abstract class Base : Solution
 
     private void MoveNextKnot(int currentKnot = 0)
     {
-        if (Math.Abs(_knots[currentKnot].X - _knots[currentKnot + 1].X) < 2 && Math.Abs(_knots[currentKnot].Y - _knots[currentKnot + 1].Y) < 2)
+        while (true)
         {
-            return;
-        }
-
-        var distances = new double[9];
-
-        for (var x = -1; x < 2; x++)
-        {
-            for (var y = -1; y < 2; y++)
+            if (Math.Abs(_knots[currentKnot].X - _knots[currentKnot + 1].X) < 2 && Math.Abs(_knots[currentKnot].Y - _knots[currentKnot + 1].Y) < 2)
             {
-                distances[x + 1 + (y + 1) * 3] = Math.Sqrt(Math.Pow(Math.Abs(_knots[currentKnot].X - (_knots[currentKnot + 1].X + x)), 2) + Math.Pow(Math.Abs(_knots[currentKnot].Y - (_knots[currentKnot + 1].Y + y)), 2));
+                return;
             }
-        }
 
-        var min = double.MaxValue;
+            var distances = new double[9];
 
-        var minIndex = 0;
-
-        for (var i = 0; i < 9; i++)
-        {
-            if (distances[i] < min)
+            for (var x = -1; x < 2; x++)
             {
-                min = distances[i];
-
-                minIndex = i;
+                for (var y = -1; y < 2; y++)
+                {
+                    distances[x + 1 + (y + 1) * 3] = Math.Sqrt(Math.Pow(Math.Abs(_knots[currentKnot].X - (_knots[currentKnot + 1].X + x)), 2) + Math.Pow(Math.Abs(_knots[currentKnot].Y - (_knots[currentKnot + 1].Y + y)), 2));
+                }
             }
-        }
 
-        var dX = minIndex % 3 - 1;
+            var min = double.MaxValue;
 
-        var dY = minIndex / 3 - 1;
+            var minIndex = 0;
 
-        _knots[currentKnot + 1].X += dX;
+            for (var i = 0; i < 9; i++)
+            {
+                if (distances[i] < min)
+                {
+                    min = distances[i];
 
-        _knots[currentKnot + 1].Y += dY;
+                    minIndex = i;
+                }
+            }
 
-        if (currentKnot < _knotCount - 2)
-        {
-            MoveNextKnot(currentKnot + 1);
+            var dX = minIndex % 3 - 1;
+
+            var dY = minIndex / 3 - 1;
+
+            _knots[currentKnot + 1].X += dX;
+
+            _knots[currentKnot + 1].Y += dY;
+
+            if (currentKnot < _knotCount - 2)
+            {
+                currentKnot++;
+                
+                continue;
+            }
+
+            break;
         }
     }
 }
