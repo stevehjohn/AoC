@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Common;
+﻿using System.Runtime.CompilerServices;
+using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2022._09;
@@ -86,6 +87,7 @@ public abstract class Base : Solution
         }
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
     private void MoveNextKnot(int currentKnot = 0)
     {
         while (true)
