@@ -1,4 +1,4 @@
-﻿//namespace AoC.Solutions.Solutions._2022._08;
+﻿//namespace AoC.Solutions.Solutions._2022._12;
 
 //public class Part1 : Base
 //{
