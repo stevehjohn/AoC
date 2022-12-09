@@ -4,7 +4,7 @@ namespace AoC.Solutions.Solutions._2022._07;
 
 public abstract class Base : Solution
 {
-    public override string Description => "No Space Left On Device";
+    public override string Description => "No space left on device";
 
     protected readonly Dictionary<string, long> DirectorySizes = new();
 

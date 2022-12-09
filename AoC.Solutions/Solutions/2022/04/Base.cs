@@ -4,7 +4,7 @@ namespace AoC.Solutions.Solutions._2022._04;
 
 public abstract class Base : Solution
 {
-    public override string Description => "Camp Cleanup";
+    public override string Description => "Camp cleanup";
 
     protected (Range elf1, Range elf2) ParseLine(string line)
     {

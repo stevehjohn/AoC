@@ -6,7 +6,7 @@ namespace AoC.Solutions.Solutions._2022._09;
 
 public abstract class Base : Solution
 {
-    public override string Description => "Rope Bridge";
+    public override string Description => "Rope bridge";
 
     private const int Width = 10_000;
 

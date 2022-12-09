@@ -4,7 +4,7 @@ namespace AoC.Solutions.Solutions._2022._01;
 
 public abstract class Base : Solution
 {
-    public override string Description => "Calorie Counting";
+    public override string Description => "Calorie counting";
 
     protected List<int> Calories = new();
 

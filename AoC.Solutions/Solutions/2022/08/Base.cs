@@ -5,7 +5,7 @@ namespace AoC.Solutions.Solutions._2022._08;
 
 public abstract class Base : Solution
 {
-    public override string Description => "Treetop Tree House";
+    public override string Description => "Treetop tree house";
 
     protected char[,] Matrix;
 

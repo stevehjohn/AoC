@@ -4,7 +4,7 @@ namespace AoC.Solutions.Solutions._2022._06;
 
 public abstract class Base : Solution
 {
-    public override string Description => "Tuning Trouble";
+    public override string Description => "Tuning trouble";
 
     protected int FindMarker(int length)
     {
