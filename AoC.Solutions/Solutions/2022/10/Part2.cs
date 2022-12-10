@@ -6,10 +6,6 @@ public class Part2 : Base
     {
         var registerX = 1;
 
-        var cycle = 1;
-
-        var strength = 0;
-
         var column = 0;
 
         foreach (var line in Input)
@@ -28,8 +24,6 @@ public class Part2 : Base
 
                     Console.Write(Math.Abs(registerX - column) < 2 ? "#" : ".");
 
-                    cycle++;
-
                     break;
 
                 case "addx":
@@ -41,8 +35,6 @@ public class Part2 : Base
 
                         Console.WriteLine();
                     }
-
-                    cycle++;
 
                     Console.Write(Math.Abs(registerX - column) < 2 ? "#" : ".");
 
@@ -58,13 +50,11 @@ public class Part2 : Base
                     registerX += int.Parse(line[5..]);
 
                     Console.Write(Math.Abs(registerX - column) < 2 ? "#" : ".");
-                    
-                    cycle++;
 
                     break;
             }
         }
 
-        return strength.ToString();
+        return "";
     }
 }

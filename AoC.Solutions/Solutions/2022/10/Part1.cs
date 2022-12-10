@@ -17,10 +17,7 @@ public class Part1 : Base
             switch (line[..4])
             {
                 case "noop":
-                    Console.WriteLine($"{cycle}: noop");
-
                     strengthTimer--;
-
                     if (strengthTimer == 0)
                     {
                         strength += cycle * registerX;
@@ -33,8 +30,6 @@ public class Part1 : Base
                     break;
 
                 case "addx":
-                    Console.WriteLine($"{cycle}: addx");
-
                     strengthTimer--;
                     if (strengthTimer == 0)
                     {
@@ -53,11 +48,9 @@ public class Part1 : Base
                         strengthTimer = 40;
                     }
 
-                    Console.WriteLine($"{cycle}: {line[5..]}");
+                    cycle++;
 
                     registerX += int.Parse(line[5..]);
-
-                    cycle++;
 
                     break;
             }
