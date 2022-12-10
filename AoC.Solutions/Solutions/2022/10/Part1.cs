@@ -66,17 +66,3 @@ public class Part1 : Base
         return strength.ToString();
     }
 }
-
-public class ScheduledOperation
-{
-    public int Cycle { get; }
-
-    public int Value { get; }
-
-    public ScheduledOperation(int cycle, int value)
-    {
-        Cycle = cycle;
-
-        Value = value;
-    }
-}
