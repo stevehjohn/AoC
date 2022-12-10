@@ -5,7 +5,7 @@ namespace AoC.Solutions.Solutions._2022._10;
 
 public class Part2 : Base
 {
-    //public override Variant? OcrOutput => Variant.Small;
+    public override Variant? OcrOutput => Variant.Small;
 
     public override string GetAnswer()
     {
@@ -20,33 +20,20 @@ public class Part2 : Base
             switch (line[..4])
             {
                 case "noop":
+                    answer.Append(Math.Abs(registerX - column) < 2 ? '*' : '.');
+
                     column++;
 
                     if (column == 40)
                     {
                         column = 0;
 
-                        Console.WriteLine();
                         answer.Append('\0');
                     }
-
-                    Console.Write(Math.Abs(registerX - column) < 2 ? '#' : '.');
-                    answer.Append(Math.Abs(registerX - column) < 2 ? '*' : '.');
 
                     break;
 
                 case "addx":
-                    column++;
-
-                    if (column == 40)
-                    {
-                        column = 0;
-
-                        Console.WriteLine();
-                        answer.Append('\0');
-                    }
-
-                    Console.Write(Math.Abs(registerX - column) < 2 ? '#' : '.');
                     answer.Append(Math.Abs(registerX - column) < 2 ? '*' : '.');
 
                     column++;
@@ -55,14 +42,21 @@ public class Part2 : Base
                     {
                         column = 0;
 
-                        Console.WriteLine();
+                        answer.Append('\0');
+                    }
+
+                    answer.Append(Math.Abs(registerX - column) < 2 ? '*' : '.');
+
+                    column++;
+
+                    if (column == 40)
+                    {
+                        column = 0;
+
                         answer.Append('\0');
                     }
 
                     registerX += int.Parse(line[5..]);
-
-                    Console.Write(Math.Abs(registerX - column) < 2 ? '#' : '.');
-                    answer.Append(Math.Abs(registerX - column) < 2 ? '*' : '.');
 
                     break;
             }
