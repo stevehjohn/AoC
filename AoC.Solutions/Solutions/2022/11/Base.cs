@@ -59,7 +59,7 @@ public abstract class Base : Solution
                 {
                     _inspections[monkeyIndex]++;
 
-                    var item = monkey.Items[0];
+                    var item = monkey.Items.First;
 
                     monkey.Items.RemoveFirst();
 

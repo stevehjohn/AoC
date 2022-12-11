@@ -45,7 +45,7 @@ public class FastList<T>
         _count--;
     }
 
-    public T this[int index] => _items[(_start + index) % _capacity];
+    public T First => _items[_start % _capacity];
 
     public int Count => _count;
 }
