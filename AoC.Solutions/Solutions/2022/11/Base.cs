@@ -8,7 +8,9 @@ public abstract class Base : Solution
 
     private readonly List<Monkey> _monkeys = new();
 
-    protected readonly List<int> Inspections = new();
+    private long _commonDivisor = 1;
+
+    protected readonly List<long> Inspections = new();
 
     protected void InitialiseMonkeys()
     {
@@ -36,24 +38,12 @@ public abstract class Base : Solution
             _monkeys.Add(monkey);
 
             Inspections.Add(0);
+
+            _commonDivisor *= test;
         }
-
-        //var m = 0;
-
-        //foreach (var monkey in _monkeys)
-        //{
-        //    Console.WriteLine($"Monkey {m}:");
-        //    Console.WriteLine($"  Starting items: {string.Join(", ", monkey.Items)}");
-        //    Console.WriteLine($"  Operation: new = old {monkey.Operator} {(monkey.Operand == 0 ? "old" : monkey.Operand)}");
-        //    Console.WriteLine($"  Test: divisible by {monkey.DivisorTest}");
-        //    Console.WriteLine($"    If true: throw to monkey {monkey.PassTestMonkey}");
-        //    Console.WriteLine($"    If false: throw to monkey {monkey.FailTestMonkey}");
-
-        //    m++;
-        //}
     }
 
-    protected void PlayRounds(int rounds = 20)
+    protected void PlayRounds(int rounds = 20, bool reduceWorry = true)
     {
         for (var round = 0; round < rounds; round++)
         {
@@ -73,7 +63,14 @@ public abstract class Base : Solution
 
                     item = monkey.Operator == '*' ? item * operand : item + operand;
 
-                    item = (int) Math.Floor(item / 3m);
+                    if (reduceWorry)
+                    {
+                        item = (int) Math.Floor(item / 3m);
+                    }
+                    else
+                    {
+                        item %= _commonDivisor;
+                    }
 
                     if (item % monkey.DivisorTest == 0)
                     {
