@@ -92,7 +92,7 @@ public abstract class Base : Solution
     {
         while (true)
         {
-            if (Math.Abs(_knots[currentKnot].X - _knots[currentKnot + 1].X) < 2 && Math.Abs(_knots[currentKnot].Y - _knots[currentKnot + 1].Y) < 2)
+            if (Abs(_knots[currentKnot].X - _knots[currentKnot + 1].X) < 2 && Abs(_knots[currentKnot].Y - _knots[currentKnot + 1].Y) < 2)
             {
                 return;
             }
@@ -103,7 +103,7 @@ public abstract class Base : Solution
             {
                 for (var y = -1; y < 2; y++)
                 {
-                    distances[x + 1 + (y + 1) * 3] = Math.Sqrt(Square(Math.Abs(_knots[currentKnot].X - (_knots[currentKnot + 1].X + x))) + Square(Math.Abs(_knots[currentKnot].Y - (_knots[currentKnot + 1].Y + y))));
+                    distances[x + 1 + (y + 1) * 3] = Math.Sqrt(Square(Abs(_knots[currentKnot].X - (_knots[currentKnot + 1].X + x))) + Square(Abs(_knots[currentKnot].Y - (_knots[currentKnot + 1].Y + y))));
                 }
             }
 
@@ -143,5 +143,10 @@ public abstract class Base : Solution
     private static double Square(double value)
     {
         return value * value;
+    }
+
+    private static int Abs(int value)
+    {
+        return (value + (value >> 31)) ^ (value >> 31);
     }
 }
