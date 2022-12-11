@@ -16,7 +16,7 @@ public class Monkey
 
     public Monkey(int divisorTest, int passTestMonkey, int failTestMonkey, char @operator, int operand)
     {
-        Items = new(25);
+        Items = new(32);
 
         DivisorTest = divisorTest;
 
