@@ -69,7 +69,7 @@ public abstract class Base : Solution
 
                     if (reduceWorry)
                     {
-                        item = (int) Math.Floor(item / 3m);
+                        item /= 3;
                     }
                     else
                     {
