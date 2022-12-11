@@ -73,7 +73,7 @@ public abstract class Base : Solution
                     }
                     else
                     {
-                        item %= _commonDivisor;
+                        item = item >= _commonDivisor ? item % _commonDivisor : item;
                     }
 
                     if (item % monkey.DivisorTest == 0)
