@@ -12,8 +12,6 @@ public class FastList<T>
 
     private int _end;
 
-    private int _count;
-
     private readonly int _mask;
 
     public FastList(int capacity)
@@ -35,18 +33,14 @@ public class FastList<T>
         _items[_end] = item;
 
         _end = (_end + 1) & _mask;
-
-        _count++;
     }
 
     public void RemoveFirst()
     {
         _start = (_start + 1) & _mask;
-
-        _count--;
     }
 
     public T First => _items[_start % _capacity];
 
-    public int Count => _count;
+    public int Count => Math.Abs(_start - _end);
 }
