@@ -10,7 +10,7 @@ public abstract class Base : Solution
 
     private long _commonDivisor = 1;
 
-    protected readonly List<long> Inspections = new();
+    protected long[] Inspections;
 
     protected void InitialiseMonkeys()
     {
@@ -37,10 +37,10 @@ public abstract class Base : Solution
 
             _monkeys.Add(monkey);
 
-            Inspections.Add(0);
-
             _commonDivisor *= test;
         }
+
+        Inspections = new long[_monkeys.Count];
     }
 
     protected void PlayRounds(int rounds = 20, bool reduceWorry = true)
