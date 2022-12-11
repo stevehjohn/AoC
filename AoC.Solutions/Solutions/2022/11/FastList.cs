@@ -40,7 +40,15 @@ public class FastList<T>
         _start = (_start + 1) & _mask;
     }
 
-    public T First => _items[_start % _capacity];
+    public T First => _items[_start & (_capacity - 1)];
 
-    public int Count => Math.Abs(_start - _end);
+    public int Count 
+    {
+        get
+        {
+            var count = _start - _end;
+
+            return (count + (count >> 31)) ^ (count >> 31);
+        }
+    }
 }
