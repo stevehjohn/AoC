@@ -51,13 +51,13 @@ public abstract class Base : Solution
     {
         for (var round = 0; round < rounds; round++)
         {
-            var monkeyIndex = 0;
-
-            foreach (var monkey in _monkeys)
+            for (var i = 0; i < MonkeyCount; i++)
             {
+                var monkey = _monkeys[i];
+
                 while (monkey.Items.Count > 0)
                 {
-                    _inspections[monkeyIndex]++;
+                    _inspections[i]++;
 
                     var item = monkey.Items.First;
 
@@ -85,8 +85,6 @@ public abstract class Base : Solution
                         _monkeys[monkey.FailTestMonkey].Items.Add(item);
                     }
                 }
-
-                monkeyIndex++;
             }
         }
     }
