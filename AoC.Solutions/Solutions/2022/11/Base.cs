@@ -6,14 +6,16 @@ public abstract class Base : Solution
 {
     public override string Description => "Monkey in the middle";
 
-    private readonly List<Monkey> _monkeys = new();
+    private readonly Monkey[] _monkeys = new Monkey[8];
 
     private long _commonDivisor = 1;
 
-    protected long[] Inspections;
+    protected long[] Inspections = new long[8];
 
     protected void InitialiseMonkeys()
     {
+        var m = 0;
+
         for (var i = 1; i < Input.Length; i += 7)
         {
             var test = int.Parse(Input[i + 2][21..]);
@@ -35,12 +37,12 @@ public abstract class Base : Solution
                 monkey.Items.Add(int.Parse(item));
             }
 
-            _monkeys.Add(monkey);
+            _monkeys[m] = monkey;
 
             _commonDivisor *= test;
-        }
 
-        Inspections = new long[_monkeys.Count];
+            m++;
+        }
     }
 
     protected void PlayRounds(int rounds = 20, bool reduceWorry = true)
