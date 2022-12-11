@@ -57,7 +57,7 @@ public abstract class Base : Solution
 
                     var item = monkey.Items[0];
 
-                    monkey.Items.RemoveAt(0);
+                    monkey.Items.RemoveFirst();
 
                     var operand = monkey.Operand == 0 ? item : monkey.Operand;
 

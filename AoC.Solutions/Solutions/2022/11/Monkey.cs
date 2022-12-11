@@ -2,7 +2,7 @@
 
 public class Monkey
 {
-    public List<long> Items { get; }
+    public FastList<long> Items { get; }
 
     public int DivisorTest { get; }
 
@@ -16,7 +16,7 @@ public class Monkey
 
     public Monkey(int divisorTest, int passTestMonkey, int failTestMonkey, char @operator, int operand)
     {
-        Items = new();
+        Items = new(25);
 
         DivisorTest = divisorTest;
 
