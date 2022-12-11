@@ -6,11 +6,13 @@ public abstract class Base : Solution
 {
     public override string Description => "Monkey in the middle";
 
-    private readonly Monkey[] _monkeys = new Monkey[8];
+    private const int MonkeyCount = 8;
+
+    private readonly Monkey[] _monkeys = new Monkey[MonkeyCount];
 
     private long _commonDivisor = 1;
 
-    protected long[] Inspections = new long[8];
+    private readonly long[] _inspections = new long[MonkeyCount];
 
     protected void InitialiseMonkeys()
     {
@@ -55,7 +57,7 @@ public abstract class Base : Solution
             {
                 while (monkey.Items.Count > 0)
                 {
-                    Inspections[monkeyIndex]++;
+                    _inspections[monkeyIndex]++;
 
                     var item = monkey.Items[0];
 
@@ -87,5 +89,34 @@ public abstract class Base : Solution
                 monkeyIndex++;
             }
         }
+    }
+
+    protected long GetMonkeyBusiness()
+    {
+        var max1 = 0L;
+
+        var max2 = 0L;
+
+        for (var i = 0; i < MonkeyCount; i++)
+        {
+            var inspection = _inspections[i];
+
+            if (inspection > max1)
+            {
+                max1 = inspection;
+            }
+        }
+
+        for (var i = 0; i < MonkeyCount; i++)
+        {
+            var inspection = _inspections[i];
+
+            if (inspection > max2 && inspection < max1)
+            {
+                max2 = inspection;
+            }
+        }
+
+        return max1 * max2;
     }
 }

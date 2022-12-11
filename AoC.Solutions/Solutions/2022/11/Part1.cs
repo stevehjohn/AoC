@@ -8,8 +8,6 @@ public class Part1 : Base
 
         PlayRounds();
 
-        var mostActive = Inspections.OrderByDescending(i => i).Take(2).ToArray();
-
-        return (mostActive[0] * mostActive[1]).ToString();
+        return GetMonkeyBusiness().ToString();
     }
 }
