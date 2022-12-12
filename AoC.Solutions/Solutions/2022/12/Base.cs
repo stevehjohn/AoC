@@ -17,6 +17,8 @@ public abstract class Base : Solution
 
     private Point _end;
 
+    private readonly Point[] _directions = new Point[] { new(-1, 0), new(1, 0), new(0, -1), new (0, 1) };
+
     protected void ParseInput()
     {
         _width = Input[0].Length;
@@ -103,8 +105,6 @@ public abstract class Base : Solution
 
             var height = _map[position.X, position.Y];
 
-            Point newPosition;
-
             var manhattan = 0;
 
             if (! startFromEnd)
@@ -112,51 +112,18 @@ public abstract class Base : Solution
                 manhattan = Math.Abs(position.X - _end.X) + Math.Abs(position.Y - _end.Y);
             }
 
-            if (position.X > 0 && comparer(_map[position.X - 1, position.Y], height))
+            foreach (var direction in _directions)
             {
-                newPosition = new Point(position.X - 1, position.Y);
+                var newPosition = new Point(position.X + direction.X, position.Y + direction.Y);
 
-                if (! visited.Contains(newPosition))
+                if (newPosition.X >= 0 && newPosition.X < _width && newPosition.Y >= 0 && newPosition.Y < _height)
                 {
-                    queue.Enqueue((newPosition, node.Steps + 1), manhattan + node.Steps);
+                    if (comparer(_map[newPosition.X, newPosition.Y], height) && ! visited.Contains(newPosition))
+                    {
+                        queue.Enqueue((newPosition, node.Steps + 1), manhattan + node.Steps);
 
-                    visited.Add(newPosition);
-                }
-            }
-
-            if (position.X < _width - 1 && comparer(_map[position.X + 1, position.Y], height))
-            {
-                newPosition = new Point(position.X + 1, position.Y);
-
-                if (! visited.Contains(newPosition))
-                {
-                    queue.Enqueue((newPosition, node.Steps + 1), manhattan + node.Steps);
-
-                    visited.Add(newPosition);
-                }
-            }
-
-            if (position.Y > 0 && comparer(_map[position.X, position.Y - 1], height))
-            {
-                newPosition = new Point(position.X, position.Y - 1);
-
-                if (! visited.Contains(newPosition))
-                {
-                    queue.Enqueue((newPosition, node.Steps + 1), manhattan + node.Steps);
-
-                    visited.Add(newPosition);
-                }
-            }
-
-            if (position.Y < _height - 1 && comparer(_map[position.X, position.Y + 1], height))
-            {
-                newPosition = new Point(position.X, position.Y + 1);
-
-                if (! visited.Contains(newPosition))
-                {
-                    queue.Enqueue((newPosition, node.Steps + 1), manhattan + node.Steps);
-
-                    visited.Add(newPosition);
+                        visited.Add(newPosition);
+                    }
                 }
             }
         }
