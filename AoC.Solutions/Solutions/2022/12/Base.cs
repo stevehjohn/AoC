@@ -36,12 +36,16 @@ public abstract class Base : Solution
                 {
                     _start = new Point(x, y);
 
+                    _map[x, y] = 0;
+
                     continue;
                 }
 
                 if (character == 'E')
                 {
                     _end = new Point(x, y);
+
+                    _map[x, y] = 'z' - 'a';
 
                     continue;
                 }
