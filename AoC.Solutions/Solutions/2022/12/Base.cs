@@ -71,11 +71,6 @@ public abstract class Base : Solution
 
             if (position.Equals(_end))
             {
-                foreach (var point in node.History)
-                {
-                    Console.WriteLine($"({point.X}, {point.Y}): {(char) (_map[point.X, point.Y] + 'a')}");
-                }
-
                 return node.Steps;
             }
 
