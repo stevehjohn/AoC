@@ -57,7 +57,9 @@ public abstract class Base : Solution
 
                 var items = monkey.Items;
 
-                while (items.Count > 0)
+                var count = items.Count;
+
+                while (count-- > 0)
                 {
                     _inspections[i]++;
 
