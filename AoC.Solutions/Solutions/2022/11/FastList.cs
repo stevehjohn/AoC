@@ -4,8 +4,6 @@ namespace AoC.Solutions.Solutions._2022._11;
 
 public class FastList<T>
 {
-    private readonly int _capacity;
-
     private readonly T[] _items;
 
     private int _start;
@@ -21,11 +19,9 @@ public class FastList<T>
             throw new PuzzleException("Capacity must be a power of 2");
         }
 
-        _capacity = capacity;
-
         _mask = capacity - 1;
 
-        _items = new T[_capacity];
+        _items = new T[capacity];
     }
 
     public void Add(T item)
