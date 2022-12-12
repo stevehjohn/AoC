@@ -37,8 +37,12 @@ public class FastList<T>
 
     public T RemoveFirst()
     {
+        var start = _start;
+
+        _start = (_start + 1) & _mask;
+
         Count--;
 
-        return _items[_start++ & _mask];
+        return _items[start];
     }
 }
