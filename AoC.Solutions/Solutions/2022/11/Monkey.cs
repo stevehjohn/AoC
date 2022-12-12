@@ -2,9 +2,9 @@
 
 public class Monkey
 {
-    public FastList<long> Items { get; }
+    public FastList<ulong> Items { get; }
 
-    public int DivisorTest { get; }
+    public ulong DivisorTest { get; }
 
     public int PassTestMonkey { get; }
 
@@ -12,9 +12,9 @@ public class Monkey
 
     public char Operator { get; }
 
-    public int Operand { get; }
+    public ulong Operand { get; }
 
-    public Monkey(int divisorTest, int passTestMonkey, int failTestMonkey, char @operator, int operand)
+    public Monkey(ulong divisorTest, int passTestMonkey, int failTestMonkey, char @operator, ulong operand)
     {
         Items = new(32);
 
