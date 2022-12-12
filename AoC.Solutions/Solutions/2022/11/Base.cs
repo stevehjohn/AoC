@@ -75,7 +75,10 @@ public abstract class Base : Solution
                     }
                     else
                     {
-                        item = item >= _commonDivisor ? item % _commonDivisor : item;
+                        if (item >= _commonDivisor)
+                        {
+                            item %= _commonDivisor;
+                        }
                     }
 
                     if (double.IsInteger((double) item / monkey.DivisorTest))
