@@ -59,7 +59,7 @@ public abstract class Base : Solution
     {
         var visited = new HashSet<Point>();
 
-        var queue = new PriorityQueue<(Point Position, int Steps, List<Point> History), byte>();
+        var queue = new PriorityQueue<(Point Position, int Steps, List<Point> History), int>();
 
         queue.Enqueue((_start, 0, new List<Point> { _start }), 0);
 
@@ -85,13 +85,15 @@ public abstract class Base : Solution
 
             var history = node.History;
 
+            var manhattan = Math.Abs(position.X - _end.X) + Math.Abs(position.Y - _end.Y);
+
             if (position.X > 0 && _map[position.X - 1, position.Y] <= height + 1)
             {
                 newPosition = new Point(position.X - 1, position.Y);
 
                 if (! visited.Contains(newPosition))
                 {
-                    queue.Enqueue((newPosition, node.Steps + 1, new List<Point>(history) { newPosition }), _map[position.X - 1, position.Y]);
+                    queue.Enqueue((newPosition, node.Steps + 1, new List<Point>(history) { newPosition }), manhattan + node.Steps);
 
                     visited.Add(newPosition);
                 }
@@ -103,7 +105,7 @@ public abstract class Base : Solution
 
                 if (! visited.Contains(newPosition))
                 {
-                    queue.Enqueue((newPosition, node.Steps + 1, new List<Point>(history) { newPosition }), _map[position.X + 1, position.Y]);
+                    queue.Enqueue((newPosition, node.Steps + 1, new List<Point>(history) { newPosition }), manhattan + node.Steps);
 
                     visited.Add(newPosition);
                 }
@@ -115,7 +117,7 @@ public abstract class Base : Solution
 
                 if (! visited.Contains(newPosition))
                 {
-                    queue.Enqueue((newPosition, node.Steps + 1, new List<Point>(history) { newPosition }), _map[position.X, position.Y - 1]);
+                    queue.Enqueue((newPosition, node.Steps + 1, new List<Point>(history) { newPosition }), manhattan + node.Steps);
 
                     visited.Add(newPosition);
                 }
@@ -127,7 +129,7 @@ public abstract class Base : Solution
 
                 if (! visited.Contains(newPosition))
                 {
-                    queue.Enqueue((newPosition, node.Steps + 1, new List<Point>(history) { newPosition }), _map[position.X, position.Y + 1]);
+                    queue.Enqueue((newPosition, node.Steps + 1, new List<Point>(history) { newPosition }), manhattan + node.Steps);
 
                     visited.Add(newPosition);
                 }
