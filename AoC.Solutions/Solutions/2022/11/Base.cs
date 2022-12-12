@@ -55,13 +55,15 @@ public abstract class Base : Solution
             {
                 var monkey = _monkeys[i];
 
-                while (monkey.Items.Count > 0)
+                var items = monkey.Items;
+
+                while (items.Count > 0)
                 {
                     _inspections[i]++;
 
-                    var item = monkey.Items.First;
+                    var item = items.First;
 
-                    monkey.Items.RemoveFirst();
+                    items.RemoveFirst();
 
                     var operand = monkey.Operand == 0 ? item : monkey.Operand;
 
