@@ -68,6 +68,17 @@ public abstract class Base : Solution
         {
             queue.Enqueue((_start, 0), 0);
         }
+        
+        Func<byte, byte, bool> comparer;
+
+        if (startFromEnd)
+        {
+            comparer = (l, h) => l >= h - 1;
+        }
+        else
+        {
+            comparer = (l, h) => l <= h + 1;
+        }
 
         while (queue.Count > 0)
         {
@@ -101,7 +112,7 @@ public abstract class Base : Solution
                 manhattan = Math.Abs(position.X - _end.X) + Math.Abs(position.Y - _end.Y);
             }
 
-            if (position.X > 0 && _map[position.X - 1, position.Y] <= height + 1)
+            if (position.X > 0 && comparer(_map[position.X - 1, position.Y], height))
             {
                 newPosition = new Point(position.X - 1, position.Y);
 
@@ -113,7 +124,7 @@ public abstract class Base : Solution
                 }
             }
 
-            if (position.X < _width - 1 && _map[position.X + 1, position.Y] <= height + 1)
+            if (position.X < _width - 1 && comparer(_map[position.X + 1, position.Y], height))
             {
                 newPosition = new Point(position.X + 1, position.Y);
 
@@ -125,7 +136,7 @@ public abstract class Base : Solution
                 }
             }
 
-            if (position.Y > 0 && _map[position.X, position.Y - 1] <= height + 1)
+            if (position.Y > 0 && comparer(_map[position.X, position.Y - 1], height))
             {
                 newPosition = new Point(position.X, position.Y - 1);
 
@@ -137,88 +148,13 @@ public abstract class Base : Solution
                 }
             }
 
-            if (position.Y < _height - 1 && _map[position.X, position.Y + 1] <= height + 1)
+            if (position.Y < _height - 1 && comparer(_map[position.X, position.Y + 1], height))
             {
                 newPosition = new Point(position.X, position.Y + 1);
 
                 if (! visited.Contains(newPosition))
                 {
                     queue.Enqueue((newPosition, node.Steps + 1), manhattan + node.Steps);
-
-                    visited.Add(newPosition);
-                }
-            }
-        }
-
-        return int.MaxValue;
-    }
-
-    protected int FindShortestPath2()
-    {
-        var visited = new HashSet<Point>();
-
-        var queue = new PriorityQueue<(Point Position, int Steps), int>();
-
-        queue.Enqueue((_end, 0), 0);
-
-        while (queue.Count > 0)
-        {
-            var node = queue.Dequeue();
-
-            var position = node.Position;
-
-            if (_map[position.X, position.Y] == 0)
-            {
-                return node.Steps;
-            }
-
-            var height = _map[position.X, position.Y];
-
-            Point newPosition;
-
-            if (position.X > 0 && _map[position.X - 1, position.Y] >= height - 1)
-            {
-                newPosition = new Point(position.X - 1, position.Y);
-
-                if (! visited.Contains(newPosition))
-                {
-                    queue.Enqueue((newPosition, node.Steps + 1), node.Steps);
-
-                    visited.Add(newPosition);
-                }
-            }
-
-            if (position.X < _width - 1 && _map[position.X + 1, position.Y] >= height - 1)
-            {
-                newPosition = new Point(position.X + 1, position.Y);
-
-                if (! visited.Contains(newPosition))
-                {
-                    queue.Enqueue((newPosition, node.Steps + 1), node.Steps);
-
-                    visited.Add(newPosition);
-                }
-            }
-
-            if (position.Y > 0 && _map[position.X, position.Y - 1] >= height - 1)
-            {
-                newPosition = new Point(position.X, position.Y - 1);
-
-                if (! visited.Contains(newPosition))
-                {
-                    queue.Enqueue((newPosition, node.Steps + 1), node.Steps);
-
-                    visited.Add(newPosition);
-                }
-            }
-
-            if (position.Y < _height - 1 && _map[position.X, position.Y + 1] >= height - 1)
-            {
-                newPosition = new Point(position.X, position.Y + 1);
-
-                if (! visited.Contains(newPosition))
-                {
-                    queue.Enqueue((newPosition, node.Steps + 1), node.Steps);
 
                     visited.Add(newPosition);
                 }
