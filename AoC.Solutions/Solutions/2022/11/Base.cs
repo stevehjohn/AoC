@@ -10,7 +10,7 @@ public abstract class Base : Solution
 
     private readonly Monkey[] _monkeys = new Monkey[MonkeyCount];
 
-    private long _commonDivisor = 1;
+    private ulong _commonDivisor = 1;
 
     private readonly long[] _inspections = new long[MonkeyCount];
 
@@ -20,7 +20,7 @@ public abstract class Base : Solution
 
         for (var i = 1; i < Input.Length; i += 7)
         {
-            var test = int.Parse(Input[i + 2][21..]);
+            var test = ulong.Parse(Input[i + 2][21..]);
 
             var pass = int.Parse(Input[i + 3][29..]);
 
@@ -28,7 +28,7 @@ public abstract class Base : Solution
 
             var @operator = Input[i + 1][23];
 
-            var operand = Input[i + 1][25] == 'o' ? 0 : int.Parse(Input[i + 1][25..]);
+            var operand = Input[i + 1][25] == 'o' ? 0 : ulong.Parse(Input[i + 1][25..]);
 
             var monkey = new Monkey(test, pass, fail, @operator, operand);
 
@@ -36,7 +36,7 @@ public abstract class Base : Solution
 
             foreach (var item in items)
             {
-                monkey.Items.Add(int.Parse(item));
+                monkey.Items.Add(ulong.Parse(item));
             }
 
             _monkeys[m] = monkey;
