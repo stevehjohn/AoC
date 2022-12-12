@@ -17,7 +17,7 @@ public abstract class Base : Solution
 
     private Point _end;
 
-    private readonly Point[] _directions = new Point[] { new(-1, 0), new(1, 0), new(0, -1), new (0, 1) };
+    private readonly Point[] _directions = { new(-1, 0), new(1, 0), new(0, -1), new (0, 1) };
 
     protected void ParseInput()
     {
