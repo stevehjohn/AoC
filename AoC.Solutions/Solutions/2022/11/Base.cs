@@ -76,7 +76,7 @@ public abstract class Base : Solution
                         item = item >= _commonDivisor ? item % _commonDivisor : item;
                     }
 
-                    if (item % monkey.DivisorTest == 0)
+                    if (double.IsInteger((double) item / monkey.DivisorTest))
                     {
                         _monkeys[monkey.PassTestMonkey].Items.Add(item);
                     }
