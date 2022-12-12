@@ -6,8 +6,8 @@ public class Part1 : Base
     {
         ParseInput();
 
-        FindShortestPath();
+        var steps = FindShortestPath();
 
-        return "";
+        return steps.ToString();
     }
 }
