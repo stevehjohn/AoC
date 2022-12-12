@@ -12,6 +12,8 @@ public class FastList<T>
 
     private readonly int _mask;
 
+    public int Count { get; private set; }
+
     public FastList(int capacity)
     {
         if (capacity % 2 != 0)
@@ -29,6 +31,8 @@ public class FastList<T>
         _items[_end] = item;
 
         _end = (_end + 1) & _mask;
+
+        Count++;
     }
 
     public T RemoveFirst()
@@ -37,16 +41,8 @@ public class FastList<T>
 
         _start = (_start + 1) & _mask;
 
+        Count--;
+
         return _items[start];
-    }
-
-    public int Count 
-    {
-        get
-        {
-            var count = _start - _end;
-
-            return (count + (count >> 31)) ^ (count >> 31);
-        }
     }
 }
