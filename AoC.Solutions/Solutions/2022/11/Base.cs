@@ -61,9 +61,7 @@ public abstract class Base : Solution
                 {
                     _inspections[i]++;
 
-                    var item = items.First;
-
-                    items.RemoveFirst();
+                    var item = items.RemoveFirst();
 
                     var operand = monkey.Operand == 0 ? item : monkey.Operand;
 

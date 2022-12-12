@@ -35,12 +35,14 @@ public class FastList<T>
         _end = (_end + 1) & _mask;
     }
 
-    public void RemoveFirst()
+    public T RemoveFirst()
     {
-        _start = (_start + 1) & _mask;
-    }
+        var start = _start;
 
-    public T First => _items[_start & (_capacity - 1)];
+        _start = (_start + 1) & _mask;
+
+        return _items[start];
+    }
 
     public int Count 
     {
