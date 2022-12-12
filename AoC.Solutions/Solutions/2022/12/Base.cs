@@ -1,4 +1,5 @@
 ﻿using AoC.Solutions.Common;
+using AoC.Solutions.Exceptions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2022._12;
@@ -50,13 +51,13 @@ public abstract class Base : Solution
         }
     }
 
-    protected void FindShortestPath()
+    protected int FindShortestPath()
     {
         var visited = new HashSet<Point>();
 
-        var queue = new PriorityQueue<(Point Position, int Steps), byte>();
+        var queue = new PriorityQueue<(Point Position, int Steps, List<Point> History), byte>();
 
-        queue.Enqueue((_start, 0), 0);
+        queue.Enqueue((_start, 0, new List<Point> { _start }), 0);
 
         while (queue.Count > 0)
         {
@@ -66,12 +67,19 @@ public abstract class Base : Solution
 
             if (position.Equals(_end))
             {
-                break;
+                foreach (var point in node.History)
+                {
+                    Console.WriteLine($"({point.X}, {point.Y}): {(char) (_map[point.X, point.Y] + 'a')}");
+                }
+
+                return node.Steps;
             }
 
             var height = _map[position.X, position.Y];
 
             Point newPosition;
+
+            var history = node.History;
 
             if (position.X > 0 && _map[position.X - 1, position.Y] <= height + 1)
             {
@@ -79,7 +87,7 @@ public abstract class Base : Solution
 
                 if (! visited.Contains(newPosition))
                 {
-                    queue.Enqueue((newPosition, node.Steps + 1), _map[position.X - 1, position.Y]);
+                    queue.Enqueue((newPosition, node.Steps + 1, new List<Point>(history) { newPosition }), _map[position.X - 1, position.Y]);
 
                     visited.Add(newPosition);
                 }
@@ -91,7 +99,7 @@ public abstract class Base : Solution
 
                 if (! visited.Contains(newPosition))
                 {
-                    queue.Enqueue((newPosition, node.Steps + 1), _map[position.X + 1, position.Y]);
+                    queue.Enqueue((newPosition, node.Steps + 1, new List<Point>(history) { newPosition }), _map[position.X + 1, position.Y]);
 
                     visited.Add(newPosition);
                 }
@@ -103,7 +111,7 @@ public abstract class Base : Solution
 
                 if (! visited.Contains(newPosition))
                 {
-                    queue.Enqueue((newPosition, node.Steps + 1), _map[position.X, position.Y - 1]);
+                    queue.Enqueue((newPosition, node.Steps + 1, new List<Point>(history) { newPosition }), _map[position.X, position.Y - 1]);
 
                     visited.Add(newPosition);
                 }
@@ -115,11 +123,13 @@ public abstract class Base : Solution
 
                 if (! visited.Contains(newPosition))
                 {
-                    queue.Enqueue((newPosition, node.Steps + 1), _map[position.X, position.Y + 1]);
+                    queue.Enqueue((newPosition, node.Steps + 1, new List<Point>(history) { newPosition }), _map[position.X, position.Y + 1]);
 
                     visited.Add(newPosition);
                 }
             }
         }
+
+        throw new PuzzleException("Solution not found");
     }
 }
