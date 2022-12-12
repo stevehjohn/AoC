@@ -8,11 +8,11 @@ public abstract class Base : Solution
 {
     public override string Description => "Hill climbing algorithm";
 
-    private int _width;
+    protected int Width;
 
-    private int _height;
+    protected int Height;
 
-    private byte[,] _map;
+    protected byte[,] Map;
 
     private Point _start;
 
@@ -20,11 +20,11 @@ public abstract class Base : Solution
 
     protected void ParseInput()
     {
-        _width = Input[0].Length;
+        Width = Input[0].Length;
 
-        _height = Input.Length;
+        Height = Input.Length;
 
-        _map = new byte[_width, _height];
+        Map = new byte[Width, Height];
 
         for (var y = 0; y < Input.Length; y++)
         {
@@ -36,7 +36,7 @@ public abstract class Base : Solution
                 {
                     _start = new Point(x, y);
 
-                    _map[x, y] = 0;
+                    Map[x, y] = 0;
 
                     continue;
                 }
@@ -45,12 +45,12 @@ public abstract class Base : Solution
                 {
                     _end = new Point(x, y);
 
-                    _map[x, y] = 'z' - 'a';
+                    Map[x, y] = 'z' - 'a';
 
                     continue;
                 }
 
-                _map[x, y] = (byte) (character - 'a');
+                Map[x, y] = (byte) (character - 'a');
             }
         }
     }
@@ -59,9 +59,9 @@ public abstract class Base : Solution
     {
         var visited = new HashSet<Point>();
 
-        var queue = new PriorityQueue<(Point Position, int Steps, List<Point> History), int>();
+        var queue = new PriorityQueue<(Point Position, int Steps), int>();
 
-        queue.Enqueue((_start, 0, new List<Point> { _start }), 0);
+        queue.Enqueue((_start, 0), 0);
 
         while (queue.Count > 0)
         {
@@ -74,63 +74,136 @@ public abstract class Base : Solution
                 return node.Steps;
             }
 
-            var height = _map[position.X, position.Y];
+            var height = Map[position.X, position.Y];
 
             Point newPosition;
 
-            var history = node.History;
-
             var manhattan = Math.Abs(position.X - _end.X) + Math.Abs(position.Y - _end.Y);
 
-            if (position.X > 0 && _map[position.X - 1, position.Y] <= height + 1)
+            if (position.X > 0 && Map[position.X - 1, position.Y] <= height + 1)
             {
                 newPosition = new Point(position.X - 1, position.Y);
 
                 if (! visited.Contains(newPosition))
                 {
-                    queue.Enqueue((newPosition, node.Steps + 1, new List<Point>(history) { newPosition }), manhattan + node.Steps);
+                    queue.Enqueue((newPosition, node.Steps + 1), manhattan + node.Steps);
 
                     visited.Add(newPosition);
                 }
             }
 
-            if (position.X < _width - 1 && _map[position.X + 1, position.Y] <= height + 1)
+            if (position.X < Width - 1 && Map[position.X + 1, position.Y] <= height + 1)
             {
                 newPosition = new Point(position.X + 1, position.Y);
 
                 if (! visited.Contains(newPosition))
                 {
-                    queue.Enqueue((newPosition, node.Steps + 1, new List<Point>(history) { newPosition }), manhattan + node.Steps);
+                    queue.Enqueue((newPosition, node.Steps + 1), manhattan + node.Steps);
 
                     visited.Add(newPosition);
                 }
             }
 
-            if (position.Y > 0 && _map[position.X, position.Y - 1] <= height + 1)
+            if (position.Y > 0 && Map[position.X, position.Y - 1] <= height + 1)
             {
                 newPosition = new Point(position.X, position.Y - 1);
 
                 if (! visited.Contains(newPosition))
                 {
-                    queue.Enqueue((newPosition, node.Steps + 1, new List<Point>(history) { newPosition }), manhattan + node.Steps);
+                    queue.Enqueue((newPosition, node.Steps + 1), manhattan + node.Steps);
 
                     visited.Add(newPosition);
                 }
             }
 
-            if (position.Y < _height - 1 && _map[position.X, position.Y + 1] <= height + 1)
+            if (position.Y < Height - 1 && Map[position.X, position.Y + 1] <= height + 1)
             {
                 newPosition = new Point(position.X, position.Y + 1);
 
                 if (! visited.Contains(newPosition))
                 {
-                    queue.Enqueue((newPosition, node.Steps + 1, new List<Point>(history) { newPosition }), manhattan + node.Steps);
+                    queue.Enqueue((newPosition, node.Steps + 1), manhattan + node.Steps);
 
                     visited.Add(newPosition);
                 }
             }
         }
 
-        throw new PuzzleException("Solution not found");
+        return int.MaxValue;
+    }
+
+    protected int FindShortestPath2()
+    {
+        var visited = new HashSet<Point>();
+
+        var queue = new PriorityQueue<(Point Position, int Steps), int>();
+
+        queue.Enqueue((_end, 0), 0);
+
+        while (queue.Count > 0)
+        {
+            var node = queue.Dequeue();
+
+            var position = node.Position;
+
+            if (Map[position.X, position.Y] == 0)
+            {
+                return node.Steps;
+            }
+
+            var height = Map[position.X, position.Y];
+
+            Point newPosition;
+
+            if (position.X > 0 && Map[position.X - 1, position.Y] >= height - 1)
+            {
+                newPosition = new Point(position.X - 1, position.Y);
+
+                if (! visited.Contains(newPosition))
+                {
+                    queue.Enqueue((newPosition, node.Steps + 1), node.Steps);
+
+                    visited.Add(newPosition);
+                }
+            }
+
+            if (position.X < Width - 1 && Map[position.X + 1, position.Y] >= height - 1)
+            {
+                newPosition = new Point(position.X + 1, position.Y);
+
+                if (! visited.Contains(newPosition))
+                {
+                    queue.Enqueue((newPosition, node.Steps + 1), node.Steps);
+
+                    visited.Add(newPosition);
+                }
+            }
+
+            if (position.Y > 0 && Map[position.X, position.Y - 1] >= height - 1)
+            {
+                newPosition = new Point(position.X, position.Y - 1);
+
+                if (! visited.Contains(newPosition))
+                {
+                    queue.Enqueue((newPosition, node.Steps + 1), node.Steps);
+
+                    visited.Add(newPosition);
+                }
+            }
+
+            if (position.Y < Height - 1 && Map[position.X, position.Y + 1] >= height - 1)
+            {
+                newPosition = new Point(position.X, position.Y + 1);
+
+                if (! visited.Contains(newPosition))
+                {
+                    queue.Enqueue((newPosition, node.Steps + 1), node.Steps);
+
+                    visited.Add(newPosition);
+                }
+            }
+        }
+
+        return int.MaxValue;
     }
 }
