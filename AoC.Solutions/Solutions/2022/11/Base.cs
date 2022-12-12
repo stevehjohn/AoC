@@ -59,10 +59,10 @@ public abstract class Base : Solution
 
                 var count = items.Count;
 
+                _inspections[i] += count;
+
                 while (count-- > 0)
                 {
-                    _inspections[i]++;
-
                     var item = items.RemoveFirst();
 
                     var operand = monkey.Operand == 0 ? item : monkey.Operand;
