@@ -99,12 +99,25 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         _vertices = new VertexPositionColor[_width * _height];
 
+        var palette = PaletteGenerator.GetPalette(26,
+                                                  new[]
+                                                  {
+                                                      new Color(46, 27, 134),
+                                                      new Color(119, 35, 172),
+                                                      new Color(176, 83, 203),
+                                                      new Color(255, 168, 76),
+                                                      new Color(254, 211, 56),
+                                                      new Color(254, 253, 0)
+                                                  });
+
         for (var x = 0; x < _width; x++)
         {
             for (var y = 0; y < _height; y++)
             {
-                _vertices[x + y * _width].Position = new Vector3(x, _state.Map[x, y], -_height / 2 + y);
-                _vertices[x + y * _width].Color = Color.White;
+                var height = _state.Map[x, y];
+
+                _vertices[x + y * _width].Position = new Vector3(x, height, -_height / 2 + y);
+                _vertices[x + y * _width].Color = palette[height];
             }
         }
     }
@@ -139,7 +152,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private void SetUpCamera()
     {
-        _viewMatrix = Matrix.CreateLookAt(new Vector3(_width / 2f, _height / 2f, 60), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
+        _viewMatrix = Matrix.CreateLookAt(new Vector3(_width / 2f, _height / 2f, 80), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
 
         _projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, GraphicsDevice.Viewport.AspectRatio, 1.0f, 300.0f);
     }
@@ -149,7 +162,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         var rasterizerState = new RasterizerState();
 
         rasterizerState.CullMode = CullMode.None;
-        rasterizerState.FillMode = FillMode.WireFrame;
+        rasterizerState.FillMode = FillMode.Solid;
 
         GraphicsDevice.RasterizerState = rasterizerState;
 
@@ -160,6 +173,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
         effect.View = _viewMatrix;
         effect.Projection = _projectionMatrix;
         effect.World = worldMatrix;
+        effect.VertexColorEnabled = true;
+        //effect.LightingEnabled = true;
 
         foreach (var pass in effect.CurrentTechnique.Passes)
         {
