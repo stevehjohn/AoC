@@ -25,6 +25,7 @@
     <None Remove="_Content\2018\13\sprites.png" />
     <None Remove="_Content\2018\17\Content.mgcb" />
     <None Remove="_Content\2020\20\Content.mgcb" />
+    <None Remove="_Content\2022\12\Content.mgcb" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,7 +40,9 @@
     <DesignData Include="_Content\2018\13\Content.mgcb" />
     <DesignData Include="_Content\2018\17\Content.mgcb" />
     <DesignData Include="_Content\2020\20\Content.mgcb" />
+    <DesignData Include="_Content\2022\12\Content.mgcb" />
     <Folder Include="Visualisations\2018\17\" />
+    <Folder Include="Visualisations\2022\12\" />
   </ItemGroup>
 
   <ItemGroup>
