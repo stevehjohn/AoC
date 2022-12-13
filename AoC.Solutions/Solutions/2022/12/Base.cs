@@ -19,7 +19,7 @@ public abstract class Base : Solution
 
     private readonly HashSet<Point> _visited = new();
 
-    private readonly PriorityQueue<(Point Position, int Steps), int> _queue = new();
+    private readonly PriorityQueue<(Point Position, int Steps, List<Point> History), int> _queue = new();
     
     private readonly IVisualiser<PuzzleState> _visualiser;
 
@@ -75,11 +75,11 @@ public abstract class Base : Solution
 
         if (startFromEnd)
         {
-            _queue.Enqueue((_end, 0), 0);
+            _queue.Enqueue((_end, 0, new List<Point> { _end }), 0);
         }
         else
         {
-            _queue.Enqueue((_start, 0), 0);
+            _queue.Enqueue((_start, 0, new List<Point> { _start }), 0);
         }
         
         Func<byte, byte, bool> comparer;
@@ -98,6 +98,8 @@ public abstract class Base : Solution
             var node = _queue.Dequeue();
 
             var position = node.Position;
+
+            Visualise(node.History);
 
             if (startFromEnd)
             {
@@ -123,13 +125,13 @@ public abstract class Base : Solution
                 manhattan = Math.Abs(position.X - _end.X) + Math.Abs(position.Y - _end.Y);
             }
 
-            AddPossibleMoves(position, comparer, height, node.Steps, manhattan);
+            AddPossibleMoves(position, comparer, height, node.Steps, manhattan, node.History);
         }
 
         return int.MaxValue;
     }
 
-    private void AddPossibleMoves(Point position, Func<byte, byte, bool> comparer, byte height, int steps, int manhattan)
+    private void AddPossibleMoves(Point position, Func<byte, byte, bool> comparer, byte height, int steps, int manhattan, List<Point> history)
     {
         Point newPosition;
 
@@ -139,7 +141,7 @@ public abstract class Base : Solution
 
             if (comparer(_map[newPosition.X, newPosition.Y], height) && ! _visited.Contains(newPosition))
             {
-                _queue.Enqueue((newPosition, steps + 1), manhattan + steps);
+                _queue.Enqueue((newPosition, steps + 1, new List<Point>(history) { newPosition }), manhattan + steps);
 
                 _visited.Add(newPosition);
             }
@@ -151,7 +153,7 @@ public abstract class Base : Solution
 
             if (comparer(_map[newPosition.X, newPosition.Y], height) && ! _visited.Contains(newPosition))
             {
-                _queue.Enqueue((newPosition, steps + 1), manhattan + steps);
+                _queue.Enqueue((newPosition, steps + 1, new List<Point>(history) { newPosition }), manhattan + steps);
 
                 _visited.Add(newPosition);
             }
@@ -163,7 +165,7 @@ public abstract class Base : Solution
 
             if (comparer(_map[newPosition.X, newPosition.Y], height) && ! _visited.Contains(newPosition))
             {
-                _queue.Enqueue((newPosition, steps + 1), manhattan + steps);
+                _queue.Enqueue((newPosition, steps + 1, new List<Point>(history) { newPosition }), manhattan + steps);
 
                 _visited.Add(newPosition);
             }
@@ -175,15 +177,15 @@ public abstract class Base : Solution
 
             if (comparer(_map[newPosition.X, newPosition.Y], height) && ! _visited.Contains(newPosition))
             {
-                _queue.Enqueue((newPosition, steps + 1), manhattan + steps);
+                _queue.Enqueue((newPosition, steps + 1, new List<Point>(history) { newPosition }), manhattan + steps);
 
                 _visited.Add(newPosition);
             }
         }
     }
 
-    private void Visualise()
+    private void Visualise(List<Point> history = null)
     {
-        _visualiser.PuzzleStateChanged(new PuzzleState(_map));
+        _visualiser.PuzzleStateChanged(new PuzzleState(_map, history));
     }
 }
