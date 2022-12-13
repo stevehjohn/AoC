@@ -83,6 +83,9 @@
     <None Update="_Content\2020\20\bin\Windows\scanner.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="_Content\2022\12\bin\Windows\tile.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <Import Project="$(MSBuildProgramFiles32)\MSBuild\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
