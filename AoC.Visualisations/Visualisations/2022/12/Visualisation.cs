@@ -5,6 +5,8 @@ using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Color = Microsoft.Xna.Framework.Color;
+using FillMode = Microsoft.Xna.Framework.Graphics.FillMode;
+using PrimitiveType = Microsoft.Xna.Framework.Graphics.PrimitiveType;
 
 namespace AoC.Visualisations.Visualisations._2022._12;
 
@@ -26,6 +28,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private Matrix _projectionMatrix;
 
+    private readonly Color[] _palette;
+    
+    private float _angle;
+
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -38,6 +44,17 @@ public class Visualisation : VisualisationBase<PuzzleState>
         Content.RootDirectory = "_Content\\2022\\12\\bin\\Windows";
 
         IsMouseVisible = true;
+
+        _palette = PaletteGenerator.GetPalette(26,
+                                                  new[]
+                                                  {
+                                                      new Color(46, 27, 134),
+                                                      new Color(119, 35, 172),
+                                                      new Color(176, 83, 203),
+                                                      new Color(255, 168, 76),
+                                                      new Color(254, 211, 56),
+                                                      new Color(254, 253, 0)
+                                                  });
     }
 
     public override void SetPart(int part)
@@ -55,7 +72,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     protected override void Update(GameTime gameTime)
     {
-        _angle += 0.01f;
+        _angle += 0.005f;
 
         base.Update(gameTime);
     }
@@ -75,12 +92,76 @@ public class Visualisation : VisualisationBase<PuzzleState>
             else
             {
                 _state = GetNextState();
+
+                if (_state.History != null)
+                {
+                    for (var x = 0; x < _width; x++)
+                    {
+                        for (var y = 0; y < _height; y++)
+                        {
+                            var height = _state.Map[x, y];
+
+                            _vertices[x + y * _width].Color = _palette[height];
+                        }
+                    }
+
+                    foreach (var point in _state.History)
+                    {
+                        _vertices[point.X + point.Y * _width].Color = Color.AntiqueWhite;
+                    }
+                }
             }
+        }
+        else
+        {
+            RenderFinalPath();
         }
 
         DrawMap();
 
         base.Draw(gameTime);
+    }
+
+    private int _index = -1;
+
+    private int _counter;
+
+    private void RenderFinalPath()
+    {
+        if (_counter != 0)
+        {
+            _counter--;
+
+            return;
+        }
+        else
+        {
+            _counter = 2;
+        }
+
+        if (_index == -1)
+        {
+            for (var x = 0; x < _width; x++)
+            {
+                for (var y = 0; y < _height; y++)
+                {
+                    var height = _state.Map[x, y];
+
+                    _vertices[x + y * _width].Color = _palette[height];
+                }
+            }
+        }
+
+        _index++;
+
+        if (_index >= _state.History.Count - 1)
+        {
+            return;
+        }
+
+        var point = _state.History[_index];
+
+        _vertices[point.X + point.Y * _width].Color = Color.Cyan;
     }
 
     private void InitialiseTerrain()
@@ -101,17 +182,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
         _vertices = new VertexPositionColor[_width * _height];
         _outlines = new VertexPositionColor[_width * _height];
 
-        var palette = PaletteGenerator.GetPalette(26,
-                                                  new[]
-                                                  {
-                                                      new Color(46, 27, 134),
-                                                      new Color(119, 35, 172),
-                                                      new Color(176, 83, 203),
-                                                      new Color(255, 168, 76),
-                                                      new Color(254, 211, 56),
-                                                      new Color(254, 253, 0)
-                                                  });
-
         for (var x = 0; x < _width; x++)
         {
             for (var y = 0; y < _height; y++)
@@ -119,7 +189,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 var height = _state.Map[x, y];
 
                 _vertices[x + y * _width].Position = new Vector3(x, height, -_height / 2 + y);
-                _vertices[x + y * _width].Color = palette[height];
+                _vertices[x + y * _width].Color = _palette[height];
 
                 _outlines[x + y * _width].Position = new Vector3(x, height, -_height / 2 + y);
                 _outlines[x + y * _width].Color = Color.Black;
@@ -152,8 +222,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
             }
         }
     }
-
-    private float _angle;
 
     private void SetUpCamera()
     {
