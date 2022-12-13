@@ -5,7 +5,6 @@ using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Color = Microsoft.Xna.Framework.Color;
-using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace AoC.Visualisations.Visualisations._2022._12;
 
@@ -14,9 +13,19 @@ public class Visualisation : VisualisationBase<PuzzleState>
 {
     private SpriteBatch _spriteBatch;
 
-    private Texture2D _tile;
-
     private PuzzleState _state;
+
+    private int _width;
+
+    private int _height;
+
+    private VertexPositionColor[] _vertices;
+
+    private short[] _indices;
+
+    private Matrix _viewMatrix;
+
+    private Matrix _projectionMatrix;
 
     public Visualisation()
     {
@@ -42,47 +51,119 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 throw new VisualisationParameterException();
         }
     }
-    
+
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-        _tile = Content.Load<Texture2D>("tile");
 
         base.LoadContent();
     }
 
     protected override void Draw(GameTime gameTime)
     {
+        GraphicsDevice.Clear(Color.Black);
+
         if (HasNextState)
         {
-            _state = GetNextState();
+            if (_state == null)
+            {
+                _state = GetNextState();
+
+                InitialiseTerrain();
+            }
+            else
+            {
+                _state = GetNextState();
+            }
         }
 
-        _spriteBatch.Begin();
-
         DrawMap();
-
-        _spriteBatch.End();
 
         base.Draw(gameTime);
     }
 
+    private void InitialiseTerrain()
+    {
+        _width = _state.Map.GetLength(0);
+
+        _height = _state.Map.GetLength(1);
+
+        SetUpVertices();
+
+        SetUpIndices();
+
+        SetUpCamera();
+    }
+
+    private void SetUpVertices()
+    {
+        _vertices = new VertexPositionColor[_width * _height];
+
+        for (var x = 0; x < _width; x++)
+        {
+            for (var y = 0; y < _height; y++)
+            {
+                _vertices[x + y * _width].Position = new Vector3(x, _state.Map[x, y], y);
+                _vertices[x + y * _width].Color = Color.White;
+            }
+        }
+    }
+
+    private void SetUpIndices()
+    {
+        _indices = new short[_width * _height * 6];
+
+        var counter = 0;
+
+        for (var y = 0; y < _height - 1; y++)
+        {
+            for (var x = 0; x < _width - 1; x++)
+            {
+                var lowerLeft = (short) (x + y * _width);
+                var lowerRight = (short) ((x + 1) + y * _width);
+                var topLeft = (short) (x + (y + 1) * _width);
+                var topRight = (short) ((x + 1) + (y + 1) * _width);
+
+                _indices[counter++] = topLeft;
+                _indices[counter++] = lowerRight;
+                _indices[counter++] = lowerLeft;
+
+                _indices[counter++] = topLeft;
+                _indices[counter++] = topRight;
+                _indices[counter++] = lowerRight;
+            }
+        }
+    }
+
+    private void SetUpCamera()
+    {
+        _viewMatrix = Matrix.CreateLookAt(new Vector3(60, 80, -80), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
+
+        _projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, GraphicsDevice.Viewport.AspectRatio, 1.0f, 300.0f);
+    }
+
     private void DrawMap()
     {
-        for (var y = 0; y < _state.Map.GetLength(1); y++)
+        var rasterizerState = new RasterizerState();
+
+        rasterizerState.CullMode = CullMode.None;
+        rasterizerState.FillMode = FillMode.WireFrame;
+
+        GraphicsDevice.RasterizerState = rasterizerState;
+
+        var worldMatrix = Matrix.CreateTranslation(-_width / 2.0f, 0, _height / 2.0f);
+
+        var effect = new BasicEffect(GraphicsDevice);
+
+        effect.View = _viewMatrix;
+        effect.Projection = _projectionMatrix;
+        effect.World = worldMatrix;
+
+        foreach (EffectPass pass in effect.CurrentTechnique.Passes)
         {
-            var xOffset = 33;
+            pass.Apply();
 
-            if (y % 2 == 0)
-            {
-                xOffset = 0;
-            }
-
-            for (var x = 0; x < _state.Map.GetLength(0); x++)
-            {
-                _spriteBatch.Draw(_tile, new Vector2(x * 49 + xOffset, y * 15 + x * 15), new Rectangle(0, 0, 47, 29), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
-            }
+            GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, _vertices, 0, _vertices.Length, _indices, 0, _indices.Length / 3, VertexPositionColor.VertexDeclaration);
         }
     }
 }
