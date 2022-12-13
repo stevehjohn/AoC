@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using System.Runtime.CompilerServices;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2022._11;
 
@@ -12,6 +13,7 @@ public abstract class Base : Solution
 
     private readonly long[] _inspections = new long[MonkeyCount];
 
+    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
     protected void PlayRounds(int rounds = 20, bool reduceWorry = true)
     {
         var monkeys = InitialiseMonkeys();
