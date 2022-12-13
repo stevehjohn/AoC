@@ -11,8 +11,6 @@ namespace AoC.Visualisations.Visualisations._2022._12;
 [UsedImplicitly]
 public class Visualisation : VisualisationBase<PuzzleState>
 {
-    private SpriteBatch _spriteBatch;
-
     private PuzzleState _state;
 
     private int _width;
@@ -37,6 +35,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         // Something funky going on with having to add \bin\Windows - investigate.
         Content.RootDirectory = "_Content\\2022\\12\\bin\\Windows";
+
+        IsMouseVisible = true;
     }
 
     public override void SetPart(int part)
@@ -52,11 +52,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
         }
     }
 
-    protected override void LoadContent()
+    protected override void Update(GameTime gameTime)
     {
-        _spriteBatch = new SpriteBatch(GraphicsDevice);
+        _angle += 0.01f;
 
-        base.LoadContent();
+        base.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
@@ -103,7 +103,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             for (var y = 0; y < _height; y++)
             {
-                _vertices[x + y * _width].Position = new Vector3(x, _state.Map[x, y], y);
+                _vertices[x + y * _width].Position = new Vector3(x, _state.Map[x, y], -_height / 2 + y);
                 _vertices[x + y * _width].Color = Color.White;
             }
         }
@@ -120,9 +120,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
             for (var x = 0; x < _width - 1; x++)
             {
                 var lowerLeft = (short) (x + y * _width);
-                var lowerRight = (short) ((x + 1) + y * _width);
+                var lowerRight = (short) (x + 1 + y * _width);
                 var topLeft = (short) (x + (y + 1) * _width);
-                var topRight = (short) ((x + 1) + (y + 1) * _width);
+                var topRight = (short) (x + 1 + (y + 1) * _width);
 
                 _indices[counter++] = topLeft;
                 _indices[counter++] = lowerRight;
@@ -135,9 +135,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
         }
     }
 
+    private float _angle;
+
     private void SetUpCamera()
     {
-        _viewMatrix = Matrix.CreateLookAt(new Vector3(60, 80, -80), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
+        _viewMatrix = Matrix.CreateLookAt(new Vector3(_width * 2f, _height * 2f, 80), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
 
         _projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, GraphicsDevice.Viewport.AspectRatio, 1.0f, 300.0f);
     }
@@ -151,7 +153,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         GraphicsDevice.RasterizerState = rasterizerState;
 
-        var worldMatrix = Matrix.CreateTranslation(-_width / 2.0f, 0, _height / 2.0f);
+        var worldMatrix = Matrix.CreateTranslation(-_width / 2f, 0, 0) * Matrix.CreateRotationY(_angle);
 
         var effect = new BasicEffect(GraphicsDevice);
 
@@ -159,7 +161,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         effect.Projection = _projectionMatrix;
         effect.World = worldMatrix;
 
-        foreach (EffectPass pass in effect.CurrentTechnique.Passes)
+        foreach (var pass in effect.CurrentTechnique.Passes)
         {
             pass.Apply();
 
