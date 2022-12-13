@@ -18,6 +18,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private int _height;
 
     private VertexPositionColor[] _vertices;
+    private VertexPositionColor[] _outlines;
 
     private short[] _indices;
 
@@ -98,6 +99,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private void SetUpVertices()
     {
         _vertices = new VertexPositionColor[_width * _height];
+        _outlines = new VertexPositionColor[_width * _height];
 
         var palette = PaletteGenerator.GetPalette(26,
                                                   new[]
@@ -118,6 +120,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                 _vertices[x + y * _width].Position = new Vector3(x, height, -_height / 2 + y);
                 _vertices[x + y * _width].Color = palette[height];
+
+                _outlines[x + y * _width].Position = new Vector3(x, height, -_height / 2 + y);
+                _outlines[x + y * _width].Color = Color.Black;
             }
         }
     }
@@ -175,13 +180,26 @@ public class Visualisation : VisualisationBase<PuzzleState>
         effect.Projection = _projectionMatrix;
         effect.World = worldMatrix;
         effect.VertexColorEnabled = true;
-        //effect.LightingEnabled = true;
 
         foreach (var pass in effect.CurrentTechnique.Passes)
         {
             pass.Apply();
 
             GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, _vertices, 0, _vertices.Length, _indices, 0, _indices.Length / 3, VertexPositionColor.VertexDeclaration);
+        }
+
+        rasterizerState = new RasterizerState();
+
+        rasterizerState.CullMode = CullMode.None;
+        rasterizerState.FillMode = FillMode.WireFrame;
+
+        GraphicsDevice.RasterizerState = rasterizerState;
+
+        foreach (var pass in effect.CurrentTechnique.Passes)
+        {
+            pass.Apply();
+
+            GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, _outlines, 0, _outlines.Length, _indices, 0, _indices.Length / 3, VertexPositionColor.VertexDeclaration);
         }
     }
 }
