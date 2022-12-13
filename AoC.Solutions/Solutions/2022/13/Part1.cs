@@ -4,6 +4,8 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        return "";
+        var result = Solve();
+
+        return result.ToString();
     }
 }
