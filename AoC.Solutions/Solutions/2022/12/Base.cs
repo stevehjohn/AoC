@@ -17,7 +17,9 @@ public abstract class Base : Solution
 
     private Point _end;
 
-    private readonly Point[] _directions = { new(-1, 0), new(1, 0), new(0, -1), new (0, 1) };
+    private readonly HashSet<Point> _visited = new();
+
+    private readonly PriorityQueue<(Point Position, int Steps), int> _queue = new();
 
     protected void ParseInput()
     {
@@ -58,17 +60,13 @@ public abstract class Base : Solution
 
     protected int FindShortestPath(bool startFromEnd = false)
     {
-        var visited = new HashSet<Point>();
-
-        var queue = new PriorityQueue<(Point Position, int Steps), int>();
-
         if (startFromEnd)
         {
-            queue.Enqueue((_end, 0), 0);
+            _queue.Enqueue((_end, 0), 0);
         }
         else
         {
-            queue.Enqueue((_start, 0), 0);
+            _queue.Enqueue((_start, 0), 0);
         }
         
         Func<byte, byte, bool> comparer;
@@ -82,9 +80,9 @@ public abstract class Base : Solution
             comparer = (l, h) => l <= h + 1;
         }
 
-        while (queue.Count > 0)
+        while (_queue.Count > 0)
         {
-            var node = queue.Dequeue();
+            var node = _queue.Dequeue();
 
             var position = node.Position;
 
@@ -112,22 +110,62 @@ public abstract class Base : Solution
                 manhattan = Math.Abs(position.X - _end.X) + Math.Abs(position.Y - _end.Y);
             }
 
-            foreach (var direction in _directions)
-            {
-                var newPosition = new Point(position.X + direction.X, position.Y + direction.Y);
-
-                if (newPosition.X >= 0 && newPosition.X < _width && newPosition.Y >= 0 && newPosition.Y < _height)
-                {
-                    if (comparer(_map[newPosition.X, newPosition.Y], height) && ! visited.Contains(newPosition))
-                    {
-                        queue.Enqueue((newPosition, node.Steps + 1), manhattan + node.Steps);
-
-                        visited.Add(newPosition);
-                    }
-                }
-            }
+            AddPossibleMoves(position, comparer, height, node.Steps, manhattan);
         }
 
         return int.MaxValue;
+    }
+
+    private void AddPossibleMoves(Point position, Func<byte, byte, bool> comparer, byte height, int steps, int manhattan)
+    {
+        Point newPosition;
+
+        if (position.X > 0)
+        {
+            newPosition = new Point(position.X - 1, position.Y);
+
+            if (comparer(_map[newPosition.X, newPosition.Y], height) && ! _visited.Contains(newPosition))
+            {
+                _queue.Enqueue((newPosition, steps + 1), manhattan + steps);
+
+                _visited.Add(newPosition);
+            }
+        }
+
+        if (position.X < _width - 1)
+        {
+            newPosition = new Point(position.X + 1, position.Y);
+
+            if (comparer(_map[newPosition.X, newPosition.Y], height) && ! _visited.Contains(newPosition))
+            {
+                _queue.Enqueue((newPosition, steps + 1), manhattan + steps);
+
+                _visited.Add(newPosition);
+            }
+        }
+
+        if (position.Y > 0)
+        {
+            newPosition = new Point(position.X, position.Y - 1);
+
+            if (comparer(_map[newPosition.X, newPosition.Y], height) && ! _visited.Contains(newPosition))
+            {
+                _queue.Enqueue((newPosition, steps + 1), manhattan + steps);
+
+                _visited.Add(newPosition);
+            }
+        }
+
+        if (position.Y < _height - 1)
+        {
+            newPosition = new Point(position.X, position.Y + 1);
+
+            if (comparer(_map[newPosition.X, newPosition.Y], height) && ! _visited.Contains(newPosition))
+            {
+                _queue.Enqueue((newPosition, steps + 1), manhattan + steps);
+
+                _visited.Add(newPosition);
+            }
+        }
     }
 }
