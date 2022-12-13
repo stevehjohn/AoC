@@ -20,6 +20,17 @@ public abstract class Base : Solution
     private readonly HashSet<Point> _visited = new();
 
     private readonly PriorityQueue<(Point Position, int Steps), int> _queue = new();
+    
+    private readonly IVisualiser<PuzzleState> _visualiser;
+
+    protected Base()
+    {
+    }
+
+    protected Base(IVisualiser<PuzzleState> visualiser)
+    {
+        _visualiser = visualiser;
+    }
 
     protected void ParseInput()
     {
@@ -60,6 +71,8 @@ public abstract class Base : Solution
 
     protected int FindShortestPath(bool startFromEnd = false)
     {
+        Visualise();
+
         if (startFromEnd)
         {
             _queue.Enqueue((_end, 0), 0);
@@ -167,5 +180,10 @@ public abstract class Base : Solution
                 _visited.Add(newPosition);
             }
         }
+    }
+
+    private void Visualise()
+    {
+        _visualiser.PuzzleStateChanged(new PuzzleState(_map));
     }
 }
