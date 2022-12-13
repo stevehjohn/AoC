@@ -8,52 +8,19 @@ public abstract class Base : Solution
 
     private const int MonkeyCount = 8;
 
-    private readonly Monkey[] _monkeys = new Monkey[MonkeyCount];
-
     private ulong _commonDivisor = 1;
 
     private readonly long[] _inspections = new long[MonkeyCount];
 
-    protected void InitialiseMonkeys()
-    {
-        var m = 0;
-
-        for (var i = 1; i < Input.Length; i += 7)
-        {
-            var test = ulong.Parse(Input[i + 2][21..]);
-
-            var pass = int.Parse(Input[i + 3][29..]);
-
-            var fail = int.Parse(Input[i + 4][30..]);
-
-            var @operator = Input[i + 1][23];
-
-            var operand = Input[i + 1][25] == 'o' ? 0 : ulong.Parse(Input[i + 1][25..]);
-
-            var monkey = new Monkey(test, pass, fail, @operator, operand);
-
-            var items = Input[i][18..].Split(',', StringSplitOptions.TrimEntries);
-
-            foreach (var item in items)
-            {
-                monkey.Items.Add(ulong.Parse(item));
-            }
-
-            _monkeys[m] = monkey;
-
-            _commonDivisor *= test;
-
-            m++;
-        }
-    }
-
     protected void PlayRounds(int rounds = 20, bool reduceWorry = true)
     {
+        var monkeys = InitialiseMonkeys();
+
         for (var round = 0; round < rounds; round++)
         {
             for (var i = 0; i < MonkeyCount; i++)
             {
-                var monkey = _monkeys[i];
+                var monkey = monkeys[i];
 
                 var items = monkey.Items;
 
@@ -83,11 +50,11 @@ public abstract class Base : Solution
 
                     if (double.IsInteger((double) item / monkey.DivisorTest))
                     {
-                        _monkeys[monkey.PassTestMonkey].Items.Add(item);
+                        monkeys[monkey.PassTestMonkey].Items.Add(item);
                     }
                     else
                     {
-                        _monkeys[monkey.FailTestMonkey].Items.Add(item);
+                        monkeys[monkey.FailTestMonkey].Items.Add(item);
                     }
                 }
             }
@@ -121,5 +88,42 @@ public abstract class Base : Solution
         }
 
         return max1 * max2;
+    }
+
+    private Monkey[] InitialiseMonkeys()
+    {
+        var monkeys = new Monkey[MonkeyCount];
+
+        var m = 0;
+
+        for (var i = 1; i < Input.Length; i += 7)
+        {
+            var test = ulong.Parse(Input[i + 2][21..]);
+
+            var pass = int.Parse(Input[i + 3][29..]);
+
+            var fail = int.Parse(Input[i + 4][30..]);
+
+            var @operator = Input[i + 1][23];
+
+            var operand = Input[i + 1][25] == 'o' ? 0 : ulong.Parse(Input[i + 1][25..]);
+
+            var monkey = new Monkey(test, pass, fail, @operator, operand);
+
+            var items = Input[i][18..].Split(',', StringSplitOptions.TrimEntries);
+
+            foreach (var item in items)
+            {
+                monkey.Items.Add(ulong.Parse(item));
+            }
+
+            monkeys[m] = monkey;
+
+            _commonDivisor *= test;
+
+            m++;
+        }
+
+        return monkeys;
     }
 }

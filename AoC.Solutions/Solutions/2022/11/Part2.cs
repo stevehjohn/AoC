@@ -4,8 +4,6 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        InitialiseMonkeys();
-
         PlayRounds(10_000, false);
 
         return GetMonkeyBusiness().ToString();

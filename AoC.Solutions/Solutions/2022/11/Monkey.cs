@@ -1,6 +1,6 @@
 ﻿namespace AoC.Solutions.Solutions._2022._11;
 
-public class Monkey
+public struct Monkey
 {
     public FastList<ulong> Items { get; }
 
