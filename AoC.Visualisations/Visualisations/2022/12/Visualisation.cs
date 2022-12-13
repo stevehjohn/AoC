@@ -152,7 +152,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private void SetUpCamera()
     {
-        _viewMatrix = Matrix.CreateLookAt(new Vector3(_width / 2f, _height / 2f, 80), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
+        // TODO: I hate magic numbers...
+        _viewMatrix = Matrix.CreateLookAt(new Vector3(0, 50, 60), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
 
         _projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, GraphicsDevice.Viewport.AspectRatio, 1.0f, 300.0f);
     }
