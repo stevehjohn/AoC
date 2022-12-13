@@ -4,7 +4,6 @@ using AoC.Visualisations.Infrastructure;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SharpDX.Direct3D9;
 using Color = Microsoft.Xna.Framework.Color;
 using FillMode = Microsoft.Xna.Framework.Graphics.FillMode;
 using PrimitiveType = Microsoft.Xna.Framework.Graphics.PrimitiveType;
