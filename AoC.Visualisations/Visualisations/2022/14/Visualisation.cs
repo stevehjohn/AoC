@@ -18,7 +18,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private const int TileSize = 8;
 
-    private const int TileMapWidth = 11;
+    private const int TileMapWidth = 6;
 
     private SpriteBatch _spriteBatch;
 
@@ -144,7 +144,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                     }
                     else
                     {
-                        _spriteBatch.Draw(_tiles, new Vector2(x * TileSize, y * TileSize), new Rectangle(column * TileSize, row * TileSize, TileSize, TileSize), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        _spriteBatch.Draw(_tiles, new Vector2(x * TileSize, y * TileSize), new Rectangle(column * TileSize, row * TileSize, TileSize, TileSize), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0.5f);
                     }
                 }
             }

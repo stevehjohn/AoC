@@ -27,8 +27,6 @@ public class Map
         AddBackgroundBricks();
 
         AddLines(puzzleMap);
-
-        AddContainers(puzzleMap);
     }
 
     public int this[int x, int y] => _map[x, y];
@@ -98,157 +96,25 @@ public class Map
         {
             for (var x = 0; x < Width; x++)
             {
+                var type = 1 + Random.Next(3) * 6;
+
                 if (puzzleMap[x, y] == '#')
                 {
-                    if (puzzleMap[x, y - 1] == '#')
+                    if (_map[x - xMin, y - 1] != 0 && _map[x - xMin, y - 1] < 18)
                     {
-                        _map[x - xMin, y] = 26;
+                        type = _map[x - xMin, y - 1];
                     }
-                    else
+                    if (_map[x - xMin - 1, y] != 0 && _map[x - xMin - 1, y] < 18)
                     {
-                        _map[x - xMin, y] = 24;
+                        type = _map[x - xMin - 1, y];
                     }
 
-                    continue;
-                }
-
-                if (puzzleMap[x, y] == 'o')
-                {
-                    _map[x - xMin, y] = 'o';
+                    _map[x - xMin, y] = type;
                 }
             }
         }
     }
-
-    private void AddContainers(char[,] puzzleMap)
-    {
-        for (var y = 1; y < Height; y++)
-        {
-            for (var x = 0; x < Width; x++)
-            {
-                if (puzzleMap[x, y] == '#' && puzzleMap[x, y - 1] == '#' && puzzleMap[x + 1, y] == '#')
-                {
-                    AddContainer(puzzleMap, x, y);
-                }
-            }
-        }
-    }
-
-    private void AddContainer(char[,] puzzleMap, int leftX, int bottomY)
-    {
-        var leftTopY = 0;
-
-        var rightTopY = 0;
-
-        var rightX = 0;
-
-        for (var y = bottomY - 1; y > 0; y--)
-        {
-            if (puzzleMap[leftX, y] != '#')
-            {
-                leftTopY = y + 1;
-
-                break;
-            }
-        }
-
-        for (var x = leftX + 1; x < Width; x++)
-        {
-            if (puzzleMap[x, bottomY] != '#')
-            {
-                rightX = x - 1;
-
-                break;
-            }
-        }
-
-        for (var y = bottomY - 1; y > 0; y--)
-        {
-            if (puzzleMap[rightX, y] != '#')
-            {
-                rightTopY = y + 1;
-
-                break;
-            }
-        }
-
-        AddContainerToMap(leftX, rightX, leftTopY, rightTopY, bottomY, puzzleMap[leftX + 1, leftTopY] == '#');
-    }
-
-    private void AddContainerToMap(int leftX, int rightX, int leftTop, int rightTop, int bottom, bool closed)
-    {
-        leftX -= XMin;
-
-        rightX -= XMin;
-
-        var tileRow = Random.Next(3) * 11 + 1;
-
-        _map[leftX, bottom] = tileRow;
-
-        for (var x = leftX + 1; x < rightX; x++)
-        {
-            _map[x, bottom] = tileRow + 1;
-
-            if (tileRow == 1 && bottom < Height - 1 && Random.Next(20) == 0)
-            {
-                _map[x, bottom + 1] = 40;
-
-                _map[x + 1, bottom + 1] = 41;
-            }
-        }
-
-        _map[rightX, bottom] = tileRow + 2;
-
-        for (var y = bottom - 1; y >= leftTop; y--)
-        {
-            _map[leftX, y] = tileRow + 3;
-
-            if (Random.Next(5) == 0 && rightX - leftX > 3)
-            {
-                _map[leftX + 1, y] = tileRow + 4;
-            }
-
-            if (Random.Next(5) == 0 && leftX > 0)
-            {
-                _map[leftX - 1, y] = tileRow + 7;
-            }
-        }
-
-        for (var y = bottom - 1; y >= rightTop; y--)
-        {
-            _map[rightX, y] = tileRow + 6;
-
-            if (Random.Next(5) == 0 && rightX - leftX > 3)
-            {
-                _map[rightX - 1, y] = tileRow + 5;
-            }
-
-            if (Random.Next(5) == 0 && rightX < Width)
-            {
-                _map[rightX + 1, y] = tileRow + 8;
-            }
-        }
-
-        for (var y = bottom - 1; y >= Math.Max(leftTop, rightTop); y--)
-        {
-            for (var x = leftX + 1; x < rightX; x++)
-            {
-                if (_map[x, y] > 33 && _map[x, y] < 40)
-                {
-                    _map[x, y] += 11;
-                }
-            }
-        }
-
-        if (closed)
-        {
-            for (var x = leftX + 1; x < rightX; x++)
-            {
-                _map[x, leftTop] = tileRow + 1;
-            }
-        }
-    }
-
+    
     private void AddBackgroundBricks()
     {
         for (var y = 1; y < Height; y++)
@@ -310,9 +176,9 @@ public class Map
 
     private void AddClumpRow(int left, int right, int y)
     {
-        SafeSetMap(left, y, 34 + Random.Next(6));
+        SafeSetMap(left, y, 18 + Random.Next(6));
 
-        SafeSetMap(right, y, 34 + Random.Next(6));
+        SafeSetMap(right, y, 18 + Random.Next(6));
 
         for (var x = left + 1; x <= right - 1; x++)
         {
