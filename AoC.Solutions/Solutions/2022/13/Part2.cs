@@ -4,7 +4,7 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        var input = Input.Where(l => !string.IsNullOrWhiteSpace(l)).ToList();
+        var input = Input.Where(l => !string.IsNullOrWhiteSpace(l)).Select(l => l.Replace("10", ":")).ToList();
 
         input.Add("[[2]]");
         input.Add("[[6]]");

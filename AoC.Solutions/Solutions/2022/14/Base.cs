@@ -16,6 +16,33 @@ public abstract class Base : Solution
     private int _maxY;
 
     private bool _hasFloor;
+        
+    private readonly IVisualiser<PuzzleState> _visualiser;
+
+    protected Base()
+    {
+    }
+
+    protected Base(IVisualiser<PuzzleState> visualiser)
+    {
+        _visualiser = visualiser;
+    }
+
+    protected void Visualise()
+    {
+        if (_visualiser != null)
+        {
+            _visualiser.PuzzleStateChanged(new PuzzleState(_map));
+        }
+    }
+    
+    protected void EndVisualisation()
+    {
+        if (_visualiser != null)
+        {
+            _visualiser.PuzzleComplete();
+        }
+    }
 
     protected void CreateCave()
     {
@@ -68,6 +95,8 @@ public abstract class Base : Solution
 
         while (canContinue)
         {
+            Visualise();
+
             var position = new Point(500, 0);
 
             while (true)
@@ -118,6 +147,8 @@ public abstract class Base : Solution
                 break;
             }
         }
+
+        EndVisualisation();
 
         return units;
     }
