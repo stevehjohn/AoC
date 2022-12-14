@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Solutions._2022._14;
+﻿using System.Diagnostics;
+using AoC.Solutions.Solutions._2022._14;
 using AoC.Visualisations.Exceptions;
 using AoC.Visualisations.Infrastructure;
 using JetBrains.Annotations;
@@ -163,6 +164,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
             }
         }
 
-        _spriteBatch.Draw(_tiles, new Vector2((_state.Position.X - _map.XMin) * TileSize, _state.Position.Y * TileSize), new Rectangle(0, 5 * TileSize, TileSize, TileSize), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0.5f);
+        foreach (var position in _state.Positions)
+        {
+            _spriteBatch.Draw(_tiles, new Vector2((position.X - _map.XMin) * TileSize, position.Y * TileSize), new Rectangle(0, 5 * TileSize, TileSize, TileSize), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0.5f);
+        }
     }
 }
