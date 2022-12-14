@@ -97,21 +97,26 @@ public abstract class Base : Solution
 
         var counter = 21;
 
+        var toRemove = new List<Point>();
+
         while (true)
         {
-            counter--;
-
-            if (counter == 0)
+            if (_visualiser != null)
             {
-                positions.Add(new Point(500, 0));
+                counter--;
 
-                counter = 20;
+                if (counter == 0)
+                {
+                    positions.Add(new Point(500, 0));
+
+                    counter = 20;
+                }
             }
 
-            var toRemove = new List<Point>();
-
-            foreach (var position in positions)
+            for (var i = 0; i < positions.Count; i++)
             {
+                var position = positions[i];
+
                 if (position.Y == _maxY && !_hasFloor)
                 {
                     return units;
@@ -157,81 +162,26 @@ public abstract class Base : Solution
                 
                 units++;
 
-                toRemove.Add(position);
+                if (_visualiser != null)
+                {
+                    toRemove.Add(position);
+                }
+                else
+                {
+                    positions[0] = new Point(500, 0);
+                }
             }
 
-            foreach (var point in toRemove)
+            if (_visualiser != null)
             {
-                positions.Remove(point);
+                foreach (var point in toRemove)
+                {
+                    positions.Remove(point);
+                }
+
+                toRemove.Clear();
             }
         }
-
-        //var canContinue = true;
-
-        //while (canContinue)
-        //{
-        //    _position = new Point(500, 0);
-
-        //    while (true)
-        //    {
-        //        if (_position.Y == _maxY && ! _hasFloor)
-        //        {
-        //            canContinue = false;
-
-        //            break;
-        //        }
-
-        //        if (_map[_position.X, _position.Y + 1] == '\0')
-        //        {
-        //            _position.Y++;
-
-        //            Visualise();
-
-        //            continue;
-        //        }
-
-        //        if (_map[_position.X - 1, _position.Y + 1] == '\0')
-        //        {
-        //            _position.X--;
-
-        //            _position.Y++;
-
-        //            Visualise();
-
-        //            continue;
-        //        }
-
-        //        if (_map[_position.X + 1, _position.Y + 1] == '\0')
-        //        {
-        //            _position.X++;
-
-        //            _position.Y++;
-                    
-        //            Visualise();
-
-        //            continue;
-        //        }
-
-        //        if (_position.X == 500 && _position.Y == 0)
-        //        {
-        //            canContinue = false;
-
-        //            break;
-        //        }
-
-        //        _map[_position.X, _position.Y] = 'o';
-
-        //        units++;
-
-        //        Visualise();
-
-        //        break;
-        //    }
-        //}
-
-        //EndVisualisation();
-
-        return units;
     }
 
     protected void AddFloor()
