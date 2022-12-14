@@ -1,4 +1,6 @@
-﻿namespace AoC.Visualisations.Visualisations._2022._14;
+﻿using System.Diagnostics;
+
+namespace AoC.Visualisations.Visualisations._2022._14;
 
 public class Map
 {
@@ -176,13 +178,13 @@ public class Map
 
     private void AddClumpRow(int left, int right, int y)
     {
-        SafeSetMap(left, y, 18 + Random.Next(6));
+        SafeSetMap(left, y, 20 + Random.Next(6));
 
-        SafeSetMap(right, y, 18 + Random.Next(6));
+        SafeSetMap(right, y, 20 + Random.Next(6));
 
         for (var x = left + 1; x <= right - 1; x++)
         {
-            SafeSetMap(x, y, 34);
+            SafeSetMap(x, y, 19);
         }
     }
 
