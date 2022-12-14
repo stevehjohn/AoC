@@ -95,7 +95,7 @@ public abstract class Base : Solution
 
         _positions = new List<Point> { new(500, 0) };
 
-        var counter = 11;
+        var counter = _hasFloor ? 3 : 11;
 
         var toRemove = new List<Point>();
 
@@ -109,7 +109,7 @@ public abstract class Base : Solution
                 {
                     _positions.Add(new Point(500, 0));
 
-                    counter = 10;
+                    counter = _hasFloor ? 2 : 10;
                 }
             }
 
