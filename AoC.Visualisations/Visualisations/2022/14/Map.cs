@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace AoC.Visualisations.Visualisations._2022._14;
+﻿namespace AoC.Visualisations.Visualisations._2022._14;
 
 public class Map
 {
