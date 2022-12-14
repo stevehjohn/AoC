@@ -14,6 +14,8 @@ public class Map
 
     public int XMin { get; private set; }
 
+    public int YMax { get; private set; }
+
     public void CreateMap(char[,] puzzleMap)
     {
         Width = puzzleMap.GetLength(0);
@@ -24,7 +26,7 @@ public class Map
 
         XMin = int.MaxValue;
 
-        GetXMin(puzzleMap);
+        GetXMinYMax(puzzleMap);
 
         AddBackgroundBricks();
 
@@ -33,9 +35,19 @@ public class Map
 
     public int this[int x, int y] => _map[x, y];
 
-    private void GetXMin(char[,] puzzleMap)
+    private void GetXMinYMax(char[,] puzzleMap)
     {
-        for (var y = 1; y < Height; y++)
+        for (var y = 0; y < Height; y++)
+        {
+            if (puzzleMap[0, y] == '#')
+            {
+                break;
+            }
+
+            YMax = y;
+        }
+
+        for (var y = 1; y < YMax; y++)
         {
             for (var x = 0; x < Width; x++)
             {
@@ -64,7 +76,10 @@ public class Map
             {
                 if (puzzleMap[x, y] == 'o')
                 {
-                    _map[x - XMin, y] = 'o';
+                    if (x - XMin > 0)
+                    {
+                        _map[x - XMin, y] = 'o';
+                    }
                 }
             }
         }
@@ -72,29 +87,7 @@ public class Map
 
     private void AddLines(char[,] puzzleMap)
     {
-        var xMin = int.MaxValue;
-
-        for (var y = 1; y < Height; y++)
-        {
-            for (var x = 0; x < Width; x++)
-            {
-                if (x > xMin)
-                {
-                    break;
-                }
-
-                if (puzzleMap[x, y] == '#')
-                {
-                    xMin = x;
-
-                    break;
-                }
-            }
-        }
-
-        xMin -= 10;
-
-        for (var y = 1; y < Height; y++)
+        for (var y = 1; y < YMax; y++)
         {
             for (var x = 0; x < Width; x++)
             {
@@ -102,16 +95,16 @@ public class Map
 
                 if (puzzleMap[x, y] == '#')
                 {
-                    if (_map[x - xMin, y - 1] != 0 && _map[x - xMin, y - 1] < 18)
+                    if (_map[x - XMin, y - 1] != 0 && _map[x - XMin, y - 1] < 18)
                     {
-                        type = _map[x - xMin, y - 1];
+                        type = _map[x - XMin, y - 1];
                     }
-                    if (_map[x - xMin - 1, y] != 0 && _map[x - xMin - 1, y] < 18)
+                    if (_map[x - XMin - 1, y] != 0 && _map[x - XMin - 1, y] < 18)
                     {
-                        type = _map[x - xMin - 1, y];
+                        type = _map[x - XMin - 1, y];
                     }
 
-                    _map[x - xMin, y] = type;
+                    _map[x - XMin, y] = type;
                 }
             }
         }
