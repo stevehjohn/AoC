@@ -35,10 +35,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
-                                 {
-                                     PreferredBackBufferWidth = ScreenWidth,
-                                     PreferredBackBufferHeight = ScreenHeight
-                                 };
+                                {
+                                    PreferredBackBufferWidth = ScreenWidth,
+                                    PreferredBackBufferHeight = ScreenHeight
+                                };
 
         // Something funky going on with having to add \bin\Windows - investigate.
         Content.RootDirectory = "_Content\\2022\\14\\bin\\Windows";
@@ -85,7 +85,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             {
                 _previousPuzzleState = new char[_map.Width, _map.Height];
 
-                Buffer.BlockCopy(_state.Map, 0, _previousPuzzleState, 0, sizeof(char) * _map.Width *_map.Height);
+                Buffer.BlockCopy(_state.Map, 0, _previousPuzzleState, 0, sizeof(char) * _map.Width * _map.Height);
             }
 
             _state = GetNextState();
@@ -138,7 +138,14 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                     var column = (tile - 1) % TileMapWidth;
 
-                    _spriteBatch.Draw(_tiles, new Vector2(x * TileSize, y * TileSize), new Rectangle(column * TileSize, row * TileSize, TileSize, TileSize), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                    if (tile == 'o')
+                    {
+                        _spriteBatch.Draw(_tiles, new Vector2(x * TileSize, y * TileSize), new Rectangle(0, 5 * TileSize, TileSize, TileSize), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0.5f);
+                    }
+                    else
+                    {
+                        _spriteBatch.Draw(_tiles, new Vector2(x * TileSize, y * TileSize), new Rectangle(column * TileSize, row * TileSize, TileSize, TileSize), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                    }
                 }
             }
         }
