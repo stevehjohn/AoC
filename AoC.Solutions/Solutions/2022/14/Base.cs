@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Common;
+﻿using System.Diagnostics;
+using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2022._14;
@@ -19,7 +20,7 @@ public abstract class Base : Solution
         
     private readonly IVisualiser<PuzzleState> _visualiser;
 
-//    private Point _position;
+    private List<Point> _positions;
 
     protected Base()
     {
@@ -34,7 +35,7 @@ public abstract class Base : Solution
     {
         if (_visualiser != null)
         {
-            _visualiser.PuzzleStateChanged(new PuzzleState(_map, null));
+            _visualiser.PuzzleStateChanged(new PuzzleState(_map, _positions));
         }
     }
     
@@ -93,9 +94,9 @@ public abstract class Base : Solution
     {
         var units = _hasFloor ? 1 : 0;
 
-        var positions = new List<Point> { new(500, 0) };
+        _positions = new List<Point> { new(500, 0) };
 
-        var counter = 21;
+        var counter = 11;
 
         var toRemove = new List<Point>();
 
@@ -107,26 +108,26 @@ public abstract class Base : Solution
 
                 if (counter == 0)
                 {
-                    positions.Add(new Point(500, 0));
+                    _positions.Add(new Point(500, 0));
 
-                    counter = 20;
+                    counter = 10;
                 }
             }
 
-            for (var i = 0; i < positions.Count; i++)
+            for (var i = 0; i < _positions.Count; i++)
             {
-                var position = positions[i];
+                var position = _positions[i];
 
                 if (position.Y == _maxY && !_hasFloor)
                 {
+                    EndVisualisation();
+
                     return units;
                 }
 
                 if (_map[position.X, position.Y + 1] == '\0')
                 {
                     position.Y++;
-
-                    Visualise();
 
                     continue;
                 }
@@ -137,8 +138,6 @@ public abstract class Base : Solution
 
                     position.Y++;
 
-                    Visualise();
-
                     continue;
                 }
 
@@ -148,13 +147,13 @@ public abstract class Base : Solution
 
                     position.Y++;
                     
-                    Visualise();
-
                     continue;
                 }
 
                 if (position.X == 500 && position.Y == 0)
                 {
+                    EndVisualisation();
+
                     return units;
                 }
 
@@ -168,15 +167,17 @@ public abstract class Base : Solution
                 }
                 else
                 {
-                    positions[0] = new Point(500, 0);
+                    _positions[0] = new Point(500, 0);
                 }
             }
+
+            Visualise();
 
             if (_visualiser != null)
             {
                 foreach (var point in toRemove)
                 {
-                    positions.Remove(point);
+                    _positions.Remove(point);
                 }
 
                 toRemove.Clear();
