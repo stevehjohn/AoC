@@ -19,6 +19,8 @@ public abstract class Base : Solution
         
     private readonly IVisualiser<PuzzleState> _visualiser;
 
+    private Point _position;
+
     protected Base()
     {
     }
@@ -32,7 +34,7 @@ public abstract class Base : Solution
     {
         if (_visualiser != null)
         {
-            _visualiser.PuzzleStateChanged(new PuzzleState(_map));
+            _visualiser.PuzzleStateChanged(new PuzzleState(_map, _position));
         }
     }
     
@@ -95,54 +97,60 @@ public abstract class Base : Solution
 
         while (canContinue)
         {
-            Visualise();
-
-            var position = new Point(500, 0);
+            _position = new Point(500, 0);
 
             while (true)
             {
-                if (position.Y == _maxY && ! _hasFloor)
+                if (_position.Y == _maxY && ! _hasFloor)
                 {
                     canContinue = false;
 
                     break;
                 }
 
-                if (_map[position.X, position.Y + 1] == '\0')
+                if (_map[_position.X, _position.Y + 1] == '\0')
                 {
-                    position.Y++;
+                    _position.Y++;
+
+                    Visualise();
 
                     continue;
                 }
 
-                if (_map[position.X - 1, position.Y + 1] == '\0')
+                if (_map[_position.X - 1, _position.Y + 1] == '\0')
                 {
-                    position.X--;
+                    _position.X--;
 
-                    position.Y++;
+                    _position.Y++;
+
+                    Visualise();
 
                     continue;
                 }
 
-                if (_map[position.X + 1, position.Y + 1] == '\0')
+                if (_map[_position.X + 1, _position.Y + 1] == '\0')
                 {
-                    position.X++;
+                    _position.X++;
 
-                    position.Y++;
+                    _position.Y++;
+                    
+                    Visualise();
 
                     continue;
                 }
 
-                if (position.X == 500 && position.Y == 0)
+                if (_position.X == 500 && _position.Y == 0)
                 {
                     canContinue = false;
 
                     break;
                 }
 
-                _map[position.X, position.Y] = 'o';
+                _map[_position.X, _position.Y] = 'o';
 
                 units++;
+
+                Visualise();
 
                 break;
             }

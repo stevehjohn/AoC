@@ -10,7 +10,7 @@ public class Map
 
     private Random Random { get; } = new();
 
-    private int _xMin = int.MaxValue;
+    public int XMin { get; private set; }
 
     public void CreateMap(char[,] puzzleMap)
     {
@@ -20,13 +20,15 @@ public class Map
 
         _map = new int[Width, Height];
 
+        XMin = int.MaxValue;
+
         GetXMin(puzzleMap);
 
         AddBackgroundBricks();
 
         AddLines(puzzleMap);
 
-        //AddContainers(puzzleMap);
+        AddContainers(puzzleMap);
     }
 
     public int this[int x, int y] => _map[x, y];
@@ -37,21 +39,35 @@ public class Map
         {
             for (var x = 0; x < Width; x++)
             {
-                if (x > _xMin)
+                if (x > XMin)
                 {
                     break;
                 }
 
                 if (puzzleMap[x, y] == '#')
                 {
-                    _xMin = x;
+                    XMin = x;
 
                     break;
                 }
             }
         }
 
-        _xMin -= 10;
+        XMin -= 10;
+    }
+
+    public void CopySand(char[,] puzzleMap)
+    {
+        for (var y = 1; y < Height; y++)
+        {
+            for (var x = 0; x < Width; x++)
+            {
+                if (puzzleMap[x, y] == 'o')
+                {
+                    _map[x - XMin, y] = 'o';
+                }
+            }
+        }
     }
 
     private void AddLines(char[,] puzzleMap)
@@ -98,12 +114,12 @@ public class Map
 
                 if (puzzleMap[x, y] == 'o')
                 {
-                    _map[x - xMin, y] = 55;
+                    _map[x - xMin, y] = 'o';
                 }
             }
         }
     }
-    
+
     private void AddContainers(char[,] puzzleMap)
     {
         for (var y = 1; y < Height; y++)
@@ -161,9 +177,9 @@ public class Map
 
     private void AddContainerToMap(int leftX, int rightX, int leftTop, int rightTop, int bottom, bool closed)
     {
-        leftX -= _xMin;
+        leftX -= XMin;
 
-        rightX -= _xMin;
+        rightX -= XMin;
 
         var tileRow = Random.Next(3) * 11 + 1;
 
@@ -262,7 +278,7 @@ public class Map
         for (var mY = y; mY > y - Random.Next(4); mY++)
         {
             left += Random.Next(3);
-        
+
             right -= Random.Next(3);
 
             if (left > right)
@@ -280,7 +296,7 @@ public class Map
         for (var mY = y; mY < y + Random.Next(4); mY--)
         {
             left += Random.Next(3);
-        
+
             right -= Random.Next(3);
 
             if (left > right)

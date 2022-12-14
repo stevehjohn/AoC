@@ -90,11 +90,15 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
             _state = GetNextState();
 
-            //if (_map == null)
+            if (_map == null)
             {
                 _map = new Map();
 
                 _map.CreateMap(_state.Map);
+            }
+            else
+            {
+                _map.CopySand(_state.Map);
             }
 
             _frame = 0;
@@ -157,5 +161,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 }
             }
         }
+
+        _spriteBatch.Draw(_tiles, new Vector2((_state.Position.X - _map.XMin) * TileSize, _state.Position.Y * TileSize), new Rectangle(0, 5 * TileSize, TileSize, TileSize), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0.5f);
     }
 }
