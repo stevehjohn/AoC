@@ -19,7 +19,7 @@ public abstract class Base : Solution
         
     private readonly IVisualiser<PuzzleState> _visualiser;
 
-    private Point _position;
+//    private Point _position;
 
     protected Base()
     {
@@ -34,7 +34,7 @@ public abstract class Base : Solution
     {
         if (_visualiser != null)
         {
-            _visualiser.PuzzleStateChanged(new PuzzleState(_map, _position));
+            _visualiser.PuzzleStateChanged(new PuzzleState(_map, null));
         }
     }
     
@@ -93,70 +93,143 @@ public abstract class Base : Solution
     {
         var units = _hasFloor ? 1 : 0;
 
-        var canContinue = true;
+        var positions = new List<Point> { new(500, 0) };
 
-        while (canContinue)
+        var counter = 21;
+
+        while (true)
         {
-            _position = new Point(500, 0);
+            counter--;
 
-            while (true)
+            if (counter == 0)
             {
-                if (_position.Y == _maxY && ! _hasFloor)
-                {
-                    canContinue = false;
+                positions.Add(new Point(500, 0));
 
-                    break;
+                counter = 20;
+            }
+
+            var toRemove = new List<Point>();
+
+            foreach (var position in positions)
+            {
+                if (position.Y == _maxY && !_hasFloor)
+                {
+                    return units;
                 }
 
-                if (_map[_position.X, _position.Y + 1] == '\0')
+                if (_map[position.X, position.Y + 1] == '\0')
                 {
-                    _position.Y++;
+                    position.Y++;
 
                     Visualise();
 
                     continue;
                 }
 
-                if (_map[_position.X - 1, _position.Y + 1] == '\0')
+                if (_map[position.X - 1, position.Y + 1] == '\0')
                 {
-                    _position.X--;
+                    position.X--;
 
-                    _position.Y++;
+                    position.Y++;
 
                     Visualise();
 
                     continue;
                 }
 
-                if (_map[_position.X + 1, _position.Y + 1] == '\0')
+                if (_map[position.X + 1, position.Y + 1] == '\0')
                 {
-                    _position.X++;
+                    position.X++;
 
-                    _position.Y++;
+                    position.Y++;
                     
                     Visualise();
 
                     continue;
                 }
 
-                if (_position.X == 500 && _position.Y == 0)
+                if (position.X == 500 && position.Y == 0)
                 {
-                    canContinue = false;
-
-                    break;
+                    return units;
                 }
 
-                _map[_position.X, _position.Y] = 'o';
-
+                _map[position.X, position.Y] = 'o';
+                
                 units++;
 
-                Visualise();
+                toRemove.Add(position);
+            }
 
-                break;
+            foreach (var point in toRemove)
+            {
+                positions.Remove(point);
             }
         }
 
-        EndVisualisation();
+        //var canContinue = true;
+
+        //while (canContinue)
+        //{
+        //    _position = new Point(500, 0);
+
+        //    while (true)
+        //    {
+        //        if (_position.Y == _maxY && ! _hasFloor)
+        //        {
+        //            canContinue = false;
+
+        //            break;
+        //        }
+
+        //        if (_map[_position.X, _position.Y + 1] == '\0')
+        //        {
+        //            _position.Y++;
+
+        //            Visualise();
+
+        //            continue;
+        //        }
+
+        //        if (_map[_position.X - 1, _position.Y + 1] == '\0')
+        //        {
+        //            _position.X--;
+
+        //            _position.Y++;
+
+        //            Visualise();
+
+        //            continue;
+        //        }
+
+        //        if (_map[_position.X + 1, _position.Y + 1] == '\0')
+        //        {
+        //            _position.X++;
+
+        //            _position.Y++;
+                    
+        //            Visualise();
+
+        //            continue;
+        //        }
+
+        //        if (_position.X == 500 && _position.Y == 0)
+        //        {
+        //            canContinue = false;
+
+        //            break;
+        //        }
+
+        //        _map[_position.X, _position.Y] = 'o';
+
+        //        units++;
+
+        //        Visualise();
+
+        //        break;
+        //    }
+        //}
+
+        //EndVisualisation();
 
         return units;
     }
