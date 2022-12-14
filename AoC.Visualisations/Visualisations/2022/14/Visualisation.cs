@@ -30,8 +30,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private Map _map;
 
-    private int _frame = 4;
-
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -79,7 +77,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     protected override void Update(GameTime gameTime)
     {
-        if (HasNextState && _frame == 4)
+        if (HasNextState)
         {
             if (_state != null)
             {
@@ -100,11 +98,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             {
                 _map.CopySand(_state.Map);
             }
-
-            _frame = 0;
         }
-
-        _frame++;
 
         base.Update(gameTime);
     }
