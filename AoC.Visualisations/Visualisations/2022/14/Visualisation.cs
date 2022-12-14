@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using AoC.Solutions.Solutions._2022._14;
+﻿using AoC.Solutions.Solutions._2022._14;
 using AoC.Visualisations.Exceptions;
 using AoC.Visualisations.Infrastructure;
 using JetBrains.Annotations;
