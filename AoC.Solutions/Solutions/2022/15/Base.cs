@@ -82,7 +82,7 @@ public abstract class Base : Solution
 
     protected Point GetDeadZone(int range)
     {
-        for (var y = 0; y <= range; y++)
+        for (var y = range; y >= 0; y--)
         {
             var covered = new List<(int L, int R)>();
 
