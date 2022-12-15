@@ -7,7 +7,6 @@ public class Part1 : Base
         ParseInput();
 
         var dead = GetDeadZones(2_000_000);
-        //var dead = GetDeadZones(10);
 
         return dead.ToString();
     }
