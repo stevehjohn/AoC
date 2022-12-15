@@ -135,9 +135,7 @@ public abstract class Base : Solution
                 var item = ranges[i];
 
                 if ((item.L >= range.L - 1 && item.L <= range.R + 1)
-                    || (item.R >= range.L - 1 && item.R <= range.R + 1)
-                    || (range.L >= item.L - 1 && range.L <= item.R + 1)
-                    || (range.R >= item.L - 1 && range.R <= item.R + 1))
+                    || (item.R >= range.L - 1 && item.R <= range.R + 1))
                 {
                     range.L = Math.Min(range.L, item.L);
                     range.R = Math.Max(range.R, item.R);
