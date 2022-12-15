@@ -82,9 +82,11 @@ public abstract class Base : Solution
 
     protected Point GetDeadZone(int range)
     {
+        var covered = new List<(int L, int R)>();
+
         for (var y = range; y >= 0; y--)
         {
-            var covered = new List<(int L, int R)>();
+            covered.Clear();
 
             foreach (var sensor in _sensors)
             {
