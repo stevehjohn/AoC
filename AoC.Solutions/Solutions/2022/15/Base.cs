@@ -52,7 +52,7 @@ public abstract class Base : Solution
         {
             var dY = Math.Abs(sensor.Position.Y - y);
 
-            if (dY > sensor.ManhattanRange)
+            if (dY >= sensor.ManhattanRange)
             {
                 continue;
             }
@@ -66,28 +66,42 @@ public abstract class Base : Solution
             ranges.Add((l, r));
         }
 
-        var covered = 0;
+        var range1 = ranges[0];
 
-        var dead = 0;
+        ranges.RemoveAt(0);
 
-        var position = new Point(0, y);
+        var changed = true;
 
-        for (var x = _minX; x < _maxX; x++)
+        while (changed)
         {
-            position.X = x;
+            changed = false;
 
-            if (ranges.Any(r => r.L <= x && r.R >= x))
+            var i = 0;
+
+            while (i < ranges.Count)
             {
-                covered++;
+                var item = ranges[i];
 
-                if (_sensors.Exists(s => s.ClosestBeacon.Equals(position)))
+                if ((item.L >= range1.L - 1 && item.L <= range1.R + 1)
+                    || (item.R >= range1.L - 1 && item.R <= range1.R + 1)
+                    || (range1.L >= item.L - 1 && range1.L <= item.R + 1) 
+                    || (range1.R >= item.L - 1 && range1.R <= item.R + 1))
                 {
-                    dead++;
+                    range1.L = Math.Min(range1.L, item.L);
+                    range1.R = Math.Max(range1.R, item.R);
+
+                    ranges.RemoveAt(i);
+
+                    changed = true;
+
+                    continue;
                 }
+
+                i++;
             }
         }
 
-        return covered - dead;
+        return -range1.L + range1.R;
     }
 
     protected Point GetDeadZone(int range)
