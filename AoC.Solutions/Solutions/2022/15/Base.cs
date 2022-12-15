@@ -91,11 +91,7 @@ public abstract class Base : Solution
 
                 var lineRange = sensor.ManhattanRange - dY;
 
-                var l = sensor.Position.X - lineRange;
-
-                var r = sensor.Position.X + lineRange;
-
-                covered.Add((l, r));
+                covered.Add((sensor.Position.X - lineRange, sensor.Position.X + lineRange));
             }
 
             var range1 = Collapse(covered);
