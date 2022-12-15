@@ -46,31 +46,41 @@ public abstract class Base : Solution
 
     protected int GetDeadZones(int y)
     {
+        var ranges = new List<(int L, int R)>();
+
+        foreach (var sensor in _sensors)
+        {
+            var dY = Math.Abs(sensor.Position.Y - y);
+
+            if (dY > sensor.ManhattanRange)
+            {
+                continue;
+            }
+
+            var lineRange = sensor.ManhattanRange - dY;
+
+            var l = sensor.Position.X - lineRange;
+
+            var r = sensor.Position.X + lineRange;
+
+            ranges.Add((l, r));
+        }
+
         var covered = 0;
 
         var dead = 0;
-        
+
+        var position = new Point(0, y);
+
         for (var x = _minX; x < _maxX; x++)
         {
-            var isCovered = false;
+            position.X = x;
 
-            foreach (var sensor in _sensors)
-            {
-                var manhattanDistance = Math.Abs(x - sensor.Position.X) + Math.Abs(y - sensor.Position.Y);
-
-                if (manhattanDistance <= sensor.ManhattanRange)
-                {
-                    isCovered = true;
-
-                    break;
-                }
-            }
-
-            if (isCovered)
+            if (ranges.Any(r => r.L <= x && r.R >= x))
             {
                 covered++;
 
-                if (_sensors.Exists(s => s.ClosestBeacon.Equals(new Point(x, y))))
+                if (_sensors.Exists(s => s.ClosestBeacon.Equals(position)))
                 {
                     dead++;
                 }
