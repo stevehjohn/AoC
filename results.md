@@ -1,3 +1,24 @@
+# Low-resolution (Stopwatch) Timings
+
+## Hardware
+
+2020 16" Intel MacBook Pro with TouchBar
+
+- Intel Core i9-9980HK
+- Base Speed: 2.40 GHz
+- Max Speed: 5.0 GHz
+- 8 Cores
+- 16 Logical Processors
+- Cache:
+  - L1: 512 KB
+  - L2: 2.0 MB
+  - L3: 16.0 MB
+- 32 GB RAM
+- Apple SSD
+
+
+## Results
+
 ```
  2015  1.1: 74                             0ms     Not quite lisp
  2015  1.2: 1795                           0ms
