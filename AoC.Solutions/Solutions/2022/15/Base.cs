@@ -66,7 +66,7 @@ public abstract class Base : Solution
             ranges.Add((l, r));
         }
 
-        var range1 = ranges[0];
+        var range = ranges[0];
 
         ranges.RemoveAt(0);
 
@@ -82,13 +82,13 @@ public abstract class Base : Solution
             {
                 var item = ranges[i];
 
-                if ((item.L >= range1.L - 1 && item.L <= range1.R + 1)
-                    || (item.R >= range1.L - 1 && item.R <= range1.R + 1)
-                    || (range1.L >= item.L - 1 && range1.L <= item.R + 1) 
-                    || (range1.R >= item.L - 1 && range1.R <= item.R + 1))
+                if ((item.L >= range.L - 1 && item.L <= range.R + 1)
+                    || (item.R >= range.L - 1 && item.R <= range.R + 1)
+                    || (range.L >= item.L - 1 && range.L <= item.R + 1) 
+                    || (range.R >= item.L - 1 && range.R <= item.R + 1))
                 {
-                    range1.L = Math.Min(range1.L, item.L);
-                    range1.R = Math.Max(range1.R, item.R);
+                    range.L = Math.Min(range.L, item.L);
+                    range.R = Math.Max(range.R, item.R);
 
                     ranges.RemoveAt(i);
 
@@ -101,7 +101,7 @@ public abstract class Base : Solution
             }
         }
 
-        return -range1.L + range1.R;
+        return -range.L + range.R;
     }
 
     protected Point GetDeadZone(int range)
