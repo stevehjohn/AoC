@@ -6,14 +6,12 @@ public class Sensor
 {
     public Point Position { get; }
 
-    public Point ClosestBeacon { get; }
-
-    public int ManhattanRange => Math.Abs(Position.X - ClosestBeacon.X) + Math.Abs(Position.Y - ClosestBeacon.Y);
+    public int ManhattanRange { get; }
 
     public Sensor(Point position, Point closestBeacon)
     {
         Position = position;
 
-        ClosestBeacon = closestBeacon;
+        ManhattanRange = Math.Abs(Position.X - closestBeacon.X) + Math.Abs(Position.Y - closestBeacon.Y);
     }
 }
