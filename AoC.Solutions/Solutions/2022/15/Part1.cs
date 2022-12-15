@@ -4,6 +4,10 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        return "";
+        ParseInput();
+
+        var dead = GetDeadZones(2_000_000);
+
+        return dead.ToString();
     }
 }
