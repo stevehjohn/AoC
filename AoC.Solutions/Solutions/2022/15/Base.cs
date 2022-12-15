@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Common;
+﻿using System.Runtime.CompilerServices;
+using AoC.Solutions.Common;
 using AoC.Solutions.Exceptions;
 using AoC.Solutions.Infrastructure;
 
@@ -66,6 +67,14 @@ public abstract class Base : Solution
             ranges.Add((l, r));
         }
 
+        var range = Collapse(ranges);
+
+        return -range.L + range.R;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static (int L, int R) Collapse(List<(int L, int R)> ranges)
+    {
         var range = ranges[0];
 
         ranges.RemoveAt(0);
@@ -84,7 +93,7 @@ public abstract class Base : Solution
 
                 if ((item.L >= range.L - 1 && item.L <= range.R + 1)
                     || (item.R >= range.L - 1 && item.R <= range.R + 1)
-                    || (range.L >= item.L - 1 && range.L <= item.R + 1) 
+                    || (range.L >= item.L - 1 && range.L <= item.R + 1)
                     || (range.R >= item.L - 1 && range.R <= item.R + 1))
                 {
                     range.L = Math.Min(range.L, item.L);
@@ -101,7 +110,7 @@ public abstract class Base : Solution
             }
         }
 
-        return -range.L + range.R;
+        return range;
     }
 
     protected Point GetDeadZone(int range)
