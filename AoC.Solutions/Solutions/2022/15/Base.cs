@@ -23,31 +23,21 @@ public abstract class Base : Solution
 
             var position = Point.Parse(positionString);
 
-            if (position.X < _minX)
-            {
-                _minX = position.X;
-            }
-
-            if (position.X > _maxX)
-            {
-                _maxX = position.X;
-            }
-
             var beaconString = split[1][21..].Replace("x=", string.Empty).Replace("y=", string.Empty);
 
             var beacon = Point.Parse(beaconString);
 
-            if (beacon.X < _minX)
-            {
-                _minX = beacon.X;
-            }
-
-            if (beacon.X > _maxX)
-            {
-                _maxX = beacon.X;
-            }
-
             var sensor = new Sensor(position, beacon);
+
+            if (sensor.Position.X - sensor.ManhattanRange < _minX)
+            {
+                _minX = sensor.Position.X - sensor.ManhattanRange;
+            }
+
+            if (sensor.Position.X + sensor.ManhattanRange > _maxX)
+            {
+                _maxX = sensor.Position.X + sensor.ManhattanRange;
+            }
 
             _sensors.Add(sensor);
         }
@@ -55,13 +45,13 @@ public abstract class Base : Solution
 
     protected int GetDeadZones(int y)
     {
-        var dead = 0;
+        var covered = 0;
 
+        var dead = 0;
+        
         for (var x = _minX; x < _maxX; x++)
         {
-            var beaconFound = false;
-
-            var position = new Point(x, y);
+            var isCovered = false;
 
             foreach (var sensor in _sensors)
             {
@@ -69,27 +59,23 @@ public abstract class Base : Solution
 
                 if (manhattanDistance <= sensor.ManhattanRange)
                 {
-                    if (_sensors.Exists(s => s.ClosestBeacon.Equals(position)))
-                    {
-                        beaconFound = true;
+                    isCovered = true;
 
-                        break;
-                    }
+                    break;
                 }
             }
 
-            //Console.WriteLine($"{x}: {beaconFound}");
+            if (isCovered)
+            {
+                covered++;
 
-            if (! beaconFound)
-            {
-                dead++;
-            }
-            else
-            {
-                Console.WriteLine($"{x}");
+                if (_sensors.Exists(s => s.ClosestBeacon.Equals(new Point(x, y))))
+                {
+                    dead++;
+                }
             }
         }
 
-        return dead;
+        return covered - dead;
     }
 }
