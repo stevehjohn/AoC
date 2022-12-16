@@ -64,9 +64,9 @@ public abstract class Base : Solution
 
     protected void Solve()
     {
-        var queue = new PriorityQueue<(Valve Valve, int Time, int ReleasedPressure, List<string> OpenedValves), int>();
+        var queue = new PriorityQueue<(Valve Valve, int Time, int ReleasedPressure, List<string> OpenedValves, List<string> History), float>();
 
-        queue.Enqueue((_start, 30, 0, new()), 0);
+        queue.Enqueue((_start, 30, 0, new(), new() { _start.Name }), 0);
 
         while (queue.Count > 0)
         {
@@ -79,6 +79,10 @@ public abstract class Base : Solution
                     _max = node.ReleasedPressure;
 
                     Console.WriteLine(_max);
+
+                    node.History.ForEach(h => Console.Write($"{h} -> "));
+
+                    Console.WriteLine();
                 }
 
                 continue;
@@ -91,6 +95,8 @@ public abstract class Base : Solution
                 node.OpenedValves.Add(node.Valve.Name);
 
                 node.ReleasedPressure += node.Valve.FlowRate * node.Time;
+
+                node.History.Add("O");
             }
 
             if (node.Time == 0)
@@ -100,6 +106,10 @@ public abstract class Base : Solution
                     _max = node.ReleasedPressure;
 
                     Console.WriteLine(_max);
+
+                    node.History.ForEach(h => Console.Write($"{h} -> "));
+
+                    Console.WriteLine();
                 }
 
                 continue;
@@ -107,7 +117,7 @@ public abstract class Base : Solution
 
             foreach (var valve in node.Valve.WorkingValves)
             {
-                queue.Enqueue((valve.Valve, node.Time - 1, node.ReleasedPressure, node.OpenedValves.ToList()), int.MaxValue - valve.Cost * valve.Valve.FlowRate);
+                queue.Enqueue((valve.Valve, node.Time - valve.Cost, node.ReleasedPressure, node.OpenedValves.ToList(), new List<string>(node.History) { valve.Valve.Name }), 100 - (float) valve.Valve.FlowRate / valve.Cost + (node.OpenedValves.Contains(valve.Valve.Name) ? 50 : 0));
             }
         }
     }
