@@ -1,17 +1,17 @@
-﻿namespace AoC.Solutions.Solutions._2022._16;
+﻿//namespace AoC.Solutions.Solutions._2022._16;
 
-public class Part2 : Base
-{
-    public override string GetAnswer()
-    {
-        ParseInput();
+//public class Part2 : Base
+//{
+//    public override string GetAnswer()
+//    {
+//        ParseInput();
 
-        Solve();
+//        Solve();
 
-        return "";
-    }
+//        return "";
+//    }
 
-    private void Solve()
-    {
-    }
-}
+//    private void Solve()
+//    {
+//    }
+//}
