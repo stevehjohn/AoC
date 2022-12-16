@@ -117,7 +117,8 @@ public abstract class Base : Solution
 
             foreach (var valve in node.Valve.WorkingValves)
             {
-                queue.Enqueue((valve.Valve, node.Time - valve.Cost, node.ReleasedPressure, node.OpenedValves.ToList(), new List<string>(node.History) { valve.Valve.Name }), 100 - (float) valve.Valve.FlowRate / valve.Cost + (node.OpenedValves.Contains(valve.Valve.Name) ? 50 : 0));
+                queue.Enqueue((valve.Valve, node.Time - valve.Cost, node.ReleasedPressure, node.OpenedValves.ToList(), new List<string>(node.History) { valve.Valve.Name }),
+                              100 - (float) valve.Valve.FlowRate / valve.Cost + (node.OpenedValves.Contains(valve.Valve.Name) ? 50 : 0));
             }
         }
     }
