@@ -70,7 +70,7 @@ public class Part1 : Base
 
             foreach (var valve in node.Valve.WorkingValves)
             {
-                var priority = 1_000 - (valve.Valve.FlowRate - valve.Cost) * node.Time + (node.OpenedValves.Contains(valve.Valve.Name) ? 1_000 : 0);
+                var priority = 1_000 - (valve.Valve.FlowRate - valve.Cost) + (node.OpenedValves.Contains(valve.Valve.Name) ? 1_000 : 0);
 
                 queue.Enqueue((valve.Valve, node.Time - valve.Cost, node.ReleasedPressure, node.OpenedValves.ToList(), new List<string>(node.History) { valve.Valve.Name }), priority);
             }
