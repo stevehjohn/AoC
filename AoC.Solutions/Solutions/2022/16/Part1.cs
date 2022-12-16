@@ -41,7 +41,7 @@ public class Part1 : Base
                 continue;
             }
 
-            if (node.Valve.FlowRate > 0 && !node.OpenedValves.Contains(node.Valve.Name))
+            if (node.Valve.FlowRate > 0 && ! node.OpenedValves.Contains(node.Valve.Name))
             {
                 node.Time--;
 
@@ -73,7 +73,7 @@ public class Part1 : Base
                 if (node.Time - valve.Cost >= 0)
                 {
                     queue.Enqueue((valve.Valve, node.Time - valve.Cost, node.ReleasedPressure, node.OpenedValves.ToList(), new List<string>(node.History) { valve.Valve.Name }),
-                                  100 - (float)valve.Valve.FlowRate / valve.Cost + (node.OpenedValves.Contains(valve.Valve.Name) ? 50 : 0));
+                                  100 - (float) valve.Valve.FlowRate / valve.Cost + (node.OpenedValves.Contains(valve.Valve.Name) ? 50 : 0));
                 }
             }
         }
