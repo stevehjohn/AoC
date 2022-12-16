@@ -1,9 +1,15 @@
-﻿//namespace AoC.Solutions.Solutions._2022._16;
+﻿namespace AoC.Solutions.Solutions._2022._16;
 
-//public class Part1 : Base
-//{
-//    public override string GetAnswer()
-//    {
-//        throw new NotImplementedException();
-//    }
-//}
+public class Part1 : Base
+{
+    public override string GetAnswer()
+    {
+        ParseInput();
+
+        OptimiseGraph();
+
+        Solve();
+
+        return "";
+    }
+}
