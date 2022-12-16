@@ -72,7 +72,7 @@ public abstract class Base : Solution
         {
             var node = queue.Dequeue();
 
-            if (node.Time == 0)
+            if (node.Time <= 0)
             {
                 if (node.ReleasedPressure > _max)
                 {
@@ -99,7 +99,7 @@ public abstract class Base : Solution
                 node.History.Add("O");
             }
 
-            if (node.Time == 0)
+            if (node.Time <= 0)
             {
                 if (node.ReleasedPressure > _max)
                 {
