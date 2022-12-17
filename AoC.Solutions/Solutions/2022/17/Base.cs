@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using System.Diagnostics;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2022._17;
 
@@ -7,6 +8,8 @@ public abstract class Base : Solution
     public override string Description => "Pyroclastic flow";
 
     private const int MapHeight = 10_000;
+
+    private const int WindowSize = 50;
 
     private string _wind;
 
@@ -55,7 +58,7 @@ public abstract class Base : Solution
 
     private int _highPoint = MapHeight - 1;
 
-    protected int Solve()
+    protected int Solve(bool findPattern = false)
     {
         Console.CursorVisible = false;
 
@@ -65,7 +68,9 @@ public abstract class Base : Solution
 
         var windIndex = 0;
 
-        for (var i = 0; i < 2022; i++)
+        var cycles = findPattern ? MapHeight : 2022;
+
+        for (var i = 0; i < cycles; i++)
         {
             var rock = _rocks[rockIndex].ToArray();
 
@@ -172,37 +177,74 @@ public abstract class Base : Solution
                         _highPoint = y - 1;
                     }
 
+                    if (findPattern)
+                    {
+                        FindPattern();
+                    }
+
                     break;
                 }
 
                 y++;
-            }
 
-            Console.SetCursorPosition(0, 1);
+                //if (rockIndex == 0 && windIndex == 0)
+                //{
+                //    Console.SetCursorPosition(0, 1);
 
-            for (var sY = _highPoint; sY < Math.Min(_highPoint + 30, MapHeight); sY++)
-            {
-                Console.Write((_map[sY] & 0b1000000) > 0 ? '#' : '.');
-                Console.Write((_map[sY] & 0b0100000) > 0 ? '#' : '.');
-                Console.Write((_map[sY] & 0b0010000) > 0 ? '#' : '.');
-                Console.Write((_map[sY] & 0b0001000) > 0 ? '#' : '.');
-                Console.Write((_map[sY] & 0b0000100) > 0 ? '#' : '.');
-                Console.Write((_map[sY] & 0b0000010) > 0 ? '#' : '.');
-                Console.Write((_map[sY] & 0b0000001) > 0 ? '#' : '.');
+                //    for (var sY = _highPoint; sY < Math.Min(_highPoint + 50, MapHeight); sY++)
+                //    {
+                //        Write(_map[sY]);
 
-                if (sY == _highPoint)
-                {
-                    Console.WriteLine($" {_highPoint}");
-                }
+                //        if (sY == _highPoint)
+                //        {
+                //            Console.Write($" {_highPoint} ({i})    ");
+                //        }
 
-                Console.WriteLine();
-            }
-
-            if (rockIndex == 0 && windIndex == 0)
-            {
+                //        Console.WriteLine();
+                //    }
+                //}
             }
         }
 
         return MapHeight - _highPoint - 1;
+    }
+
+    private readonly Dictionary<int, int> _hashes = new();
+
+    private void FindPattern()
+    {
+        if (MapHeight - _highPoint < WindowSize)
+        {
+            return;
+        }
+
+        var hash = new HashCode();
+
+        for (var y = _highPoint; y < _highPoint + WindowSize; y++)
+        {
+            hash.Add(_map[y]);
+        }
+
+        var hashCode = hash.ToHashCode();
+
+        if (_hashes.ContainsKey(hashCode))
+        {
+            Console.WriteLine($"{_highPoint} seen at {_hashes[hashCode]}, period {_highPoint - _hashes[hashCode]}");
+        }
+        else
+        {
+            _hashes.Add(hash.ToHashCode(), _highPoint);
+        }
+    }
+
+    private void Write(int value)
+    {
+        Console.Write((value & 0b1000000) > 0 ? '#' : '.');
+        Console.Write((value & 0b0100000) > 0 ? '#' : '.');
+        Console.Write((value & 0b0010000) > 0 ? '#' : '.');
+        Console.Write((value & 0b0001000) > 0 ? '#' : '.');
+        Console.Write((value & 0b0000100) > 0 ? '#' : '.');
+        Console.Write((value & 0b0000010) > 0 ? '#' : '.');
+        Console.Write((value & 0b0000001) > 0 ? '#' : '.');
     }
 }
