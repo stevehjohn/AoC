@@ -44,7 +44,7 @@ public abstract class Base : Solution
 
     protected void OptimiseGraph()
     {
-        var workingValves = _valves.Where(v => v.FlowRate > 0).ToList();
+        var workingValves = _valves.Where(v => v.FlowRate > 0 || v.Name == "AA").ToList();
 
         var designation = 1;
 
@@ -54,11 +54,11 @@ public abstract class Base : Solution
             designation <<= 1;
         });
 
-        foreach (var valve in _valves)
+        foreach (var valve in workingValves)
         {
             foreach (var connection in workingValves)
             {
-                if (valve.Equals(connection))
+                if (valve.Equals(connection) || connection.Name == "AA")
                 {
                     continue;
                 }
