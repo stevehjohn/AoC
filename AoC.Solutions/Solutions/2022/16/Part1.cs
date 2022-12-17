@@ -25,10 +25,10 @@ public class Part1 : Base
         {
             var node = queue.Dequeue();
 
-            if (node.Time <= 0 && node.OpenedValves.Capacity < WorkingValves)
-            {
-                continue;
-            }
+            //if (node.Time <= 0 && node.OpenedValves.Capacity < WorkingValves)
+            //{
+            //    continue;
+            //}
 
             if (node.Time <= 0)
             {
@@ -55,22 +55,22 @@ public class Part1 : Base
                 node.ReleasedPressure += node.Valve.FlowRate * node.Time;
 
                 node.History.Add("O");
+            }
 
-                if (node.OpenedValves.Count == WorkingValves)
+            if (node.Time <= 0)
+            {
+                if (node.ReleasedPressure > max)
                 {
-                    if (node.ReleasedPressure > max)
-                    {
-                        max = node.ReleasedPressure;
+                    max = node.ReleasedPressure;
 
-                        Console.WriteLine(max);
+                    Console.WriteLine(max);
 
-                        node.History.ForEach(h => Console.Write($"{h} -> "));
+                    node.History.ForEach(h => Console.Write($"{h} -> "));
 
-                        Console.WriteLine();
-                    }
-
-                    continue;
+                    Console.WriteLine();
                 }
+
+                continue;
             }
 
             foreach (var valve in node.Valve.WorkingValves)
