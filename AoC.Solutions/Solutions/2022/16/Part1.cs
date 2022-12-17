@@ -17,9 +17,9 @@ public class Part1 : Base
     {
         var max = 0;
 
-        var queue = new PriorityQueue<(Valve Valve, int Time, int ReleasedPressure, List<string> OpenedValves, List<string> History), int>();
+        var queue = new PriorityQueue<(Valve Valve, int Time, int ReleasedPressure, List<string> OpenedValves), int>();
 
-        queue.Enqueue((Start, 30, 0, new(), new() { Start.Name }), 0);
+        queue.Enqueue((Start, 30, 0, new()), 0);
 
         while (queue.Count > 0)
         {
@@ -30,12 +30,6 @@ public class Part1 : Base
                 if (node.ReleasedPressure > max)
                 {
                     max = node.ReleasedPressure;
-
-                    Console.WriteLine(max);
-
-                    node.History.ForEach(h => Console.Write($"{h} -> "));
-
-                    Console.WriteLine("\n");
                 }
 
                 continue;
@@ -48,8 +42,6 @@ public class Part1 : Base
                 node.OpenedValves.Add(node.Valve.Name);
 
                 node.ReleasedPressure += node.Valve.FlowRate * node.Time;
-
-                //node.History.Add("O");
             }
 
             if (node.Time <= 0)
@@ -57,12 +49,6 @@ public class Part1 : Base
                 if (node.ReleasedPressure > max)
                 {
                     max = node.ReleasedPressure;
-
-                    Console.WriteLine(max);
-
-                    node.History.ForEach(h => Console.Write($"{h} -> "));
-
-                    Console.WriteLine("\n");
                 }
 
                 continue;
@@ -85,9 +71,7 @@ public class Part1 : Base
 
                 priority += node.OpenedValves.Contains(valve.Valve.Name) ? 20_000 : 0;
 
-                var history = $"{valve.Valve.Name}: {node.ReleasedPressure + (node.Time - valve.Cost) * valve.Valve.FlowRate * (node.OpenedValves.Contains(valve.Valve.Name) ? 0 : 1)} ({valve.Cost}, {valve.Valve.FlowRate}): {priority})";
-
-                queue.Enqueue((valve.Valve, node.Time - valve.Cost, node.ReleasedPressure, node.OpenedValves.ToList(), new List<string>(node.History) { history }), priority);
+                queue.Enqueue((valve.Valve, node.Time - valve.Cost, node.ReleasedPressure, node.OpenedValves.ToList()), priority);
             }
         }
 
