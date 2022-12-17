@@ -17,7 +17,7 @@ public class Part1 : Base
     {
         var max = 0;
 
-        var queue = new PriorityQueue<(Valve Valve, int Time, int ReleasedPressure, List<string> OpenedValves), int>();
+        var queue = new PriorityQueue<(Valve Valve, int Time, int ReleasedPressure, int OpenedValves), int>();
 
         queue.Enqueue((Start, 30, 0, new()), 0);
 
@@ -35,11 +35,11 @@ public class Part1 : Base
                 continue;
             }
 
-            if (node.Valve.FlowRate > 0 && ! node.OpenedValves.Contains(node.Valve.Name))
+            if (node.Valve.FlowRate > 0 && (node.OpenedValves & node.Valve.Designation) == 0)
             {
                 node.Time--;
 
-                node.OpenedValves.Add(node.Valve.Name);
+                node.OpenedValves |=node.Valve.Designation;
 
                 node.ReleasedPressure += node.Valve.FlowRate * node.Time;
             }
@@ -61,7 +61,7 @@ public class Part1 : Base
                     continue;
                 }
 
-                var extraPressure = (node.Time - valve.Cost) * valve.Valve.FlowRate * (node.OpenedValves.Contains(valve.Valve.Name) ? 0 : 1);
+                var extraPressure = (node.Time - valve.Cost) * valve.Valve.FlowRate * ((node.OpenedValves & node.Valve.Designation) > 0 ? 0 : 1);
 
                 var totalPressure = node.ReleasedPressure + extraPressure;
 
@@ -69,9 +69,9 @@ public class Part1 : Base
 
                 priority -= totalPressure;
 
-                priority += node.OpenedValves.Contains(valve.Valve.Name) ? 20_000 : 0;
+                priority += (node.OpenedValves & node.Valve.Designation) > 0 ? 20_000 : 0;
 
-                queue.Enqueue((valve.Valve, node.Time - valve.Cost, node.ReleasedPressure, node.OpenedValves.ToList()), priority);
+                queue.Enqueue((valve.Valve, node.Time - valve.Cost, node.ReleasedPressure, node.OpenedValves), priority);
             }
         }
 

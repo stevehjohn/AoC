@@ -46,6 +46,14 @@ public abstract class Base : Solution
     {
         var workingValves = _valves.Where(v => v.FlowRate > 0).ToList();
 
+        var designation = 1;
+
+        workingValves.ForEach(v =>
+        {
+            v.Designation = designation;
+            designation <<= 1;
+        });
+
         foreach (var valve in _valves)
         {
             foreach (var connection in workingValves)
