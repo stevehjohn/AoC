@@ -253,7 +253,7 @@ public abstract class Base : Solution
             }
             else if (_previousPeriod != period)
             {
-                var approximation = 1000000000000L / (cycle - _previousCycle) * _previousPeriod;
+                var approximation = 1_000_000_000_000L / (cycle - _previousCycle) * _previousPeriod;
 
                 return approximation;
             }
