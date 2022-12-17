@@ -70,8 +70,6 @@ public class Part1 : Base
 
             foreach (var valve in node.Valve.WorkingValves)
             {
-                var priority = 10_000;
-
                 if (node.Time - valve.Cost < 0)
                 {
                     continue;
@@ -79,7 +77,11 @@ public class Part1 : Base
 
                 var extraPressure = (node.Time - valve.Cost) * valve.Valve.FlowRate * (node.OpenedValves.Contains(valve.Valve.Name) ? 0 : 1);
 
-                priority -= node.ReleasedPressure + extraPressure;
+                var totalPressure = node.ReleasedPressure + extraPressure;
+
+                var priority = 10_000;
+
+                priority -= totalPressure;
 
                 priority += node.OpenedValves.Contains(valve.Valve.Name) ? 20_000 : 0;
 
