@@ -80,20 +80,10 @@ public class Part2 : Base
 
                     var elephantOpen = (node.OpenedValves & elephantValve.Valve.Designation) > 0;
 
-                    //if (isOpen && elephantOpen)
-                    //{
-                    //    continue;
-                    //}
-
-                    //if (elephantValve.Equals(valve))
-                    //{
-                    //    continue;
-                    //}
-
-                    //if (node.Time - valve.Cost < 0 && node.ElephantTime - elephantValve.Cost < 0)
-                    //{
-                    //    continue;
-                    //}
+                    if (node.Time - valve.Cost < 0 && node.ElephantTime - elephantValve.Cost < 0)
+                    {
+                        continue;
+                    }
 
                     var extraPressure = (node.Time - valve.Cost) * valve.Valve.FlowRate * (isOpen ? 0 : 1);
 
@@ -105,9 +95,9 @@ public class Part2 : Base
 
                     priority -= totalPressure;
 
-                    priority += isOpen ? 20_000 : 0;
+                    priority += isOpen || elephantOpen ? 20_000 : 0;
 
-                    priority += elephantOpen ? 20_000 : 0;
+                    //priority += elephantOpen ? 20_000 : 0;
 
                     queue.Enqueue((valve.Valve, node.Time - valve.Cost, elephantValve.Valve, node.ElephantTime - elephantValve.Cost, node.ReleasedPressure, node.OpenedValves), priority);
 
