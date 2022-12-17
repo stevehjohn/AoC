@@ -72,12 +72,14 @@ public class Part1 : Base
             {
                 var priority = 10_000;
 
-                //priority -= valve.Valve.FlowRate - valve.Cost;
                 priority -= node.ReleasedPressure + (node.Time - valve.Cost) * valve.Valve.FlowRate;
 
                 priority += node.OpenedValves.Contains(valve.Valve.Name) ? 20_000 : 0;
 
-                queue.Enqueue((valve.Valve, node.Time - valve.Cost, node.ReleasedPressure, node.OpenedValves.ToList(), new List<string>(node.History) { $"{valve.Valve.Name}: ({valve.Valve.FlowRate}, {valve.Cost}) {priority}" }), priority);
+                //var history = $"{valve.Valve.Name}: ({valve.Valve.FlowRate}, {valve.Cost}) {priority}";
+                var history = $"{valve.Valve.Name}: {node.ReleasedPressure + (node.Time - valve.Cost) * valve.Valve.FlowRate}";
+
+                queue.Enqueue((valve.Valve, node.Time - valve.Cost, node.ReleasedPressure, node.OpenedValves.ToList(), new List<string>(node.History) { history }), priority);
             }
         }
 
