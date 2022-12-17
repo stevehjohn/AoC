@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2022._17;
 
@@ -179,7 +178,11 @@ public abstract class Base : Solution
 
                     if (findPattern)
                     {
-                        FindPattern(i);
+                        var pattern = FindPattern(i);
+
+                        if (pattern > 0)
+                        {
+                        }
                     }
 
                     break;
@@ -217,11 +220,11 @@ public abstract class Base : Solution
 
     private int _startHeight;
 
-    private void FindPattern(int cycle)
+    private long FindPattern(int cycle)
     {
         if (MapHeight - _highPoint < WindowSize)
         {
-            return;
+            return 0;
         }
 
         var hash = new HashCode();
@@ -252,9 +255,7 @@ public abstract class Base : Solution
             {
                 var approximation = 1000000000000L / (cycle - _previousCycle) * _previousPeriod;
 
-                var patternStartY = MapHeight - _startHeight + 1;
-
-                var answer = approximation + patternStartY - _previousPeriod;
+                return approximation;
             }
 
             Console.WriteLine($"{_highPoint} seen at {_hashes[hashCode]}, period {period}: Cycle {cycle}");
@@ -263,6 +264,8 @@ public abstract class Base : Solution
         {
             _hashes.Add(hash.ToHashCode(), (_highPoint, cycle));
         }
+
+        return 0;
     }
 
     private void Write(int value)
