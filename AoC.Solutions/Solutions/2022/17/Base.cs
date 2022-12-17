@@ -179,7 +179,7 @@ public abstract class Base : Solution
 
                     if (findPattern)
                     {
-                        FindPattern();
+                        FindPattern(i);
                     }
 
                     break;
@@ -209,9 +209,15 @@ public abstract class Base : Solution
         return MapHeight - _highPoint - 1;
     }
 
-    private readonly Dictionary<int, int> _hashes = new();
+    private readonly Dictionary<int, (int Y, int Cycle)> _hashes = new();
 
-    private void FindPattern()
+    private int _previousCycle;
+
+    private int _previousPeriod;
+
+    private int _startHeight;
+
+    private void FindPattern(int cycle)
     {
         if (MapHeight - _highPoint < WindowSize)
         {
@@ -229,11 +235,33 @@ public abstract class Base : Solution
 
         if (_hashes.ContainsKey(hashCode))
         {
-            Console.WriteLine($"{_highPoint} seen at {_hashes[hashCode]}, period {_highPoint - _hashes[hashCode]}");
+            var period = _hashes[hashCode].Y - _highPoint;
+
+            if (_startHeight == 0)
+            {
+                _startHeight = _hashes[hashCode].Y;
+            }
+
+            if (_previousPeriod == 0)
+            {
+                _previousPeriod = period;
+
+                _previousCycle = cycle;
+            }
+            else if (_previousPeriod != period)
+            {
+                var approximation = 1000000000000L / (cycle - _previousCycle) * _previousPeriod;
+
+                var patternStartY = MapHeight - _startHeight + 1;
+
+                var answer = approximation + patternStartY - _previousPeriod;
+            }
+
+            Console.WriteLine($"{_highPoint} seen at {_hashes[hashCode]}, period {period}: Cycle {cycle}");
         }
         else
         {
-            _hashes.Add(hash.ToHashCode(), _highPoint);
+            _hashes.Add(hash.ToHashCode(), (_highPoint, cycle));
         }
     }
 
