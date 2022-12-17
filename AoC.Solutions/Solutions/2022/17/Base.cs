@@ -57,6 +57,8 @@ public abstract class Base : Solution
 
     protected int Solve()
     {
+        Console.CursorVisible = false;
+
         _wind = Input[0];
 
         var rockIndex = 0;
@@ -176,20 +178,29 @@ public abstract class Base : Solution
                 y++;
             }
 
-            //Console.Clear();
+            Console.SetCursorPosition(0, 1);
 
-            //for (var sY = _highPoint; sY < 10_000; sY++)
-            //{
-            //    Console.Write((_map[sY] & 0b1000000) > 0 ? '#' : '.');
-            //    Console.Write((_map[sY] & 0b0100000) > 0 ? '#' : '.');
-            //    Console.Write((_map[sY] & 0b0010000) > 0 ? '#' : '.');
-            //    Console.Write((_map[sY] & 0b0001000) > 0 ? '#' : '.');
-            //    Console.Write((_map[sY] & 0b0000100) > 0 ? '#' : '.');
-            //    Console.Write((_map[sY] & 0b0000010) > 0 ? '#' : '.');
-            //    Console.Write((_map[sY] & 0b0000001) > 0 ? '#' : '.');
+            for (var sY = _highPoint; sY < Math.Min(_highPoint + 30, MapHeight); sY++)
+            {
+                Console.Write((_map[sY] & 0b1000000) > 0 ? '#' : '.');
+                Console.Write((_map[sY] & 0b0100000) > 0 ? '#' : '.');
+                Console.Write((_map[sY] & 0b0010000) > 0 ? '#' : '.');
+                Console.Write((_map[sY] & 0b0001000) > 0 ? '#' : '.');
+                Console.Write((_map[sY] & 0b0000100) > 0 ? '#' : '.');
+                Console.Write((_map[sY] & 0b0000010) > 0 ? '#' : '.');
+                Console.Write((_map[sY] & 0b0000001) > 0 ? '#' : '.');
 
-            //    Console.WriteLine();
-            //}
+                if (sY == _highPoint)
+                {
+                    Console.WriteLine($" {_highPoint}");
+                }
+
+                Console.WriteLine();
+            }
+
+            if (rockIndex == 0 && windIndex == 0)
+            {
+            }
         }
 
         return MapHeight - _highPoint - 1;
