@@ -49,7 +49,7 @@ public class Part1 : Base
 
                 node.ReleasedPressure += node.Valve.FlowRate * node.Time;
 
-                node.History.Add("O");
+                //node.History.Add("O");
             }
 
             if (node.Time <= 0)
@@ -72,12 +72,21 @@ public class Part1 : Base
             {
                 var priority = 10_000;
 
-                priority -= node.ReleasedPressure + (node.Time - valve.Cost) * valve.Valve.FlowRate * (node.OpenedValves.Contains(valve.Valve.Name) ? 0 : 1);
+                if (node.Time - valve.Cost < 0)
+                {
+                    continue;
+                }
+
+                var extraPressure = (node.Time - valve.Cost) * valve.Valve.FlowRate * (node.OpenedValves.Contains(valve.Valve.Name) ? 0 : 1);
+
+                priority -= node.ReleasedPressure + extraPressure;
 
                 priority += node.OpenedValves.Contains(valve.Valve.Name) ? 20_000 : 0;
 
+                //Console.WriteLine($"{valve.Valve.Name}: ({valve.Valve.FlowRate}, {valve.Cost}) {priority}");
+
                 //var history = $"{valve.Valve.Name}: ({valve.Valve.FlowRate}, {valve.Cost}) {priority}";
-                var history = $"{valve.Valve.Name}: {node.ReleasedPressure + (node.Time - valve.Cost) * valve.Valve.FlowRate} ({priority})";
+                var history = $"{valve.Valve.Name}: {node.ReleasedPressure + (node.Time - valve.Cost) * valve.Valve.FlowRate * (node.OpenedValves.Contains(valve.Valve.Name) ? 0 : 1)} ({valve.Cost}, {valve.Valve.FlowRate}): {priority})";
 
                 queue.Enqueue((valve.Valve, node.Time - valve.Cost, node.ReleasedPressure, node.OpenedValves.ToList(), new List<string>(node.History) { history }), priority);
             }
