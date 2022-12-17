@@ -92,6 +92,11 @@ public class Part1 : Base
             }
         }
 
-        throw new PuzzleException("Solution not found");
+        if (max == 0)
+        {
+            throw new PuzzleException("Solution not found");
+        }
+     
+        return max;
     }
 }
