@@ -19,7 +19,7 @@ public class Part1 : Base
 
         var queue = new PriorityQueue<(Valve Valve, int Time, int ReleasedPressure, int OpenedValves), int>();
 
-        queue.Enqueue((Start, 30, 0, new()), 0);
+        queue.Enqueue((Start, 30, 0, 0), 0);
 
         while (queue.Count > 0)
         {

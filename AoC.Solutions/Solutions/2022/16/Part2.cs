@@ -17,63 +17,90 @@ public class Part2 : Base
     {
         var max = 0;
 
-        var queue = new PriorityQueue<(Valve Valve, int Time, int ReleasedPressure, int OpenedValves), int>();
+        var queue = new PriorityQueue<(Valve Valve, int Time, Valve ElephantValve, int ElephantTime, int ReleasedPressure, int OpenedValves), int>();
 
-        queue.Enqueue((Start, 30, 0, new()), 0);
+        queue.Enqueue((Start, 26, Start, 26, 0, 0), 0);
 
         while (queue.Count > 0)
         {
+            if (queue.Count % 100_000 == 0)
+            {
+                Console.WriteLine($"{max} ({queue.Count})");
+            }
+
             var node = queue.Dequeue();
 
-            if (node.Time <= 0)
+            if (node.Time <= 0 && node.ElephantTime <= 0)
             {
                 if (node.ReleasedPressure > max)
                 {
                     max = node.ReleasedPressure;
+
+                    Console.WriteLine(max);
                 }
 
                 continue;
             }
 
-            if (node.Valve.FlowRate > 0 && (node.OpenedValves & node.Valve.Designation) == 0)
+            if (node.Valve.FlowRate > 0 && (node.OpenedValves & node.Valve.Designation) == 0 && node.Time > 0)
             {
                 node.Time--;
 
-                node.OpenedValves |=node.Valve.Designation;
+                node.OpenedValves |= node.Valve.Designation;
 
                 node.ReleasedPressure += node.Valve.FlowRate * node.Time;
             }
 
-            if (node.Time <= 0)
+            if (node.ElephantValve.FlowRate > 0 && (node.OpenedValves & node.ElephantValve.Designation) == 0 && node.ElephantTime > 0)
+            {
+                node.ElephantTime--;
+
+                node.OpenedValves |= node.ElephantValve.Designation;
+
+                node.ReleasedPressure += node.ElephantValve.FlowRate * node.ElephantTime;
+            }
+
+            if (node.Time <= 0 && node.ElephantTime <= 0)
             {
                 if (node.ReleasedPressure > max)
                 {
                     max = node.ReleasedPressure;
+
+                    Console.WriteLine(max);
                 }
 
                 continue;
             }
 
-            foreach (var valve in node.Valve.WorkingValves)
+            foreach (var elephantValve in node.ElephantValve.WorkingValves)
             {
-                if (node.Time - valve.Cost < 0)
+                foreach (var valve in node.Valve.WorkingValves)
                 {
-                    continue;
+                    if (node.Time - valve.Cost < 0 || node.ElephantTime - elephantValve.Cost < 0)
+                    {
+                        continue;
+                    }
+
+                    var isOpen = (node.OpenedValves & node.Valve.Designation) > 0;
+
+                    var elephantOpen = (node.OpenedValves & elephantValve.Valve.Designation) > 0;
+
+                    var extraPressure = (node.Time - valve.Cost) * valve.Valve.FlowRate * (isOpen ? 0 : 1);
+
+                    extraPressure += (node.ElephantTime - elephantValve.Cost) * elephantValve.Valve.FlowRate * (elephantOpen ? 0 : 1);
+
+                    var totalPressure = node.ReleasedPressure + extraPressure;
+
+                    var priority = 10_000;
+
+                    priority -= totalPressure;
+
+                    priority += isOpen ? 20_000 : 0;
+
+                    priority += elephantOpen ? 20_000 : 0;
+
+                    queue.Enqueue((valve.Valve, node.Time - valve.Cost, elephantValve.Valve, node.ElephantTime - elephantValve.Cost, node.ReleasedPressure, node.OpenedValves), priority);
                 }
-
-                var isOpen = (node.OpenedValves & node.Valve.Designation) > 0;
-
-                var extraPressure = (node.Time - valve.Cost) * valve.Valve.FlowRate * (isOpen ? 0 : 1);
-
-                var totalPressure = node.ReleasedPressure + extraPressure;
-
-                var priority = 10_000;
-
-                priority -= totalPressure;
-
-                priority += isOpen ? 20_000 : 0;
-
-                queue.Enqueue((valve.Valve, node.Time - valve.Cost, node.ReleasedPressure, node.OpenedValves), priority);
             }
         }
 
@@ -81,7 +108,7 @@ public class Part2 : Base
         {
             throw new PuzzleException("Solution not found");
         }
-     
+
         return max;
     }
 }
