@@ -61,7 +61,9 @@ public class Part1 : Base
                     continue;
                 }
 
-                var extraPressure = (node.Time - valve.Cost) * valve.Valve.FlowRate * ((node.OpenedValves & node.Valve.Designation) > 0 ? 0 : 1);
+                var isOpen = node.OpenedValves & node.Valve.Designation;
+
+                var extraPressure = (node.Time - valve.Cost) * valve.Valve.FlowRate * (isOpen > 0 ? 0 : 1);
 
                 var totalPressure = node.ReleasedPressure + extraPressure;
 
@@ -69,7 +71,7 @@ public class Part1 : Base
 
                 priority -= totalPressure;
 
-                priority += (node.OpenedValves & node.Valve.Designation) > 0 ? 20_000 : 0;
+                priority += isOpen > 0 ? 20_000 : 0;
 
                 queue.Enqueue((valve.Valve, node.Time - valve.Cost, node.ReleasedPressure, node.OpenedValves), priority);
             }
