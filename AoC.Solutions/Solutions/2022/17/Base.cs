@@ -57,7 +57,7 @@ public abstract class Base : Solution
 
     private int _highPoint = MapHeight - 1;
 
-    protected int Solve(bool findPattern = false)
+    protected long Solve(bool findPattern = false)
     {
         Console.CursorVisible = false;
 
@@ -182,6 +182,7 @@ public abstract class Base : Solution
 
                         if (pattern > 0)
                         {
+                            return pattern;
                         }
                     }
 
@@ -189,23 +190,6 @@ public abstract class Base : Solution
                 }
 
                 y++;
-
-                //if (rockIndex == 0 && windIndex == 0)
-                //{
-                //    Console.SetCursorPosition(0, 1);
-
-                //    for (var sY = _highPoint; sY < Math.Min(_highPoint + 50, MapHeight); sY++)
-                //    {
-                //        Write(_map[sY]);
-
-                //        if (sY == _highPoint)
-                //        {
-                //            Console.Write($" {_highPoint} ({i})    ");
-                //        }
-
-                //        Console.WriteLine();
-                //    }
-                //}
             }
         }
 
@@ -258,7 +242,7 @@ public abstract class Base : Solution
                 return approximation;
             }
 
-            Console.WriteLine($"{_highPoint} seen at {_hashes[hashCode]}, period {period}: Cycle {cycle}");
+            //Console.WriteLine($"{_highPoint} seen at {_hashes[hashCode]}, period {period}: Cycle {cycle}");
         }
         else
         {
