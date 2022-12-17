@@ -6,6 +6,8 @@ public class Valve
 
     public int FlowRate { get; }
 
+    public int Designation { get; set;  }
+
     public List<Valve> DirectConnections { get; }
 
     public List<(Valve Valve, int Cost)> WorkingValves { get; }
