@@ -76,14 +76,24 @@ public class Part2 : Base
             {
                 foreach (var valve in node.Valve.WorkingValves)
                 {
-                    if (node.Time - valve.Cost < 0 || node.ElephantTime - elephantValve.Cost < 0)
-                    {
-                        continue;
-                    }
-
                     var isOpen = (node.OpenedValves & node.Valve.Designation) > 0;
 
                     var elephantOpen = (node.OpenedValves & elephantValve.Valve.Designation) > 0;
+
+                    //if (isOpen && elephantOpen)
+                    //{
+                    //    continue;
+                    //}
+
+                    //if (elephantValve.Equals(valve))
+                    //{
+                    //    continue;
+                    //}
+
+                    //if (node.Time - valve.Cost < 0 && node.ElephantTime - elephantValve.Cost < 0)
+                    //{
+                    //    continue;
+                    //}
 
                     var extraPressure = (node.Time - valve.Cost) * valve.Valve.FlowRate * (isOpen ? 0 : 1);
 
@@ -100,6 +110,11 @@ public class Part2 : Base
                     priority += elephantOpen ? 20_000 : 0;
 
                     queue.Enqueue((valve.Valve, node.Time - valve.Cost, elephantValve.Valve, node.ElephantTime - elephantValve.Cost, node.ReleasedPressure, node.OpenedValves), priority);
+
+                    if (queue.Count % 100_000 == 0)
+                    {
+                        Console.WriteLine($"{max} ({queue.Count})");
+                    }
                 }
             }
         }
