@@ -10,8 +10,6 @@ public abstract class Base : Solution
 
     protected Valve Start;
 
-    protected int WorkingValves { get; private set; }
-
     protected void ParseInput()
     {
         var connections = new Dictionary<string, string[]>();
@@ -23,11 +21,6 @@ public abstract class Base : Solution
             var parts = line.Split(';', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
             var flowRate = int.Parse(parts[0][23..]);
-
-            if (flowRate > 0)
-            {
-                WorkingValves++;
-            }
 
             var valve = new Valve(name, flowRate);
 

@@ -25,11 +25,6 @@ public class Part1 : Base
         {
             var node = queue.Dequeue();
 
-            //if (node.Time <= 0 && node.OpenedValves.Capacity < WorkingValves)
-            //{
-            //    continue;
-            //}
-
             if (node.Time <= 0)
             {
                 if (node.ReleasedPressure > max)
@@ -40,7 +35,7 @@ public class Part1 : Base
 
                     node.History.ForEach(h => Console.Write($"{h} -> "));
 
-                    Console.WriteLine();
+                    Console.WriteLine("\n");
                 }
 
                 continue;
@@ -67,7 +62,7 @@ public class Part1 : Base
 
                     node.History.ForEach(h => Console.Write($"{h} -> "));
 
-                    Console.WriteLine();
+                    Console.WriteLine("\n");
                 }
 
                 continue;
@@ -75,9 +70,12 @@ public class Part1 : Base
 
             foreach (var valve in node.Valve.WorkingValves)
             {
-                var priority = 1_000 - (valve.Valve.FlowRate - valve.Cost);
+                var priority = 10_000;
 
-                priority += node.OpenedValves.Contains(valve.Valve.Name) ? 1_000 : 0;
+                //priority -= valve.Valve.FlowRate - valve.Cost;
+                priority -= node.ReleasedPressure + (node.Time - valve.Cost) * valve.Valve.FlowRate;
+
+                priority += node.OpenedValves.Contains(valve.Valve.Name) ? 20_000 : 0;
 
                 queue.Enqueue((valve.Valve, node.Time - valve.Cost, node.ReleasedPressure, node.OpenedValves.ToList(), new List<string>(node.History) { $"{valve.Valve.Name}: ({valve.Valve.FlowRate}, {valve.Cost}) {priority}" }), priority);
             }
