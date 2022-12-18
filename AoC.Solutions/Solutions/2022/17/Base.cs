@@ -14,6 +14,16 @@ public abstract class Base : Solution
 
     private string _wind;
 
+    private long _heightBoost;
+
+    private readonly Dictionary<int, (int Y, int Cycle)> _hashes = new();
+
+    private int _previousCycle;
+
+    private int _previousPeriod;
+
+    private int _startHeight;
+
     private readonly int[][] _rocks =
     {
         new[]
@@ -201,16 +211,6 @@ public abstract class Base : Solution
         return MapHeight - _highPoint - 1 + _heightBoost;
     }
 
-    private long _heightBoost;
-
-    private readonly Dictionary<int, (int Y, int Cycle)> _hashes = new();
-
-    private int _previousCycle;
-
-    private int _previousPeriod;
-
-    private int _startHeight;
-
     private long FindPattern(int cycle)
     {
         if (MapHeight - _highPoint < WindowSize)
@@ -250,8 +250,6 @@ public abstract class Base : Solution
 
                 return approximation;
             }
-
-            //Console.WriteLine($"{_highPoint} seen at {_hashes[hashCode]}, period {period}: Cycle {cycle}");
         }
         else
         {
@@ -259,16 +257,5 @@ public abstract class Base : Solution
         }
 
         return 0;
-    }
-
-    private void Write(int value)
-    {
-        Console.Write((value & 0b1000000) > 0 ? '#' : '.');
-        Console.Write((value & 0b0100000) > 0 ? '#' : '.');
-        Console.Write((value & 0b0010000) > 0 ? '#' : '.');
-        Console.Write((value & 0b0001000) > 0 ? '#' : '.');
-        Console.Write((value & 0b0000100) > 0 ? '#' : '.');
-        Console.Write((value & 0b0000010) > 0 ? '#' : '.');
-        Console.Write((value & 0b0000001) > 0 ? '#' : '.');
     }
 }
