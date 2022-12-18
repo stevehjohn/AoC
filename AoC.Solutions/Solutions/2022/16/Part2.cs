@@ -31,11 +31,6 @@ public class Part2 : Base
         {
             var node = queue.Dequeue();
 
-            if (queue.Count % 100_000 == 0)
-            {
-                Console.WriteLine($"{max} ({queue.Count})");
-            }
-
             if (node.ReleasedPressure > max)
             {
                 max = node.ReleasedPressure;
