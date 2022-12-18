@@ -97,8 +97,6 @@ public abstract class Base : Solution
 
         var counter = _hasFloor ? 3 : 11;
 
-        var toRemove = new List<Point>();
-
         while (true)
         {
             if (_visualiser != null)
