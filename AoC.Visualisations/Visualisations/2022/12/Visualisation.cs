@@ -19,8 +19,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private int _height;
 
-    private VertexPositionColor[] _vertices;
-    private VertexPositionColor[] _outlines;
+    private VertexPositionColorNormal[] _vertices;
+    private VertexPositionColorNormal[] _outlines;
 
     private short[] _indices;
 
@@ -138,10 +138,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
             return;
         }
-        else
-        {
-            _counter = 2;
-        }
+        
+        _counter = 2;
 
         if (_index == -1)
         {
@@ -183,8 +181,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private void SetUpVertices()
     {
-        _vertices = new VertexPositionColor[_width * _height];
-        _outlines = new VertexPositionColor[_width * _height];
+        _vertices = new VertexPositionColorNormal[_width * _height];
+        _outlines = new VertexPositionColorNormal[_width * _height];
 
         for (var x = 0; x < _width; x++)
         {
@@ -194,6 +192,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                 _vertices[x + y * _width].Position = new Vector3(x, height, -_height / 2 + y);
                 _vertices[x + y * _width].Color = _palette[height];
+                _vertices[x + y * _width].Normal = Vector3.Down;
 
                 _outlines[x + y * _width].Position = new Vector3(x, height, -_height / 2 + y);
                 _outlines[x + y * _width].Color = Color.Black;
@@ -253,11 +252,17 @@ public class Visualisation : VisualisationBase<PuzzleState>
         effect.World = worldMatrix;
         effect.VertexColorEnabled = true;
 
+        effect.EnableDefaultLighting();
+        //effect.AmbientLightColor = new Vector3( 0.3f, 0.3f, 0.3f );
+        //effect.DirectionalLight0.Enabled = true;
+        //effect.DirectionalLight0.DiffuseColor = new Vector3( 0.7f, 0.7f, 0.7f );
+        //effect.DirectionalLight0.Direction = new Vector3( 0, 1, -1);
+
         foreach (var pass in effect.CurrentTechnique.Passes)
         {
             pass.Apply();
 
-            GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, _vertices, 0, _vertices.Length, _indices, 0, _indices.Length / 3, VertexPositionColor.VertexDeclaration);
+            GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, _vertices, 0, _vertices.Length, _indices, 0, _indices.Length / 3, VertexPositionColorNormal.VertexDeclaration);
         }
 
         rasterizerState = new RasterizerState();
@@ -271,7 +276,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             pass.Apply();
 
-            GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, _outlines, 0, _outlines.Length, _indices, 0, _indices.Length / 3, VertexPositionColor.VertexDeclaration);
+            GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, _outlines, 0, _outlines.Length, _indices, 0, _indices.Length / 3, VertexPositionColorNormal.VertexDeclaration);
         }
     }
 }
