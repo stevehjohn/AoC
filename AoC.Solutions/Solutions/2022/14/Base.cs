@@ -113,7 +113,9 @@ public abstract class Base : Solution
                 }
             }
 
-            for (var i = 0; i < _positions.Count; i++)
+            var i = 0;
+
+            while (i < _positions.Count)
             {
                 var position = _positions[i];
 
@@ -162,7 +164,7 @@ public abstract class Base : Solution
 
                 if (_visualiser != null)
                 {
-                    toRemove.Add(position);
+                    _positions.RemoveAt(i);
                 }
                 else
                 {
@@ -171,16 +173,6 @@ public abstract class Base : Solution
             }
 
             Visualise();
-
-            if (_visualiser != null)
-            {
-                foreach (var point in toRemove)
-                {
-                    _positions.Remove(point);
-                }
-
-                toRemove.Clear();
-            }
         }
     }
 
