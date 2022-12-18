@@ -4,6 +4,8 @@ namespace AoC.Solutions.Solutions._2022._16;
 
 public class Part1 : Base
 {
+    private readonly HashSet<(Valve Valve, int Time, int OpenedValves)> _added = new();
+
     public override string GetAnswer()
     {
         ParseInput();
@@ -17,11 +19,9 @@ public class Part1 : Base
     {
         var max = 0;
 
-        var queue = new PriorityQueue<(Valve Valve, int Time, int ReleasedPressure, int OpenedValves, int AvailableTotalFlow), int>();
+        var queue = new Queue<(Valve Valve, int Time, int ReleasedPressure, int OpenedValves)>();
 
-        var availableTotalFlow = Start.WorkingValves.Sum(v => v.Valve.FlowRate);
-
-        queue.Enqueue((Start, 30, 0, 0, availableTotalFlow), 0);
+        queue.Enqueue((Start, 30, 0, 0));
 
         while (queue.Count > 0)
         {
@@ -44,8 +44,6 @@ public class Part1 : Base
                 node.OpenedValves |= node.Valve.Designation;
 
                 node.ReleasedPressure += node.Valve.FlowRate * node.Time;
-
-                node.AvailableTotalFlow -= node.Valve.FlowRate;
             }
 
             if (node.ReleasedPressure > max)
@@ -60,24 +58,19 @@ public class Part1 : Base
 
             foreach (var valve in node.Valve.WorkingValves)
             {
-                if (node.Time - valve.Cost < 0 || node.ReleasedPressure + node.AvailableTotalFlow * node.Time < max)
+                if (node.Time - valve.Cost < 0)
                 {
                     continue;
                 }
 
-                var isOpen = (node.OpenedValves & node.Valve.Designation) > 0;
+                var newItem = (valve.Valve, node.Time, node.OpenedValves);
 
-                var extraPressure = (node.Time - valve.Cost) * valve.Valve.FlowRate * (isOpen ? 0 : 1);
+                if (! _added.Contains(newItem))
+                {
+                    queue.Enqueue((valve.Valve, node.Time - valve.Cost, node.ReleasedPressure, node.OpenedValves));
 
-                var totalPressure = node.ReleasedPressure + extraPressure;
-
-                var priority = 10_000;
-
-                priority -= totalPressure;
-
-                priority += isOpen ? 20_000 : 0;
-
-                queue.Enqueue((valve.Valve, node.Time - valve.Cost, node.ReleasedPressure, node.OpenedValves, node.AvailableTotalFlow), -priority);
+                    _added.Add(newItem);
+                }
             }
         }
 

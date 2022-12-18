@@ -100,7 +100,7 @@ public class Part2 : Base
 
                     priority += elephantOpen ? 20_000 : 0;
 
-                    var newItem = (valve.Valve, 60 - node.Time - node.ElephantTime, elephantValve.Valve, node.OpenedValves);
+                    var newItem = (valve.Valve, node.Time + node.ElephantTime, elephantValve.Valve, node.OpenedValves);
 
                     if (! _added.Contains(newItem))
                     {
