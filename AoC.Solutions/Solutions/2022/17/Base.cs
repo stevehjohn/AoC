@@ -6,6 +6,8 @@ public abstract class Base : Solution
 {
     public override string Description => "Pyroclastic flow";
 
+    private const long MassiveNumber = 1_000_000_000_000;
+
     private const int MapHeight = 10_000;
 
     private const int WindowSize = 50;
@@ -176,13 +178,16 @@ public abstract class Base : Solution
                         _highPoint = y - 1;
                     }
 
-                    if (findPattern)
+                    if (findPattern && _heightBoost == 0)
                     {
                         var pattern = FindPattern(i);
 
                         if (pattern > 0)
                         {
-                            return pattern;
+                            // TODO: Calculate 835
+                            i = cycles - 835;
+
+                            _heightBoost = pattern;
                         }
                     }
 
@@ -193,8 +198,10 @@ public abstract class Base : Solution
             }
         }
 
-        return MapHeight - _highPoint - 1;
+        return MapHeight - _highPoint - 1 + _heightBoost;
     }
+
+    private long _heightBoost;
 
     private readonly Dictionary<int, (int Y, int Cycle)> _hashes = new();
 
@@ -237,7 +244,9 @@ public abstract class Base : Solution
             }
             else if (_previousPeriod != period)
             {
-                var approximation = 1_000_000_000_000L / (cycle - _previousCycle) * _previousPeriod;
+                var cycleLength = cycle - _previousCycle;
+
+                var approximation = (MassiveNumber / cycleLength - 2) * _previousPeriod;
 
                 return approximation;
             }
