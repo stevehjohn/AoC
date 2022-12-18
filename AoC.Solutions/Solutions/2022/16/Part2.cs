@@ -6,6 +6,8 @@ public class Part2 : Base
 {
     private const int StartMinutes = 26;
 
+    private readonly HashSet<(Valve Valve, int Time, Valve ElephantValve, int ElephantTime, int ReleasedPressure, int OpenedValves, int AvailableTotalFlow)> _addded = new();
+
     public override string GetAnswer()
     {
         ParseInput();
@@ -102,7 +104,14 @@ public class Part2 : Base
 
                     priority += elephantOpen ? 20_000 : 0;
 
-                    queue.Enqueue((valve.Valve, node.Time - valve.Cost, elephantValve.Valve, node.ElephantTime - elephantValve.Cost, node.ReleasedPressure, node.OpenedValves, node.AvailableTotalFlow), priority);
+                    var newItem = (valve.Valve, node.Time - valve.Cost, elephantValve.Valve, node.ElephantTime - elephantValve.Cost, node.ReleasedPressure, node.OpenedValves, node.AvailableTotalFlow);
+
+                    if (! _addded.Contains(newItem))
+                    {
+                        queue.Enqueue(newItem, priority);
+
+                        _addded.Add(newItem);
+                    }
 
                     if (queue.Count % 100_000 == 0)
                     {
