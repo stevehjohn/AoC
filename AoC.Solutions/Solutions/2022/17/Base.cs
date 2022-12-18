@@ -192,12 +192,11 @@ public abstract class Base : Solution
                     {
                         var pattern = FindPattern(i);
 
-                        if (pattern > 0)
+                        if (pattern.Boost > 0)
                         {
-                            // TODO: Calculate 835
-                            i = cycles - 835;
+                            i = cycles - pattern.RemainingCycles;
 
-                            _heightBoost = pattern;
+                            _heightBoost = pattern.Boost;
                         }
                     }
 
@@ -211,11 +210,11 @@ public abstract class Base : Solution
         return MapHeight - _highPoint - 1 + _heightBoost;
     }
 
-    private long FindPattern(int cycle)
+    private (long Boost, int RemainingCycles) FindPattern(int cycle)
     {
         if (MapHeight - _highPoint < WindowSize)
         {
-            return 0;
+            return (0, 0);
         }
 
         var hash = new HashCode();
@@ -248,7 +247,7 @@ public abstract class Base : Solution
 
                 var approximation = (MassiveNumber / cycleLength - 2) * _previousPeriod;
 
-                return approximation;
+                return (approximation, (int) ((MassiveNumber - cycle) % cycleLength));
             }
         }
         else
@@ -256,6 +255,6 @@ public abstract class Base : Solution
             _hashes.Add(hash.ToHashCode(), (_highPoint, cycle));
         }
 
-        return 0;
+        return (0, 0);
     }
 }
