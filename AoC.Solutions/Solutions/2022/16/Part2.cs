@@ -6,7 +6,7 @@ public class Part2 : Base
 {
     private const int StartMinutes = 26;
 
-    private readonly HashSet<(Valve Valve, int Time, Valve ElephantValve, int ElephantTime, int ReleasedPressure, int OpenedValves, int AvailableTotalFlow)> _addded = new();
+    private readonly HashSet<(Valve Valve, int Time, Valve ElephantValve, int OpenedValves)> _added = new();
 
     public override string GetAnswer()
     {
@@ -21,7 +21,7 @@ public class Part2 : Base
     {
         var max = 0;
 
-        var queue = new TrimablePriorityQueue<(Valve Valve, int Time, Valve ElephantValve, int ElephantTime, int ReleasedPressure, int OpenedValves, int AvailableTotalFlow), int>();
+        var queue = new PriorityQueue<(Valve Valve, int Time, Valve ElephantValve, int ElephantTime, int ReleasedPressure, int OpenedValves, int AvailableTotalFlow), int>();
 
         var availableTotalFlow = Start.WorkingValves.Sum(v => v.Valve.FlowRate);
 
@@ -86,6 +86,11 @@ public class Part2 : Base
             {
                 foreach (var valve in node.Valve.WorkingValves)
                 {
+                    if (node.ReleasedPressure + node.AvailableTotalFlow * node.ElephantTime * node.Time < max)
+                    {
+                        continue;
+                    }
+
                     var isOpen = (node.OpenedValves & node.Valve.Designation) > 0;
 
                     var elephantOpen = (node.OpenedValves & elephantValve.Valve.Designation) > 0;
@@ -104,21 +109,18 @@ public class Part2 : Base
 
                     priority += elephantOpen ? 20_000 : 0;
 
-                    var newItem = (valve.Valve, node.Time - valve.Cost, elephantValve.Valve, node.ElephantTime - elephantValve.Cost, node.ReleasedPressure, node.OpenedValves, node.AvailableTotalFlow);
+                    var newItem = (valve.Valve, 60 - node.Time - node.ElephantTime, elephantValve.Valve, node.OpenedValves);
 
-                    if (! _addded.Contains(newItem))
+                    if (! _added.Contains(newItem))
                     {
-                        queue.Enqueue(newItem, priority);
+                        queue.Enqueue((valve.Valve, node.Time - valve.Cost, elephantValve.Valve, node.ElephantTime - elephantValve.Cost, node.ReleasedPressure, node.OpenedValves, node.AvailableTotalFlow), priority);
 
-                        _addded.Add(newItem);
+                        _added.Add(newItem);
                     }
 
-                    if (queue.Count % 100_000 == 0)
+                    if (queue.Count % 10_000 == 0)
                     {
-                        Console.WriteLine($"{max} ({queue.Count}). Trimmed: {
-//                            queue.Trim(i => i.Time < node.Time && i.ElephantTime < node.ElephantTime && i.ReleasedPressure < node.ReleasedPressure)
-                            queue.Trim(i => i.AvailableTotalFlow < node.AvailableTotalFlow && i.ReleasedPressure < node.ReleasedPressure)
-                        }");
+                        Console.WriteLine($"{max} ({queue.Count})");
                     }
                 }
             }
