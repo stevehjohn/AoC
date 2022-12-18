@@ -104,7 +104,7 @@ public class Part2 : Base
 
                     if (! _added.Contains(newItem))
                     {
-                        queue.Enqueue((valve.Valve, node.Time - valve.Cost, elephantValve.Valve, node.ElephantTime - elephantValve.Cost, node.ReleasedPressure, node.OpenedValves, node.AvailableTotalFlow), priority);
+                        queue.Enqueue((valve.Valve, node.Time - valve.Cost, elephantValve.Valve, node.ElephantTime - elephantValve.Cost, node.ReleasedPressure, node.OpenedValves, node.AvailableTotalFlow), -priority);
 
                         _added.Add(newItem);
                     }
