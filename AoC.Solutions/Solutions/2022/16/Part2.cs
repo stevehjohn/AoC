@@ -107,7 +107,8 @@ public class Part2 : Base
                     if (queue.Count % 100_000 == 0)
                     {
                         Console.WriteLine($"{max} ({queue.Count}). Trimmed: {
-                            queue.Trim(i => i.Time < node.Time && i.ElephantTime < node.ElephantTime && i.ReleasedPressure < node.ReleasedPressure)
+//                            queue.Trim(i => i.Time < node.Time && i.ElephantTime < node.ElephantTime && i.ReleasedPressure < node.ReleasedPressure)
+                            queue.Trim(i => i.AvailableTotalFlow < node.AvailableTotalFlow && i.ReleasedPressure < node.ReleasedPressure)
                         }");
                     }
                 }
