@@ -84,11 +84,6 @@ public class Part2 : Base
             {
                 foreach (var valve in node.Valve.WorkingValves)
                 {
-                    if (node.ReleasedPressure + node.AvailableTotalFlow * node.ElephantTime * node.Time < max)
-                    {
-                        continue;
-                    }
-
                     var isOpen = (node.OpenedValves & node.Valve.Designation) > 0;
 
                     var elephantOpen = (node.OpenedValves & elephantValve.Valve.Designation) > 0;
@@ -109,9 +104,11 @@ public class Part2 : Base
 
                     queue.Enqueue((valve.Valve, node.Time - valve.Cost, elephantValve.Valve, node.ElephantTime - elephantValve.Cost, node.ReleasedPressure, node.OpenedValves, node.AvailableTotalFlow), priority);
 
-                    if (queue.Count % 10_000 == 0)
+                    if (queue.Count % 100_000 == 0)
                     {
-                        Console.WriteLine($"{max} ({queue.Count}). Trimmed: {queue.Trim(i => i.AvailableTotalFlow < node.AvailableTotalFlow)}");
+                        Console.WriteLine($"{max} ({queue.Count}). Trimmed: {
+                            queue.Trim(i => i.Time < node.Time && i.ElephantTime < node.ElephantTime && i.ReleasedPressure < node.ReleasedPressure)
+                        }");
                     }
                 }
             }

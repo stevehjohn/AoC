@@ -4,82 +4,80 @@ namespace AoC.Solutions.Solutions._2022._16;
 
 public class TrimablePriorityQueue<T, TP> where TP : INumber<TP>, IComparable<TP>
 {
-    private readonly List<(TP Priority, T Item)> _items = new();
+    private readonly SortedList<TP, List<T>> _items = new();
 
-    public int Count => _items.Count;
+    private int _count;
+
+    public int Count => _count;
 
     public void Enqueue(T item, TP priority)
     {
-        if (_items.Count == 0)
+        _count++;
+
+        if (_items.ContainsKey(priority))
         {
-            _items.Add((priority, item));
+            _items[priority].Add(item);
 
             return;
         }
 
-        var index = 0;
-
-        var endIndex = _items.Count;
-
-        while (endIndex > index)
-        {
-            var windowSize = endIndex - index;
-
-            var middleIndex = index + windowSize / 2;
-
-            var middleValue = _items[middleIndex].Priority;
-
-            var compareResult = middleValue.CompareTo(priority);
-
-            if (compareResult == 0)
-            {
-                _items.Insert(middleIndex, (priority, item));
-
-                return;
-            }
-            
-            if (compareResult < 0)
-            {
-                index = middleIndex + 1;
-
-                continue;
-            }
-            
-            endIndex = middleIndex;
-        }
-
-        _items.Insert(index, (priority, item));
+        _items.Add(priority, new List<T> { item });
     }
 
     public T Dequeue()
     {
-        var item = _items[0];
+        _count--;
 
-        _items.RemoveAt(0);
+        var priorityItem = _items.GetValueAtIndex(0);
 
-        return item.Item;
+        var item = priorityItem[0];
+
+        priorityItem.RemoveAt(0);
+
+        if (priorityItem.Count == 0)
+        {
+            _items.RemoveAt(0);
+        }
+
+        return item;
     }
 
     public int Trim(Func<T, bool> function)
     {
-        var count = 0;
+        var trimmed = 0;
 
-        var i = 0;
+        var i1 = 0;
 
-        while (i < _items.Count)
+        while (i1 < _items.Count)
         {
-            if (function(_items[i].Item))
-            {
-                _items.RemoveAt(i);
+            var priorityItem = _items.GetValueAtIndex(i1);
 
-                count++;
+            var i2 = 0;
+
+            while (i2 < priorityItem.Count)
+            {
+                if (function(priorityItem[i2]))
+                {
+                    priorityItem.RemoveAt(i2);
+
+                    trimmed++;
+
+                    continue;
+                }
+
+                i2++;
+            }
+
+            if (priorityItem.Count == 0)
+            {
+                _items.RemoveAt(i1);
 
                 continue;
             }
 
-            i++;
+            i1++;
         }
 
-        return count;
+        return trimmed;
     }
 }
