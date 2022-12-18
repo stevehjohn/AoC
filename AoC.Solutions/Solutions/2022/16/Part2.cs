@@ -31,16 +31,16 @@ public class Part2 : Base
         {
             var node = queue.Dequeue();
 
-            if (queue.Count % 100_000 == 0)
-            {
-                Console.WriteLine($"{max} ({queue.Count})");
-            }
+            //if (queue.Count % 100_000 == 0)
+            //{
+            //    Console.WriteLine($"{max} ({queue.Count})");
+            //}
 
             if (node.ReleasedPressure > max)
             {
                 max = node.ReleasedPressure;
 
-                Console.WriteLine($"{max} ({queue.Count})");
+                //Console.WriteLine($"{max} ({queue.Count})");
             }
 
             if (node.Time <= 0 && node.ElephantTime <= 0)
@@ -74,7 +74,7 @@ public class Part2 : Base
             {
                 max = node.ReleasedPressure;
 
-                Console.WriteLine($"{max} ({queue.Count})");
+                //Console.WriteLine($"{max} ({queue.Count})");
             }
 
             if (node.Time <= 0 && node.ElephantTime <= 0)
@@ -118,10 +118,10 @@ public class Part2 : Base
                         _added.Add(newItem);
                     }
 
-                    if (queue.Count % 10_000 == 0)
-                    {
-                        Console.WriteLine($"{max} ({queue.Count})");
-                    }
+                    //if (queue.Count % 10_000 == 0)
+                    //{
+                    //    Console.WriteLine($"{max} ({queue.Count})");
+                    //}
                 }
             }
         }
