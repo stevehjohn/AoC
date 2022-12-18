@@ -1,0 +1,21 @@
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Color = Microsoft.Xna.Framework.Color;
+
+namespace AoC.Visualisations.Infrastructure;
+
+public struct VertexPositionColorNormal : IVertexType
+{
+    public Vector3 Position;
+    public Color Color;
+    public Vector3 Normal;
+
+    public static readonly VertexDeclaration VertexDeclaration = new
+    (
+        new VertexElement(0, VertexElementFormat.Vector3, VertexElementUsage.Position, 0),
+        new VertexElement(sizeof(float) * 3, VertexElementFormat.Color, VertexElementUsage.Color, 0),
+        new VertexElement(sizeof(float) * 3 + 4, VertexElementFormat.Vector3, VertexElementUsage.Normal, 0)
+    );
+
+    VertexDeclaration IVertexType.VertexDeclaration => VertexDeclaration;
+}
