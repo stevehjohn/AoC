@@ -65,8 +65,6 @@ public class Part2 : Base
                 if (node.ReleasedPressure > max)
                 {
                     max = node.ReleasedPressure;
-
-                    Console.WriteLine(max);
                 }
 
                 continue;
