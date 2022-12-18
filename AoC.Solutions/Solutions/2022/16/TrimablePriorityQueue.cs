@@ -62,6 +62,8 @@ public class TrimablePriorityQueue<T, TP> where TP : INumber<TP>, IComparable<TP
 
                     trimmed++;
 
+                    _count--;
+
                     continue;
                 }
 
