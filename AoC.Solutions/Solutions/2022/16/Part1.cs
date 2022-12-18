@@ -77,7 +77,7 @@ public class Part1 : Base
 
                 priority += isOpen ? 20_000 : 0;
 
-                queue.Enqueue((valve.Valve, node.Time - valve.Cost, node.ReleasedPressure, node.OpenedValves, node.AvailableTotalFlow), priority);
+                queue.Enqueue((valve.Valve, node.Time - valve.Cost, node.ReleasedPressure, node.OpenedValves, node.AvailableTotalFlow), -priority);
             }
         }
 
