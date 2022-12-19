@@ -57,8 +57,6 @@ public class Part2 : Base
             if (node.ReleasedPressure > max)
             {
                 max = node.ReleasedPressure;
-
-                Console.WriteLine(max);
             }
 
             if (node.Time <= 0 && node.ElephantTime <= 0)
@@ -80,8 +78,6 @@ public class Part2 : Base
             if (node.ReleasedPressure > max)
             {
                 max = node.ReleasedPressure;
-
-                Console.WriteLine(max);
             }
 
             if (node.Time <= 0 && node.ElephantTime <= 0)
@@ -118,8 +114,6 @@ public class Part2 : Base
         {
             throw new PuzzleException("Solution not found");
         }
-
-        Console.WriteLine(added.Count);
 
         return max;
     }
