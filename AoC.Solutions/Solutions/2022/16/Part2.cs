@@ -6,7 +6,7 @@ public class Part2 : Base
 {
     private const int StartMinutes = 26;
 
-    private readonly HashSet<(Valve Valve, int Time, Valve ElephantValve, int OpenedValves)> _added = new();
+    private const int ArbitrarySize = 110_000_000;
 
     public override string GetAnswer()
     {
@@ -21,19 +21,33 @@ public class Part2 : Base
     {
         var max = 0;
 
-        var queue = new PriorityQueue<(Valve Valve, int Time, Valve ElephantValve, int ElephantTime, int ReleasedPressure, int OpenedValves, int AvailableTotalFlow), int>();
+        var added = new HashSet<(Valve Valve, int Time, Valve ElephantValve, int OpenedValves)>(ArbitrarySize);
+
+        var count = 1;
+
+        var readPosition = 0;
+
+        var addPosition = 1;
+
+        var queue = new (Valve Valve, int Time, Valve ElephantValve, int ElephantTime, int ReleasedPressure, int OpenedValves, int AvailableTotalFlow)[ArbitrarySize];
 
         var availableTotalFlow = Start.WorkingValves.Sum(v => v.Valve.FlowRate);
 
-        queue.Enqueue((Start, StartMinutes, Start, StartMinutes, 0, 0, availableTotalFlow), 0);
+        queue[0] = (Start, StartMinutes, Start, StartMinutes, 0, 0, availableTotalFlow);
 
-        while (queue.Count > 0)
+        while (count > 0)
         {
-            var node = queue.Dequeue();
+            var node = queue[readPosition];
+
+            readPosition++;
+
+            count--;
 
             if (node.ReleasedPressure > max)
             {
                 max = node.ReleasedPressure;
+
+                Console.WriteLine(max);
             }
 
             if (node.Time <= 0 && node.ElephantTime <= 0)
@@ -66,6 +80,8 @@ public class Part2 : Base
             if (node.ReleasedPressure > max)
             {
                 max = node.ReleasedPressure;
+
+                Console.WriteLine(max);
             }
 
             if (node.Time <= 0 && node.ElephantTime <= 0)
@@ -82,31 +98,17 @@ public class Part2 : Base
                         continue;
                     }
 
-                    var isOpen = (node.OpenedValves & node.Valve.Designation) > 0;
-
-                    var elephantOpen = (node.OpenedValves & elephantValve.Valve.Designation) > 0;
-
-                    var extraPressure = (node.Time - valve.Cost) * valve.Valve.FlowRate * (isOpen ? 0 : 1);
-
-                    extraPressure += (node.ElephantTime - elephantValve.Cost) * elephantValve.Valve.FlowRate * (elephantOpen ? 0 : 1);
-
-                    var totalPressure = node.ReleasedPressure + extraPressure;
-
-                    var priority = 10_000;
-
-                    priority -= totalPressure;
-
-                    priority += isOpen ? 20_000 : 0;
-
-                    priority += elephantOpen ? 20_000 : 0;
-
                     var newItem = (valve.Valve, node.Time + node.ElephantTime, elephantValve.Valve, node.OpenedValves);
 
-                    if (! _added.Contains(newItem))
+                    if (! added.Contains(newItem))
                     {
-                        queue.Enqueue((valve.Valve, node.Time - valve.Cost, elephantValve.Valve, node.ElephantTime - elephantValve.Cost, node.ReleasedPressure, node.OpenedValves, node.AvailableTotalFlow), -priority);
+                        queue[addPosition] = (valve.Valve, node.Time - valve.Cost, elephantValve.Valve, node.ElephantTime - elephantValve.Cost, node.ReleasedPressure, node.OpenedValves, node.AvailableTotalFlow);
+                        
+                        addPosition++;
 
-                        _added.Add(newItem);
+                        count++;
+
+                        added.Add(newItem);
                     }
                 }
             }
@@ -116,6 +118,8 @@ public class Part2 : Base
         {
             throw new PuzzleException("Solution not found");
         }
+
+        Console.WriteLine(added.Count);
 
         return max;
     }
