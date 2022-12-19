@@ -43,6 +43,17 @@ public class Part2 : Base
 
             count--;
 
+            if (node.Valve.FlowRate > 0 && (node.OpenedValves & node.Valve.Designation) == 0 && node.Time > 0)
+            {
+                node.Time--;
+
+                node.OpenedValves |= node.Valve.Designation;
+
+                node.ReleasedPressure += node.Valve.FlowRate * node.Time;
+
+                node.AvailableTotalFlow -= node.Valve.FlowRate;
+            }
+
             if (node.ReleasedPressure > max)
             {
                 max = node.ReleasedPressure;
@@ -53,17 +64,6 @@ public class Part2 : Base
             if (node.Time <= 0 && node.ElephantTime <= 0)
             {
                 continue;
-            }
-
-            if (node.Valve.FlowRate > 0 && (node.OpenedValves & node.Valve.Designation) == 0 && node.Time > 0)
-            {
-                node.Time--;
-
-                node.OpenedValves |= node.Valve.Designation;
-
-                node.ReleasedPressure += node.Valve.FlowRate * node.Time;
-
-                node.AvailableTotalFlow -= node.Valve.FlowRate;
             }
 
             if (node.ElephantValve.FlowRate > 0 && (node.OpenedValves & node.ElephantValve.Designation) == 0 && node.ElephantTime > 0)
