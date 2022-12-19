@@ -39,6 +39,8 @@ public abstract class Base : Solution
             Console.WriteLine($"BP Id: {blueprint.Id}");
 
             ExecuteBlueprint(blueprint, minutes);
+
+            break;
         }
     }
 
@@ -46,7 +48,7 @@ public abstract class Base : Solution
     {
         var max = 0;
 
-        var queue = new TrimableQueue<State>();
+        var queue = new Queue<State>();
 
         queue.Enqueue(new(0, 0, 0, 0, 1, 0, 0, 0, 0));
 
@@ -60,13 +62,9 @@ public abstract class Base : Solution
 
             if (i == 0)
             {
-                Console.Write(queue.Count);
+                Console.WriteLine(queue.Count);
 
                 i = 1_000_000;
-
-                var maxCaptured = max;
-
-                Console.WriteLine($" {queue.Trim(s => s.Geodes < maxCaptured && s.ElapsedTime > state.ElapsedTime)}");
             }
 
             if (state.ElapsedTime == minutes)
@@ -138,19 +136,6 @@ public abstract class Base : Solution
             return builds;
         }
 
-        if (state.Ore >= blueprint.OreCost.Ore)
-        {
-            build = new State(state);
-
-            build.Ore -= blueprint.OreCost.Ore;
-
-            build.OreBots++;
-
-            builds.Add(build);
-
-            return builds;
-        }
-
         if (state.Ore >= blueprint.ClayCost.Ore)
         {
             build = new State(state);
@@ -158,6 +143,19 @@ public abstract class Base : Solution
             build.Ore -= blueprint.ClayCost.Ore;
 
             build.ClayBots++;
+
+            builds.Add(build);
+
+            return builds;
+        }
+
+        if (state.Ore >= blueprint.OreCost.Ore)
+        {
+            build = new State(state);
+
+            build.Ore -= blueprint.OreCost.Ore;
+
+            build.OreBots++;
 
             builds.Add(build);
         }
