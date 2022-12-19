@@ -4,8 +4,6 @@ namespace AoC.Solutions.Solutions._2022._16;
 
 public class Part1 : Base
 {
-    private readonly HashSet<(Valve Valve, int Time, int OpenedValves)> _added = new();
-
     public override string GetAnswer()
     {
         ParseInput();
@@ -18,6 +16,8 @@ public class Part1 : Base
     private int Solve()
     {
         var max = 0;
+
+        var added = new HashSet<(Valve Valve, int Time, int OpenedValves)>();
 
         var queue = new Queue<(Valve Valve, int Time, int ReleasedPressure, int OpenedValves)>();
 
@@ -58,11 +58,11 @@ public class Part1 : Base
 
                 var newItem = (valve.Valve, node.Time, node.OpenedValves);
 
-                if (! _added.Contains(newItem))
+                if (! added.Contains(newItem))
                 {
                     queue.Enqueue((valve.Valve, node.Time - valve.Cost, node.ReleasedPressure, node.OpenedValves));
 
-                    _added.Add(newItem);
+                    added.Add(newItem);
                 }
             }
         }
