@@ -39,8 +39,6 @@ public abstract class Base : Solution
             Console.WriteLine($"BP Id: {blueprint.Id}");
 
             ExecuteBlueprint(blueprint, minutes);
-
-            break;
         }
     }
 
@@ -54,20 +52,19 @@ public abstract class Base : Solution
 
         var max = 0;
 
-        var i = 100_000;
-
         while (queue.Count > 0)
         {
-            if (i == 0)
-            {
-                Console.WriteLine(queue.Count);
+            var state = queue.Dequeue();
 
-                i = 100_000;
+            if (state.ElapsedTime == 24 && state.Geodes == 9)
+            {
+                Console.WriteLine(state);
             }
 
-            i--;
-
-            var state = queue.Dequeue();
+            if (state.ElapsedTime > minutes)
+            {
+                continue;
+            }
 
             if (state.Geodes > max)
             {
@@ -76,45 +73,37 @@ public abstract class Base : Solution
                 Console.WriteLine(max);
             }
 
-            if (state.ElapsedTime == minutes)
-            {
-                continue;
-            }
-
-            var builds = GetBuildOptions(blueprint, state);
-
-            state.Ore += state.OreBots;
-
-            state.Clay += state.ClayBots;
-
-            state.Obsidian += state.ObsidianBots;
-
-            state.Geodes += state.GeodeBots;
-
-            var newState = new State(state);
-
-            newState.ElapsedTime++;
-
-            queue.Enqueue(newState);
+            var builds = GetBuildOptions(blueprint, state, minutes);
 
             foreach (var build in builds)
             {
-                build.ElapsedTime++;
-
                 queue.Enqueue(build);
             }
         }
+
+        Console.WriteLine(max);
     }
 
-    private static List<State> GetBuildOptions(Blueprint blueprint,  State state)
+    private static List<State> GetBuildOptions(Blueprint blueprint, State state, int minutes)
     {
         var options = new List<State>();
 
-        State build;
+        var build = new State(state);
 
-        if (state.Ore >= blueprint.GeodeCost.Ore && state.Obsidian >= blueprint.GeodeCost.Obsidian)
+        // Geode Bot
+        while (build.Ore <= blueprint.GeodeCost.Ore && build.Obsidian <= blueprint.GeodeCost.Obsidian)
         {
-            build = new State(state);
+            GatherResources(build);
+
+            if (build.ElapsedTime >= minutes)
+            {
+                break;
+            }
+        }
+
+        if (build.Ore >= blueprint.GeodeCost.Ore && build.Obsidian >= blueprint.GeodeCost.Obsidian)
+        {
+            GatherResources(build);
 
             build.Ore -= blueprint.GeodeCost.Ore;
 
@@ -122,44 +111,112 @@ public abstract class Base : Solution
 
             build.GeodeBots++;
 
-            options.Add(build);
-        }
-
-        if (state.Ore >= blueprint.ObsidianCost.Ore && state.Clay >= blueprint.ObsidianCost.Clay && state.ObsidianBots < blueprint.MaxObsidianCost)
-        {
-            build = new State(state);
-
-            build.Ore -= blueprint.ObsidianCost.Ore;
-
-            build.Clay -= blueprint.ObsidianCost.Clay;
-
-            build.ObsidianBots++;
+            //Console.WriteLine(build);
 
             options.Add(build);
         }
 
-        if (state.Ore >= blueprint.ClayCost.Ore && state.ClayBots < blueprint.MaxClayCost)
+        // Obsidian Bot
+        if (state.ObsidianBots < blueprint.MaxObsidianCost)
         {
             build = new State(state);
 
-            build.Ore -= blueprint.ClayCost.Ore;
+            while (build.Ore <= blueprint.ObsidianCost.Ore && build.Clay <= blueprint.ObsidianCost.Clay)
+            {
+                GatherResources(build);
 
-            build.ClayBots++;
+                if (build.ElapsedTime >= minutes)
+                {
+                    break;
+                }
+            }
 
-            options.Add(build);
+            if (build.Ore >= blueprint.ObsidianCost.Ore && build.Clay >= blueprint.ObsidianCost.Clay)
+            {
+                GatherResources(build);
+
+                build.Ore -= blueprint.ObsidianCost.Ore;
+
+                build.Clay -= blueprint.ObsidianCost.Clay;
+
+                build.ObsidianBots++;
+
+                //Console.WriteLine(build);
+
+                options.Add(build);
+            }
         }
 
-        if (state.Ore >= blueprint.OreCost.Ore && state.OreBots < blueprint.MaxOreCost)
+        // Clay Bot
+        if (state.ClayBots < blueprint.MaxClayCost)
         {
             build = new State(state);
 
-            build.Ore -= blueprint.OreCost.Ore;
+            while (build.Ore <= blueprint.ClayCost.Ore)
+            {
+                GatherResources(build);
 
-            build.OreBots++;
+                if (build.ElapsedTime >= minutes)
+                {
+                    break;
+                }
+            }
 
-            options.Add(build);
+            if (build.Ore >= blueprint.ClayCost.Ore)
+            {
+                GatherResources(build);
+
+                build.Ore -= blueprint.ClayCost.Ore;
+
+                build.ClayBots++;
+
+                //Console.WriteLine(build);
+
+                options.Add(build);
+            }
+        }
+
+        // Ore Bot
+        if (state.OreBots < blueprint.MaxOreCost)
+        {
+            build = new State(state);
+            while (build.Ore <= blueprint.OreCost.Ore)
+            {
+                GatherResources(build);
+
+                if (build.ElapsedTime >= minutes)
+                {
+                    break;
+                }
+            }
+
+            if (build.Ore >= blueprint.OreCost.Ore)
+            {
+                GatherResources(build);
+
+                build.Ore -= blueprint.ClayCost.Ore;
+
+                build.OreBots++;
+
+                //Console.WriteLine(build);
+
+                options.Add(build);
+            }
         }
 
         return options;
+    }
+
+    private static void GatherResources(State state)
+    {
+        state.Ore += state.OreBots;
+
+        state.Clay += state.ClayBots;
+
+        state.Obsidian += state.ObsidianBots;
+
+        state.Geodes += state.GeodeBots;
+
+        state.ElapsedTime++;
     }
 }
