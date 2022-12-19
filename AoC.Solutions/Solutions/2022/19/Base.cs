@@ -36,6 +36,8 @@ public abstract class Base : Solution
     {
         foreach (var blueprint in _blueprints)
         {
+            Console.WriteLine($"BP Id: {blueprint.Id}");
+
             ExecuteBlueprint(blueprint, minutes);
         }
     }
@@ -44,25 +46,42 @@ public abstract class Base : Solution
     {
         var max = 0;
 
-        var queue = new PriorityQueue<State, int>();
+        var queue = new TrimableQueue<State>();
 
-        queue.Enqueue(new(0, 0, 0, 0, 1, 0, 0, 0, 0), 0);
+        queue.Enqueue(new(0, 0, 0, 0, 1, 0, 0, 0, 0));
+
+        var i = 1_000_000;
 
         while (queue.Count > 0)
         {
             var state = queue.Dequeue();
 
+            i--;
+
+            if (i == 0)
+            {
+                Console.Write(queue.Count);
+
+                i = 1_000_000;
+
+                var maxCaptured = max;
+
+                Console.WriteLine($" {queue.Trim(s => s.Geodes < maxCaptured && s.ElapsedTime > state.ElapsedTime)}");
+            }
+
             if (state.ElapsedTime == minutes)
             {
-                Console.WriteLine($"{state}. END!\n");
-
                 if (state.Geodes > max)
                 {
                     max = state.Geodes;
-                }
 
-                continue;
+                    Console.WriteLine($"\nMAX: {max}\n");
+                }
             }
+
+            state.ElapsedTime++;
+
+            var builds = GetPossibleBuilds(state, blueprint);
 
             state.Ore += state.OreBots;
 
@@ -72,39 +91,15 @@ public abstract class Base : Solution
 
             state.Geodes += state.GeodeBots;
 
-            state.ElapsedTime++;
+            var newState = new State(state);
 
-            var builds = GetPossibleBuilds(state, blueprint);
-
-            if (builds.Count == 0)
-            {
-                queue.Enqueue(new State(state), CalculatePriority(state));
-                
-                Console.WriteLine($"{state}. Score: {CalculatePriority(state)}");
-
-                continue;
-            }
-
-            if (builds.Count > 1)
-            {
-            }
+            queue.Enqueue(newState);
 
             foreach (var build in builds)
             {
-                queue.Enqueue(build, CalculatePriority(build));
-
-                Console.WriteLine($"{build}. Score: {CalculatePriority(build)}");
+                queue.Enqueue(build);
             }
-
-            Console.WriteLine();
         }
-
-        Console.WriteLine(max);
-    }
-
-    private static int CalculatePriority(State state)
-    {
-        return 100_000_000 - (1_000_000 * state.GeodeBots + 10_000 * state.ObsidianBots + 100 * state.ClayBots + state.OreBots);
     }
 
     private static List<State> GetPossibleBuilds(State state, Blueprint blueprint)
@@ -113,29 +108,22 @@ public abstract class Base : Solution
 
         State build;
 
-        if (state.Ore > blueprint.OreCost.Ore)
+        if (state.Ore >= blueprint.GeodeCost.Ore && state.Obsidian > blueprint.GeodeCost.Obsidian)
         {
             build = new State(state);
 
-            build.Ore -= blueprint.OreCost.Ore;
+            build.Ore -= blueprint.GeodeCost.Ore;
 
-            build.OreBots++;
+            build.Obsidian -= blueprint.GeodeCost.Obsidian;
 
-            builds.Add(build);
-        }
-
-        if (state.Ore > blueprint.ClayCost.Ore)
-        {
-            build = new State(state);
-
-            build.Ore -= blueprint.ClayCost.Ore;
-
-            build.ClayBots++;
+            build.GeodeBots++;
 
             builds.Add(build);
+
+            return builds;
         }
 
-        if (state.Ore > blueprint.ObsidianCost.Ore && state.Clay > blueprint.ObsidianCost.Clay)
+        if (state.Ore >= blueprint.ObsidianCost.Ore && state.Clay > blueprint.ObsidianCost.Clay)
         {
             build = new State(state);
 
@@ -146,17 +134,30 @@ public abstract class Base : Solution
             build.ObsidianBots++;
 
             builds.Add(build);
+
+            return builds;
         }
 
-        if (state.Ore > blueprint.GeodeCost.Ore && state.Obsidian > blueprint.GeodeCost.Obsidian)
+        if (state.Ore >= blueprint.OreCost.Ore)
         {
             build = new State(state);
 
-            build.Ore -= blueprint.ObsidianCost.Ore;
+            build.Ore -= blueprint.OreCost.Ore;
 
-            build.Obsidian -= blueprint.ObsidianCost.Obsidian;
+            build.OreBots++;
 
-            build.GeodeBots++;
+            builds.Add(build);
+
+            return builds;
+        }
+
+        if (state.Ore >= blueprint.ClayCost.Ore)
+        {
+            build = new State(state);
+
+            build.Ore -= blueprint.ClayCost.Ore;
+
+            build.ClayBots++;
 
             builds.Add(build);
         }
