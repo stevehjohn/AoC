@@ -21,13 +21,16 @@ public class Part1 : Base
 
         var queue = new Queue<(Valve Valve, int Time, int ReleasedPressure, int OpenedValves)>();
 
-        queue.Enqueue((Start, 30, 0, 0));
+        foreach (var valve in Start.WorkingValves)
+        {
+            queue.Enqueue((valve.Valve, 30 - valve.Cost, 0, 0));
+        }
 
         while (queue.Count > 0)
         {
             var node = queue.Dequeue();
 
-            if (node.Valve.FlowRate > 0 && (node.OpenedValves & node.Valve.Designation) == 0)
+            if ((node.OpenedValves & node.Valve.Designation) == 0)
             {
                 node.Time--;
 
