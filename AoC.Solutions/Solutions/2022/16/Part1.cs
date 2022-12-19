@@ -27,16 +27,6 @@ public class Part1 : Base
         {
             var node = queue.Dequeue();
 
-            if (node.ReleasedPressure > max)
-            {
-                max = node.ReleasedPressure;
-            }
-
-            if (node.Time <= 0)
-            {
-                continue;
-            }
-
             if (node.Valve.FlowRate > 0 && (node.OpenedValves & node.Valve.Designation) == 0)
             {
                 node.Time--;
@@ -58,7 +48,7 @@ public class Part1 : Base
 
             foreach (var valve in node.Valve.WorkingValves)
             {
-                if (node.Time - valve.Cost < 0)
+                if (node.Time - valve.Cost <= 0)
                 {
                     continue;
                 }
