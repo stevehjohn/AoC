@@ -12,6 +12,12 @@ public class Blueprint
 
     public Materials GeodeCost { get; }
 
+    public int MaxOreCost { get; }
+
+    public int MaxClayCost { get; }
+
+    public int MaxObsidianCost { get; }
+
     public Blueprint(int id, Materials oreCost, Materials clayCost, Materials obsidianCost, Materials geodeCost)
     {
         Id = id;
@@ -23,5 +29,11 @@ public class Blueprint
         ObsidianCost = obsidianCost;
 
         GeodeCost = geodeCost;
+        
+        MaxOreCost = new[] { oreCost.Ore, clayCost.Ore, obsidianCost.Ore, geodeCost.Ore}.Max();
+        
+        MaxClayCost = new[] { oreCost.Clay, clayCost.Clay, obsidianCost.Clay, geodeCost.Clay}.Max();
+        
+        MaxObsidianCost = new[] { oreCost.Obsidian, clayCost.Obsidian, obsidianCost.Obsidian, geodeCost.Obsidian}.Max();
     }
 }
