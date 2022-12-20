@@ -17,7 +17,7 @@ public class Part1 : Base
     {
         var max = 0;
 
-        var added = new HashSet<int>();
+        var added = new HashSet<(Valve Valve, int Time, int OpenedValves)>();
 
         var queue = new Queue<(Valve Valve, int Time, int ReleasedPressure, int OpenedValves)>();
 
@@ -56,19 +56,13 @@ public class Part1 : Base
                     continue;
                 }
 
-                var hash = new HashCode();
+                var newItem = (valve.Valve, node.Time, node.OpenedValves);
 
-                hash.Add(valve.Valve);
-                hash.Add(node.Time);
-                hash.Add(node.OpenedValves);
-
-                var code = hash.ToHashCode();
-
-                if (! added.Contains(code))
+                if (! added.Contains(newItem))
                 {
                     queue.Enqueue((valve.Valve, node.Time - valve.Cost, node.ReleasedPressure, node.OpenedValves));
 
-                    added.Add(code);
+                    added.Add(newItem);
                 }
             }
         }
