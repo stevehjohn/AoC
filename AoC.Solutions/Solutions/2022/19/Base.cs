@@ -38,8 +38,6 @@ public abstract class Base : Solution
 
         foreach (var blueprint in _blueprints)
         {
-            Console.WriteLine($"BP Id: {blueprint.Id}");
-
             var quality = ExecuteBlueprint(blueprint, minutes) * blueprint.Id;
 
             sumQuality += quality;
@@ -64,19 +62,16 @@ public abstract class Base : Solution
         {
             var state = queue.Dequeue();
 
-            // TODO: Good optimisation?
-            //if (state.Geodes < max && state.ElapsedTime > maxTime)
-            //{
-            //    continue;
-            //}
+            if (state.Geodes < max && state.ElapsedTime > maxTime)
+            {
+                continue;
+            }
 
             if (state.Geodes > max)
             {
                 max = state.Geodes;
 
                 maxTime = state.ElapsedTime;
-
-                Console.WriteLine($" {max} @ {state.ElapsedTime}");
             }
 
             var builds = GetBuildOptions(blueprint, state, minutes);
@@ -118,9 +113,6 @@ public abstract class Base : Solution
             build.GeodeBots++;
 
             options.Add(build);
-
-            // TODO: Is this a good optimisation?
-            // return options;
         }
 
         // Obsidian Bot
