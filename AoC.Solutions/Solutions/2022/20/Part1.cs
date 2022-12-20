@@ -8,6 +8,8 @@ public class Part1 : Base
 
         MixState();
 
-        return "";
+        var result = Solve();
+
+        return result.ToString();
     }
 }

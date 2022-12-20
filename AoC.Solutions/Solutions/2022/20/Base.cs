@@ -22,8 +22,6 @@ public abstract class Base : Solution
 
     protected void MixState()
     {
-        Output();
-
         for (var i = 0; i < _length; i++)
         {
             var iCaptured = i;
@@ -32,8 +30,27 @@ public abstract class Base : Solution
 
             _numbers.Move(source, source.Data.Value);
 
-            Output();
+            //Output();
         }
+    }
+
+    protected int Solve()
+    {
+        var start = _numbers.Get(n => n.Value == 0);
+
+        var sum = 0;
+
+        for (var i = 0; i < 3_000; i++)
+        {
+            start = start.Next;
+
+            if (i % 1000 == 999)
+            {
+                sum += start.Data.Value;
+            }
+        }
+        
+        return sum;
     }
 
     private void Output()
