@@ -89,6 +89,16 @@ public class Part2 : Base
             {
                 foreach (var valve in node.Valve.WorkingValves)
                 {
+                    if ((valve.Valve.Designation & elephantValve.Valve.Designation) > 0)
+                    {
+                        continue;
+                    }
+
+                    if ((valve.Valve.Designation & node.OpenedValves) > 0 && (elephantValve.Valve.Designation & node.OpenedValves) > 0)
+                    {
+                        continue;
+                    }
+
                     if (valve.Equals(elephantValve))
                     {
                         continue;
