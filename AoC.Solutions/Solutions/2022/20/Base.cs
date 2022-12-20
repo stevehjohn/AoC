@@ -48,25 +48,9 @@ public abstract class Base : Solution
             if (i % 1000 == 999)
             {
                 sum += start.Data.Value;
-
-                Console.WriteLine(start.Data.Value);
             }
         }
         
         return sum;
-    }
-
-    private void Output()
-    {
-        var s = _numbers.First;
-
-        for (var l = 0; l < 7; l++)
-        {
-            Console.Write($"{s.Data.Value, 2} ");
-
-            s = s.Next;
-        }
-
-        Console.WriteLine();
     }
 }
