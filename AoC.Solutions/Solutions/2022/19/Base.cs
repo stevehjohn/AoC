@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using System.Runtime.CompilerServices;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2022._19;
 
@@ -32,18 +33,18 @@ public abstract class Base : Solution
         }
     }
 
-    protected int Simulate(int minutes)
+    protected List<(int Best, int Id)> Simulate(int minutes)
     {
-        var sumQuality = 0;
+        var result = new List<(int Best, int Id)>();
 
         foreach (var blueprint in _blueprints)
         {
-            var quality = ExecuteBlueprint(blueprint, minutes) * blueprint.Id;
+            var best = ExecuteBlueprint(blueprint, minutes);
 
-            sumQuality += quality;
+            result.Add((best, blueprint.Id));
         }
 
-        return sumQuality;
+        return result;
     }
 
     private static int ExecuteBlueprint(Blueprint blueprint, int minutes)
@@ -78,13 +79,17 @@ public abstract class Base : Solution
 
             foreach (var build in builds)
             {
-                queue.Enqueue(build, build.ElapsedTime);
+                if (build.Geodes + (minutes - build.ElapsedTime) >= max)
+                {
+                    queue.Enqueue(build, build.ElapsedTime);
+                }
             }
         }
 
         return max;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
     private static List<State> GetBuildOptions(Blueprint blueprint, State state, int minutes)
     {
         var options = new List<State>();
@@ -201,6 +206,7 @@ public abstract class Base : Solution
         return options;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static void GatherResources(State state)
     {
         state.Ore += state.OreBots;
