@@ -8,8 +8,6 @@ public class CircularLinkedList<T>
 
     private Node<T> _end;
 
-    public Node<T> First => _start;
-
     private int _length;
 
     public void Add(T item)
