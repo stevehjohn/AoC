@@ -32,18 +32,18 @@ public abstract class Base : Solution
         }
     }
 
-    protected int Simulate(int minutes)
+    protected List<(int Best, int Id)> Simulate(int minutes)
     {
-        var sumQuality = 0;
+        var result = new List<(int Best, int Id)>();
 
         foreach (var blueprint in _blueprints)
         {
-            var quality = ExecuteBlueprint(blueprint, minutes) * blueprint.Id;
+            var best = ExecuteBlueprint(blueprint, minutes);
 
-            sumQuality += quality;
+            result.Add((best, blueprint.Id));
         }
 
-        return sumQuality;
+        return result;
     }
 
     private static int ExecuteBlueprint(Blueprint blueprint, int minutes)
@@ -91,9 +91,9 @@ public abstract class Base : Solution
 
         var build = new State(state);
 
-        // Geode Bot
         var delta = 0;
 
+        // Geode Bot
         while (build.Ore < blueprint.GeodeCost.Ore || build.Obsidian < blueprint.GeodeCost.Obsidian)
         {
             GatherResources(build);
@@ -125,8 +125,6 @@ public abstract class Base : Solution
         }
 
         // Obsidian Bot
-        delta = 0;
-
         if (state.ObsidianBots < blueprint.MaxObsidianCost)
         {
             build = new State(state);
@@ -139,8 +137,6 @@ public abstract class Base : Solution
                 {
                     break;
                 }
-
-                delta++;
             }
 
             if (build.Ore >= blueprint.ObsidianCost.Ore && build.Clay >= blueprint.ObsidianCost.Clay && build.ElapsedTime < minutes)
@@ -154,17 +150,10 @@ public abstract class Base : Solution
                 build.ObsidianBots++;
 
                 options.Add(build);
-
-                if (delta == 0)
-                {
-                    return options;
-                }
             }
         }
 
         // Clay Bot
-        delta = 0;
-
         if (state.ClayBots < blueprint.MaxClayCost)
         {
             build = new State(state);
@@ -177,8 +166,6 @@ public abstract class Base : Solution
                 {
                     break;
                 }
-
-                delta++;
             }
 
             if (build.Ore >= blueprint.ClayCost.Ore && build.ElapsedTime < minutes)
@@ -189,16 +176,11 @@ public abstract class Base : Solution
 
                 build.ClayBots++;
 
-                if (delta == 0)
-                {
-                    options.Add(build);
-                }
+                options.Add(build);
             }
         }
 
         // Ore Bot
-        delta = 0;
-
         if (state.OreBots < blueprint.MaxOreCost)
         {
             build = new State(state);
@@ -211,8 +193,6 @@ public abstract class Base : Solution
                 {
                     break;
                 }
-
-                delta++;
             }
 
             if (build.Ore >= blueprint.OreCost.Ore && build.ElapsedTime < minutes)
@@ -223,10 +203,7 @@ public abstract class Base : Solution
 
                 build.OreBots++;
 
-                if (delta == 0)
-                {
-                    options.Add(build);
-                }
+                options.Add(build);
             }
         }
 
