@@ -6,39 +6,40 @@ public abstract class Base : Solution
 {
     public override string Description => "Grove positioning system";
 
-    private readonly CircularLinkedList<(int Value, int InitialIndex)> _numbers = new();
+    private readonly CircularLinkedList<(long Value, int InitialIndex)> _numbers = new();
 
     private int _length;
 
-    protected void ParseInput()
+    protected void ParseInput(long key = 1)
     {
         _length = Input.Length;
 
         for (var i = 0; i < _length; i++)
         {
-            _numbers.Add((int.Parse(Input[i]), i));
+            _numbers.Add((long.Parse(Input[i]) * key, i));
         }
     }
 
-    protected void MixState()
+    protected void MixState(int times = 1)
     {
-        for (var i = 0; i < _length; i++)
+        for (var t = 0; t < times; t++)
         {
-            var iCaptured = i;
+            for (var i = 0; i < _length; i++)
+            {
+                var iCaptured = i;
 
-            var source = _numbers.Get(n => n.InitialIndex == iCaptured);
+                var source = _numbers.Get(n => n.InitialIndex == iCaptured);
 
-            _numbers.Move(source, source.Data.Value);
-
-            //Output();
+                _numbers.Move(source, source.Data.Value);
+            }
         }
     }
 
-    protected int Solve()
+    protected long Solve()
     {
         var start = _numbers.Get(n => n.Value == 0);
 
-        var sum = 0;
+        var sum = 0L;
 
         for (var i = 0; i < 3_000; i++)
         {
@@ -47,6 +48,8 @@ public abstract class Base : Solution
             if (i % 1000 == 999)
             {
                 sum += start.Data.Value;
+
+                Console.WriteLine(start.Data.Value);
             }
         }
         
