@@ -65,10 +65,10 @@ public abstract class Base : Solution
             var state = queue.Dequeue();
 
             // TODO: Good optimisation?
-            if (state.Geodes < max && state.ElapsedTime > maxTime)
-            {
-                continue;
-            }
+            //if (state.Geodes < max && state.ElapsedTime > maxTime)
+            //{
+            //    continue;
+            //}
 
             if (state.Geodes > max)
             {
@@ -76,7 +76,7 @@ public abstract class Base : Solution
 
                 maxTime = state.ElapsedTime;
 
-                Console.WriteLine($"{max} @ {state.ElapsedTime}");
+                Console.WriteLine($" {max} @ {state.ElapsedTime}");
             }
 
             var builds = GetBuildOptions(blueprint, state, minutes);
@@ -120,7 +120,7 @@ public abstract class Base : Solution
             options.Add(build);
 
             // TODO: Is this a good optimisation?
-            return options;
+            // return options;
         }
 
         // Obsidian Bot
