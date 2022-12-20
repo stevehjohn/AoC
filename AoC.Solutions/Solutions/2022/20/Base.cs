@@ -22,27 +22,31 @@ public abstract class Base : Solution
 
     protected void MixState()
     {
+        Output();
+
         for (var i = 0; i < _length; i++)
         {
             var iCaptured = i;
 
             var source = _numbers.Get(n => n.InitialIndex == iCaptured);
 
-            var target = source;
+            _numbers.Move(source, source.Data.Value);
 
-            for (var t = 0; t < Math.Abs(source.Value.Value); t++)
-            {
-                if (source.Value.Value < 0)
-                {
-                    target = target.Previous;
-                }
-                else
-                {
-                    target = target.Next;
-                }
-            }
-
-            _numbers.Swap(source, target);
+            Output();
         }
+    }
+
+    private void Output()
+    {
+        var s = _numbers.First;
+
+        for (var l = 0; l < 7; l++)
+        {
+            Console.Write($"{s.Data.Value, 2} ");
+
+            s = s.Next;
+        }
+
+        Console.WriteLine();
     }
 }
