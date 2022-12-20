@@ -21,7 +21,7 @@ public class Part2 : Base
     {
         var max = 0;
 
-        var added = new HashSet<(Valve Valve, int Time, Valve ElephantValve, int OpenedValves)>(ArbitrarySize);
+        var added = new HashSet<int>(ArbitrarySize);
 
         var count = 1;
 
@@ -89,14 +89,26 @@ public class Part2 : Base
             {
                 foreach (var valve in node.Valve.WorkingValves)
                 {
+                    if (node.Time - valve.Cost < 0 && node.ElephantTime - elephantValve.Cost < 0)
+                    {
+                        continue;
+                    }
+
                     if (node.ReleasedPressure + node.AvailableTotalFlow * node.ElephantTime * node.Time < max)
                     {
                         continue;
                     }
 
-                    var newItem = (valve.Valve, node.Time + node.ElephantTime, elephantValve.Valve, node.OpenedValves);
+                    var hash = new HashCode();
 
-                    if (! added.Contains(newItem))
+                    hash.Add(valve.Valve);
+                    hash.Add(node.Time + node.ElephantTime);
+                    hash.Add(elephantValve.Valve);
+                    hash.Add(node.OpenedValves);
+
+                    var code = hash.ToHashCode();
+
+                    if (! added.Contains(code))
                     {
                         queue[addPosition] = (valve.Valve, node.Time - valve.Cost, elephantValve.Valve, node.ElephantTime - elephantValve.Cost, node.ReleasedPressure, node.OpenedValves, node.AvailableTotalFlow);
                         
@@ -104,7 +116,7 @@ public class Part2 : Base
 
                         count++;
 
-                        added.Add(newItem);
+                        added.Add(code);
                     }
                 }
             }
