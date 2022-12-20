@@ -73,12 +73,22 @@ public class CircularLinkedList<T>
                 (node.Previous.Data, node.Data) = (node.Data, node.Previous.Data);
 
                 node = node.Previous;
+
+                if (node == _start)
+                {
+                    _start = _start.Next;
+                }
             }
             else
             {
                 (node.Data, node.Next.Data) = (node.Next.Data, node.Data);
 
                 node = node.Next;
+
+                if (node == _start)
+                {
+                    _start = _start.Previous;
+                }
             }
         }
     }
