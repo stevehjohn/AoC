@@ -51,9 +51,9 @@ public abstract class Base : Solution
     {
         var start = new State(0, 0, 0, 0, 1, 0, 0, 0, 0);
 
-        var queue = new Queue<State>();
+        var queue = new PriorityQueue<State, int>();
 
-        queue.Enqueue(start);
+        queue.Enqueue(start, 0);
 
         var max = 0;
 
@@ -81,7 +81,7 @@ public abstract class Base : Solution
             {
                 if (build.Geodes + (minutes - build.ElapsedTime) >= max)
                 {
-                    queue.Enqueue(build);
+                    queue.Enqueue(build, build.ElapsedTime);
                 }
             }
         }
