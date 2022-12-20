@@ -6,8 +6,8 @@ public class Part1 : Base
     {
         ParseInput();
 
-        var results = Simulate(24);
+        var answer = Simulate(24);
 
-        return results.Sum(r => r.Best * r.Id).ToString();
+        return answer.ToString();
     }
 }
