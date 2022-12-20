@@ -52,9 +52,9 @@ public abstract class Base : Solution
     {
         var start = new State(0, 0, 0, 0, 1, 0, 0, 0, 0);
 
-        var queue = new Queue<State>();
+        var queue = new PriorityQueue<State, int>();
 
-        queue.Enqueue(start);
+        queue.Enqueue(start, 0);
 
         var max = 0;
 
@@ -83,7 +83,7 @@ public abstract class Base : Solution
 
             foreach (var build in builds)
             {
-                queue.Enqueue(build);
+                queue.Enqueue(build, build.ElapsedTime);
             }
         }
 
@@ -97,7 +97,7 @@ public abstract class Base : Solution
         var build = new State(state);
 
         // Geode Bot
-        while (build.Ore <= blueprint.GeodeCost.Ore && build.Obsidian <= blueprint.GeodeCost.Obsidian)
+        while (build.Ore < blueprint.GeodeCost.Ore || build.Obsidian < blueprint.GeodeCost.Obsidian)
         {
             GatherResources(build);
 
@@ -128,7 +128,7 @@ public abstract class Base : Solution
         {
             build = new State(state);
 
-            while (build.Ore <= blueprint.ObsidianCost.Ore && build.Clay <= blueprint.ObsidianCost.Clay)
+            while (build.Ore < blueprint.ObsidianCost.Ore || build.Clay < blueprint.ObsidianCost.Clay)
             {
                 GatherResources(build);
 
@@ -157,7 +157,7 @@ public abstract class Base : Solution
         {
             build = new State(state);
 
-            while (build.Ore <= blueprint.ClayCost.Ore)
+            while (build.Ore < blueprint.ClayCost.Ore)
             {
                 GatherResources(build);
 
@@ -184,7 +184,7 @@ public abstract class Base : Solution
         {
             build = new State(state);
 
-            while (build.Ore <= blueprint.OreCost.Ore)
+            while (build.Ore < blueprint.OreCost.Ore)
             {
                 GatherResources(build);
 
