@@ -96,6 +96,8 @@ public abstract class Base : Solution
 
         var build = new State(state);
 
+        var delta = 0;
+
         // Geode Bot
         while (build.Ore < blueprint.GeodeCost.Ore || build.Obsidian < blueprint.GeodeCost.Obsidian)
         {
@@ -105,6 +107,8 @@ public abstract class Base : Solution
             {
                 break;
             }
+
+            delta++;
         }
 
         if (build.Ore >= blueprint.GeodeCost.Ore && build.Obsidian >= blueprint.GeodeCost.Obsidian && build.ElapsedTime < minutes)
@@ -118,6 +122,11 @@ public abstract class Base : Solution
             build.GeodeBots++;
 
             options.Add(build);
+
+            if (delta == 0)
+            {
+                return options;
+            }
         }
 
         // Obsidian Bot
