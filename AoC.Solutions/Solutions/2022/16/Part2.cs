@@ -89,6 +89,11 @@ public class Part2 : Base
             {
                 foreach (var valve in node.Valve.WorkingValves)
                 {
+                    if (valve.Equals(elephantValve))
+                    {
+                        continue;
+                    }
+
                     if (node.Time - valve.Cost < 0 && node.ElephantTime - elephantValve.Cost < 0)
                     {
                         continue;
