@@ -58,11 +58,14 @@ public abstract class Base : Solution
 
         var max = 0;
 
+        var maxTime = 0;
+
         while (queue.Count > 0)
         {
             var state = queue.Dequeue();
 
-            if (state.ElapsedTime > minutes)
+            // TODO: Good optimisation?
+            if (state.Geodes < max && state.ElapsedTime > maxTime)
             {
                 continue;
             }
@@ -70,6 +73,8 @@ public abstract class Base : Solution
             if (state.Geodes > max)
             {
                 max = state.Geodes;
+
+                maxTime = state.ElapsedTime;
 
                 Console.WriteLine($"{max} @ {state.ElapsedTime}");
             }
@@ -102,7 +107,7 @@ public abstract class Base : Solution
             }
         }
 
-        if (build.Ore >= blueprint.GeodeCost.Ore && build.Obsidian >= blueprint.GeodeCost.Obsidian)
+        if (build.Ore >= blueprint.GeodeCost.Ore && build.Obsidian >= blueprint.GeodeCost.Obsidian && build.ElapsedTime < minutes)
         {
             GatherResources(build);
 
@@ -113,6 +118,9 @@ public abstract class Base : Solution
             build.GeodeBots++;
 
             options.Add(build);
+
+            // TODO: Is this a good optimisation?
+            return options;
         }
 
         // Obsidian Bot
@@ -130,7 +138,7 @@ public abstract class Base : Solution
                 }
             }
 
-            if (build.Ore >= blueprint.ObsidianCost.Ore && build.Clay >= blueprint.ObsidianCost.Clay)
+            if (build.Ore >= blueprint.ObsidianCost.Ore && build.Clay >= blueprint.ObsidianCost.Clay && build.ElapsedTime < minutes)
             {
                 GatherResources(build);
 
@@ -159,7 +167,7 @@ public abstract class Base : Solution
                 }
             }
 
-            if (build.Ore >= blueprint.ClayCost.Ore)
+            if (build.Ore >= blueprint.ClayCost.Ore && build.ElapsedTime < minutes)
             {
                 GatherResources(build);
 
@@ -175,6 +183,7 @@ public abstract class Base : Solution
         if (state.OreBots < blueprint.MaxOreCost)
         {
             build = new State(state);
+
             while (build.Ore <= blueprint.OreCost.Ore)
             {
                 GatherResources(build);
@@ -185,7 +194,7 @@ public abstract class Base : Solution
                 }
             }
 
-            if (build.Ore >= blueprint.OreCost.Ore)
+            if (build.Ore >= blueprint.OreCost.Ore && build.ElapsedTime < minutes)
             {
                 GatherResources(build);
 
