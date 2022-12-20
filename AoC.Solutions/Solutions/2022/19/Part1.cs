@@ -6,8 +6,8 @@ public class Part1 : Base
     {
         ParseInput();
 
-        Simulate(24);
+        var answer = Simulate(24);
 
-        return "";
+        return answer.ToString();;
     }
 }

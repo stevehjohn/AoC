@@ -32,17 +32,23 @@ public abstract class Base : Solution
         }
     }
 
-    protected void Simulate(int minutes)
+    protected int Simulate(int minutes)
     {
+        var sumQuality = 0;
+
         foreach (var blueprint in _blueprints)
         {
             Console.WriteLine($"BP Id: {blueprint.Id}");
 
-            ExecuteBlueprint(blueprint, minutes);
+            var quality = ExecuteBlueprint(blueprint, minutes) * blueprint.Id;
+
+            sumQuality += quality;
         }
+
+        return sumQuality;
     }
 
-    private static void ExecuteBlueprint(Blueprint blueprint, int minutes)
+    private static int ExecuteBlueprint(Blueprint blueprint, int minutes)
     {
         var start = new State(0, 0, 0, 0, 1, 0, 0, 0, 0);
 
@@ -56,11 +62,6 @@ public abstract class Base : Solution
         {
             var state = queue.Dequeue();
 
-            if (state.ElapsedTime == 24 && state.Geodes == 9)
-            {
-                Console.WriteLine(state);
-            }
-
             if (state.ElapsedTime > minutes)
             {
                 continue;
@@ -70,7 +71,7 @@ public abstract class Base : Solution
             {
                 max = state.Geodes;
 
-                Console.WriteLine(max);
+                Console.WriteLine($"{max} @ {state.ElapsedTime}");
             }
 
             var builds = GetBuildOptions(blueprint, state, minutes);
@@ -81,7 +82,7 @@ public abstract class Base : Solution
             }
         }
 
-        Console.WriteLine(max);
+        return max;
     }
 
     private static List<State> GetBuildOptions(Blueprint blueprint, State state, int minutes)
@@ -111,8 +112,6 @@ public abstract class Base : Solution
 
             build.GeodeBots++;
 
-            //Console.WriteLine(build);
-
             options.Add(build);
         }
 
@@ -141,8 +140,6 @@ public abstract class Base : Solution
 
                 build.ObsidianBots++;
 
-                //Console.WriteLine(build);
-
                 options.Add(build);
             }
         }
@@ -170,8 +167,6 @@ public abstract class Base : Solution
 
                 build.ClayBots++;
 
-                //Console.WriteLine(build);
-
                 options.Add(build);
             }
         }
@@ -194,11 +189,9 @@ public abstract class Base : Solution
             {
                 GatherResources(build);
 
-                build.Ore -= blueprint.ClayCost.Ore;
+                build.Ore -= blueprint.OreCost.Ore;
 
                 build.OreBots++;
-
-                //Console.WriteLine(build);
 
                 options.Add(build);
             }
