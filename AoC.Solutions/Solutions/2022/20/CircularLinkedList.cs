@@ -10,8 +10,6 @@ public class CircularLinkedList<T>
 
     public Node<T> First => _start;
 
-    private int _length;
-
     public void Add(T item)
     {
         var newItem = new Node<T>(item);
@@ -40,8 +38,6 @@ public class CircularLinkedList<T>
         newItem.Next = _start;
 
         _start.Previous = _end;
-
-        _length++;
     }
 
     public Node<T> Get(Func<T, bool> function)
@@ -61,6 +57,28 @@ public class CircularLinkedList<T>
 
         throw new PuzzleException("Not found in list.");
     }
+
+    //public int GetNewIndex(Func<T, bool> function)
+    //{
+    //    var look = _start;
+
+    //    var index = 0;
+
+    //    do
+    //    {
+    //        if (function(look.Data))
+    //        {
+    //            return index;
+    //        }
+
+    //        look = look.Next;
+
+    //        index++;
+
+    //    } while (look != _start);
+
+    //    throw new PuzzleException("Not found in list.");
+    //}
 
     public void Move(Node<T> node, int places)
     {
