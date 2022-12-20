@@ -7,7 +7,11 @@ public class CircularLinkedList<T>
     private Node<T> _start;
 
     private Node<T> _end;
-    
+
+    public Node<T> First => _start;
+
+    private int _length;
+
     public void Add(T item)
     {
         var newItem = new Node<T>(item);
@@ -36,6 +40,8 @@ public class CircularLinkedList<T>
         newItem.Next = _start;
 
         _start.Previous = _end;
+
+        _length++;
     }
 
     public Node<T> Get(Func<T, bool> function)
@@ -44,7 +50,7 @@ public class CircularLinkedList<T>
 
         do
         {
-            if (function(look.Value))
+            if (function(look.Data))
             {
                 return look;
             }
@@ -56,18 +62,26 @@ public class CircularLinkedList<T>
         throw new PuzzleException("Not found in list.");
     }
 
-    public void Swap(Node<T> left, Node<T> right)
+    public void Move(Node<T> node, int places)
     {
-        var tempPrevious = left.Previous;
+        var delta = places > 0 ? 1 : -1;
 
-        var tempNext = left.Next;
+        var passesStart = false;
 
-        left.Next = right.Next;
+        for (var i = 0; i != places; i += delta)
+        {
+            if (delta < 0)
+            {
+                (node.Previous.Data, node.Data) = (node.Data, node.Previous.Data);
 
-        left.Previous = right.Previous;
+                node = node.Previous;
+            }
+            else
+            {
+                (node.Data, node.Next.Data) = (node.Next.Data, node.Data);
 
-        right.Next = tempNext;
-
-        right.Previous = tempPrevious;
+                node = node.Next;
+            }
+        }
     }
 }
