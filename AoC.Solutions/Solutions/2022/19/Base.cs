@@ -78,7 +78,10 @@ public abstract class Base : Solution
 
             foreach (var build in builds)
             {
-                queue.Enqueue(build, build.ElapsedTime);
+                if (build.Geodes + (minutes - build.ElapsedTime) >= max)
+                {
+                    queue.Enqueue(build, build.ElapsedTime);
+                }
             }
         }
 
