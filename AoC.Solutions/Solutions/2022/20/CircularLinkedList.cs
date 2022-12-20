@@ -66,8 +66,6 @@ public class CircularLinkedList<T>
     {
         var delta = places > 0 ? 1 : -1;
 
-        var passesStart = false;
-
         for (var i = 0; i != places; i += delta)
         {
             if (delta < 0)
