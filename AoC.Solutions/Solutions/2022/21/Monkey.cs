@@ -10,9 +10,9 @@ public class Monkey
 
     public string Operator { get; set; }
 
-    public double Value { get; set; }
+    public long? Value { get; set; }
 
-    public Monkey(string name, string left, string right, string @operator, double value)
+    public Monkey(string name, string left, string right, string @operator, long? value)
     {
         Name = name;
 
