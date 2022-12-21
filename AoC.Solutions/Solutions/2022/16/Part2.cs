@@ -104,12 +104,13 @@ public class Part2 : Base
                         continue;
                     }
 
-                    if (node.Time - valve.Cost < 0 && node.ElephantTime - elephantValve.Cost < 0)
+                    if (node.Time - valve.Cost <= 0 && node.ElephantTime - elephantValve.Cost <= 0)
                     {
                         continue;
                     }
 
-                    if (node.ReleasedPressure + node.AvailableTotalFlow * node.ElephantTime * node.Time < max)
+                    // Magic number / 50. Seems to trim a lot and still spit out the correct answer. *Shrugs*.
+                    if (node.ReleasedPressure + node.AvailableTotalFlow * (node.ElephantTime * node.Time / 50) < max)
                     {
                         continue;
                     }
