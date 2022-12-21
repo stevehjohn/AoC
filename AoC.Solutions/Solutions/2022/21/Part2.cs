@@ -75,11 +75,25 @@ public class Part2 : Base
                     break;
 
                 case "*":
-                    expected = right / left;
+                    if (rightMonkey.Value == null)
+                    {
+                        expected = right / left;
+                    }
+                    else
+                    {
+                        expected = left / right;
+                    }
                     break;
 
                 default:
-                    expected = right - left;
+                    if (rightMonkey.Value == null)
+                    {
+                        expected = right - left;
+                    }
+                    else
+                    {
+                        expected = left - right;
+                    }
                     break;
             }
 
