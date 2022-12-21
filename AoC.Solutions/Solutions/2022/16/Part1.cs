@@ -17,7 +17,7 @@ public class Part1 : Base
     {
         var max = 0;
 
-        var added = new HashSet<(Valve Valve, int Time, int OpenedValves)>();
+        var added = new HashSet<(int ValveDesignation, int Time, int OpenedValves)>();
 
         var queue = new Queue<(Valve Valve, int Time, int ReleasedPressure, int OpenedValves)>();
 
@@ -56,7 +56,12 @@ public class Part1 : Base
                     continue;
                 }
 
-                var newItem = (valve.Valve, node.Time, node.OpenedValves);
+                if ((valve.Valve.Designation & node.OpenedValves) > 0)
+                {
+                    continue;
+                }
+
+                var newItem = (valve.Valve.Designation, node.Time, node.OpenedValves);
 
                 if (! added.Contains(newItem))
                 {
