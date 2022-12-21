@@ -22,7 +22,7 @@ public abstract class Base : Solution
 
             var rightParts = parts[1].Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
-            var value = 0d;
+            long? value = null;
 
             string leftName = null;
 
@@ -32,7 +32,7 @@ public abstract class Base : Solution
 
             if (rightParts.Length == 1)
             {
-                value = double.Parse(rightParts[0]);
+                value = long.Parse(rightParts[0]);
             }
             else
             {
@@ -47,7 +47,7 @@ public abstract class Base : Solution
         }
     }
 
-    protected double Solve(string name = RootMonkeyName)
+    protected long? Solve(string name = RootMonkeyName)
     {
         var monkey = Monkeys[name];
 
@@ -60,24 +60,29 @@ public abstract class Base : Solution
 
         var rightValue = Solve(monkey.Right);
 
-        double value;
+        if (leftValue == null || rightValue == null)
+        {
+            return null;
+        }
+
+        long value;
 
         switch (monkey.Operator)
         {
             case "-":
-                value = leftValue - rightValue;
+                value = leftValue.Value - rightValue.Value;
                 break;
 
             case "/":
-                value = leftValue / rightValue;
+                value = leftValue.Value / rightValue.Value;
                 break;
 
             case "*":
-                value = leftValue * rightValue;
+                value = leftValue.Value * rightValue.Value;
                 break;
 
             default:
-                value = leftValue + rightValue;
+                value = leftValue.Value + rightValue.Value;
                 break;
         }
 

@@ -7,7 +7,7 @@ public class Part2 : Base
     {
         ParseInput();
 
-        Monkeys[HumanMonkeyName].Value = double.NaN;
+        Monkeys[HumanMonkeyName].Value = null;
 
         var rootMonkey = Monkeys[RootMonkeyName];
 
@@ -17,19 +17,25 @@ public class Part2 : Base
 
         double answer;
 
-        if (double.IsNaN(rootLeft))
+        Console.WriteLine("root: pppw == 150");
+
+        // ReSharper disable PossibleInvalidOperationException
+        if (rootLeft == null)
         {
-            answer = SolveForHuman(rootMonkey.Left, rootRight);
+            answer = SolveForHuman(rootMonkey.Left, rootRight.Value);
         }
         else
         {
-            answer = SolveForHuman(rootMonkey.Right, rootLeft);
+            answer = SolveForHuman(rootMonkey.Right, rootLeft.Value);
         }
+        // ReSharper restore PossibleInvalidOperationException
+
+        Console.WriteLine();
 
         return answer.ToString();
     }
 
-    private double SolveForHuman(string name, double expected)
+    private long SolveForHuman(string name, long expected)
     {
         var monkey = Monkeys[name];
 
@@ -41,22 +47,24 @@ public class Part2 : Base
 
             var rightMonkey = Monkeys[monkey.Right];
 
-            double left;
+            long left;
 
-            double right;
+            long right;
 
-            if (double.IsNaN(leftMonkey.Value))
+            // ReSharper disable PossibleInvalidOperationException
+            if (leftMonkey.Value == null)
             {
                 left = expected;
 
-                right = rightMonkey.Value;
+                right = rightMonkey.Value.Value;
             }
             else
             {
-                left = leftMonkey.Value;
+                left = leftMonkey.Value.Value;
 
                 right = expected;
             }
+            // ReSharper restore PossibleInvalidOperationException
 
             switch (monkey.Operator)
             {
@@ -77,7 +85,7 @@ public class Part2 : Base
                     break;
             }
 
-            if (double.IsNaN(leftMonkey.Value))
+            if (leftMonkey.Value == null)
             {
                 Console.Write($"({expected}) {monkey.Operator} {right}");
 
@@ -93,24 +101,24 @@ public class Part2 : Base
             Console.WriteLine();
         }
 
-        return 0;
+        return expected;
     }
 
-    private double SolveForHumanX(string branchStart, double expected)
-    {
-        var monkey = Monkeys[HumanMonkeyName];
+    //private double SolveForHumanX(string branchStart, double expected)
+    //{
+    //    var monkey = Monkeys[HumanMonkeyName];
 
-        while (monkey.Name != RootMonkeyName)
-        {
-            monkey = Monkeys.SingleOrDefault(m => m.Value.Left == monkey.Name).Value ?? Monkeys.SingleOrDefault(m => m.Value.Right == monkey.Name).Value;
+    //    while (monkey.Name != RootMonkeyName)
+    //    {
+    //        monkey = Monkeys.SingleOrDefault(m => m.Value.Left == monkey.Name).Value ?? Monkeys.SingleOrDefault(m => m.Value.Right == monkey.Name).Value;
 
-            var left = Monkeys[monkey.Left].Value != 0 ? Monkeys[monkey.Left].Value.ToString() : monkey.Left;
+    //        var left = Monkeys[monkey.Left].Value != 0 ? Monkeys[monkey.Left].Value.ToString() : monkey.Left;
 
-            var right = Monkeys[monkey.Right].Value != 0 ? Monkeys[monkey.Right].Value.ToString() : monkey.Right;
+    //        var right = Monkeys[monkey.Right].Value != 0 ? Monkeys[monkey.Right].Value.ToString() : monkey.Right;
 
-            Console.WriteLine($"{monkey.Name}: {left} {monkey.Operator} {right}");
-        }
+    //        Console.WriteLine($"{monkey.Name}: {left} {monkey.Operator} {right}");
+    //    }
 
-        return 0d;
-    }
+    //    return 0d;
+    //}
 }
