@@ -1,5 +1,4 @@
 ﻿// ReSharper disable SpecifyACultureInStringConversionExplicitly
-
 namespace AoC.Solutions.Solutions._2022._21;
 
 public class Part2 : Base
@@ -34,71 +33,64 @@ public class Part2 : Base
     {
         var monkey = Monkeys[name];
 
-        while (monkey.Name != RootMonkeyName)
+        while (monkey.Name != HumanMonkeyName)
         {
-            Monkey valueMonkey;
-
-            Monkey unknownMonkey;
-
-            double leftValue;
-
-            double rightValue;
-
-            if (double.IsNaN(Monkeys[monkey.Left].Value))
-            {
-                valueMonkey = Monkeys[monkey.Right];
-
-                unknownMonkey = Monkeys[monkey.Left];
-
-                leftValue = expected;
-
-                rightValue = valueMonkey.Value;
-            }
-            else
-            {
-                valueMonkey = Monkeys[monkey.Left];
-
-                unknownMonkey = Monkeys[monkey.Right];
-
-                leftValue = valueMonkey.Value;
-
-                rightValue = expected;
-            }
+            Console.Write($"{monkey.Name}: ");
 
             var leftMonkey = Monkeys[monkey.Left];
 
             var rightMonkey = Monkeys[monkey.Right];
 
-            //var leftValue = double.IsNaN(leftMonkey.Value) ? expected : leftMonkey.Value;
+            double left;
 
-            //var rightValue = double.IsNaN(rightMonkey.Value) ? expected : rightMonkey.Value;
+            double right;
+
+            if (double.IsNaN(leftMonkey.Value))
+            {
+                left = expected;
+
+                right = rightMonkey.Value;
+            }
+            else
+            {
+                left = leftMonkey.Value;
+
+                right = expected;
+            }
 
             switch (monkey.Operator)
             {
                 case "-":
-                    expected = leftValue + rightValue;
+                    expected = right + left;
                     break;
 
                 case "/":
-                    expected = leftValue * rightValue;
+                    expected = right * left;
                     break;
 
                 case "*":
-                    expected = leftValue / rightValue;
+                    expected = right / left;
                     break;
 
                 default:
-                    expected = leftValue - rightValue;
+                    expected = right - left;
                     break;
             }
 
-            var left = leftMonkey.Value != 0 ? leftMonkey.Value.ToString() : monkey.Left;
+            if (double.IsNaN(leftMonkey.Value))
+            {
+                Console.Write($"({expected}) {monkey.Operator} {right}");
 
-            var right = rightMonkey.Value != 0 ? rightMonkey.Value.ToString() : monkey.Right;
+                monkey = Monkeys[monkey.Left];
+            }
+            else
+            {
+                Console.Write($"{left} {monkey.Operator} ({expected})");
+                
+                monkey = Monkeys[monkey.Right];
+            }
 
-            Console.WriteLine($"{monkey.Name}: {left} {monkey.Operator} {right} ({expected})");
-
-            monkey = unknownMonkey;
+            Console.WriteLine();
         }
 
         return 0;
