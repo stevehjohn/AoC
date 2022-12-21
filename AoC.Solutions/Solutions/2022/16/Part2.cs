@@ -87,30 +87,18 @@ public class Part2 : Base
 
             foreach (var elephantValve in node.ElephantValve.WorkingValves)
             {
-                if ((elephantValve.Valve.Designation & node.OpenedValves) > 0)
+                if ((elephantValve.Valve.Designation & node.OpenedValves) > 0 || node.ElephantTime - elephantValve.Cost <= 0)
                 {
                     continue;
                 }
 
                 foreach (var valve in node.Valve.WorkingValves)
                 {
-                    if ((valve.Valve.Designation & node.OpenedValves) > 0)
-                    {
-                        continue;
-                    }
-
-                    if ((valve.Valve.Designation & elephantValve.Valve.Designation) > 0)
-                    {
-                        continue;
-                    }
-
-                    if (node.Time - valve.Cost <= 0 && node.ElephantTime - elephantValve.Cost <= 0)
-                    {
-                        continue;
-                    }
-
                     // Magic number / 50. Seems to trim a lot and still spit out the correct answer. *Shrugs*.
-                    if (node.ReleasedPressure + node.AvailableTotalFlow * (node.ElephantTime * node.Time / 50) < max)
+                    if ((valve.Valve.Designation & node.OpenedValves) > 0
+                        || node.Time - valve.Cost <= 0
+                        || (valve.Valve.Designation & elephantValve.Valve.Designation) > 0
+                        || node.ReleasedPressure + node.AvailableTotalFlow * (node.ElephantTime * node.Time / 50) < max)
                     {
                         continue;
                     }

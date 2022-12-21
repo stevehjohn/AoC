@@ -51,12 +51,7 @@ public class Part1 : Base
 
             foreach (var valve in node.Valve.WorkingValves)
             {
-                if (node.Time - valve.Cost <= 0)
-                {
-                    continue;
-                }
-
-                if ((valve.Valve.Designation & node.OpenedValves) > 0)
+                if (node.Time - valve.Cost <= 0 || (valve.Valve.Designation & node.OpenedValves) > 0)
                 {
                     continue;
                 }
