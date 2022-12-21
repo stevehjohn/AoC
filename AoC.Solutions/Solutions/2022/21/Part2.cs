@@ -17,8 +17,6 @@ public class Part2 : Base
 
         double answer;
 
-        Console.WriteLine("root: pppw == 150");
-
         // ReSharper disable PossibleInvalidOperationException
         if (rootLeft == null)
         {
@@ -103,22 +101,4 @@ public class Part2 : Base
 
         return expected;
     }
-
-    //private double SolveForHumanX(string branchStart, double expected)
-    //{
-    //    var monkey = Monkeys[HumanMonkeyName];
-
-    //    while (monkey.Name != RootMonkeyName)
-    //    {
-    //        monkey = Monkeys.SingleOrDefault(m => m.Value.Left == monkey.Name).Value ?? Monkeys.SingleOrDefault(m => m.Value.Right == monkey.Name).Value;
-
-    //        var left = Monkeys[monkey.Left].Value != 0 ? Monkeys[monkey.Left].Value.ToString() : monkey.Left;
-
-    //        var right = Monkeys[monkey.Right].Value != 0 ? Monkeys[monkey.Right].Value.ToString() : monkey.Right;
-
-    //        Console.WriteLine($"{monkey.Name}: {left} {monkey.Operator} {right}");
-    //    }
-
-    //    return 0d;
-    //}
 }
