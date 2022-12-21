@@ -62,7 +62,8 @@ public abstract class Base : Solution
         {
             var state = queue.Dequeue();
 
-            if (state.Geodes < max && state.ElapsedTime > maxTime)
+            // Seems like a hack-y optimisation, but it works...
+            if (state.Geodes + 1 < max && state.ElapsedTime >= maxTime)
             {
                 continue;
             }
@@ -78,7 +79,8 @@ public abstract class Base : Solution
 
             foreach (var build in builds)
             {
-                if (build.Geodes + (minutes - build.ElapsedTime) / 4 >= max)
+                // Dunno why / 100 seems so helpful to runtime, but it is.
+                if (build.Geodes + (minutes - build.ElapsedTime) / 100 >= max)
                 {
                     queue.Enqueue(build, build.ElapsedTime);
                 }
