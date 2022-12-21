@@ -37,8 +37,6 @@ public class Part2 : Base
     {
         var monkey = Monkeys[name];
 
-        Console.WriteLine($"root: (qmfl) + {Monkeys["qdpj"].Value}");
-
         while (monkey.Name != HumanMonkeyName)
         {
             Console.Write($"{monkey.Name}: ");
