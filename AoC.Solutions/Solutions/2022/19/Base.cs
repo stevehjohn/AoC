@@ -8,6 +8,8 @@ public abstract class Base : Solution
 
     private readonly List<Blueprint> _blueprints = new();
 
+    private readonly List<State> _buildOptions = new();
+
     protected void ParseInput()
     {
         foreach (var line in Input)
@@ -46,7 +48,7 @@ public abstract class Base : Solution
         return result;
     }
 
-    private static int ExecuteBlueprint(Blueprint blueprint, int minutes)
+    private int ExecuteBlueprint(Blueprint blueprint, int minutes)
     {
         var start = new State(0, 0, 0, 0, 1, 0, 0, 0, 0);
 
@@ -75,16 +77,11 @@ public abstract class Base : Solution
                 maxTime = state.ElapsedTime;
             }
 
-            var builds = GetBuildOptions(blueprint, state, minutes);
+            GenerateBuildOptions(blueprint, state, minutes);
 
-            if (builds == null)
+            foreach (var build in _buildOptions)
             {
-                continue;
-            }
-
-            foreach (var build in builds)
-            {
-                // Dunno why / 100 seems so helpful to runtime, but it is.
+                // Dunno why / 100 seems so helpful to execution time, but it is.
                 if (build.Geodes + (minutes - build.ElapsedTime) / 100 >= max)
                 {
                     queue.Enqueue(build, build.ElapsedTime);
@@ -95,14 +92,9 @@ public abstract class Base : Solution
         return max;
     }
 
-    private static List<State> GetBuildOptions(Blueprint blueprint, State state, int minutes)
+    private void GenerateBuildOptions(Blueprint blueprint, State state, int minutes)
     {
-        if (state.ElapsedTime >= minutes)
-        {
-            return null;
-        }
-
-        var options = new List<State>();
+        _buildOptions.Clear();
 
         var build = new State(state);
 
@@ -131,11 +123,11 @@ public abstract class Base : Solution
 
             build.GeodeBots++;
 
-            options.Add(build);
+            _buildOptions.Add(build);
 
             if (delta == 0)
             {
-                return options;
+                return;
             }
         }
 
@@ -168,11 +160,11 @@ public abstract class Base : Solution
 
                 build.ObsidianBots++;
 
-                options.Add(build);
+                _buildOptions.Add(build);
 
                 if (delta == 0)
                 {
-                    return options;
+                    return;
                 }
             }
         }
@@ -202,7 +194,7 @@ public abstract class Base : Solution
 
                 build.ClayBots++;
 
-                options.Add(build);
+                _buildOptions.Add(build);
             }
         }
 
@@ -229,11 +221,9 @@ public abstract class Base : Solution
 
                 build.OreBots++;
 
-                options.Add(build);
+                _buildOptions.Add(build);
             }
         }
-
-        return options;
     }
 
     private static void GatherResources(State state)
