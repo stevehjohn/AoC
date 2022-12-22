@@ -8,6 +8,8 @@ public abstract class Base : Solution
 
     private readonly List<Blueprint> _blueprints = new();
 
+    private readonly List<State> _buildOptions = new();
+
     protected void ParseInput()
     {
         foreach (var line in Input)
@@ -46,7 +48,7 @@ public abstract class Base : Solution
         return result;
     }
 
-    private static int ExecuteBlueprint(Blueprint blueprint, int minutes)
+    private int ExecuteBlueprint(Blueprint blueprint, int minutes)
     {
         var start = new State(0, 0, 0, 0, 1, 0, 0, 0, 0);
 
@@ -75,14 +77,9 @@ public abstract class Base : Solution
                 maxTime = state.ElapsedTime;
             }
 
-            var builds = GetBuildOptions(blueprint, state, minutes);
+            GetBuildOptions(blueprint, state, minutes);
 
-            if (builds == null)
-            {
-                continue;
-            }
-
-            foreach (var build in builds)
+            foreach (var build in _buildOptions)
             {
                 // Dunno why / 100 seems so helpful to runtime, but it is.
                 if (build.Geodes + (minutes - build.ElapsedTime) / 100 >= max)
@@ -95,14 +92,13 @@ public abstract class Base : Solution
         return max;
     }
 
-    private static List<State> GetBuildOptions(Blueprint blueprint, State state, int minutes)
+    private void GetBuildOptions(Blueprint blueprint, State state, int minutes)
     {
         if (state.ElapsedTime >= minutes)
         {
-            return null;
         }
 
-        var options = new List<State>();
+        _buildOptions.Clear();
 
         var build = new State(state);
 
@@ -131,11 +127,11 @@ public abstract class Base : Solution
 
             build.GeodeBots++;
 
-            options.Add(build);
+            _buildOptions.Add(build);
 
             if (delta == 0)
             {
-                return options;
+                return;
             }
         }
 
@@ -168,11 +164,11 @@ public abstract class Base : Solution
 
                 build.ObsidianBots++;
 
-                options.Add(build);
+                _buildOptions.Add(build);
 
                 if (delta == 0)
                 {
-                    return options;
+                    return;
                 }
             }
         }
@@ -202,7 +198,7 @@ public abstract class Base : Solution
 
                 build.ClayBots++;
 
-                options.Add(build);
+                _buildOptions.Add(build);
             }
         }
 
@@ -211,14 +207,17 @@ public abstract class Base : Solution
         {
             build = new State(state);
 
-            var cycles = (int) Math.Ceiling((blueprint.OreCost.Ore - build.Ore) / (float) build.OreBots);
-
-            if (cycles > 0)
+            while (build.Ore < blueprint.OreCost.Ore)
             {
-                GatherResources(build, cycles);
+                GatherResources(build);
+
+                if (build.ElapsedTime >= minutes)
+                {
+                    break;
+                }
             }
 
-            if (build.ElapsedTime < minutes)
+            if (build.Ore >= blueprint.OreCost.Ore && build.ElapsedTime < minutes)
             {
                 GatherResources(build);
 
@@ -226,23 +225,21 @@ public abstract class Base : Solution
 
                 build.OreBots++;
 
-                options.Add(build);
+                _buildOptions.Add(build);
             }
         }
-
-        return options;
     }
 
-    private static void GatherResources(State state, int cycles = 1)
+    private static void GatherResources(State state)
     {
-        state.Ore += state.OreBots * cycles;
+        state.Ore += state.OreBots;
 
-        state.Clay += state.ClayBots * cycles;
+        state.Clay += state.ClayBots;
 
-        state.Obsidian += state.ObsidianBots * cycles;
+        state.Obsidian += state.ObsidianBots;
 
-        state.Geodes += state.GeodeBots * cycles;
+        state.Geodes += state.GeodeBots;
 
-        state.ElapsedTime += cycles;
+        state.ElapsedTime++;
     }
 }
