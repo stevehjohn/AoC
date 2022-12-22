@@ -77,11 +77,11 @@ public abstract class Base : Solution
                 maxTime = state.ElapsedTime;
             }
 
-            GetBuildOptions(blueprint, state, minutes);
+            GenerateBuildOptions(blueprint, state, minutes);
 
             foreach (var build in _buildOptions)
             {
-                // Dunno why / 100 seems so helpful to runtime, but it is.
+                // Dunno why / 100 seems so helpful to execution time, but it is.
                 if (build.Geodes + (minutes - build.ElapsedTime) / 100 >= max)
                 {
                     queue.Enqueue(build, build.ElapsedTime);
@@ -92,12 +92,8 @@ public abstract class Base : Solution
         return max;
     }
 
-    private void GetBuildOptions(Blueprint blueprint, State state, int minutes)
+    private void GenerateBuildOptions(Blueprint blueprint, State state, int minutes)
     {
-        if (state.ElapsedTime >= minutes)
-        {
-        }
-
         _buildOptions.Clear();
 
         var build = new State(state);
@@ -178,16 +174,11 @@ public abstract class Base : Solution
         {
             build = new State(state);
 
-            while (build.Ore < blueprint.ClayCost.Ore)
+            var cycles = (int) Math.Ceiling((blueprint.ClayCost.Ore - build.Ore) / (float) build.OreBots);
+
+            if (cycles > 0)
             {
-                GatherResources(build);
-
-                if (build.ElapsedTime >= minutes)
-                {
-                    break;
-                }
-
-                delta++;
+                GatherResources(build, cycles);
             }
 
             if (build.Ore >= blueprint.ClayCost.Ore && build.ElapsedTime < minutes)
@@ -207,17 +198,14 @@ public abstract class Base : Solution
         {
             build = new State(state);
 
-            while (build.Ore < blueprint.OreCost.Ore)
-            {
-                GatherResources(build);
+            var cycles = (int) Math.Ceiling((blueprint.OreCost.Ore - build.Ore) / (float) build.OreBots);
 
-                if (build.ElapsedTime >= minutes)
-                {
-                    break;
-                }
+            if (cycles > 0)
+            {
+                GatherResources(build, cycles);
             }
 
-            if (build.Ore >= blueprint.OreCost.Ore && build.ElapsedTime < minutes)
+            if (build.ElapsedTime < minutes)
             {
                 GatherResources(build);
 
@@ -230,16 +218,16 @@ public abstract class Base : Solution
         }
     }
 
-    private static void GatherResources(State state)
+    private static void GatherResources(State state, int cycles = 1)
     {
-        state.Ore += state.OreBots;
+        state.Ore += state.OreBots * cycles;
 
-        state.Clay += state.ClayBots;
+        state.Clay += state.ClayBots * cycles;
 
-        state.Obsidian += state.ObsidianBots;
+        state.Obsidian += state.ObsidianBots * cycles;
 
-        state.Geodes += state.GeodeBots;
+        state.Geodes += state.GeodeBots * cycles;
 
-        state.ElapsedTime++;
+        state.ElapsedTime += cycles;
     }
 }
