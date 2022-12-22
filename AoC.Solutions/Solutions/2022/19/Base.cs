@@ -203,17 +203,14 @@ public abstract class Base : Solution
         {
             build = new State(state);
 
-            while (build.Ore < blueprint.OreCost.Ore)
-            {
-                GatherResources(build);
+            var cycles = (int) Math.Ceiling((blueprint.OreCost.Ore - build.Ore) / (float) build.OreBots);
 
-                if (build.ElapsedTime >= minutes)
-                {
-                    break;
-                }
+            if (cycles > 0)
+            {
+                GatherResources(build, cycles);
             }
 
-            if (build.Ore >= blueprint.OreCost.Ore && build.ElapsedTime < minutes)
+            if (build.ElapsedTime < minutes)
             {
                 GatherResources(build);
 
@@ -226,16 +223,16 @@ public abstract class Base : Solution
         }
     }
 
-    private static void GatherResources(State state)
+    private static void GatherResources(State state, int cycles = 1)
     {
-        state.Ore += state.OreBots;
+        state.Ore += state.OreBots * cycles;
 
-        state.Clay += state.ClayBots;
+        state.Clay += state.ClayBots * cycles;
 
-        state.Obsidian += state.ObsidianBots;
+        state.Obsidian += state.ObsidianBots * cycles;
 
-        state.Geodes += state.GeodeBots;
+        state.Geodes += state.GeodeBots * cycles;
 
-        state.ElapsedTime++;
+        state.ElapsedTime += cycles;
     }
 }
