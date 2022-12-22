@@ -41,8 +41,6 @@ public class Part2 : Base
 
         while (monkey.Name != HumanMonkeyName)
         {
-            Console.Write($"{monkey.Name}: ");
-
             var leftMonkey = Monkeys[monkey.Left];
 
             var rightMonkey = Monkeys[monkey.Right];
@@ -61,21 +59,6 @@ public class Part2 : Base
                 ("/", true) => expected * value,
                 _ => throw new PuzzleException("Unknown operator.")
             };
-
-            if (leftMonkey.Value == null)
-            {
-                Console.Write($"({expected}) {monkey.Operator} {value}");
-
-                monkey = Monkeys[monkey.Left];
-            }
-            else
-            {
-                Console.Write($"{value} {monkey.Operator} ({expected})");
-
-                monkey = Monkeys[monkey.Right];
-            }
-
-            Console.WriteLine();
         }
 
         return expected;
