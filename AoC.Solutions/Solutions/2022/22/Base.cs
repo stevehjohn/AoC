@@ -72,11 +72,16 @@ public abstract class Base : Solution
 
         for (var i = 0; i < _path.Length; i++)
         {
-            if (_path[i] > '9')
+            if (_path[i] > '9' || i == _path.Length - 1)
             {
                 var length = i == _path.Length - 1 ? int.Parse(_path.Substring(i)) : int.Parse(_path.Substring(previous, i - previous));
 
                 Walk(length);
+
+                if (i == _path.Length - 1)
+                {
+                    break;
+                }
 
                 _direction = (_direction, _path[i]) switch
                 {
