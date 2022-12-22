@@ -65,26 +65,13 @@ public abstract class Base : Solution
             return null;
         }
 
-        long value;
-
-        switch (monkey.Operator)
+        var value = monkey.Operator switch
         {
-            case "-":
-                value = leftValue.Value - rightValue.Value;
-                break;
-
-            case "/":
-                value = leftValue.Value / rightValue.Value;
-                break;
-
-            case "*":
-                value = leftValue.Value * rightValue.Value;
-                break;
-
-            default:
-                value = leftValue.Value + rightValue.Value;
-                break;
-        }
+            "-" => leftValue.Value - rightValue.Value,
+            "/" => leftValue.Value / rightValue.Value,
+            "*" => leftValue.Value * rightValue.Value,
+            _ => leftValue.Value + rightValue.Value
+        };
 
         Monkeys[name].Value = value;
 
