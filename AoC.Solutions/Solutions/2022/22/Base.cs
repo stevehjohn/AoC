@@ -161,7 +161,16 @@ public abstract class Base : Solution
                 return;
             }
 
-            length = TeleportFlat(position, xD, yD, length);
+            if (IsCube)
+            {
+                Teleport3D(position, xD, yD);
+
+                length--;
+            }
+            else
+            {
+                length = TeleportFlat(position, xD, yD, length);
+            }
         }
     }
 
@@ -187,6 +196,10 @@ public abstract class Base : Solution
         }
 
         return length;
+    }
+
+    private void Teleport3D(Point point, int xD, int yD)
+    {
     }
 
     private Point MoveOneStep(Point point, int xD, int yD)
