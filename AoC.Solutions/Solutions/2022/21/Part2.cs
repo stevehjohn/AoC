@@ -1,4 +1,5 @@
 ﻿// ReSharper disable SpecifyACultureInStringConversionExplicitly
+
 using AoC.Solutions.Exceptions;
 
 namespace AoC.Solutions.Solutions._2022._21;
@@ -59,6 +60,10 @@ public class Part2 : Base
                 ("/", true) => expected * value,
                 _ => throw new PuzzleException("Unknown operator.")
             };
+
+            monkey = leftMonkey.Value == null
+                         ? Monkeys[monkey.Left]
+                         : Monkeys[monkey.Right];
         }
 
         return expected;
