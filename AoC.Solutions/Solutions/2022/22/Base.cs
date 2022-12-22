@@ -198,19 +198,9 @@ public abstract class Base : Solution
         return length;
     }
 
-    // TODO: This sucks balls. It is hard-coded for the puzzle input. Please make me better Steve!
+    // TODO: *Shrugs*
     private int Teleport3D(Point point, int xD, int yD, int length)
     {
-        var voidPosition = new Point(point.X / FaceSize, point.Y / FaceSize);
-        
-        var facePosition = new Point(point.X / FaceSize, point.Y / FaceSize);
-
-        var position = (voidPosition.X, voidPosition.Y) switch
-        {
-            (3, 1) => new Point(1, 1),
-            _ => throw new PuzzleException("Atlas shrugged.")
-        };
-
         return 0;
     }
 
