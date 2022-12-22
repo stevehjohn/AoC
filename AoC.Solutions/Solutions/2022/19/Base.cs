@@ -129,6 +129,8 @@ public abstract class Base : Solution
             }
         }
 
+        delta = 0;
+
         // Obsidian Bot
         if (state.ObsidianBots < blueprint.MaxObsidianCost)
         {
@@ -142,6 +144,8 @@ public abstract class Base : Solution
                 {
                     break;
                 }
+
+                delta++;
             }
 
             if (build.Ore >= blueprint.ObsidianCost.Ore && build.Clay >= blueprint.ObsidianCost.Clay && build.ElapsedTime < minutes)
@@ -155,6 +159,11 @@ public abstract class Base : Solution
                 build.ObsidianBots++;
 
                 options.Add(build);
+
+                if (delta == 0)
+                {
+                    return options;
+                }
             }
         }
 
@@ -171,6 +180,8 @@ public abstract class Base : Solution
                 {
                     break;
                 }
+
+                delta++;
             }
 
             if (build.Ore >= blueprint.ClayCost.Ore && build.ElapsedTime < minutes)
