@@ -4,7 +4,9 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        var cube = Cube.BuildFromInput(Input[..^2]);
+        var cube = new Cube();
+            
+        cube.BuildFromInput(Input[..^2]);
 
         return "";
     }
