@@ -1,5 +1,4 @@
 ﻿// ReSharper disable SpecifyACultureInStringConversionExplicitly
-
 using AoC.Solutions.Exceptions;
 
 namespace AoC.Solutions.Solutions._2022._21;
