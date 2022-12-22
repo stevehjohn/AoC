@@ -77,6 +77,11 @@ public abstract class Base : Solution
 
             var builds = GetBuildOptions(blueprint, state, minutes);
 
+            if (builds == null)
+            {
+                continue;
+            }
+
             foreach (var build in builds)
             {
                 // Dunno why / 100 seems so helpful to runtime, but it is.
@@ -92,6 +97,11 @@ public abstract class Base : Solution
 
     private static List<State> GetBuildOptions(Blueprint blueprint, State state, int minutes)
     {
+        if (state.ElapsedTime >= minutes)
+        {
+            return null;
+        }
+
         var options = new List<State>();
 
         var build = new State(state);
