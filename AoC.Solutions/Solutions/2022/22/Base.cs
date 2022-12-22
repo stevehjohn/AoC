@@ -202,16 +202,39 @@ public abstract class Base : Solution
     {
         point = new Point(point.X - xD, point.Y - yD);
 
-        var transforms = new Dictionary<int, Func<Point, (Point NewPosition, char NewDirection)>>();
-
-        transforms.Add(2, p =>
-        {
-            return (p.X, p.Y, _direction) switch
-            {
-                (_, 11, 'D') => (new Point(p.X, p.Y), 'l'),
-                _ => throw new PuzzleException("WT actual F?")
-            };
-        });
+        var transforms = new Dictionary<int, Func<Point, (Point NewPosition, char NewDirection)>>
+                         {
+                             {
+                                 6, p =>
+                                 {
+                                     return (p.X, p.Y, _direction) switch
+                                     {
+                                         (11, 5, 'R') => (new Point(14, 8), 'D'),
+                                         _ => throw new PuzzleException("WT actual F?")
+                                     };
+                                 }
+                             },
+                             {
+                                 10, p =>
+                                 {
+                                     return (p.X, p.Y, _direction) switch
+                                     {
+                                         (11, 11, 'D') => (new Point(1, 7), 'U'),
+                                         _ => throw new PuzzleException("WT actual F?")
+                                     };
+                                 }
+                             },
+                             //{
+                             //    5, p =>
+                             //    {
+                             //        return (p.X, p.Y, _direction) switch
+                             //        {
+                             //            (11, 5, 'U') => (new Point(1, 7), 'R'),
+                             //            _ => throw new PuzzleException("WT actual F?")
+                             //        };
+                             //    }
+                             //}
+                         };
 
         var transformIndex = point.Y / FaceSize * 4 + point.X / FaceSize;
 
@@ -220,7 +243,7 @@ public abstract class Base : Solution
         var transformed = transform(point);
 
         point = transformed.NewPosition;
-        
+
         if (_map[point.X, point.Y] == '#')
         {
             return 0;
