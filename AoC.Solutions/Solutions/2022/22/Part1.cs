@@ -8,6 +8,6 @@ public class Part1 : Base
 
         WalkPath();
 
-        return "";
+        return GetSolution().ToString();
     }
 }
