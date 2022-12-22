@@ -198,22 +198,20 @@ public abstract class Base : Solution
         return length;
     }
 
+    // TODO: This sucks balls. It is hard-coded for the puzzle input. Please make me better Steve!
     private int Teleport3D(Point point, int xD, int yD, int length)
     {
-        point = new Point(point.X - xD, point.Y - yD);
+        var voidPosition = new Point(point.X / FaceSize, point.Y / FaceSize);
+        
+        var facePosition = new Point(point.X / FaceSize, point.Y / FaceSize);
 
-        // TODO: MOVE!
-
-        if (_map[point.X, point.Y] == '#')
+        var position = (voidPosition.X, voidPosition.Y) switch
         {
-            return 0;
-        }
+            (3, 1) => new Point(1, 1),
+            _ => throw new PuzzleException("Atlas shrugged.")
+        };
 
-        _direction = transformed.NewDirection;
-
-        _position = point;
-
-        return length - 1;
+        return 0;
     }
 
     private Point MoveOneStep(Point point, int xD, int yD)
