@@ -1,4 +1,6 @@
-﻿namespace AoC.Solutions.Solutions._2022._22;
+﻿using AoC.Solutions.Common;
+
+namespace AoC.Solutions.Solutions._2022._22;
 
 public class Part2 : Base
 {
@@ -13,7 +15,7 @@ public class Part2 : Base
 
     private void GetFaces()
     {
-        var faces = new List<char[,]>();
+        var faces = new List<(Point NetCoordinates, char[,] Face)>();
 
         var y = 0;
 
@@ -34,7 +36,7 @@ public class Part2 : Base
 
                 var face = GetFace(x, y);
 
-                faces.Add(face);
+                faces.Add((new Point(x / FaceSize, y / FaceSize), face));
 
                 x += FaceSize;
             }
