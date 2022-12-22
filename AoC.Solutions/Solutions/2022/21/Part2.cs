@@ -1,5 +1,4 @@
 ﻿// ReSharper disable SpecifyACultureInStringConversionExplicitly
-
 using AoC.Solutions.Exceptions;
 
 namespace AoC.Solutions.Solutions._2022._21;
@@ -48,18 +47,7 @@ public class Part2 : Base
 
             var rightMonkey = Monkeys[monkey.Right];
 
-            long value;
-
-            // ReSharper disable PossibleInvalidOperationException
-            if (leftMonkey.Value == null)
-            {
-                value = rightMonkey.Value.Value;
-            }
-            else
-            {
-                value = leftMonkey.Value.Value;
-            }
-            // ReSharper restore PossibleInvalidOperationException
+            var value = leftMonkey.Value ?? rightMonkey.Value!.Value;
 
             var swap = leftMonkey.Value == null;
 
@@ -67,8 +55,6 @@ public class Part2 : Base
             {
                 ("+", _) => expected - value,
                 ("*", _) => expected / value,
-                //("-", _) => expected + value,
-                //("/", _) => expected * value,
                 ("-", false) => value - expected,
                 ("-", true) => expected + value,
                 ("/", false) => value / expected,
