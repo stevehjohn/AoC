@@ -1,4 +1,7 @@
 ﻿// ReSharper disable SpecifyACultureInStringConversionExplicitly
+
+using AoC.Solutions.Exceptions;
+
 namespace AoC.Solutions.Solutions._2022._21;
 
 public class Part2 : Base
@@ -45,54 +48,44 @@ public class Part2 : Base
 
             var rightMonkey = Monkeys[monkey.Right];
 
-            long left;
-
-            long right;
+            long value;
 
             // ReSharper disable PossibleInvalidOperationException
             if (leftMonkey.Value == null)
             {
-                left = expected;
-
-                right = rightMonkey.Value.Value;
+                value = rightMonkey.Value.Value;
             }
             else
             {
-                left = leftMonkey.Value.Value;
-
-                right = expected;
+                value = leftMonkey.Value.Value;
             }
             // ReSharper restore PossibleInvalidOperationException
 
-            switch (monkey.Operator)
+            var swap = leftMonkey.Value == null;
+
+            expected = (monkey.Operator, swap) switch
             {
-                case "-":
-                    expected = right + left;
-                    break;
-
-                case "/":
-                    expected = right * left;
-                    break;
-
-                case "*":
-                    expected = right / left;
-                    break;
-
-                default:
-                    expected = right - left;
-                    break;
-            }
+                ("+", _) => expected - value,
+                ("*", _) => expected / value,
+                ("-", _) => expected + value,
+                ("/", _) => expected * value,
+                //("-", false) => expected - value,
+                //("-", true) => value + expected,
+                //("/", false) => expected / value,
+                //("/", true) => value * expected,
+                _ => throw new PuzzleException("Unknown operator.")
+            };
 
             if (leftMonkey.Value == null)
             {
-                Console.Write($"({expected}) {monkey.Operator} {right}");
+                Console.Write($"({expected}) {monkey.Operator} {value}");
 
                 monkey = Monkeys[monkey.Left];
             }
             else
             {
-                Console.Write($"{left} {monkey.Operator} ({expected})");
-                
+                Console.Write($"{value} {monkey.Operator} ({expected})");
+
                 monkey = Monkeys[monkey.Right];
             }
 
