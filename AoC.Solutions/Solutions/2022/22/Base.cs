@@ -20,8 +20,6 @@ public abstract class Base : Solution
 
     private char _direction = 'R';
 
-    private int _steps;
-
     protected void ParseInput()
     {
         int y;
@@ -64,16 +62,6 @@ public abstract class Base : Solution
         }
 
         _path = Input[y + 1];
-
-        for (var x = 0; x < _path.Length; x++)
-        {
-            if (_path[x] > '9')
-            {
-                _steps++;
-            }
-        }
-
-        _steps++;
     }
 
     protected void WalkPath()
@@ -103,10 +91,6 @@ public abstract class Base : Solution
                     _ => throw new PuzzleException("Don't know how to turn.")
                 };
 
-                _steps--;
-
-                SmallDump();
-
                 previous = i + 1;
             }
         }
@@ -124,35 +108,6 @@ public abstract class Base : Solution
         };
 
         return 1_000 * (_position.Y + 1) + 4 * (_position.X + 1) + facing;
-    }
-
-    private void Dump()
-    {
-        for (var y = 0; y < _height; y++)
-        {
-            for (var x = 0; x < _width; x++)
-            {
-                if (_position.X == x && _position.Y == y)
-                {
-                    Console.Write("@");
-
-                    continue;
-                }
-
-                if (_map[x, y] == '\0')
-                {
-                    Console.Write(" ");
-
-                    continue;
-                }
-
-                Console.Write(_map[x, y]);
-            }
-
-            Console.WriteLine();
-        }
-
-        Console.WriteLine();
     }
 
     private void Walk(int length)
@@ -177,91 +132,17 @@ public abstract class Base : Solution
         }
     }
 
-    private void SmallDump(Point position = null)
-    {
-        Console.SetCursorPosition(1, 1);
-
-        Console.Write($"{_direction}: Steps: {_steps}    ");
-
-        var cY = 0;
-
-        if (position == null)
-        {
-            position = _position;
-        }
-
-        for (var y = position.Y - 10; y < position.Y + 10; y++)
-        {
-            Console.SetCursorPosition(1, 3 + cY);
-
-            for (var x = position.X - 20; x < position.X + 20; x++)
-            {
-                if (x == position.X && y == position.Y)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-
-                    Console.Write('@');
-
-                    Console.ForegroundColor = ConsoleColor.Green;
-
-                    continue;
-                }
-
-                if (x < 0 || x >= _width || y < 0 || y >= _height)
-                {
-                    Console.Write(' ');
-
-                    continue;
-                }
-
-                if (_map[x, y] == '\0')
-                {
-                    Console.Write(' ');
-
-                    continue;
-                }
-
-                Console.Write(_map[x, y]);
-            }
-
-            cY++;
-        }
-    }
-
     private void Walk(int xD, int yD, int length)
     {
         while (length > 0)
         {
-            var p = new Point(_position);
+            var newPoint = NewPosition(_position, xD, yD);
 
-            p.X += xD;
-            p.Y += yD;
-
-            if (p.X < 0)
-            {
-                p.X = _width - 1;
-            }
-
-            if (p.X == _width)
-            {
-                p.X = 0;
-            }
-
-            if (p.Y < 0)
-            {
-                p.Y = _height - 1;
-            }
-
-            if (p.Y == _height)
-            {
-                p.Y = 0;
-            }
-
-            var newPosition = _map[p.X, p.Y];
+            var newPosition = _map[newPoint.X, newPoint.Y];
 
             if (newPosition == '.')
             {
-                _position = p;
+                _position = newPoint;
 
                 length--;
 
@@ -273,41 +154,18 @@ public abstract class Base : Solution
                 return;
             }
 
-            var position = new Point(_position);
-
             while (true)
             {
-                position.X += xD;
-                position.Y += yD;
+                newPoint = NewPosition(newPoint, xD, yD);
 
-                if (position.X < 0)
-                {
-                    position.X = _width - 1;
-                }
-
-                if (position.X == _width)
-                {
-                    position.X = 0;
-                }
-
-                if (position.Y < 0)
-                {
-                    position.Y = _height - 1;
-                }
-
-                if (position.Y == _height)
-                {
-                    position.Y = 0;
-                }
-
-                if (_map[position.X, position.Y] == '#')
+                if (_map[newPoint.X, newPoint.Y] == '#')
                 {
                     return;
                 }
 
-                if (_map[position.X, position.Y] == '.')
+                if (_map[newPoint.X, newPoint.Y] == '.')
                 {
-                    _position = position;
+                    _position = newPoint;
 
                     length--;
 
@@ -315,5 +173,35 @@ public abstract class Base : Solution
                 }
             }
         }
+    }
+
+    private Point NewPosition(Point point, int xD, int yD)
+    {
+        var newPoint = new Point(point);
+
+        newPoint.X += xD;
+        newPoint.Y += yD;
+
+        if (newPoint.X < 0)
+        {
+            newPoint.X = _width - 1;
+        }
+
+        if (newPoint.X == _width)
+        {
+            newPoint.X = 0;
+        }
+
+        if (newPoint.Y < 0)
+        {
+            newPoint.Y = _height - 1;
+        }
+
+        if (newPoint.Y == _height)
+        {
+            newPoint.Y = 0;
+        }
+
+        return newPoint;
     }
 }
