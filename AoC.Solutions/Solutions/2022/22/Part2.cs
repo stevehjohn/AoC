@@ -4,8 +4,6 @@ namespace AoC.Solutions.Solutions._2022._22;
 
 public class Part2 : Base
 {
-    private const int FaceSize = 4;
-
     public override string GetAnswer()
     {
         GetFaces();
@@ -29,31 +27,33 @@ public class Part2 : Base
             {
                 if (line[x] == ' ')
                 {
-                    x += FaceSize;
+                    x += Constants.FaceSize;
 
                     continue;
                 }
 
                 var face = GetFace(x, y);
 
-                faces.Add((new Point(x / FaceSize, y / FaceSize), face));
+                faces.Add((new Point(x / Constants.FaceSize, y / Constants.FaceSize), face));
 
-                x += FaceSize;
+                x += Constants.FaceSize;
             }
 
-            y += FaceSize;
+            y += Constants.FaceSize;
         }
+
+        var cube = new Cube(faces);
     }
 
     private char[,] GetFace(int x, int y)
     {
-        var face = new char[FaceSize, FaceSize];
+        var face = new char[Constants.FaceSize, Constants.FaceSize];
 
-        for (var iY = 0; iY < FaceSize; iY++)
+        for (var iY = 0; iY < Constants.FaceSize; iY++)
         {
             var line = Input[y + iY];
 
-            for (var iX = 0; iX < FaceSize; iX++)
+            for (var iX = 0; iX < Constants.FaceSize; iX++)
             {
                 face[iX, iY] = line[x + iX];
             }
