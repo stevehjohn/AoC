@@ -202,28 +202,31 @@ public abstract class Base : Solution
     {
         point = new Point(point.X - xD, point.Y - yD);
 
-        var transforms = new Dictionary<int, Func<Point, Point>>(); // Also change direction?
+        var transforms = new Dictionary<int, Func<Point, (Point NewPosition, char NewDirection)>>();
 
-        // Add transforms
-        //transforms.Add(2, p =>
-        //{
-        //    return (p.X, p.Y, _direction) switch
-        //    {
-        //        (0, 0) =>
-        //        _ => throw new PuzzleException("WT actual F?")
-        //    };
-        //});
+        transforms.Add(2, p =>
+        {
+            return (p.X, p.Y, _direction) switch
+            {
+                (_, 11, 'D') => (new Point(p.X, p.Y), 'l'),
+                _ => throw new PuzzleException("WT actual F?")
+            };
+        });
 
         var transformIndex = point.Y / FaceSize * 4 + point.X / FaceSize;
 
         var transform = transforms[transformIndex];
 
-        point = transform(point);
+        var transformed = transform(point);
 
+        point = transformed.NewPosition;
+        
         if (_map[point.X, point.Y] == '#')
         {
             return 0;
         }
+
+        _direction = transformed.NewDirection;
 
         _position = point;
 
