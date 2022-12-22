@@ -67,12 +67,12 @@ public class Part2 : Base
             {
                 ("+", _) => expected - value,
                 ("*", _) => expected / value,
-                ("-", _) => expected + value,
-                ("/", _) => expected * value,
-                //("-", false) => expected - value,
-                //("-", true) => value + expected,
-                //("/", false) => expected / value,
-                //("/", true) => value * expected,
+                //("-", _) => expected + value,
+                //("/", _) => expected * value,
+                ("-", false) => value - expected,
+                ("-", true) => expected + value,
+                ("/", false) => value / expected,
+                ("/", true) => expected * value,
                 _ => throw new PuzzleException("Unknown operator.")
             };
 
