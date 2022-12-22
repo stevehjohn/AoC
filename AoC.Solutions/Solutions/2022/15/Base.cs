@@ -9,7 +9,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Beacon exclusion zone";
 
-    private readonly List<Sensor> _sensors = new();
+    private List<Sensor> _sensors = new();
 
     private int _minX = int.MaxValue;
 
@@ -74,9 +74,7 @@ public abstract class Base : Solution
 
     protected Point GetDeadZone()
     {
-        var (start, end) = GetRangeToScan();
-
-        Console.WriteLine($"{start} -> {end}");
+        var (start, end) = GetRangeToScanAndCullSensors();
 
         var covered = new List<(int L, int R)>();
 
@@ -117,11 +115,13 @@ public abstract class Base : Solution
         throw new PuzzleException("Solution not found");
     }
 
-    private (int Start, int End) GetRangeToScan()
+    private (int Start, int End) GetRangeToScanAndCullSensors()
     {
         var start = int.MaxValue;
 
         var end = int.MinValue;
+
+        var culled = new List<Sensor>();
 
         for (var o = 0; o < _sensors.Count; o++)
         {
@@ -150,9 +150,15 @@ public abstract class Base : Solution
                     {
                         end = max;
                     }
+
+                    culled.Add(inner);
+
+                    culled.Add(outer);
                 }
             }
         }
+
+        _sensors = culled;
 
         return (start, end);
     }
