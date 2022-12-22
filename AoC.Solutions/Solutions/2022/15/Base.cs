@@ -1,7 +1,7 @@
-﻿using System.Runtime.CompilerServices;
-using AoC.Solutions.Common;
+﻿using AoC.Solutions.Common;
 using AoC.Solutions.Exceptions;
 using AoC.Solutions.Infrastructure;
+using System.Runtime.CompilerServices;
 
 namespace AoC.Solutions.Solutions._2022._15;
 
@@ -72,11 +72,15 @@ public abstract class Base : Solution
         return -range.L + range.R;
     }
 
-    protected Point GetDeadZone(int range)
+    protected Point GetDeadZone()
     {
+        var (start, end) = GetRangeToScan();
+
+        Console.WriteLine($"{start} -> {end}");
+
         var covered = new List<(int L, int R)>();
 
-        for (var y = range; y >= 0; y--)
+        for (var y = start; y <= end; y++)
         {
             covered.Clear();
 
@@ -103,12 +107,54 @@ public abstract class Base : Solution
 
             var range2 = Collapse(covered);
 
-            var lBound = Math.Min(range1.R, range2.R);
-
-            return new Point(lBound + 1, y);
+            // Maybe some data sets would require "range1.L - range2.R == 2"? WOMMAD (Works On My Machine And Data) anyhoo.
+            if (range2.L - range1.R == 2)
+            {
+                return new Point(range1.R + 1, y);
+            }
         }
 
         throw new PuzzleException("Solution not found");
+    }
+
+    private (int Start, int End) GetRangeToScan()
+    {
+        var start = int.MaxValue;
+
+        var end = int.MinValue;
+
+        for (var o = 0; o < _sensors.Count; o++)
+        {
+            var outer = _sensors[o];
+
+            for (var i = o + 1; i < _sensors.Count; i++)
+            {
+                var inner = _sensors[i];
+
+                var targetDelta = outer.ManhattanRange + inner.ManhattanRange + 2;
+
+                var delta = Math.Abs(outer.Position.X - inner.Position.X) + Math.Abs(outer.Position.Y - inner.Position.Y);
+
+                if (delta == targetDelta)
+                {
+                    var min = Math.Min(outer.Position.Y, inner.Position.Y);
+
+                    if (min < start)
+                    {
+                        start = min;
+                    }
+
+                    var max = Math.Max(outer.Position.Y, inner.Position.Y);
+
+                    if (max > end)
+                    {
+                        end = max;
+                    }
+                }
+            }
+        }
+
+        return (start, end);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
