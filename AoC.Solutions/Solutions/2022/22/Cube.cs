@@ -1,27 +1,57 @@
-﻿using AoC.Solutions.Common;
-
-namespace AoC.Solutions.Solutions._2022._22;
+﻿namespace AoC.Solutions.Solutions._2022._22;
 
 public class Cube
 {
-    private readonly CubeFace[] _faces = new CubeFace[6];
+    private static char[,] Relationships = new char[4, 4];
 
-    private int _currentFace;
+    private readonly char[,,] _cube = new char[Constants.FaceSize, Constants.FaceSize, Constants.FaceSize];
 
-    private Point _facePosition;
-
-    public Cube(List<(Point NetCoordinates, char[,] Face)> faces)
+    public static Cube BuildFromInput(string[] input)
     {
-        for (var i = 0; i < 6; i++)
+        InitialiseRelationships();
+
+        GetArrangement(input);
+
+        return null;
+    }
+
+    private static void GetArrangement(string[] input)
+    {
+        for (var y = 0; y < 4 * Constants.FaceSize; y += Constants.FaceSize)
         {
-            AddFace(faces, i);
+            if (y >= input.Length)
+            {
+                return;
+            }
+
+            for (var x = 0; x < 4 * Constants.FaceSize; x += Constants.FaceSize)
+            {
+                if (x >= input[y].Length)
+                {
+                    continue;
+                }
+
+                if (input[y][x] != ' ')
+                {
+                    Console.Write(Relationships[x / Constants.FaceSize, y / Constants.FaceSize]);
+                }
+                else
+                {
+                    Console.Write(' ');
+                }
+            }
+
+            Console.WriteLine();
         }
     }
-    
-    private void AddFace(List<(Point NetCoordinates, char[,] Face)> faces, int index)
-    {
-        var face = new CubeFace(faces[index].Face);
 
-        _faces[index] = face;
+    private static void InitialiseRelationships()
+    {
+        var relationships = "URDLFRBLDRULBRFL";
+
+        for (var i = 0; i < relationships.Length; i++)
+        {
+            Relationships[i % 4, i / 4] = relationships[i];
+        }
     }
 }
