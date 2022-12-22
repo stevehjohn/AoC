@@ -8,6 +8,8 @@ public abstract class Base : Solution
 {
     public override string Description => "Monkey map";
 
+    private const int FaceSize = 4;
+
     protected bool IsCube { get; set; }
 
     private char[,] _map;
@@ -163,9 +165,7 @@ public abstract class Base : Solution
 
             if (IsCube)
             {
-                Teleport3D(position, xD, yD);
-
-                length--;
+                length = Teleport3D(position, xD, yD, length);
             }
             else
             {
@@ -198,8 +198,36 @@ public abstract class Base : Solution
         return length;
     }
 
-    private void Teleport3D(Point point, int xD, int yD)
+    private int Teleport3D(Point point, int xD, int yD, int length)
     {
+        point = new Point(point.X - xD, point.Y - yD);
+
+        var transforms = new Dictionary<int, Func<Point, Point>>(); // Also change direction?
+
+        // Add transforms
+        //transforms.Add(2, p =>
+        //{
+        //    return (p.X, p.Y, _direction) switch
+        //    {
+        //        (0, 0) =>
+        //        _ => throw new PuzzleException("WT actual F?")
+        //    };
+        //});
+
+        var transformIndex = point.Y / FaceSize * 4 + point.X / FaceSize;
+
+        var transform = transforms[transformIndex];
+
+        point = transform(point);
+
+        if (_map[point.X, point.Y] == '#')
+        {
+            return 0;
+        }
+
+        _position = point;
+
+        return length - 1;
     }
 
     private Point MoveOneStep(Point point, int xD, int yD)
