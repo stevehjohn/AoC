@@ -218,6 +218,7 @@ public abstract class Base : Solution
         {
             (1, 0, 'L') => (GetPositionAfterTeleport(segmentPosition, new Point(), ' '), ' '),
             (1, 0, 'U') => (GetPositionAfterTeleport(segmentPosition, new Point(), ' '), ' '),
+            (2, 0, 'D') => (GetPositionAfterTeleport(segmentPosition, new Point(), ' '), ' '),
             (2, 0, 'R') => (GetPositionAfterTeleport(segmentPosition, new Point(), ' '), ' '),
             (2, 0, 'U') => (GetPositionAfterTeleport(segmentPosition, new Point(), ' '), ' '),
             (1, 1, 'L') => (GetPositionAfterTeleport(segmentPosition, new Point(), ' '), ' '),
