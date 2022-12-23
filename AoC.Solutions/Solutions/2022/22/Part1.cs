@@ -84,10 +84,6 @@ public class Part1 : Base
 
                 Walk(length);
 
-#if TEST
-                Dump();
-#endif
-
                 if (i == _path.Length - 1)
                 {
                     break;
