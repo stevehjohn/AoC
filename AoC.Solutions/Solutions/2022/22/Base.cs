@@ -83,6 +83,8 @@ public abstract class Base : Solution
 
                 Walk(length);
 
+                Dump();
+
                 if (i == _path.Length - 1)
                 {
                     break;
@@ -103,6 +105,47 @@ public abstract class Base : Solution
 
                 previous = i + 1;
             }
+        }
+    }
+
+    private void Dump()
+    {
+        for (var y = 0; y < _height; y++)
+        {
+            for (var x = 0; x < _width; x++)
+            {
+                if (_position.X == x && _position.Y == y)
+                {
+                    switch (_direction)
+                    {
+                        case 'U':
+                            Console.Write("^");
+                            break;
+                        case 'R':
+                            Console.Write(">");
+                            break;
+                        case 'D':
+                            Console.Write("v");
+                            break;
+                        case 'L':
+                            Console.Write("<");
+                            break;
+                    }
+
+                    continue;
+                }
+
+                if (_map[x, y] == '\0')
+                {
+                    Console.Write(' ');
+
+                    continue;
+                }
+
+                Console.Write(_map[x, y]);
+            }
+
+            Console.WriteLine();
         }
     }
 
