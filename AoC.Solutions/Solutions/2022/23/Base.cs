@@ -132,7 +132,7 @@ public abstract class Base : Solution
                                   : null);
     }
 
-    private Point GetProposedMove(Point position, bool rotate = false)
+    private Point GetProposedMove(Point position)
     {
         if (! _elves.Contains(new Point(position.X - 1, position.Y - 1))
             && ! _elves.Contains(new Point(position.X, position.Y - 1))
