@@ -31,7 +31,9 @@ public abstract class Base : Solution
 
         Dump();
 
-        while (true)
+        var i = 10;
+
+        while (i > 0)
         {
             if (RunSimulationStep() == 0)
             {
@@ -39,7 +41,37 @@ public abstract class Base : Solution
             }
 
             Dump();
+
+            i--;
         }
+
+        Console.WriteLine(CountEmptyTiles());
+    }
+
+    private int CountEmptyTiles()
+    {
+        var minX = _elves.Min(e => e.X);
+        var maxX = _elves.Max(e => e.X);
+
+        var minY = _elves.Min(e => e.Y);
+        var maxY = _elves.Max(e => e.Y);
+
+        var empty = 0;
+
+        for (var y = minY; y <= maxY; y++)
+        {
+            for (var x = minX; x <= maxX; x++)
+            {
+                if (_elves.Contains(new Point(x, y)))
+                {
+                    continue;
+                }
+
+                empty++;
+            }
+        }
+
+        return empty;
     }
 
     private void Dump()
