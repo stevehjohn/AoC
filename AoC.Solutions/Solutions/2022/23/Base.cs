@@ -7,7 +7,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Unstable diffusion";
 
-    private const int SetMaxSize = 2_000;
+    private const int SetMaxSize = 2_500;
 
     private HashSet<Point> _elves = new(SetMaxSize);
 
