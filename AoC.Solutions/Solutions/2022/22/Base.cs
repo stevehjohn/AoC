@@ -82,6 +82,8 @@ public abstract class Base : Solution
 
                 Walk(length);
 
+                Console.WriteLine(_position);
+
                 if (i == _path.Length - 1)
                 {
                     break;
@@ -195,22 +197,24 @@ public abstract class Base : Solution
     // TODO: *Shrugs*
     private int Teleport3D(Point point, int length)
     {
-        // LOOKS LIKE LENGTH ISN'T BEING CORRECTLY DECREMENTED...
-
         var segmentIndex = point.X / FaceSize + point.Y / FaceSize * FaceSize;
 
         var segmentPosition = new Point(point.X % FaceSize, point.Y % FaceSize);
 
+        var previousDirection = _direction;
+
         (var position, _direction) = (segmentIndex, segmentPosition.X, segmentPosition.Y, _direction) switch
         {
             (7, 0, _, 'R') => (new Point(FaceSize * 4 - 1 - segmentPosition.Y, FaceSize * 2), 'D'),
-            (14, _, 0, 'D') => (new Point(FaceSize - 1 - segmentPosition.Y, FaceSize * 2 - 1), 'U'),
+            (14, _, 0, 'D') => (new Point(FaceSize - 1 - segmentPosition.X, FaceSize * 2 - 1), 'U'),
             (1, _, FaceSize - 1, 'U') => (new Point(FaceSize * 2, segmentPosition.X), 'R'),
             _ => throw new PuzzleException("Unknown map segment.")
         };
 
         if (_map[position.X, position.Y] == '#')
         {
+            _direction = previousDirection;
+
             return 0;
         }
 
