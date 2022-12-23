@@ -8,11 +8,11 @@ public abstract class Base : Solution
 {
     public override string Description => "Monkey map";
 
-    // 4 for sample input.
-    private const int FaceSize = 4;
+    // 4 for sample input, 50 for actual.
+    private const int FaceSize = 50;
 
-    // 4 for sample input.
-    private const int NetWidth = 4;
+    // 4 for sample input, 3 for actual.
+    private const int NetWidth = 3;
 
     protected bool IsCube { get; set; }
 
