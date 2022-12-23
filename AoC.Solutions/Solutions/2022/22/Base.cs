@@ -216,20 +216,20 @@ public abstract class Base : Solution
         // For actual data.
         (var position, _direction) = (segment.X, segment.Y, _direction) switch
         {
-            (1, 0, 'L') => (GetPositionAfterTeleport(segmentPosition, new Point(0, 2), 'W'), ' '),
-            (1, 0, 'U') => (GetPositionAfterTeleport(segmentPosition, new Point(0, 3), 'W'), ' '),
-            (2, 0, 'D') => (GetPositionAfterTeleport(segmentPosition, new Point(1, 1), 'E'), ' '),
-            (2, 0, 'R') => (GetPositionAfterTeleport(segmentPosition, new Point(1, 2), 'E'), ' '),
-            (2, 0, 'U') => (GetPositionAfterTeleport(segmentPosition, new Point(0, 3), 'S'), ' '),
-            (1, 1, 'L') => (GetPositionAfterTeleport(segmentPosition, new Point(0, 2), 'N'), ' '),
-            (1, 1, 'R') => (GetPositionAfterTeleport(segmentPosition, new Point(2, 0), 'S'), ' '),
-            (0, 2, 'L') => (GetPositionAfterTeleport(segmentPosition, new Point(1, 0), 'W'), ' '),
-            (0, 2, 'U') => (GetPositionAfterTeleport(segmentPosition, new Point(1, 1), 'W'), ' '),
-            (1, 2, 'D') => (GetPositionAfterTeleport(segmentPosition, new Point(0, 3), 'E'), ' '),
-            (1, 2, 'R') => (GetPositionAfterTeleport(segmentPosition, new Point(2, 0), 'E'), ' '),
-            (0, 3, 'D') => (GetPositionAfterTeleport(segmentPosition, new Point(2, 0), 'N'), ' '),
-            (0, 3, 'L') => (GetPositionAfterTeleport(segmentPosition, new Point(1, 0), 'N'), ' '),
-            (0, 3, 'R') => (GetPositionAfterTeleport(segmentPosition, new Point(1, 2), 'S'), ' '),
+            (1, 0, 'L') => (GetPositionAfterTeleport(segmentPosition, new Point(0, 2), 'W'), 'R'),
+            (1, 0, 'U') => (GetPositionAfterTeleport(segmentPosition, new Point(0, 3), 'W'), 'R'),
+            (2, 0, 'D') => (GetPositionAfterTeleport(segmentPosition, new Point(1, 1), 'E'), 'L'),
+            (2, 0, 'R') => (GetPositionAfterTeleport(segmentPosition, new Point(1, 2), 'E'), 'L'),
+            (2, 0, 'U') => (GetPositionAfterTeleport(segmentPosition, new Point(0, 3), 'S'), 'U'),
+            (1, 1, 'L') => (GetPositionAfterTeleport(segmentPosition, new Point(0, 2), 'N'), 'D'),
+            (1, 1, 'R') => (GetPositionAfterTeleport(segmentPosition, new Point(2, 0), 'S'), 'U'),
+            (0, 2, 'L') => (GetPositionAfterTeleport(segmentPosition, new Point(1, 0), 'W'), 'R'),
+            (0, 2, 'U') => (GetPositionAfterTeleport(segmentPosition, new Point(1, 1), 'W'), 'R'),
+            (1, 2, 'D') => (GetPositionAfterTeleport(segmentPosition, new Point(0, 3), 'E'), 'L'),
+            (1, 2, 'R') => (GetPositionAfterTeleport(segmentPosition, new Point(2, 0), 'E'), 'L'),
+            (0, 3, 'D') => (GetPositionAfterTeleport(segmentPosition, new Point(2, 0), 'N'), 'D'),
+            (0, 3, 'L') => (GetPositionAfterTeleport(segmentPosition, new Point(1, 0), 'N'), 'D'),
+            (0, 3, 'R') => (GetPositionAfterTeleport(segmentPosition, new Point(1, 2), 'S'), 'U'),
             _ => throw new PuzzleException("Unknown map segment.")
         };
 
@@ -254,6 +254,7 @@ public abstract class Base : Solution
             'N' => new Point(segment.X + (FaceSize - 1 - segmentPosition.Y), segment.Y),
             'W' => new Point(segment.X, segment.Y + segmentPosition.X),
             'S' => new Point(segment.X + (FaceSize - 1 - segmentPosition.X), segment.Y + (FaceSize - 1)),
+            'E' => new Point(segment.X + (FaceSize - 1), segment.Y + (FaceSize - 1 - segmentPosition.X)),
             _ => throw new PuzzleException("WTF?")
         };
     }
