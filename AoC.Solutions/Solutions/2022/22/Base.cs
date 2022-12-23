@@ -232,15 +232,13 @@ public abstract class Base : Solution
 
         var segmentStart = new Point(newSegmentInfo.NewSegment.X * FaceSize, newSegmentInfo.NewSegment.Y * FaceSize);
 
-        // var position = segmentStart + some combination of segmentPosition...
-        //var position = new Point(segmentStart.X, segmentStart.Y);
-
+        // Incoming/outgoing edges matter!
         var position = newSegmentInfo.Edge switch
         {
-            'N' => new Point(segmentStart.X, segmentStart.Y), // Tweak X
+            'N' => new Point(segmentStart.X + (FaceSize - 1 - segmentPosition.Y), segmentStart.Y), // Tweak X
             'E' => new Point(segmentStart.X + FaceSize - 1, segmentStart.Y), // Tweak Y
-            'S' => new Point(segmentStart.X, segmentStart.Y + FaceSize - 1), // Tweak X
-            'W' => new Point(segmentStart.X, segmentStart.Y), // Tweak Y
+            'S' => new Point(segmentStart.X + (FaceSize - 1 - segmentPosition.X), segmentStart.Y + FaceSize - 1), // Tweak X
+            'W' => new Point(segmentStart.X, segmentStart.Y + segmentPosition.X), // Tweak Y
             _ => throw new PuzzleException("Unknown segment edge.")
         };
 
@@ -256,20 +254,6 @@ public abstract class Base : Solution
         _position = position;
 
         return length - 1;
-    }
-
-    private static Point GetPositionAfterTeleport(Point segmentPosition, Point newSegment, char edge)
-    {
-        var segmentStart = new Point(newSegment.X * FaceSize, newSegment.Y * FaceSize);
-
-        return edge switch
-        {
-            'N' => new Point(),
-            'W' => new Point(segmentStart.X, segmentStart.Y + segmentPosition.X),
-            'S' => new Point(),
-            'E' => new Point(),
-            _ => throw new PuzzleException("Unknown map direction.")
-        };
     }
 
     private Point MoveOneStep(Point point, int xD, int yD, bool wrap)
@@ -346,5 +330,7 @@ public abstract class Base : Solution
 
             Console.WriteLine();
         }
+
+        Console.WriteLine();
     }
 }
