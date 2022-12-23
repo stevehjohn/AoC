@@ -9,7 +9,7 @@ public abstract class Base : Solution
     public override string Description => "Monkey map";
 
     // 4 for sample input, 50 for actual.
-    private const int FaceSize = 50;
+    private const int FaceSize = 4;
 
     protected bool IsCube { get; set; }
 
