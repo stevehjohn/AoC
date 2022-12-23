@@ -7,7 +7,9 @@ public abstract class Base : Solution
 {
     public override string Description => "Unstable diffusion";
 
-    private HashSet<Point> _elves = new();
+    private const int SetMaxSize = 2_000;
+
+    private HashSet<Point> _elves = new(SetMaxSize);
 
     private readonly List<Func<Point, Point>> _evaluations = new();
 
@@ -78,7 +80,7 @@ public abstract class Base : Solution
             moves.Add(proposedMove, 1);
         }
 
-        var elves = new HashSet<Point>();
+        var elves = new HashSet<Point>(SetMaxSize);
 
         var moved = 0;
 
