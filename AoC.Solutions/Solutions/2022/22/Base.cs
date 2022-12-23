@@ -9,10 +9,10 @@ public abstract class Base : Solution
     public override string Description => "Monkey map";
 
     // 4 for sample input.
-    private const int FaceSize = 50;
+    private const int FaceSize = 4;
 
     // 4 for sample input.
-    private const int NetWidth = 3;
+    private const int NetWidth = 4;
 
     protected bool IsCube { get; set; }
 
@@ -136,11 +136,13 @@ public abstract class Base : Solution
                 _ => throw new PuzzleException("")
             };
 
-            var position = MoveOneStep(_position, xD, yD, ! IsCube);
+            var previousPosition = new Point(_position);
+
+            var position = MoveOneStep(previousPosition, xD, yD, ! IsCube);
 
             if (position.X < 0 || position.X == _width || position.Y < 0 || position.Y == _height)
             {
-                length = Teleport3D(position, length);
+                length = Teleport3D(previousPosition, length);
 
                 continue;
             }
@@ -163,7 +165,7 @@ public abstract class Base : Solution
 
             if (IsCube)
             {
-                length = Teleport3D(position, length);
+                length = Teleport3D(previousPosition, length);
             }
             else
             {
@@ -205,22 +207,22 @@ public abstract class Base : Solution
 
         var previousDirection = _direction;
 
-        //// For test data.
-        //(var position, _direction) = (segmentIndex, _direction) switch
-        //{
-        //    (1, 'U') => (new Point(FaceSize * 2, segmentPosition.X), 'R'),
-        //    (7, 'R') => (new Point(FaceSize * 4 - 1 - segmentPosition.Y, FaceSize * 2), 'D'),
-        //    (14, 'D') => (new Point(FaceSize - 1 - segmentPosition.X, FaceSize * 2 - 1), 'U'),
-        //    _ => throw new PuzzleException("Unknown map segment.")
-        //};
-
-        Console.WriteLine($"{segmentIndex}, {segmentPosition.X}, {segmentPosition.Y}, {_direction}");
-
+        // For test data.
         (var position, _direction) = (segmentIndex, _direction) switch
         {
-            (0, 'L') => (new Point(), ' '),
+            (5, 'U') => (new Point(FaceSize * 2, segmentPosition.X), 'R'),
+            (6, 'R') => (new Point(FaceSize * 4 - 1 - segmentPosition.Y, FaceSize * 2), 'D'),
+            (10, 'D') => (new Point(FaceSize - 1 - segmentPosition.X, FaceSize * 2 - 1), 'U'),
             _ => throw new PuzzleException("Unknown map segment.")
         };
+
+        //Console.WriteLine($"{segmentIndex}, {segmentPosition.X}, {segmentPosition.Y}, {_direction}");
+
+        //(var position, _direction) = (segmentIndex, _direction) switch
+        //{
+        //    (0, 'L') => (new Point(), ' '),
+        //    _ => throw new PuzzleException("Unknown map segment.")
+        //};
 
         if (_map[position.X, position.Y] == '#')
         {
