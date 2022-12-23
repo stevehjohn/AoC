@@ -198,23 +198,21 @@ public abstract class Base : Solution
     // TODO: *Shrugs*
     private int Teleport3D(Point point, int length)
     {
-        var segmentX = point.X / FaceSize;
-        var segmentY = point.Y / FaceSize;
+        var segment = new Point(point.X / FaceSize, point.Y / FaceSize);
 
         var segmentPosition = new Point(point.X % FaceSize, point.Y % FaceSize);
 
         var previousDirection = _direction;
 
         // For test data.
-        (var position, _direction) = (segmentX, segmentY, _direction) switch
+        (var position, _direction) = (segment.X, segment.Y, _direction) switch
         {
-            (1, 1, 'U') => (new Point(FaceSize * 2, segmentPosition.X), 'R'),
-            (2, 1, 'R') => (new Point(FaceSize * 4 - 1 - segmentPosition.Y, FaceSize * 2), 'D'),
+            (1, 1, 'U') => (GetPositionAfterTeleport(segmentPosition, new Point(2, 0), 'W'), 'R'),
+            (2, 1, 'R') => (GetPositionAfterTeleport(segmentPosition, new Point(3, 2), 'N'), 'D'),
+            //(2, 1, 'R') => (new Point(FaceSize * 4 - 1 - segmentPosition.Y, FaceSize * 2), 'D'),
             (2, 2, 'D') => (new Point(FaceSize - 1 - segmentPosition.X, FaceSize * 2 - 1), 'U'),
             _ => throw new PuzzleException("Unknown map segment.")
         };
-
-        //Console.WriteLine($"{segmentIndex}, {_direction}");
 
         //(var position, _direction) = (segmentIndex, _direction) switch
         //{
@@ -232,6 +230,30 @@ public abstract class Base : Solution
         _position = position;
 
         return length - 1;
+    }
+
+    private static Point GetPositionAfterTeleport(Point segmentPosition, Point newSegment, char edge)
+    {
+        var segment = new Point(newSegment.X * FaceSize, newSegment.Y * FaceSize);
+
+        switch (edge)
+        {
+            case 'N':
+                segment.X += FaceSize - 1 - segmentPosition.Y;
+                return segment;
+
+            case 'W':
+                segment.Y += segmentPosition.X;
+                return segment;
+
+            case 'S':
+                break;
+
+            case 'E':
+                break;
+        }
+
+        return null;
     }
 
     private Point MoveOneStep(Point point, int xD, int yD, bool wrap)
