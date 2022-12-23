@@ -210,7 +210,6 @@ public abstract class Base : Solution
             (1, 1, 'U') => (GetPositionAfterTeleport(segmentPosition, new Point(2, 0), 'W'), 'R'),
             (2, 1, 'R') => (GetPositionAfterTeleport(segmentPosition, new Point(3, 2), 'N'), 'D'),
             (2, 2, 'D') => (GetPositionAfterTeleport(segmentPosition, new Point(0, 1), 'S'), 'U'),
-            //(2, 2, 'D') => (new Point(FaceSize - 1 - segmentPosition.X, FaceSize * 2 - 1), 'U'),
             _ => throw new PuzzleException("Unknown map segment.")
         };
 
