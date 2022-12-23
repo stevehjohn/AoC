@@ -25,6 +25,8 @@ public abstract class Base : Solution
 
     private char _direction = 'R';
 
+    private readonly Dictionary<(Point Segment, char InDirection), (Point NewSegment, char NewDirection, char Edge)> _edgeMappings = new();
+
     protected void ParseInput()
     {
         int y;
@@ -67,6 +69,11 @@ public abstract class Base : Solution
         }
 
         _path = Input[y + 1];
+
+        if (IsCube)
+        {
+            InitialiseEdgeMappings();
+        }
     }
 
     protected void WalkPath()
@@ -108,47 +115,6 @@ public abstract class Base : Solution
         }
     }
 
-    private void Dump()
-    {
-        for (var y = 0; y < _height; y++)
-        {
-            for (var x = 0; x < _width; x++)
-            {
-                if (_position.X == x && _position.Y == y)
-                {
-                    switch (_direction)
-                    {
-                        case 'U':
-                            Console.Write("^");
-                            break;
-                        case 'R':
-                            Console.Write(">");
-                            break;
-                        case 'D':
-                            Console.Write("v");
-                            break;
-                        case 'L':
-                            Console.Write("<");
-                            break;
-                    }
-
-                    continue;
-                }
-
-                if (_map[x, y] == '\0')
-                {
-                    Console.Write(' ');
-
-                    continue;
-                }
-
-                Console.Write(_map[x, y]);
-            }
-
-            Console.WriteLine();
-        }
-    }
-
     protected int GetSolution()
     {
         var facing = _direction switch
@@ -161,6 +127,21 @@ public abstract class Base : Solution
         };
 
         return 1_000 * (_position.Y + 1) + 4 * (_position.X + 1) + facing;
+    }
+
+    private void InitialiseEdgeMappings()
+    {
+        // Template
+        // _edgeMappings.Add((new Point(), ' '), (new Point(), ' '));
+
+        // Format <Segment you're leaving, Segment you're entering>
+
+        // Test data.
+        _edgeMappings.Add((new Point(1, 1), 'U'), (new Point(2, 0), 'R', 'W'));
+        _edgeMappings.Add((new Point(2, 1), 'R'), (new Point(3, 2), 'D', 'N'));
+        _edgeMappings.Add((new Point(2, 2), 'D'), (new Point(0, 1), 'U', 'S'));
+
+        // Actual data.
     }
 
     private void Walk(int length)
@@ -247,34 +228,23 @@ public abstract class Base : Solution
 
         var previousDirection = _direction;
 
-        // For test data.
-        //(var position, _direction) = (segment.X, segment.Y, _direction) switch
-        //{
-        //    (1, 1, 'U') => (GetPositionAfterTeleport(segmentPosition, new Point(2, 0), 'W'), 'R'),
-        //    (2, 1, 'R') => (GetPositionAfterTeleport(segmentPosition, new Point(3, 2), 'N'), 'D'),
-        //    (2, 2, 'D') => (GetPositionAfterTeleport(segmentPosition, new Point(0, 1), 'S'), 'U'),
-        //    _ => throw new PuzzleException("Unknown map segment.")
-        //};
+        var newSegmentInfo = _edgeMappings[(segment, _direction)];
 
-        // For actual data.
-        (var position, _direction) = (segment.X, segment.Y, _direction) switch
+        var segmentStart = new Point(newSegmentInfo.NewSegment.X * FaceSize, newSegmentInfo.NewSegment.Y * FaceSize);
+
+        // var position = segmentStart + some combination of segmentPosition...
+        //var position = new Point(segmentStart.X, segmentStart.Y);
+
+        var position = newSegmentInfo.Edge switch
         {
-            (1, 0, 'L') => (GetPositionAfterTeleport(segmentPosition, new Point(0, 2), 'W'), 'R'),
-            (1, 0, 'U') => (GetPositionAfterTeleport(segmentPosition, new Point(0, 3), 'W'), 'R'),
-            (2, 0, 'D') => (GetPositionAfterTeleport(segmentPosition, new Point(1, 1), 'E'), 'L'),
-            (2, 0, 'R') => (GetPositionAfterTeleport(segmentPosition, new Point(1, 2), 'E'), 'L'),
-            (2, 0, 'U') => (GetPositionAfterTeleport(segmentPosition, new Point(0, 3), 'S'), 'U'),
-            (1, 1, 'L') => (GetPositionAfterTeleport(segmentPosition, new Point(0, 2), 'N'), 'D'),
-            (1, 1, 'R') => (GetPositionAfterTeleport(segmentPosition, new Point(2, 0), 'S'), 'U'),
-            (0, 2, 'L') => (GetPositionAfterTeleport(segmentPosition, new Point(1, 0), 'W'), 'R'),
-            (0, 2, 'U') => (GetPositionAfterTeleport(segmentPosition, new Point(1, 1), 'W'), 'R'),
-            (1, 2, 'D') => (GetPositionAfterTeleport(segmentPosition, new Point(0, 3), 'E'), 'L'),
-            (1, 2, 'R') => (GetPositionAfterTeleport(segmentPosition, new Point(2, 0), 'E'), 'L'),
-            (0, 3, 'D') => (GetPositionAfterTeleport(segmentPosition, new Point(2, 0), 'N'), 'D'),
-            (0, 3, 'L') => (GetPositionAfterTeleport(segmentPosition, new Point(1, 0), 'N'), 'D'),
-            (0, 3, 'R') => (GetPositionAfterTeleport(segmentPosition, new Point(1, 2), 'S'), 'U'),
-            _ => throw new PuzzleException("Unknown map segment.")
+            'N' => new Point(segmentStart.X, segmentStart.Y), // Tweak X
+            'E' => new Point(segmentStart.X + FaceSize - 1, segmentStart.Y), // Tweak Y
+            'S' => new Point(segmentStart.X, segmentStart.Y + FaceSize - 1), // Tweak X
+            'W' => new Point(segmentStart.X, segmentStart.Y), // Tweak Y
+            _ => throw new PuzzleException("Unknown segment edge.")
         };
+
+        _direction = newSegmentInfo.NewDirection;
 
         if (_map[position.X, position.Y] == '#')
         {
@@ -335,5 +305,46 @@ public abstract class Base : Solution
         }
 
         return newPoint;
+    }
+
+    private void Dump()
+    {
+        for (var y = 0; y < _height; y++)
+        {
+            for (var x = 0; x < _width; x++)
+            {
+                if (_position.X == x && _position.Y == y)
+                {
+                    switch (_direction)
+                    {
+                        case 'U':
+                            Console.Write("^");
+                            break;
+                        case 'R':
+                            Console.Write(">");
+                            break;
+                        case 'D':
+                            Console.Write("v");
+                            break;
+                        case 'L':
+                            Console.Write("<");
+                            break;
+                    }
+
+                    continue;
+                }
+
+                if (_map[x, y] == '\0')
+                {
+                    Console.Write(' ');
+
+                    continue;
+                }
+
+                Console.Write(_map[x, y]);
+            }
+
+            Console.WriteLine();
+        }
     }
 }
