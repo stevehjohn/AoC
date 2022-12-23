@@ -290,14 +290,14 @@ public abstract class Base : Solution
 
     private static Point GetPositionAfterTeleport(Point segmentPosition, Point newSegment, char edge)
     {
-        var segment = new Point(newSegment.X * FaceSize, newSegment.Y * FaceSize);
+        var segmentStart = new Point(newSegment.X * FaceSize, newSegment.Y * FaceSize);
 
         return edge switch
         {
-            'N' => new Point(segment.X + (FaceSize - 1 - segmentPosition.Y), segment.Y),
-            'W' => new Point(segment.X, segment.Y + segmentPosition.X),
-            'S' => new Point(segment.X + (FaceSize - 1 - segmentPosition.X), segment.Y + (FaceSize - 1)),
-            'E' => new Point(segment.X + (FaceSize - 1), segment.Y + (FaceSize - 1 - segmentPosition.X)),
+            'N' => new Point(),
+            'W' => new Point(segmentStart.X, segmentStart.Y + segmentPosition.X),
+            'S' => new Point(),
+            'E' => new Point(),
             _ => throw new PuzzleException("Unknown map direction.")
         };
     }
