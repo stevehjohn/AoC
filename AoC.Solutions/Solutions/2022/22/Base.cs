@@ -195,6 +195,8 @@ public abstract class Base : Solution
     // TODO: *Shrugs*
     private int Teleport3D(Point point, int length)
     {
+        // LOOKS LIKE LENGTH ISN'T BEING CORRECTLY DECREMENTED...
+
         var segmentIndex = point.X / FaceSize + point.Y / FaceSize * FaceSize;
 
         var segmentPosition = new Point(point.X % FaceSize, point.Y % FaceSize);
