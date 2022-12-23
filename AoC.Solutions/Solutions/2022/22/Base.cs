@@ -207,22 +207,22 @@ public abstract class Base : Solution
 
         var previousDirection = _direction;
 
-        // For test data.
-        (var position, _direction) = (segmentIndex, _direction) switch
-        {
-            (5, 'U') => (new Point(FaceSize * 2, segmentPosition.X), 'R'),
-            (6, 'R') => (new Point(FaceSize * 4 - 1 - segmentPosition.Y, FaceSize * 2), 'D'),
-            (10, 'D') => (new Point(FaceSize - 1 - segmentPosition.X, FaceSize * 2 - 1), 'U'),
-            _ => throw new PuzzleException("Unknown map segment.")
-        };
-
-        //Console.WriteLine($"{segmentIndex}, {segmentPosition.X}, {segmentPosition.Y}, {_direction}");
-
+        //// For test data.
         //(var position, _direction) = (segmentIndex, _direction) switch
         //{
-        //    (0, 'L') => (new Point(), ' '),
+        //    (5, 'U') => (new Point(FaceSize * 2, segmentPosition.X), 'R'),
+        //    (6, 'R') => (new Point(FaceSize * 4 - 1 - segmentPosition.Y, FaceSize * 2), 'D'),
+        //    (10, 'D') => (new Point(FaceSize - 1 - segmentPosition.X, FaceSize * 2 - 1), 'U'),
         //    _ => throw new PuzzleException("Unknown map segment.")
         //};
+
+        Console.WriteLine($"{segmentIndex}, {_direction}");
+
+        (var position, _direction) = (segmentIndex, _direction) switch
+        {
+            (0, 'L') => (new Point(), ' '),
+            _ => throw new PuzzleException("Unknown map segment.")
+        };
 
         if (_map[position.X, position.Y] == '#')
         {
