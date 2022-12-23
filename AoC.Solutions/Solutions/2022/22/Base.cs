@@ -121,31 +121,25 @@ public abstract class Base : Solution
 
     private void Walk(int length)
     {
-        switch (_direction)
-        {
-            case 'R':
-                Walk(1, 0, length);
-                break;
-
-            case 'D':
-                Walk(0, 1, length);
-                break;
-
-            case 'L':
-                Walk(-1, 0, length);
-                break;
-
-            case 'U':
-                Walk(0, -1, length);
-                break;
-        }
-    }
-
-    private void Walk(int xD, int yD, int length)
-    {
         while (length > 0)
         {
-            var position = MoveOneStep(_position, xD, yD);
+            var (xD, yD) = _direction switch
+            {
+                'R' => (1, 0),
+                'D' => (0, 1),
+                'L' => (-1, 0),
+                'U' => (0, -1),
+                _ => throw new PuzzleException("")
+            };
+
+            var position = MoveOneStep(_position, xD, yD, ! IsCube);
+
+            if (position.X < 0 || position.X == _width || position.Y < 0 || position.Y == _height)
+            {
+                length = Teleport3D(position, length);
+
+                continue;
+            }
 
             var tile = _map[position.X, position.Y];
 
@@ -165,7 +159,7 @@ public abstract class Base : Solution
 
             if (IsCube)
             {
-                length = Teleport3D(position, xD, yD, length);
+                length = Teleport3D(position, length);
             }
             else
             {
@@ -178,7 +172,7 @@ public abstract class Base : Solution
     {
         while (true)
         {
-            point = MoveOneStep(point, xD, yD);
+            point = MoveOneStep(point, xD, yD, true);
 
             if (_map[point.X, point.Y] == '#')
             {
@@ -199,17 +193,41 @@ public abstract class Base : Solution
     }
 
     // TODO: *Shrugs*
-    private int Teleport3D(Point point, int xD, int yD, int length)
+    private int Teleport3D(Point point, int length)
     {
-        return 0;
+        var segmentIndex = point.X / FaceSize + point.Y / FaceSize * FaceSize;
+
+        var segmentPosition = new Point(point.X % FaceSize, point.Y % FaceSize);
+
+        (var position, _direction) = (segmentIndex, segmentPosition.X, segmentPosition.Y, _direction) switch
+        {
+            (7, 0, _, 'R') => (new Point(FaceSize * 4 - 1 - segmentPosition.Y, FaceSize * 2), 'D'),
+            (14, _, 0, 'D') => (new Point(FaceSize - 1 - segmentPosition.Y, FaceSize * 2 - 1), 'U'),
+            (1, _, FaceSize - 1, 'U') => (new Point(FaceSize * 2, segmentPosition.X), 'R'),
+            _ => throw new PuzzleException("Unknown map segment.")
+        };
+
+        if (_map[position.X, position.Y] == '#')
+        {
+            return 0;
+        }
+
+        _position = position;
+
+        return length - 1;
     }
 
-    private Point MoveOneStep(Point point, int xD, int yD)
+    private Point MoveOneStep(Point point, int xD, int yD, bool wrap)
     {
         var newPoint = new Point(point);
 
         newPoint.X += xD;
         newPoint.Y += yD;
+
+        if (! wrap && (newPoint.X < 0 || newPoint.X == _width || newPoint.Y < 0 || newPoint.Y == _height))
+        {
+            return newPoint;
+        }
 
         if (newPoint.X < 0)
         {
