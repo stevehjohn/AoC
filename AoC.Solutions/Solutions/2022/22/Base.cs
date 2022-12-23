@@ -1,4 +1,6 @@
-﻿using AoC.Solutions.Common;
+﻿#define NOTEST
+
+using AoC.Solutions.Common;
 using AoC.Solutions.Exceptions;
 using AoC.Solutions.Infrastructure;
 
@@ -9,7 +11,11 @@ public abstract class Base : Solution
     public override string Description => "Monkey map";
 
     // 4 for sample input, 50 for actual.
+#if TEST
     private const int FaceSize = 4;
+#else
+    private const int FaceSize = 50;
+#endif
 
     protected bool IsCube { get; set; }
 
@@ -25,7 +31,7 @@ public abstract class Base : Solution
 
     private char _direction = 'R';
 
-    private readonly Dictionary<(Point Segment, char InDirection), (Point NewSegment, char NewDirection, char Edge)> _edgeMappings = new();
+    private readonly Dictionary<(Point Segment, char InDirection), (Point NewSegment, char NewDirection)> _edgeMappings = new();
 
     protected void ParseInput()
     {
@@ -90,7 +96,9 @@ public abstract class Base : Solution
 
                 Walk(length);
 
+#if TEST
                 Dump();
+#endif
 
                 if (i == _path.Length - 1)
                 {
@@ -129,6 +137,7 @@ public abstract class Base : Solution
         return 1_000 * (_position.Y + 1) + 4 * (_position.X + 1) + facing;
     }
 
+    // TODO: Would be good to auto-generate this from the input.
     private void InitialiseEdgeMappings()
     {
         // Template
@@ -137,11 +146,27 @@ public abstract class Base : Solution
         // Format <Segment you're leaving, Segment you're entering>
 
         // Test data.
-        _edgeMappings.Add((new Point(1, 1), 'U'), (new Point(2, 0), 'R', 'W'));
-        _edgeMappings.Add((new Point(2, 1), 'R'), (new Point(3, 2), 'D', 'N'));
-        _edgeMappings.Add((new Point(2, 2), 'D'), (new Point(0, 1), 'U', 'S'));
-
+#if TEST
+        _edgeMappings.Add((new Point(1, 1), 'U'), (new Point(2, 0), 'R'));
+        _edgeMappings.Add((new Point(2, 1), 'R'), (new Point(3, 2), 'D'));
+        _edgeMappings.Add((new Point(2, 2), 'D'), (new Point(0, 1), 'U'));
+#else
         // Actual data.
+        _edgeMappings.Add((new Point(1, 0), 'U'), (new Point(0, 3), 'R'));
+        _edgeMappings.Add((new Point(1, 0), 'L'), (new Point(0, 2), 'R'));
+        _edgeMappings.Add((new Point(2, 0), 'U'), (new Point(0, 3), 'U'));
+        _edgeMappings.Add((new Point(2, 0), 'R'), (new Point(1, 2), 'L'));
+        _edgeMappings.Add((new Point(2, 0), 'D'), (new Point(1, 1), 'L'));
+        _edgeMappings.Add((new Point(1, 1), 'R'), (new Point(2, 0), 'U'));
+        _edgeMappings.Add((new Point(1, 1), 'L'), (new Point(0, 2), 'D'));
+        _edgeMappings.Add((new Point(0, 2), 'U'), (new Point(1, 1), 'R'));
+        _edgeMappings.Add((new Point(0, 2), 'L'), (new Point(1, 0), 'R'));
+        _edgeMappings.Add((new Point(1, 2), 'R'), (new Point(2, 0), 'L'));
+        _edgeMappings.Add((new Point(1, 2), 'D'), (new Point(0, 3), 'L'));
+        _edgeMappings.Add((new Point(0, 3), 'R'), (new Point(1, 2), 'U'));
+        _edgeMappings.Add((new Point(0, 3), 'D'), (new Point(2, 0), 'D'));
+        _edgeMappings.Add((new Point(0, 3), 'L'), (new Point(1, 0), 'D'));
+#endif
     }
 
     private void Walk(int length)
@@ -219,7 +244,6 @@ public abstract class Base : Solution
         return length;
     }
 
-    // TODO: *Shrugs*
     private int Teleport3D(Point point, int length)
     {
         var segment = new Point(point.X / FaceSize, point.Y / FaceSize);
@@ -232,13 +256,13 @@ public abstract class Base : Solution
 
         var segmentStart = new Point(newSegmentInfo.NewSegment.X * FaceSize, newSegmentInfo.NewSegment.Y * FaceSize);
 
-        // Incoming/outgoing edges matter!
-        var position = newSegmentInfo.Edge switch
+        // Incoming/outgoing edges matter! Or, maybe turn direction ([clock|counter]wise)?
+        var position = newSegmentInfo.NewDirection switch
         {
-            'N' => new Point(segmentStart.X + (FaceSize - 1 - segmentPosition.Y), segmentStart.Y), // Tweak X
-            'E' => new Point(segmentStart.X + FaceSize - 1, segmentStart.Y), // Tweak Y
-            'S' => new Point(segmentStart.X + (FaceSize - 1 - segmentPosition.X), segmentStart.Y + FaceSize - 1), // Tweak X
-            'W' => new Point(segmentStart.X, segmentStart.Y + segmentPosition.X), // Tweak Y
+            'D' => new Point(segmentStart.X + (FaceSize - 1 - segmentPosition.Y), segmentStart.Y), // Tweak X
+            'L' => new Point(segmentStart.X + FaceSize - 1, segmentStart.Y), // Tweak Y
+            'U' => new Point(segmentStart.X + (FaceSize - 1 - segmentPosition.X), segmentStart.Y + FaceSize - 1), // Tweak X
+            'R' => new Point(segmentStart.X, segmentStart.Y + segmentPosition.X), // Tweak Y
             _ => throw new PuzzleException("Unknown segment edge.")
         };
 
