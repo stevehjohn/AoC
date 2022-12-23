@@ -236,24 +236,13 @@ public abstract class Base : Solution
     {
         var segment = new Point(newSegment.X * FaceSize, newSegment.Y * FaceSize);
 
-        switch (edge)
+        return edge switch
         {
-            case 'N':
-                segment.X += FaceSize - 1 - segmentPosition.Y;
-                return segment;
-
-            case 'W':
-                segment.Y += segmentPosition.X;
-                return segment;
-
-            case 'S':
-                segment.Y += FaceSize - 1;
-                segment.X += FaceSize - 1 - segmentPosition.X;
-                return segment;
-
-            case 'E':
-                break;
-        }
+            'N' => new Point(segment.X + (FaceSize - 1 - segmentPosition.Y), segment.Y),
+            'W' => new Point(segment.X, segment.Y + segmentPosition.X),
+            'S' => new Point(segment.X + (FaceSize - 1 - segmentPosition.X), segment.Y + (FaceSize - 1)),
+            _ => throw new PuzzleException("WTF?")
+        };
 
         return null;
     }
