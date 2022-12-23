@@ -9,6 +9,8 @@ public abstract class Base : Solution
 
     private HashSet<Point> _elves = new();
 
+    private readonly List<Func<Point, Point>> _evaluations = new();
+
     protected void ParseInput()
     {
         for (var y = 0; y < Input.Length; y++)
@@ -25,13 +27,13 @@ public abstract class Base : Solution
         }
     }
 
-    protected void RunSimulation()
+    protected int RunSimulation(bool toCompletion = false)
     {
         InitialiseEvaluations();
 
-        Dump();
+        var i = toCompletion ? int.MaxValue : 10;
 
-        var i = 10;
+        var rounds = 1;
 
         while (i > 0)
         {
@@ -40,66 +42,17 @@ public abstract class Base : Solution
                 break;
             }
 
-            Dump();
-
             i--;
+
+            rounds++;
         }
 
-        Console.WriteLine(CountEmptyTiles());
-    }
-
-    private int CountEmptyTiles()
-    {
-        var minX = _elves.Min(e => e.X);
-        var maxX = _elves.Max(e => e.X);
-
-        var minY = _elves.Min(e => e.Y);
-        var maxY = _elves.Max(e => e.Y);
-
-        var empty = 0;
-
-        for (var y = minY; y <= maxY; y++)
+        if (toCompletion)
         {
-            for (var x = minX; x <= maxX; x++)
-            {
-                if (_elves.Contains(new Point(x, y)))
-                {
-                    continue;
-                }
-
-                empty++;
-            }
+            return rounds;
         }
 
-        return empty;
-    }
-
-    private void Dump()
-    {
-        var minX = _elves.Min(e => e.X);
-        var maxX = _elves.Max(e => e.X);
-
-        var minY = _elves.Min(e => e.Y);
-        var maxY = _elves.Max(e => e.Y);
-
-        for (var y = minY; y <= maxY; y++)
-        {
-            for (var x = minX; x <= maxX; x++)
-            {
-                if (_elves.Contains(new Point(x, y)))
-                {
-                    Console.Write('#');
-                }
-                else
-                {
-                    Console.Write('.');
-                }
-            }
-
-            Console.WriteLine();
-        }
-
-        Console.WriteLine();
+        return CountEmptyTiles();
     }
 
     protected int RunSimulationStep()
@@ -151,8 +104,6 @@ public abstract class Base : Solution
 
         return moved;
     }
-
-    private readonly List<Func<Point, Point>> _evaluations = new();
 
     private void InitialiseEvaluations()
     {
@@ -217,5 +168,31 @@ public abstract class Base : Solution
         _evaluations.RemoveAt(0);
 
         _evaluations.Add(first);
+    }
+
+    private int CountEmptyTiles()
+    {
+        var minX = _elves.Min(e => e.X);
+        var maxX = _elves.Max(e => e.X);
+
+        var minY = _elves.Min(e => e.Y);
+        var maxY = _elves.Max(e => e.Y);
+
+        var empty = 0;
+
+        for (var y = minY; y <= maxY; y++)
+        {
+            for (var x = minX; x <= maxX; x++)
+            {
+                if (_elves.Contains(new Point(x, y)))
+                {
+                    continue;
+                }
+
+                empty++;
+            }
+        }
+
+        return empty;
     }
 }
