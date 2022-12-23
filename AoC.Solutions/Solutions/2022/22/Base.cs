@@ -255,7 +255,7 @@ public abstract class Base : Solution
             'W' => new Point(segment.X, segment.Y + segmentPosition.X),
             'S' => new Point(segment.X + (FaceSize - 1 - segmentPosition.X), segment.Y + (FaceSize - 1)),
             'E' => new Point(segment.X + (FaceSize - 1), segment.Y + (FaceSize - 1 - segmentPosition.X)),
-            _ => throw new PuzzleException("WTF?")
+            _ => throw new PuzzleException("Unknown map direction.")
         };
     }
 
