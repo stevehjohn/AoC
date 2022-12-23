@@ -243,8 +243,6 @@ public abstract class Base : Solution
             'S' => new Point(segment.X + (FaceSize - 1 - segmentPosition.X), segment.Y + (FaceSize - 1)),
             _ => throw new PuzzleException("WTF?")
         };
-
-        return null;
     }
 
     private Point MoveOneStep(Point point, int xD, int yD, bool wrap)
