@@ -9,10 +9,7 @@ public abstract class Base : Solution
     public override string Description => "Monkey map";
 
     // 4 for sample input, 50 for actual.
-    private const int FaceSize = 50;
-
-    // 4 for sample input, 3 for actual.
-    private const int NetWidth = 3;
+    private const int FaceSize = 4;
 
     protected bool IsCube { get; set; }
 
@@ -201,28 +198,29 @@ public abstract class Base : Solution
     // TODO: *Shrugs*
     private int Teleport3D(Point point, int length)
     {
-        var segmentIndex = point.X / FaceSize + point.Y / FaceSize * NetWidth;
+        var segmentX = point.X / FaceSize;
+        var segmentY = point.Y / FaceSize;
 
         var segmentPosition = new Point(point.X % FaceSize, point.Y % FaceSize);
 
         var previousDirection = _direction;
 
-        //// For test data.
-        //(var position, _direction) = (segmentIndex, _direction) switch
-        //{
-        //    (5, 'U') => (new Point(FaceSize * 2, segmentPosition.X), 'R'),
-        //    (6, 'R') => (new Point(FaceSize * 4 - 1 - segmentPosition.Y, FaceSize * 2), 'D'),
-        //    (10, 'D') => (new Point(FaceSize - 1 - segmentPosition.X, FaceSize * 2 - 1), 'U'),
-        //    _ => throw new PuzzleException("Unknown map segment.")
-        //};
-
-        Console.WriteLine($"{segmentIndex}, {_direction}");
-
-        (var position, _direction) = (segmentIndex, _direction) switch
+        // For test data.
+        (var position, _direction) = (segmentX, segmentY, _direction) switch
         {
-            (0, 'L') => (new Point(), ' '),
+            (1, 1, 'U') => (new Point(FaceSize * 2, segmentPosition.X), 'R'),
+            (2, 1, 'R') => (new Point(FaceSize * 4 - 1 - segmentPosition.Y, FaceSize * 2), 'D'),
+            (2, 2, 'D') => (new Point(FaceSize - 1 - segmentPosition.X, FaceSize * 2 - 1), 'U'),
             _ => throw new PuzzleException("Unknown map segment.")
         };
+
+        //Console.WriteLine($"{segmentIndex}, {_direction}");
+
+        //(var position, _direction) = (segmentIndex, _direction) switch
+        //{
+        //    (0, 'L') => (new Point(), ' '),
+        //    _ => throw new PuzzleException("Unknown map segment.")
+        //};
 
         if (_map[position.X, position.Y] == '#')
         {
