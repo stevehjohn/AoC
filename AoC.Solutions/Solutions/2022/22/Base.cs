@@ -9,7 +9,7 @@ public abstract class Base : Solution
     public override string Description => "Monkey map";
 
     // 4 for sample input, 50 for actual.
-    private const int FaceSize = 4;
+    private const int FaceSize = 50;
 
     protected bool IsCube { get; set; }
 
@@ -205,19 +205,32 @@ public abstract class Base : Solution
         var previousDirection = _direction;
 
         // For test data.
-        (var position, _direction) = (segment.X, segment.Y, _direction) switch
-        {
-            (1, 1, 'U') => (GetPositionAfterTeleport(segmentPosition, new Point(2, 0), 'W'), 'R'),
-            (2, 1, 'R') => (GetPositionAfterTeleport(segmentPosition, new Point(3, 2), 'N'), 'D'),
-            (2, 2, 'D') => (GetPositionAfterTeleport(segmentPosition, new Point(0, 1), 'S'), 'U'),
-            _ => throw new PuzzleException("Unknown map segment.")
-        };
-
-        //(var position, _direction) = (segmentIndex, _direction) switch
+        //(var position, _direction) = (segment.X, segment.Y, _direction) switch
         //{
-        //    (0, 'L') => (new Point(), ' '),
+        //    (1, 1, 'U') => (GetPositionAfterTeleport(segmentPosition, new Point(2, 0), 'W'), 'R'),
+        //    (2, 1, 'R') => (GetPositionAfterTeleport(segmentPosition, new Point(3, 2), 'N'), 'D'),
+        //    (2, 2, 'D') => (GetPositionAfterTeleport(segmentPosition, new Point(0, 1), 'S'), 'U'),
         //    _ => throw new PuzzleException("Unknown map segment.")
         //};
+
+        // For actual data.
+        (var position, _direction) = (segment.X, segment.Y, _direction) switch
+        {
+            (1, 0, 'L') => (GetPositionAfterTeleport(segmentPosition, new Point(), ' '), ' '),
+            (1, 0, 'U') => (GetPositionAfterTeleport(segmentPosition, new Point(), ' '), ' '),
+            (2, 0, 'R') => (GetPositionAfterTeleport(segmentPosition, new Point(), ' '), ' '),
+            (2, 0, 'U') => (GetPositionAfterTeleport(segmentPosition, new Point(), ' '), ' '),
+            (1, 1, 'L') => (GetPositionAfterTeleport(segmentPosition, new Point(), ' '), ' '),
+            (1, 1, 'R') => (GetPositionAfterTeleport(segmentPosition, new Point(), ' '), ' '),
+            (0, 2, 'L') => (GetPositionAfterTeleport(segmentPosition, new Point(), ' '), ' '),
+            (0, 2, 'U') => (GetPositionAfterTeleport(segmentPosition, new Point(), ' '), ' '),
+            (1, 2, 'D') => (GetPositionAfterTeleport(segmentPosition, new Point(), ' '), ' '),
+            (1, 2, 'R') => (GetPositionAfterTeleport(segmentPosition, new Point(), ' '), ' '),
+            (0, 3, 'D') => (GetPositionAfterTeleport(segmentPosition, new Point(), ' '), ' '),
+            (0, 3, 'L') => (GetPositionAfterTeleport(segmentPosition, new Point(), ' '), ' '),
+            (0, 3, 'R') => (GetPositionAfterTeleport(segmentPosition, new Point(), ' '), ' '),
+            _ => throw new PuzzleException("Unknown map segment.")
+        };
 
         if (_map[position.X, position.Y] == '#')
         {
