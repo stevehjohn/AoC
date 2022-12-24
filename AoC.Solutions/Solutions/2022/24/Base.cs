@@ -166,11 +166,10 @@ public abstract class Base : Solution
             return moves;
         }
 
-        // TODO: Will need this (pt2).
-        //if (position.Y == 1 && position.X == _start.X)
-        //{
-        //    moves.Add(new Point(position.X, position.Y - 1));
-        //}
+        if (position.Y == 1 && position.X == _start.X)
+        {
+            moves.Add(new Point(position.X, position.Y - 1));
+        }
 
         if (position.X < _width - 2 && ! storms.Any(s => s.X == position.X + 1 && s.Y == position.Y))
         {
