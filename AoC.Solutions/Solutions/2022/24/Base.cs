@@ -146,6 +146,8 @@ public abstract class Base : Solution
 
             if (loops > 0)
             {
+                Console.WriteLine($"Loop: {loops}");
+
                 if (target.Equals(_end))
                 {
                     target = _start;
@@ -195,16 +197,33 @@ public abstract class Base : Solution
             moves.Add(new Point(position));
         }
 
-        if (position.Y == 0 && position.X == origin.X)
+        if (origin.Equals(_start))
         {
-            moves.Add(new Point(position.X, position.Y + 1));
+            if (position.Y == 0 && position.X == origin.X)
+            {
+                moves.Add(new Point(position.X, position.Y + 1));
 
-            return moves;
+                return moves;
+            }
+
+            if (position.Y == 1 && position.X == origin.X)
+            {
+                moves.Add(new Point(position.X, position.Y - 1));
+            }
         }
-
-        if (position.Y == 1 && position.X == origin.X)
+        else
         {
-            moves.Add(new Point(position.X, position.Y - 1));
+            if (position.Y == _height - 1 && position.X == origin.X)
+            {
+                moves.Add(new Point(position.X, position.Y - 2));
+
+                return moves;
+            }
+
+            if (position.Y == _height - 2 && position.X == origin.X)
+            {
+                moves.Add(new Point(position.X, position.Y + 11));
+            }
         }
 
         if (position.X < _width - 2 && ! storms.Any(s => s.X == position.X + 1 && s.Y == position.Y))
