@@ -197,7 +197,7 @@ public abstract class Base : Solution
         // For test data
         (position, var newDirection) = (newSegment.X, newSegment.Y) switch
         {
-            (3, 1) => (new Point(FaceSize * 4 - 1 - segmentPosition.Y, FaceSize * 2), 'D'),
+            (3, 1) => (GetPositionInNewSegment(3, 2, FaceSize - 1 - segmentPosition.Y, 0), 'D'),
             (2, 3) => (new Point(FaceSize - 1 - segmentPosition.X, FaceSize * 2 - 1), 'U'),
             (1, 0) => (new Point(FaceSize * 2, segmentPosition.X), 'R'),
             _ => throw new PuzzleException("Cannot 3D teleport.")
@@ -213,6 +213,11 @@ public abstract class Base : Solution
         _direction = newDirection;
 
         return length - 1;
+    }
+
+    private Point GetPositionInNewSegment(int x, int y, int dX, int dY)
+    {
+        return new Point(x * FaceSize + dX, y * FaceSize + dY);
     }
 
     private Point MoveOneStep(Point point, int xD, int yD)
