@@ -54,11 +54,15 @@ public abstract class Base : Solution
                 if (y == 0 && c == '.')
                 {
                     _start = new Point(x, y);
+
+                    continue;
                 }
 
                 if (y == Input.Length - 1 && c == '.')
                 {
                     _end = new Point(x, y);
+
+                    continue;
                 }
 
                 if (c == '#' || c == '.')
@@ -92,7 +96,7 @@ public abstract class Base : Solution
                 continue;
             }
 
-            //Dump(item.Position, item.Storms);
+            Dump(item.Position, item.Storms);
 
             if (item.Position.Equals(_end))
             {
