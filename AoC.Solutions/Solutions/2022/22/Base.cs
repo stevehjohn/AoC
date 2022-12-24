@@ -216,7 +216,7 @@ public abstract class Base : Solution
     }
 
     // TODO: Elegant way to use delta (as in x += delta or x += FaceSize - 1 - delta).
-    private Point GetPositionInNewSegment(int x, int y, char edge, int delta)
+    private static Point GetPositionInNewSegment(int x, int y, char edge, int delta)
     {
         var position = new Point(x * FaceSize, y * FaceSize);
 
