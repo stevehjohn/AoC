@@ -14,7 +14,7 @@ public class Part2 : Base
 
     private const int FaceEndIndex = FaceSize + 1;
 
-    private readonly char[,,] _cube = new char[FaceSize + 2, FaceSize + 2, FaceSize + 2];
+    private readonly (char Tile, Point InitialPosition)[,,] _cube = new (char Tile, Point InitialPosition)[FaceSize + 2, FaceSize + 2, FaceSize + 2];
 
     private string _path;
 
@@ -22,11 +22,15 @@ public class Part2 : Base
 
     private Point _position;
 
+    private Point _direction = new(1, 0);
+
     public override string GetAnswer()
     {
         InitialiseMappings();
 
         ParseInput();
+
+        WalkCube();
 
         return "";
     }
@@ -90,13 +94,50 @@ public class Part2 : Base
 
                 var position = mappingFunction(x % FaceSize, y % FaceSize);
 
-                _cube[position.X, position.Y, position.Z] = line[x];
+                _cube[position.X, position.Y, position.Z].Tile = line[x];
+                _cube[position.X, position.Y, position.Z].InitialPosition = new Point(x, y);
             }
         }
 
         _path = Input[y + 1];
 
         Count();
+    }
+
+    private void WalkCube()
+    {
+        var previous = 0;
+        
+        for (var i = 0; i < _path.Length; i++)
+        {
+            if (_path[i] > '9' || i == _path.Length - 1)
+            {
+                var length = i == _path.Length - 1 ? int.Parse(_path.Substring(i)) : int.Parse(_path.Substring(previous, i - previous));
+
+                Walk(length);
+
+                if (i == _path.Length - 1)
+                {
+                    break;
+                }
+
+                // TODO: Change direction
+
+                previous = i + 1;
+            }
+        }
+    }
+
+    private void Walk(int length)
+    {
+        while (length > 0)
+        {
+            var position = new Point(_position);
+
+            position += _direction;
+
+            length--;
+        }
     }
 
     private void Count()
@@ -109,7 +150,7 @@ public class Part2 : Base
             {
                 for (var z = 0; z < FaceEndIndex; z++)
                 {
-                    if (_cube[x, y, z] != '\0')
+                    if (_cube[x, y, z].Tile != '\0')
                     {
                         c++;
                     }

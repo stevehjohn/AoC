@@ -72,8 +72,6 @@ public class Part1 : Base
 
     private void WalkPath()
     {
-        Console.CursorVisible = false;
-
         var previous = 0;
 
         for (var i = 0; i < _path.Length; i++)
