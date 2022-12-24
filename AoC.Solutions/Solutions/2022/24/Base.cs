@@ -174,11 +174,18 @@ public abstract class Base : Solution
     private List<Point> GetMoves(Storm[] storms, Point position, Point target, Point origin)
     {
         var moves = new List<Point>();
-        
+
         // Here be dragons?
         if (position.X == target.X && position.Y == target.Y - 1)
         {
             moves.Add(new Point(position.X, position.Y + 1));
+
+            return moves;
+        }
+
+        if (position.X == target.X && position.Y == target.Y + 1)
+        {
+            moves.Add(new Point(position.X, position.Y - 1));
 
             return moves;
         }
