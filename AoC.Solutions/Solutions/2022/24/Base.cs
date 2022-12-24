@@ -1,5 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-using AoC.Solutions.Common;
+﻿using AoC.Solutions.Common;
 using AoC.Solutions.Exceptions;
 using AoC.Solutions.Infrastructure;
 
@@ -80,15 +79,24 @@ public abstract class Base : Solution
 
         queue.Enqueue((_storms, _start, 0), 0);
 
+        var min = int.MaxValue;
+
         while (queue.Count > 0)
         {
             var item = queue.Dequeue();
 
-            Dump(item.Position, item.Storms);
+            //Dump(item.Position, item.Storms);
 
             if (item.Position.Equals(_end))
             {
-                return item.Steps;
+                if (item.Steps < min)
+                {
+                    min = item.Steps;
+
+                    Console.WriteLine(min);
+                }
+
+                //return item.Steps;
             }
 
             var nextStorms = MoveStorms(item.Storms);
@@ -97,6 +105,11 @@ public abstract class Base : Solution
 
             foreach (var move in moves)
             {
+                if (item.Steps + 1 > min)
+                {
+                    continue;
+                }
+
                 queue.Enqueue((nextStorms, move, item.Steps + 1), Math.Abs(_end.X - move.X) + Math.Abs(_end.Y - move.Y));
             }
         }
