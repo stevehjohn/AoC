@@ -81,14 +81,16 @@ public abstract class Base : Solution
 
         queue.Enqueue((_storms, _start, 0), 0);
 
+        var origin = _start;
+
         var target = _end;
 
         var totalMin = 0;
 
+        var min = int.MaxValue;
+
         while (loops > 0)
         {
-            var min = int.MaxValue;
-
             while (queue.Count > 0)
             {
                 var item = queue.Dequeue();
@@ -112,7 +114,7 @@ public abstract class Base : Solution
 
                 var nextStorms = MoveStorms(item.Storms);
 
-                var moves = GetMoves(nextStorms, item.Position);
+                var moves = GetMoves(nextStorms, item.Position, target, origin);
 
                 foreach (var move in moves)
                 {
@@ -136,17 +138,35 @@ public abstract class Base : Solution
             loops--;
 
             totalMin += min;
+
+            if (loops > 0)
+            {
+                if (target.Equals(_end))
+                {
+                    target = _start;
+
+                    queue.Enqueue((_storms, _end, 0), 0);
+                }
+                else
+                {
+                    target = _end;
+
+                    queue.Enqueue((_storms, _start, 0), 0);
+                }
+
+                min = int.MaxValue;
+            }
         }
 
-        return Math.Max(Byte.MinValue, totalMin);
+        return Math.Max(min, totalMin);
     }
 
     // This'll be sloooooooow...
-    private List<Point> GetMoves(Storm[] storms, Point position)
+    private List<Point> GetMoves(Storm[] storms, Point position, Point target, Point origin)
     {
         var moves = new List<Point>();
         
-        if (position.X == _end.X && position.Y == _end.Y - 1)
+        if (position.X == target.X && position.Y == target.Y - 1)
         {
             moves.Add(new Point(position.X, position.Y + 1));
 
@@ -158,14 +178,14 @@ public abstract class Base : Solution
             moves.Add(new Point(position));
         }
 
-        if (position.Y == 0 && position.X == _start.X)
+        if (position.Y == 0 && position.X == origin.X)
         {
             moves.Add(new Point(position.X, position.Y + 1));
 
             return moves;
         }
 
-        if (position.Y == 1 && position.X == _start.X)
+        if (position.Y == 1 && position.X == origin.X)
         {
             moves.Add(new Point(position.X, position.Y - 1));
         }
