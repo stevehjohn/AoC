@@ -78,6 +78,8 @@ public abstract class Base : Solution
 
                 Walk(length);
 
+                Console.WriteLine(_position);
+
                 if (i == _path.Length - 1)
                 {
                     break;
@@ -125,7 +127,7 @@ public abstract class Base : Solution
                 'D' => (0, 1),
                 'L' => (-1, 0),
                 'U' => (0, -1),
-                _ => throw new PuzzleException("")
+                _ => throw new PuzzleException("Don't know where to turn.")
             };
 
             var previousPosition = new Point(_position);
@@ -134,7 +136,7 @@ public abstract class Base : Solution
 
             if (IsCube && (position.X < 0 || position.X == _width || position.Y < 0 || position.Y == _height || _map[position.X, position.Y] == '\0'))
             {
-                length = Teleport3D(position);
+                length = Teleport3D(position, length);
 
                 continue;
             }
@@ -183,9 +185,34 @@ public abstract class Base : Solution
         return length;
     }
 
-    private int Teleport3D(Point position)
+    private int Teleport3D(Point position, int length)
     {
-        return 0;
+        Console.WriteLine($"TS: {position}");
+
+        var segmentPosition = new Point(position.X % 4, position.Y % 4);
+
+        (position, var newDirection) = (position.X, position.Y) switch
+        {
+            (12, > 3 and < 8) => (new Point(15 - segmentPosition.Y, 8), 'D'),
+            (> 7 and < 12, 12) => (new Point(3 - segmentPosition.X, 7), 'U'),
+            (> 3 and < 8, 3) => (new Point(8, segmentPosition.X), 'R'),
+            _ => throw new PuzzleException("Cannot 3D teleport.")
+        };
+
+        Console.WriteLine($"TE: {position}");
+
+        Console.WriteLine();
+
+        if (_map[position.X, position.Y] == '#')
+        {
+            return 0;
+        }
+
+        _position = position;
+
+        _direction = newDirection;
+
+        return length - 1;
     }
 
     private Point MoveOneStep(Point point, int xD, int yD)
@@ -194,6 +221,11 @@ public abstract class Base : Solution
 
         newPoint.X += xD;
         newPoint.Y += yD;
+
+        if (IsCube)
+        {
+            return newPoint;
+        }
 
         if (newPoint.X < 0)
         {
