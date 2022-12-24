@@ -12,13 +12,13 @@ public class Part2 : Base
     private const int FaceSize = 50;
 #endif
 
-    private const int FaceEndIndex = FaceSize - 1;
+    private const int FaceEndIndex = FaceSize + 1;
 
-    private readonly char[,,] _cube = new char[FaceSize, FaceSize, FaceSize];
+    private readonly char[,,] _cube = new char[FaceSize + 2, FaceSize + 2, FaceSize + 2];
 
     private string _path;
 
-    private readonly Dictionary<Point, (Point Start, Func<Point, Point> XChanged, Func<Point, Point> YChanged)> _mappings = new();
+    private readonly Dictionary<Point, Func<int, int, Point>> _mappings = new();
 
     private Point _position;
 
@@ -35,7 +35,18 @@ public class Part2 : Base
     private void InitialiseMappings()
     {
 #if TEST
-        _mappings.Add(new Point(2, 0), (new Point(0, 0, FaceEndIndex), p => new Point(p.X + 1, p.Y, p.Z), p => new Point(p.X - FaceSize, p.Y + 1, p.Z)));
+        // Top
+        _mappings.Add(new Point(2, 0), (x, y) => new Point(x + 1, y + 1, FaceEndIndex));
+        // Back
+        _mappings.Add(new Point(0, 1), (x, y) => new Point(FaceSize - x, 0, FaceSize - y));
+        // Left
+        _mappings.Add(new Point(1, 1), (x, y) => new Point(0, y + 1, x + 1));
+        // Front
+        _mappings.Add(new Point(2, 1), (x, y) => new Point(x + 1, FaceEndIndex, FaceSize - y));
+        // Bottom
+        _mappings.Add(new Point(2, 2), (x, y) => new Point(x + 1, FaceSize - y));
+        // Right
+        _mappings.Add(new Point(3, 2), (x, y) => new Point(FaceEndIndex, FaceSize - x, FaceSize - y));
 #else
 #endif
     }
@@ -44,9 +55,7 @@ public class Part2 : Base
     {
         int y;
 
-        Point cubePosition = null;
-
-        (Point Start, Func<Point, Point> XChanged, Func<Point, Point> YChanged) mapping = (new Point(-1, -1, -1), _ => throw new PuzzleException("Mapping not found."), _ => throw new PuzzleException("Mapping not found."));
+        Func<int, int, Point> mappingFunction =  (_, _) => throw new PuzzleException("Mapping not set.");
 
         for (y = 0; y < Input.Length; y++)
         {
@@ -64,28 +73,50 @@ public class Part2 : Base
                     continue;
                 }
 
-                if (x % FaceSize == 0 && y % FaceSize == 0)
+                if (x % FaceSize == 0 || y % FaceSize == 0)
                 {
-                    mapping = _mappings[new Point(x / FaceSize, y / FaceSize)];
+                    if (! _mappings.ContainsKey(new Point(x / FaceSize, y / FaceSize)))
+                    {
+                        Count();
+                    }
 
-                    cubePosition = new Point(mapping.Start);
+                    mappingFunction = _mappings[new Point(x / FaceSize, y / FaceSize)];
                 }
 
                 if (_position == null && line[x] == '.')
                 {
-                    _position = new Point(cubePosition);
+                    _position = new Point(mappingFunction(x % FaceSize, y % FaceSize));
                 }
 
-                // ReSharper disable once PossibleNullReferenceException - want this to fail if null.
-                _cube[cubePosition.X, cubePosition.Y, cubePosition.Z] = line[x];
+                var position = mappingFunction(x % FaceSize, y % FaceSize);
 
-                cubePosition = mapping.XChanged(cubePosition);
+                _cube[position.X, position.Y, position.Z] = line[x];
             }
-
-            // ReSharper disable once PossibleNullReferenceException - want this to fail if null.
-            cubePosition = mapping.YChanged(cubePosition);
         }
 
         _path = Input[y + 1];
+
+        Count();
+    }
+
+    private void Count()
+    {
+        var c = 0;
+
+        for (var x = 0; x < FaceEndIndex; x++)
+        {
+            for (var y = 0; y < FaceEndIndex; y++)
+            {
+                for (var z = 0; z < FaceEndIndex; z++)
+                {
+                    if (_cube[x, y, z] != '\0')
+                    {
+                        c++;
+                    }
+                }
+            }
+        }
+
+        Console.WriteLine(c);
     }
 }
