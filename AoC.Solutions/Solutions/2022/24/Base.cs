@@ -170,6 +170,7 @@ public abstract class Base : Solution
     {
         var moves = new List<Point>();
         
+        // Here be dragons?
         if (position.X == target.X && position.Y == target.Y - 1)
         {
             moves.Add(new Point(position.X, position.Y + 1));
