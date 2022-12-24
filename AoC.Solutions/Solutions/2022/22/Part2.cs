@@ -119,18 +119,16 @@ public class Part2 : Base
 
                 Walk(length);
 
-                Console.WriteLine(GetElement(_position).InitialPosition);
-
                 if (i == _path.Length - 1)
                 {
                     break;
                 }
 
-                // TODO: Change direction - this depends on which face of cube :(
+                // TODO: Change direction - this depends on which face of cube :( ... maybe?
                 _direction = (_direction.X, _direction.Y, _direction.Z, _path[i]) switch
                 {
-                    (1, 0, 0, 'R') => new Point(),
-                    (1, 0, 0, 'L') => new Point(),
+                    (1, 0, 0, 'R') => new Point(0, 1),
+                    (0, 0, -1, 'L') => new Point(1, 0),
                     _ => throw new PuzzleException("Don't know how to turn.")
                 };
 
@@ -156,14 +154,51 @@ public class Part2 : Base
 
             if (tile == '\0')
             {
-                // Change direction. If hit #, return.
-                // Should only be one option that isn't where you came from...
+                var newDirection = Wrap(position);
+
+                position += newDirection;
+
+                if (GetElement(position).Tile == '#')
+                {
+                    return;
+                }
+
+                _direction = newDirection;
+
+                // This accounts for previous decrement taking us into '\0'.
+//                length++;
             }
 
             _position = position;
 
+            Console.WriteLine(GetElement(_position).InitialPosition);
+
             length--;
         }
+    }
+
+    private Point Wrap(Point position)
+    {
+        // Change direction. If hit #, return.
+        // Should only be one option that isn't where you came from...
+        // Don't change class variable if change goes to a #.
+
+        return (position.X, position.Y, position.Z, _direction.X, _direction.Y, _direction.Z) switch
+        {
+            // Top ->
+            //   Back
+            (_, 0, FaceEndIndex, 0, -1, 0) => new Point(),
+            //   Left
+            (0, _, FaceEndIndex, 0, -1, 0) => new Point(),
+            //   Right
+            (FaceEndIndex, _, FaceEndIndex, 0, -1, 0) => new Point(),
+            //   Front
+            (_, FaceEndIndex, FaceEndIndex, _, 1, _) => new Point(0, 0, -1),
+            // Front ->
+            //   Right
+            (FaceEndIndex, FaceEndIndex, _, 1, 0, 0) => new Point(0, -1),
+            _ => throw new PuzzleException("Don't know how to wrap.")
+        };
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
