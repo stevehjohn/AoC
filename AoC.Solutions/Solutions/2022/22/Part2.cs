@@ -1,4 +1,5 @@
 ﻿#define TEST
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using AoC.Solutions.Common;
 using AoC.Solutions.Exceptions;
@@ -96,6 +97,7 @@ public class Part2 : Base
                 var position = mappingFunction(x % FaceSize, y % FaceSize);
 
                 _cube[position.X, position.Y, position.Z].Tile = line[x];
+
                 _cube[position.X, position.Y, position.Z].InitialPosition = new Point(x, y);
             }
         }
@@ -117,12 +119,20 @@ public class Part2 : Base
 
                 Walk(length);
 
+                Console.WriteLine(GetElement(_position).InitialPosition);
+
                 if (i == _path.Length - 1)
                 {
                     break;
                 }
 
-                // TODO: Change direction
+                // TODO: Change direction - this depends on which face of cube :(
+                _direction = (_direction.X, _direction.Y, _direction.Z, _path[i]) switch
+                {
+                    (1, 0, 0, 'R') => new Point(),
+                    (1, 0, 0, 'L') => new Point(),
+                    _ => throw new PuzzleException("Don't know how to turn.")
+                };
 
                 previous = i + 1;
             }
@@ -147,7 +157,10 @@ public class Part2 : Base
             if (tile == '\0')
             {
                 // Change direction. If hit #, return.
+                // Should only be one option that isn't where you came from...
             }
+
+            _position = position;
 
             length--;
         }
