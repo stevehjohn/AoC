@@ -91,6 +91,8 @@ public abstract class Base : Solution
 
         while (loops > 0)
         {
+            Storm[] lastStorms = null;
+
             while (queue.Count > 0)
             {
                 var item = queue.Dequeue();
@@ -105,6 +107,8 @@ public abstract class Base : Solution
                     if (item.Steps < min)
                     {
                         min = item.Steps;
+
+                        lastStorms = item.Storms;
 
                         Console.WriteLine(min);
 
@@ -145,13 +149,13 @@ public abstract class Base : Solution
                 {
                     target = _start;
 
-                    queue.Enqueue((_storms, _end, 0), 0);
+                    queue.Enqueue((lastStorms, _end, 0), 0);
                 }
                 else
                 {
                     target = _end;
 
-                    queue.Enqueue((_storms, _start, 0), 0);
+                    queue.Enqueue((lastStorms, _start, 0), 0);
                 }
 
                 min = int.MaxValue;
