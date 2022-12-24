@@ -233,9 +233,10 @@ public abstract class Base : Solution
             (0, 0, 'L') => (GetPositionInNewSegment(0, 2, 'L', segmentPosition.Y), 'R'),
             (1, -1, 'U') => (GetPositionInNewSegment(0, 3, 'L', segmentPosition.X, false), 'R'),
             (2, -1, 'U') => (GetPositionInNewSegment(0, 3, 'D', segmentPosition.X), 'U'),
-            (4, 0, 'R') => (GetPositionInNewSegment(1, 2, 'R', segmentPosition.Y), 'L'),
-            // Two way street thing...
-            (3, 1, 'D') => (GetPositionInNewSegment(2, 1, 'R', segmentPosition.Y, false), 'L'),
+            (3, 0, 'R') => (GetPositionInNewSegment(1, 2, 'R', segmentPosition.Y), 'L'),
+            (2, 1, 'D') => (GetPositionInNewSegment(1, 1, 'R', segmentPosition.X, false), 'L'),
+            (2, 1, 'R') => (GetPositionInNewSegment(2, 0, 'D', segmentPosition.Y, false), 'U'),
+            (2, 2, 'R') => (GetPositionInNewSegment(2, 0, 'R', segmentPosition.Y), 'L'),
             _ => throw new PuzzleException("Cannot 3D teleport.")
         };
     }
