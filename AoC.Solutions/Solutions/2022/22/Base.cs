@@ -208,6 +208,7 @@ public abstract class Base : Solution
         return length - 1;
     }
 
+    // TODO: This is the bit I'd like to programatically calculate.
     private (Point Position, char NewDirection) Wrap3D(Point newSegment, Point segmentPosition, char direction)
     {
         return (newSegment.X, newSegment.Y, _direction) switch
