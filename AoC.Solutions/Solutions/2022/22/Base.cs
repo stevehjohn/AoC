@@ -194,15 +194,7 @@ public abstract class Base : Solution
 
         Console.WriteLine($"New: {newSegment}");
 
-        // For test data
-        (position, var newDirection) = (newSegment.X, newSegment.Y, _direction) switch
-        {
-            (3, 1, 'R') => (GetPositionInNewSegment(3, 2, 'U', segmentPosition.Y), 'D'),
-            (2, 3, 'D') => (GetPositionInNewSegment(0, 1, 'D', segmentPosition.X), 'U'),
-            (1, 0, 'U') => (GetPositionInNewSegment(2, 0, 'L', segmentPosition.X, false), 'R'),
-//            (1, 0, _) => (new Point(FaceSize * 2, segmentPosition.X), 'R'),
-            _ => throw new PuzzleException("Cannot 3D teleport.")
-        };
+        (position, var newDirection) = Wrap3D(newSegment, segmentPosition, _direction);
 
         if (_map[position.X, position.Y] == '#')
         {
@@ -214,6 +206,17 @@ public abstract class Base : Solution
         _direction = newDirection;
 
         return length - 1;
+    }
+
+    private (Point Position, char NewDirection) Wrap3D(Point newSegment, Point segmentPosition, char direction)
+    {
+        return (newSegment.X, newSegment.Y, _direction) switch
+        {
+            (3, 1, 'R') => (GetPositionInNewSegment(3, 2, 'U', segmentPosition.Y), 'D'),
+            (2, 3, 'D') => (GetPositionInNewSegment(0, 1, 'D', segmentPosition.X), 'U'),
+            (1, 0, 'U') => (GetPositionInNewSegment(2, 0, 'L', segmentPosition.X, false), 'R'),
+            _ => throw new PuzzleException("Cannot 3D teleport.")
+        };
     }
 
     private static Point GetPositionInNewSegment(int x, int y, char edge, int delta, bool reverse = true)
