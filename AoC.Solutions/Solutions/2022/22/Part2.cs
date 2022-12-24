@@ -137,9 +137,16 @@ public class Part2 : Base
 
             position += _direction;
 
-            if (GetElement(position).Tile == '#')
+            var tile = GetElement(position).Tile;
+
+            if (tile == '#')
             {
                 return;
+            }
+
+            if (tile == '\0')
+            {
+                // Change direction. If hit #, return.
             }
 
             length--;
