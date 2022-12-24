@@ -73,7 +73,7 @@ public abstract class Base : Solution
         }
     }
 
-    protected int RunSimulation()
+    protected int RunSimulation(int loops = 1)
     {
         var queue = new PriorityQueue<(Storm[] Storms, Point Position, int Steps), int>();
 
@@ -81,49 +81,84 @@ public abstract class Base : Solution
 
         queue.Enqueue((_storms, _start, 0), 0);
 
+        var loopedMin = 0;
+
         var min = int.MaxValue;
 
-        while (queue.Count > 0)
+        var target = _end;
+
+        while (loops > 0)
         {
-            var item = queue.Dequeue();
-
-            if (item.Steps >= min)
+            while (queue.Count > 0)
             {
-                continue;
-            }
+                var item = queue.Dequeue();
 
-            if (item.Position.Equals(_end))
-            {
-                if (item.Steps < min)
+                if (item.Steps >= min)
                 {
-                    min = item.Steps;
-
-                    Console.WriteLine(min);
-
                     continue;
                 }
+
+                if (item.Position.Equals(_end))
+                {
+                    if (item.Steps < min)
+                    {
+                        min = item.Steps;
+
+                        Console.WriteLine(min);
+
+                        continue;
+                    }
+                }
+
+                var nextStorms = MoveStorms(item.Storms);
+
+                var moves = GetMoves(nextStorms, item.Position);
+
+                foreach (var move in moves)
+                {
+                    var hash = new HashCode();
+
+                    hash.Add(move.X);
+                    hash.Add(move.Y);
+                    hash.Add(item.Steps);
+
+                    var code = hash.ToHashCode();
+
+                    if (! visited.Contains(code))
+                    {
+                        queue.Enqueue((nextStorms, move, item.Steps + 1), Math.Abs(target.X - move.X) + Math.Abs(target.Y - move.Y));
+
+                        visited.Add(code);
+                    }
+                }
             }
 
-            var nextStorms = MoveStorms(item.Storms);
+            loops--;
 
-            var moves = GetMoves(nextStorms, item.Position);
-
-            foreach (var move in moves)
+            if (loops == 0)
             {
-                var hash = new HashCode();
+                break;
+            }
 
-                hash.Add(move.X);
-                hash.Add(move.Y);
-                hash.Add(item.Steps);
+            if (target.Equals(_end))
+            {
+                loopedMin += min;
 
-                var code = hash.ToHashCode();
+                min = int.MaxValue;
 
-                if (! visited.Contains(code))
-                {
-                    queue.Enqueue((nextStorms, move, item.Steps + 1), Math.Abs(_end.X - move.X) + Math.Abs(_end.Y - move.Y));
+                target = _start;
 
-                    visited.Add(code);
-                }
+                queue.Enqueue((_storms, _end, min), 0);
+            }
+            else
+            {
+                loopedMin += min;
+
+                min = int.MaxValue;
+
+                target = _end;
+
+                queue.Enqueue((_storms, _start, min), 0);
             }
         }
 
@@ -177,7 +212,7 @@ public abstract class Base : Solution
     private List<Point> GetMoves(Storm[] storms, Point position)
     {
         var moves = new List<Point>();
-        
+
         if (position.X == _end.X && position.Y == _end.Y - 1)
         {
             moves.Add(new Point(position.X, position.Y + 1));
