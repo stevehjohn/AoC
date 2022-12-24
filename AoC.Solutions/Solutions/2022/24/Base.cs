@@ -3,6 +3,7 @@ using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2022._24;
 
+// TODO: This class makes my eyes bleed. Needs tidying up!
 public abstract class Base : Solution
 {
     public override string Description => "Blizzard basin";
@@ -109,8 +110,6 @@ public abstract class Base : Solution
 
                         lastStorms = item.Storms;
 
-                        Console.WriteLine(min);
-
                         continue;
                     }
                 }
@@ -151,8 +150,6 @@ public abstract class Base : Solution
 
             if (loops > 0)
             {
-                Console.WriteLine($"Loop: {loops}");
-
                 if (target.Equals(_end))
                 {
                     target = _start;
@@ -204,6 +201,7 @@ public abstract class Base : Solution
             moves.Add(new Point(position));
         }
 
+        // In and out of start/end.
         if (origin.Equals(_start))
         {
             if (position.Y == 0 && position.X == origin.X)
@@ -229,7 +227,7 @@ public abstract class Base : Solution
 
             if (position.Y == _height - 2 && position.X == origin.X)
             {
-                moves.Add(new Point(position.X, position.Y + 11));
+                moves.Add(new Point(position.X, position.Y + 1));
             }
         }
 
