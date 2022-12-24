@@ -121,6 +121,11 @@ public abstract class Base : Solution
 
                 foreach (var move in moves)
                 {
+                    if (nextStorms.Any(s => s.X == move.X && s.Y == move.Y))
+                    {
+                        continue;
+                    }
+
                     var hash = new HashCode();
 
                     hash.Add(move.X);
@@ -129,7 +134,7 @@ public abstract class Base : Solution
 
                     var code = hash.ToHashCode();
 
-                    if (! visited.Contains(code))
+                    if (!visited.Contains(code))
                     {
                         queue.Enqueue((nextStorms, move, item.Steps + 1), Math.Abs(target.X - move.X) + Math.Abs(target.Y - move.Y));
 
@@ -177,21 +182,23 @@ public abstract class Base : Solution
     {
         var moves = new List<Point>();
 
-        // Here be dragons?
-        if (position.X == target.X && position.Y == target.Y - 1)
+        // Reached goal (end).
+        if (target.Equals(_end) && position.X == target.X && position.Y == target.Y - 1)
         {
             moves.Add(new Point(position.X, position.Y + 1));
 
             return moves;
         }
 
-        if (position.X == target.X && position.Y == target.Y + 1)
+        // Reached goal (start).
+        if (target.Equals(_start) && position.X == target.X && position.Y == target.Y + 1)
         {
             moves.Add(new Point(position.X, position.Y - 1));
 
             return moves;
         }
 
+        // Loiter.
         if (! storms.Any(s => s.X == position.X && s.Y == position.Y))
         {
             moves.Add(new Point(position));
@@ -226,21 +233,25 @@ public abstract class Base : Solution
             }
         }
 
+        // Right?
         if (position.X < _width - 2 && ! storms.Any(s => s.X == position.X + 1 && s.Y == position.Y))
         {
             moves.Add(new Point(position.X + 1, position.Y));
         }
 
+        // Left?
         if (position.X > 1 && ! storms.Any(s => s.X == position.X - 1 && s.Y == position.Y))
         {
             moves.Add(new Point(position.X - 1, position.Y));
         }
 
+        // Down?
         if (position.Y < _height - 2 && ! storms.Any(s => s.X == position.X && s.Y == position.Y + 1))
         {
             moves.Add(new Point(position.X, position.Y + 1));
         }
 
+        // Up?
         if (position.Y > 1 && ! storms.Any(s => s.X == position.X && s.Y == position.Y - 1))
         {
             moves.Add(new Point(position.X, position.Y - 1));
