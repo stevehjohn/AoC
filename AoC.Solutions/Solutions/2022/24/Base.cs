@@ -98,7 +98,7 @@ public abstract class Base : Solution
                     continue;
                 }
 
-                if (item.Position.Equals(_end))
+                if (item.Position.Equals(target))
                 {
                     if (item.Steps < min)
                     {
@@ -112,7 +112,7 @@ public abstract class Base : Solution
 
                 var nextStorms = MoveStorms(item.Storms);
 
-                var moves = GetMoves(nextStorms, item.Position);
+                var moves = GetMoves(nextStorms, item.Position, target);
 
                 foreach (var move in moves)
                 {
@@ -170,50 +170,12 @@ public abstract class Base : Solution
         throw new PuzzleException("Answer not found.");
     }
 
-    private void Dump(Point position, Storm[] storms)
-    {
-        for (var y = 0; y < _height; y++)
-        {
-            for (var x = 0; x < _width; x++)
-            {
-                if (position.X == x && position.Y == y)
-                {
-                    Console.Write('E');
-
-                    continue;
-                }
-
-                var count = storms.Count(s => s.X == x && s.Y == y);
-
-                if (count > 0)
-                {
-                    if (count > 1)
-                    {
-                        Console.Write(count);
-                    }
-                    else
-                    {
-                        Console.Write(storms.First(s => s.X == x && s.Y == y).Direction);
-                    }
-
-                    continue;
-                }
-
-                Console.Write('.');
-            }
-
-            Console.WriteLine();
-        }
-
-        Console.WriteLine();
-    }
-
     // This'll be sloooooooow...
-    private List<Point> GetMoves(Storm[] storms, Point position)
+    private List<Point> GetMoves(Storm[] storms, Point position, Point target)
     {
         var moves = new List<Point>();
 
-        if (position.X == _end.X && position.Y == _end.Y - 1)
+        if (position.X == target.X && position.Y == target.Y - 1)
         {
             moves.Add(new Point(position.X, position.Y + 1));
 
