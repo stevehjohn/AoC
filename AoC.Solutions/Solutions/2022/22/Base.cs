@@ -1,4 +1,4 @@
-﻿#define TEST
+﻿#define NOT_TEST
 using AoC.Solutions.Common;
 using AoC.Solutions.Exceptions;
 using AoC.Solutions.Infrastructure;
@@ -198,7 +198,7 @@ public abstract class Base : Solution
 
         Console.WriteLine($"New: {newSegment}");
 
-        (position, var newDirection) = Wrap3D(newSegment, segmentPosition, _direction);
+        (position, var newDirection) = Wrap3D(newSegment, segmentPosition);
 
         if (_map[position.X, position.Y] == '#')
         {
@@ -213,8 +213,8 @@ public abstract class Base : Solution
     }
 
     // TODO: This is the bit I'd like to programatically calculate.
-    #if TEST
-    private (Point Position, char NewDirection) Wrap3D(Point newSegment, Point segmentPosition, char direction)
+#if TEST
+    private (Point Position, char NewDirection) Wrap3D(Point newSegment, Point segmentPosition)
     {
         return (newSegment.X, newSegment.Y, _direction) switch
         {
@@ -224,8 +224,30 @@ public abstract class Base : Solution
             _ => throw new PuzzleException("Cannot 3D teleport.")
         };
     }
-    #else
-    #endif
+#else
+    private (Point Position, char NewDirection) Wrap3D(Point newSegment, Point segmentPosition)
+    {
+        return (newSegment.X, newSegment.Y, _direction) switch
+        {
+            (1, -1, 'U') => (GetPositionInNewSegment(0, 3, 'L', segmentPosition.X, false), 'R'),
+            (0, 0, 'L') => (GetPositionInNewSegment(0, 2, 'L', segmentPosition.Y), 'R'),
+            //(, , '') => (GetPositionInNewSegment(, , '', segmentPosition.), ''),
+            //(, , '') => (GetPositionInNewSegment(, , '', segmentPosition.), ''),
+            //(, , '') => (GetPositionInNewSegment(, , '', segmentPosition.), ''),
+            //(, , '') => (GetPositionInNewSegment(, , '', segmentPosition.), ''),
+            //(, , '') => (GetPositionInNewSegment(, , '', segmentPosition.), ''),
+            //(, , '') => (GetPositionInNewSegment(, , '', segmentPosition.), ''),
+            //(, , '') => (GetPositionInNewSegment(, , '', segmentPosition.), ''),
+            //(, , '') => (GetPositionInNewSegment(, , '', segmentPosition.), ''),
+            //(, , '') => (GetPositionInNewSegment(, , '', segmentPosition.), ''),
+            //(, , '') => (GetPositionInNewSegment(, , '', segmentPosition.), ''),
+            //(, , '') => (GetPositionInNewSegment(, , '', segmentPosition.), ''),
+            //(, , '') => (GetPositionInNewSegment(, , '', segmentPosition.), ''),
+            //(, , '') => (GetPositionInNewSegment(, , '', segmentPosition.), ''),
+            _ => throw new PuzzleException("Cannot 3D teleport.")
+        };
+    }
+#endif
 
     private static Point GetPositionInNewSegment(int x, int y, char edge, int delta, bool reverse = true)
     {
