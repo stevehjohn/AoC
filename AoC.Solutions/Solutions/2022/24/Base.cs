@@ -101,9 +101,10 @@ public abstract class Base : Solution
                     min = item.Steps;
 
                     Console.WriteLine(min);
-
+                    
                     continue;
                 }
+
                 //return item.Steps;
             }
 
