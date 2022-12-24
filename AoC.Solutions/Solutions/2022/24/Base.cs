@@ -150,11 +150,15 @@ public abstract class Base : Solution
                 {
                     target = _start;
 
+                    origin = _end;
+
                     queue.Enqueue((lastStorms, _end, 0), 0);
                 }
                 else
                 {
                     target = _end;
+
+                    origin = _start;
 
                     queue.Enqueue((lastStorms, _start, 0), 0);
                 }
