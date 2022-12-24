@@ -72,9 +72,9 @@ public abstract class Base : Solution
 
     protected void RunSimulation()
     {
-        var queue = new Queue<(Storm[] Storms, Point Position)>();
+        var queue = new PriorityQueue<(Storm[] Storms, Point Position), int>();
 
-        queue.Enqueue((_storms, _start));
+        queue.Enqueue((_storms, _start), 0);
 
         while (queue.Count > 0)
         {
@@ -90,7 +90,7 @@ public abstract class Base : Solution
 
             foreach (var move in moves)
             {
-                queue.Enqueue((nextStorms, move));
+                queue.Enqueue((nextStorms, move), Math.Abs(_end.X - move.X) + Math.Abs(_end.Y - move.Y));
             }
         }
     }
@@ -111,6 +111,11 @@ public abstract class Base : Solution
         if (position.X > 1 && ! storms.Any(s => s.X == position.X - 1 && s.Y == position.Y))
         {
             moves.Add(new Point(position.X - 1, position.Y));
+        }
+
+        if (position.X == _end.X && position.Y == _end.Y - 1)
+        {
+            moves.Add(new Point(position.X, position.Y + 1));
         }
 
         if (position.Y < _height - 2 && ! storms.Any(s => s.X == position.X && s.Y == position.Y + 1))
@@ -140,7 +145,7 @@ public abstract class Base : Solution
 
             switch (storm.Direction)
             {
-                case '^': 
+                case '^':
                     y = storm.Y - 1;
 
                     if (y == 0)
