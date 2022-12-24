@@ -83,6 +83,8 @@ public abstract class Base : Solution
 
         var min = int.MaxValue;
 
+        var target = _end;
+
         while (queue.Count > 0)
         {
             var item = queue.Dequeue();
@@ -92,7 +94,7 @@ public abstract class Base : Solution
                 continue;
             }
 
-            if (item.Position.Equals(_end))
+            if (item.Position.Equals(target))
             {
                 if (item.Steps < min)
                 {
@@ -120,7 +122,7 @@ public abstract class Base : Solution
 
                 if (! visited.Contains(code))
                 {
-                    queue.Enqueue((nextStorms, move, item.Steps + 1), Math.Abs(_end.X - move.X) + Math.Abs(_end.Y - move.Y));
+                    queue.Enqueue((nextStorms, move, item.Steps + 1), Math.Abs(target.X - move.X) + Math.Abs(target.Y - move.Y));
 
                     visited.Add(code);
                 }
