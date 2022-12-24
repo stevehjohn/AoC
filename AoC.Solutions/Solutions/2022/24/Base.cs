@@ -105,7 +105,7 @@ public abstract class Base : Solution
 
             foreach (var move in moves)
             {
-                if (item.Steps + 1 >= min)
+                if (item.Steps + 1 > min)
                 {
                     continue;
                 }
@@ -154,12 +154,20 @@ public abstract class Base : Solution
                         new(position)
                     };
 
-        if (position.Y == 0)
+        if (position.Y == 0 && position.X == _start.X)
         {
             moves.Add(new Point(position.X, position.Y + 1));
 
             return moves;
         }
+        
+        // TODO: Will need this (pt2).
+        //if (position.Y == 1 && position.X == _start.X)
+        //{
+        //    moves.Add(new Point(position.X, position.Y - 1));
+
+        //    return moves;
+        //}
 
         if (position.X < _width - 2 && ! storms.Any(s => s.X == position.X + 1 && s.Y == position.Y))
         {
