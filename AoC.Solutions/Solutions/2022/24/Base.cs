@@ -110,7 +110,7 @@ public abstract class Base : Solution
 
                         lastStorms = item.Storms;
 
-                        continue;
+                        break;
                     }
                 }
 
@@ -133,14 +133,16 @@ public abstract class Base : Solution
 
                     var code = hash.ToHashCode();
 
-                    if (!visited.Contains(code))
+                    if (! visited.Contains(code))
                     {
-                        queue.Enqueue((nextStorms, move, item.Steps + 1), Math.Abs(target.X - move.X) + Math.Abs(target.Y - move.Y));
+                        queue.Enqueue((nextStorms, move, item.Steps + 1), Math.Abs(target.X - move.X) + Math.Abs(target.Y - move.Y) + item.Steps);
 
                         visited.Add(code);
                     }
                 }
             }
+
+            queue.Clear();
 
             loops--;
 
