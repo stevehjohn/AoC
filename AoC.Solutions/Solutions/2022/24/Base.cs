@@ -73,7 +73,7 @@ public abstract class Base : Solution
         }
     }
 
-    protected int RunSimulation(int loops = 1)
+    protected int RunSimulation()
     {
         var queue = new PriorityQueue<(Storm[] Storms, Point Position, int Steps), int>();
 
@@ -81,86 +81,49 @@ public abstract class Base : Solution
 
         queue.Enqueue((_storms, _start, 0), 0);
 
-        var loopedMin = 0;
-
         var min = int.MaxValue;
 
-        var target = _end;
-
-        Storm[] nextStorms = null;
-
-        while (loops > 0)
+        while (queue.Count > 0)
         {
-            while (queue.Count > 0)
-            {
-                var item = queue.Dequeue();
+            var item = queue.Dequeue();
 
-                if (item.Steps >= min)
+            if (item.Steps >= min)
+            {
+                continue;
+            }
+
+            if (item.Position.Equals(_end))
+            {
+                if (item.Steps < min)
                 {
+                    min = item.Steps;
+
+                    Console.WriteLine(min);
+
                     continue;
                 }
+            }
 
-                if (item.Position.Equals(target))
+            var nextStorms = MoveStorms(item.Storms);
+
+            var moves = GetMoves(nextStorms, item.Position);
+
+            foreach (var move in moves)
+            {
+                var hash = new HashCode();
+
+                hash.Add(move.X);
+                hash.Add(move.Y);
+                hash.Add(item.Steps);
+
+                var code = hash.ToHashCode();
+
+                if (! visited.Contains(code))
                 {
-                    if (item.Steps < min)
-                    {
-                        min = item.Steps;
+                    queue.Enqueue((nextStorms, move, item.Steps + 1), Math.Abs(_end.X - move.X) + Math.Abs(_end.Y - move.Y));
 
-                        Console.WriteLine(min);
-
-                        continue;
-                    }
+                    visited.Add(code);
                 }
-
-                nextStorms = MoveStorms(item.Storms);
-
-                var moves = GetMoves(nextStorms, item.Position, target);
-
-                foreach (var move in moves)
-                {
-                    var hash = new HashCode();
-
-                    hash.Add(move.X);
-                    hash.Add(move.Y);
-                    hash.Add(item.Steps);
-
-                    var code = hash.ToHashCode();
-
-                    if (! visited.Contains(code))
-                    {
-                        queue.Enqueue((nextStorms, move, item.Steps + 1), Math.Abs(target.X - move.X) + Math.Abs(target.Y - move.Y));
-
-                        visited.Add(code);
-                    }
-                }
-            }
-
-            loops--;
-
-            if (loops == 0)
-            {
-                break;
-            }
-
-            if (target.Equals(_end))
-            {
-                loopedMin += min;
-
-                min = int.MaxValue;
-
-                target = _start;
-
-                queue.Enqueue((nextStorms, _end, min), 0);
-            }
-            else
-            {
-                loopedMin += min;
-
-                min = int.MaxValue;
-
-                target = _end;
-
-                queue.Enqueue((nextStorms, _start, min), 0);
             }
         }
 
@@ -172,12 +135,50 @@ public abstract class Base : Solution
         throw new PuzzleException("Answer not found.");
     }
 
+    private void Dump(Point position, Storm[] storms)
+    {
+        for (var y = 0; y < _height; y++)
+        {
+            for (var x = 0; x < _width; x++)
+            {
+                if (position.X == x && position.Y == y)
+                {
+                    Console.Write('E');
+
+                    continue;
+                }
+
+                var count = storms.Count(s => s.X == x && s.Y == y);
+
+                if (count > 0)
+                {
+                    if (count > 1)
+                    {
+                        Console.Write(count);
+                    }
+                    else
+                    {
+                        Console.Write(storms.First(s => s.X == x && s.Y == y).Direction);
+                    }
+
+                    continue;
+                }
+
+                Console.Write('.');
+            }
+
+            Console.WriteLine();
+        }
+
+        Console.WriteLine();
+    }
+
     // This'll be sloooooooow...
-    private List<Point> GetMoves(Storm[] storms, Point position, Point target)
+    private List<Point> GetMoves(Storm[] storms, Point position)
     {
         var moves = new List<Point>();
-
-        if (position.X == target.X && position.Y == target.Y - 1)
+        
+        if (position.X == _end.X && position.Y == _end.Y - 1)
         {
             moves.Add(new Point(position.X, position.Y + 1));
 
