@@ -81,12 +81,14 @@ public abstract class Base : Solution
 
         queue.Enqueue((_storms, _start, 0), 0);
 
-        var min = int.MaxValue;
-
         var target = _end;
+
+        var totalMin = 0;
 
         while (loops > 0)
         {
+            var min = int.MaxValue;
+
             while (queue.Count > 0)
             {
                 var item = queue.Dequeue();
@@ -132,14 +134,11 @@ public abstract class Base : Solution
             }
 
             loops--;
+
+            totalMin += min;
         }
 
-        if (min < int.MaxValue)
-        {
-            return min;
-        }
-
-        throw new PuzzleException("Answer not found.");
+        return Math.Max(Byte.MinValue, totalMin);
     }
 
     // This'll be sloooooooow...

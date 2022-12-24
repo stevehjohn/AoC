@@ -1,13 +1,13 @@
-﻿//namespace AoC.Solutions.Solutions._2022._24;
+﻿namespace AoC.Solutions.Solutions._2022._24;
 
-//public class Part2 : Base
-//{
-//    public override string GetAnswer()
-//    {
-//        ParseInput();
+public class Part2 : Base
+{
+    public override string GetAnswer()
+    {
+        ParseInput();
 
-//        var answer = RunSimulation(4);
+        var answer = RunSimulation(4);
 
-//        return answer.ToString();
-//    }
-//}
+        return answer.ToString();
+    }
+}
