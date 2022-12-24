@@ -230,6 +230,12 @@ public abstract class Base : Solution
         return (newSegment.X, newSegment.Y, _direction) switch
         {
             //(, , '') => (GetPositionInNewSegment(, , '', segmentPosition.), ''),
+            (0, 0, 'L') => (GetPositionInNewSegment(0, 2, 'L', segmentPosition.Y), 'R'),
+            (1, -1, 'U') => (GetPositionInNewSegment(0, 3, 'L', segmentPosition.X, false), 'R'),
+            (2, -1, 'U') => (GetPositionInNewSegment(0, 3, 'D', segmentPosition.X), 'U'),
+            (4, 0, 'R') => (GetPositionInNewSegment(1, 2, 'R', segmentPosition.Y), 'L'),
+            // Two way street thing...
+            (3, 1, 'D') => (GetPositionInNewSegment(2, 1, 'R', segmentPosition.Y, false), 'L'),
             _ => throw new PuzzleException("Cannot 3D teleport.")
         };
     }
