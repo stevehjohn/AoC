@@ -54,15 +54,11 @@ public abstract class Base : Solution
                 if (y == 0 && c == '.')
                 {
                     _start = new Point(x, y);
-
-                    continue;
                 }
 
                 if (y == Input.Length - 1 && c == '.')
                 {
                     _end = new Point(x, y);
-
-                    continue;
                 }
 
                 if (c == '#' || c == '.')
@@ -85,6 +81,8 @@ public abstract class Base : Solution
 
         queue.Enqueue((_storms, _start, 1), 0);
 
+        Dump(_start, _storms);
+
         var min = int.MaxValue;
 
         while (queue.Count > 0)
@@ -96,7 +94,12 @@ public abstract class Base : Solution
                 continue;
             }
 
-            Dump(item.Position, item.Storms);
+            if (item.Storms.Any(s => s.X == item.Position.X && s.Y == item.Position.Y))
+            {
+                Dump(item.Position, item.Storms);
+            }
+
+            //Dump(item.Position, item.Storms);
 
             if (item.Position.Equals(_end))
             {
@@ -151,9 +154,18 @@ public abstract class Base : Solution
                     continue;
                 }
 
-                if (storms.Any(s => s.X == x && s.Y == y))
+                var count = storms.Count(s => s.X == x && s.Y == y);
+
+                if (count > 0)
                 {
-                    Console.Write(storms.First(s => s.X == x && s.Y == y).Direction);
+                    if (count > 1)
+                    {
+                        Console.Write(count);
+                    }
+                    else
+                    {
+                        Console.Write(storms.First(s => s.X == x && s.Y == y).Direction);
+                    }
 
                     continue;
                 }
@@ -179,7 +191,10 @@ public abstract class Base : Solution
             return moves;
         }
 
-        moves.Add(new Point(position));
+        if (! storms.Any(s => s.X == position.X && s.Y == position.Y))
+        {
+            moves.Add(new Point(position));
+        }
 
         if (position.Y == 0 && position.X == _start.X)
         {
