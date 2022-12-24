@@ -7,7 +7,9 @@ public abstract class Base : Solution
 {
     public override string Description => "Blizzard basin";
 
-    private readonly List<(Point Position, char Direction)> _storms = new();
+    private Storm[] _storms;
+
+    private int _stormCount;
 
     private int _width;
 
@@ -22,6 +24,23 @@ public abstract class Base : Solution
         _width = Input[0].Length;
 
         _height = Input.Length;
+
+        for (var y = 1; y < _height - 1; y++)
+        {
+            var line = Input[y];
+
+            for (var x = 1; x < _width - 1; x++)
+            {
+                if (line[x] != '.')
+                {
+                    _stormCount++;
+                }
+            }
+        }
+
+        _storms = new Storm[_stormCount];
+
+        var i = 0;
 
         for (var y = 0; y < _height; y++)
         {
@@ -46,7 +65,7 @@ public abstract class Base : Solution
                     continue;
                 }
 
-                _storms.Add((new Point(x, y), c));
+                _storms[i] = new Storm(c, x, y);
             }
         }
     }
@@ -59,52 +78,70 @@ public abstract class Base : Solution
         }
     }
 
-    private void MoveStorms()
+    private Storm[] MoveStorms()
     {
-        foreach (var storm in _storms)
+        var storms = new Storm[_stormCount];
+
+        for (var i = 0; i < _stormCount; i++)
         {
+            var storm = _storms[i];
+
+            int x;
+
+            int y;
+
             switch (storm.Direction)
             {
-                case '^':
-                    storm.Position.Y--;
+                case '^': 
+                    y = storm.Y - 1;
 
-                    if (storm.Position.Y == 0)
+                    if (y == 0)
                     {
-                        storm.Position.Y = _height - 2;
+                        y = _height - 2;
                     }
 
-                    break;
+                    storms[i] = new Storm(storm.Direction, storm.X, y);
+
+                    continue;
 
                 case '>':
-                    storm.Position.X++;
+                    x = storm.X + 1;
 
-                    if (storm.Position.X == _width - 1)
+                    if (x == _width - 1)
                     {
-                        storm.Position.X = 1;
+                        x = 1;
                     }
 
-                    break;
+                    storms[i] = new Storm(storm.Direction, x, storm.Y);
+
+                    continue;
 
                 case 'v':
-                    storm.Position.Y++;
+                    y = storm.Y + 1;
 
-                    if (storm.Position.Y == _height - 1)
+                    if (y == _height - 1)
                     {
-                        storm.Position.Y = 1;
+                        y = 1;
                     }
 
-                    break;
+                    storms[i] = new Storm(storm.Direction, storm.X, y);
+
+                    continue;
 
                 case '<':
-                    storm.Position.X--;
+                    x = storm.X - 1;
 
-                    if (storm.Position.X == 0)
+                    if (x == 0)
                     {
-                        storm.Position.X = _width - 2;
+                        x = _width - 2;
                     }
 
-                    break;
+                    storms[i] = new Storm(storm.Direction, x, storm.Y);
+
+                    continue;
             }
         }
+
+        return storms;
     }
 }
