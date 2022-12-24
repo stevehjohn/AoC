@@ -80,8 +80,50 @@ public abstract class Base : Solution
         {
             var item = queue.Dequeue();
 
+            if (item.Position.Equals(_end))
+            {
+            }
+
             var nextStorms = MoveStorms(item.Storms);
+
+            var moves = GetMoves(item.Storms, item.Position);
+
+            foreach (var move in moves)
+            {
+                queue.Enqueue((nextStorms, move));
+            }
         }
+    }
+
+    // This'll be sloooooooow...
+    private List<Point> GetMoves(Storm[] storms, Point position)
+    {
+        var moves = new List<Point>
+                    {
+                        new(position)
+                    };
+
+        if (position.X < _width - 2 && ! storms.Any(s => s.X == position.X + 1 && s.Y == position.Y))
+        {
+            moves.Add(new Point(position.X + 1, position.Y));
+        }
+
+        if (position.X > 1 && ! storms.Any(s => s.X == position.X - 1 && s.Y == position.Y))
+        {
+            moves.Add(new Point(position.X - 1, position.Y));
+        }
+
+        if (position.Y < _height - 2 && ! storms.Any(s => s.X == position.X && s.Y == position.Y + 1))
+        {
+            moves.Add(new Point(position.X, position.Y + 1));
+        }
+
+        if (position.Y > 1 && ! storms.Any(s => s.X == position.X && s.Y == position.Y - 1))
+        {
+            moves.Add(new Point(position.X, position.Y - 1));
+        }
+
+        return moves;
     }
 
     private Storm[] MoveStorms(Storm[] storms)
