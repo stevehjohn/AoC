@@ -1,15 +1,15 @@
-﻿//namespace AoC.Solutions.Solutions._2022._22;
+﻿namespace AoC.Solutions.Solutions._2022._22;
 
-//public class Part2 : Base
-//{
-//    public override string GetAnswer()
-//    {
-//        ParseInput();
+public class Part2 : Base
+{
+    public override string GetAnswer()
+    {
+        ParseInput();
 
-//        IsCube = true;
+        IsCube = true;
 
-//        WalkPath();
+        WalkPath();
 
-//        return GetSolution().ToString();
-//    }
-//}
+        return GetSolution().ToString();
+    }
+}
