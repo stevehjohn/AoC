@@ -149,10 +149,16 @@ public abstract class Base : Solution
     // This'll be sloooooooow...
     private List<Point> GetMoves(Storm[] storms, Point position)
     {
-        var moves = new List<Point>
-                    {
-                        new(position)
-                    };
+        var moves = new List<Point>();
+        
+        if (position.X == _end.X && position.Y == _end.Y - 1)
+        {
+            moves.Add(new Point(position.X, position.Y + 1));
+
+            return moves;
+        }
+
+        moves.Add(new Point(position));
 
         if (position.Y == 0 && position.X == _start.X)
         {
@@ -160,13 +166,11 @@ public abstract class Base : Solution
 
             return moves;
         }
-        
+
         // TODO: Will need this (pt2).
         //if (position.Y == 1 && position.X == _start.X)
         //{
         //    moves.Add(new Point(position.X, position.Y - 1));
-
-        //    return moves;
         //}
 
         if (position.X < _width - 2 && ! storms.Any(s => s.X == position.X + 1 && s.Y == position.Y))
@@ -177,13 +181,6 @@ public abstract class Base : Solution
         if (position.X > 1 && ! storms.Any(s => s.X == position.X - 1 && s.Y == position.Y))
         {
             moves.Add(new Point(position.X - 1, position.Y));
-        }
-
-        if (position.X == _end.X && position.Y == _end.Y - 1)
-        {
-            moves.Add(new Point(position.X, position.Y + 1));
-
-            return moves;
         }
 
         if (position.Y < _height - 2 && ! storms.Any(s => s.X == position.X && s.Y == position.Y + 1))
