@@ -1,4 +1,6 @@
-﻿using AoC.Solutions.Common;
+﻿using System.Reflection.Metadata.Ecma335;
+using AoC.Solutions.Common;
+using AoC.Solutions.Exceptions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2022._24;
@@ -66,22 +68,27 @@ public abstract class Base : Solution
                 }
 
                 _storms[i] = new Storm(c, x, y);
+
+                i++;
             }
         }
     }
 
-    protected void RunSimulation()
+    protected int RunSimulation()
     {
-        var queue = new PriorityQueue<(Storm[] Storms, Point Position), int>();
+        var queue = new PriorityQueue<(Storm[] Storms, Point Position, int Steps), int>();
 
-        queue.Enqueue((_storms, _start), 0);
+        queue.Enqueue((_storms, _start, 0), 0);
 
         while (queue.Count > 0)
         {
             var item = queue.Dequeue();
 
+            Dump(item.Position, item.Storms);
+
             if (item.Position.Equals(_end))
             {
+                return item.Steps;
             }
 
             var nextStorms = MoveStorms(item.Storms);
@@ -90,9 +97,40 @@ public abstract class Base : Solution
 
             foreach (var move in moves)
             {
-                queue.Enqueue((nextStorms, move), Math.Abs(_end.X - move.X) + Math.Abs(_end.Y - move.Y));
+                queue.Enqueue((nextStorms, move, item.Steps + 1), Math.Abs(_end.X - move.X) + Math.Abs(_end.Y - move.Y));
             }
         }
+
+        throw new PuzzleException("Answer not found.");
+    }
+
+    private void Dump(Point position, Storm[] storms)
+    {
+        for (var y = 0; y < _height; y++)
+        {
+            for (var x = 0; x < _width; x++)
+            {
+                if (position.X == x && position.Y == y)
+                {
+                    Console.Write('E');
+
+                    continue;
+                }
+
+                if (storms.Any(s => s.X == position.X + 1 && s.Y == position.Y))
+                {
+                    Console.Write(storms.First(s => s.X == position.X + 1 && s.Y == position.Y).Direction);
+
+                    continue;
+                }
+
+                Console.Write('.');
+            }
+
+            Console.WriteLine();
+        }
+
+        Console.WriteLine();
     }
 
     // This'll be sloooooooow...
@@ -102,6 +140,13 @@ public abstract class Base : Solution
                     {
                         new(position)
                     };
+
+        if (position.Y == 0)
+        {
+            moves.Add(new Point(position.X, position.Y + 1));
+
+            return moves;
+        }
 
         if (position.X < _width - 2 && ! storms.Any(s => s.X == position.X + 1 && s.Y == position.Y))
         {
@@ -116,6 +161,8 @@ public abstract class Base : Solution
         if (position.X == _end.X && position.Y == _end.Y - 1)
         {
             moves.Add(new Point(position.X, position.Y + 1));
+
+            return moves;
         }
 
         if (position.Y < _height - 2 && ! storms.Any(s => s.X == position.X && s.Y == position.Y + 1))

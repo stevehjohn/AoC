@@ -16,4 +16,9 @@ public struct Storm
             
         Y = y;
     }
+
+    public override string ToString()
+    {
+        return $"{Direction} ({X}, {Y})";
+    }
 }
