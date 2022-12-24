@@ -50,4 +50,61 @@ public abstract class Base : Solution
             }
         }
     }
+
+    protected void RunSimulation()
+    {
+        while (true)
+        {
+            MoveStorms();
+        }
+    }
+
+    private void MoveStorms()
+    {
+        foreach (var storm in _storms)
+        {
+            switch (storm.Direction)
+            {
+                case '^':
+                    storm.Position.Y--;
+
+                    if (storm.Position.Y == 0)
+                    {
+                        storm.Position.Y = _height - 2;
+                    }
+
+                    break;
+
+                case '>':
+                    storm.Position.X++;
+
+                    if (storm.Position.X == _width - 1)
+                    {
+                        storm.Position.X = 1;
+                    }
+
+                    break;
+
+                case 'v':
+                    storm.Position.Y++;
+
+                    if (storm.Position.Y == _height - 1)
+                    {
+                        storm.Position.Y = 1;
+                    }
+
+                    break;
+
+                case '<':
+                    storm.Position.X--;
+
+                    if (storm.Position.X == 0)
+                    {
+                        storm.Position.X = _width - 2;
+                    }
+
+                    break;
+            }
+        }
+    }
 }
