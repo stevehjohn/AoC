@@ -1,4 +1,6 @@
-﻿namespace AoC.Solutions.Common;
+﻿using Microsoft.VisualBasic.CompilerServices;
+
+namespace AoC.Solutions.Common;
 
 public class Point
 {
@@ -46,6 +48,11 @@ public class Point
         }
 
         return point;
+    }
+
+    public static Point operator +(Point left, Point right)
+    {
+        return new Point(left.X + right.X, left.Y + right.Y, left.Z + right.Z);
     }
 
     public override string ToString()
