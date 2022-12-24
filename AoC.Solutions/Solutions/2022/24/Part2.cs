@@ -6,7 +6,7 @@ public class Part2 : Base
     {
         ParseInput();
 
-        var answer = RunSimulation(4);
+        var answer = RunSimulation(3);
 
         return answer.ToString();
     }
