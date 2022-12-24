@@ -143,6 +143,8 @@ public abstract class Base : Solution
 
             totalMin += min;
 
+            visited.Clear();
+
             if (loops > 0)
             {
                 if (target.Equals(_end))
