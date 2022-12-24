@@ -10,6 +10,9 @@ public abstract class Base : Solution
 
     protected bool IsCube { get; set; }
 
+    // For test data.
+    private const int FaceSize = 4;
+
     private char[,] _map;
 
     private int _width;
@@ -187,11 +190,12 @@ public abstract class Base : Solution
     {
         var segmentPosition = new Point(position.X % 4, position.Y % 4);
 
+        // For test data
         (position, var newDirection) = (position.X, position.Y) switch
         {
-            (12, > 3 and < 8) => (new Point(15 - segmentPosition.Y, 8), 'D'),
-            (> 7 and < 12, 12) => (new Point(3 - segmentPosition.X, 7), 'U'),
-            (> 3 and < 8, 3) => (new Point(8, segmentPosition.X), 'R'),
+            (FaceSize * 3, >= FaceSize and < FaceSize * 2) => (new Point(FaceSize * 4 - 1 - segmentPosition.Y, FaceSize * 2), 'D'),
+            (>= FaceSize * 2 and < FaceSize * 3, FaceSize * 3) => (new Point(FaceSize - 1 - segmentPosition.X, FaceSize * 2 - 1), 'U'),
+            (>= FaceSize and < FaceSize * 2, FaceSize - 1) => (new Point(FaceSize * 2, segmentPosition.X), 'R'),
             _ => throw new PuzzleException("Cannot 3D teleport.")
         };
 
