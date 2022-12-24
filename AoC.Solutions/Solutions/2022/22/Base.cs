@@ -197,10 +197,10 @@ public abstract class Base : Solution
         // For test data
         (position, var newDirection) = (newSegment.X, newSegment.Y, _direction) switch
         {
-            (3, 1, 'R') => (GetPositionInNewSegment(3, 2, 'U', segmentPosition.Y, true), 'D'),
-            (2, 3, 'D') => (GetPositionInNewSegment(0, 1, 'D', segmentPosition.X, true), 'U'),
-            //(2, 3, _) => (new Point(FaceSize - 1 - segmentPosition.X, FaceSize * 2 - 1), 'U'),
-            (1, 0, _) => (new Point(FaceSize * 2, segmentPosition.X), 'R'),
+            (3, 1, 'R') => (GetPositionInNewSegment(3, 2, 'U', segmentPosition.Y), 'D'),
+            (2, 3, 'D') => (GetPositionInNewSegment(0, 1, 'D', segmentPosition.X), 'U'),
+            (1, 0, 'U') => (GetPositionInNewSegment(2, 0, 'L', segmentPosition.X, false), 'R'),
+//            (1, 0, _) => (new Point(FaceSize * 2, segmentPosition.X), 'R'),
             _ => throw new PuzzleException("Cannot 3D teleport.")
         };
 
@@ -216,7 +216,7 @@ public abstract class Base : Solution
         return length - 1;
     }
 
-    private static Point GetPositionInNewSegment(int x, int y, char edge, int delta, bool reverse = false)
+    private static Point GetPositionInNewSegment(int x, int y, char edge, int delta, bool reverse = true)
     {
         var position = new Point(x * FaceSize, y * FaceSize);
 
@@ -236,6 +236,7 @@ public abstract class Base : Solution
                 break;
 
             case 'L':
+                position.Y += reverse ? FaceSize - 1 - delta : delta;
                 break;
         }
 
