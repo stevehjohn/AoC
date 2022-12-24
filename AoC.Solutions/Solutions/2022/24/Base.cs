@@ -87,6 +87,8 @@ public abstract class Base : Solution
 
         var target = _end;
 
+        Storm[] nextStorms = null;
+
         while (loops > 0)
         {
             while (queue.Count > 0)
@@ -110,7 +112,7 @@ public abstract class Base : Solution
                     }
                 }
 
-                var nextStorms = MoveStorms(item.Storms);
+                nextStorms = MoveStorms(item.Storms);
 
                 var moves = GetMoves(nextStorms, item.Position, target);
 
@@ -148,7 +150,7 @@ public abstract class Base : Solution
 
                 target = _start;
 
-                queue.Enqueue((_storms, _end, min), 0);
+                queue.Enqueue((nextStorms, _end, min), 0);
             }
             else
             {
@@ -158,7 +160,7 @@ public abstract class Base : Solution
 
                 target = _end;
 
-                queue.Enqueue((_storms, _start, min), 0);
+                queue.Enqueue((nextStorms, _start, min), 0);
             }
         }
 
