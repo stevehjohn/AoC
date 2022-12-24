@@ -212,7 +212,7 @@ public abstract class Base : Solution
         return length - 1;
     }
 
-    // TODO: This is the bit I'd like to programatically calculate.
+    // TODO: This is the bit I'd like to programatically calculate. It hurts my brain.
 #if TEST
     private (Point Position, char NewDirection) Wrap3D(Point newSegment, Point segmentPosition)
     {
@@ -229,20 +229,6 @@ public abstract class Base : Solution
     {
         return (newSegment.X, newSegment.Y, _direction) switch
         {
-            (1, -1, 'U') => (GetPositionInNewSegment(0, 3, 'L', segmentPosition.X, false), 'R'),
-            (0, 0, 'L') => (GetPositionInNewSegment(0, 2, 'L', segmentPosition.Y), 'R'),
-            //(, , '') => (GetPositionInNewSegment(, , '', segmentPosition.), ''),
-            //(, , '') => (GetPositionInNewSegment(, , '', segmentPosition.), ''),
-            //(, , '') => (GetPositionInNewSegment(, , '', segmentPosition.), ''),
-            //(, , '') => (GetPositionInNewSegment(, , '', segmentPosition.), ''),
-            //(, , '') => (GetPositionInNewSegment(, , '', segmentPosition.), ''),
-            //(, , '') => (GetPositionInNewSegment(, , '', segmentPosition.), ''),
-            //(, , '') => (GetPositionInNewSegment(, , '', segmentPosition.), ''),
-            //(, , '') => (GetPositionInNewSegment(, , '', segmentPosition.), ''),
-            //(, , '') => (GetPositionInNewSegment(, , '', segmentPosition.), ''),
-            //(, , '') => (GetPositionInNewSegment(, , '', segmentPosition.), ''),
-            //(, , '') => (GetPositionInNewSegment(, , '', segmentPosition.), ''),
-            //(, , '') => (GetPositionInNewSegment(, , '', segmentPosition.), ''),
             //(, , '') => (GetPositionInNewSegment(, , '', segmentPosition.), ''),
             _ => throw new PuzzleException("Cannot 3D teleport.")
         };
