@@ -1,4 +1,5 @@
 ﻿#define TEST
+using System.Runtime.CompilerServices;
 using AoC.Solutions.Common;
 using AoC.Solutions.Exceptions;
 
@@ -136,8 +137,19 @@ public class Part2 : Base
 
             position += _direction;
 
+            if (GetElement(position).Tile == '#')
+            {
+                return;
+            }
+
             length--;
         }
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private (char Tile, Point InitialPosition) GetElement(Point position)
+    {
+        return _cube[position.X, position.Y, position.Z];
     }
 
     private void Count()
