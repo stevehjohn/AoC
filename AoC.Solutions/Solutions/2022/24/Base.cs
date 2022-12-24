@@ -117,9 +117,9 @@ public abstract class Base : Solution
                     continue;
                 }
 
-                if (storms.Any(s => s.X == position.X + 1 && s.Y == position.Y))
+                if (storms.Any(s => s.X == x && s.Y == y))
                 {
-                    Console.Write(storms.First(s => s.X == position.X + 1 && s.Y == position.Y).Direction);
+                    Console.Write(storms.First(s => s.X == x && s.Y == y).Direction);
 
                     continue;
                 }
