@@ -190,12 +190,16 @@ public abstract class Base : Solution
     {
         var segmentPosition = new Point(position.X % 4, position.Y % 4);
 
+        var newSegment = new Point(position.X < 0 ? -1 : position.X / 4, position.Y < 0 ? -1 : position.Y / 4);
+
+        Console.WriteLine($"New: {newSegment}");
+
         // For test data
-        (position, var newDirection) = (position.X, position.Y) switch
+        (position, var newDirection) = (newSegment.X, newSegment.Y) switch
         {
-            (FaceSize * 3, >= FaceSize and < FaceSize * 2) => (new Point(FaceSize * 4 - 1 - segmentPosition.Y, FaceSize * 2), 'D'),
-            (>= FaceSize * 2 and < FaceSize * 3, FaceSize * 3) => (new Point(FaceSize - 1 - segmentPosition.X, FaceSize * 2 - 1), 'U'),
-            (>= FaceSize and < FaceSize * 2, FaceSize - 1) => (new Point(FaceSize * 2, segmentPosition.X), 'R'),
+            (3, 1) => (new Point(FaceSize * 4 - 1 - segmentPosition.Y, FaceSize * 2), 'D'),
+            (2, 3) => (new Point(FaceSize - 1 - segmentPosition.X, FaceSize * 2 - 1), 'U'),
+            (1, 0) => (new Point(FaceSize * 2, segmentPosition.X), 'R'),
             _ => throw new PuzzleException("Cannot 3D teleport.")
         };
 
