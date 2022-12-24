@@ -6,6 +6,8 @@ public class Part1 : Base
     {
         ParseInput();
 
+        RunSimulation();
+
         return "";
     }
 }
