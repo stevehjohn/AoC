@@ -105,7 +105,7 @@ public abstract class Base : Solution
 
             foreach (var move in moves)
             {
-                if (item.Steps + 1 > min)
+                if (item.Steps + 1 >= min)
                 {
                     continue;
                 }
