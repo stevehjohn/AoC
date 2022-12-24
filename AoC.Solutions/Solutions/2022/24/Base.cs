@@ -135,44 +135,6 @@ public abstract class Base : Solution
         throw new PuzzleException("Answer not found.");
     }
 
-    private void Dump(Point position, Storm[] storms)
-    {
-        for (var y = 0; y < _height; y++)
-        {
-            for (var x = 0; x < _width; x++)
-            {
-                if (position.X == x && position.Y == y)
-                {
-                    Console.Write('E');
-
-                    continue;
-                }
-
-                var count = storms.Count(s => s.X == x && s.Y == y);
-
-                if (count > 0)
-                {
-                    if (count > 1)
-                    {
-                        Console.Write(count);
-                    }
-                    else
-                    {
-                        Console.Write(storms.First(s => s.X == x && s.Y == y).Direction);
-                    }
-
-                    continue;
-                }
-
-                Console.Write('.');
-            }
-
-            Console.WriteLine();
-        }
-
-        Console.WriteLine();
-    }
-
     // This'll be sloooooooow...
     private List<Point> GetMoves(Storm[] storms, Point position)
     {
