@@ -79,7 +79,7 @@ public abstract class Base : Solution
 
         var visited = new HashSet<int>();
 
-        queue.Enqueue((_storms, _start, 0), 0);
+        queue.Enqueue((_storms, _start, 1), 0);
 
         var min = int.MaxValue;
 
@@ -101,7 +101,7 @@ public abstract class Base : Solution
                     min = item.Steps;
 
                     Console.WriteLine(min);
-                    
+
                     continue;
                 }
 
@@ -110,7 +110,7 @@ public abstract class Base : Solution
 
             var nextStorms = MoveStorms(item.Storms);
 
-            var moves = GetMoves(item.Storms, item.Position);
+            var moves = GetMoves(nextStorms, item.Position);
 
             foreach (var move in moves)
             {
