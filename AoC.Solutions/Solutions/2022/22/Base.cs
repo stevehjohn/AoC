@@ -232,6 +232,7 @@ public abstract class Base : Solution
 
             case 'R':
                 position.X += FaceSize - 1;
+                position.Y += reverse ? FaceSize - 1 - delta : delta;
                 break;
 
             case 'D':
