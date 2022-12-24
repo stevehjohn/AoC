@@ -30,8 +30,6 @@ public class Part2 : Base
         }
         // ReSharper restore PossibleInvalidOperationException
 
-        Console.WriteLine();
-
         return answer.ToString();
     }
 
