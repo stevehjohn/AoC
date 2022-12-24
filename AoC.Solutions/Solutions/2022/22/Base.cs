@@ -78,8 +78,6 @@ public abstract class Base : Solution
 
                 Walk(length);
 
-                Console.WriteLine(_position);
-
                 if (i == _path.Length - 1)
                 {
                     break;
@@ -187,8 +185,6 @@ public abstract class Base : Solution
 
     private int Teleport3D(Point position, int length)
     {
-        Console.WriteLine($"TS: {position}");
-
         var segmentPosition = new Point(position.X % 4, position.Y % 4);
 
         (position, var newDirection) = (position.X, position.Y) switch
@@ -198,10 +194,6 @@ public abstract class Base : Solution
             (> 3 and < 8, 3) => (new Point(8, segmentPosition.X), 'R'),
             _ => throw new PuzzleException("Cannot 3D teleport.")
         };
-
-        Console.WriteLine($"TE: {position}");
-
-        Console.WriteLine();
 
         if (_map[position.X, position.Y] == '#')
         {
