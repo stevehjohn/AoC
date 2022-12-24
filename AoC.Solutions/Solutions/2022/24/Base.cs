@@ -77,6 +77,8 @@ public abstract class Base : Solution
     {
         var queue = new PriorityQueue<(Storm[] Storms, Point Position, int Steps), int>();
 
+        var visited = new HashSet<int>();
+
         queue.Enqueue((_storms, _start, 0), 0);
 
         var min = int.MaxValue;
@@ -84,6 +86,11 @@ public abstract class Base : Solution
         while (queue.Count > 0)
         {
             var item = queue.Dequeue();
+
+            if (item.Steps >= min)
+            {
+                continue;
+            }
 
             //Dump(item.Position, item.Storms);
 
@@ -94,8 +101,9 @@ public abstract class Base : Solution
                     min = item.Steps;
 
                     Console.WriteLine(min);
-                }
 
+                    continue;
+                }
                 //return item.Steps;
             }
 
@@ -105,12 +113,20 @@ public abstract class Base : Solution
 
             foreach (var move in moves)
             {
-                if (item.Steps + 1 > min)
-                {
-                    continue;
-                }
+                var hash = new HashCode();
 
-                queue.Enqueue((nextStorms, move, item.Steps + 1), Math.Abs(_end.X - move.X) + Math.Abs(_end.Y - move.Y));
+                hash.Add(move.X);
+                hash.Add(move.Y);
+                hash.Add(item.Steps);
+
+                var code = hash.ToHashCode();
+
+                if (! visited.Contains(code))
+                {
+                    queue.Enqueue((nextStorms, move, item.Steps + 1), Math.Abs(_end.X - move.X) + Math.Abs(_end.Y - move.Y));
+
+                    visited.Add(code);
+                }
             }
         }
 
