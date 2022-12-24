@@ -72,19 +72,25 @@ public abstract class Base : Solution
 
     protected void RunSimulation()
     {
-        while (true)
+        var queue = new Queue<(Storm[] Storms, Point Position)>();
+
+        queue.Enqueue((_storms, _start));
+
+        while (queue.Count > 0)
         {
-            MoveStorms();
+            var item = queue.Dequeue();
+
+            var nextStorms = MoveStorms(item.Storms);
         }
     }
 
-    private Storm[] MoveStorms()
+    private Storm[] MoveStorms(Storm[] storms)
     {
-        var storms = new Storm[_stormCount];
+        var nextStorms = new Storm[_stormCount];
 
         for (var i = 0; i < _stormCount; i++)
         {
-            var storm = _storms[i];
+            var storm = storms[i];
 
             int x;
 
@@ -100,7 +106,7 @@ public abstract class Base : Solution
                         y = _height - 2;
                     }
 
-                    storms[i] = new Storm(storm.Direction, storm.X, y);
+                    nextStorms[i] = new Storm(storm.Direction, storm.X, y);
 
                     continue;
 
@@ -112,7 +118,7 @@ public abstract class Base : Solution
                         x = 1;
                     }
 
-                    storms[i] = new Storm(storm.Direction, x, storm.Y);
+                    nextStorms[i] = new Storm(storm.Direction, x, storm.Y);
 
                     continue;
 
@@ -124,7 +130,7 @@ public abstract class Base : Solution
                         y = 1;
                     }
 
-                    storms[i] = new Storm(storm.Direction, storm.X, y);
+                    nextStorms[i] = new Storm(storm.Direction, storm.X, y);
 
                     continue;
 
@@ -136,12 +142,12 @@ public abstract class Base : Solution
                         x = _width - 2;
                     }
 
-                    storms[i] = new Storm(storm.Direction, x, storm.Y);
+                    nextStorms[i] = new Storm(storm.Direction, x, storm.Y);
 
                     continue;
             }
         }
 
-        return storms;
+        return nextStorms;
     }
 }
