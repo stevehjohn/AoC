@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualBasic.CompilerServices;
-
-namespace AoC.Solutions.Common;
+﻿namespace AoC.Solutions.Common;
 
 public class Point
 {
