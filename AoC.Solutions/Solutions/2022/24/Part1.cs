@@ -8,6 +8,6 @@ public class Part1 : Base
 
         var answer = RunSimulation();
 
-        return answer.ToString();
+        return answer.ToString();;
     }
 }
