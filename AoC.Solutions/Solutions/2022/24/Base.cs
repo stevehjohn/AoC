@@ -79,9 +79,7 @@ public abstract class Base : Solution
 
         var visited = new HashSet<int>();
 
-        queue.Enqueue((_storms, _start, 1), 0);
-
-        Dump(_start, _storms);
+        queue.Enqueue((_storms, _start, 0), 0);
 
         var min = int.MaxValue;
 
@@ -94,13 +92,6 @@ public abstract class Base : Solution
                 continue;
             }
 
-            if (item.Storms.Any(s => s.X == item.Position.X && s.Y == item.Position.Y))
-            {
-                Dump(item.Position, item.Storms);
-            }
-
-            //Dump(item.Position, item.Storms);
-
             if (item.Position.Equals(_end))
             {
                 if (item.Steps < min)
@@ -111,8 +102,6 @@ public abstract class Base : Solution
 
                     continue;
                 }
-
-                //return item.Steps;
             }
 
             var nextStorms = MoveStorms(item.Storms);
@@ -136,6 +125,11 @@ public abstract class Base : Solution
                     visited.Add(code);
                 }
             }
+        }
+
+        if (min < int.MaxValue)
+        {
+            return min;
         }
 
         throw new PuzzleException("Answer not found.");
