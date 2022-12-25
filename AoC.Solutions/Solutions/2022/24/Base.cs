@@ -1,4 +1,6 @@
-﻿using AoC.Solutions.Common;
+﻿using System.Diagnostics;
+using AoC.Solutions.Common;
+using AoC.Solutions.Exceptions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2022._24;
@@ -12,13 +14,15 @@ public abstract class Base : Solution
 
     private Storm[] _initialStorms;
 
-    private HashSet<int> _initialHashes;
-
     private int _stormCount;
 
     private int _width;
 
     private int _height;
+
+    private int _blizzardWidth;
+
+    private int _blizzardHeight;
 
     private Point _start;
 
@@ -26,13 +30,15 @@ public abstract class Base : Solution
 
     private readonly Point[] _possibleMoves = new Point[MaxPossibleMoves];
 
-    private readonly Dictionary<int, (Storm[] Storms, HashSet<int> Hashes)> _cache = new();
-
     protected void ParseInput()
     {
         _width = Input[0].Length;
 
         _height = Input.Length;
+
+        _blizzardWidth = _width - 2;
+
+        _blizzardHeight = _height - 2;
 
         for (var y = 1; y < _height - 1; y++)
         {
@@ -48,8 +54,6 @@ public abstract class Base : Solution
         }
 
         _initialStorms = new Storm[_stormCount];
-
-        _initialHashes = new HashSet<int>(_stormCount);
 
         var i = 0;
 
@@ -78,8 +82,6 @@ public abstract class Base : Solution
 
                 _initialStorms[i] = new Storm(c, x, y);
 
-                _initialHashes.Add(HashCode.Combine(_initialStorms[i].X, _initialStorms[i].Y));
-
                 i++;
             }
         }
@@ -92,11 +94,11 @@ public abstract class Base : Solution
             _possibleMoves[i] = new Point();
         }
 
-        var queue = new PriorityQueue<(Storm[] Storms, HashSet<int> Hashes, (int X, int Y) Position, int Steps), int>();
+        var queue = new PriorityQueue<(Point Position, int Steps), int>();
 
         var visited = new HashSet<int>();
 
-        queue.Enqueue((_initialStorms, _initialHashes, (_start.X, _start.Y), 0), 0);
+        queue.Enqueue((new Point(_start.X, _start.Y), 0), 0);
 
         var origin = _start;
 
@@ -106,12 +108,13 @@ public abstract class Base : Solution
 
         var min = int.MaxValue;
 
+        //for (var i = 0; i < 20; i++)
+        //{
+        //    Dump(i);
+        //}
+
         while (loops > 0)
         {
-            Storm[] lastStorms = null;
-
-            HashSet<int> lastHashes = null;
-
             while (queue.Count > 0)
             {
                 var item = queue.Dequeue();
@@ -125,40 +128,16 @@ public abstract class Base : Solution
                 {
                     min = item.Steps;
 
-                    lastStorms = item.Storms;
-
-                    lastHashes = item.Hashes;
+                    Console.WriteLine(min);
 
                     break;
                 }
 
-                Storm[] nextStorms;
-
-                HashSet<int> nextHashes;
-
-                if (_cache.ContainsKey(item.Steps + loops * 100_000))
-                {
-                    nextStorms = _cache[item.Steps + loops * 100_000].Storms;
-
-                    nextHashes = _cache[item.Steps + loops * 100_000].Hashes;
-                }
-                else
-                {
-                    (nextStorms, nextHashes) = MoveStorms(item.Storms);
-
-                    _cache.Add(item.Steps + loops * 100_000, (nextStorms, nextHashes));
-                }
-
-                var moveCount = GenerateMoves(nextStorms, nextHashes, item.Position.X, item.Position.Y, target, origin);
+                var moveCount = GenerateMoves(item.Position.X, item.Position.Y, target, origin, totalMin + item.Steps + 1);
 
                 for (var i = 0; i < moveCount; i++)
                 {
                     var move = _possibleMoves[i];
-
-                    if (nextStorms.Any(s => s.X == move.X && s.Y == move.Y))
-                    {
-                        continue;
-                    }
 
                     var hash = new HashCode();
 
@@ -168,9 +147,9 @@ public abstract class Base : Solution
 
                     var code = hash.ToHashCode();
 
-                    if (!visited.Contains(code))
+                    if (! visited.Contains(code))
                     {
-                        queue.Enqueue((nextStorms, nextHashes, (move.X, move.Y), item.Steps + 1), Math.Abs(target.X - move.X) + Math.Abs(target.Y - move.Y) + item.Steps);
+                        queue.Enqueue((new Point(move), item.Steps + 1), Math.Abs(target.X - move.X) + Math.Abs(target.Y - move.Y) + item.Steps);
 
                         visited.Add(code);
                     }
@@ -193,7 +172,7 @@ public abstract class Base : Solution
 
                     origin = _end;
 
-                    queue.Enqueue((lastStorms, lastHashes, (_end.X, _end.Y), 0), 0);
+                    queue.Enqueue((new Point(_end.X, _end.Y), 0), 0);
                 }
                 else
                 {
@@ -201,7 +180,7 @@ public abstract class Base : Solution
 
                     origin = _start;
 
-                    queue.Enqueue((lastStorms, lastHashes, (_start.X, _start.Y), 0), 0);
+                    queue.Enqueue((new Point(_start.X, _start.Y), 0), 0);
                 }
 
                 min = int.MaxValue;
@@ -211,7 +190,26 @@ public abstract class Base : Solution
         return Math.Max(min, totalMin);
     }
 
-    private int GenerateMoves(Storm[] storms, HashSet<int> hashes, int x, int y, Point target, Point origin)
+    private void Dump(int iteration)
+    {
+        Console.WriteLine(iteration);
+
+        Console.WriteLine();
+
+        for (var y = 1; y <= _blizzardHeight; y++)
+        {
+            for (var x = 1; x <= _blizzardWidth; x++)
+            {
+                Console.Write(IsOccupied(new Point(x, y), iteration) ? 'X' : '.');
+            }
+
+            Console.WriteLine();
+        }
+
+        Console.WriteLine();
+    }
+
+    private int GenerateMoves(int x, int y, Point target, Point origin, int iteration)
     {
         var moveCount = 0;
 
@@ -234,7 +232,7 @@ public abstract class Base : Solution
         }
 
         // Loiter.
-        if (! storms.Any(s => s.X == x && s.Y == y))
+        if (! IsOccupied(new Point(x, y), iteration))
         {
             _possibleMoves[0].X = x;
             _possibleMoves[0].Y = y;
@@ -285,7 +283,7 @@ public abstract class Base : Solution
         }
 
         // Right?
-        if (x < _width - 2 && ! hashes.Contains(HashCode.Combine(x + 1, y)))
+        if (x < _blizzardWidth && ! IsOccupied(new Point(x + 1, y), iteration))
         {
             _possibleMoves[moveCount].X = x + 1;
             _possibleMoves[moveCount].Y = y;
@@ -294,7 +292,7 @@ public abstract class Base : Solution
         }
 
         // Left?
-        if (x > 1 && ! hashes.Contains(HashCode.Combine(x - 1, y)))
+        if (x > 1 && ! IsOccupied(new Point(x - 1, y), iteration))
         {
             _possibleMoves[moveCount].X = x - 1;
             _possibleMoves[moveCount].Y = y;
@@ -303,7 +301,7 @@ public abstract class Base : Solution
         }
 
         // Down?
-        if (y < _height - 2 && ! hashes.Contains(HashCode.Combine(x, y + 1)))
+        if (y < _blizzardHeight && ! IsOccupied(new Point(x, y + 1), iteration))
         {
             _possibleMoves[moveCount].X = x;
             _possibleMoves[moveCount].Y = y + 1;
@@ -312,7 +310,7 @@ public abstract class Base : Solution
         }
 
         // Up?
-        if (y > 1 && ! hashes.Contains(HashCode.Combine(x, y - 1)))
+        if (y > 1 && ! IsOccupied(new Point(x, y - 1), iteration))
         {
             _possibleMoves[moveCount].X = x;
             _possibleMoves[moveCount].Y = y - 1;
@@ -323,80 +321,45 @@ public abstract class Base : Solution
         return moveCount;
     }
 
-    private (Storm[] Storms, HashSet<int> Hashes) MoveStorms(Storm[] storms)
+    private bool IsOccupied(Point position, int iteration)
     {
-        var nextStorms = new Storm[_stormCount];
+        var xD = iteration % _blizzardWidth;
 
-        var nextHashes = new HashSet<int>(_stormCount);
+        var yD = iteration % _blizzardHeight;
 
-        for (var i = 0; i < _stormCount; i++)
+        var found = _initialStorms.Where(s => s.Direction is '>' or '<')
+                                  .Any(s => position.X == s.Direction switch
+                                            {
+                                                '>' => (s.X - 1 + xD) % _blizzardWidth + 1,
+                                                '<' => (s.X - 1 + _blizzardWidth - xD) % _blizzardWidth + 1,
+                                                _ => throw new PuzzleException("This exception shouldn't happen.")
+                                            }
+                                            && position.Y == s.Y);
+
+        if (found)
         {
-            var storm = storms[i];
-
-            int x;
-
-            int y;
-
-            switch (storm.Direction)
-            {
-                case '^':
-                    y = storm.Y - 1;
-
-                    if (y == 0)
-                    {
-                        y = _height - 2;
-                    }
-
-                    nextStorms[i] = new Storm(storm.Direction, storm.X, y);
-
-                    nextHashes.Add(HashCode.Combine(nextStorms[i].X, nextStorms[i].Y));
-
-                    continue;
-
-                case '>':
-                    x = storm.X + 1;
-
-                    if (x == _width - 1)
-                    {
-                        x = 1;
-                    }
-
-                    nextStorms[i] = new Storm(storm.Direction, x, storm.Y);
-
-                    nextHashes.Add(HashCode.Combine(nextStorms[i].X, nextStorms[i].Y));
-
-                    continue;
-
-                case 'v':
-                    y = storm.Y + 1;
-
-                    if (y == _height - 1)
-                    {
-                        y = 1;
-                    }
-
-                    nextStorms[i] = new Storm(storm.Direction, storm.X, y);
-
-                    nextHashes.Add(HashCode.Combine(nextStorms[i].X, nextStorms[i].Y));
-
-                    continue;
-
-                case '<':
-                    x = storm.X - 1;
-
-                    if (x == 0)
-                    {
-                        x = _width - 2;
-                    }
-
-                    nextStorms[i] = new Storm(storm.Direction, x, storm.Y);
-
-                    nextHashes.Add(HashCode.Combine(nextStorms[i].X, nextStorms[i].Y));
-
-                    continue;
-            }
+            return true;
         }
 
-        return (nextStorms, nextHashes);
+        found = _initialStorms.Where(s => s.Direction is 'v' or '^')
+                              .Any(s => position.Y == s.Direction switch
+                                        {
+                                            'v' => (s.Y - 1 + yD) % _blizzardHeight + 1,
+                                            '^' => (s.Y - 1 + _blizzardHeight - yD) % _blizzardHeight + 1,
+                                            _ => throw new PuzzleException("This exception shouldn't happen.")
+                                        }
+                                        && position.X == s.X);
+
+        //found = _initialStorms.Any(s => s.X == position.X &&
+        //                                (s.Direction == 'v'
+        //                                     ? s.Y + yD
+        //                                     : s.Y + _blizzardHeight - yD) == position.Y);
+
+        //found = _initialStorms.Any(s => s.X == position.X &&
+        //                                (s.Direction == 'v'
+        //                                     ? s.Y + yD
+        //                                     : 0) == position.Y);
+        
+        return found;
     }
 }
