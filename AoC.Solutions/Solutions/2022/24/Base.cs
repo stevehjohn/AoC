@@ -123,16 +123,13 @@ public abstract class Base : Solution
 
                 if (item.Position.X == target.X && item.Position.Y == target.Y)
                 {
-                    if (item.Steps < min)
-                    {
-                        min = item.Steps;
+                    min = item.Steps;
 
-                        lastStorms = item.Storms;
+                    lastStorms = item.Storms;
 
-                        lastHashes = item.Hashes;
+                    lastHashes = item.Hashes;
 
-                        break;
-                    }
+                    break;
                 }
 
                 Storm[] nextStorms;
