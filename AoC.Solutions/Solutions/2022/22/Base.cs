@@ -77,8 +77,6 @@ public abstract class Base : Solution
     {
         var previous = 0;
 
-        //Dump();
-
         for (var i = 0; i < _path.Length; i++)
         {
             if (_path[i] > '9' || i == _path.Length - 1)
@@ -86,8 +84,6 @@ public abstract class Base : Solution
                 var length = i == _path.Length - 1 ? int.Parse(_path.Substring(previous)) : int.Parse(_path.Substring(previous, i - previous));
 
                 Walk(length);
-
-                //Dump();
 
                 if (i == _path.Length - 1)
                 {
