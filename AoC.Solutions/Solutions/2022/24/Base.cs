@@ -1,20 +1,16 @@
-﻿using System.Diagnostics;
-using AoC.Solutions.Common;
+﻿using AoC.Solutions.Common;
 using AoC.Solutions.Exceptions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2022._24;
 
-// TODO: This class makes my eyes bleed. Needs tidying up!
 public abstract class Base : Solution
 {
     public override string Description => "Blizzard basin";
 
-    private const int MaxPossibleMoves = 5;
+    private readonly Dictionary<int, List<Storm>> _horizontalStorms = new();
 
-    private Storm[] _initialStorms;
-
-    private int _stormCount;
+    private readonly Dictionary<int, List<Storm>> _verticalStorms = new();
 
     private int _width;
 
@@ -28,8 +24,6 @@ public abstract class Base : Solution
 
     private Point _end;
 
-    private readonly Point[] _possibleMoves = new Point[MaxPossibleMoves];
-
     protected void ParseInput()
     {
         _width = Input[0].Length;
@@ -39,23 +33,6 @@ public abstract class Base : Solution
         _blizzardWidth = _width - 2;
 
         _blizzardHeight = _height - 2;
-
-        for (var y = 1; y < _height - 1; y++)
-        {
-            var line = Input[y];
-
-            for (var x = 1; x < _width - 1; x++)
-            {
-                if (line[x] != '.')
-                {
-                    _stormCount++;
-                }
-            }
-        }
-
-        _initialStorms = new Storm[_stormCount];
-
-        var i = 0;
 
         for (var y = 0; y < _height; y++)
         {
@@ -80,20 +57,30 @@ public abstract class Base : Solution
                     continue;
                 }
 
-                _initialStorms[i] = new Storm(c, x, y);
+                if (c is '<' or '>')
+                {
+                    if (! _horizontalStorms.ContainsKey(y))
+                    {
+                        _horizontalStorms.Add(y, new List<Storm>());
+                    }
 
-                i++;
+                    _horizontalStorms[y].Add(new Storm(c, x, y));
+                }
+                else
+                {
+                    if (! _verticalStorms.ContainsKey(x))
+                    {
+                        _verticalStorms.Add(x, new List<Storm>());
+                    }
+
+                    _verticalStorms[x].Add(new Storm(c, x, y));
+                }
             }
         }
     }
 
     protected int RunSimulation(int loops = 1)
     {
-        for (var i = 0; i < MaxPossibleMoves; i++)
-        {
-            _possibleMoves[i] = new Point();
-        }
-
         var queue = new PriorityQueue<(Point Position, int Steps), int>();
 
         var visited = new HashSet<int>();
@@ -107,11 +94,6 @@ public abstract class Base : Solution
         var totalMin = 0;
 
         var min = int.MaxValue;
-
-        //for (var i = 0; i < 20; i++)
-        //{
-        //    Dump(i);
-        //}
 
         while (loops > 0)
         {
@@ -133,12 +115,10 @@ public abstract class Base : Solution
                     break;
                 }
 
-                var moveCount = GenerateMoves(item.Position.X, item.Position.Y, target, origin, totalMin + item.Steps + 1);
+                var moves = GenerateMoves(item.Position.X, item.Position.Y, target, origin, totalMin + item.Steps + 1);
 
-                for (var i = 0; i < moveCount; i++)
+                foreach (var move in moves)
                 {
-                    var move = _possibleMoves[i];
-
                     var hash = new HashCode();
 
                     hash.Add(move.X);
@@ -156,16 +136,16 @@ public abstract class Base : Solution
                 }
             }
 
-            queue.Clear();
+            totalMin += min;
 
             loops--;
 
-            totalMin += min;
-
-            visited.Clear();
-
             if (loops > 0)
             {
+                queue.Clear();
+
+                visited.Clear();
+
                 if (target.Equals(_end))
                 {
                     target = _start;
@@ -190,54 +170,30 @@ public abstract class Base : Solution
         return Math.Max(min, totalMin);
     }
 
-    private void Dump(int iteration)
+    private List<Point> GenerateMoves(int x, int y, Point target, Point origin, int iteration)
     {
-        Console.WriteLine(iteration);
-
-        Console.WriteLine();
-
-        for (var y = 1; y <= _blizzardHeight; y++)
-        {
-            for (var x = 1; x <= _blizzardWidth; x++)
-            {
-                Console.Write(IsOccupied(new Point(x, y), iteration) ? 'X' : '.');
-            }
-
-            Console.WriteLine();
-        }
-
-        Console.WriteLine();
-    }
-
-    private int GenerateMoves(int x, int y, Point target, Point origin, int iteration)
-    {
-        var moveCount = 0;
+        var moves = new List<Point>();
 
         // Reached goal (end).
         if (target.Equals(_end) && x == target.X && y == target.Y - 1)
         {
-            _possibleMoves[0].X = x;
-            _possibleMoves[0].Y = y + 1;
+            moves.Add(new Point(x, y + 1));
 
-            return 1;
+            return moves;
         }
 
         // Reached goal (start).
         if (target.Equals(_start) && x == target.X && y == target.Y + 1)
         {
-            _possibleMoves[0].X = x;
-            _possibleMoves[0].Y = y - 1;
+            moves.Add(new Point(x, y - 1));
 
-            return 1;
+            return moves;
         }
 
         // Loiter.
         if (! IsOccupied(new Point(x, y), iteration))
         {
-            _possibleMoves[0].X = x;
-            _possibleMoves[0].Y = y;
-
-            moveCount++;
+            moves.Add(new Point(x, y));
         }
 
         // In and out of start/end.
@@ -245,120 +201,97 @@ public abstract class Base : Solution
         {
             if (y == 0 && x == origin.X)
             {
-                _possibleMoves[moveCount].X = x;
-                _possibleMoves[moveCount].Y = 1;
+                moves.Add(new Point(x, 1));
 
-                moveCount++;
-
-                return moveCount;
+                return moves;
             }
 
             if (y == 1 && x == origin.X)
             {
-                _possibleMoves[moveCount].X = x;
-                _possibleMoves[moveCount].Y = y - 1;
-
-                moveCount++;
+                moves.Add(new Point(x, y - 1));
             }
         }
         else
         {
             if (y == _height - 1 && x == origin.X)
             {
-                _possibleMoves[moveCount].X = x;
-                _possibleMoves[moveCount].Y = y - 2;
+                moves.Add(new Point(x, y - 2));
 
-                moveCount++;
-
-                return moveCount;
+                return moves;
             }
 
             if (y == _height - 2 && x == origin.X)
             {
-                _possibleMoves[moveCount].X = x;
-                _possibleMoves[moveCount].Y = y + 1;
-
-                moveCount++;
+                moves.Add(new Point(x, y + 1));
             }
         }
 
         // Right?
         if (x < _blizzardWidth && ! IsOccupied(new Point(x + 1, y), iteration))
         {
-            _possibleMoves[moveCount].X = x + 1;
-            _possibleMoves[moveCount].Y = y;
-
-            moveCount++;
+            moves.Add(new Point(x + 1, y));
         }
 
         // Left?
         if (x > 1 && ! IsOccupied(new Point(x - 1, y), iteration))
         {
-            _possibleMoves[moveCount].X = x - 1;
-            _possibleMoves[moveCount].Y = y;
-
-            moveCount++;
+            moves.Add(new Point(x - 1, y));
         }
 
         // Down?
         if (y < _blizzardHeight && ! IsOccupied(new Point(x, y + 1), iteration))
         {
-            _possibleMoves[moveCount].X = x;
-            _possibleMoves[moveCount].Y = y + 1;
-
-            moveCount++;
+            moves.Add(new Point(x, y + 1));
         }
 
         // Up?
         if (y > 1 && ! IsOccupied(new Point(x, y - 1), iteration))
         {
-            _possibleMoves[moveCount].X = x;
-            _possibleMoves[moveCount].Y = y - 1;
-
-            moveCount++;
+            moves.Add(new Point(x, y - 1));
         }
 
-        return moveCount;
+        return moves;
     }
 
     private bool IsOccupied(Point position, int iteration)
     {
+        if (position.X < 1 || position.Y < 1 || position.X >= _width || position.Y >= _height)
+        {
+            return false;
+        }
+
         var xD = iteration % _blizzardWidth;
 
         var yD = iteration % _blizzardHeight;
 
-        var found = _initialStorms.Where(s => s.Direction is '>' or '<')
-                                  .Any(s => position.X == s.Direction switch
-                                            {
-                                                '>' => (s.X - 1 + xD) % _blizzardWidth + 1,
-                                                '<' => (s.X - 1 + _blizzardWidth - xD) % _blizzardWidth + 1,
-                                                _ => throw new PuzzleException("This exception shouldn't happen.")
-                                            }
-                                            && position.Y == s.Y);
+        if (! _horizontalStorms.ContainsKey(position.Y))
+        {
+            return false;
+        }
+
+        var found = _horizontalStorms[position.Y].Any(s => position.X == s.Direction switch
+        {
+            '>' => (s.X - 1 + xD) % _blizzardWidth + 1,
+            '<' => (s.X - 1 + _blizzardWidth - xD) % _blizzardWidth + 1,
+            _ => throw new PuzzleException("This exception shouldn't happen.")
+        });
 
         if (found)
         {
             return true;
         }
 
-        found = _initialStorms.Where(s => s.Direction is 'v' or '^')
-                              .Any(s => position.Y == s.Direction switch
-                                        {
-                                            'v' => (s.Y - 1 + yD) % _blizzardHeight + 1,
-                                            '^' => (s.Y - 1 + _blizzardHeight - yD) % _blizzardHeight + 1,
-                                            _ => throw new PuzzleException("This exception shouldn't happen.")
-                                        }
-                                        && position.X == s.X);
+        if (! _verticalStorms.ContainsKey(position.X))
+        {
+            return false;
+        }
 
-        //found = _initialStorms.Any(s => s.X == position.X &&
-        //                                (s.Direction == 'v'
-        //                                     ? s.Y + yD
-        //                                     : s.Y + _blizzardHeight - yD) == position.Y);
-
-        //found = _initialStorms.Any(s => s.X == position.X &&
-        //                                (s.Direction == 'v'
-        //                                     ? s.Y + yD
-        //                                     : 0) == position.Y);
+        found = _verticalStorms[position.X].Any(s => position.Y == s.Direction switch
+        {
+            'v' => (s.Y - 1 + yD) % _blizzardHeight + 1,
+            '^' => (s.Y - 1 + _blizzardHeight - yD) % _blizzardHeight + 1,
+            _ => throw new PuzzleException("This exception shouldn't happen.")
+        });
         
         return found;
     }
