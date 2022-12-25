@@ -1,32 +1,32 @@
 ﻿using AoC.Solutions.Common;
+using AoC.Solutions.Exceptions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2022._24;
 
-// TODO: This class makes my eyes bleed. Needs tidying up!
 public abstract class Base : Solution
 {
     public override string Description => "Blizzard basin";
 
-    private const int MaxPossibleMoves = 5;
+    private readonly Dictionary<int, List<Storm>> _leftStorms = new();
 
-    private Storm[] _initialStorms;
+    private readonly Dictionary<int, List<Storm>> _downStorms = new();
 
-    private HashSet<int> _initialHashes;
+    private readonly Dictionary<int, List<Storm>> _rightStorms = new();
 
-    private int _stormCount;
+    private readonly Dictionary<int, List<Storm>> _upStorms = new();
 
     private int _width;
 
     private int _height;
 
+    private int _blizzardWidth;
+
+    private int _blizzardHeight;
+
     private Point _start;
 
     private Point _end;
-
-    private readonly Point[] _possibleMoves = new Point[MaxPossibleMoves];
-
-    private readonly Dictionary<int, (Storm[] Storms, HashSet<int> Hashes)> _cache = new();
 
     protected void ParseInput()
     {
@@ -34,24 +34,9 @@ public abstract class Base : Solution
 
         _height = Input.Length;
 
-        for (var y = 1; y < _height - 1; y++)
-        {
-            var line = Input[y];
+        _blizzardWidth = _width - 2;
 
-            for (var x = 1; x < _width - 1; x++)
-            {
-                if (line[x] != '.')
-                {
-                    _stormCount++;
-                }
-            }
-        }
-
-        _initialStorms = new Storm[_stormCount];
-
-        _initialHashes = new HashSet<int>(_stormCount);
-
-        var i = 0;
+        _blizzardHeight = _height - 2;
 
         for (var y = 0; y < _height; y++)
         {
@@ -76,170 +61,143 @@ public abstract class Base : Solution
                     continue;
                 }
 
-                _initialStorms[i] = new Storm(c, x, y);
+                if (c == '<')
+                {
+                    if (! _leftStorms.ContainsKey(y))
+                    {
+                        _leftStorms.Add(y, new List<Storm>());
+                    }
 
-                _initialHashes.Add(HashCode.Combine(_initialStorms[i].X, _initialStorms[i].Y));
+                    _leftStorms[y].Add(new Storm(c, x, y));
 
-                i++;
+                    continue;
+                }
+
+                if (c == '>')
+                {
+                    if (! _rightStorms.ContainsKey(y))
+                    {
+                        _rightStorms.Add(y, new List<Storm>());
+                    }
+
+                    _rightStorms[y].Add(new Storm(c, x, y));
+
+                    continue;
+                }
+
+                if (c == 'v')
+                {
+                    if (! _downStorms.ContainsKey(x))
+                    {
+                        _downStorms.Add(x, new List<Storm>());
+                    }
+
+                    _downStorms[x].Add(new Storm(c, x, y));
+                }
+
+                if (c == '^')
+                {
+                    if (! _upStorms.ContainsKey(x))
+                    {
+                        _upStorms.Add(x, new List<Storm>());
+                    }
+
+                    _upStorms[x].Add(new Storm(c, x, y));
+                }
             }
         }
     }
 
     protected int RunSimulation(int loops = 1)
     {
-        for (var i = 0; i < MaxPossibleMoves; i++)
+        var steps = 0;
+
+        for (var i = 0; i < loops; i++)
         {
-            _possibleMoves[i] = new Point();
+            steps += RunSimulationStep(steps);
         }
 
-        var queue = new PriorityQueue<(Storm[] Storms, HashSet<int> Hashes, (int X, int Y) Position, int Steps), int>();
+        return steps;
+    }
+
+    private int RunSimulationStep(int startIteration)
+    {
+        var queue = new PriorityQueue<(Point Position, int Steps), int>();
 
         var visited = new HashSet<int>();
 
-        queue.Enqueue((_initialStorms, _initialHashes, (_start.X, _start.Y), 0), 0);
+        queue.Enqueue((new Point(_start.X, _start.Y), 0), 0);
 
         var origin = _start;
 
         var target = _end;
 
-        var totalMin = 0;
-
         var min = int.MaxValue;
 
-        while (loops > 0)
+        while (queue.Count > 0)
         {
-            Storm[] lastStorms = null;
+            var item = queue.Dequeue();
 
-            HashSet<int> lastHashes = null;
-
-            while (queue.Count > 0)
+            if (item.Steps >= min)
             {
-                var item = queue.Dequeue();
-
-                if (item.Steps >= min)
-                {
-                    continue;
-                }
-
-                if (item.Position.X == target.X && item.Position.Y == target.Y)
-                {
-                    min = item.Steps;
-
-                    lastStorms = item.Storms;
-
-                    lastHashes = item.Hashes;
-
-                    break;
-                }
-
-                Storm[] nextStorms;
-
-                HashSet<int> nextHashes;
-
-                if (_cache.ContainsKey(item.Steps + loops * 100_000))
-                {
-                    nextStorms = _cache[item.Steps + loops * 100_000].Storms;
-
-                    nextHashes = _cache[item.Steps + loops * 100_000].Hashes;
-                }
-                else
-                {
-                    (nextStorms, nextHashes) = MoveStorms(item.Storms);
-
-                    _cache.Add(item.Steps + loops * 100_000, (nextStorms, nextHashes));
-                }
-
-                var moveCount = GenerateMoves(nextStorms, nextHashes, item.Position.X, item.Position.Y, target, origin);
-
-                for (var i = 0; i < moveCount; i++)
-                {
-                    var move = _possibleMoves[i];
-
-                    if (nextStorms.Any(s => s.X == move.X && s.Y == move.Y))
-                    {
-                        continue;
-                    }
-
-                    var hash = new HashCode();
-
-                    hash.Add(move.X);
-                    hash.Add(move.Y);
-                    hash.Add(item.Steps);
-
-                    var code = hash.ToHashCode();
-
-                    if (!visited.Contains(code))
-                    {
-                        queue.Enqueue((nextStorms, nextHashes, (move.X, move.Y), item.Steps + 1), Math.Abs(target.X - move.X) + Math.Abs(target.Y - move.Y) + item.Steps);
-
-                        visited.Add(code);
-                    }
-                }
+                continue;
             }
 
-            queue.Clear();
-
-            loops--;
-
-            totalMin += min;
-
-            visited.Clear();
-
-            if (loops > 0)
+            if (item.Position.X == target.X && item.Position.Y == target.Y)
             {
-                if (target.Equals(_end))
+                min = item.Steps;
+
+                return min;
+            }
+
+            var moves = GenerateMoves(item.Position.X, item.Position.Y, target, origin, startIteration + item.Steps + 1);
+
+            foreach (var move in moves)
+            {
+                var hash = new HashCode();
+
+                hash.Add(move.X);
+                hash.Add(move.Y);
+                hash.Add(item.Steps);
+
+                var code = hash.ToHashCode();
+
+                if (! visited.Contains(code))
                 {
-                    target = _start;
+                    queue.Enqueue((new Point(move), item.Steps + 1), Math.Abs(target.X - move.X) + Math.Abs(target.Y - move.Y) + item.Steps);
 
-                    origin = _end;
-
-                    queue.Enqueue((lastStorms, lastHashes, (_end.X, _end.Y), 0), 0);
+                    visited.Add(code);
                 }
-                else
-                {
-                    target = _end;
-
-                    origin = _start;
-
-                    queue.Enqueue((lastStorms, lastHashes, (_start.X, _start.Y), 0), 0);
-                }
-
-                min = int.MaxValue;
             }
         }
 
-        return Math.Max(min, totalMin);
+        throw new PuzzleException("Solution not found.");
     }
 
-    private int GenerateMoves(Storm[] storms, HashSet<int> hashes, int x, int y, Point target, Point origin)
+    private List<Point> GenerateMoves(int x, int y, Point target, Point origin, int iteration)
     {
-        var moveCount = 0;
+        var moves = new List<Point>();
 
         // Reached goal (end).
         if (target.Equals(_end) && x == target.X && y == target.Y - 1)
         {
-            _possibleMoves[0].X = x;
-            _possibleMoves[0].Y = y + 1;
+            moves.Add(new Point(x, y + 1));
 
-            return 1;
+            return moves;
         }
 
         // Reached goal (start).
         if (target.Equals(_start) && x == target.X && y == target.Y + 1)
         {
-            _possibleMoves[0].X = x;
-            _possibleMoves[0].Y = y - 1;
+            moves.Add(new Point(x, y - 1));
 
-            return 1;
+            return moves;
         }
 
         // Loiter.
-        if (! storms.Any(s => s.X == x && s.Y == y))
+        if (! IsOccupied(new Point(x, y), iteration))
         {
-            _possibleMoves[0].X = x;
-            _possibleMoves[0].Y = y;
-
-            moveCount++;
+            moves.Add(new Point(x, y));
         }
 
         // In and out of start/end.
@@ -247,156 +205,90 @@ public abstract class Base : Solution
         {
             if (y == 0 && x == origin.X)
             {
-                _possibleMoves[moveCount].X = x;
-                _possibleMoves[moveCount].Y = 1;
+                moves.Add(new Point(x, 1));
 
-                moveCount++;
-
-                return moveCount;
+                return moves;
             }
 
             if (y == 1 && x == origin.X)
             {
-                _possibleMoves[moveCount].X = x;
-                _possibleMoves[moveCount].Y = y - 1;
-
-                moveCount++;
+                moves.Add(new Point(x, y - 1));
             }
         }
         else
         {
             if (y == _height - 1 && x == origin.X)
             {
-                _possibleMoves[moveCount].X = x;
-                _possibleMoves[moveCount].Y = y - 2;
+                moves.Add(new Point(x, y - 2));
 
-                moveCount++;
-
-                return moveCount;
+                return moves;
             }
 
             if (y == _height - 2 && x == origin.X)
             {
-                _possibleMoves[moveCount].X = x;
-                _possibleMoves[moveCount].Y = y + 1;
-
-                moveCount++;
+                moves.Add(new Point(x, y + 1));
             }
         }
 
         // Right?
-        if (x < _width - 2 && ! hashes.Contains(HashCode.Combine(x + 1, y)))
+        if (x < _blizzardWidth && ! IsOccupied(new Point(x + 1, y), iteration))
         {
-            _possibleMoves[moveCount].X = x + 1;
-            _possibleMoves[moveCount].Y = y;
-
-            moveCount++;
+            moves.Add(new Point(x + 1, y));
         }
 
         // Left?
-        if (x > 1 && ! hashes.Contains(HashCode.Combine(x - 1, y)))
+        if (x > 1 && ! IsOccupied(new Point(x - 1, y), iteration))
         {
-            _possibleMoves[moveCount].X = x - 1;
-            _possibleMoves[moveCount].Y = y;
-
-            moveCount++;
+            moves.Add(new Point(x - 1, y));
         }
 
         // Down?
-        if (y < _height - 2 && ! hashes.Contains(HashCode.Combine(x, y + 1)))
+        if (y < _blizzardHeight && ! IsOccupied(new Point(x, y + 1), iteration))
         {
-            _possibleMoves[moveCount].X = x;
-            _possibleMoves[moveCount].Y = y + 1;
-
-            moveCount++;
+            moves.Add(new Point(x, y + 1));
         }
 
         // Up?
-        if (y > 1 && ! hashes.Contains(HashCode.Combine(x, y - 1)))
+        if (y > 1 && ! IsOccupied(new Point(x, y - 1), iteration))
         {
-            _possibleMoves[moveCount].X = x;
-            _possibleMoves[moveCount].Y = y - 1;
-
-            moveCount++;
+            moves.Add(new Point(x, y - 1));
         }
 
-        return moveCount;
+        return moves;
     }
 
-    private (Storm[] Storms, HashSet<int> Hashes) MoveStorms(Storm[] storms)
+    private bool IsOccupied(Point position, int iteration)
     {
-        var nextStorms = new Storm[_stormCount];
-
-        var nextHashes = new HashSet<int>(_stormCount);
-
-        for (var i = 0; i < _stormCount; i++)
+        if (position.X < 1 || position.Y < 1 || position.X >= _width || position.Y >= _height)
         {
-            var storm = storms[i];
-
-            int x;
-
-            int y;
-
-            switch (storm.Direction)
-            {
-                case '^':
-                    y = storm.Y - 1;
-
-                    if (y == 0)
-                    {
-                        y = _height - 2;
-                    }
-
-                    nextStorms[i] = new Storm(storm.Direction, storm.X, y);
-
-                    nextHashes.Add(HashCode.Combine(nextStorms[i].X, nextStorms[i].Y));
-
-                    continue;
-
-                case '>':
-                    x = storm.X + 1;
-
-                    if (x == _width - 1)
-                    {
-                        x = 1;
-                    }
-
-                    nextStorms[i] = new Storm(storm.Direction, x, storm.Y);
-
-                    nextHashes.Add(HashCode.Combine(nextStorms[i].X, nextStorms[i].Y));
-
-                    continue;
-
-                case 'v':
-                    y = storm.Y + 1;
-
-                    if (y == _height - 1)
-                    {
-                        y = 1;
-                    }
-
-                    nextStorms[i] = new Storm(storm.Direction, storm.X, y);
-
-                    nextHashes.Add(HashCode.Combine(nextStorms[i].X, nextStorms[i].Y));
-
-                    continue;
-
-                case '<':
-                    x = storm.X - 1;
-
-                    if (x == 0)
-                    {
-                        x = _width - 2;
-                    }
-
-                    nextStorms[i] = new Storm(storm.Direction, x, storm.Y);
-
-                    nextHashes.Add(HashCode.Combine(nextStorms[i].X, nextStorms[i].Y));
-
-                    continue;
-            }
+            return false;
         }
 
-        return (nextStorms, nextHashes);
+        var xD = iteration % _blizzardWidth;
+
+        var yD = iteration % _blizzardHeight;
+
+        var found = _rightStorms.ContainsKey(position.Y) && _rightStorms[position.Y].Any(s => position.X == (s.X - 1 + xD) % _blizzardWidth + 1);
+
+        if (found)
+        {
+            return true;
+        }
+
+        found = _leftStorms.ContainsKey(position.Y) && _leftStorms[position.Y].Any(s => position.X == (s.X - 1 + _blizzardWidth - xD) % _blizzardWidth + 1);
+
+        if (found)
+        {
+            return true;
+        }
+
+        found = _downStorms.ContainsKey(position.X) && _downStorms[position.X].Any(s => position.Y == (s.Y - 1 + yD) % _blizzardHeight + 1);
+
+        if (found)
+        {
+            return true;
+        }
+
+        return _upStorms.ContainsKey(position.X) && _upStorms[position.X].Any(s => position.Y == (s.Y - 1 + _blizzardHeight - yD) % _blizzardHeight + 1);
     }
 }
