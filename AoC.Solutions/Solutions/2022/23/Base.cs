@@ -128,41 +128,41 @@ public abstract class Base : Solution
 
     private void InitialiseEvaluations()
     {
-        _evaluations.Add(p => ! _elves.Contains(new Point(p.X - 1, p.Y - 1))
-                              && ! _elves.Contains(new Point(p.X, p.Y - 1))
-                              && ! _elves.Contains(new Point(p.X + 1, p.Y - 1))
+        _evaluations.Add(p => ! (_elves.Contains(new Point(p.X - 1, p.Y - 1))
+                                 || _elves.Contains(new Point(p.X, p.Y - 1))
+                                 || _elves.Contains(new Point(p.X + 1, p.Y - 1)))
                                   ? new Point(p.X, p.Y - 1)
                                   : null);
 
-        _evaluations.Add(p => ! _elves.Contains(new Point(p.X - 1, p.Y + 1))
-                              && ! _elves.Contains(new Point(p.X, p.Y + 1))
-                              && ! _elves.Contains(new Point(p.X + 1, p.Y + 1))
+        _evaluations.Add(p => ! (_elves.Contains(new Point(p.X - 1, p.Y + 1))
+                                 || _elves.Contains(new Point(p.X, p.Y + 1))
+                                 || _elves.Contains(new Point(p.X + 1, p.Y + 1)))
                                   ? new Point(p.X, p.Y + 1)
                                   : null);
 
-        _evaluations.Add(p => ! _elves.Contains(new Point(p.X - 1, p.Y - 1))
-                              && ! _elves.Contains(new Point(p.X - 1, p.Y))
-                              && ! _elves.Contains(new Point(p.X - 1, p.Y + 1))
+        _evaluations.Add(p => ! (_elves.Contains(new Point(p.X - 1, p.Y - 1))
+                                 || _elves.Contains(new Point(p.X - 1, p.Y))
+                                 || _elves.Contains(new Point(p.X - 1, p.Y + 1)))
                                   ? new Point(p.X - 1, p.Y)
                                   : null);
 
-        _evaluations.Add(p => ! _elves.Contains(new Point(p.X + 1, p.Y - 1))
-                              && ! _elves.Contains(new Point(p.X + 1, p.Y))
-                              && ! _elves.Contains(new Point(p.X + 1, p.Y + 1))
+        _evaluations.Add(p => ! (_elves.Contains(new Point(p.X + 1, p.Y - 1))
+                                 || _elves.Contains(new Point(p.X + 1, p.Y))
+                                 || _elves.Contains(new Point(p.X + 1, p.Y + 1)))
                                   ? new Point(p.X + 1, p.Y)
                                   : null);
     }
 
     private Point GetProposedMove(Point position)
     {
-        if (! _elves.Contains(new Point(position.X - 1, position.Y - 1))
-            && ! _elves.Contains(new Point(position.X, position.Y - 1))
-            && ! _elves.Contains(new Point(position.X + 1, position.Y - 1))
-            && ! _elves.Contains(new Point(position.X + 1, position.Y))
-            && ! _elves.Contains(new Point(position.X + 1, position.Y + 1))
-            && ! _elves.Contains(new Point(position.X, position.Y + 1))
-            && ! _elves.Contains(new Point(position.X - 1, position.Y + 1))
-            && ! _elves.Contains(new Point(position.X - 1, position.Y)))
+        if (! (_elves.Contains(new Point(position.X - 1, position.Y - 1))
+               || _elves.Contains(new Point(position.X, position.Y - 1))
+               || _elves.Contains(new Point(position.X + 1, position.Y - 1))
+               || _elves.Contains(new Point(position.X + 1, position.Y))
+               || _elves.Contains(new Point(position.X + 1, position.Y + 1))
+               || _elves.Contains(new Point(position.X, position.Y + 1))
+               || _elves.Contains(new Point(position.X - 1, position.Y + 1))
+               || _elves.Contains(new Point(position.X - 1, position.Y))))
         {
             return null;
         }
