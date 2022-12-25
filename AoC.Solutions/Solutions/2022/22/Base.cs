@@ -19,6 +19,8 @@ public abstract class Base : Solution
 
     private char[,] _map;
 
+    private char[,] _walked;
+
     private int _width;
 
     private int _height;
@@ -51,6 +53,8 @@ public abstract class Base : Solution
         _height = y;
 
         _map = new char[_width, _height];
+
+        _walked = new char[_width, _height];
 
         for (y = 0; y < _height; y++)
         {
@@ -125,6 +129,13 @@ public abstract class Base : Solution
                     continue;
                 }
 
+                if (_walked[x, y] != '\0')
+                {
+                    Console.Write('+');
+
+                    continue;
+                }
+
                 if (_map[x, y] == '\0')
                 {
                     Console.Write(' ');
@@ -183,6 +194,8 @@ public abstract class Base : Solution
 
             if (tile == '.')
             {
+                _walked[position.X, position.Y] = '+';
+
                 _position = position;
 
                 length--;
@@ -229,7 +242,7 @@ public abstract class Base : Solution
 
         var newSegment = new Point(position.X < 0 ? -1 : position.X / 4, position.Y < 0 ? -1 : position.Y / 4);
 
-        Console.WriteLine($"New: {newSegment}");
+        // Console.WriteLine($"New: {newSegment}");
 
         (position, var newDirection) = Wrap3D(newSegment, segmentPosition);
 
@@ -239,6 +252,8 @@ public abstract class Base : Solution
         }
 
         _position = position;
+        
+        _walked[position.X, position.Y] = '+';
 
         _direction = newDirection;
 
@@ -262,20 +277,20 @@ public abstract class Base : Solution
     {
         return (newSegment.X, newSegment.Y, _direction) switch
         {
-            (0, 0, 'L') => (GetPositionInNewSegment(0, 2, 'L', segmentPosition.Y), 'R'),
-            (1, -1, 'U') => (GetPositionInNewSegment(0, 3, 'L', segmentPosition.X, false), 'R'),
-            (2, -1, 'U') => (GetPositionInNewSegment(0, 3, 'D', segmentPosition.X), 'U'),
-            (3, 0, 'R') => (GetPositionInNewSegment(1, 2, 'R', segmentPosition.Y), 'L'),
+            (0, 0, 'L') => (GetPositionInNewSegment(0, 2, 'L', segmentPosition.Y), 'R'), //
+            (1, -1, 'U') => (GetPositionInNewSegment(0, 3, 'L', segmentPosition.X, false), 'R'), //
+            (2, -1, 'U') => (GetPositionInNewSegment(0, 3, 'D', segmentPosition.X, false), 'U'), //
+            (3, 0, 'R') => (GetPositionInNewSegment(1, 2, 'R', segmentPosition.Y), 'L'), //
             (2, 1, 'D') => (GetPositionInNewSegment(1, 1, 'R', segmentPosition.X, false), 'L'),
             (2, 1, 'R') => (GetPositionInNewSegment(2, 0, 'D', segmentPosition.Y, false), 'U'),
-            (2, 2, 'R') => (GetPositionInNewSegment(2, 0, 'R', segmentPosition.Y), 'L'),
+            (2, 2, 'R') => (GetPositionInNewSegment(2, 0, 'R', segmentPosition.Y), 'L'), //
             (1, 3, 'D') => (GetPositionInNewSegment(1, 3, 'L', segmentPosition.X, false), 'R'),
             (1, 3, 'R') => (GetPositionInNewSegment(2, 0, 'R', segmentPosition.Y, false), 'L'),
-            (4, 0, 'U') => (GetPositionInNewSegment(3, 0, 'D', segmentPosition.Y), 'U'),
-            (-1, 3, 'L') => (GetPositionInNewSegment(1, 0, 'U', segmentPosition.Y, false), 'D'),
-            (-1, 2, 'L') => (GetPositionInNewSegment(1, 0, 'L', segmentPosition.Y), 'R'),
-            (0, 1, 'U') => (GetPositionInNewSegment(1, 1, 'L', segmentPosition.X, false), 'R'),
-            (0, 1, 'L') => (GetPositionInNewSegment(0, 2, 'U', segmentPosition.Y, false), 'D'),
+            (0, 4, 'D') => (GetPositionInNewSegment(2, 0, 'U', segmentPosition.X, false), 'D'), //
+            (-1, 3, 'L') => (GetPositionInNewSegment(1, 0, 'U', segmentPosition.Y, false), 'D'), //
+            (-1, 2, 'L') => (GetPositionInNewSegment(1, 0, 'L', segmentPosition.Y), 'R'), // 
+            (0, 1, 'U') => (GetPositionInNewSegment(1, 1, 'L', segmentPosition.X, false), 'R'), //
+            (0, 1, 'L') => (GetPositionInNewSegment(0, 2, 'U', segmentPosition.Y, false), 'D'), //
             _ => throw new PuzzleException("Cannot 3D teleport.")
         };
     }
