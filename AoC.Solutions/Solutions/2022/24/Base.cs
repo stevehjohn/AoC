@@ -8,9 +8,13 @@ public abstract class Base : Solution
 {
     public override string Description => "Blizzard basin";
 
-    private readonly Dictionary<int, List<Storm>> _horizontalStorms = new();
+    private readonly Dictionary<int, List<Storm>> _leftStorms = new();
 
-    private readonly Dictionary<int, List<Storm>> _verticalStorms = new();
+    private readonly Dictionary<int, List<Storm>> _downStorms = new();
+
+    private readonly Dictionary<int, List<Storm>> _rightStorms = new();
+
+    private readonly Dictionary<int, List<Storm>> _upStorms = new();
 
     private int _width;
 
@@ -57,23 +61,48 @@ public abstract class Base : Solution
                     continue;
                 }
 
-                if (c is '<' or '>')
+                if (c == '<')
                 {
-                    if (! _horizontalStorms.ContainsKey(y))
+                    if (! _leftStorms.ContainsKey(y))
                     {
-                        _horizontalStorms.Add(y, new List<Storm>());
+                        _leftStorms.Add(y, new List<Storm>());
                     }
 
-                    _horizontalStorms[y].Add(new Storm(c, x, y));
+                    _leftStorms[y].Add(new Storm(c, x, y));
+
+                    continue;
                 }
-                else
+
+                if (c == '>')
                 {
-                    if (! _verticalStorms.ContainsKey(x))
+                    if (! _rightStorms.ContainsKey(y))
                     {
-                        _verticalStorms.Add(x, new List<Storm>());
+                        _rightStorms.Add(y, new List<Storm>());
                     }
 
-                    _verticalStorms[x].Add(new Storm(c, x, y));
+                    _rightStorms[y].Add(new Storm(c, x, y));
+
+                    continue;
+                }
+
+                if (c == 'v')
+                {
+                    if (! _downStorms.ContainsKey(x))
+                    {
+                        _downStorms.Add(x, new List<Storm>());
+                    }
+
+                    _downStorms[x].Add(new Storm(c, x, y));
+                }
+
+                if (c == '^')
+                {
+                    if (! _upStorms.ContainsKey(x))
+                    {
+                        _upStorms.Add(x, new List<Storm>());
+                    }
+
+                    _upStorms[x].Add(new Storm(c, x, y));
                 }
             }
         }
@@ -239,35 +268,27 @@ public abstract class Base : Solution
 
         var yD = iteration % _blizzardHeight;
 
-        if (! _horizontalStorms.ContainsKey(position.Y))
-        {
-            return false;
-        }
-
-        var found = _horizontalStorms[position.Y].Any(s => position.X == s.Direction switch
-        {
-            '>' => (s.X - 1 + xD) % _blizzardWidth + 1,
-            '<' => (s.X - 1 + _blizzardWidth - xD) % _blizzardWidth + 1,
-            _ => throw new PuzzleException("This exception shouldn't happen.")
-        });
+        var found = _rightStorms.ContainsKey(position.Y) && _rightStorms[position.Y].Any(s => position.X == (s.X - 1 + xD) % _blizzardWidth + 1);
 
         if (found)
         {
             return true;
         }
 
-        if (! _verticalStorms.ContainsKey(position.X))
+        found = _leftStorms.ContainsKey(position.Y) && _leftStorms[position.Y].Any(s => position.X == (s.X - 1 + _blizzardWidth - xD) % _blizzardWidth + 1);
+
+        if (found)
         {
-            return false;
+            return true;
         }
 
-        found = _verticalStorms[position.X].Any(s => position.Y == s.Direction switch
-        {
-            'v' => (s.Y - 1 + yD) % _blizzardHeight + 1,
-            '^' => (s.Y - 1 + _blizzardHeight - yD) % _blizzardHeight + 1,
-            _ => throw new PuzzleException("This exception shouldn't happen.")
-        });
+        found = _downStorms.ContainsKey(position.X) && _downStorms[position.X].Any(s => position.Y == (s.Y - 1 + yD) % _blizzardHeight + 1);
 
-        return found;
+        if (found)
+        {
+            return true;
+        }
+
+        return _upStorms.ContainsKey(position.X) && _upStorms[position.X].Any(s => position.Y == (s.Y - 1 + _blizzardHeight - yD) % _blizzardHeight + 1);
     }
 }
