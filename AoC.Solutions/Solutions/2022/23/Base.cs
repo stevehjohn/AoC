@@ -61,18 +61,28 @@ public abstract class Base : Solution
         return CountEmptyTiles();
     }
 
+    private readonly Dictionary<Point, Point> _proposedMoves = new();
+
     protected int RunSimulationStep()
     {
         _visited.Clear();
 
         _blocked.Clear();
 
+        _proposedMoves.Clear();
+
+        var elves = new HashSet<Point>(SetMaxSize);
+
         foreach (var elf in _elves)
         {
             var proposedMove = GetProposedMove(elf);
 
+            _proposedMoves.Add(elf, proposedMove);
+
             if (proposedMove == null)
             {
+                elves.Add(elf);
+
                 continue;
             }
 
@@ -88,13 +98,16 @@ public abstract class Base : Solution
 
         var moved = 0;
 
-        var elves = new HashSet<Point>(SetMaxSize);
-
         foreach (var elf in _elves)
         {
-            var proposedMove = GetProposedMove(elf);
+            var proposedMove = _proposedMoves[elf];
 
-            if (proposedMove == null || _blocked.Contains(proposedMove))
+            if (proposedMove == null)
+            {
+                continue;
+            }
+
+            if (_blocked.Contains(proposedMove))
             {
                 elves.Add(elf);
 
