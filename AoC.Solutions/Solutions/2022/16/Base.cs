@@ -74,6 +74,8 @@ public abstract class Base : Solution
 
         queue.Enqueue((start, 0), 0);
 
+        var visited = new HashSet<int>();
+
         while (queue.Count > 0)
         {
             var item = queue.Dequeue();
@@ -85,7 +87,14 @@ public abstract class Base : Solution
 
             foreach (var connection in item.Valve.DirectConnections)
             {
-                queue.Enqueue((connection, item.Steps + 1), item.Steps + 1);
+                var code = HashCode.Combine(connection.Name, item.Steps + 1);
+
+                if (! visited.Contains(code))
+                {
+                    queue.Enqueue((connection, item.Steps + 1), item.Steps + 1);
+
+                    visited.Add(code);
+                }
             }
         }
 
