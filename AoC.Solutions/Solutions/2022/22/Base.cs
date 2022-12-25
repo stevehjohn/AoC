@@ -87,7 +87,7 @@ public abstract class Base : Solution
         {
             if (_path[i] > '9' || i == _path.Length - 1)
             {
-                var length = i == _path.Length - 1 ? int.Parse(_path.Substring(i)) : int.Parse(_path.Substring(previous, i - previous));
+                var length = i == _path.Length - 1 ? int.Parse(_path.Substring(previous)) : int.Parse(_path.Substring(previous, i - previous));
 
                 Walk(length);
 
@@ -168,6 +168,8 @@ public abstract class Base : Solution
 
     private void Walk(int length)
     {
+        Console.WriteLine(length);
+
         while (length > 0)
         {
             var (xD, yD) = _direction switch
@@ -281,11 +283,11 @@ public abstract class Base : Solution
             (1, -1, 'U') => (GetPositionInNewSegment(0, 3, 'L', segmentPosition.X, false), 'R'), //
             (2, -1, 'U') => (GetPositionInNewSegment(0, 3, 'D', segmentPosition.X, false), 'U'), //
             (3, 0, 'R') => (GetPositionInNewSegment(1, 2, 'R', segmentPosition.Y), 'L'), //
-            (2, 1, 'D') => (GetPositionInNewSegment(1, 1, 'R', segmentPosition.X, false), 'L'),
-            (2, 1, 'R') => (GetPositionInNewSegment(2, 0, 'D', segmentPosition.Y, false), 'U'),
+            (2, 1, 'D') => (GetPositionInNewSegment(1, 1, 'R', segmentPosition.X, false), 'L'), //
+            (2, 1, 'R') => (GetPositionInNewSegment(2, 0, 'D', segmentPosition.Y, false), 'U'), //
             (2, 2, 'R') => (GetPositionInNewSegment(2, 0, 'R', segmentPosition.Y), 'L'), //
-            (1, 3, 'D') => (GetPositionInNewSegment(1, 3, 'L', segmentPosition.X, false), 'R'),
-            (1, 3, 'R') => (GetPositionInNewSegment(2, 0, 'R', segmentPosition.Y, false), 'L'),
+            (1, 3, 'D') => (GetPositionInNewSegment(0, 3, 'R', segmentPosition.X, false), 'L'), //
+            (1, 3, 'R') => (GetPositionInNewSegment(1, 2, 'D', segmentPosition.Y, false), 'U'), //
             (0, 4, 'D') => (GetPositionInNewSegment(2, 0, 'U', segmentPosition.X, false), 'D'), //
             (-1, 3, 'L') => (GetPositionInNewSegment(1, 0, 'U', segmentPosition.Y, false), 'D'), //
             (-1, 2, 'L') => (GetPositionInNewSegment(1, 0, 'L', segmentPosition.Y), 'R'), // 
