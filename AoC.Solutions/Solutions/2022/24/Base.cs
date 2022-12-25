@@ -26,6 +26,8 @@ public abstract class Base : Solution
 
     private readonly Point[] _possibleMoves = new Point[MaxPossibleMoves];
 
+    private readonly Dictionary<int, (Storm[] Storms, HashSet<int> Hashes)> _cache = new();
+
     protected void ParseInput()
     {
         _width = Input[0].Length;
@@ -133,7 +135,22 @@ public abstract class Base : Solution
                     }
                 }
 
-                var (nextStorms, nextHashes) = MoveStorms(item.Storms);
+                Storm[] nextStorms;
+
+                HashSet<int> nextHashes;
+
+                if (_cache.ContainsKey(item.Steps + loops * 100_000))
+                {
+                    nextStorms = _cache[item.Steps + loops * 100_000].Storms;
+
+                    nextHashes = _cache[item.Steps + loops * 100_000].Hashes;
+                }
+                else
+                {
+                    (nextStorms, nextHashes) = MoveStorms(item.Storms);
+
+                    _cache.Add(item.Steps + loops * 100_000, (nextStorms, nextHashes));
+                }
 
                 var moveCount = GenerateMoves(nextStorms, nextHashes, item.Position.X, item.Position.Y, target, origin);
 
