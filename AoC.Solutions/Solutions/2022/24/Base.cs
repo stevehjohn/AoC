@@ -132,22 +132,13 @@ public abstract class Base : Solution
 
         var target = _end;
 
-        var min = int.MaxValue;
-
         while (queue.Count > 0)
         {
             var item = queue.Dequeue();
 
-            if (item.Steps >= min)
-            {
-                continue;
-            }
-
             if (item.Position.X == target.X && item.Position.Y == target.Y)
             {
-                min = item.Steps;
-
-                return min;
+                return item.Steps;
             }
 
             var moves = GenerateMoves(item.Position.X, item.Position.Y, target, origin, startIteration + item.Steps + 1);
