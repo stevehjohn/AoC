@@ -268,27 +268,35 @@ public abstract class Base : Solution
 
         var yD = iteration % _blizzardHeight;
 
-        var found = _rightStorms.ContainsKey(position.Y) && _rightStorms[position.Y].Any(s => position.X == (s.X - 1 + xD) % _blizzardWidth + 1);
+        var target = (position.X - 1 + _blizzardWidth - xD) % _blizzardWidth + 1;
+
+        var found = _rightStorms.ContainsKey(position.Y) && _rightStorms[position.Y].Any(s => target == s.X);
 
         if (found)
         {
             return true;
         }
 
-        found = _leftStorms.ContainsKey(position.Y) && _leftStorms[position.Y].Any(s => position.X == (s.X - 1 + _blizzardWidth - xD) % _blizzardWidth + 1);
+        target = (position.X - 1 + xD) % _blizzardWidth + 1;
+
+        found = _leftStorms.ContainsKey(position.Y) && _leftStorms[position.Y].Any(s => target == s.X);
 
         if (found)
         {
             return true;
         }
 
-        found = _downStorms.ContainsKey(position.X) && _downStorms[position.X].Any(s => position.Y == (s.Y - 1 + yD) % _blizzardHeight + 1);
+        target = (position.Y - 1 + _blizzardHeight - yD) % _blizzardHeight + 1;
+
+        found = _downStorms.ContainsKey(position.X) && _downStorms[position.X].Any(s => target == s.Y);
 
         if (found)
         {
             return true;
         }
 
-        return _upStorms.ContainsKey(position.X) && _upStorms[position.X].Any(s => position.Y == (s.Y - 1 + _blizzardHeight - yD) % _blizzardHeight + 1);
+        target = (position.Y - 1 + yD) % _blizzardHeight + 1;
+
+        return _upStorms.ContainsKey(position.X) && _upStorms[position.X].Any(s => target == s.Y);
     }
 }
