@@ -352,6 +352,8 @@ public abstract class Base : Solution
 
                     nextStorms[i] = new Storm(storm.Direction, storm.X, y);
 
+                    nextHashes.Add(HashCode.Combine(nextStorms[i].X, nextStorms[i].Y));
+
                     continue;
 
                 case '>':
@@ -363,6 +365,8 @@ public abstract class Base : Solution
                     }
 
                     nextStorms[i] = new Storm(storm.Direction, x, storm.Y);
+
+                    nextHashes.Add(HashCode.Combine(nextStorms[i].X, nextStorms[i].Y));
 
                     continue;
 
@@ -376,6 +380,8 @@ public abstract class Base : Solution
 
                     nextStorms[i] = new Storm(storm.Direction, storm.X, y);
 
+                    nextHashes.Add(HashCode.Combine(nextStorms[i].X, nextStorms[i].Y));
+
                     continue;
 
                 case '<':
@@ -388,10 +394,10 @@ public abstract class Base : Solution
 
                     nextStorms[i] = new Storm(storm.Direction, x, storm.Y);
 
+                    nextHashes.Add(HashCode.Combine(nextStorms[i].X, nextStorms[i].Y));
+
                     continue;
             }
-
-            nextHashes.Add(HashCode.Combine(nextStorms[i].X, nextStorms[i].Y));
         }
 
         return (nextStorms, nextHashes);
