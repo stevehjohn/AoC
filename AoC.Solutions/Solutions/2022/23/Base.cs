@@ -11,11 +11,13 @@ public abstract class Base : Solution
 
     private HashSet<Point> _elves = new(SetMaxSize);
 
-    private readonly List<Func<Point, Point>> _evaluations = new();
+    private readonly Func<Point, Point>[] _evaluations = new Func<Point, Point>[4];
 
     private readonly HashSet<Point> _visited = new(SetMaxSize);
 
     private readonly HashSet<Point> _blocked = new(SetMaxSize);
+
+    private int _startEvaluation;
 
     protected void ParseInput()
     {
@@ -128,29 +130,29 @@ public abstract class Base : Solution
 
     private void InitialiseEvaluations()
     {
-        _evaluations.Add(p => ! (_elves.Contains(new Point(p.X - 1, p.Y - 1))
-                                 || _elves.Contains(new Point(p.X, p.Y - 1))
-                                 || _elves.Contains(new Point(p.X + 1, p.Y - 1)))
-                                  ? new Point(p.X, p.Y - 1)
-                                  : null);
+        _evaluations[0] = p => ! (_elves.Contains(new Point(p.X - 1, p.Y - 1))
+                                  || _elves.Contains(new Point(p.X, p.Y - 1))
+                                  || _elves.Contains(new Point(p.X + 1, p.Y - 1)))
+                                   ? new Point(p.X, p.Y - 1)
+                                   : null;
 
-        _evaluations.Add(p => ! (_elves.Contains(new Point(p.X - 1, p.Y + 1))
-                                 || _elves.Contains(new Point(p.X, p.Y + 1))
-                                 || _elves.Contains(new Point(p.X + 1, p.Y + 1)))
-                                  ? new Point(p.X, p.Y + 1)
-                                  : null);
+        _evaluations[1] = p => ! (_elves.Contains(new Point(p.X - 1, p.Y + 1))
+                                  || _elves.Contains(new Point(p.X, p.Y + 1))
+                                  || _elves.Contains(new Point(p.X + 1, p.Y + 1)))
+                                   ? new Point(p.X, p.Y + 1)
+                                   : null;
 
-        _evaluations.Add(p => ! (_elves.Contains(new Point(p.X - 1, p.Y - 1))
-                                 || _elves.Contains(new Point(p.X - 1, p.Y))
-                                 || _elves.Contains(new Point(p.X - 1, p.Y + 1)))
-                                  ? new Point(p.X - 1, p.Y)
-                                  : null);
+        _evaluations[2] = p => ! (_elves.Contains(new Point(p.X - 1, p.Y - 1))
+                                  || _elves.Contains(new Point(p.X - 1, p.Y))
+                                  || _elves.Contains(new Point(p.X - 1, p.Y + 1)))
+                                   ? new Point(p.X - 1, p.Y)
+                                   : null;
 
-        _evaluations.Add(p => ! (_elves.Contains(new Point(p.X + 1, p.Y - 1))
-                                 || _elves.Contains(new Point(p.X + 1, p.Y))
-                                 || _elves.Contains(new Point(p.X + 1, p.Y + 1)))
-                                  ? new Point(p.X + 1, p.Y)
-                                  : null);
+        _evaluations[3] = p => ! (_elves.Contains(new Point(p.X + 1, p.Y - 1))
+                                  || _elves.Contains(new Point(p.X + 1, p.Y))
+                                  || _elves.Contains(new Point(p.X + 1, p.Y + 1)))
+                                   ? new Point(p.X + 1, p.Y)
+                                   : null;
     }
 
     private Point GetProposedMove(Point position)
@@ -167,13 +169,22 @@ public abstract class Base : Solution
             return null;
         }
 
-        foreach (var evaluation in _evaluations)
+        var evaluationIndex = _startEvaluation;
+
+        for (var i = 0; i < 4; i++)
         {
-            var newPosition = evaluation(position);
+            var newPosition = _evaluations[evaluationIndex](position);
 
             if (newPosition != null)
             {
                 return newPosition;
+            }
+
+            evaluationIndex++;
+
+            if (evaluationIndex == 4)
+            {
+                evaluationIndex = 0;
             }
         }
 
@@ -182,11 +193,12 @@ public abstract class Base : Solution
 
     private void RotateEvaluations()
     {
-        var first = _evaluations[0];
+        _startEvaluation++;
 
-        _evaluations.RemoveAt(0);
-
-        _evaluations.Add(first);
+        if (_startEvaluation == 4)
+        {
+            _startEvaluation = 0;
+        }
     }
 
     private int CountEmptyTiles()
