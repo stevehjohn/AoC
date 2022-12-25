@@ -10,6 +10,8 @@ public abstract class Base : Solution
 
     private Storm[] _storms;
 
+    private HashSet<int> _hashes;
+
     private int _stormCount;
 
     private int _width;
@@ -41,6 +43,8 @@ public abstract class Base : Solution
 
         _storms = new Storm[_stormCount];
 
+        _hashes = new HashSet<int>(_stormCount);
+
         var i = 0;
 
         for (var y = 0; y < _height; y++)
@@ -68,6 +72,8 @@ public abstract class Base : Solution
 
                 _storms[i] = new Storm(c, x, y);
 
+                _hashes.Add(HashCode.Combine(_storms[i].X, _storms[i].Y));
+
                 i++;
             }
         }
@@ -75,11 +81,11 @@ public abstract class Base : Solution
 
     protected int RunSimulation(int loops = 1)
     {
-        var queue = new PriorityQueue<(Storm[] Storms, Point Position, int Steps), int>();
+        var queue = new PriorityQueue<(Storm[] Storms, HashSet<int> Hashes, Point Position, int Steps), int>();
 
         var visited = new HashSet<int>();
 
-        queue.Enqueue((_storms, _start, 0), 0);
+        queue.Enqueue((_storms, _hashes, _start, 0), 0);
 
         var origin = _start;
 
@@ -92,6 +98,8 @@ public abstract class Base : Solution
         while (loops > 0)
         {
             Storm[] lastStorms = null;
+
+            HashSet<int> lastHashes = null;
 
             while (queue.Count > 0)
             {
@@ -110,13 +118,15 @@ public abstract class Base : Solution
 
                         lastStorms = item.Storms;
 
+                        lastHashes = item.Hashes;
+
                         break;
                     }
                 }
 
-                var nextStorms = MoveStorms(item.Storms);
+                var (nextStorms, nextHashes) = MoveStorms(item.Storms);
 
-                var moves = GetMoves(nextStorms, item.Position, target, origin);
+                var moves = GetMoves(nextStorms, nextHashes, item.Position, target, origin);
 
                 foreach (var move in moves)
                 {
@@ -135,7 +145,7 @@ public abstract class Base : Solution
 
                     if (! visited.Contains(code))
                     {
-                        queue.Enqueue((nextStorms, move, item.Steps + 1), Math.Abs(target.X - move.X) + Math.Abs(target.Y - move.Y) + item.Steps);
+                        queue.Enqueue((nextStorms, nextHashes, move, item.Steps + 1), Math.Abs(target.X - move.X) + Math.Abs(target.Y - move.Y) + item.Steps);
 
                         visited.Add(code);
                     }
@@ -158,7 +168,7 @@ public abstract class Base : Solution
 
                     origin = _end;
 
-                    queue.Enqueue((lastStorms, _end, 0), 0);
+                    queue.Enqueue((lastStorms, lastHashes, _end, 0), 0);
                 }
                 else
                 {
@@ -166,7 +176,7 @@ public abstract class Base : Solution
 
                     origin = _start;
 
-                    queue.Enqueue((lastStorms, _start, 0), 0);
+                    queue.Enqueue((lastStorms, lastHashes, _start, 0), 0);
                 }
 
                 min = int.MaxValue;
@@ -176,8 +186,7 @@ public abstract class Base : Solution
         return Math.Max(min, totalMin);
     }
 
-    // This'll be sloooooooow...
-    private List<Point> GetMoves(Storm[] storms, Point position, Point target, Point origin)
+    private List<Point> GetMoves(Storm[] storms, HashSet<int> hashes, Point position, Point target, Point origin)
     {
         var moves = new List<Point>();
 
@@ -234,25 +243,25 @@ public abstract class Base : Solution
         }
 
         // Right?
-        if (position.X < _width - 2 && ! storms.Any(s => s.X == position.X + 1 && s.Y == position.Y))
+        if (position.X < _width - 2 && ! hashes.Contains(HashCode.Combine(position.X + 1, position.Y)))
         {
             moves.Add(new Point(position.X + 1, position.Y));
         }
 
         // Left?
-        if (position.X > 1 && ! storms.Any(s => s.X == position.X - 1 && s.Y == position.Y))
+        if (position.X > 1 && ! hashes.Contains(HashCode.Combine(position.X - 1, position.Y)))
         {
             moves.Add(new Point(position.X - 1, position.Y));
         }
 
         // Down?
-        if (position.Y < _height - 2 && ! storms.Any(s => s.X == position.X && s.Y == position.Y + 1))
+        if (position.Y < _height - 2 && ! hashes.Contains(HashCode.Combine(position.X, position.Y + 1)))
         {
             moves.Add(new Point(position.X, position.Y + 1));
         }
 
         // Up?
-        if (position.Y > 1 && ! storms.Any(s => s.X == position.X && s.Y == position.Y - 1))
+        if (position.Y > 1 && ! hashes.Contains(HashCode.Combine(position.X, position.Y - 1)))
         {
             moves.Add(new Point(position.X, position.Y - 1));
         }
@@ -260,9 +269,11 @@ public abstract class Base : Solution
         return moves;
     }
 
-    private Storm[] MoveStorms(Storm[] storms)
+    private (Storm[] Storms, HashSet<int> Hashes) MoveStorms(Storm[] storms)
     {
         var nextStorms = new Storm[_stormCount];
+
+        var nextHashes = new HashSet<int>(_stormCount);
 
         for (var i = 0; i < _stormCount; i++)
         {
@@ -322,8 +333,10 @@ public abstract class Base : Solution
 
                     continue;
             }
+
+            nextHashes.Add(HashCode.Combine(nextStorms[i].X, nextStorms[i].Y));
         }
 
-        return nextStorms;
+        return (nextStorms, nextHashes);
     }
 }
