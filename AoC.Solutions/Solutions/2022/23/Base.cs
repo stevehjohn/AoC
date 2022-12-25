@@ -167,19 +167,17 @@ public abstract class Base : Solution
             return null;
         }
 
-        Point newPosition = null;
-
         foreach (var evaluation in _evaluations)
         {
-            newPosition = evaluation(position);
+            var newPosition = evaluation(position);
 
             if (newPosition != null)
             {
-                break;
+                return newPosition;
             }
         }
 
-        return newPosition;
+        return null;
     }
 
     private void RotateEvaluations()
