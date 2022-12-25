@@ -14,7 +14,7 @@ public abstract class Base : Solution
 #if TEST
     private const int FaceSize = 4;
 #else
-    private const int FaceSize = 50;
+    private const int FaceSize = 4;
 #endif
 
     private char[,] _map;
@@ -77,6 +77,8 @@ public abstract class Base : Solution
     {
         var previous = 0;
 
+        Dump();
+
         for (var i = 0; i < _path.Length; i++)
         {
             if (_path[i] > '9' || i == _path.Length - 1)
@@ -84,6 +86,8 @@ public abstract class Base : Solution
                 var length = i == _path.Length - 1 ? int.Parse(_path.Substring(i)) : int.Parse(_path.Substring(previous, i - previous));
 
                 Walk(length);
+
+                Dump();
 
                 if (i == _path.Length - 1)
                 {
@@ -106,6 +110,35 @@ public abstract class Base : Solution
                 previous = i + 1;
             }
         }
+    }
+
+    private void Dump()
+    {
+        for (var y = 0; y < _height; y++)
+        {
+            for (var x = 0; x < _width; x++)
+            {
+                if (x == _position.X && y == _position.Y)
+                {
+                    Console.Write('E');
+
+                    continue;
+                }
+
+                if (_map[x, y] == '\0')
+                {
+                    Console.Write(' ');
+
+                    continue;
+                }
+
+                Console.Write(_map[x, y]);
+            }
+
+            Console.WriteLine();
+        }
+
+        Console.WriteLine();
     }
 
     protected int GetSolution()
@@ -229,7 +262,6 @@ public abstract class Base : Solution
     {
         return (newSegment.X, newSegment.Y, _direction) switch
         {
-            //(, , '') => (GetPositionInNewSegment(, , '', segmentPosition.), ''),
             (0, 0, 'L') => (GetPositionInNewSegment(0, 2, 'L', segmentPosition.Y), 'R'),
             (1, -1, 'U') => (GetPositionInNewSegment(0, 3, 'L', segmentPosition.X, false), 'R'),
             (2, -1, 'U') => (GetPositionInNewSegment(0, 3, 'D', segmentPosition.X), 'U'),
@@ -237,6 +269,13 @@ public abstract class Base : Solution
             (2, 1, 'D') => (GetPositionInNewSegment(1, 1, 'R', segmentPosition.X, false), 'L'),
             (2, 1, 'R') => (GetPositionInNewSegment(2, 0, 'D', segmentPosition.Y, false), 'U'),
             (2, 2, 'R') => (GetPositionInNewSegment(2, 0, 'R', segmentPosition.Y), 'L'),
+            (1, 3, 'D') => (GetPositionInNewSegment(1, 3, 'L', segmentPosition.X, false), 'R'),
+            (1, 3, 'R') => (GetPositionInNewSegment(2, 0, 'R', segmentPosition.Y, false), 'L'),
+            (4, 0, 'U') => (GetPositionInNewSegment(3, 0, 'D', segmentPosition.Y), 'U'),
+            (-1, 3, 'L') => (GetPositionInNewSegment(1, 0, 'U', segmentPosition.Y, false), 'D'),
+            (-1, 2, 'L') => (GetPositionInNewSegment(1, 0, 'L', segmentPosition.Y), 'R'),
+            (0, 1, 'U') => (GetPositionInNewSegment(1, 1, 'L', segmentPosition.X, false), 'R'),
+            (0, 1, 'L') => (GetPositionInNewSegment(0, 2, 'U', segmentPosition.Y, false), 'D'),
             _ => throw new PuzzleException("Cannot 3D teleport.")
         };
     }
