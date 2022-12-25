@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using AoC.Solutions.Common;
+﻿using AoC.Solutions.Common;
 using AoC.Solutions.Exceptions;
 using AoC.Solutions.Infrastructure;
 
@@ -82,6 +81,18 @@ public abstract class Base : Solution
 
     protected int RunSimulation(int loops = 1)
     {
+        var steps = 0;
+
+        for (var i = 0; i < loops; i++)
+        {
+            steps += RunSimulationStep(steps);
+        }
+
+        return steps;
+    }
+
+    private int RunSimulationStep(int startIteration)
+    {
         var queue = new PriorityQueue<(Point Position, int Steps), int>();
 
         var visited = new HashSet<int>();
@@ -92,81 +103,46 @@ public abstract class Base : Solution
 
         var target = _end;
 
-        var totalMin = 0;
-
         var min = int.MaxValue;
 
-        while (loops > 0)
+        while (queue.Count > 0)
         {
-            while (queue.Count > 0)
+            var item = queue.Dequeue();
+
+            if (item.Steps >= min)
             {
-                var item = queue.Dequeue();
-
-                if (item.Steps >= min)
-                {
-                    continue;
-                }
-
-                if (item.Position.X == target.X && item.Position.Y == target.Y)
-                {
-                    min = item.Steps;
-
-                    break;
-                }
-
-                var moves = GenerateMoves(item.Position.X, item.Position.Y, target, origin, totalMin + item.Steps + 1);
-
-                foreach (var move in moves)
-                {
-                    var hash = new HashCode();
-
-                    hash.Add(move.X);
-                    hash.Add(move.Y);
-                    hash.Add(item.Steps);
-
-                    var code = hash.ToHashCode();
-
-                    if (! visited.Contains(code))
-                    {
-                        queue.Enqueue((new Point(move), item.Steps + 1), Math.Abs(target.X - move.X) + Math.Abs(target.Y - move.Y) + item.Steps);
-
-                        visited.Add(code);
-                    }
-                }
+                continue;
             }
 
-            totalMin += min;
-
-            loops--;
-
-            if (loops > 0)
+            if (item.Position.X == target.X && item.Position.Y == target.Y)
             {
-                queue.Clear();
+                min = item.Steps;
 
-                visited.Clear();
+                return min;
+            }
 
-                if (target.Equals(_end))
+            var moves = GenerateMoves(item.Position.X, item.Position.Y, target, origin, startIteration + item.Steps + 1);
+
+            foreach (var move in moves)
+            {
+                var hash = new HashCode();
+
+                hash.Add(move.X);
+                hash.Add(move.Y);
+                hash.Add(item.Steps);
+
+                var code = hash.ToHashCode();
+
+                if (! visited.Contains(code))
                 {
-                    target = _start;
+                    queue.Enqueue((new Point(move), item.Steps + 1), Math.Abs(target.X - move.X) + Math.Abs(target.Y - move.Y) + item.Steps);
 
-                    origin = _end;
-
-                    queue.Enqueue((new Point(_end.X, _end.Y), 0), 0);
+                    visited.Add(code);
                 }
-                else
-                {
-                    target = _end;
-
-                    origin = _start;
-
-                    queue.Enqueue((new Point(_start.X, _start.Y), 0), 0);
-                }
-
-                min = int.MaxValue;
             }
         }
 
-        return Math.Max(min, totalMin);
+        throw new PuzzleException("Solution not found.");
     }
 
     private List<Point> GenerateMoves(int x, int y, Point target, Point origin, int iteration)
@@ -291,7 +267,7 @@ public abstract class Base : Solution
             '^' => (s.Y - 1 + _blizzardHeight - yD) % _blizzardHeight + 1,
             _ => throw new PuzzleException("This exception shouldn't happen.")
         });
-        
+
         return found;
     }
 }
