@@ -27,8 +27,6 @@ public class Part1 : Base
         foreach (var line in Input)
         {
             sum += ParseSnafu(line);
-            
-            Console.WriteLine($"{line, 7} => {ParseSnafu(line), 7} => {MakeSnafu(ParseSnafu(line)), 7}");
         }
 
         return MakeSnafu(sum);
