@@ -13,6 +13,10 @@ public abstract class Base : Solution
 
     private readonly List<Func<Point, Point>> _evaluations = new();
 
+    private readonly HashSet<Point> _visited = new(SetMaxSize);
+
+    private readonly HashSet<Point> _blocked = new(SetMaxSize);
+
     protected void ParseInput()
     {
         for (var y = 0; y < Input.Length; y++)
@@ -59,7 +63,9 @@ public abstract class Base : Solution
 
     protected int RunSimulationStep()
     {
-        var moves = new Dictionary<Point, int>();
+        _visited.Clear();
+
+        _blocked.Clear();
 
         foreach (var elf in _elves)
         {
@@ -70,25 +76,25 @@ public abstract class Base : Solution
                 continue;
             }
 
-            if (moves.ContainsKey(proposedMove))
+            if (_visited.Contains(proposedMove))
             {
-                moves[proposedMove]++;
+                _blocked.Add(proposedMove);
 
                 continue;
             }
 
-            moves.Add(proposedMove, 1);
+            _visited.Add(proposedMove);
         }
 
-        var elves = new HashSet<Point>(SetMaxSize);
-
         var moved = 0;
+
+        var elves = new HashSet<Point>(SetMaxSize);
 
         foreach (var elf in _elves)
         {
             var proposedMove = GetProposedMove(elf);
 
-            if (proposedMove == null || moves[proposedMove] > 1)
+            if (proposedMove == null || _blocked.Contains(proposedMove))
             {
                 elves.Add(elf);
 
