@@ -14,12 +14,10 @@ public abstract class Base : Solution
 #if TEST
     private const int FaceSize = 4;
 #else
-    private const int FaceSize = 4;
+    private const int FaceSize = 50;
 #endif
 
     private char[,] _map;
-
-    private char[,] _walked;
 
     private int _width;
 
@@ -54,8 +52,6 @@ public abstract class Base : Solution
 
         _map = new char[_width, _height];
 
-        _walked = new char[_width, _height];
-
         for (y = 0; y < _height; y++)
         {
             var line = Input[y];
@@ -81,7 +77,7 @@ public abstract class Base : Solution
     {
         var previous = 0;
 
-        Dump();
+        //Dump();
 
         for (var i = 0; i < _path.Length; i++)
         {
@@ -91,7 +87,7 @@ public abstract class Base : Solution
 
                 Walk(length);
 
-                Dump();
+                //Dump();
 
                 if (i == _path.Length - 1)
                 {
@@ -116,42 +112,6 @@ public abstract class Base : Solution
         }
     }
 
-    private void Dump()
-    {
-        for (var y = 0; y < _height; y++)
-        {
-            for (var x = 0; x < _width; x++)
-            {
-                if (x == _position.X && y == _position.Y)
-                {
-                    Console.Write('E');
-
-                    continue;
-                }
-
-                if (_walked[x, y] != '\0')
-                {
-                    Console.Write('+');
-
-                    continue;
-                }
-
-                if (_map[x, y] == '\0')
-                {
-                    Console.Write(' ');
-
-                    continue;
-                }
-
-                Console.Write(_map[x, y]);
-            }
-
-            Console.WriteLine();
-        }
-
-        Console.WriteLine();
-    }
-
     protected int GetSolution()
     {
         var facing = _direction switch
@@ -168,8 +128,6 @@ public abstract class Base : Solution
 
     private void Walk(int length)
     {
-        Console.WriteLine(length);
-
         while (length > 0)
         {
             var (xD, yD) = _direction switch
@@ -196,8 +154,6 @@ public abstract class Base : Solution
 
             if (tile == '.')
             {
-                _walked[position.X, position.Y] = '+';
-
                 _position = position;
 
                 length--;
@@ -240,11 +196,9 @@ public abstract class Base : Solution
 
     private int Teleport3D(Point position, int length)
     {
-        var segmentPosition = new Point(position.X % 4, position.Y % 4);
+        var segmentPosition = new Point(position.X % FaceSize, position.Y % FaceSize);
 
-        var newSegment = new Point(position.X < 0 ? -1 : position.X / 4, position.Y < 0 ? -1 : position.Y / 4);
-
-        // Console.WriteLine($"New: {newSegment}");
+        var newSegment = new Point(position.X < 0 ? -1 : position.X / FaceSize, position.Y < 0 ? -1 : position.Y / FaceSize);
 
         (position, var newDirection) = Wrap3D(newSegment, segmentPosition);
 
@@ -254,8 +208,6 @@ public abstract class Base : Solution
         }
 
         _position = position;
-        
-        _walked[position.X, position.Y] = '+';
 
         _direction = newDirection;
 
