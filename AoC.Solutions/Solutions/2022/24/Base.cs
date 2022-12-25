@@ -8,9 +8,9 @@ public abstract class Base : Solution
 {
     public override string Description => "Blizzard basin";
 
-    private Storm[] _storms;
+    private Storm[] _initialStorms;
 
-    private HashSet<int> _hashes;
+    private HashSet<int> _initialHashes;
 
     private int _stormCount;
 
@@ -41,9 +41,9 @@ public abstract class Base : Solution
             }
         }
 
-        _storms = new Storm[_stormCount];
+        _initialStorms = new Storm[_stormCount];
 
-        _hashes = new HashSet<int>(_stormCount);
+        _initialHashes = new HashSet<int>(_stormCount);
 
         var i = 0;
 
@@ -70,9 +70,9 @@ public abstract class Base : Solution
                     continue;
                 }
 
-                _storms[i] = new Storm(c, x, y);
+                _initialStorms[i] = new Storm(c, x, y);
 
-                _hashes.Add(HashCode.Combine(_storms[i].X, _storms[i].Y));
+                _initialHashes.Add(HashCode.Combine(_initialStorms[i].X, _initialStorms[i].Y));
 
                 i++;
             }
@@ -85,7 +85,7 @@ public abstract class Base : Solution
 
         var visited = new HashSet<int>();
 
-        queue.Enqueue((_storms, _hashes, _start, 0), 0);
+        queue.Enqueue((_initialStorms, _initialHashes, _start, 0), 0);
 
         var origin = _start;
 
