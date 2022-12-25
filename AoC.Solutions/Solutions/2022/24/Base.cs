@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Common;
+﻿using System.Runtime.CompilerServices;
+using AoC.Solutions.Common;
 using AoC.Solutions.Exceptions;
 using AoC.Solutions.Infrastructure;
 
@@ -233,6 +234,7 @@ public abstract class Base : Solution
         return moves;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
     private bool IsOccupied(Point position, int iteration)
     {
         if (position.X < 1 || position.Y < 1 || position.X >= _width || position.Y >= _height)
