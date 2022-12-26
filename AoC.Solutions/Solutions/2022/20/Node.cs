@@ -1,12 +1,15 @@
 ﻿namespace AoC.Solutions.Solutions._2022._20;
 
-public class Node
+public class Node<T>
 {
-    public Node Previous { get; set; }
+    public T Data { get; set; }
 
-    public Node Next { get; set; }
+    public Node<T> Previous { get; set; }
 
-    public long Value { get; set; }
+    public Node<T> Next { get; set; }
 
-    public int InitialIndex { get; set; }
+    public Node(T value)
+    {
+        Data = value;
+    }
 }
