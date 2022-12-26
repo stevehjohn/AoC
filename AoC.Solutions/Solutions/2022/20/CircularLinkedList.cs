@@ -2,17 +2,25 @@
 
 namespace AoC.Solutions.Solutions._2022._20;
 
-public class CircularLinkedList<T>
+public class CircularLinkedList
 {
-    private Node<T> _start;
+    private Node _start;
 
-    private Node<T> _end;
+    private Node _end;
 
     private int _length;
 
-    public void Add(T item)
+    private readonly Node[] _nodesByInitialIndex = new Node[5_000];
+
+    public void Add(long value, int initialIndex)
     {
-        var newItem = new Node<T>(item);
+        var newItem = new Node 
+                      { 
+                          Value = value,
+                          InitialIndex = initialIndex
+                      };
+
+        _nodesByInitialIndex[initialIndex] = newItem;
 
         if (_start == null)
         {
@@ -42,13 +50,18 @@ public class CircularLinkedList<T>
         _length++;
     }
 
-    public Node<T> Get(Func<T, bool> function)
+    public Node GetByInitialIndex(int initialIndex)
+    {
+        return _nodesByInitialIndex[initialIndex];
+    }
+
+    public Node GetByValue(long value)
     {
         var look = _start;
 
         do
         {
-            if (function(look.Data))
+            if (look.Value == value)
             {
                 return look;
             }
@@ -60,7 +73,7 @@ public class CircularLinkedList<T>
         throw new PuzzleException("Not found in list.");
     }
 
-    public void Move(Node<T> node, long places)
+    public void Move(Node node, long places)
     {
         places %= _length;
 
@@ -70,13 +83,13 @@ public class CircularLinkedList<T>
         {
             if (delta < 0)
             {
-                (node.Previous.Data, node.Data) = (node.Data, node.Previous.Data);
+                (node.Previous.Value, node.Value) = (node.Value, node.Previous.Value);
 
                 node = node.Previous;
             }
             else
             {
-                (node.Data, node.Next.Data) = (node.Next.Data, node.Data);
+                (node.Value, node.Next.Value) = (node.Next.Value, node.Value);
 
                 node = node.Next;
             }
