@@ -1,6 +1,5 @@
 ﻿using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
-using Microsoft.Diagnostics.Tracing.Parsers.Clr;
 
 namespace AoC.Solutions.Solutions._2022._23;
 
@@ -13,12 +12,6 @@ public abstract class Base : Solution
     private HashSet<Point> _elves = new(SetMaxSize);
 
     private readonly Func<Point, Point>[] _evaluations = new Func<Point, Point>[4];
-
-    private readonly HashSet<Point> _visited = new(SetMaxSize);
-
-    private readonly HashSet<Point> _blocked = new(SetMaxSize);
-
-    private readonly Dictionary<Point, Point> _proposedMoves = new();
 
     private int _startEvaluation;
 
@@ -68,12 +61,6 @@ public abstract class Base : Solution
 
     protected int RunSimulationStep()
     {
-        _visited.Clear();
-
-        _blocked.Clear();
-
-        _proposedMoves.Clear();
-
         var elves = new HashSet<Point>(SetMaxSize);
 
         var moved = 0;
@@ -81,8 +68,6 @@ public abstract class Base : Solution
         foreach (var elf in _elves)
         {
             var proposedMove = GetProposedMove(elf);
-
-            _proposedMoves.Add(elf, proposedMove);
 
             if (proposedMove == null)
             {
@@ -107,37 +92,7 @@ public abstract class Base : Solution
             elves.Add(elf + proposedMove);
 
             moved++;
-
-            //if (_visited.Contains(proposedMove))
-            //{
-            //    _blocked.Add(proposedMove);
-
-            //    continue;
-            //}
-
-            //_visited.Add(proposedMove);
         }
-
-        //foreach (var elf in _elves)
-        //{
-        //    var proposedMove = _proposedMoves[elf];
-
-        //    if (proposedMove == null)
-        //    {
-        //        continue;
-        //    }
-
-        //    if (_blocked.Contains(proposedMove))
-        //    {
-        //        elves.Add(elf);
-
-        //        continue;
-        //    }
-
-        //    elves.Add(proposedMove);
-
-        //    moved++;
-        //}
 
         _elves = elves;
 
