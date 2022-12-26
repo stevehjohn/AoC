@@ -191,12 +191,4 @@ public abstract class Base : Solution
             _visualiser.PuzzleStateChanged(new PuzzleState(_map, history));
         }
     }
-
-    public void EndVisualisation()
-    {
-        if (_visualiser != null)
-        {
-            _visualiser.PuzzleComplete();
-        }
-    }
 }
