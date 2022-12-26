@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Grove positioning system";
 
-    private readonly CircularLinkedList<(long Value, int InitialIndex)> _numbers = new();
+    private readonly CircularLinkedList _numbers = new();
 
     private int _length;
 
@@ -16,7 +16,7 @@ public abstract class Base : Solution
 
         for (var i = 0; i < _length; i++)
         {
-            _numbers.Add((long.Parse(Input[i]) * key, i));
+            _numbers.Add(long.Parse(Input[i]) * key, i);
         }
     }
 
@@ -26,18 +26,16 @@ public abstract class Base : Solution
         {
             for (var i = 0; i < _length; i++)
             {
-                var iCaptured = i;
+                var source = _numbers.GetByInitialIndex(i);
 
-                var source = _numbers.Get(n => n.InitialIndex == iCaptured);
-
-                _numbers.Move(source, source.Data.Value);
+                _numbers.Move(source, source.Value);
             }
         }
     }
 
     protected long Solve()
     {
-        var start = _numbers.Get(n => n.Value == 0);
+        var start = _numbers.GetByValue(0);
 
         var sum = 0L;
 
@@ -47,7 +45,7 @@ public abstract class Base : Solution
 
             if (i % 1000 == 999)
             {
-                sum += start.Data.Value;
+                sum += start.Value;
             }
         }
         
