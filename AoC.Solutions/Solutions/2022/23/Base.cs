@@ -17,6 +17,8 @@ public abstract class Base : Solution
 
     private readonly HashSet<Point> _blocked = new(SetMaxSize);
 
+    private readonly Dictionary<Point, Point> _proposedMoves = new();
+
     private int _startEvaluation;
 
     protected void ParseInput()
@@ -62,8 +64,6 @@ public abstract class Base : Solution
 
         return CountEmptyTiles();
     }
-
-    private readonly Dictionary<Point, Point> _proposedMoves = new();
 
     protected int RunSimulationStep()
     {
