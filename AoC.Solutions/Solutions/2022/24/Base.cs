@@ -254,9 +254,9 @@ public abstract class Base : Solution
     {
         var key = HashCode.Combine(position, iteration);
 
-        if (_occupiedCache.ContainsKey(key))
+        if (_occupiedCache.TryGetValue(key, out var occupied))
         {
-            return _occupiedCache[key];
+            return occupied;
         }
 
         if (position.X < 1 || position.Y < 1 || position.X >= _width || position.Y >= _height)
