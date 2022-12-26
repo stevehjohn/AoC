@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Color = Microsoft.Xna.Framework.Color;
 using FillMode = Microsoft.Xna.Framework.Graphics.FillMode;
 using PrimitiveType = Microsoft.Xna.Framework.Graphics.PrimitiveType;
+using VertexPositionColorNormal = AoC.Visualisations.Infrastructure.VertexPositionColorNormal;
 
 namespace AoC.Visualisations.Visualisations._2022._12;
 
