@@ -28,6 +28,8 @@ public abstract class Base : Solution
 
     private Point _end;
 
+    private readonly Dictionary<int, bool> _occupiedCache = new(600_000);
+
     protected void ParseInput()
     {
         _width = Input[0].Length;
@@ -250,8 +252,17 @@ public abstract class Base : Solution
 
     private bool IsOccupied(Point position, int iteration)
     {
+        var key = HashCode.Combine(position, iteration);
+
+        if (_occupiedCache.ContainsKey(key))
+        {
+            return _occupiedCache[key];
+        }
+
         if (position.X < 1 || position.Y < 1 || position.X >= _width || position.Y >= _height)
         {
+            _occupiedCache.Add(key, false);
+
             return false;
         }
 
@@ -265,6 +276,8 @@ public abstract class Base : Solution
 
         if (found)
         {
+            _occupiedCache.Add(key, true);
+
             return true;
         }
 
@@ -274,6 +287,8 @@ public abstract class Base : Solution
 
         if (found)
         {
+            _occupiedCache.Add(key, true);
+
             return true;
         }
 
@@ -283,11 +298,17 @@ public abstract class Base : Solution
 
         if (found)
         {
+            _occupiedCache.Add(key, true);
+
             return true;
         }
 
         target = (position.Y - 1 + yD) % _blizzardHeight + 1;
 
-        return _upStorms.ContainsKey(position.X) && _upStorms[position.X].Any(s => target == s.Y);
+        found = _upStorms.ContainsKey(position.X) && _upStorms[position.X].Any(s => target == s.Y);
+        
+        _occupiedCache.Add(key, found);
+
+        return found;
     }
 }
