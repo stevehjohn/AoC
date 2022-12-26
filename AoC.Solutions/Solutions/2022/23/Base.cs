@@ -100,34 +100,6 @@ public abstract class Base : Solution
 
         return moved;
     }
-    
-    private void Dump()
-    {
-        var minX = _elves.Min(e => e.X);
-        var maxX = _elves.Max(e => e.X);
-
-        var minY = _elves.Min(e => e.Y);
-        var maxY = _elves.Max(e => e.Y);
-
-        for (var y = minY; y <= maxY; y++)
-        {
-            for (var x = minX; x <= maxX; x++)
-            {
-                if (_elves.Contains(new Point(x, y)))
-                {
-                    Console.Write('#');
-
-                    continue;
-                }
-
-                Console.Write('.');
-            }
-
-            Console.WriteLine();
-        }
-
-        Console.WriteLine();
-    }
 
     private void InitialiseEvaluations()
     {
