@@ -46,16 +46,12 @@ public abstract class Base : Solution
 
         var rounds = 1;
 
-        //Dump();
-
         while (i > 0)
         {
             if (RunSimulationStep() == 0)
             {
-                //break;
+                break;
             }
-
-            //Dump();
 
             i--;
 
@@ -80,6 +76,8 @@ public abstract class Base : Solution
 
         var elves = new HashSet<Point>(SetMaxSize);
 
+        var moved = 0;
+
         foreach (var elf in _elves)
         {
             var proposedMove = GetProposedMove(elf);
@@ -101,10 +99,14 @@ public abstract class Base : Solution
 
                 elves.Add(elf + proposedMove + proposedMove);
 
+                moved--;
+
                 continue;
             }
 
             elves.Add(elf + proposedMove);
+
+            moved++;
 
             //if (_visited.Contains(proposedMove))
             //{
@@ -115,8 +117,6 @@ public abstract class Base : Solution
 
             //_visited.Add(proposedMove);
         }
-
-        var moved = 0;
 
         //foreach (var elf in _elves)
         //{
