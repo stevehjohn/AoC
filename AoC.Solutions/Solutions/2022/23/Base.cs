@@ -7,13 +7,15 @@ public abstract class Base : Solution
 {
     public override string Description => "Unstable diffusion";
 
-    private const int SetMaxSize = 2_500;
+    private const int SetMaxSize = 2_400;
 
     private HashSet<Point> _elves = new(SetMaxSize);
 
     private readonly Func<Point, Point>[] _evaluations = new Func<Point, Point>[4];
 
     private int _startEvaluation;
+
+    private readonly Point[] _directions = { new(0, -1), new(1, 0), new(0, 1), new(-1, 0) };
 
     protected void ParseInput()
     {
@@ -106,25 +108,25 @@ public abstract class Base : Solution
         _evaluations[0] = p => ! (_elves.Contains(new Point(p.X - 1, p.Y - 1))
                                   || _elves.Contains(new Point(p.X, p.Y - 1))
                                   || _elves.Contains(new Point(p.X + 1, p.Y - 1)))
-                                   ? new Point(0, - 1)
+                                   ? _directions[0]
                                    : null;
 
         _evaluations[1] = p => ! (_elves.Contains(new Point(p.X - 1, p.Y + 1))
                                   || _elves.Contains(new Point(p.X, p.Y + 1))
                                   || _elves.Contains(new Point(p.X + 1, p.Y + 1)))
-                                   ? new Point(0, 1)
+                                   ? _directions[2]
                                    : null;
 
         _evaluations[2] = p => ! (_elves.Contains(new Point(p.X - 1, p.Y - 1))
                                   || _elves.Contains(new Point(p.X - 1, p.Y))
                                   || _elves.Contains(new Point(p.X - 1, p.Y + 1)))
-                                   ? new Point(- 1, 0)
+                                   ? _directions[3]
                                    : null;
 
         _evaluations[3] = p => ! (_elves.Contains(new Point(p.X + 1, p.Y - 1))
                                   || _elves.Contains(new Point(p.X + 1, p.Y))
                                   || _elves.Contains(new Point(p.X + 1, p.Y + 1)))
-                                   ? new Point(1, 0)
+                                   ? _directions[1]
                                    : null;
     }
 
