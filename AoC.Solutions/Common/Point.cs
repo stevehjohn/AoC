@@ -53,6 +53,11 @@ public class Point
         return new Point(left.X + right.X, left.Y + right.Y, left.Z + right.Z);
     }
 
+    public static Point operator -(Point left, Point right)
+    {
+        return new Point(left.X - right.X, left.Y - right.Y, left.Z - right.Z);
+    }
+
     public override string ToString()
     {
         return $"{X,5},{Y,5},{Z,5}";

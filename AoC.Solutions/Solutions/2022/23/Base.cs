@@ -1,5 +1,6 @@
 ﻿using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
+using Microsoft.Diagnostics.Tracing.Parsers.Clr;
 
 namespace AoC.Solutions.Solutions._2022._23;
 
@@ -45,12 +46,16 @@ public abstract class Base : Solution
 
         var rounds = 1;
 
+        //Dump();
+
         while (i > 0)
         {
             if (RunSimulationStep() == 0)
             {
-                break;
+                //break;
             }
+
+            //Dump();
 
             i--;
 
@@ -88,38 +93,51 @@ public abstract class Base : Solution
                 continue;
             }
 
-            if (_visited.Contains(proposedMove))
+            if (elves.Contains(elf + proposedMove))
             {
-                _blocked.Add(proposedMove);
+                elves.Add(elf);
+
+                elves.Remove(elf + proposedMove);
+
+                elves.Add(elf + proposedMove + proposedMove);
 
                 continue;
             }
 
-            _visited.Add(proposedMove);
+            elves.Add(elf + proposedMove);
+
+            //if (_visited.Contains(proposedMove))
+            //{
+            //    _blocked.Add(proposedMove);
+
+            //    continue;
+            //}
+
+            //_visited.Add(proposedMove);
         }
 
         var moved = 0;
 
-        foreach (var elf in _elves)
-        {
-            var proposedMove = _proposedMoves[elf];
+        //foreach (var elf in _elves)
+        //{
+        //    var proposedMove = _proposedMoves[elf];
 
-            if (proposedMove == null)
-            {
-                continue;
-            }
+        //    if (proposedMove == null)
+        //    {
+        //        continue;
+        //    }
 
-            if (_blocked.Contains(proposedMove))
-            {
-                elves.Add(elf);
+        //    if (_blocked.Contains(proposedMove))
+        //    {
+        //        elves.Add(elf);
 
-                continue;
-            }
+        //        continue;
+        //    }
 
-            elves.Add(proposedMove);
+        //    elves.Add(proposedMove);
 
-            moved++;
-        }
+        //    moved++;
+        //}
 
         _elves = elves;
 
@@ -127,31 +145,59 @@ public abstract class Base : Solution
 
         return moved;
     }
+    
+    private void Dump()
+    {
+        var minX = _elves.Min(e => e.X);
+        var maxX = _elves.Max(e => e.X);
+
+        var minY = _elves.Min(e => e.Y);
+        var maxY = _elves.Max(e => e.Y);
+
+        for (var y = minY; y <= maxY; y++)
+        {
+            for (var x = minX; x <= maxX; x++)
+            {
+                if (_elves.Contains(new Point(x, y)))
+                {
+                    Console.Write('#');
+
+                    continue;
+                }
+
+                Console.Write('.');
+            }
+
+            Console.WriteLine();
+        }
+
+        Console.WriteLine();
+    }
 
     private void InitialiseEvaluations()
     {
         _evaluations[0] = p => ! (_elves.Contains(new Point(p.X - 1, p.Y - 1))
                                   || _elves.Contains(new Point(p.X, p.Y - 1))
                                   || _elves.Contains(new Point(p.X + 1, p.Y - 1)))
-                                   ? new Point(p.X, p.Y - 1)
+                                   ? new Point(0, - 1)
                                    : null;
 
         _evaluations[1] = p => ! (_elves.Contains(new Point(p.X - 1, p.Y + 1))
                                   || _elves.Contains(new Point(p.X, p.Y + 1))
                                   || _elves.Contains(new Point(p.X + 1, p.Y + 1)))
-                                   ? new Point(p.X, p.Y + 1)
+                                   ? new Point(0, 1)
                                    : null;
 
         _evaluations[2] = p => ! (_elves.Contains(new Point(p.X - 1, p.Y - 1))
                                   || _elves.Contains(new Point(p.X - 1, p.Y))
                                   || _elves.Contains(new Point(p.X - 1, p.Y + 1)))
-                                   ? new Point(p.X - 1, p.Y)
+                                   ? new Point(- 1, 0)
                                    : null;
 
         _evaluations[3] = p => ! (_elves.Contains(new Point(p.X + 1, p.Y - 1))
                                   || _elves.Contains(new Point(p.X + 1, p.Y))
                                   || _elves.Contains(new Point(p.X + 1, p.Y + 1)))
-                                   ? new Point(p.X + 1, p.Y)
+                                   ? new Point(1, 0)
                                    : null;
     }
 
