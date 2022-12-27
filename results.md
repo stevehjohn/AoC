@@ -16,7 +16,6 @@
 - 32 GB RAM
 - Apple SSD
 
-
 ## Results
 
 ```
