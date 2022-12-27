@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2022._20;
 
