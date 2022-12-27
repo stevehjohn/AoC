@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using System.Runtime.CompilerServices;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2022._20;
 
@@ -6,17 +7,21 @@ public abstract class Base : Solution
 {
     public override string Description => "Grove positioning system";
 
-    private readonly CircularLinkedList<(long Value, int InitialIndex)> _numbers = new();
+    private readonly List<(long Number, int InitialPosition)> _initialNumbers = new();
 
-    private int _length;
+    private readonly List<(long Number, int InitialPosition)> _numbers = new();
 
     protected void ParseInput(long key = 1)
     {
-        _length = Input.Length;
+        var length = Input.Length;
 
-        for (var i = 0; i < _length; i++)
+        for (var i = 0; i < length; i++)
         {
-            _numbers.Add((long.Parse(Input[i]) * key, i));
+            var number = long.Parse(Input[i]) * key;
+
+            _initialNumbers.Add((number, i));
+
+            _numbers.Add((number, i));
         }
     }
 
@@ -24,33 +29,43 @@ public abstract class Base : Solution
     {
         for (var t = 0; t < times; t++)
         {
-            for (var i = 0; i < _length; i++)
+            for (var i = 0; i < _numbers.Count; i++)
             {
-                var iCaptured = i;
-
-                var source = _numbers.Get(n => n.InitialIndex == iCaptured);
-
-                _numbers.Move(source, source.Data.Value);
+                DoSwap(i);
             }
         }
     }
 
     protected long Solve()
     {
-        var start = _numbers.Get(n => n.Value == 0);
+        var startIndex = _numbers.IndexOf(_numbers.First(n => n.Number == 0));
 
         var sum = 0L;
 
-        for (var i = 0; i < 3_000; i++)
-        {
-            start = start.Next;
+        sum += _numbers[(1_000 + startIndex) % _numbers.Count].Number;
 
-            if (i % 1000 == 999)
-            {
-                sum += start.Data.Value;
-            }
-        }
-        
+        sum += _numbers[(2_000 + startIndex) % _numbers.Count].Number;
+
+        sum += _numbers[(3_000 + startIndex) % _numbers.Count].Number;
+
         return sum;
+    }
+
+    private void DoSwap(int index)
+    {
+        var number = _initialNumbers[index];
+
+        var oldIndex = _numbers.IndexOf(number);
+
+        var newIndex = (int) ((oldIndex + number.Number) % (_numbers.Count - 1));
+
+        if (newIndex <= 0 && oldIndex + number.Number != 0)
+        {
+            newIndex = _numbers.Count - 1 + newIndex;
+        }
+
+        _numbers.RemoveAt(oldIndex);
+
+        _numbers.Insert(newIndex, number);
     }
 }
