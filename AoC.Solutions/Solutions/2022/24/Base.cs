@@ -1,6 +1,7 @@
 ﻿using AoC.Solutions.Common;
 using AoC.Solutions.Exceptions;
 using AoC.Solutions.Infrastructure;
+using System;
 
 namespace AoC.Solutions.Solutions._2022._24;
 
@@ -8,13 +9,13 @@ public abstract class Base : Solution
 {
     public override string Description => "Blizzard basin";
 
-    private readonly Dictionary<int, HashSet<int>> _leftStorms = new();
+    private readonly HashSet<int> _leftStorms = new();
 
-    private readonly Dictionary<int, HashSet<int>> _downStorms = new();
+    private readonly HashSet<int> _downStorms = new();
 
-    private readonly Dictionary<int, HashSet<int>> _rightStorms = new();
+    private readonly HashSet<int> _rightStorms = new();
 
-    private readonly Dictionary<int, HashSet<int>> _upStorms = new();
+    private readonly HashSet<int> _upStorms = new();
 
     private int _width;
 
@@ -44,19 +45,8 @@ public abstract class Base : Solution
         {
             var line = Input[y];
 
-            _leftStorms.Add(y, new HashSet<int>());
-
-            _rightStorms.Add(y, new HashSet<int>());
-
             for (var x = 0; x < _width; x++)
             {
-                if (! _downStorms.ContainsKey(x))
-                {
-                    _downStorms.Add(x, new HashSet<int>());
-
-                    _upStorms.Add(x, new HashSet<int>());
-                }
-
                 var c = line[x];
 
                 if (y == 0 && c == '.')
@@ -76,26 +66,28 @@ public abstract class Base : Solution
 
                 if (c == '<')
                 {
-                    _leftStorms[y].Add(x);
+                    _leftStorms.Add(HashCode.Combine(y, x));
 
                     continue;
                 }
 
                 if (c == '>')
                 {
-                    _rightStorms[y].Add(x);
+                    _rightStorms.Add(HashCode.Combine(y, x));
 
                     continue;
                 }
 
                 if (c == 'v')
                 {
-                    _downStorms[x].Add(y);
+                    _downStorms.Add(HashCode.Combine(x, y));
+
+                    continue;
                 }
 
                 if (c == '^')
                 {
-                    _upStorms[x].Add(y);
+                    _upStorms.Add(HashCode.Combine(x, y));
                 }
             }
         }
@@ -263,7 +255,7 @@ public abstract class Base : Solution
 
         var target = (position.X - 1 + _blizzardWidth - xD) % _blizzardWidth + 1;
 
-        var found = _rightStorms[position.Y].Contains(target);
+        var found = _rightStorms.Contains(HashCode.Combine(position.Y, target));
 
         if (found)
         {
@@ -274,7 +266,7 @@ public abstract class Base : Solution
 
         target = (position.X - 1 + xD) % _blizzardWidth + 1;
 
-        found = _leftStorms[position.Y].Contains(target);
+        found = _leftStorms.Contains(HashCode.Combine(position.Y, target));
 
         if (found)
         {
@@ -285,7 +277,7 @@ public abstract class Base : Solution
 
         target = (position.Y - 1 + _blizzardHeight - yD) % _blizzardHeight + 1;
 
-        found = _downStorms[position.X].Contains(target);
+        found = _downStorms.Contains(HashCode.Combine(position.X, target));
 
         if (found)
         {
@@ -296,7 +288,7 @@ public abstract class Base : Solution
 
         target = (position.Y - 1 + yD) % _blizzardHeight + 1;
 
-        found = _upStorms[position.X].Contains(target);
+        found = _upStorms.Contains(HashCode.Combine(position.X, target));
         
         _occupiedCache.Add(key, found);
 
