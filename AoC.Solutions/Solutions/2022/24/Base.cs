@@ -8,13 +8,13 @@ public abstract class Base : Solution
 {
     public override string Description => "Blizzard basin";
 
-    private readonly Dictionary<int, List<Storm>> _leftStorms = new();
+    private readonly Dictionary<int, HashSet<int>> _leftStorms = new();
 
-    private readonly Dictionary<int, List<Storm>> _downStorms = new();
+    private readonly Dictionary<int, HashSet<int>> _downStorms = new();
 
-    private readonly Dictionary<int, List<Storm>> _rightStorms = new();
+    private readonly Dictionary<int, HashSet<int>> _rightStorms = new();
 
-    private readonly Dictionary<int, List<Storm>> _upStorms = new();
+    private readonly Dictionary<int, HashSet<int>> _upStorms = new();
 
     private int _width;
 
@@ -44,8 +44,19 @@ public abstract class Base : Solution
         {
             var line = Input[y];
 
+            _leftStorms.Add(y, new HashSet<int>());
+
+            _rightStorms.Add(y, new HashSet<int>());
+
             for (var x = 0; x < _width; x++)
             {
+                if (! _downStorms.ContainsKey(x))
+                {
+                    _downStorms.Add(x, new HashSet<int>());
+
+                    _upStorms.Add(x, new HashSet<int>());
+                }
+
                 var c = line[x];
 
                 if (y == 0 && c == '.')
@@ -65,46 +76,26 @@ public abstract class Base : Solution
 
                 if (c == '<')
                 {
-                    if (! _leftStorms.ContainsKey(y))
-                    {
-                        _leftStorms.Add(y, new List<Storm>());
-                    }
-
-                    _leftStorms[y].Add(new Storm(x, y));
+                    _leftStorms[y].Add(y);
 
                     continue;
                 }
 
                 if (c == '>')
                 {
-                    if (! _rightStorms.ContainsKey(y))
-                    {
-                        _rightStorms.Add(y, new List<Storm>());
-                    }
-
-                    _rightStorms[y].Add(new Storm(x, y));
+                    _rightStorms[y].Add(y);
 
                     continue;
                 }
 
                 if (c == 'v')
                 {
-                    if (! _downStorms.ContainsKey(x))
-                    {
-                        _downStorms.Add(x, new List<Storm>());
-                    }
-
-                    _downStorms[x].Add(new Storm(x, y));
+                    _downStorms[x].Add(x);
                 }
 
                 if (c == '^')
                 {
-                    if (! _upStorms.ContainsKey(x))
-                    {
-                        _upStorms.Add(x, new List<Storm>());
-                    }
-
-                    _upStorms[x].Add(new Storm(x, y));
+                    _upStorms[x].Add(x);
                 }
             }
         }
@@ -272,7 +263,7 @@ public abstract class Base : Solution
 
         var target = (position.X - 1 + _blizzardWidth - xD) % _blizzardWidth + 1;
 
-        var found = _rightStorms.ContainsKey(position.Y) && _rightStorms[position.Y].Any(s => target == s.X);
+        var found = _rightStorms[position.Y].Contains(target);
 
         if (found)
         {
@@ -283,7 +274,7 @@ public abstract class Base : Solution
 
         target = (position.X - 1 + xD) % _blizzardWidth + 1;
 
-        found = _leftStorms.ContainsKey(position.Y) && _leftStorms[position.Y].Any(s => target == s.X);
+        found = _leftStorms[position.Y].Contains(target);
 
         if (found)
         {
@@ -294,7 +285,7 @@ public abstract class Base : Solution
 
         target = (position.Y - 1 + _blizzardHeight - yD) % _blizzardHeight + 1;
 
-        found = _downStorms.ContainsKey(position.X) && _downStorms[position.X].Any(s => target == s.Y);
+        found = _downStorms[position.X].Contains(target);
 
         if (found)
         {
@@ -305,7 +296,7 @@ public abstract class Base : Solution
 
         target = (position.Y - 1 + yD) % _blizzardHeight + 1;
 
-        found = _upStorms.ContainsKey(position.X) && _upStorms[position.X].Any(s => target == s.Y);
+        found = _upStorms[position.X].Contains(target);
         
         _occupiedCache.Add(key, found);
 
