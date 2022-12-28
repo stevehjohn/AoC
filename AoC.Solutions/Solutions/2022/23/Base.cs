@@ -180,11 +180,8 @@ public abstract class Base : Solution
         var min = _elves.Min();
         var max = _elves.Max();
 
-        //var minX = (int) Math.Round((float) min % YOffset);
-        //var maxX = (int) Math.Round((float) max % YOffset);
-
-        var minX = -4;
-        var maxX = 73;
+        var minX = (int) Math.Round((float) min % YOffset);
+        var maxX = (int) Math.Round((float) max % YOffset);
 
         var minY = (int) Math.Round((float) min / YOffset);
         var maxY = (int) Math.Round((float) max / YOffset);
