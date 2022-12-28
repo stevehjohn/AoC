@@ -70,7 +70,7 @@ public abstract class Base : Solution
                         _leftStorms.Add(y, new List<Storm>());
                     }
 
-                    _leftStorms[y].Add(new Storm(c, x, y));
+                    _leftStorms[y].Add(new Storm(x, y));
 
                     continue;
                 }
@@ -82,7 +82,7 @@ public abstract class Base : Solution
                         _rightStorms.Add(y, new List<Storm>());
                     }
 
-                    _rightStorms[y].Add(new Storm(c, x, y));
+                    _rightStorms[y].Add(new Storm(x, y));
 
                     continue;
                 }
@@ -94,7 +94,7 @@ public abstract class Base : Solution
                         _downStorms.Add(x, new List<Storm>());
                     }
 
-                    _downStorms[x].Add(new Storm(c, x, y));
+                    _downStorms[x].Add(new Storm(x, y));
                 }
 
                 if (c == '^')
@@ -104,7 +104,7 @@ public abstract class Base : Solution
                         _upStorms.Add(x, new List<Storm>());
                     }
 
-                    _upStorms[x].Add(new Storm(c, x, y));
+                    _upStorms[x].Add(new Storm(x, y));
                 }
             }
         }

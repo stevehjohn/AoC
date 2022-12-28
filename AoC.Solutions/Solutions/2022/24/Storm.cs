@@ -2,16 +2,12 @@
 
 public readonly struct Storm
 {
-    public char Direction { get; }
-
     public int X { get; }
 
     public int Y { get; }
 
-    public Storm(char direction, int x, int y)
+    public Storm(int x, int y)
     {
-        Direction = direction;
-
         X = x;
             
         Y = y;
@@ -19,6 +15,6 @@ public readonly struct Storm
 
     public override string ToString()
     {
-        return $"{Direction} ({X}, {Y})";
+        return $"({X}, {Y})";
     }
 }
