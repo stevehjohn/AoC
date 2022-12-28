@@ -296,7 +296,7 @@ public abstract class Base : Solution
 
         target = (position.Y - 1 + yD) % _blizzardHeight + 1;
 
-        found = _upStorms.ContainsKey(position.X) && _upStorms[position.X].Contains(target);
+        found = _upStorms[position.X].Contains(target);
         
         _occupiedCache.Add(key, found);
 
