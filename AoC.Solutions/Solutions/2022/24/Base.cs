@@ -1,7 +1,6 @@
 ﻿using AoC.Solutions.Common;
 using AoC.Solutions.Exceptions;
 using AoC.Solutions.Infrastructure;
-using System;
 
 namespace AoC.Solutions.Solutions._2022._24;
 
@@ -28,8 +27,6 @@ public abstract class Base : Solution
     private Point _start;
 
     private Point _end;
-
-    private readonly Dictionary<int, bool> _occupiedCache = new(600_000);
 
     protected void ParseInput()
     {
@@ -235,23 +232,12 @@ public abstract class Base : Solution
 
     private bool IsOccupied(Point position, int iteration)
     {
-        var key = HashCode.Combine(position, iteration);
-
-        if (_occupiedCache.TryGetValue(key, out var occupied))
-        {
-            return occupied;
-        }
-
         if (position.X < 1 || position.Y < 1 || position.X >= _width || position.Y >= _height)
         {
-            _occupiedCache.Add(key, false);
-
             return false;
         }
 
         var xD = iteration % _blizzardWidth;
-
-        var yD = iteration % _blizzardHeight;
 
         var target = (position.X - 1 + _blizzardWidth - xD) % _blizzardWidth + 1;
 
@@ -259,8 +245,6 @@ public abstract class Base : Solution
 
         if (found)
         {
-            _occupiedCache.Add(key, true);
-
             return true;
         }
 
@@ -270,10 +254,10 @@ public abstract class Base : Solution
 
         if (found)
         {
-            _occupiedCache.Add(key, true);
-
             return true;
         }
+
+        var yD = iteration % _blizzardHeight;
 
         target = (position.Y - 1 + _blizzardHeight - yD) % _blizzardHeight + 1;
 
@@ -281,8 +265,6 @@ public abstract class Base : Solution
 
         if (found)
         {
-            _occupiedCache.Add(key, true);
-
             return true;
         }
 
@@ -290,8 +272,6 @@ public abstract class Base : Solution
 
         found = _upStorms.Contains(HashCode.Combine(position.X, target));
         
-        _occupiedCache.Add(key, found);
-
         return found;
     }
 }
