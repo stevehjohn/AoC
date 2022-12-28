@@ -1,5 +1,4 @@
-﻿using AoC.Solutions.Common;
-using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2022._23;
 
@@ -9,13 +8,13 @@ public abstract class Base : Solution
 
     private const int SetMaxSize = 2_400;
 
-    private HashSet<Point> _elves = new(SetMaxSize);
+    private const int YOffset = 200;
 
-    private readonly Func<Point, Point>[] _evaluations = new Func<Point, Point>[4];
+    private HashSet<int> _elves = new(SetMaxSize);
+
+    private readonly Func<int, int>[] _evaluations = new Func<int, int>[4];
 
     private int _startEvaluation;
-
-    private readonly Point[] _directions = { new(0, -1), new(1, 0), new(0, 1), new(-1, 0) };
 
     protected void ParseInput()
     {
@@ -27,7 +26,7 @@ public abstract class Base : Solution
             {
                 if (line[x] == '#')
                 {
-                    _elves.Add(new Point(x, y));
+                    _elves.Add(x + y * YOffset);
                 }
             }
         }
@@ -63,7 +62,7 @@ public abstract class Base : Solution
 
     protected int RunSimulationStep()
     {
-        var elves = new HashSet<Point>(SetMaxSize);
+        var elves = new HashSet<int>(SetMaxSize);
 
         var moved = 0;
 
@@ -71,7 +70,7 @@ public abstract class Base : Solution
         {
             var proposedMove = GetProposedMove(elf);
 
-            if (proposedMove == null)
+            if (proposedMove == 0)
             {
                 elves.Add(elf);
 
@@ -105,43 +104,43 @@ public abstract class Base : Solution
 
     private void InitialiseEvaluations()
     {
-        _evaluations[0] = p => ! (_elves.Contains(new Point(p.X - 1, p.Y - 1))
-                                  || _elves.Contains(new Point(p.X, p.Y - 1))
-                                  || _elves.Contains(new Point(p.X + 1, p.Y - 1)))
-                                   ? _directions[0]
-                                   : null;
+        _evaluations[0] = p => ! (_elves.Contains(p - 1 - YOffset)
+                                  || _elves.Contains(p - YOffset)
+                                  || _elves.Contains(p + 1 - YOffset))
+                                   ? -YOffset
+                                   : 0;
 
-        _evaluations[1] = p => ! (_elves.Contains(new Point(p.X - 1, p.Y + 1))
-                                  || _elves.Contains(new Point(p.X, p.Y + 1))
-                                  || _elves.Contains(new Point(p.X + 1, p.Y + 1)))
-                                   ? _directions[2]
-                                   : null;
+        _evaluations[1] = p => ! (_elves.Contains(p - 1 + YOffset)
+                                  || _elves.Contains(p + YOffset)
+                                  || _elves.Contains(p + 1 + YOffset))
+                                   ? YOffset
+                                   : 0;
 
-        _evaluations[2] = p => ! (_elves.Contains(new Point(p.X - 1, p.Y - 1))
-                                  || _elves.Contains(new Point(p.X - 1, p.Y))
-                                  || _elves.Contains(new Point(p.X - 1, p.Y + 1)))
-                                   ? _directions[3]
-                                   : null;
+        _evaluations[2] = p => ! (_elves.Contains(p - 1 - YOffset)
+                                  || _elves.Contains(p - 1)
+                                  || _elves.Contains(p - 1 + YOffset))
+                                   ? -1
+                                   : 0;
 
-        _evaluations[3] = p => ! (_elves.Contains(new Point(p.X + 1, p.Y - 1))
-                                  || _elves.Contains(new Point(p.X + 1, p.Y))
-                                  || _elves.Contains(new Point(p.X + 1, p.Y + 1)))
-                                   ? _directions[1]
-                                   : null;
+        _evaluations[3] = p => ! (_elves.Contains(p + 1 - YOffset)
+                                  || _elves.Contains(p + 1)
+                                  || _elves.Contains(p + 1 + YOffset))
+                                   ? 1
+                                   : 0;
     }
 
-    private Point GetProposedMove(Point position)
+    private int GetProposedMove(int position)
     {
-        if (! (_elves.Contains(new Point(position.X - 1, position.Y - 1))
-               || _elves.Contains(new Point(position.X, position.Y - 1))
-               || _elves.Contains(new Point(position.X + 1, position.Y - 1))
-               || _elves.Contains(new Point(position.X + 1, position.Y))
-               || _elves.Contains(new Point(position.X + 1, position.Y + 1))
-               || _elves.Contains(new Point(position.X, position.Y + 1))
-               || _elves.Contains(new Point(position.X - 1, position.Y + 1))
-               || _elves.Contains(new Point(position.X - 1, position.Y))))
+        if (! (_elves.Contains(position - 1 - YOffset)
+               || _elves.Contains(position - YOffset)
+               || _elves.Contains(position + 1 - YOffset)
+               || _elves.Contains(position + 1)
+               || _elves.Contains(position + 1 + YOffset)
+               || _elves.Contains(position + YOffset)
+               || _elves.Contains(position - 1 + YOffset)
+               || _elves.Contains(position - 1)))
         {
-            return null;
+            return 0;
         }
 
         var evaluationIndex = _startEvaluation;
@@ -150,7 +149,7 @@ public abstract class Base : Solution
         {
             var newPosition = _evaluations[evaluationIndex](position);
 
-            if (newPosition != null)
+            if (newPosition != 0)
             {
                 return newPosition;
             }
@@ -163,7 +162,7 @@ public abstract class Base : Solution
             }
         }
 
-        return null;
+        return 0;
     }
 
     private void RotateEvaluations()
@@ -178,11 +177,17 @@ public abstract class Base : Solution
 
     private int CountEmptyTiles()
     {
-        var minX = _elves.Min(e => e.X);
-        var maxX = _elves.Max(e => e.X);
+        var min = _elves.Min();
+        var max = _elves.Max();
 
-        var minY = _elves.Min(e => e.Y);
-        var maxY = _elves.Max(e => e.Y);
+        //var minX = (int) Math.Round((float) min % YOffset);
+        //var maxX = (int) Math.Round((float) max % YOffset);
+
+        var minX = -4;
+        var maxX = 73;
+
+        var minY = (int) Math.Round((float) min / YOffset);
+        var maxY = (int) Math.Round((float) max / YOffset);
 
         var empty = 0;
 
@@ -190,7 +195,7 @@ public abstract class Base : Solution
         {
             for (var x = minX; x <= maxX; x++)
             {
-                if (_elves.Contains(new Point(x, y)))
+                if (_elves.Contains(x + y * YOffset))
                 {
                     continue;
                 }
