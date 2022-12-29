@@ -15,12 +15,11 @@ public class Part2 : Base
         return Solve().ToString();
     }
 
-
     private int Solve()
     {
         var max = 0;
 
-        var added = new HashSet<(int ValveDesignation, int Time, int OpenedValves)>();
+        var added = new HashSet<(int ValveDesignation, int Time, int OpenedValves, int ReleasedPressure)>();
 
         var queue = new Queue<(Valve Valve, int Time, int ReleasedPressure, int OpenedValves, List<(string ValveName, int Time)> History)>();
 
@@ -67,7 +66,7 @@ public class Part2 : Base
                     continue;
                 }
 
-                var newItem = (valve.Valve.Designation, node.Time, node.OpenedValves);
+                var newItem = (valve.Valve.Designation, node.Time - valve.Cost, node.OpenedValves, node.ReleasedPressure);
 
                 if (! added.Contains(newItem))
                 {
@@ -97,7 +96,7 @@ public class Part2 : Base
                         m = sum;
                     }
 
-                    Console.WriteLine(path.Sum(p => p.Flow) + o.Sum(k => k.Flow));
+                    //Console.WriteLine(path.Sum(p => p.Flow) + o.Sum(k => k.Flow));
                 }
             }
         }
