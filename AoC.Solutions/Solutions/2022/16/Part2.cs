@@ -1,6 +1,4 @@
-﻿using AoC.Solutions.Exceptions;
-
-namespace AoC.Solutions.Solutions._2022._16;
+﻿namespace AoC.Solutions.Solutions._2022._16;
 
 public class Part2 : Base
 {
@@ -17,33 +15,29 @@ public class Part2 : Base
         return Solve().ToString();
     }
 
+
     private int Solve()
     {
         var max = 0;
 
-        var added = new HashSet<int>(ArbitrarySize);
+        var added = new HashSet<(int ValveDesignation, int Time, int OpenedValves)>();
 
-        var count = 1;
+        var queue = new Queue<(Valve Valve, int Time, int ReleasedPressure, int OpenedValves, List<(string ValveName, int Time)> History)>();
 
-        var readPosition = 0;
+        var paths = new List<List<(string ValveName, int Flow)>>();
 
-        var addPosition = 1;
-
-        var queue = new (Valve Valve, int Time, Valve ElephantValve, int ElephantTime, int ReleasedPressure, int OpenedValves, int AvailableTotalFlow)[ArbitrarySize];
-
-        var availableTotalFlow = Start.WorkingValves.Sum(v => v.Valve.FlowRate);
-
-        queue[0] = (Start, StartMinutes, Start, StartMinutes, 0, 0, availableTotalFlow);
-
-        while (count > 0)
+        foreach (var valve in Start.WorkingValves)
         {
-            var node = queue[readPosition];
+            queue.Enqueue((valve.Valve, 26 - valve.Cost, 0, 0, new List<(string ValveName, int Time)>()));
+        }
 
-            readPosition++;
+        while (queue.Count > 0)
+        {
+            var node = queue.Dequeue();
 
-            count--;
+            var history = new List<(string ValveName, int Time)>(node.History);
 
-            if (node.Valve.FlowRate > 0 && (node.OpenedValves & node.Valve.Designation) == 0 && node.Time > 0)
+            if ((node.OpenedValves & node.Valve.Designation) == 0)
             {
                 node.Time--;
 
@@ -51,7 +45,7 @@ public class Part2 : Base
 
                 node.ReleasedPressure += node.Valve.FlowRate * node.Time;
 
-                node.AvailableTotalFlow -= node.Valve.FlowRate;
+                history.Add((node.Valve.Name, node.Time * node.Valve.FlowRate));
             }
 
             if (node.ReleasedPressure > max)
@@ -59,78 +53,59 @@ public class Part2 : Base
                 max = node.ReleasedPressure;
             }
 
-            if (node.Time <= 0 && node.ElephantTime <= 0)
+            if (node.Time <= 0)
             {
+                paths.Add(node.History);
+
                 continue;
             }
 
-            if (node.ElephantValve.FlowRate > 0 && (node.OpenedValves & node.ElephantValve.Designation) == 0 && node.ElephantTime > 0)
+            foreach (var valve in node.Valve.WorkingValves)
             {
-                node.ElephantTime--;
-
-                node.OpenedValves |= node.ElephantValve.Designation;
-
-                node.ReleasedPressure += node.ElephantValve.FlowRate * node.ElephantTime;
-
-                node.AvailableTotalFlow -= node.Valve.FlowRate;
-            }
-
-            if (node.ReleasedPressure > max)
-            {
-                max = node.ReleasedPressure;
-            }
-
-            if (node.Time <= 0 && node.ElephantTime <= 0)
-            {
-                continue;
-            }
-
-            foreach (var elephantValve in node.ElephantValve.WorkingValves)
-            {
-                if ((elephantValve.Valve.Designation & node.OpenedValves) > 0 || node.ElephantTime - elephantValve.Cost <= 0)
+                if (node.Time - valve.Cost <= 0 || (valve.Valve.Designation & node.OpenedValves) > 0)
                 {
                     continue;
                 }
 
-                foreach (var valve in node.Valve.WorkingValves)
+                var newItem = (valve.Valve.Designation, node.Time, node.OpenedValves);
+
+                if (! added.Contains(newItem))
                 {
-                    // Magic number / 50. Seems to trim a lot and still spit out the correct answer. *Shrugs*.
-                    if ((valve.Valve.Designation & node.OpenedValves) > 0
-                        || node.Time - valve.Cost <= 0
-                        || (valve.Valve.Designation & elephantValve.Valve.Designation) > 0
-                        || node.ReleasedPressure + node.AvailableTotalFlow * (node.ElephantTime * node.Time / 50) < max)
-                    {
-                        continue;
-                    }
+                    queue.Enqueue((valve.Valve, node.Time - valve.Cost, node.ReleasedPressure, node.OpenedValves, history));
 
-                    var hash = new HashCode();
-
-                    hash.Add(valve.Valve);
-                    hash.Add(node.Time + node.ElephantTime);
-                    hash.Add(elephantValve.Valve);
-                    hash.Add(node.OpenedValves);
-
-                    var code = hash.ToHashCode();
-
-                    if (! added.Contains(code))
-                    {
-                        queue[addPosition] = (valve.Valve, node.Time - valve.Cost, elephantValve.Valve, node.ElephantTime - elephantValve.Cost, node.ReleasedPressure, node.OpenedValves, node.AvailableTotalFlow);
-                        
-                        addPosition++;
-
-                        count++;
-
-                        added.Add(code);
-                    }
+                    added.Add(newItem);
                 }
             }
         }
 
-        if (max == 0)
+        var ordered = paths.Where(p => p.Count > 5).ToList();
+
+        var m = 0;
+
+        foreach (var path in ordered)
         {
-            throw new PuzzleException("Solution not found");
+            var other = ordered.Where(o => ! o.Any(ov => path.Any(pv => pv.ValveName == ov.ValveName))).ToList();
+
+            if (other.Count > 0)
+            {
+                foreach (var o in other)
+                {
+                    var sum = path.Sum(p => p.Flow) + o.Sum(k => k.Flow);
+
+                    if (sum > m)
+                    {
+                        m = sum;
+                    }
+
+                    Console.WriteLine(path.Sum(p => p.Flow) + o.Sum(k => k.Flow));
+                }
+            }
         }
 
-        return max;
+        Console.WriteLine();
+        
+        Console.WriteLine(m);
+
+        return 0;
     }
 }
