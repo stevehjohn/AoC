@@ -94,9 +94,9 @@ public class Part2 : Base
                     if (sum > m)
                     {
                         m = sum;
-                    }
 
-                    //Console.WriteLine(path.Sum(p => p.Flow) + o.Sum(k => k.Flow));
+                        Console.WriteLine(m);
+                    }
                 }
             }
         }
