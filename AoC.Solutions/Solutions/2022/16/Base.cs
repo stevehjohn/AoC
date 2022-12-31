@@ -10,6 +10,8 @@ public abstract class Base : Solution
 
     protected Valve Start;
 
+    protected readonly Dictionary<int, (int Flow, int OpenedCount)> StateCache = new();
+
     protected void ParseInput()
     {
         var connections = new Dictionary<string, string[]>();
@@ -64,6 +66,51 @@ public abstract class Base : Solution
                 }
 
                 valve.WorkingValves.Add((connection, GetSteps(valve, connection)));
+            }
+        }
+    }
+    
+    protected void Traverse(int startMinutes)
+    {
+        var queue = new Queue<(Valve Valve, int Time, int Opened, int OpenedCount, int Flow)>();
+
+        foreach (var valve in Start.WorkingValves)
+        {
+            queue.Enqueue((valve.Valve, startMinutes - valve.Cost, 0, 0, 0));
+        }
+
+        while (queue.Count > 0)
+        {
+            var node = queue.Dequeue();
+
+            if ((node.Opened & node.Valve.Designation) == 0)
+            {
+                node.Time--;
+
+                node.Flow += node.Time * node.Valve.FlowRate;
+
+                node.Opened |= node.Valve.Designation;
+
+                node.OpenedCount++;
+
+                StateCache[node.Opened] = (Math.Max(StateCache.GetValueOrDefault(node.Opened).Flow, node.Flow), node.OpenedCount);
+            }
+
+            if (node.Time <= 0)
+            {
+                continue;
+            }
+
+            foreach (var connection in node.Valve.WorkingValves)
+            {
+                var remaining = node.Time - connection.Cost;
+
+                if (remaining <= 0 || (node.Opened & connection.Valve.Designation) != 0)
+                {
+                    continue;
+                }
+
+                queue.Enqueue((connection.Valve, remaining, node.Opened, node.OpenedCount, node.Flow));
             }
         }
     }
