@@ -8,7 +8,7 @@ public class NameColumn : IColumn
 {
     public string GetValue(Summary summary, BenchmarkCase benchmarkCase)
     {
-        if (benchmarkCase.Parameters.Count == 0 || benchmarkCase.Parameters[0].Value == null)
+        if (benchmarkCase.Parameters.Count == 0)
         {
             return "Unknown";
         }
