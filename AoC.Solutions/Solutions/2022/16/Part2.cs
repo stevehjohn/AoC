@@ -23,6 +23,11 @@ public class Part2 : Base
         {
             foreach (var elephant in cache)
             {
+                if (human.Key == elephant.Key)
+                {
+                    break;
+                }
+
                 if ((human.Key & elephant.Key) > 0)
                 {
                     continue;
