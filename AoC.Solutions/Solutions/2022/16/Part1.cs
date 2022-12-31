@@ -1,4 +1,6 @@
-﻿namespace AoC.Solutions.Solutions._2022._16;
+﻿using System.Diagnostics;
+
+namespace AoC.Solutions.Solutions._2022._16;
 
 public class Part1 : Base
 {
