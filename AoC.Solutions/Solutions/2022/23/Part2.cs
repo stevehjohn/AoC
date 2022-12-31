@@ -11,7 +11,7 @@ public class Part2 : Base
         return result.ToString();
     }
 
-    private const int YOffset = 200;
+    private const int YOffset = 125;
 
     private HashSet<int> _elves = new(SetMaxSize);
 
