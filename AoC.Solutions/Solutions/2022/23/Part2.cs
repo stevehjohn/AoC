@@ -1,4 +1,6 @@
-﻿namespace AoC.Solutions.Solutions._2022._23;
+﻿using AoC.Solutions.Exceptions;
+
+namespace AoC.Solutions.Solutions._2022._23;
 
 public class Part2 : Base
 {
@@ -15,8 +17,6 @@ public class Part2 : Base
 
     private readonly HashSet<int> _elves = new(SetMaxSize);
 
-    private readonly Func<int, int>[] _evaluations = new Func<int, int>[4];
-    
     private void ParseInput()
     {
         for (var y = 0; y < Input.Length; y++)
@@ -35,8 +35,6 @@ public class Part2 : Base
 
     private int RunSimulation()
     {
-        InitialiseEvaluations();
-
         var rounds = 1;
 
         while (true)
@@ -93,31 +91,40 @@ public class Part2 : Base
         return moved;
     }
 
-    private void InitialiseEvaluations()
+    private int Evaluate(int index, int p)
     {
-        _evaluations[0] = p => ! (_elves.Contains(p - 1 - YOffset)
-                                  || _elves.Contains(p - YOffset)
-                                  || _elves.Contains(p + 1 - YOffset))
-                                   ? -YOffset
-                                   : 0;
+        switch (index)
+        {
+            case 0:
+                return ! (_elves.Contains(p - 1 - YOffset)
+                          || _elves.Contains(p - YOffset)
+                          || _elves.Contains(p + 1 - YOffset))
+                           ? -YOffset
+                           : 0;
 
-        _evaluations[1] = p => ! (_elves.Contains(p - 1 + YOffset)
-                                  || _elves.Contains(p + YOffset)
-                                  || _elves.Contains(p + 1 + YOffset))
-                                   ? YOffset
-                                   : 0;
+            case 1:
+                return ! (_elves.Contains(p - 1 + YOffset)
+                          || _elves.Contains(p + YOffset)
+                          || _elves.Contains(p + 1 + YOffset))
+                           ? YOffset
+                           : 0;
 
-        _evaluations[2] = p => ! (_elves.Contains(p - 1 - YOffset)
-                                  || _elves.Contains(p - 1)
-                                  || _elves.Contains(p - 1 + YOffset))
-                                   ? -1
-                                   : 0;
+            case 2:
+                return ! (_elves.Contains(p - 1 - YOffset)
+                          || _elves.Contains(p - 1)
+                          || _elves.Contains(p - 1 + YOffset))
+                           ? -1
+                           : 0;
 
-        _evaluations[3] = p => ! (_elves.Contains(p + 1 - YOffset)
-                                  || _elves.Contains(p + 1)
-                                  || _elves.Contains(p + 1 + YOffset))
-                                   ? 1
-                                   : 0;
+            case 3:
+                return ! (_elves.Contains(p + 1 - YOffset)
+                          || _elves.Contains(p + 1)
+                          || _elves.Contains(p + 1 + YOffset))
+                           ? 1
+                           : 0;
+        }
+
+        throw new PuzzleException("Evaluation index is not valid.");
     }
 
     private int GetProposedMove(int position)
@@ -138,7 +145,7 @@ public class Part2 : Base
 
         for (var i = 0; i < 4; i++)
         {
-            var newPosition = _evaluations[evaluationIndex](position);
+            var newPosition = Evaluate(evaluationIndex, position);
 
             if (newPosition != 0)
             {
