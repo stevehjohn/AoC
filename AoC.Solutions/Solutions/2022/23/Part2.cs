@@ -13,7 +13,7 @@ public class Part2 : Base
 
     private const int YOffset = 125;
 
-    private HashSet<int> _elves = new(SetMaxSize);
+    private readonly HashSet<int> _elves = new(SetMaxSize);
 
     private readonly Func<int, int>[] _evaluations = new Func<int, int>[4];
     
