@@ -6,9 +6,9 @@ public abstract class Base : Solution
 {
     public override string Description => "Grove positioning system";
 
-    private readonly List<(long Number, int InitialPosition)> _initialNumbers = new();
+    private readonly List<Number> _initialNumbers = new();
 
-    private readonly List<(long Number, int InitialPosition)> _numbers = new();
+    private readonly List<Number> _numbers = new();
 
     protected void ParseInput(long key = 1)
     {
@@ -16,11 +16,11 @@ public abstract class Base : Solution
 
         for (var i = 0; i < length; i++)
         {
-            var number = long.Parse(Input[i]) * key;
+            var number = new Number(long.Parse(Input[i]) * key);
 
-            _initialNumbers.Add((number, i));
+            _initialNumbers.Add(number);
 
-            _numbers.Add((number, i));
+            _numbers.Add(number);
         }
     }
 
@@ -37,15 +37,15 @@ public abstract class Base : Solution
 
     protected long Solve()
     {
-        var startIndex = _numbers.IndexOf(_numbers.First(n => n.Number == 0));
+        var startIndex = _numbers.IndexOf(_numbers.First(n => n.Value == 0));
 
         var sum = 0L;
 
-        sum += _numbers[(1_000 + startIndex) % _numbers.Count].Number;
+        sum += _numbers[(1_000 + startIndex) % _numbers.Count].Value;
 
-        sum += _numbers[(2_000 + startIndex) % _numbers.Count].Number;
+        sum += _numbers[(2_000 + startIndex) % _numbers.Count].Value;
 
-        sum += _numbers[(3_000 + startIndex) % _numbers.Count].Number;
+        sum += _numbers[(3_000 + startIndex) % _numbers.Count].Value;
 
         return sum;
     }
@@ -56,9 +56,9 @@ public abstract class Base : Solution
 
         var oldIndex = _numbers.IndexOf(number);
 
-        var newIndex = (int) ((oldIndex + number.Number) % (_numbers.Count - 1));
+        var newIndex = (int) ((oldIndex + number.Value) % (_numbers.Count - 1));
 
-        if (newIndex <= 0 && oldIndex + number.Number != 0)
+        if (newIndex <= 0 && oldIndex + number.Value != 0)
         {
             newIndex = _numbers.Count - 1 + newIndex;
         }
