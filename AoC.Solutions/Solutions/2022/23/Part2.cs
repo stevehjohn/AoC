@@ -91,35 +91,35 @@ public class Part2 : Base
         return moved;
     }
 
-    private int Evaluate(int index, int p)
+    private int Evaluate(int index, int position)
     {
         switch (index)
         {
             case 0:
-                return ! (_elves.Contains(p - 1 - YOffset)
-                          || _elves.Contains(p - YOffset)
-                          || _elves.Contains(p + 1 - YOffset))
+                return ! (_elves.Contains(position - 1 - YOffset)
+                          || _elves.Contains(position - YOffset)
+                          || _elves.Contains(position + 1 - YOffset))
                            ? -YOffset
                            : 0;
 
             case 1:
-                return ! (_elves.Contains(p - 1 + YOffset)
-                          || _elves.Contains(p + YOffset)
-                          || _elves.Contains(p + 1 + YOffset))
+                return ! (_elves.Contains(position - 1 + YOffset)
+                          || _elves.Contains(position + YOffset)
+                          || _elves.Contains(position + 1 + YOffset))
                            ? YOffset
                            : 0;
 
             case 2:
-                return ! (_elves.Contains(p - 1 - YOffset)
-                          || _elves.Contains(p - 1)
-                          || _elves.Contains(p - 1 + YOffset))
+                return ! (_elves.Contains(position - 1 - YOffset)
+                          || _elves.Contains(position - 1)
+                          || _elves.Contains(position - 1 + YOffset))
                            ? -1
                            : 0;
 
             case 3:
-                return ! (_elves.Contains(p + 1 - YOffset)
-                          || _elves.Contains(p + 1)
-                          || _elves.Contains(p + 1 + YOffset))
+                return ! (_elves.Contains(position + 1 - YOffset)
+                          || _elves.Contains(position + 1)
+                          || _elves.Contains(position + 1 + YOffset))
                            ? 1
                            : 0;
         }
