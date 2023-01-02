@@ -54,9 +54,9 @@ public class Part2 : Base
 
     private int RunSimulationStep()
     {
-        var elves = new HashSet<int>(SetMaxSize);
-
         var moved = 0;
+
+        var moves = new Dictionary<int, int>();
 
         foreach (var elf in _elves)
         {
@@ -64,30 +64,29 @@ public class Part2 : Base
 
             if (proposedMove == 0)
             {
-                elves.Add(elf);
-
                 continue;
             }
 
-            if (elves.Contains(elf + proposedMove))
+            if (moves.ContainsKey(elf + proposedMove))
             {
-                elves.Add(elf);
-
-                elves.Remove(elf + proposedMove);
-
-                elves.Add(elf + proposedMove + proposedMove);
+                moves.Remove(elf + proposedMove);
 
                 moved--;
 
                 continue;
             }
 
-            elves.Add(elf + proposedMove);
+            moves.Add(elf + proposedMove, elf);
 
             moved++;
         }
 
-        _elves = elves;
+        foreach (var move in moves)
+        {
+            _elves.Remove(move.Value);
+
+            _elves.Add(move.Key);
+        }
 
         RotateEvaluations();
 
