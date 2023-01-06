@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using AoC.Solutions.Exceptions;
+﻿using AoC.Solutions.Exceptions;
 
 namespace AoC.Solutions.Solutions._2022._23;
 
@@ -24,6 +23,8 @@ public class Part2 : Base
 
     private readonly Dictionary<int, int> _moves = new();
 
+    private readonly HashSet<int> _elves = new();
+
     private void ParseInput()
     {
         for (var y = 0; y < Input.Length; y++)
@@ -35,6 +36,8 @@ public class Part2 : Base
                 if (line[x] == '#')
                 {
                     _cells[NegativeOffset + x + y * YOffset] = true;
+
+                    _elves.Add(NegativeOffset + x + y * YOffset);
                 }
             }
         }
@@ -63,13 +66,8 @@ public class Part2 : Base
 
         _moves.Clear();
 
-        for (var elf = 0; elf < 20_000; elf++)
+        foreach (var elf in _elves)
         {
-            if (! _cells[elf])
-            {
-                continue;
-            }
-
             var proposedMove = GetProposedMove(elf);
 
             if (proposedMove == 0)
@@ -96,6 +94,10 @@ public class Part2 : Base
             _cells[move.Value] = false;
 
             _cells[move.Key] = true;
+
+            _elves.Remove(move.Value);
+
+            _elves.Add(move.Key);
         }
 
         RotateEvaluations();
