@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Exceptions;
+﻿using System.Runtime.CompilerServices;
+using AoC.Solutions.Exceptions;
 
 namespace AoC.Solutions.Solutions._2022._23;
 
@@ -101,37 +102,21 @@ public class Part2 : Base
         return moved;
     }
 
-    private int Evaluate(int index, int position)
+    private static int Evaluate(bool top, bool bottom, bool right, bool left, int index)
     {
         switch (index)
         {
             case 0:
-                return ! (_cells[position - 1 - YOffset]
-                          || _cells[position - YOffset]
-                          || _cells[position + 1 - YOffset])
-                           ? -YOffset
-                           : 0;
+                return ! top ? -YOffset : 0;
 
             case 1:
-                return ! (_cells[position - 1 + YOffset]
-                          || _cells[position + YOffset]
-                          || _cells[position + 1 + YOffset])
-                           ? YOffset
-                           : 0;
+                return ! bottom ? YOffset : 0;
 
             case 2:
-                return ! (_cells[position - 1 - YOffset]
-                          || _cells[position - 1]
-                          || _cells[position - 1 + YOffset])
-                           ? -1
-                           : 0;
+                return ! left ? -1 : 0;
 
             case 3:
-                return ! (_cells[position + 1 - YOffset]
-                          || _cells[position + 1]
-                          || _cells[position + 1 + YOffset])
-                           ? 1
-                           : 0;
+                return ! right ? 1 : 0;
         }
 
         throw new PuzzleException("Evaluation index is not valid.");
@@ -139,14 +124,15 @@ public class Part2 : Base
 
     private int GetProposedMove(int position)
     {
-        if (! (_cells[position - 1 - YOffset]
-               || _cells[position - YOffset]
-               || _cells[position + 1 - YOffset]
-               || _cells[position + 1]
-               || _cells[position + 1 + YOffset]
-               || _cells[position + YOffset]
-               || _cells[position - 1 + YOffset]
-               || _cells[position - 1]))
+        var top = _cells[position - 1 - YOffset] || _cells[position - YOffset] || _cells[position + 1 - YOffset];
+
+        var bottom = _cells[position - 1 + YOffset] || _cells[position + YOffset] || _cells[position + 1 + YOffset];
+
+        var right = _cells[position + 1 - YOffset] || _cells[position + 1] || _cells[position + 1 + YOffset];
+
+        var left = _cells[position - 1 - YOffset] || _cells[position - 1] || _cells[position - 1 + YOffset];
+
+        if (! (top || left || bottom || right))
         {
             return 0;
         }
@@ -155,7 +141,7 @@ public class Part2 : Base
 
         for (var i = 0; i < 4; i++)
         {
-            var newPosition = Evaluate(evaluationIndex, position);
+            var newPosition = Evaluate(top, bottom, right, left, evaluationIndex);
 
             if (newPosition != 0)
             {
