@@ -104,22 +104,21 @@ public abstract class Base : Solution
 
         for (var i = 0; i < loops; i++)
         {
-            steps += RunSimulationStep(steps);
+            steps += RunSimulationStep(steps, i);
         }
 
         return steps;
     }
 
-    private int RunSimulationStep(int startIteration)
+    private int RunSimulationStep(int startIteration, int loop)
     {
         var queue = new PriorityQueue<(int Position, int Steps), int>();
 
         var visited = new HashSet<int>();
 
-        // TODO: Why does not swapping these still yield the correct answer? Should have been a carpenter...
-        var origin = _start;
+        var origin = loop == 1 ? _end : _start;
 
-        var target = _end;
+        var target = loop == 1 ? _start : _end;
 
         queue.Enqueue((origin, 0), 0);
 
@@ -180,7 +179,7 @@ public abstract class Base : Solution
         }
 
         // Loiter.
-        if (! IsOccupied(new Point(x, y), iteration))
+        if (! IsOccupied(x, y, iteration))
         {
             moves.Add(position);
         }
@@ -216,25 +215,25 @@ public abstract class Base : Solution
         }
 
         // Right?
-        if (x < _blizzardWidth && ! IsOccupied(new Point(x + 1, y), iteration))
+        if (x < _blizzardWidth && ! IsOccupied(x + 1, y, iteration))
         {
             moves.Add(position + 1);
         }
 
         // Left?
-        if (x > 1 && ! IsOccupied(new Point(x - 1, y), iteration))
+        if (x > 1 && ! IsOccupied(x - 1, y, iteration))
         {
             moves.Add(position - 1);
         }
 
         // Down?
-        if (y < _blizzardHeight && ! IsOccupied(new Point(x, y + 1), iteration))
+        if (y < _blizzardHeight && ! IsOccupied(x, y + 1, iteration))
         {
             moves.Add(position + _width);
         }
 
         // Up?
-        if (y > 1 && ! IsOccupied(new Point(x, y - 1), iteration))
+        if (y > 1 && ! IsOccupied(x, y - 1, iteration))
         {
             moves.Add(position - _width);
         }
@@ -242,27 +241,27 @@ public abstract class Base : Solution
         return moves;
     }
 
-    private bool IsOccupied(Point position, int iteration)
+    private bool IsOccupied(int x, int y, int iteration)
     {
-        if (position.X < 1 || position.Y < 1 || position.X >= _width || position.Y >= _height)
+        if (x < 1 || y < 1 || x >= _width || y >= _height)
         {
             return false;
         }
 
         var xD = iteration % _blizzardWidth;
 
-        var target = (position.X - 1 + _blizzardWidth - xD) % _blizzardWidth + 1;
+        var target = (x - 1 + _blizzardWidth - xD) % _blizzardWidth + 1;
 
-        var found = _rightStorms[position.Y, target];
+        var found = _rightStorms[y, target];
 
         if (found)
         {
             return true;
         }
 
-        target = (position.X - 1 + xD) % _blizzardWidth + 1;
+        target = (x - 1 + xD) % _blizzardWidth + 1;
 
-        found = _leftStorms[position.Y, target];
+        found = _leftStorms[y, target];
 
         if (found)
         {
@@ -271,18 +270,18 @@ public abstract class Base : Solution
 
         var yD = iteration % _blizzardHeight;
 
-        target = (position.Y - 1 + _blizzardHeight - yD) % _blizzardHeight + 1;
+        target = (y - 1 + _blizzardHeight - yD) % _blizzardHeight + 1;
 
-        found = _downStorms[position.X, target];
+        found = _downStorms[x, target];
 
         if (found)
         {
             return true;
         }
 
-        target = (position.Y - 1 + yD) % _blizzardHeight + 1;
+        target = (y - 1 + yD) % _blizzardHeight + 1;
 
-        found = _upStorms[position.X, target];
+        found = _upStorms[x, target];
         
         return found;
     }
