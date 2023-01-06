@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Grove positioning system";
 
-    private readonly List<Number> _initialNumbers = new();
+    private Number[] _initialNumbers;
 
     private int _length;
 
@@ -16,13 +16,15 @@ public abstract class Base : Solution
     {
         _length = Input.Length;
 
+        _initialNumbers = new Number[_length];
+
         _numbers = new Number[_length];
 
         for (var i = 0; i < _length; i++)
         {
             var number = new Number(long.Parse(Input[i]) * key);
 
-            _initialNumbers.Add(number);
+            _initialNumbers[i] = number;
 
             _numbers[i] = number;
         }
