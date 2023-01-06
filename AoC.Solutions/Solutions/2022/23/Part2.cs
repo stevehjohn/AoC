@@ -15,7 +15,11 @@ public class Part2 : Base
 
     private const int YOffset = 125;
 
-    private readonly HashSet<int> _elves = new(SetMaxSize);
+    private const int NegativeOffset = 2_000;
+
+    private const int ArbitraryArenaSize = 20_000;
+
+    private readonly bool[] _cells = new bool[ArbitraryArenaSize];
 
     private void ParseInput()
     {
@@ -27,7 +31,7 @@ public class Part2 : Base
             {
                 if (line[x] == '#')
                 {
-                    _elves.Add(x + y * YOffset);
+                    _cells[NegativeOffset + x + y * YOffset] = true;
                 }
             }
         }
@@ -56,8 +60,14 @@ public class Part2 : Base
 
         var moves = new Dictionary<int, int>();
 
-        foreach (var elf in _elves)
+        //foreach (var elf in _elves)
+        for (var elf = 0; elf < 20_000; elf++)
         {
+            if (! _cells[elf])
+            {
+                continue;
+            }
+
             var proposedMove = GetProposedMove(elf);
 
             if (proposedMove == 0)
@@ -81,9 +91,9 @@ public class Part2 : Base
 
         foreach (var move in moves)
         {
-            _elves.Remove(move.Value);
+            _cells[move.Value] = false;
 
-            _elves.Add(move.Key);
+            _cells[move.Key] = true;
         }
 
         RotateEvaluations();
@@ -96,30 +106,30 @@ public class Part2 : Base
         switch (index)
         {
             case 0:
-                return ! (_elves.Contains(position - 1 - YOffset)
-                          || _elves.Contains(position - YOffset)
-                          || _elves.Contains(position + 1 - YOffset))
+                return ! (_cells[position - 1 - YOffset]
+                          || _cells[position - YOffset]
+                          || _cells[position + 1 - YOffset])
                            ? -YOffset
                            : 0;
 
             case 1:
-                return ! (_elves.Contains(position - 1 + YOffset)
-                          || _elves.Contains(position + YOffset)
-                          || _elves.Contains(position + 1 + YOffset))
+                return ! (_cells[position - 1 + YOffset]
+                          || _cells[position + YOffset]
+                          || _cells[position + 1 + YOffset])
                            ? YOffset
                            : 0;
 
             case 2:
-                return ! (_elves.Contains(position - 1 - YOffset)
-                          || _elves.Contains(position - 1)
-                          || _elves.Contains(position - 1 + YOffset))
+                return ! (_cells[position - 1 - YOffset]
+                          || _cells[position - 1]
+                          || _cells[position - 1 + YOffset])
                            ? -1
                            : 0;
 
             case 3:
-                return ! (_elves.Contains(position + 1 - YOffset)
-                          || _elves.Contains(position + 1)
-                          || _elves.Contains(position + 1 + YOffset))
+                return ! (_cells[position + 1 - YOffset]
+                          || _cells[position + 1]
+                          || _cells[position + 1 + YOffset])
                            ? 1
                            : 0;
         }
@@ -129,14 +139,14 @@ public class Part2 : Base
 
     private int GetProposedMove(int position)
     {
-        if (! (_elves.Contains(position - 1 - YOffset)
-               || _elves.Contains(position - YOffset)
-               || _elves.Contains(position + 1 - YOffset)
-               || _elves.Contains(position + 1)
-               || _elves.Contains(position + 1 + YOffset)
-               || _elves.Contains(position + YOffset)
-               || _elves.Contains(position - 1 + YOffset)
-               || _elves.Contains(position - 1)))
+        if (! (_cells[position - 1 - YOffset]
+               || _cells[position - YOffset]
+               || _cells[position + 1 - YOffset]
+               || _cells[position + 1]
+               || _cells[position + 1 + YOffset]
+               || _cells[position + YOffset]
+               || _cells[position - 1 + YOffset]
+               || _cells[position - 1]))
         {
             return 0;
         }
