@@ -22,6 +22,8 @@ public class Part2 : Base
 
     private readonly bool[] _cells = new bool[ArbitraryArenaSize];
 
+    private readonly Dictionary<int, int> _moves = new();
+
     private void ParseInput()
     {
         for (var y = 0; y < Input.Length; y++)
@@ -59,9 +61,8 @@ public class Part2 : Base
     {
         var moved = 0;
 
-        var moves = new Dictionary<int, int>();
+        _moves.Clear();
 
-        //foreach (var elf in _elves)
         for (var elf = 0; elf < 20_000; elf++)
         {
             if (! _cells[elf])
@@ -76,21 +77,21 @@ public class Part2 : Base
                 continue;
             }
 
-            if (moves.ContainsKey(elf + proposedMove))
+            if (_moves.ContainsKey(elf + proposedMove))
             {
-                moves.Remove(elf + proposedMove);
+                _moves.Remove(elf + proposedMove);
 
                 moved--;
 
                 continue;
             }
 
-            moves.Add(elf + proposedMove, elf);
+            _moves.Add(elf + proposedMove, elf);
 
             moved++;
         }
 
-        foreach (var move in moves)
+        foreach (var move in _moves)
         {
             _cells[move.Value] = false;
 
