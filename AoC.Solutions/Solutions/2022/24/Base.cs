@@ -8,13 +8,13 @@ public abstract class Base : Solution
 {
     public override string Description => "Blizzard basin";
 
-    private readonly HashSet<int> _leftStorms = new();
+    private bool[,] _leftStorms;
 
-    private readonly HashSet<int> _downStorms = new();
+    private bool[,] _downStorms;
 
-    private readonly HashSet<int> _rightStorms = new();
+    private bool[,] _rightStorms;
 
-    private readonly HashSet<int> _upStorms = new();
+    private bool[,] _upStorms;
 
     private int _width;
 
@@ -37,6 +37,14 @@ public abstract class Base : Solution
         _blizzardWidth = _width - 2;
 
         _blizzardHeight = _height - 2;
+
+        _leftStorms = new bool[_height, _width];
+
+        _downStorms = new bool[_width, _height];
+        
+        _rightStorms = new bool[_height, _width];
+
+        _upStorms = new bool[_width, _height];
 
         for (var y = 0; y < _height; y++)
         {
@@ -63,28 +71,28 @@ public abstract class Base : Solution
 
                 if (c == '<')
                 {
-                    _leftStorms.Add(HashCode.Combine(y, x));
+                    _leftStorms[y, x] = true;
 
                     continue;
                 }
 
                 if (c == '>')
                 {
-                    _rightStorms.Add(HashCode.Combine(y, x));
+                    _rightStorms[y, x] = true;
 
                     continue;
                 }
 
                 if (c == 'v')
                 {
-                    _downStorms.Add(HashCode.Combine(x, y));
+                    _downStorms[x, y] = true;
 
                     continue;
                 }
 
                 if (c == '^')
                 {
-                    _upStorms.Add(HashCode.Combine(x, y));
+                    _upStorms[x, y] = true;
                 }
             }
         }
@@ -241,7 +249,7 @@ public abstract class Base : Solution
 
         var target = (position.X - 1 + _blizzardWidth - xD) % _blizzardWidth + 1;
 
-        var found = _rightStorms.Contains(HashCode.Combine(position.Y, target));
+        var found = _rightStorms[position.Y, target];
 
         if (found)
         {
@@ -250,7 +258,7 @@ public abstract class Base : Solution
 
         target = (position.X - 1 + xD) % _blizzardWidth + 1;
 
-        found = _leftStorms.Contains(HashCode.Combine(position.Y, target));
+        found = _leftStorms[position.Y, target];
 
         if (found)
         {
@@ -261,7 +269,7 @@ public abstract class Base : Solution
 
         target = (position.Y - 1 + _blizzardHeight - yD) % _blizzardHeight + 1;
 
-        found = _downStorms.Contains(HashCode.Combine(position.X, target));
+        found = _downStorms[position.X, target];
 
         if (found)
         {
@@ -270,7 +278,7 @@ public abstract class Base : Solution
 
         target = (position.Y - 1 + yD) % _blizzardHeight + 1;
 
-        found = _upStorms.Contains(HashCode.Combine(position.X, target));
+        found = _upStorms[position.X, target];
         
         return found;
     }
