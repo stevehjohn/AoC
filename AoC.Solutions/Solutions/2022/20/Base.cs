@@ -86,9 +86,9 @@ public abstract class Base : Solution
 
         var newIndex = (int) ((oldIndex + number.Value) % (_length - 1));
 
-        if (newIndex <= 0 && oldIndex + number.Value != 0)
+        if (newIndex < 0)
         {
-            newIndex = _length - 1 + newIndex;
+            newIndex += _length - 1;
         }
 
         Array.Copy(_numbers, oldIndex + 1, _numbers, oldIndex, _length - oldIndex - 1);
