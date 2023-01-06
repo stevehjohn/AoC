@@ -91,9 +91,14 @@ public abstract class Base : Solution
             newIndex += _length - 1;
         }
 
-        Array.Copy(_numbers, oldIndex + 1, _numbers, oldIndex, _length - oldIndex - 1);
-
-        Array.Copy(_numbers, newIndex, _numbers, newIndex + 1, _length - newIndex - 1);
+        if (oldIndex < newIndex)
+        {
+            Array.Copy(_numbers, oldIndex + 1, _numbers, oldIndex, newIndex - oldIndex);
+        }
+        else
+        {
+            Array.Copy(_numbers, newIndex, _numbers, newIndex + 1, oldIndex - newIndex);
+        }
 
         _numbers[newIndex] = number;
     }
