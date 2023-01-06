@@ -37,9 +37,11 @@ public class Part2 : Base
             {
                 if (line[x] == '#')
                 {
-                    _cells[NegativeOffset + x + y * YOffset] = true;
+                    var position = NegativeOffset + x + y * YOffset;
+                    
+                    _cells[position] = true;
 
-                    _elves.Add(NegativeOffset + x + y * YOffset);
+                    _elves.Add(position);
                 }
             }
         }
