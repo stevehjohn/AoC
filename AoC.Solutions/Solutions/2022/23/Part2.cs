@@ -110,16 +110,16 @@ public class Part2 : Base
         switch (index)
         {
             case 0:
-                return ! top ? -YOffset : 0;
+                return ! top ? -YOffset : ! bottom ? YOffset : ! left ? -1 : ! right ? 1 : 0;
 
             case 1:
-                return ! bottom ? YOffset : 0;
+                return ! bottom ? YOffset : ! left ? -1 : ! right ? 1 : ! top ? -YOffset : 0;
 
             case 2:
-                return ! left ? -1 : 0;
+                return ! left ? -1 : ! right ? 1 : ! top ? -YOffset : ! bottom ? YOffset : 0;
 
             case 3:
-                return ! right ? 1 : 0;
+                return ! right ? 1 : ! top ? -YOffset : ! bottom ? YOffset : ! left ? -1 : 0;
         }
 
         throw new PuzzleException("Evaluation index is not valid.");
@@ -140,23 +140,11 @@ public class Part2 : Base
             return 0;
         }
 
-        var evaluationIndex = StartEvaluation;
+        var newPosition = Evaluate(top, bottom, right, left, StartEvaluation);
 
-        for (var i = 0; i < 4; i++)
+        if (newPosition != 0)
         {
-            var newPosition = Evaluate(top, bottom, right, left, evaluationIndex);
-
-            if (newPosition != 0)
-            {
-                return newPosition;
-            }
-
-            evaluationIndex++;
-
-            if (evaluationIndex == 4)
-            {
-                evaluationIndex = 0;
-            }
+            return newPosition;
         }
 
         return 0;
