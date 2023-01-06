@@ -19,11 +19,13 @@ public class Part2 : Base
 
     private const int ArbitraryArenaSize = 20_000;
 
+    private const int MaxElves = 2_500;
+
     private readonly bool[] _cells = new bool[ArbitraryArenaSize];
 
     private readonly Dictionary<int, int> _moves = new();
 
-    private readonly HashSet<int> _elves = new();
+    private readonly HashSet<int> _elves = new(MaxElves);
 
     private void ParseInput()
     {
@@ -75,18 +77,16 @@ public class Part2 : Base
                 continue;
             }
 
-            if (! _moves.ContainsKey(elf + proposedMove))
+            if (! _moves.TryAdd(elf + proposedMove, elf))
             {
-                _moves.Add(elf + proposedMove, elf);
+                _moves.Remove(elf + proposedMove);
 
-                moved++;
+                moved--;
 
                 continue;
             }
 
-            _moves.Remove(elf + proposedMove);
-
-            moved--;
+            moved++;
         }
 
         foreach (var move in _moves)
