@@ -8,19 +8,23 @@ public abstract class Base : Solution
 
     private readonly List<Number> _initialNumbers = new();
 
-    private readonly List<Number> _numbers = new();
+    private int _length;
+
+    private Number[] _numbers;
 
     protected void ParseInput(long key = 1)
     {
-        var length = Input.Length;
+        _length = Input.Length;
 
-        for (var i = 0; i < length; i++)
+        _numbers = new Number[_length];
+
+        for (var i = 0; i < _length; i++)
         {
             var number = new Number(long.Parse(Input[i]) * key);
 
             _initialNumbers.Add(number);
 
-            _numbers.Add(number);
+            _numbers[i] = number;
         }
     }
 
@@ -28,7 +32,7 @@ public abstract class Base : Solution
     {
         for (var t = 0; t < times; t++)
         {
-            for (var i = 0; i < _numbers.Count; i++)
+            for (var i = 0; i < _length; i++)
             {
                 DoSwap(i);
             }
@@ -37,15 +41,27 @@ public abstract class Base : Solution
 
     protected long Solve()
     {
-        var startIndex = _numbers.IndexOf(_numbers.First(n => n.Value == 0));
+        var zero = _numbers.First(n => n.Value == 0);
+
+        var startIndex = 0;
+
+        for (var i = 0; i < _length; i++)
+        {
+            if (_numbers[i] == zero)
+            {
+                startIndex = i;
+
+                break;
+            }
+        }
 
         var sum = 0L;
 
-        sum += _numbers[(1_000 + startIndex) % _numbers.Count].Value;
+        sum += _numbers[(1_000 + startIndex) % _length].Value;
 
-        sum += _numbers[(2_000 + startIndex) % _numbers.Count].Value;
+        sum += _numbers[(2_000 + startIndex) % _length].Value;
 
-        sum += _numbers[(3_000 + startIndex) % _numbers.Count].Value;
+        sum += _numbers[(3_000 + startIndex) % _length].Value;
 
         return sum;
     }
@@ -54,17 +70,29 @@ public abstract class Base : Solution
     {
         var number = _initialNumbers[index];
 
-        var oldIndex = _numbers.IndexOf(number);
+        var oldIndex = 0;
 
-        var newIndex = (int) ((oldIndex + number.Value) % (_numbers.Count - 1));
+        for (var i = 0; i < _length; i++)
+        {
+            if (_numbers[i] == number)
+            {
+                oldIndex = i;
+
+                break;
+            }
+        }
+
+        var newIndex = (int) ((oldIndex + number.Value) % (_length - 1));
 
         if (newIndex <= 0 && oldIndex + number.Value != 0)
         {
-            newIndex = _numbers.Count - 1 + newIndex;
+            newIndex = _length - 1 + newIndex;
         }
 
-        _numbers.RemoveAt(oldIndex);
+        Array.Copy(_numbers, oldIndex + 1, _numbers, oldIndex, _length - oldIndex - 1);
 
-        _numbers.Insert(newIndex, number);
+        Array.Copy(_numbers, newIndex, _numbers, newIndex + 1, _length - newIndex - 1);
+
+        _numbers[newIndex] = number;
     }
 }
