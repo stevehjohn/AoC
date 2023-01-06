@@ -19,13 +19,11 @@ public class Part2 : Base
 
     private const int ArbitraryArenaSize = 20_000;
 
-    private const int MaxElves = 2_500;
-
     private readonly bool[] _cells = new bool[ArbitraryArenaSize];
 
     private readonly Dictionary<int, int> _moves = new();
 
-    private readonly HashSet<int> _elves = new(MaxElves);
+    private readonly HashSet<int> _elves = new(SetMaxSize);
 
     private void ParseInput()
     {
