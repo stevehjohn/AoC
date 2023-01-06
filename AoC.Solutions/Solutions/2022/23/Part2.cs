@@ -79,16 +79,16 @@ public class Part2 : Base
                 continue;
             }
 
-            if (! _moves.TryAdd(elf + proposedMove, elf))
+            if (_moves.TryAdd(elf + proposedMove, elf))
             {
-                _moves.Remove(elf + proposedMove);
-
-                moved--;
+                moved++;
 
                 continue;
             }
 
-            moved++;
+            _moves.Remove(elf + proposedMove);
+
+            moved--;
         }
 
         foreach (var move in _moves)
