@@ -24,9 +24,9 @@ public abstract class Base : Solution
 
     private int _blizzardHeight;
 
-    private Point _start;
+    private int _start;
 
-    private Point _end;
+    private int _end;
 
     protected void ParseInput()
     {
@@ -56,12 +56,12 @@ public abstract class Base : Solution
 
                 if (y == 0 && c == '.')
                 {
-                    _start = new Point(x, y);
+                    _start = x + y * _width;
                 }
 
                 if (y == Input.Length - 1 && c == '.')
                 {
-                    _end = new Point(x, y);
+                    _end = x + y * _width;
                 }
 
                 if (c == '#' || c == '.')
@@ -112,40 +112,40 @@ public abstract class Base : Solution
 
     private int RunSimulationStep(int startIteration)
     {
-        var queue = new PriorityQueue<(Point Position, int Steps), int>();
+        var queue = new PriorityQueue<(int Position, int Steps), int>();
 
         var visited = new HashSet<int>();
 
-        queue.Enqueue((new Point(_start.X, _start.Y), 0), 0);
-
+        // TODO: Why does not swapping these still yield the correct answer? Should have been a carpenter...
         var origin = _start;
 
         var target = _end;
+
+        queue.Enqueue((origin, 0), 0);
 
         while (queue.Count > 0)
         {
             var item = queue.Dequeue();
 
-            if (item.Position.X == target.X && item.Position.Y == target.Y)
+            if (item.Position == target && item.Position == target)
             {
                 return item.Steps;
             }
 
-            var moves = GenerateMoves(item.Position.X, item.Position.Y, target, origin, startIteration + item.Steps + 1);
+            var moves = GenerateMoves(item.Position, target, origin, startIteration + item.Steps + 1);
 
             foreach (var move in moves)
             {
                 var hash = new HashCode();
 
-                hash.Add(move.X);
-                hash.Add(move.Y);
+                hash.Add(move);
                 hash.Add(item.Steps);
 
                 var code = hash.ToHashCode();
 
                 if (! visited.Contains(code))
                 {
-                    queue.Enqueue((new Point(move), item.Steps + 1), Math.Abs(target.X - move.X) + Math.Abs(target.Y - move.Y) + item.Steps);
+                    queue.Enqueue((move, item.Steps + 1), Math.Abs(target % _width - move % _width) + Math.Abs(target / _width - move / _width) + item.Steps);
 
                     visited.Add(code);
                 }
@@ -155,22 +155,26 @@ public abstract class Base : Solution
         throw new PuzzleException("Solution not found.");
     }
 
-    private List<Point> GenerateMoves(int x, int y, Point target, Point origin, int iteration)
+    private List<int> GenerateMoves(int position, int target, int origin, int iteration)
     {
-        var moves = new List<Point>();
+        var moves = new List<int>();
+
+        var x = position % _width;
+
+        var y = position / _width;
 
         // Reached goal (end).
-        if (target.Equals(_end) && x == target.X && y == target.Y - 1)
+        if (target == _end && x == target % _width && y == target / _width - 1)
         {
-            moves.Add(new Point(x, y + 1));
+            moves.Add(position + _width);
 
             return moves;
         }
 
         // Reached goal (start).
-        if (target.Equals(_start) && x == target.X && y == target.Y + 1)
+        if (target == _start && x == target % _width && y == target / _width + 1)
         {
-            moves.Add(new Point(x, y - 1));
+            moves.Add(position - _width);
 
             return moves;
         }
@@ -178,61 +182,61 @@ public abstract class Base : Solution
         // Loiter.
         if (! IsOccupied(new Point(x, y), iteration))
         {
-            moves.Add(new Point(x, y));
+            moves.Add(position);
         }
 
         // In and out of start/end.
         if (origin.Equals(_start))
         {
-            if (y == 0 && x == origin.X)
+            if (y == 0 && x == origin % _width)
             {
-                moves.Add(new Point(x, 1));
+                moves.Add(x + _width);
 
                 return moves;
             }
 
-            if (y == 1 && x == origin.X)
+            if (y == 1 && x == origin % _width)
             {
-                moves.Add(new Point(x, y - 1));
+                moves.Add(position - _width);
             }
         }
         else
         {
-            if (y == _height - 1 && x == origin.X)
+            if (y == _height - 1 && x == origin % _width)
             {
-                moves.Add(new Point(x, y - 2));
+                moves.Add(position - _width * 2);
 
                 return moves;
             }
 
-            if (y == _height - 2 && x == origin.X)
+            if (y == _height - 2 && x == origin % _width)
             {
-                moves.Add(new Point(x, y + 1));
+                moves.Add(position + _width);
             }
         }
 
         // Right?
         if (x < _blizzardWidth && ! IsOccupied(new Point(x + 1, y), iteration))
         {
-            moves.Add(new Point(x + 1, y));
+            moves.Add(position + 1);
         }
 
         // Left?
         if (x > 1 && ! IsOccupied(new Point(x - 1, y), iteration))
         {
-            moves.Add(new Point(x - 1, y));
+            moves.Add(position - 1);
         }
 
         // Down?
         if (y < _blizzardHeight && ! IsOccupied(new Point(x, y + 1), iteration))
         {
-            moves.Add(new Point(x, y + 1));
+            moves.Add(position + _width);
         }
 
         // Up?
         if (y > 1 && ! IsOccupied(new Point(x, y - 1), iteration))
         {
-            moves.Add(new Point(x, y - 1));
+            moves.Add(position - _width);
         }
 
         return moves;
