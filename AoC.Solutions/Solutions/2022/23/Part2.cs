@@ -75,18 +75,18 @@ public class Part2 : Base
                 continue;
             }
 
-            if (_moves.ContainsKey(elf + proposedMove))
+            if (! _moves.ContainsKey(elf + proposedMove))
             {
-                _moves.Remove(elf + proposedMove);
+                _moves.Add(elf + proposedMove, elf);
 
-                moved--;
+                moved++;
 
                 continue;
             }
 
-            _moves.Add(elf + proposedMove, elf);
+            _moves.Remove(elf + proposedMove);
 
-            moved++;
+            moved--;
         }
 
         foreach (var move in _moves)
