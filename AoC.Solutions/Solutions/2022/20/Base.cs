@@ -6,9 +6,9 @@ public abstract class Base : Solution
 {
     public override string Description => "Grove positioning system";
 
-    private Number[] _initialNumbers;
-
     private int _length;
+
+    private Number[] _initialNumbers;
 
     private Number[] _numbers;
 
