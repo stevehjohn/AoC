@@ -1,4 +1,5 @@
 ﻿using AoC.Solutions.Infrastructure;
+using System.Collections.Concurrent;
 
 namespace AoC.Solutions.Solutions._2022._19;
 
@@ -7,8 +8,6 @@ public abstract class Base : Solution
     public override string Description => "Not enough minerals";
 
     private readonly List<Blueprint> _blueprints = new();
-
-    private readonly List<State> _buildOptions = new();
 
     protected void ParseInput()
     {
@@ -36,16 +35,15 @@ public abstract class Base : Solution
 
     protected List<(int Best, int Id)> Simulate(int minutes)
     {
-        var result = new List<(int Best, int Id)>();
+        var result = new ConcurrentBag<(int Best, int Id)>();
 
-        foreach (var blueprint in _blueprints)
+        Parallel.ForEach(_blueprints, bp =>
         {
-            var best = ExecuteBlueprint(blueprint, minutes);
+            var best = ExecuteBlueprint(bp, minutes);
+            result.Add((best, bp.Id));
+        });
 
-            result.Add((best, blueprint.Id));
-        }
-
-        return result;
+        return result.ToList();
     }
 
     private int ExecuteBlueprint(Blueprint blueprint, int minutes)
@@ -77,9 +75,9 @@ public abstract class Base : Solution
                 maxTime = state.ElapsedTime;
             }
 
-            GenerateBuildOptions(blueprint, state, minutes);
+            var options = GenerateBuildOptions(blueprint, state, minutes);
 
-            foreach (var build in _buildOptions)
+            foreach (var build in options)
             {
                 // Dunno why / 100 seems so helpful to execution time, but it is.
                 if (build.Geodes + (minutes - build.ElapsedTime) / 100 >= max)
@@ -92,9 +90,9 @@ public abstract class Base : Solution
         return max;
     }
 
-    private void GenerateBuildOptions(Blueprint blueprint, State state, int minutes)
+    private List<State> GenerateBuildOptions(Blueprint blueprint, State state, int minutes)
     {
-        _buildOptions.Clear();
+        var options = new List<State>();
 
         var build = new State(state);
 
@@ -123,11 +121,11 @@ public abstract class Base : Solution
 
             build.GeodeBots++;
 
-            _buildOptions.Add(build);
+            options.Add(build);
 
             if (delta == 0)
             {
-                return;
+                return options;
             }
         }
 
@@ -160,11 +158,11 @@ public abstract class Base : Solution
 
                 build.ObsidianBots++;
 
-                _buildOptions.Add(build);
+                options.Add(build);
 
                 if (delta == 0)
                 {
-                    return;
+                    return options;
                 }
             }
         }
@@ -189,7 +187,7 @@ public abstract class Base : Solution
 
                 build.ClayBots++;
 
-                _buildOptions.Add(build);
+                options.Add(build);
             }
         }
 
@@ -213,9 +211,11 @@ public abstract class Base : Solution
 
                 build.OreBots++;
 
-                _buildOptions.Add(build);
+                options.Add(build);
             }
         }
+
+        return options;
     }
 
     private static void GatherResources(State state, int cycles = 1)
