@@ -1,110 +1,40 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  
-  <Import Project="$(MSBuildProgramFiles32)\MSBuild\MonoGame\v3.0\MonoGame.Common.props" Condition="Exists('$(MSBuildProgramFiles32)\MSBuild\MonoGame\v3.0\MonoGame.Common.props')" />
-
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows7.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWindowsForms>true</UseWindowsForms>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>disable</Nullable>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="_Content\2018\13\obj\**" />
-    <Compile Remove="_Content\2020\20\obj\**" />
-    <EmbeddedResource Remove="_Content\2018\13\obj\**" />
-    <EmbeddedResource Remove="_Content\2020\20\obj\**" />
-    <None Remove="_Content\2018\13\obj\**" />
-    <None Remove="_Content\2020\20\obj\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="_Content\2018\13\sprites.png" />
-    <None Remove="_Content\2018\17\Content.mgcb" />
-    <None Remove="_Content\2020\20\Content.mgcb" />
-    <None Remove="_Content\2022\12\Content.mgcb" />
-    <None Remove="_Content\2022\14\Content.mgcb" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2022.3.1" />
-    <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.1.303" />
-    <PackageReference Include="SharpAvi" Version="3.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Exceptions\" />
-    <Folder Include="Visualisations\2018\13\" />
-    <DesignData Include="_Content\2018\13\Content.mgcb" />
-    <DesignData Include="_Content\2018\17\Content.mgcb" />
-    <DesignData Include="_Content\2020\20\Content.mgcb" />
-    <DesignData Include="_Content\2022\12\Content.mgcb" />
-    <DesignData Include="_Content\2022\14\Content.mgcb" />
-    <Folder Include="Visualisations\2018\17\" />
-    <Folder Include="Visualisations\2022\12\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\AoC.Solutions\AoC.Solutions.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="_Content\2018\13\bin\Windows\map-tiles.xnb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="_Content\2018\13\bin\Windows\spark.xnb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="_Content\2018\17\bin\Windows\tiles.xnb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="_Content\2020\13\bin\Windows\sprites.xnb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="_Content\2020\20\bin\Windows\border.xnb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="_Content\2020\20\bin\Windows\image.xnb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="_Content\2020\20\bin\Windows\jigsaw-mat-border.xnb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="_Content\2020\20\bin\Windows\jigsaw-mat.xnb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="_Content\2020\20\bin\Windows\queue-cell.xnb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="_Content\2020\20\bin\Windows\scan-highlight.xnb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="_Content\2020\20\bin\Windows\scanner.xnb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="_Content\2022\14\bin\Windows\tiles.xnb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
-  <Import Project="$(MSBuildProgramFiles32)\MSBuild\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
-
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net7.0</TargetFramework>
+        <RollForward>Major</RollForward>
+        <PublishReadyToRun>false</PublishReadyToRun>
+        <TieredCompilation>false</TieredCompilation>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+    <PropertyGroup>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+        <ApplicationIcon>Icon.ico</ApplicationIcon>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Remove="Icon.ico"/>
+        <None Remove="Icon.bmp"/>
+    </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Include="Icon.ico"/>
+        <EmbeddedResource Include="Icon.bmp"/>
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.1.303"/>
+        <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303"/>
+    </ItemGroup>
+    <ItemGroup>
+      <DesignData Include="_Content\2018\13\Content.mgcb" />
+      <DesignData Include="_Content\2018\17\Content.mgcb" />
+      <DesignData Include="_Content\2020\20\Content.mgcb" />
+      <DesignData Include="_Content\2022\12\Content.mgcb" />
+      <DesignData Include="_Content\2022\14\Content.mgcb" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\AoC.Solutions\AoC.Solutions.csproj" />
+    </ItemGroup>
+    <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
+        <Message Text="Restoring dotnet tools" Importance="High"/>
+        <Exec Command="dotnet tool restore"/>
+    </Target>
 </Project>

@@ -1,12 +1,10 @@
 ﻿using AoC.Solutions.Infrastructure;
 using Microsoft.Xna.Framework;
-#if Windows
 using SharpAvi.Codecs;
 using SharpAvi.Output;
 using System.Drawing.Imaging;
 using Point = System.Drawing.Point;
 using Rectangle = System.Drawing.Rectangle;
-#endif
 
 namespace AoC.Visualisations.Infrastructure;
 
@@ -22,9 +20,7 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
                 {
                     _cancellationTokenSource.Cancel();
 
-#if Windows
                     EndVideo();
-#endif
 
                     Exit();
                 });
@@ -50,12 +46,10 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
 
     public string OutputAviPath { get; set; }
 
-#if Windows
     private AviWriter _aviWriter;
 
     private IAviVideoStream _aviStream;
-#endif
-    
+
     private bool _quitWhenQueueEmpty;
 
     protected override void Initialize()
@@ -63,8 +57,7 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
         _puzzleTask = new Task(() => Puzzle.GetAnswer(), _cancellationTokenSource.Token);
         
         _puzzleTask.Start();
-        
-#if Windows
+
         if (! string.IsNullOrWhiteSpace(OutputAviPath))
         {
             _aviWriter = new AviWriter(OutputAviPath)
@@ -77,12 +70,10 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
                                                            true,
                                                            GraphicsDeviceManager.PreferredBackBufferWidth, GraphicsDeviceManager.PreferredBackBufferHeight);
         }
-#endif
 
         base.Initialize();
     }
 
-#if Windows
     protected override unsafe void EndDraw()
     {
         if (_aviStream != null)
@@ -107,9 +98,7 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
 
         base.EndDraw();
     }
-#endif
 
-#if Windows
     private void EndVideo()
     {
         if (_aviWriter != null)
@@ -119,7 +108,6 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
             _aviWriter.Close();
         }
     }
-#endif
 
     public void PuzzleComplete()
     {
@@ -130,9 +118,7 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
     {
         _cancellationTokenSource.Cancel();
 
-#if Windows
         EndVideo();
-#endif
 
         base.OnExiting(sender, args);
     }
