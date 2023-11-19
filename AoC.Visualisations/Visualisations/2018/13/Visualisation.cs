@@ -42,7 +42,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                                  };
 
         // Something funky going on with having to add \bin\Windows - investigate.
-        Content.RootDirectory = "_Content\\2018\\13\\bin\\Windows";
+        Content.RootDirectory = "./13";
     }
 
     public override void SetPart(int part)
