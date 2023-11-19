@@ -10,7 +10,7 @@ public static class EntryPoint
     {
         if (arguments.Length < 1 || arguments.Length > 2)
         {
-            throw new VisualisationParameterException("Please specify the visualisation to run, format: year.day.part, e.g. 2021.05.2.");
+            throw new VisualisationParameterException("Please specify the visualisation to run, format: year.day.part, e.g. 2022.12.2.");
         }
 
         string year;
