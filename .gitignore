@@ -291,5 +291,3 @@ lambdas/.serverless/
 
 .dotnetcli/
 .vscode/
-
-*.result
