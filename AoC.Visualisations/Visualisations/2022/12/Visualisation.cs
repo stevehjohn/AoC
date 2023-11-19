@@ -43,7 +43,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                                 };
 
         // Something funky going on with having to add \bin\Windows - investigate.
-        Content.RootDirectory = "_Content\\2022\\12\\bin\\Windows";
+        Content.RootDirectory = "./12";
 
         IsMouseVisible = true;
 
