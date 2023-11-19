@@ -8,12 +8,9 @@ See answers and low-res timings [here](results.md).
 
 # Visualisations
 
-~~Now supports cross-platform visualisations.~~
+Now supports cross-platform visualisations.
 
-Works on macOS. There is an issue with Windows at the moment involving FreeImage.
-Will get that resolved when I can.
-
-For macOS, navigate to the root of the repository and do the following (replacing the puzzle number as required):
+Navigate to the root of the repository and do the following (replacing the puzzle number as required):
 
 - `dotnet build`
 - `dotnet run --project AoC.Visualisations 2022.12.2`
