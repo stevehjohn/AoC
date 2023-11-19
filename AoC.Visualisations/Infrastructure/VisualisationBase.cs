@@ -1,8 +1,8 @@
-﻿using System.Drawing;
-using System.Drawing.Imaging;
-using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Infrastructure;
 using Microsoft.Xna.Framework;
 #if Windows
+using System.Drawing;
+using System.Drawing.Imaging;
 using SharpAvi.Codecs;
 using SharpAvi.Output;
 using Point = System.Drawing.Point;
