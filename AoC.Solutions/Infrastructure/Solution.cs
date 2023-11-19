@@ -18,7 +18,7 @@ public abstract class Solution
 
         var path = parts.Skip(2).Select(s => s.Replace("_", string.Empty)).ToArray();
 
-        Input = File.ReadAllLines($"{string.Join(Path.DirectorySeparatorChar, path)}{Path.DirectorySeparatorChar}input.txt");
+        Input = File.ReadAllLines($"./Aoc.Solutions/{string.Join(Path.DirectorySeparatorChar, path)}{Path.DirectorySeparatorChar}input.txt");
     }
 
     public abstract string GetAnswer();
