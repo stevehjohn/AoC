@@ -15,6 +15,10 @@ Navigate to the root of the repository and do the following (replacing the puzzl
 - `dotnet build`
 - `dotnet run --project AoC.Visualisations 2022.12.2`
 
+If on Windows you can automatically save a recording of the visualisation (say, for uploading to YouTube). Specify the path as a second parameter.
+
+- `dotnet run --project AoC.Visualisations 2022.12.2 C:\Videos\AoC\visualisation.avi`
+
 Run the visualisation project with the visualisation as a parameter.
 The format is `year.day.part`, with part being 1 or 2.
 
