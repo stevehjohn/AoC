@@ -71,8 +71,6 @@ public abstract class Base : Solution
 
     protected long Solve(bool findPattern = false)
     {
-        Console.CursorVisible = false;
-
         _wind = Input[0];
 
         var rockIndex = 0;
