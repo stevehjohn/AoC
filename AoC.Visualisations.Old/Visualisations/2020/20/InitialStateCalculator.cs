@@ -1,5 +1,4 @@
-﻿using AoC.Solutions.Common;
-using AoC.Solutions.Solutions._2020._20;
+﻿using AoC.Solutions.Solutions._2020._20;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace AoC.Visualisations.Visualisations._2020._20;
