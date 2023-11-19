@@ -1,9 +1,10 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using System.Drawing;
+using System.Drawing.Imaging;
+using AoC.Solutions.Infrastructure;
 using Microsoft.Xna.Framework;
 #if Windows
 using SharpAvi.Codecs;
 using SharpAvi.Output;
-using System.Drawing.Imaging;
 using Point = System.Drawing.Point;
 using Rectangle = System.Drawing.Rectangle;
 #endif
@@ -87,6 +88,7 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
     {
         if (_aviStream != null)
         {
+#pragma warning disable CA1416 // Validate platform compatibility
             using var bitmap = new Bitmap(GraphicsDeviceManager.PreferredBackBufferWidth, GraphicsDeviceManager.PreferredBackBufferHeight, PixelFormat.Format32bppRgb);
 
             var bounds = Window.ClientBounds;
@@ -103,6 +105,7 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
             _aviStream?.WriteFrame(true, span);
 
             bitmap.UnlockBits(bitmapData);
+#pragma warning restore CA1416 // Validate platform compatibility
         }
 
         base.EndDraw();
