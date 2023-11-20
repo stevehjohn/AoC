@@ -1,4 +1,5 @@
 ﻿using AoC.Benchmark.Infrastructure;
+using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Running;
 
 namespace AoC.Benchmark;
@@ -10,7 +11,7 @@ public class Program
         Benchmarks.SetArguments(arguments);
 
         var config = CustomConfig.Instance;
-
+        
         BenchmarkRunner.Run<Benchmarks>(config);
     }
 }
