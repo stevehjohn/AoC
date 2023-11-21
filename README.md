@@ -8,7 +8,7 @@ See answers and low-res timings [here](results.md).
 
 # Visualisations
 
-Now supports cross-platform visualisations.
+Now supports cross-platform visualisations. YouTube playlist of them [here](https://www.youtube.com/playlist?list=PLBtwzTaAY-IWq6Mi1nvwsphMTw-HU13eM).
 
 Navigate to the root of the repository and do the following (replacing the puzzle number as required):
 
