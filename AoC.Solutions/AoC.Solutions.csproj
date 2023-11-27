@@ -61,6 +61,9 @@
     <None Update="Solutions\2023\14\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Solutions\2023\15\input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -89,7 +92,6 @@
     <Folder Include="Solutions\2021\17\" />
     <Folder Include="Solutions\2021\18\" />
     <Folder Include="Solutions\2021\21\" />
-    <Folder Include="Solutions\2023\15\" />
     <Folder Include="Solutions\2023\16\" />
     <Folder Include="Solutions\2023\17\" />
     <Folder Include="Solutions\2023\18\" />
