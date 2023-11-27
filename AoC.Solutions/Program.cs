@@ -31,6 +31,15 @@ public static class Program
 
         foreach (var solution in solutions)
         {
+            var year = int.Parse(solution.Namespace?.Split('.')[3].Replace("_", string.Empty) ?? "0");
+
+            var day = int.Parse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0");
+
+            if (new DateTime(year, 12, day) > DateTime.UtcNow)
+            {
+                continue;
+            }
+
             if (arguments.Length == 1)
             {
                 var solutionKey = $"{int.Parse(solution.Namespace?.Split('.')[3].Replace("_", string.Empty) ?? "0")}.{int.Parse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0"):D2}.{solution.Name[4]}";
@@ -64,8 +73,6 @@ public static class Program
 
                 answer = matrixParser.Parse(answer);
             }
-
-            var year = int.Parse(solution.Namespace?.Split('.')[3].Replace("_", string.Empty) ?? "0");
 
             if (previousYear == null)
             {
