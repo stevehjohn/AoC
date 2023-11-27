@@ -19,6 +19,11 @@
 
   <ItemGroup>
     <None Remove=".gitignore" />
+    <None Remove="2015.20.1.result" />
+    <None Remove="2019.10.1.result" />
+    <None Remove="2019.15.1.result" />
+    <None Remove="2020.09.1.result" />
+    <None Remove="2020.20.1.result" />
     <None Update="Solutions\2023\01\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
