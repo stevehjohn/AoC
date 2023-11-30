@@ -4,7 +4,7 @@ namespace AoC.Solutions.Solutions._2021._23;
 
 public abstract class Base : Solution
 {
-    public override string Description => "Hotel amphipod*";
+    public override string Description => "Hotel amphipod";
 
     private int[] _initialAmphipodState;
 
