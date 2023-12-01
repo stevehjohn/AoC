@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Trebuchet?!";
 
-    protected int GetNumber(string line)
+    protected static int GetNumber(string line)
     {
         var first = ' ';
         
