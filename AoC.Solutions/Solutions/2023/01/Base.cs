@@ -4,7 +4,7 @@ namespace AoC.Solutions.Solutions._2023._01;
 
 public abstract class Base : Solution
 {
-    public override string Description => "Trebuchet?!";
+    public override string Description => "Trebuchet";
 
     protected static int GetNumber(string line)
     {
