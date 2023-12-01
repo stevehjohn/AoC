@@ -101,12 +101,14 @@ public static class Program
 
                 previousDesc = description;
             }
+
+            var milliseconds = stopwatch.Elapsed.Milliseconds;
             
-            Console.WriteLine($" {year} {int.Parse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0"),2}.{solution.Name[4]}: {displayAnswer,-30} {$"{stopwatch.ElapsedMilliseconds}ms",-6}  {description}");
+            Console.WriteLine($" {year} {int.Parse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0"),2}.{solution.Name[4]}: {displayAnswer,-30} {$"{milliseconds:N0}ms",-6}  {description}");
 
-            totalMs += stopwatch.ElapsedMilliseconds;
+            totalMs += milliseconds;
 
-            yearMs += stopwatch.ElapsedMilliseconds;
+            yearMs += milliseconds;
         }
 
         WriteYearSummary(arguments.Length == 0);
@@ -163,9 +165,9 @@ public static class Program
 
             Console.WriteLine(showTotal ? " -------" : string.Empty);
 
-            Console.Write($"{new string(' ', 43)}{$"{yearMs}ms",-7}");
+            Console.Write($"{new string(' ', 43)}{$"{yearMs:N0}ms",-7}");
 
-            Console.WriteLine(showTotal ? $" {totalMs}ms" : string.Empty);
+            Console.WriteLine(showTotal ? $" {totalMs:N0}ms" : string.Empty);
 
             Console.WriteLine();
         }
