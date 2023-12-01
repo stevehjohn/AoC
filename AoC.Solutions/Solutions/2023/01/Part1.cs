@@ -16,35 +16,4 @@ public class Part1 : Base
 
         return sum.ToString();
     }
-
-    private int GetNumber(string line)
-    {
-        var first = ' ';
-        
-        foreach (var letter in line)
-        {
-            if (char.IsNumber(letter))
-            {
-                first = letter;
-
-                break;
-            }
-        }
-
-        line = new string(line.Reverse().ToArray());
-
-        var last = ' ';
-        
-        foreach (var letter in line)
-        {
-            if (char.IsNumber(letter))
-            {
-                last = letter;
-
-                break;
-            }
-        }
-
-        return int.Parse($"{first}{last}");
-    }
 }

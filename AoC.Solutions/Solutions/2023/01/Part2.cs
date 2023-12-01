@@ -5,7 +5,7 @@ namespace AoC.Solutions.Solutions._2023._01;
 [UsedImplicitly]
 public class Part2 : Base
 {
-    private string[] _numbers = { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+    private readonly string[] _numbers = { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
     
     public override string GetAnswer()
     {
@@ -13,40 +13,23 @@ public class Part2 : Base
         
         foreach (var line in Input)
         {
-            sum += GetNumber(line);
+            sum += GetNumber(ParseNumbers(line));
         }
 
         return sum.ToString();
     }
 
-    private int GetNumber(string line)
+    private string ParseNumbers(string line)
     {
-        var first = ' ';
-        
-        foreach (var letter in line)
-        {
-            if (char.IsNumber(letter))
-            {
-                first = letter;
+        var index = 1;
 
-                break;
-            }
+        foreach (var number in _numbers)
+        {
+            line = line.Replace(number, index.ToString());
+
+            index++;
         }
 
-        line = new string(line.Reverse().ToArray());
-
-        var last = ' ';
-        
-        foreach (var letter in line)
-        {
-            if (char.IsNumber(letter))
-            {
-                last = letter;
-
-                break;
-            }
-        }
-
-        return int.Parse($"{first}{last}");
+        return line;
     }
 }
