@@ -102,13 +102,13 @@ public static class Program
                 previousDesc = description;
             }
 
-            var milliseconds = stopwatch.Elapsed.Milliseconds;
+            var microseconds = stopwatch.Elapsed.TotalMicroseconds;
             
-            Console.WriteLine($" {year} {int.Parse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0"),2}.{solution.Name[4]}: {displayAnswer,-30} {$"{milliseconds:N0}ms",-6}  {description}");
+            Console.WriteLine($" {year} {int.Parse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0"),2}.{solution.Name[4]}: {displayAnswer,-30} {$"{microseconds:N0}μs",-12}  {description}");
 
-            totalMs += milliseconds;
+            totalMs += (long) microseconds;
 
-            yearMs += milliseconds;
+            yearMs += (long) microseconds;
         }
 
         WriteYearSummary(arguments.Length == 0);
@@ -161,13 +161,13 @@ public static class Program
 
         void WriteYearSummary(bool showTotal)
         {
-            Console.Write($"{new string(' ', 43)}-------");
+            Console.Write($"{new string(' ', 43)}-------------");
 
-            Console.WriteLine(showTotal ? " -------" : string.Empty);
+            Console.WriteLine(showTotal ? " -------------" : string.Empty);
 
-            Console.Write($"{new string(' ', 43)}{$"{yearMs:N0}ms",-7}");
+            Console.Write($"{new string(' ', 43)}{$"{yearMs / 1000:N0}ms",-13}");
 
-            Console.WriteLine(showTotal ? $" {totalMs:N0}ms" : string.Empty);
+            Console.WriteLine(showTotal ? $" {totalMs / 1000:N0}ms" : string.Empty);
 
             Console.WriteLine();
         }
