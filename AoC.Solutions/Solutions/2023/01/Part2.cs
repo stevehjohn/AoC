@@ -13,7 +13,7 @@ public class Part2 : Base
         {
             sum += GetNumber(ParseNumbers(line));
         }
-
+        
         return sum.ToString();
     }
 
