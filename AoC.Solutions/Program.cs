@@ -101,7 +101,7 @@ public static class Program
 
                 previousDesc = description;
             }
-
+            
             Console.WriteLine($" {year} {int.Parse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0"),2}.{solution.Name[4]}: {displayAnswer,-30} {$"{stopwatch.ElapsedMilliseconds}ms",-6}  {description}");
 
             totalMs += stopwatch.ElapsedMilliseconds;
