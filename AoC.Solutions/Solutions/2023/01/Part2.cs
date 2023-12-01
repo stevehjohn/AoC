@@ -21,13 +21,60 @@ public class Part2 : Base
 
     private string ParseNumbers(string line)
     {
-        var index = 1;
+        line = ParseFirstNumberString(line);
 
-        foreach (var number in _numbers)
+        line = ParseLastNumberString(line);
+
+        return line;
+    }
+
+    private string ParseFirstNumberString(string line)
+    {
+        var first = int.MaxValue;
+
+        var firstNumber = 0;
+        
+        for (var i = 0; i < 9; i++)
         {
-            line = line.Replace(number, index.ToString());
+            var index = line.IndexOf(_numbers[i], StringComparison.InvariantCultureIgnoreCase);
 
-            index++;
+            if (index >= 0 && index < first)
+            {
+                first = index;
+
+                firstNumber = i;
+            }
+        }
+
+        if (first != int.MaxValue)
+        {
+            line = line.Replace(_numbers[firstNumber], (firstNumber + 1).ToString());
+        }
+
+        return line;
+    }
+
+    private string ParseLastNumberString(string line)
+    {
+        var last = int.MaxValue;
+
+        var lastNumber = 0;
+        
+        for (var i = 0; i < 9; i++)
+        {
+            var index = line.LastIndexOf(_numbers[i], StringComparison.InvariantCultureIgnoreCase);
+
+            if (index >= 0 && index < last)
+            {
+                last = index;
+
+                lastNumber = i;
+            }
+        }
+
+        if (last != int.MaxValue)
+        {
+            line = line.Replace(_numbers[lastNumber], (lastNumber + 1).ToString());
         }
 
         return line;
