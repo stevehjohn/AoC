@@ -293,3 +293,4 @@ lambdas/.serverless/
 .vscode/
 
 *.result
+.DS_Store
