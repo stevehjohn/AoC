@@ -6,7 +6,7 @@ namespace AoC.Solutions.Solutions._2019._21;
 
 public abstract class Base : Solution
 {
-    public override string Description => "Jumping droids (CPU used unmodified)*";
+    public override string Description => "Jumping droids (CPU used unmodified)";
 
     protected string RunDroid(string commands)
     {
