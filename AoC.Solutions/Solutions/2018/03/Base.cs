@@ -7,7 +7,7 @@ namespace AoC.Solutions.Solutions._2018._03;
 [UsedImplicitly]
 public abstract class Base : Solution
 {
-    public override string Description => "Fabric overlap*";
+    public override string Description => "Fabric overlap";
 
     protected const int FabricSize = 1_000;
 
