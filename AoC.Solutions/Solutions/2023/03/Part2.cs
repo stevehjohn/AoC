@@ -18,7 +18,7 @@ public class Part2 : Base
         return GetGearValues(gears, numbers).ToString();    
     }
 
-    private int GetGearValues(List<(int X, int Y)> gears, List<(int X, int Y, int Number, int Length)> numbers)
+    private static int GetGearValues(List<(int X, int Y)> gears, List<(int X, int Y, int Number, int Length)> numbers)
     {
         var sum = 0;
         
@@ -35,7 +35,7 @@ public class Part2 : Base
         return sum;
     }
 
-    private List<int> GetNeighbours(int x, int y, List<(int X, int Y, int Number, int Length)> numbers)
+    private static List<int> GetNeighbours(int x, int y, List<(int X, int Y, int Number, int Length)> numbers)
     {
         var neighbours = new List<int>();
         
