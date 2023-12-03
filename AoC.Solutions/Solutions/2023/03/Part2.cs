@@ -7,11 +7,41 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        var sum = 0;
-
         Width = Input[0].Length;
 
         Height = Input.Length;
+
+        var gears = GetGears();
+
+        var numbers = GetNumbers();
+        
+        return GetGearValues(gears, numbers).ToString();    
+    }
+
+    private int GetGearValues(List<(int X, int Y)> gears, List<(int X, int Y, int Number)> numbers)
+    {
+        var sum = 0;
+        
+        foreach (var gear in gears)
+        {
+            var neighbours = GetNeighbours(gear.X, gear.Y);
+
+            if (neighbours.Count == 2)
+            {
+                sum += neighbours[0] * neighbours[1];
+            }
+        }
+
+        return sum;
+    }
+
+    private List<int> GetNeighbours(int x, int y)
+    {
+    }
+
+    private List<(int X, int Y)> GetGears()
+    {
+        var gears = new List<(int X, int Y)>();
         
         for (var y = 0; y < Height; y++)
         {
@@ -21,25 +51,25 @@ public class Part2 : Base
             {
                 if (line[x] == '*')
                 {
-                    sum += CheckGear(x, y);
+                    gears.Add((x, y));
                 }
             }
         }
 
-        return sum.ToString();    
+        return gears;
     }
 
-    private int CheckGear(int oX, int oY)
+    private List<(int X, int Y, int Number)> GetNumbers()
     {
-        var numbers = new List<int>();
-
-        for (var y = oY - 1; y < oY + 2; y++)
+        var numbers = new List<(int X, int Y, int Number)>();
+        
+        for (var y = 0; y < Height; y++)
         {
             var line = Input[y];
 
             var number = 0;
-
-            for (var x = oX - 3; x < oX + 4; x++)
+            
+            for (var x = 0; x < Width; x++)
             {
                 if (char.IsNumber(line[x]))
                 {
@@ -51,7 +81,7 @@ public class Part2 : Base
                 {
                     if (number != 0)
                     {
-                        numbers.Add(number);
+                        numbers.Add((x, y, number));
 
                         number = 0;
                     }
@@ -60,15 +90,10 @@ public class Part2 : Base
 
             if (number != 0)
             {
-                numbers.Add(number);
+                numbers.Add((Width, y, number));
             }
         }
 
-        if (numbers.Count == 2)
-        {
-            return numbers[0] * numbers[1];
-        }
-
-        return 0;
+        return numbers;
     }
 }
