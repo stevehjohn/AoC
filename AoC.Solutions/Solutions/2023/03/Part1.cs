@@ -5,19 +5,15 @@ namespace AoC.Solutions.Solutions._2023._03;
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private int _width;
-
-    private int _height;
-    
     public override string GetAnswer()
     {
         var sum = 0;
 
-        _width = Input[0].Length;
+        Width = Input[0].Length;
 
-        _height = Input.Length;
+        Height = Input.Length;
         
-        for (var y = 0; y < _height; y++)
+        for (var y = 0; y < Height; y++)
         {
             var line = Input[y];
 
@@ -25,7 +21,7 @@ public class Part1 : Base
 
             var length = 0;
             
-            for (var x = 0; x < _width; x++)
+            for (var x = 0; x < Width; x++)
             {
                 if (char.IsNumber(line[x]))
                 {
@@ -53,7 +49,7 @@ public class Part1 : Base
 
             if (number != 0)
             {
-                if (AdjacentSymbol(_width - length, y, length))
+                if (AdjacentSymbol(Width - length, y, length))
                 {
                     sum += number;
                 }
@@ -83,12 +79,12 @@ public class Part1 : Base
 
     private char GetChar(int x, int y)
     {
-        if (x < 0 || x >= _width)
+        if (x < 0 || x >= Width)
         {
             return '.';
         }
 
-        if (y < 0 || y >= _height)
+        if (y < 0 || y >= Height)
         {
             return '.';
         }
