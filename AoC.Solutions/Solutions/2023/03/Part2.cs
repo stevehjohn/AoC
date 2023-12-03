@@ -18,13 +18,13 @@ public class Part2 : Base
         return GetGearValues(gears, numbers).ToString();    
     }
 
-    private int GetGearValues(List<(int X, int Y)> gears, List<(int X, int Y, int Number)> numbers)
+    private int GetGearValues(List<(int X, int Y)> gears, List<(int X, int Y, int Number, int Length)> numbers)
     {
         var sum = 0;
         
         foreach (var gear in gears)
         {
-            var neighbours = GetNeighbours(gear.X, gear.Y);
+            var neighbours = GetNeighbours(gear.X, gear.Y, numbers);
 
             if (neighbours.Count == 2)
             {
@@ -35,8 +35,22 @@ public class Part2 : Base
         return sum;
     }
 
-    private List<int> GetNeighbours(int x, int y)
+    private List<int> GetNeighbours(int x, int y, List<(int X, int Y, int Number, int Length)> numbers)
     {
+        var neighbours = new List<int>();
+        
+        foreach (var number in numbers)
+        {
+            if (y >= number.Y - 1 && y <= number.Y + 1)
+            {
+                if (x >= number.X - number.Length && x <= number.X + 1)
+                {
+                    neighbours.Add(number.Number);
+                }
+            }
+        }
+
+        return neighbours;
     }
 
     private List<(int X, int Y)> GetGears()
@@ -59,9 +73,9 @@ public class Part2 : Base
         return gears;
     }
 
-    private List<(int X, int Y, int Number)> GetNumbers()
+    private List<(int X, int Y, int Number, int Length)> GetNumbers()
     {
-        var numbers = new List<(int X, int Y, int Number)>();
+        var numbers = new List<(int X, int Y, int Number, int Length)>();
         
         for (var y = 0; y < Height; y++)
         {
@@ -81,7 +95,7 @@ public class Part2 : Base
                 {
                     if (number != 0)
                     {
-                        numbers.Add((x, y, number));
+                        numbers.Add((x - 1, y, number, number.ToString().Length));
 
                         number = 0;
                     }
@@ -90,7 +104,7 @@ public class Part2 : Base
 
             if (number != 0)
             {
-                numbers.Add((Width, y, number));
+                numbers.Add((Width - 1, y, number, number.ToString().Length));
             }
         }
 
