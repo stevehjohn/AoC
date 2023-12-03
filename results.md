@@ -1,3 +1,14 @@
+Timings for puzzle solutions below.
+
+Tests performed on a 2023 MacBook Pro.
+
+- Apple M3 Max SoC
+  - 16 Core CPU
+  - 40 Core GPU
+  - 16 Core Neural Engine
+- 64GB Unified Memory
+- 2TB SSD
+
 ```
  2015  1.1: 74                             130μs         Not quite lisp
  2015  1.2: 1795                           68μs
