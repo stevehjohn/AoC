@@ -50,6 +50,14 @@ public class Part1 : Base
                     }
                 }
             }
+
+            if (number != 0)
+            {
+                if (AdjacentSymbol(_width - length, y, length))
+                {
+                    sum += number;
+                }
+            }
         }
 
         return sum.ToString();
@@ -57,15 +65,15 @@ public class Part1 : Base
 
     private bool AdjacentSymbol(int x, int y, int length)
     {
-        for (var i = -1; i < length + 1; i++)
+        for (var i = x - 1; i <= x + length; i++)
         {
-            if (GetChar(x + i, y - 1) != '.' || GetChar(x + i, y + 1) != '.')
+            if (GetChar(i, y - 1) != '.' || GetChar(i, y + 1) != '.')
             {
                 return true;
             }
         }
         
-        if (GetChar(x - 1, y) != '.' || GetChar(x + length + 1, y) != '.')
+        if (GetChar(x - 1, y) != '.' || GetChar(x + length, y) != '.')
         {
             return true;
         }
