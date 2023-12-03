@@ -427,7 +427,7 @@ Tests performed on a 2023 MacBook Pro.
                                            ------------- -------------
                                            407ms         64,920ms
 
-  2023  1.1: 54877                          646μs         Trebuchet
+ 2023  1.1: 54877                          646μs         Trebuchet
  2023  1.2: 54100                          960μs
  2023  2.1: 1931                           214μs         Cube Conundrum
  2023  2.2: 83105                          239μs
