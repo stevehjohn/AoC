@@ -76,24 +76,4 @@ public class Part1 : Base
 
         return false;
     }
-
-    private char GetChar(int x, int y)
-    {
-        if (x < 0 || x >= Width)
-        {
-            return '.';
-        }
-
-        if (y < 0 || y >= Height)
-        {
-            return '.';
-        }
-
-        if (char.IsNumber(Input[y][x]))
-        {
-            return '.';
-        }
-
-        return Input[y][x];
-    }
 }
