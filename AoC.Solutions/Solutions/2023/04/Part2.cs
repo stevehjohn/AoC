@@ -21,6 +21,13 @@ public class Part2 : Base
             }
         }
 
-        return counts.Sum().ToString();
+        var sum = 0;
+
+        for (var i = 0; i < points.Length; i++)
+        {
+            sum += counts[i];
+        }
+
+        return sum.ToString();
     }
 }
