@@ -10,26 +10,22 @@ public abstract class Base : Solution
     {
         var first = ' ';
         
-        foreach (var letter in line)
-        {
-            if (char.IsNumber(letter))
-            {
-                first = letter;
-
-                break;
-            }
-        }
-
-        line = new string(line.Reverse().ToArray());
-
         var last = ' ';
-        
-        foreach (var letter in line)
-        {
-            if (char.IsNumber(letter))
-            {
-                last = letter;
 
+        for (var i = 0; i < line.Length; i++)
+        {
+            if (char.IsNumber(line[i]) && first == ' ')
+            {
+                first = line[i];
+            }
+
+            if (char.IsNumber(line[line.Length - i - 1]) & last == ' ')
+            {
+                last = line[line.Length - i - 1];
+            }
+
+            if (first != ' ' && last != ' ')
+            {
                 break;
             }
         }
