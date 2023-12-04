@@ -436,5 +436,5 @@ Tests performed on a 2023 MacBook Pro.
  2023  4.1: 22674                          378μs         Scratchcards
  2023  4.2: 5747443                        318μs
                                            -------------
-                                           5ms~~~~
+                                           5ms
 ```
