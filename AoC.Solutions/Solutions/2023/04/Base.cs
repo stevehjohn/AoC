@@ -20,13 +20,13 @@ public abstract class Base : Solution
 
     private static int GetMatches(string line)
     {
-        line = line.Split(':', StringSplitOptions.TrimEntries)[1];
+        var winningNumbersString = line[10..39];
 
-        var parts = line.Split('|', StringSplitOptions.TrimEntries);
+        var numbersString = line[42..];
+        
+        var winningNumbers = winningNumbersString.Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
 
-        var winningNumbers = parts[0].Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
-
-        var numbers = parts[1].Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
+        var numbers = numbersString.Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
 
         var count = winningNumbers.Intersect(numbers).Count();
 
