@@ -30,11 +30,11 @@ public abstract class Base : Solution
         {
             var location = i * 3;
 
-            var left = numbersString[location];
+            var left = winningNumbersString[location];
+
+            var right = winningNumbersString[location + 1];
             
-            _winningNumbers[i] = winningNumbersString[location] == ' '
-                ? winningNumbersString[location + 1] - '0'
-                : (winningNumbersString[location] - '0') * 10 + winningNumbersString[location + 1] - '0';
+            _winningNumbers[i] = left == ' ' ? right - '0' : (left - '0') * 10 + right - '0';
         }
 
         var count = 0;
@@ -43,9 +43,11 @@ public abstract class Base : Solution
         {
             var location = i * 3;
 
-            var number = numbersString[location] == ' '
-                ? numbersString[location + 1] - '0'
-                : (numbersString[location] - '0') * 10 + numbersString[location + 1] - '0';
+            var left = numbersString[location];
+
+            var right = numbersString[location + 1];
+
+            var number = left == ' ' ? right - '0' : (left - '0') * 10 + right - '0';
 
             for (var j = 0; j < 10; j++)
             {
