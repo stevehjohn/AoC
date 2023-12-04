@@ -32,7 +32,7 @@ public abstract class Base : Solution
 
             _winningNumbers[i] = winningNumbersString[location] == ' '
                 ? winningNumbersString[location + 1] - '0'
-                : int.Parse(winningNumbersString[location..(location + 2)]);
+                : (winningNumbersString[location] - '0') * 10 + winningNumbersString[location + 1] - '0';
         }
 
         var count = 0;
@@ -43,7 +43,7 @@ public abstract class Base : Solution
 
             var number = numbersString[location] == ' '
                 ? numbersString[location + 1] - '0'
-                : int.Parse(numbersString[location..(location + 2)]);
+                : (numbersString[location] - '0') * 10 + numbersString[location + 1] - '0';
 
             for (var j = 0; j < 10; j++)
             {
