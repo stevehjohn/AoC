@@ -13,9 +13,7 @@ public class Part1 : Base
         
         for (var i = 0; i < totalPoints.Length; i++)
         {
-            var points = totalPoints[i] == 0 ? 0 : 1 << totalPoints[i] - 1;
-
-            answer += points;
+            answer += 1 << totalPoints[i] - 1;
         }
 
         return answer.ToString();

@@ -30,6 +30,8 @@ public abstract class Base : Solution
         {
             var location = i * 3;
 
+            var left = numbersString[location];
+            
             _winningNumbers[i] = winningNumbersString[location] == ' '
                 ? winningNumbersString[location + 1] - '0'
                 : (winningNumbersString[location] - '0') * 10 + winningNumbersString[location + 1] - '0';
