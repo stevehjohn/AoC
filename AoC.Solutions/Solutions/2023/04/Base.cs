@@ -41,6 +41,11 @@ public abstract class Base : Solution
         
         for (var i = 0; i < 25; i++)
         {
+            if (count == 10)
+            {
+                break;
+            }
+
             var location = i * 3;
 
             var left = numbersString[location];
