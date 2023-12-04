@@ -7,13 +7,20 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var points = GetAllPoints();
+        var totalPoints = GetAllPoints();
 
         var answer = 0;
         
-        for (var i = 0; i < points.Length; i++)
+        for (var i = 0; i < totalPoints.Length; i++)
         {
-            answer += (int) Math.Pow(2, points[i] - 1);
+            var points = 0;
+            
+            for (var p = 0; p < totalPoints[i]; p++)
+            {
+                points = points == 0 ? 1 : points * 2;
+            }
+
+            answer += points;
         }
 
         return answer.ToString();
