@@ -6,6 +6,8 @@ namespace AoC.Solutions.Solutions._2023._03;
 public class Part2 : Base
 {
     private readonly List<int> _neighbours = new();
+
+    private readonly Dictionary<int, List<(int X, int Number, int Length)>> _numbers = new();
     
     public override string GetAnswer()
     {
@@ -15,18 +17,18 @@ public class Part2 : Base
 
         var gears = GetGears();
 
-        var numbers = GetNumbers();
+        GetNumbers();
         
-        return GetGearValues(gears, numbers).ToString();    
+        return GetGearValues(gears).ToString();    
     }
 
-    private int GetGearValues(List<(int X, int Y)> gears, List<(int X, int Y, int Number, int Length)> numbers)
+    private int GetGearValues(List<(int X, int Y)> gears)
     {
         var sum = 0;
         
         foreach (var gear in gears)
         {
-            GetNeighbours(gear.X, gear.Y, numbers);
+            GetNeighbours(gear.X, gear.Y);
 
             if (_neighbours.Count == 2)
             {
@@ -37,20 +39,20 @@ public class Part2 : Base
         return sum;
     }
 
-    private void GetNeighbours(int x, int y, List<(int X, int Y, int Number, int Length)> numbers)
+    private void GetNeighbours(int x, int y)
     {
         _neighbours.Clear();
-        
-        foreach (var number in numbers)
+
+        for (var checkY = y - 1; checkY < y + 2; checkY++)
         {
-            if (y >= number.Y - 1 && y <= number.Y + 1)
+            foreach (var number in _numbers[checkY])
             {
                 if (x >= number.X - number.Length && x <= number.X + 1)
                 {
                     if (_neighbours.Count == 2)
                     {
                         _neighbours.Clear();
-                        
+                    
                         return;
                     }
 
@@ -80,10 +82,13 @@ public class Part2 : Base
         return gears;
     }
 
-    private List<(int X, int Y, int Number, int Length)> GetNumbers()
+    private void GetNumbers()
     {
-        var numbers = new List<(int X, int Y, int Number, int Length)>();
-        
+        for (var y = -1; y < Height; y++)
+        {
+            _numbers.Add(y, new List<(int Y, int Number, int Length)>());
+        }
+
         for (var y = 0; y < Height; y++)
         {
             var line = Input[y];
@@ -102,7 +107,7 @@ public class Part2 : Base
                 {
                     if (number != 0)
                     {
-                        numbers.Add((x - 1, y, number, number.ToString().Length));
+                        _numbers[y].Add((x - 1, number, number.ToString().Length));
 
                         number = 0;
                     }
@@ -111,10 +116,8 @@ public class Part2 : Base
 
             if (number != 0)
             {
-                numbers.Add((Width - 1, y, number, number.ToString().Length));
+                _numbers[y].Add((Width - 1, number, number.ToString().Length));
             }
         }
-
-        return numbers;
     }
 }
