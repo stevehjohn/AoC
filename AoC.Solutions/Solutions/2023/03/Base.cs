@@ -9,24 +9,4 @@ public abstract class Base : Solution
     protected int Width;
 
     protected int Height;
-    
-    protected char GetChar(int x, int y)
-    {
-        if (x < 0 || x >= Width)
-        {
-            return '.';
-        }
-
-        if (y < 0 || y >= Height)
-        {
-            return '.';
-        }
-
-        if (char.IsNumber(Input[y][x]))
-        {
-            return '.';
-        }
-
-        return Input[y][x];
-    }
 }
