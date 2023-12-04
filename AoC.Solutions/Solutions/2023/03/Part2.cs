@@ -5,6 +5,8 @@ namespace AoC.Solutions.Solutions._2023._03;
 [UsedImplicitly]
 public class Part2 : Base
 {
+    private readonly List<int> _neighbours = new();
+    
     public override string GetAnswer()
     {
         Width = Input[0].Length;
@@ -18,26 +20,26 @@ public class Part2 : Base
         return GetGearValues(gears, numbers).ToString();    
     }
 
-    private static int GetGearValues(List<(int X, int Y)> gears, List<(int X, int Y, int Number, int Length)> numbers)
+    private int GetGearValues(List<(int X, int Y)> gears, List<(int X, int Y, int Number, int Length)> numbers)
     {
         var sum = 0;
         
         foreach (var gear in gears)
         {
-            var neighbours = GetNeighbours(gear.X, gear.Y, numbers);
+            GetNeighbours(gear.X, gear.Y, numbers);
 
-            if (neighbours.Count == 2)
+            if (_neighbours.Count == 2)
             {
-                sum += neighbours[0] * neighbours[1];
+                sum += _neighbours[0] * _neighbours[1];
             }
         }
 
         return sum;
     }
 
-    private static List<int> GetNeighbours(int x, int y, List<(int X, int Y, int Number, int Length)> numbers)
+    private void GetNeighbours(int x, int y, List<(int X, int Y, int Number, int Length)> numbers)
     {
-        var neighbours = new List<int>();
+        _neighbours.Clear();
         
         foreach (var number in numbers)
         {
@@ -45,12 +47,17 @@ public class Part2 : Base
             {
                 if (x >= number.X - number.Length && x <= number.X + 1)
                 {
-                    neighbours.Add(number.Number);
+                    if (_neighbours.Count == 2)
+                    {
+                        _neighbours.Clear();
+                        
+                        return;
+                    }
+
+                    _neighbours.Add(number.Number);
                 }
             }
         }
-
-        return neighbours;
     }
 
     private List<(int X, int Y)> GetGears()
