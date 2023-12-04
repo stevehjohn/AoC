@@ -6,6 +6,10 @@ public abstract class Base : Solution
 {
     public override string Description => "Scratchcards";
 
+    private int[] _winningNumbers = new int[10];
+
+    private int[] _numbers = new int[25];
+
     protected int[] GetAllPoints()
     {
         var points = new int[Input.Length];
@@ -18,17 +22,31 @@ public abstract class Base : Solution
         return points;
     }
 
-    private static int GetMatches(string line)
+    private int GetMatches(string line)
     {
         var winningNumbersString = line[10..39];
 
         var numbersString = line[42..];
-        
-        var winningNumbers = winningNumbersString.Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
 
-        var numbers = numbersString.Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
+        for (var i = 0; i < 10; i++)
+        {
+            var location = i * 3;
 
-        var count = winningNumbers.Intersect(numbers).Count();
+            _winningNumbers[i] = winningNumbersString[location] == ' '
+                ? winningNumbersString[location + 1] - '0'
+                : int.Parse(winningNumbersString[location..(location + 2)]);
+        }
+
+        for (var i = 0; i < 25; i++)
+        {
+            var location = i * 3;
+
+            _numbers[i] = numbersString[location] == ' '
+                ? numbersString[location + 1] - '0'
+                : int.Parse(numbersString[location..(location + 2)]);
+        }
+
+        var count = _winningNumbers.Intersect(_numbers).Count();
 
         return count;
     }
