@@ -29,6 +29,18 @@ public class Part1 : Base
 
         var count = winningNumbers.Intersect(numbers).Count();
 
-        return count == 0 ? 0 : 1 ^ count;
+        if (count == 0)
+        {
+            return 0;
+        }
+
+        var points = 1;
+
+        for (var i = 1; i < count; i++)
+        {
+            points *= 2;
+        }
+
+        return points;
     }
 }
