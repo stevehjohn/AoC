@@ -79,17 +79,7 @@ public class Part1 : Base
     
     private char GetChar(int x, int y)
     {
-        if (x < 0 || x >= Width)
-        {
-            return '.';
-        }
-
-        if (y < 0 || y >= Height)
-        {
-            return '.';
-        }
-
-        if (char.IsNumber(Input[y][x]))
+        if (x < 0 || x >= Width || y < 0 || y >= Height || char.IsNumber(Input[y][x]))
         {
             return '.';
         }
