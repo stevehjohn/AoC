@@ -29,6 +29,6 @@ public class Part1 : Base
 
         var count = winningNumbers.Intersect(numbers).Count();
 
-        return 1 ^ count;
+        return count == 0 ? 0 : 1 ^ count;
     }
 }
