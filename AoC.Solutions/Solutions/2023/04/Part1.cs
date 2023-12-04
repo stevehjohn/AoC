@@ -7,8 +7,15 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var answer = GetAllPoints().Select(m => (int) Math.Pow(2, m - 1)).Sum();
+        var points = GetAllPoints();
+
+        var answer = 0;
         
+        for (var i = 0; i < points.Count; i++)
+        {
+            answer += (int) Math.Pow(2, points[i] - 1);
+        }
+
         return answer.ToString();
     }
 }
