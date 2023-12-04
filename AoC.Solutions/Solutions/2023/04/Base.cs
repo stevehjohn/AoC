@@ -8,8 +8,6 @@ public abstract class Base : Solution
 
     private int[] _winningNumbers = new int[10];
 
-    private int[] _numbers = new int[25];
-
     protected int[] GetAllPoints()
     {
         var points = new int[Input.Length];
@@ -37,16 +35,26 @@ public abstract class Base : Solution
                 : int.Parse(winningNumbersString[location..(location + 2)]);
         }
 
+        var count = 0;
+        
         for (var i = 0; i < 25; i++)
         {
             var location = i * 3;
 
-            _numbers[i] = numbersString[location] == ' '
+            var number = numbersString[location] == ' '
                 ? numbersString[location + 1] - '0'
                 : int.Parse(numbersString[location..(location + 2)]);
-        }
 
-        var count = _winningNumbers.Intersect(_numbers).Count();
+            for (var j = 0; j < 10; j++)
+            {
+                if (_winningNumbers[j] == number)
+                {
+                    count++;
+
+                    break;
+                }
+            }
+        }
 
         return count;
     }
