@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Scratchcards";
 
-    private int[] _winningNumbers = new int[10];
+    private readonly int[] _winningNumbers = new int[10];
 
     protected int[] GetAllPoints()
     {
