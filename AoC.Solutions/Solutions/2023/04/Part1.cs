@@ -7,40 +7,8 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var points = 0;
-
-        foreach (var line in Input)
-        {
-            points += GetPoints(line);
-        }
+        var answer = GetAllPoints().Select(m => (int) Math.Pow(2, m - 1)).Sum();
         
-        return points.ToString();
-    }
-
-    private int GetPoints(string line)
-    {
-        line = line.Split(':', StringSplitOptions.TrimEntries)[1];
-
-        var parts = line.Split('|', StringSplitOptions.TrimEntries);
-
-        var winningNumbers = parts[0].Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
-
-        var numbers = parts[1].Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
-
-        var count = winningNumbers.Intersect(numbers).Count();
-
-        if (count == 0)
-        {
-            return 0;
-        }
-
-        var points = 1;
-
-        for (var i = 1; i < count; i++)
-        {
-            points *= 2;
-        }
-
-        return points;
+        return answer.ToString();
     }
 }
