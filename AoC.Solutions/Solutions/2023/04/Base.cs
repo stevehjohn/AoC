@@ -6,13 +6,13 @@ public abstract class Base : Solution
 {
     public override string Description => "Scratchcards";
 
-    protected List<int> GetAllPoints()
+    protected int[] GetAllPoints()
     {
-        var points = new List<int>();
-        
-        foreach (var line in Input)
+        var points = new int[Input.Length];
+
+        for (var i = 0; i < Input.Length; i++)
         {
-            points.Add(GetMatches(line));
+            points[i] = GetMatches(Input[i]);
         }
 
         return points;

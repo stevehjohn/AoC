@@ -11,7 +11,7 @@ public class Part1 : Base
 
         var answer = 0;
         
-        for (var i = 0; i < points.Count; i++)
+        for (var i = 0; i < points.Length; i++)
         {
             answer += (int) Math.Pow(2, points[i] - 1);
         }

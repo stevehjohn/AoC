@@ -7,9 +7,11 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        var points = GetAllPoints().ToArray();
+        var points = GetAllPoints();
 
-        var counts = points.Select(_ => 1).ToArray();
+        var counts = new int[Input.Length];
+        
+        Array.Fill(counts, 1);
 
         for (var i = 0; i < points.Length; i++)
         {
