@@ -7,6 +7,20 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        return "Unknown";
+        ParseInput();
+
+        var seeds = new List<long>();
+        
+        for (var i = 0; i < Seeds.Length; i += 2)
+        {
+            for (var j = Seeds[i]; j < Seeds[i] + Seeds[i + 1]; j++)
+            {
+                seeds.Add(RemapSeed(j));
+            }
+
+            Seeds[i] = RemapSeed(Seeds[i] + Seeds[i + 1] - 1);
+        }
+        
+        return seeds.Min().ToString();
     }
 }
