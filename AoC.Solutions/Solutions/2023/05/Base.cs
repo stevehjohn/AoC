@@ -8,7 +8,7 @@ public abstract class Base : Solution
 
     protected long[] Seeds;
 
-    private readonly List<List<(long Destination, long Source, long Range)>> _mappings = new();
+    private readonly List<List<(long Start, long End, long Adjustment)>> _mappings = new();
     
     protected long RemapSeed(long seed)
     {
@@ -16,9 +16,9 @@ public abstract class Base : Solution
         {
             foreach (var map in mapping)
             {
-                if (seed >= map.Source && seed < map.Source + map.Range)
+                if (seed >= map.Start && seed < map.End)
                 {
-                    seed += map.Destination - map.Source;
+                    seed += map.Adjustment;
 
                     break;
                 }
@@ -32,7 +32,7 @@ public abstract class Base : Solution
     {
         Seeds = Input[0][6..].Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).Select(long.Parse).ToArray();
 
-        var mapping = new List<(long Destination, long Source, long Range)>();
+        var mapping = new List<(long Start, long End, long Adjustment)>();
         
         foreach (var line in Input[3..])
         {
@@ -45,14 +45,14 @@ public abstract class Base : Solution
             {
                 _mappings.Add(mapping);
                 
-                mapping = new List<(long Destination, long Source, long Range)>();
+                mapping = new List<(long Start, long End, long Adjustment)>();
                 
                 continue;
             }
             
             var parts = line.Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
             
-            mapping.Add((long.Parse(parts[0]), long.Parse(parts[1]), long.Parse(parts[2])));
+            mapping.Add((long.Parse(parts[1]), long.Parse(parts[1]) + long.Parse(parts[2]) - 1, long.Parse(parts[0]) - long.Parse(parts[1])));
         }
         
         _mappings.Add(mapping);
