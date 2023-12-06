@@ -18,31 +18,18 @@ public class Part2 : Base
         foreach (var mapping in _mappings)
         {
             var newSeeds = new List<Range>(seeds);
-
-            var seedQueue = new Queue<Range>(seeds);
             
-            while (seedQueue.Count > 0)
+            Console.WriteLine(seeds.Count);
+
+            foreach (var seed in seeds)
             {
-                Console.WriteLine(seedQueue.Count);
-                
-                var seed = seedQueue.Dequeue();
-                
-                for (var m = 0; m < mapping.Count; m++)
+                foreach (var map in mapping)
                 {
-                    var map = mapping[m];
-                    
                     var overlap = map.Range.Intersects(seed);
 
                     if (overlap == null)
                     {
-                        if (m < mapping.Count - 1)
-                        {
-                            seedQueue.Enqueue(seed);
-                        }
-                        else
-                        {
-                            newSeeds.Add(seed);
-                        }
+                        newSeeds.Add(seed);
 
                         continue;
                     }
@@ -58,20 +45,11 @@ public class Part2 : Base
 
                     if (seed.Start < map.Range.Start)
                     {
-                        seed = new Range(seed.Start, map.Range.Start - 1);
+                        newSeeds.Add(new Range(seed.Start, map.Range.Start - 1));
                     }
                     else if (seed.End > map.Range.End)
                     {
-                        seed = new Range(map.Range.End + 1, seed.End);
-                    }
-                    
-                    if (m < mapping.Count - 1)
-                    {
-                        seedQueue.Enqueue(seed);
-                    }
-                    else
-                    {
-                        newSeeds.Add(seed);
+                        newSeeds.Add(new Range(map.Range.End + 1, seed.End));
                     }
                 }
             }
