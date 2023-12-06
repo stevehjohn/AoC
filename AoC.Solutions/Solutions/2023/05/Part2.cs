@@ -21,7 +21,7 @@ public class Part2 : Base
             
             var newSeeds = new List<Range>();
 
-            while(seedQueue.Count > 0)
+            while (seedQueue.Count > 0)
             {
                 var seed = seedQueue.Dequeue();
                 
