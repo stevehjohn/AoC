@@ -25,13 +25,23 @@ public class Part2 : Base
             {
                 var seed = seedQueue.Dequeue();
                 
-                foreach (var map in mapping)
+                for (var m = 0; m < mapping.Count; m++)
                 {
+                    var map = mapping[m];
+                    
                     var overlap = map.Range.Intersects(seed);
 
                     if (overlap == null)
                     {
-                        // Something
+                        if (m < mapping.Count - 1)
+                        {
+                            seedQueue.Enqueue(seed);
+                        }
+                        else
+                        {
+                            newSeeds.Add(seed);
+                        }
+
                         continue;
                     }
 
@@ -46,12 +56,20 @@ public class Part2 : Base
 
                     if (map.Range.Start < seed.Start)
                     {
-                        new Range(map.Range.Start, seed.Start);
+                        seed = new Range(map.Range.Start, seed.Start);
                     }
-
-                    if (map.Range.Start >= seed.Start)
+                    else if (map.Range.Start >= seed.Start)
                     {
-                        new Range(seed.End, map.Range.End);
+                        seed = new Range(seed.End, map.Range.End);
+                    }
+                    
+                    if (m < mapping.Count - 1)
+                    {
+                        seedQueue.Enqueue(seed);
+                    }
+                    else
+                    {
+                        newSeeds.Add(seed);
                     }
                 }
             }
