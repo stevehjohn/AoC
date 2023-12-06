@@ -27,8 +27,6 @@ public class Part2 : Base
                 
                 foreach (var seed in seeds)
                 {
-                    Console.WriteLine(seed);
-                    
                     var overlap = map.Range.Intersects(seed);
                     
                     if (overlap == null)
