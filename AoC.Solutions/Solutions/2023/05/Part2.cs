@@ -7,15 +7,17 @@ public class Part2 : Base
 {
     private readonly List<List<(Range Range, long Adjustment)>> _mappings = new();
 
-    private List<Range> _seeds = new();
+    private readonly List<Range> _seeds = new();
     
     public override string GetAnswer()
     {
         ParseInput();
+
+        var seeds = new List<Range>(_seeds);
         
         foreach (var mapping in _mappings)
         {
-            var seedQueue = new Queue<Range>(_seeds);
+            var seedQueue = new Queue<Range>(seeds);
             
             var newSeeds = new List<Range>();
 
@@ -54,10 +56,10 @@ public class Part2 : Base
                 }
             }
 
-            _seeds = newSeeds;
+            seeds = newSeeds;
         }
         
-        return "";
+        return seeds.Min(s => s.Start).ToString();
     }
 
     private void ParseInput()
