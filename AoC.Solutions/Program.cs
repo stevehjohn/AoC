@@ -151,7 +151,7 @@ public static class Program
             {
                 var temp = Console.ForegroundColor;
 
-                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.ForegroundColor = ConsoleColor.Magenta;
 
                 Console.WriteLine($" Incorrect answer for {key}. Expected {split[1]}, actual {answer}.");
 
