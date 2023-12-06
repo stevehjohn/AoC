@@ -30,12 +30,12 @@ public class Range
             return new Range(other.Start, other.End);
         }
 
-        if (other.Start < Start && other.End >= Start && other.End <= End)
+        if (other.Start <= Start && other.End >= Start && other.End <= End)
         {
             return new Range(Start, other.End);
         }
 
-        if (other.End >= End && other.Start >= Start && other.End <= End)
+        if (other.End >= End && other.Start >= Start && other.Start <= End)
         {
             return new Range(other.Start, End);
         }
