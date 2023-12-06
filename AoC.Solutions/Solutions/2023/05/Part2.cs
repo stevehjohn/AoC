@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2023._05;
@@ -9,16 +10,11 @@ public class Part2 : Base
     {
         ParseInput();
 
-        var seeds = new List<long>();
+        var seeds = new ConcurrentBag<long>();
         
         for (var i = 0; i < Seeds.Length; i += 2)
         {
-            for (var j = Seeds[i]; j < Seeds[i] + Seeds[i + 1]; j++)
-            {
-                seeds.Add(RemapSeed(j));
-            }
-
-            Seeds[i] = RemapSeed(Seeds[i] + Seeds[i + 1] - 1);
+            Parallel.For(Seeds[i], Seeds[i] + Seeds[i + 1] - 1, s => seeds.Add(RemapSeed(s)));
         }
         
         return seeds.Min().ToString();
