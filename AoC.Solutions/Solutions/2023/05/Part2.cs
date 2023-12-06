@@ -19,12 +19,8 @@ public class Part2 : Base
         {
             var newSeeds = new List<Range>();
 
-            var seedQueue = new Queue<Range>(seeds);
-            
-            while (seedQueue.Count > 0)
+            foreach (var seed in seeds)
             {
-                var seed = seedQueue.Dequeue();
-                
                 foreach (var map in mapping)
                 {
                     var overlap = map.Range.Intersects(seed);
