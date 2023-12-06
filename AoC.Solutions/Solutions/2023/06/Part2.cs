@@ -31,10 +31,10 @@ public class Part2 : Base
                 break;
             }
 
-            charge += 10;
+            charge += 100;
         }
 
-        charge -= 10;
+        charge -= 100;
         
         while (charge < time)
         {
@@ -65,10 +65,10 @@ public class Part2 : Base
                 break;
             }
 
-            charge -= 10;
+            charge -= 100;
         }
 
-        charge += 10;
+        charge += 100;
         
         while (charge > 0)
         {
