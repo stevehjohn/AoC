@@ -19,8 +19,10 @@ public class Part2 : Base
         {
             var newSeeds = new List<Range>();
             
-            foreach (var map in mapping)
+            for (var i = 0; i < mapping.Count; i++)
             {
+                var map = mapping[i];
+                
                 var mapSeeds = new List<Range>();
                 
                 foreach (var seed in seeds)
@@ -53,7 +55,14 @@ public class Part2 : Base
                     }
                 }
 
-                seeds = mapSeeds;
+                if (i == mapping.Count - 1)
+                {
+                    newSeeds.AddRange(mapSeeds);
+                }
+                else
+                {
+                    seeds = mapSeeds;
+                }
             }
 
             seeds = newSeeds;
