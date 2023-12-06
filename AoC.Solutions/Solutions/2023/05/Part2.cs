@@ -20,7 +20,7 @@ public class Part2 : Base
     {
         var seeds = Input[0][6..].Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).Select(long.Parse).ToArray();
 
-        for (var i = 0; i < seeds.Length; i++)
+        for (var i = 0; i < seeds.Length; i += 2)
         {
             _seeds.Add(new Range(seeds[i], seeds[i + 1]));
         }
