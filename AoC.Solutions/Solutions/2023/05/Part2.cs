@@ -14,26 +14,26 @@ public class Part2 : Base
         ParseInput();
 
         var seeds = new List<Range>(_seeds);
-        
+
         foreach (var mapping in _mappings)
         {
-            var newSeeds = new List<Range>(seeds);
+            var newSeeds = new List<Range>();
             
-            Console.WriteLine(seeds.Count);
-
-            foreach (var seed in seeds)
+            foreach (var map in mapping)
             {
-                foreach (var map in mapping)
+                var mapSeeds = new List<Range>();
+                
+                foreach (var seed in seeds)
                 {
                     var overlap = map.Range.Intersects(seed);
-
+                    
                     if (overlap == null)
                     {
-                        newSeeds.Add(seed);
-
+                        mapSeeds.Add(seed);
+                    
                         continue;
                     }
-
+                    
                     if (map.Range.Contains(seed))
                     {
                         newSeeds.Add(new Range(seed.Start + map.Adjustment, seed.End + map.Adjustment));
@@ -42,16 +42,18 @@ public class Part2 : Base
                     }
                     
                     newSeeds.Add(new Range(overlap.Start + map.Adjustment, overlap.End + map.Adjustment));
-
+                    
                     if (seed.Start < map.Range.Start)
                     {
-                        newSeeds.Add(new Range(seed.Start, map.Range.Start - 1));
+                        mapSeeds.Add(new Range(seed.Start, map.Range.Start - 1));
                     }
                     else if (seed.End > map.Range.End)
                     {
-                        newSeeds.Add(new Range(map.Range.End + 1, seed.End));
+                        mapSeeds.Add(new Range(map.Range.End + 1, seed.End));
                     }
                 }
+
+                seeds = mapSeeds;
             }
 
             seeds = newSeeds;
