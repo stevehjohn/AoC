@@ -26,6 +26,21 @@ public class Part2 : Base
                 foreach (var map in mapping)
                 {
                     var overlap = map.Range.Intersects(seed);
+
+                    if (overlap == null)
+                    {
+                        // Something
+                        continue;
+                    }
+
+                    if (map.Range.Contains(seed))
+                    {
+                        newSeeds.Add(new Range(seed.Start + map.Adjustment, seed.End + map.Adjustment));
+                        
+                        continue;
+                    }
+                    
+                    newSeeds.Add(new Range(overlap.Start + map.Adjustment, overlap.End + map.Adjustment));
                 }
             }
 
