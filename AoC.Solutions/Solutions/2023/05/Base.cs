@@ -4,7 +4,7 @@ namespace AoC.Solutions.Solutions._2023._05;
 
 public abstract class Base : Solution
 {
-    public override string Description => "If You Give A Seed A Fertilizer";
+    public override string Description => "If You Give a Seed a Fertilizer";
 
     protected long[] Seeds;
 

@@ -17,6 +17,8 @@ public class Part2 : Base
             {
                 seeds.Add(RemapSeed(j));
             }
+
+            Seeds[i] = RemapSeed(Seeds[i] + Seeds[i + 1] - 1);
         }
         
         return seeds.Min().ToString();
