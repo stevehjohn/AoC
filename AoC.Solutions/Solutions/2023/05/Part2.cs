@@ -45,7 +45,7 @@ public class Part2 : Base
 
             var parts = line.Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).Select(long.Parse).ToArray();
 
-            mapping.Add((new Range(parts[1], parts[1] + parts[2] - 1), parts[1] - parts[0]));
+            mapping.Add((new Range(parts[1], parts[1] + parts[2] - 1), parts[0] - parts[1]));
         }
 
         _mappings.Add(mapping);
