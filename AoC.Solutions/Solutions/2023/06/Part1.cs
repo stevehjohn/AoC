@@ -20,4 +20,25 @@ public class Part1 : Base
 
         return total.ToString();
     }
+
+    private static int GetRaceWinPossibilities(long time, long record)
+    {
+        var wins = 0;
+
+        var charge = 1;
+
+        while (charge < time)
+        {
+            var distance = (time - charge) * charge;
+
+            if (distance > record)
+            {
+                wins++;
+            }
+
+            charge++;
+        }
+
+        return wins;
+    }
 }
