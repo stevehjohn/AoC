@@ -42,4 +42,9 @@ public class Range
 
         return null;
     }
+
+    public override string ToString()
+    {
+        return $"{Start} - {End}";
+    }
 }

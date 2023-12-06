@@ -27,6 +27,8 @@ public class Part2 : Base
                 
                 foreach (var seed in seeds)
                 {
+                    Console.WriteLine(seed);
+                    
                     var overlap = map.Range.Intersects(seed);
                     
                     if (overlap == null)
@@ -77,7 +79,7 @@ public class Part2 : Base
 
         for (var i = 0; i < seeds.Length; i += 2)
         {
-            _seeds.Add(new Range(seeds[i], seeds[i + 1]));
+            _seeds.Add(new Range(seeds[i], seeds[i] + seeds[i + 1] - 1));
         }
 
         var mapping = new List<(Range Range, long Adjustment)>();
