@@ -7,6 +7,38 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        return "Unknown";
+        var times = Input[0][9..].Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
+        
+        var records = Input[1][9..].Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
+
+        var total = 1;
+        
+        for (var i = 0; i < times.Length; i++)
+        {
+            total *= GetRaceWinPossibilities(times[i], records[i]);
+        }
+
+        return total.ToString();
+    }
+
+    private int GetRaceWinPossibilities(int time, int record)
+    {
+        var wins = 0;
+
+        var charge = 1;
+
+        while (charge < time)
+        {
+            var distance = (time - charge) * charge;
+
+            if (distance > record)
+            {
+                wins++;
+            }
+
+            charge++;
+        }
+
+        return wins;
     }
 }
