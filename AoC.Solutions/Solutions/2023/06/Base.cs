@@ -4,7 +4,7 @@ namespace AoC.Solutions.Solutions._2023._06;
 
 public abstract class Base : Solution
 {
-    public override string Description => "Wait For It";
+    public override string Description => "Wait for it";
 
     protected static int GetRaceWinPossibilities(long time, long record)
     {
