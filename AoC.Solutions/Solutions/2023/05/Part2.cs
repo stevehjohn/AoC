@@ -42,7 +42,18 @@ public class Part2 : Base
                         
                         continue;
                     }
-                    
+
+                    if (seed.Contains(map.Range))
+                    {
+                        mapSeeds.Add(new Range(seed.Start, map.Range.Start - 1));
+
+                        mapSeeds.Add(new Range(seed.End + 1, map.Range.End));
+
+                        newSeeds.Add(new Range(map.Range.Start + map.Adjustment, map.Range.End + map.Adjustment));
+
+                        continue;
+                    }
+
                     newSeeds.Add(new Range(overlap.Start + map.Adjustment, overlap.End + map.Adjustment));
                     
                     if (seed.Start < map.Range.Start)
@@ -67,7 +78,7 @@ public class Part2 : Base
 
             seeds = newSeeds;
         }
-        
+
         return seeds.Min(s => s.Start).ToString();
     }
 
