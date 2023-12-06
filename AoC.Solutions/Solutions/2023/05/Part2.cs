@@ -19,11 +19,9 @@ public class Part2 : Base
         {
             var newSeeds = new List<Range>();
 
-            var orderedMapping = mapping.OrderBy(m => m.Range.Start).ToList();
-            
-            for (var i = 0; i < orderedMapping.Count; i++)
+            for (var i = 0; i < mapping.Count; i++)
             {
-                var map = orderedMapping[i];
+                var map = mapping[i];
                 
                 var mapSeeds = new List<Range>();
                 
