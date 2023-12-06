@@ -7,12 +7,31 @@ public class Part2 : Base
 {
     private readonly List<List<(Range Range, long Adjustment)>> _mappings = new();
 
-    private readonly List<Range> _seeds = new();
+    private List<Range> _seeds = new();
     
     public override string GetAnswer()
     {
         ParseInput();
+        
+        foreach (var mapping in _mappings)
+        {
+            var seedQueue = new Queue<Range>(_seeds);
+            
+            var newSeeds = new List<Range>();
 
+            while(seedQueue.Count > 0)
+            {
+                var seed = seedQueue.Dequeue();
+                
+                foreach (var map in mapping)
+                {
+                    var overlap = map.Range.Intersects(seed);
+                }
+            }
+
+            _seeds = newSeeds;
+        }
+        
         return "";
     }
 
