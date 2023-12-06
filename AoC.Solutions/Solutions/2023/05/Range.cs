@@ -17,4 +17,29 @@ public class Range
     {
         return other.Start >= Start && other.End <= End;
     }
+
+    public Range Intersects(Range other)
+    {
+        if (other.Contains(this))
+        {
+            return new Range(Start, End);
+        }
+
+        if (Contains(other))
+        {
+            return new Range(other.Start, other.End);
+        }
+
+        if (other.Start < Start && other.End >= Start && other.End <= End)
+        {
+            return new Range(Start, other.End);
+        }
+
+        if (other.End >= End && other.Start >= Start && other.End <= End)
+        {
+            return new Range(other.Start, End);
+        }
+
+        return null;
+    }
 }
