@@ -41,6 +41,16 @@ public class Part2 : Base
                     }
                     
                     newSeeds.Add(new Range(overlap.Start + map.Adjustment, overlap.End + map.Adjustment));
+
+                    if (map.Range.Start < seed.Start)
+                    {
+                        new Range(map.Range.Start, seed.Start);
+                    }
+
+                    if (map.Range.Start >= seed.Start)
+                    {
+                        new Range(seed.End, map.Range.End);
+                    }
                 }
             }
 
