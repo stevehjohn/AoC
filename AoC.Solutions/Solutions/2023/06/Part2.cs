@@ -21,7 +21,21 @@ public class Part2 : Base
         var first = 0L;
 
         var charge = 1L;
+        
+        while (charge < time)
+        {
+            var distance = (time - charge) * charge;
 
+            if (distance > record)
+            {
+                break;
+            }
+
+            charge += 10;
+        }
+
+        charge -= 10;
+        
         while (charge < time)
         {
             var distance = (time - charge) * charge;
@@ -33,7 +47,7 @@ public class Part2 : Base
                 break;
             }
 
-            charge++;
+            charge += 1;
         }
 
         var last = 0L;
@@ -51,7 +65,23 @@ public class Part2 : Base
                 break;
             }
 
-            charge--;
+            charge -= 10;
+        }
+
+        charge += 10;
+        
+        while (charge > 0)
+        {
+            var distance = (time - charge) * charge;
+
+            if (distance > record)
+            {
+                last = charge;
+                
+                break;
+            }
+
+            charge -= 1;
         }
         
         return last - first + 1;
