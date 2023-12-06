@@ -16,11 +16,11 @@ public class Part2 : Base
         return wins.ToString();
     }
 
-    private static int GetRaceWinPossibilities(long time, long record)
+    private static long GetRaceWinPossibilities(long time, long record)
     {
-        var wins = 0;
+        var first = 0L;
 
-        var charge = 1;
+        var charge = 1L;
 
         while (charge < time)
         {
@@ -28,12 +28,32 @@ public class Part2 : Base
 
             if (distance > record)
             {
-                wins++;
+                first = charge;
+                
+                break;
             }
 
             charge++;
         }
 
-        return wins;
+        var last = 0L;
+
+        charge = time;
+
+        while (charge > 0)
+        {
+            var distance = (time - charge) * charge;
+
+            if (distance > record)
+            {
+                last = charge;
+                
+                break;
+            }
+
+            charge--;
+        }
+        
+        return last - first + 1;
     }
 }
