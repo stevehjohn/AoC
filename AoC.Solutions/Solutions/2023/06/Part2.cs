@@ -7,6 +7,12 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        return "Unknown";
+        var time = long.Parse(Input[0][9..].Replace(" ", string.Empty));
+        
+        var record = long.Parse(Input[1][9..].Replace(" ", string.Empty));
+
+        var wins = GetRaceWinPossibilities(time, record);
+        
+        return wins.ToString();
     }
 }
