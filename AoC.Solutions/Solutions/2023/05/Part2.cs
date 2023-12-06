@@ -50,9 +50,9 @@ public class Part2 : Base
                         newSeeds.Add(new Range(seed.End, map.Range.End));
                     }
                 }
-
-                seeds = newSeeds;
             }
+
+            seeds = newSeeds;
         }
         
         return seeds.Min(s => s.Start).ToString();
