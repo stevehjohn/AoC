@@ -17,30 +17,17 @@ public class Part2 : Base
         
         foreach (var mapping in _mappings)
         {
-            var seedQueue = new Queue<Range>(seeds);
-            
             var newSeeds = new List<Range>();
-
-            while (seedQueue.Count > 0)
+            
+            foreach (var seed in seeds)
             {
-                var seed = seedQueue.Dequeue();
-                
-                for (var m = 0; m < mapping.Count; m++)
+                foreach (var map in mapping)
                 {
-                    var map = mapping[m];
-                    
                     var overlap = map.Range.Intersects(seed);
 
                     if (overlap == null)
                     {
-                        if (m < mapping.Count - 1)
-                        {
-                            seedQueue.Enqueue(seed);
-                        }
-                        else
-                        {
-                            newSeeds.Add(seed);
-                        }
+                        newSeeds.Add(seed);
 
                         continue;
                     }
@@ -56,25 +43,16 @@ public class Part2 : Base
 
                     if (map.Range.Start < seed.Start)
                     {
-                        seed = new Range(map.Range.Start, seed.Start);
+                        newSeeds.Add(new Range(map.Range.Start, seed.Start));
                     }
                     else if (map.Range.Start >= seed.Start)
                     {
-                        seed = new Range(seed.End, map.Range.End);
-                    }
-                    
-                    if (m < mapping.Count - 1)
-                    {
-                        seedQueue.Enqueue(seed);
-                    }
-                    else
-                    {
-                        newSeeds.Add(seed);
+                        newSeeds.Add(new Range(seed.End, map.Range.End));
                     }
                 }
-            }
 
-            seeds = newSeeds;
+                seeds = newSeeds;
+            }
         }
         
         return seeds.Min(s => s.Start).ToString();
