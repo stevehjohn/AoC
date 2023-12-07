@@ -70,7 +70,7 @@ public abstract class Base : Solution
             3 => distinct.Any(c => c.Value == 3) ? 4 : 3,
             4 => 2,
             5 => 1,
-            _ => 0,
+            _ => 0
         };
 
         return strength;
