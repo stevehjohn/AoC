@@ -53,16 +53,12 @@ public abstract class Base : Solution
         
         for (var i = 0; i < 5; i++)
         {
-            if (distinct.ContainsKey(hand[i]))
+            if (!distinct.TryAdd(hand[i], 1))
             {
                 distinct[hand[i]]++;
             }
-            else
-            {
-                distinct.Add(hand[i], 1);
-            }
         }
-        
+
         var strength = distinct.Count switch
         {
             1 => 7,
@@ -110,13 +106,9 @@ public abstract class Base : Solution
         
         for (var i = 0; i < hand.Length; i++)
         {
-            if (distinct.ContainsKey(hand[i]))
+            if (!distinct.TryAdd(hand[i], 1))
             {
                 distinct[hand[i]]++;
-            }
-            else
-            {
-                distinct.Add(hand[i], 1);
             }
         }
 
