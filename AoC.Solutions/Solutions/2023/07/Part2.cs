@@ -7,6 +7,6 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        return GetAnswerInternal(true).ToString();
+        return "";
     }
 }
