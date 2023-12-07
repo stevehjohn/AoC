@@ -57,13 +57,16 @@ public static class Program
                 continue;
             }
 
-            instance.GetAnswer();
-            
-            instance = Activator.CreateInstance(solution) as Solution;
-            
-            if (instance == null)
+            if (arguments.Length != 1 || (arguments.Length == 1 && arguments[0].Length < 5))
             {
-                continue;
+                instance.GetAnswer();
+
+                instance = Activator.CreateInstance(solution) as Solution;
+
+                if (instance == null)
+                {
+                    continue;
+                }
             }
 
             GC.Collect();
