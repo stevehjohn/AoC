@@ -57,6 +57,15 @@ public static class Program
                 continue;
             }
 
+            instance.GetAnswer();
+            
+            instance = Activator.CreateInstance(solution) as Solution;
+
+            if (instance == null)
+            {
+                continue;
+            }
+
             GC.Collect();
 
             var stopwatch = new Stopwatch();
