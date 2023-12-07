@@ -7,8 +7,6 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        ParseInput(true);
-
-        return GetResult().ToString();
+        return GetResult(true).ToString();
     }
 }

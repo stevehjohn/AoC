@@ -8,15 +8,17 @@ public abstract class Base : Solution
 
     private readonly List<(string Hand, int Bid)> _hands = new();
 
-    protected long GetResult()
+    protected long GetResult(bool jokersWild = false)
     {
-        var ordered = OrderHands();
+        ParseInput();
+        
+        var ordered = OrderHands(jokersWild);
 
         var result = 0L;
         
         for (var i = 0; i < ordered.Count; i++)
         {
-            //Console.WriteLine(ordered[i].Hand);
+            //Console.WriteLine($"{ordered[i].Hand} : {ordered[i].Original}");
             
             result += ordered[i].Bid * (i + 1);
         }
@@ -24,21 +26,28 @@ public abstract class Base : Solution
         return result;
     }
 
-    private List<(int Strength, string Hand, int Bid)> OrderHands()
+    private List<(int Strength, string Hand, int Bid, string Original)> OrderHands(bool jokersWild)
     {
-        var ordered = _hands.Select(h => (Strength: GetTypeStrength(h.Hand), h.Hand, h.Bid)).ToList();
+        var ordered = _hands.Select(h =>
+        {
+            var hand = jokersWild ? OptimiseHand(h.Hand) : h.Hand;
+            
+            return (Strength: GetTypeStrength(hand), Hand: hand, h.Bid, Original: h.Hand);
+        }).ToList();
 
         ordered = ordered.OrderBy(h => h.Strength).ThenBy(h => ParseHandForOrdering(h.Hand)).ToList();
         
         return ordered;
     }
     
-    private string ParseHandForOrdering(string hand)
+    private static string ParseHandForOrdering(string hand)
     {
-        return hand.Replace('A', 'E').Replace('K', 'D').Replace('Q', 'C').Replace('J', 'B').Replace('T', 'A');
+        hand = hand.Replace('A', 'E').Replace('K', 'D').Replace('Q', 'C').Replace('J', 'B').Replace('T', 'A');
+
+        return hand;
     }
 
-    private int GetTypeStrength(string hand)
+    private static int GetTypeStrength(string hand)
     {
         var distinct = new Dictionary<char, int>();
         
@@ -67,7 +76,7 @@ public abstract class Base : Solution
         return strength;
     }
 
-    protected void ParseInput(bool jokersWild = false)
+    private void ParseInput(bool jokersWild = false)
     {
         foreach (var line in Input)
         {
@@ -75,31 +84,31 @@ public abstract class Base : Solution
 
             var hand = parts[0];
 
-            if (jokersWild)
-            {
-                hand = OptimiseHand(hand);
-            }
-
             _hands.Add((hand, int.Parse(parts[1])));
         }
     }
 
-    private string OptimiseHand(string hand)
+    private static string OptimiseHand(string hand)
     {
         if (!hand.Contains('J'))
         {
             return hand;
         }
 
+        if (hand == "JJJJJ")
+        {
+            return "AAAAA";
+        }
+
         var originalHand = hand;
 
-        hand = hand.Replace(" ", string.Empty);
+        hand = hand.Replace("J", string.Empty);
         
         hand = hand.Replace('A', 'E').Replace('K', 'D').Replace('Q', 'C').Replace('T', 'A');
 
         var distinct = new Dictionary<char, int>();
         
-        for (var i = 0; i < 5; i++)
+        for (var i = 0; i < hand.Length; i++)
         {
             if (distinct.ContainsKey(hand[i]))
             {
@@ -111,7 +120,7 @@ public abstract class Base : Solution
             }
         }
 
-        var best = distinct.OrderByDescending(c => c.Value).ThenBy(c => c.Key).First().Key;
+        var best = distinct.OrderByDescending(c => c.Value).ThenByDescending(c => c.Key).First().Key;
 
         best = best switch
         {
