@@ -18,8 +18,6 @@ public abstract class Base : Solution
         
         for (var i = 0; i < ordered.Count; i++)
         {
-            //Console.WriteLine($"{ordered[i].Hand} : {ordered[i].Original}");
-            
             result += ordered[i].Bid * (i + 1);
         }
 
