@@ -24,16 +24,11 @@ public abstract class Base : Solution
         return result;
     }
 
-    private List<(int Strength, string Hand, int Bid, string Original)> OrderHands(bool jokersWild)
+    private List<(int Strength, string Hand, int Bid)> OrderHands(bool jokersWild)
     {
-        var ordered = _hands.Select(h =>
-        {
-            var hand = jokersWild ? OptimiseHand(h.Hand) : h.Hand;
-            
-            return (Strength: GetTypeStrength(hand), Hand: hand, h.Bid, Original: h.Hand);
-        }).ToList();
+        var ordered = _hands.Select(h => (Strength: GetTypeStrength(jokersWild ? OptimiseHand(h.Hand) : h.Hand), h.Hand, h.Bid)).ToList();
 
-        ordered = ordered.OrderBy(h => h.Strength).ThenBy(h => ParseHandForOrdering(h.Original, jokersWild)).ToList();
+        ordered = ordered.OrderBy(h => h.Strength).ThenBy(h => ParseHandForOrdering(h.Hand, jokersWild)).ToList();
         
         return ordered;
     }
