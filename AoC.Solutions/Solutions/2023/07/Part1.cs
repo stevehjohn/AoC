@@ -13,11 +13,6 @@ public class Part1 : Base
 
         var ordered = OrderHands();
 
-        foreach (var hand in ordered)
-        {
-            Console.WriteLine(hand.Hand);
-        }
-
         var result = 0;
         
         for (var i = 0; i < ordered.Count; i++)
