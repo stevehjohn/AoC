@@ -35,14 +35,21 @@ public abstract class Base : Solution
             return (Strength: GetTypeStrength(hand), Hand: hand, h.Bid, Original: h.Hand);
         }).ToList();
 
-        ordered = ordered.OrderBy(h => h.Strength).ThenBy(h => ParseHandForOrdering(h.Original)).ToList();
+        ordered = ordered.OrderBy(h => h.Strength).ThenBy(h => ParseHandForOrdering(h.Original, jokersWild)).ToList();
         
         return ordered;
     }
     
-    private static string ParseHandForOrdering(string hand)
+    private static string ParseHandForOrdering(string hand, bool jokersWild)
     {
-        hand = hand.Replace('A', 'E').Replace('K', 'D').Replace('Q', 'C').Replace('J', '1').Replace('T', 'A');
+        if (jokersWild)
+        {
+            hand = hand.Replace('A', 'E').Replace('K', 'D').Replace('Q', 'C').Replace('J', '1').Replace('T', 'A');
+        }
+        else
+        {
+            hand = hand.Replace('A', 'E').Replace('K', 'D').Replace('Q', 'C').Replace('J', 'B').Replace('T', 'A');
+        }
 
         return hand;
     }
