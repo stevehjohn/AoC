@@ -147,7 +147,7 @@ public static class Program
 
             var split = correctAnswerLine.Split(": ");
 
-            if (split[1] != answer && answer != "TESTING")
+            if (split[1] != answer)
             {
                 var temp = Console.ForegroundColor;
 
