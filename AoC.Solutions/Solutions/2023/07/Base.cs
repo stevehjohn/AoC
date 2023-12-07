@@ -18,6 +18,8 @@ public abstract class Base : Solution
         
         for (var i = 0; i < ordered.Count; i++)
         {
+            // Console.WriteLine(ordered[i]);
+            
             result += ordered[i].Bid * (i + 1);
         }
 
@@ -28,14 +30,42 @@ public abstract class Base : Solution
     {
         var ordered = _hands.Select(h => (Strength: GetTypeStrength(h.Hand), h.Hand, h.Bid)).ToList();
 
-        ordered = ordered.OrderBy(h => h.Strength).ThenBy(h => ParseHandForOrdering(h.Hand)).ToList();
-        
+        ordered = ordered.OrderBy(h => h.Strength).ThenBy(h => ParseHandForOrdering(h.Hand, h.Strength, jokersWild)).ToList();
+
         return ordered;
     }
 
-    private string ParseHandForOrdering(string hand)
+    private string ParseHandForOrdering(string hand, int strength, bool jokersWild)
     {
-        return hand.Replace('A', 'E').Replace('K', 'D').Replace('Q', 'C').Replace('J', 'B').Replace('T', 'A');
+        if (! jokersWild)
+        {
+            return hand.Replace('A', 'E').Replace('K', 'D').Replace('Q', 'C').Replace('J', 'B').Replace('T', 'A');
+        }
+
+        if (strength == 7)
+        {
+            return hand.Replace('A', 'D').Replace('K', 'C').Replace('Q', 'B').Replace('T', 'A').Replace('J', '1');
+        }
+
+        var distinct = new Dictionary<char, int>();
+        
+        for (var i = 0; i < 5; i++)
+        {
+            if (distinct.ContainsKey(hand[i]))
+            {
+                distinct[hand[i]]++;
+            }
+            else
+            {
+                distinct.Add(hand[i], 1);
+            }
+        }
+
+        var card = distinct.MaxBy(c => c.Value).Key;
+        
+        Console.WriteLine(hand.Replace('J', card));
+        
+        return hand.Replace('A', 'D').Replace('K', 'C').Replace('Q', 'B').Replace('T', 'A').Replace('J', card);
     }
 
     private int GetTypeStrength(string hand)
@@ -76,5 +106,4 @@ public abstract class Base : Solution
             _hands.Add((parts[0], int.Parse(parts[1])));
         }
     }
-    
 }
