@@ -7,7 +7,7 @@ public class Part1 : Base
 {
     private long[] _seeds;
 
-    private readonly List<List<(long Destination, long Source, long Range)>> _mappings = new();
+    private readonly List<List<(long Start, long End, long Adjustment)>> _mappings = new();
     
     public override string GetAnswer()
     {
@@ -27,9 +27,9 @@ public class Part1 : Base
         {
             foreach (var map in mapping)
             {
-                if (seed >= map.Source && seed < map.Source + map.Range)
+                if (seed >= map.Start && seed < map.End)
                 {
-                    seed += map.Destination - map.Source;
+                    seed += map.Adjustment;
 
                     break;
                 }
@@ -43,7 +43,7 @@ public class Part1 : Base
     {
         _seeds = Input[0][6..].Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).Select(long.Parse).ToArray();
 
-        var mapping = new List<(long Destination, long Source, long Range)>();
+        var mapping = new List<(long Start, long End, long Adjustment)>();
 
         foreach (var line in Input[3..])
         {
@@ -63,7 +63,7 @@ public class Part1 : Base
 
             var parts = line.Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
-            mapping.Add((long.Parse(parts[0]), long.Parse(parts[1]), long.Parse(parts[2])));
+            mapping.Add((long.Parse(parts[1]), long.Parse(parts[1]) + long.Parse(parts[2]), long.Parse(parts[0]) - long.Parse(parts[1])));
         }
 
         _mappings.Add(mapping);
