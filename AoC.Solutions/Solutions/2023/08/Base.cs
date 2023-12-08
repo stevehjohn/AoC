@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2023._08;
@@ -8,7 +9,7 @@ public abstract class Base : Solution
 
     private string _steps;
     
-    protected readonly Dictionary<string, (string Left, string Right)> Map = new();
+    private readonly ConcurrentDictionary<string, (string Left, string Right)> Map = new();
 
     protected readonly List<string> Starts = new();
     
@@ -25,7 +26,7 @@ public abstract class Base : Solution
                 Starts.Add(key);
             }
 
-            Map.Add(line[..3], (line[7..10], line[12..15]));
+            Map.TryAdd(line[..3], (line[7..10], line[12..15]));
         }
     }
 
