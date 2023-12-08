@@ -16,7 +16,7 @@ public abstract class Base : Solution
 
         foreach (var line in Input[2..])
         {
-            Map.Add(line.Substring(0, 3), (line.Substring(7, 3), line.Substring(12, 3)));
+            Map.Add(line[..3], (line[7..10], line[12..15]));
         }
     }
 
