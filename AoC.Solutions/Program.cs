@@ -97,6 +97,10 @@ public static class Program
                 previousYear = year;
 
                 yearMs = 0;
+                
+                Console.WriteLine("COLLECT!");
+                
+                GC.Collect(GC.MaxGeneration, GCCollectionMode.Aggressive, true, true);
             }
             
             CheckAnswer(instance.GetType(), answer);
