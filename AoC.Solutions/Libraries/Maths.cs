@@ -4,22 +4,36 @@ public static class Maths
 {
     public static long LowestCommonMultiple(List<long> input)
     {
-        if (input.Count == 2)
+        var queue = new Queue<long>(input.Count * 2);
+
+        foreach (var item in input)
         {
-            var left = input[0];
-
-            var right = input[1];
-
-            return left * right / GreatestCommonFactor(left, right);
+            queue.Enqueue(item);
         }
+        
+        while (true)
+        {
+            long left;
+            
+            long right;
+            
+            if (queue.Count == 2)
+            {
+                left = queue.Dequeue();
 
-        var lowestCommonMultiple = LowestCommonMultiple(input.Take(2).ToList());
+                right = queue.Dequeue();
 
-        var remaining = input.Skip(2).ToList();
+                return left * right / GreatestCommonFactor(left, right);
+            }
 
-        remaining.Add(lowestCommonMultiple);
+            left = queue.Dequeue();
 
-        return LowestCommonMultiple(remaining);
+            right = queue.Dequeue();
+
+            var lowestCommonMultiple = left * right / GreatestCommonFactor(left, right);
+
+            queue.Enqueue(lowestCommonMultiple);
+        }
     }
 
     private static long GreatestCommonFactor(long left, long right)
