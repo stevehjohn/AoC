@@ -1,5 +1,4 @@
 using JetBrains.Annotations;
-using TraceReloggerLib;
 
 namespace AoC.Solutions.Solutions._2023._08;
 
@@ -10,8 +9,40 @@ public class Part1 : Base
     {
         ParseInput();
 
-        var result = WalkMap("AAA");
+        var result = WalkMap();
         
         return result.ToString();
+    }
+
+    private int WalkMap()
+    {
+        var steps = 0;
+
+        var step = 0;
+
+        var node = "AAA";
+
+        Console.WriteLine(node);
+        
+        while (true)
+        {
+            steps++;
+            
+            node = Steps[step] == 'L' ? Map[node].Left : Map[node].Right;
+
+            if (node == "ZZZ")
+            {
+                break;
+            }
+
+            step++;
+
+            if (step == Steps.Length)
+            {
+                step = 0;
+            }
+        }
+
+        return steps;
     }
 }
