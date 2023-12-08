@@ -122,9 +122,9 @@ public abstract class Base : Solution
             return "AAAAA";
         }
 
-        var distinct = new Dictionary<char, int>();
+        var distinct = new int[14];
         
-        for (var i = 0; i < hand.Length; i++)
+        for (var i = 0; i < 5; i++)
         {
             var item = hand[i];
 
@@ -135,27 +135,42 @@ public abstract class Base : Solution
 
             item = item switch
             {
-                'A' => 'E',
-                'K' => 'D',
-                'Q' => 'C',
-                'T' => 'A',
+                'A' => '=',
+                'K' => '<',
+                'Q' => ';',
+                'T' => ':',
                 _ => item
             };
-            
-            if (!distinct.TryAdd(item, 1))
+
+            distinct[item - '0']++;
+        }
+
+        var max = 0;
+        
+        for (var i = 0; i < 14; i++)
+        {
+            if (distinct[i] > max)
             {
-                distinct[item]++;
+                max = distinct[i];
             }
         }
 
-        var best = distinct.OrderByDescending(c => c.Value).ThenByDescending(c => c.Key).First().Key;
+        var best =' ';
+        
+        for (var i = 13; i >= 0; i--)
+        {
+            if (distinct[i] == max)
+            {
+                best = (char)('0' + (char)i);
+            }
+        }
 
         best = best switch
         {
-            'E' => 'A',
-            'D' => 'K',
-            'C' => 'Q',
-            'A' => 'T',
+            '=' => 'A',
+            '<' => 'K',
+            ';' => 'Q',
+            ':' => 'T',
             _ => best
         };
 
