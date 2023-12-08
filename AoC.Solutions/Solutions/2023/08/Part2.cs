@@ -17,11 +17,9 @@ public class Part2 : Base
 
     private List<long> GetPathLengths()
     {
-        var nodes = Map.Where(n => n.Key.EndsWith('A')).Select(n => n.Key).ToArray();
-
         var pathLengths = new List<long>();
         
-        foreach (var node in nodes)
+        foreach (var node in Starts)
         {
             pathLengths.Add(WalkMap(node));   
         }

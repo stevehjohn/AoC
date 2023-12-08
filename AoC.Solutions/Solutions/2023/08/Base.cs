@@ -10,12 +10,21 @@ public abstract class Base : Solution
     
     protected readonly Dictionary<string, (string Left, string Right)> Map = new();
 
+    protected readonly List<string> Starts = new();
+    
     protected void ParseInput()
     {
         _steps = Input[0];
 
         foreach (var line in Input[2..])
         {
+            var key = line[..3];
+
+            if (key[2] == 'A')
+            {
+                Starts.Add(key);
+            }
+
             Map.Add(line[..3], (line[7..10], line[12..15]));
         }
     }
