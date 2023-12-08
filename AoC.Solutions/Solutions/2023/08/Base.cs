@@ -6,13 +6,13 @@ public abstract class Base : Solution
 {
     public override string Description => "Haunted wasteland";
 
-    protected string Steps;
+    private string _steps;
     
     protected readonly Dictionary<string, (string Left, string Right)> Map = new();
 
     protected void ParseInput()
     {
-        Steps = Input[0];
+        _steps = Input[0];
 
         foreach (var line in Input[2..])
         {
@@ -30,7 +30,7 @@ public abstract class Base : Solution
         {
             steps++;
             
-            node = Steps[step] == 'L' ? Map[node].Left : Map[node].Right;
+            node = _steps[step] == 'L' ? Map[node].Left : Map[node].Right;
 
             if (node[2] == 'Z')
             {
@@ -39,7 +39,7 @@ public abstract class Base : Solution
 
             step++;
 
-            if (step == Steps.Length)
+            if (step == _steps.Length)
             {
                 step = 0;
             }
