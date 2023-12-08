@@ -18,7 +18,7 @@ public class Part2 : Base
 
         var step = 0;
 
-        var nodes = Map.Where(n => n.Key.EndsWith('Z')).Select(n => n.Key).ToArray();
+        var nodes = Map.Where(n => n.Key.EndsWith('A')).Select(n => n.Key).ToArray();
         
         while (true)
         {
