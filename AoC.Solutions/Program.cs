@@ -98,8 +98,6 @@ public static class Program
 
                 yearMs = 0;
                 
-                Console.WriteLine("COLLECT!");
-                
                 GC.Collect(GC.MaxGeneration, GCCollectionMode.Aggressive, true, true);
             }
             
