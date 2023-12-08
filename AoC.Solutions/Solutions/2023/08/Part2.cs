@@ -19,7 +19,7 @@ public class Part2 : Base
     {
         var pathLengths = new List<long>();
 
-        Parallel.ForEach(Starts, node =>
+        Parallel.ForEach(Starts, new ParallelOptions { MaxDegreeOfParallelism = 6 } ,node =>
         {
             pathLengths.Add(WalkMap(node));
         });
