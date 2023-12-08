@@ -100,17 +100,29 @@ public abstract class Base : Solution
 
         var originalHand = hand;
 
-        hand = hand.Replace("J", string.Empty);
-        
-        hand = hand.Replace('A', 'E').Replace('K', 'D').Replace('Q', 'C').Replace('T', 'A');
-
         var distinct = new Dictionary<char, int>();
         
         for (var i = 0; i < hand.Length; i++)
         {
-            if (!distinct.TryAdd(hand[i], 1))
+            var item = hand[i];
+
+            if (item == 'J')
             {
-                distinct[hand[i]]++;
+                continue;
+            }
+
+            item = item switch
+            {
+                'A' => 'E',
+                'K' => 'D',
+                'Q' => 'C',
+                'T' => 'A',
+                _ => item
+            };
+            
+            if (!distinct.TryAdd(item, 1))
+            {
+                distinct[item]++;
             }
         }
 
