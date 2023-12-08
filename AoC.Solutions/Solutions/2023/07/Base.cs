@@ -155,7 +155,7 @@ public abstract class Base : Solution
             }
         }
 
-        var best =' ';
+        var best = ' ';
         
         for (var i = 13; i >= 0; i--)
         {
