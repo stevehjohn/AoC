@@ -55,19 +55,5 @@ public static class Maths
         }
 
         return left;
-
-        // while (left != 0 && right != 0)
-        // {
-        //     if (left > right)
-        //     {
-        //         left %= right;
-        //     }
-        //     else
-        //     {
-        //         right %= left;
-        //     }
-        // }
-        //
-        // return left | right;
     }
 }
