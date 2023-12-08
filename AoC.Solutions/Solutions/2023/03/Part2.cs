@@ -5,12 +5,16 @@ namespace AoC.Solutions.Solutions._2023._03;
 [UsedImplicitly]
 public class Part2 : Base
 {
-    private readonly List<int> _neighbours = new();
+    private List<int> _neighbours;
 
-    private readonly Dictionary<int, List<(int X, int Number, int Length)>> _numbers = new();
+    private Dictionary<int, List<(int X, int Number, int Length)>> _numbers;
     
     public override string GetAnswer()
     {
+        _neighbours = new List<int>();
+
+        _numbers = new Dictionary<int, List<(int X, int Number, int Length)>>();
+        
         Width = Input[0].Length;
 
         Height = Input.Length;

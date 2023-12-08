@@ -38,18 +38,18 @@ public static class Maths
 
     private static long GreatestCommonFactor(long left, long right)
     {
-        while (left != right)
+        while (left != 0 && right != 0)
         {
             if (left > right)
             {
-                left -= right;
+                left %= right;
             }
             else
             {
-                right -= left;
+                right %= left;
             }
         }
 
-        return left;
+        return left | right;
     }
 }
