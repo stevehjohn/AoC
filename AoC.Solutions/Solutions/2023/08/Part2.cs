@@ -8,16 +8,47 @@ public class Part2 : Base
     public override string GetAnswer()
     {
         ParseInput();
+        
+        return WalkMap().ToString();
+    }
 
+    private int WalkMap()
+    {
         var steps = 0;
 
-        var starts = Map.Where(m => m.Key.EndsWith('A')).Select(m => m.Key).ToList();
+        var step = 0;
 
-        foreach (var start in starts)
-        {
-            steps += WalkMap(start, true);
-        }
+        var nodes = Map.Where(n => n.Key.EndsWith('Z')).Select(n => n.Key).ToArray();
         
-        return steps.ToString();
+        while (true)
+        {
+            steps += 1;
+
+            var endCount = 0;
+            
+            for (var i = 0; i < nodes.Length; i++)
+            {
+                nodes[i] = Steps[step] == 'L' ? Map[nodes[i]].Left : Map[nodes[i]].Right;
+
+                if (nodes[i].EndsWith('Z'))
+                {
+                    endCount++;
+                }
+            }
+
+            if (endCount == nodes.Length)
+            {
+                break;
+            }
+
+            step++;
+
+            if (step == Steps.Length)
+            {
+                step = 0;
+            }
+        }
+
+        return steps;
     }
 }
