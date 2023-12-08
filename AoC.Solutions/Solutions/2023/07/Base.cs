@@ -158,7 +158,18 @@ public abstract class Base : Solution
             'A' => 'T',
             _ => best
         };
-        
-        return hand.Replace('J', best);
+
+        var newHand = new char[5];
+
+        for (var i = 0; i < 5; i++)
+        {
+            newHand[i] = hand[i] switch
+            {
+                'J' => best,
+                _ => hand[i]
+            };
+        }
+
+        return new string(newHand);
     }
 }
