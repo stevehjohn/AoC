@@ -18,11 +18,11 @@ public class Part2 : Base
     private List<long> GetPathLengths()
     {
         var pathLengths = new List<long>();
-        
-        foreach (var node in Starts)
+
+        Parallel.ForEach(Starts, node =>
         {
-            pathLengths.Add(WalkMap(node));   
-        }
+            pathLengths.Add(WalkMap(node));
+        });
 
         return pathLengths;
     }
