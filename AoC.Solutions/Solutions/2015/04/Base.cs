@@ -14,9 +14,11 @@ public abstract class Base : Solution
 
         var i = 1;
 
+        using var md5 = MD5.Create();
+        
         while (true)
         {
-            var hash = Convert.ToHexString(MD5.HashData(Encoding.ASCII.GetBytes($"{key}{i}")));
+            var hash = Convert.ToHexString(md5.ComputeHash(Encoding.ASCII.GetBytes($"{key}{i}")));
 
             if (hash.StartsWith(pattern))
             {
@@ -25,6 +27,8 @@ public abstract class Base : Solution
 
             i++;
         }
+            
+        md5.Clear();
 
         return i;
     }
