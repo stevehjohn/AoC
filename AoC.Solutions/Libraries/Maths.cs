@@ -42,18 +42,32 @@ public static class Maths
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     private static long GreatestCommonFactor(long left, long right)
     {
-        while (left != 0 && right != 0)
+        while (right != 0)
         {
-            if (left > right)
+            left %= right;
+
+            if (left == 0)
             {
-                left %= right;
+                return right;
             }
-            else
-            {
-                right %= left;
-            }
+
+            right %= left;
         }
 
-        return left | right;
+        return left;
+
+        // while (left != 0 && right != 0)
+        // {
+        //     if (left > right)
+        //     {
+        //         left %= right;
+        //     }
+        //     else
+        //     {
+        //         right %= left;
+        //     }
+        // }
+        //
+        // return left | right;
     }
 }
