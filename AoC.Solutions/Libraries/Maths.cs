@@ -1,7 +1,10 @@
+using System.Runtime.CompilerServices;
+
 namespace AoC.Solutions.Libraries;
 
 public static class Maths
 {
+    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
     public static long LowestCommonMultiple(List<long> input)
     {
         var queue = new Queue<long>(input.Count * 2);
@@ -36,6 +39,7 @@ public static class Maths
         }
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     private static long GreatestCommonFactor(long left, long right)
     {
         while (left != 0 && right != 0)
