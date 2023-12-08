@@ -37,16 +37,40 @@ public abstract class Base : Solution
     
     private static string ParseHandForOrdering(string hand, bool jokersWild)
     {
+        var newHand = new char[5];
+        
         if (jokersWild)
         {
-            hand = hand.Replace('A', 'E').Replace('K', 'D').Replace('Q', 'C').Replace('J', '1').Replace('T', 'A');
+            for (var i = 0; i < 5; i++)
+            {
+                newHand[i] = hand[i] switch
+                {
+                    'A' => 'E',
+                    'K' => 'D',
+                    'Q' => 'C',
+                    'J' => '1',
+                    'T' => 'A',
+                    _ => hand[i]
+                };
+            }
         }
         else
         {
-            hand = hand.Replace('A', 'E').Replace('K', 'D').Replace('Q', 'C').Replace('J', 'B').Replace('T', 'A');
+            for (var i = 0; i < 5; i++)
+            {
+                newHand[i] = hand[i] switch
+                {
+                    'A' => 'E',
+                    'K' => 'D',
+                    'Q' => 'C',
+                    'J' => 'B',
+                    'T' => 'A',
+                    _ => hand[i]
+                };
+            }
         }
 
-        return hand;
+        return new string(newHand);
     }
 
     private static int GetTypeStrength(string hand)
