@@ -7,6 +7,17 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        return "Unknown";
+        ParseInput();
+
+        var steps = 0;
+
+        var starts = Map.Where(m => m.Key.EndsWith('A')).Select(m => m.Key).ToList();
+
+        foreach (var start in starts)
+        {
+            steps += WalkMap(start, true);
+        }
+        
+        return steps.ToString();
     }
 }
