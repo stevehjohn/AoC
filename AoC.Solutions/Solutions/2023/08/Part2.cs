@@ -1,3 +1,4 @@
+using AoC.Solutions.Libraries;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2023._08;
@@ -11,7 +12,7 @@ public class Part2 : Base
 
         var pathLengths = GetPathLengths();
         
-        return LowestCommonMultiple(pathLengths).ToString();
+        return Maths.LowestCommonMultiple(pathLengths).ToString();
     }
 
     private List<long> GetPathLengths()
@@ -54,42 +55,5 @@ public class Part2 : Base
         }
         
         return steps;
-    }
-
-    private static long LowestCommonMultiple(List<long> input)
-    {
-        if (input.Count == 2)
-        {
-            var left = input[0];
-
-            var right = input[1];
-
-            return left * right / GreatestCommonFactor(left, right);
-        }
-
-        var lowestCommonMultiple = LowestCommonMultiple(input.Take(2).ToList());
-
-        var remaining = input.Skip(2).ToList();
-
-        remaining.Add(lowestCommonMultiple);
-
-        return LowestCommonMultiple(remaining);
-    }
-
-    private static long GreatestCommonFactor(long left, long right)
-    {
-        while (left != right)
-        {
-            if (left > right)
-            {
-                left -= right;
-            }
-            else
-            {
-                right -= left;
-            }
-        }
-
-        return left;
     }
 }
