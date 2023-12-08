@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Runtime.CompilerServices;
 
 namespace AoC.Solutions.Libraries;
@@ -5,9 +6,9 @@ namespace AoC.Solutions.Libraries;
 public static class Maths
 {
     [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-    public static long LowestCommonMultiple(List<long> input)
+    public static T LowestCommonMultiple<T>(List<T> input) where T : INumber<T>
     {
-        var queue = new Queue<long>(input.Count * 2);
+        var queue = new Queue<T>(input.Count * 2);
 
         foreach (var item in input)
         {
@@ -16,9 +17,9 @@ public static class Maths
         
         while (true)
         {
-            long left;
+            T left;
             
-            long right;
+            T right;
             
             if (queue.Count == 2)
             {
@@ -40,13 +41,13 @@ public static class Maths
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
-    private static long GreatestCommonFactor(long left, long right)
+    private static T GreatestCommonFactor<T>(T left, T right) where T : INumber<T>
     {
-        while (right != 0)
+        while (right != default)
         {
             left %= right;
 
-            if (left == 0)
+            if (left == default)
             {
                 return right;
             }
