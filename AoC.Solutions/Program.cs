@@ -17,8 +17,6 @@ public static class Program
                                 .OrderBy(t => t.Namespace)
                                 .ThenBy(t => t.Name);
 
-        var totalMs = 0L;
-
         var yearMs = 0L;
 
         int? previousYear = null;
@@ -92,7 +90,7 @@ public static class Program
             }
             else if (year != previousYear)
             {
-                WriteYearSummary(arguments.Length == 0);
+                WriteYearSummary();
 
                 previousYear = year;
 
@@ -120,12 +118,10 @@ public static class Program
             
             Console.WriteLine($" {year} {int.Parse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0"),2}.{solution.Name[4]}: {displayAnswer,-30} {$"{microseconds:N0}μs",-12}  {description}");
 
-            totalMs += (long) microseconds;
-
             yearMs += (long) microseconds;
         }
 
-        WriteYearSummary(arguments.Length == 0);
+        WriteYearSummary();
 
         void CheckAnswer(Type solution, string answer)
         {
@@ -173,15 +169,11 @@ public static class Program
             }
         }
 
-        void WriteYearSummary(bool showTotal)
+        void WriteYearSummary()
         {
-            Console.Write($"{new string(' ', 43)}-------------");
+            Console.WriteLine($"{new string(' ', 43)}-------------");
 
-            Console.WriteLine(showTotal ? " -------------" : string.Empty);
-
-            Console.Write($"{new string(' ', 43)}{$"{yearMs / 1000:N0}ms",-13}");
-
-            Console.WriteLine(showTotal ? $" {totalMs / 1000:N0}ms" : string.Empty);
+            Console.WriteLine($"{new string(' ', 43)}{$"{yearMs / 1000:N0}ms", -13}");
 
             Console.WriteLine();
         }
