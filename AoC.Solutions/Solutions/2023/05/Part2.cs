@@ -5,12 +5,16 @@ namespace AoC.Solutions.Solutions._2023._05;
 [UsedImplicitly]
 public class Part2 : Base
 {
-    private readonly List<List<(Range Range, long Adjustment)>> _mappings = new();
+    private List<List<(Range Range, long Adjustment)>> _mappings;
 
-    private readonly List<Range> _seeds = new();
+    private List<Range> _seeds;
     
     public override string GetAnswer()
     {
+        _mappings = new List<List<(Range Range, long Adjustment)>>();
+
+        _seeds = new List<Range>();
+        
         ParseInput();
 
         var seeds = new List<Range>(_seeds);

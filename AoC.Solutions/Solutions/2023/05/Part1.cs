@@ -7,10 +7,12 @@ public class Part1 : Base
 {
     private long[] _seeds;
 
-    private readonly List<List<(long Start, long End, long Adjustment)>> _mappings = new();
+    private List<List<(long Start, long End, long Adjustment)>> _mappings;
     
     public override string GetAnswer()
     {
+        _mappings = new List<List<(long Start, long End, long Adjustment)>>();
+        
         ParseInput();
 
         for (var i = 0; i < _seeds.Length; i++)

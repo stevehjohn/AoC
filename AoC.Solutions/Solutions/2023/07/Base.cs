@@ -6,10 +6,12 @@ public abstract class Base : Solution
 {
     public override string Description => "Camel cards";
 
-    private readonly List<(string Hand, int Bid)> _hands = new();
+    private List<(string Hand, int Bid)> _hands;
 
     protected long GetResult(bool jokersWild = false)
     {
+        _hands = new();
+        
         ParseInput();
         
         var ordered = OrderHands(jokersWild);
