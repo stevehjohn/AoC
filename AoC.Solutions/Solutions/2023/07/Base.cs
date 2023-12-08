@@ -98,8 +98,6 @@ public abstract class Base : Solution
             return "AAAAA";
         }
 
-        var originalHand = hand;
-
         var distinct = new Dictionary<char, int>();
         
         for (var i = 0; i < hand.Length; i++)
@@ -137,6 +135,6 @@ public abstract class Base : Solution
             _ => best
         };
         
-        return originalHand.Replace('J', best);
+        return hand.Replace('J', best);
     }
 }
