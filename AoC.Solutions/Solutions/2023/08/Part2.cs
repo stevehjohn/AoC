@@ -28,32 +28,4 @@ public class Part2 : Base
 
         return pathLengths;
     }
-
-    private long WalkMap(string node)
-    {
-        var steps = 0L;
-
-        var step = 0;
-
-        while (true)
-        {
-            steps++;
-            
-            node = Steps[step] == 'L' ? Map[node].Left : Map[node].Right;
-
-            if (node.EndsWith('Z'))
-            {
-                break;
-            }
-
-            step++;
-
-            if (step == Steps.Length)
-            {
-                step = 0;
-            }
-        }
-        
-        return steps;
-    }
 }

@@ -20,13 +20,11 @@ public abstract class Base : Solution
         }
     }
 
-    protected int WalkMap()
+    protected int WalkMap(string node = "AAA")
     {
         var steps = 0;
 
         var step = 0;
-
-        var node = "AAA";
         
         while (true)
         {
