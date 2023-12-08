@@ -9,7 +9,7 @@ public abstract class Base : Solution
 
     private string _steps;
     
-    private readonly ConcurrentDictionary<string, (string Left, string Right)> Map = new();
+    private readonly ConcurrentDictionary<string, (string Left, string Right)> _map = new();
 
     protected readonly List<string> Starts = new();
     
@@ -26,7 +26,7 @@ public abstract class Base : Solution
                 Starts.Add(key);
             }
 
-            Map.TryAdd(line[..3], (line[7..10], line[12..15]));
+            _map.TryAdd(line[..3], (line[7..10], line[12..15]));
         }
     }
 
@@ -40,7 +40,7 @@ public abstract class Base : Solution
         {
             steps++;
             
-            node = _steps[step] == 'L' ? Map[node].Left : Map[node].Right;
+            node = _steps[step] == 'L' ? _map[node].Left : _map[node].Right;
 
             if (node[2] == 'Z')
             {
