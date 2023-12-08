@@ -21,8 +21,6 @@ public class Part1 : Base
         var step = 0;
 
         var node = "AAA";
-
-        Console.WriteLine(node);
         
         while (true)
         {
