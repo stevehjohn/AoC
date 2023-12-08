@@ -112,7 +112,7 @@ public abstract class Base : Solution
 
     private static string OptimiseHand(string hand)
     {
-        if (!hand.Contains('J'))
+        if (! hand.Contains('J'))
         {
             return hand;
         }
@@ -161,7 +161,7 @@ public abstract class Base : Solution
         {
             if (distinct[i] == max)
             {
-                best = (char)('0' + (char)i);
+                best = (char) ('0' + (char) i);
             }
         }
 
