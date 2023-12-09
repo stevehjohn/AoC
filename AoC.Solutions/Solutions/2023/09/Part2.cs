@@ -15,21 +15,9 @@ public class Part2 : Base
         {
             var sequences = Extrapolate(sequence);
 
-            total += GetHistory(sequences);
+            total += GetHistory(sequences, (s, l) => s[0] - l);
         }
         
         return total.ToString();
-    }
-
-    private static long GetHistory(List<long[]> sequences)
-    {
-        var last = 0L;
-        
-        for (var i = sequences.Count - 2; i >= 0; i--)
-        {
-            last = sequences[i][0] - last;
-        }
-        
-        return last;
     }
 }
