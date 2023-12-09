@@ -23,7 +23,21 @@ public static class Program
 
         Console.WriteLine();
 
-        var answers = File.ReadAllLines($"Solutions{Path.DirectorySeparatorChar}AllAnswers.txt");
+        string[] answers = null;
+
+        try
+        {
+            answers = File.ReadAllLines($"Solutions{Path.DirectorySeparatorChar}AllAnswers.txt");
+        }
+        catch
+        {
+            //
+        }
+
+        if (answers == null)
+        {
+            answers = File.ReadAllLines($"./Aoc.Solutions/Solutions{Path.DirectorySeparatorChar}AllAnswers.txt");
+        }
 
         var previousDesc = string.Empty;
 
@@ -90,6 +104,8 @@ public static class Program
             }
             else if (year != previousYear)
             {
+                CleanUp();
+                
                 WriteYearSummary();
 
                 previousYear = year;
@@ -121,7 +137,11 @@ public static class Program
             yearMs += (long) microseconds;
         }
 
+        CleanUp();
+        
         WriteYearSummary();
+        
+        return;
 
         void CheckAnswer(Type solution, string answer)
         {
@@ -176,6 +196,16 @@ public static class Program
             Console.WriteLine($"{new string(' ', 43)}{$"{yearMs / 1000:N0}ms", -13}");
 
             Console.WriteLine();
+        }
+
+        void CleanUp()
+        {
+            var results = Directory.EnumerateFiles("./").Where(f => f.EndsWith(".result")).ToList();
+
+            foreach (var result in results)
+            {
+                File.Delete(result);
+            }
         }
     }
 }

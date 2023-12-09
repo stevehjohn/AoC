@@ -13,7 +13,21 @@ public class MatrixParser
 
     public MatrixParser(Variant variant)
     {
-        var templateData = File.ReadAllLines($"Common{Path.DirectorySeparatorChar}Ocr{Path.DirectorySeparatorChar}OcrTemplate-{variant}.txt");
+        string[] templateData = null;
+
+        try
+        {
+            templateData = File.ReadAllLines($"Common{Path.DirectorySeparatorChar}Ocr{Path.DirectorySeparatorChar}OcrTemplate-{variant}.txt");
+        }
+        catch
+        {
+            //
+        }
+
+        if (templateData == null)
+        {
+            templateData = File.ReadAllLines($"AoC.Solutions/Common{Path.DirectorySeparatorChar}Ocr{Path.DirectorySeparatorChar}OcrTemplate-{variant}.txt");
+        }
 
         if (variant == Variant.Small)
         {
