@@ -24,7 +24,7 @@ public abstract class Base : Solution
 
         while (true)
         {
-            var newSequence = new List<long>();
+            var newSequence = new List<long>(sequence.Count - 1);
 
             var zero = true; 
             
