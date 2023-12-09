@@ -23,11 +23,13 @@ public class Part1 : Base
 
     private static long GetHistory(List<List<long>> sequences)
     {
+        var last = 0L;
+        
         for (var i = sequences.Count - 2; i >= 0; i--)
         {
-            sequences[i].Add(sequences[i].Last() + sequences[i + 1]. Last());
+            last = sequences[i].Last() + last;
         }
-        
-        return sequences[0].Last();
+
+        return last;
     }
 }

@@ -18,15 +18,18 @@ public class Part2 : Base
             total += GetHistory(sequences);
         }
         
-        return total.ToString();    }
+        return total.ToString();
+    }
 
     private static long GetHistory(List<List<long>> sequences)
     {
+        var last = 0L;
+        
         for (var i = sequences.Count - 2; i >= 0; i--)
         {
-            sequences[i].Insert(0, sequences[i].First() - sequences[i + 1]. First());
+            last = sequences[i].First() - last;
         }
         
-        return sequences[0].First();
+        return last;
     }
 }
