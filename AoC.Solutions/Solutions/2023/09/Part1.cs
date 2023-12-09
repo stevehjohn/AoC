@@ -21,7 +21,7 @@ public class Part1 : Base
         return total.ToString();
     }
 
-    private long GetHistory(List<List<long>> sequences)
+    private static long GetHistory(List<List<long>> sequences)
     {
         for (var i = sequences.Count - 2; i >= 0; i--)
         {
