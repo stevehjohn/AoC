@@ -18,6 +18,18 @@ public abstract class Base : Solution
         }
     }
 
+    protected static long GetHistory(List<long[]> sequences, Func<long[], long, long> selector)
+    {
+        var last = 0L;
+        
+        for (var i = sequences.Count - 2; i >= 0; i--)
+        {
+            last = selector(sequences[i], last);
+        }
+        
+        return last;
+    }
+
     protected static List<long[]> Extrapolate(long[] sequence)
     {
         var sequences = new List<long[]> { sequence };
