@@ -75,21 +75,56 @@ public abstract class Base : Solution
 
     private static int GetTypeStrength(string hand)
     {
-        var distinct = new Dictionary<char, int>();
+        var distinct = new int[14];
         
         for (var i = 0; i < 5; i++)
         {
-            if (!distinct.TryAdd(hand[i], 1))
+            var item = hand[i];
+
+            item = item switch
             {
-                distinct[hand[i]]++;
+                'J' => '1',
+                'A' => '=',
+                'K' => '<',
+                'Q' => ';',
+                'T' => ':',
+                _ => item
+            };
+
+            distinct[item - '0']++;
+        }
+
+        var count = 0;
+
+        var containsOne = false;
+
+        var containsThree = false;
+        
+        for (var i = 0; i < 14; i++)
+        {
+            var item = distinct[i];
+            
+            if (item != 0)
+            {
+                count++;
+            }
+
+            if (item == 1)
+            {
+                containsOne = true;
+            }
+
+            if (item == 3)
+            {
+                containsThree = true;
             }
         }
 
-        var strength = distinct.Count switch
+        var strength = count switch
         {
             1 => 7,
-            2 => distinct.Any(c => c.Value == 1) ? 6 : 5,
-            3 => distinct.Any(c => c.Value == 3) ? 4 : 3,
+            2 => containsOne ? 6 : 5,
+            3 => containsThree ? 4 : 3,
             4 => 2,
             5 => 1,
             _ => 0
