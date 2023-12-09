@@ -6,9 +6,9 @@ namespace AoC.Solutions.Libraries;
 public static class Maths
 {
     [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-    public static T LowestCommonMultiple<T>(List<T> input) where T : INumber<T>
+    public static long LowestCommonMultiple(List<long> input)
     {
-        var queue = new Queue<T>(input.Count * 2);
+        var queue = new Queue<long>(input.Count * 2);
 
         foreach (var item in input)
         {
@@ -17,9 +17,9 @@ public static class Maths
         
         while (true)
         {
-            T left;
+            long left;
             
-            T right;
+            long right;
             
             if (queue.Count == 2)
             {
@@ -41,20 +41,30 @@ public static class Maths
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
-    private static T GreatestCommonFactor<T>(T left, T right) where T : INumber<T>
+    private static long GreatestCommonFactor(long left, long right)
     {
-        while (right != default)
+        var gcdExponentOnTwo = BitOperations.TrailingZeroCount(left | right);
+
+        left >>= gcdExponentOnTwo;
+        
+        right >>= gcdExponentOnTwo;
+
+        while (left != right)
         {
-            left %= right;
-
-            if (left == default)
+            if (left < right)
             {
-                return right;
-            }
+                right -= left;
 
-            right %= left;
+                right >>= BitOperations.TrailingZeroCount(right);
+            }
+            else
+            {
+                left -= right;
+
+                left >>= BitOperations.TrailingZeroCount(left);
+            }
         }
 
-        return left;
+        return left << gcdExponentOnTwo;
     }
 }
