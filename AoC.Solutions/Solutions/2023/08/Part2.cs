@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using AoC.Solutions.Libraries;
 using JetBrains.Annotations;
 
@@ -12,12 +13,12 @@ public class Part2 : Base
 
         var pathLengths = GetPathLengths();
         
-        return Maths.LowestCommonMultiple(pathLengths).ToString();
+        return Maths.LowestCommonMultiple(pathLengths.ToList()).ToString();
     }
 
-    private List<long> GetPathLengths()
+    private ConcurrentBag<long> GetPathLengths()
     {
-        var pathLengths = new List<long>();
+        var pathLengths = new ConcurrentBag<long>();
 
         Parallel.ForEach(Starts, new ParallelOptions { MaxDegreeOfParallelism = 6 } ,node =>
         {
