@@ -18,7 +18,7 @@ public abstract class Base : Solution
         }
     }
 
-    protected List<List<long>> Extrapolate(List<long> sequence)
+    protected static List<List<long>> Extrapolate(List<long> sequence)
     {
         var sequences = new List<List<long>> { sequence };
 
