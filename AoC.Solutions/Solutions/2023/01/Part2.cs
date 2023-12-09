@@ -17,6 +17,7 @@ public class Part2 : Base
         { "eight", "e8t" },
         { "nine", "n9e" },
     };
+    
     public override string GetAnswer()
     {
         var sum = 0;
