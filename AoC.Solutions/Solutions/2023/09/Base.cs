@@ -17,4 +17,39 @@ public abstract class Base : Solution
             Sequences.Add(parts);
         }
     }
+
+    protected List<List<long>> Extrapolate(List<long> sequence)
+    {
+        var sequences = new List<List<long>> { sequence };
+
+        while (true)
+        {
+            var newSequence = new List<long>();
+
+            var zero = true; 
+            
+            for (var i = 0; i < sequence.Count - 1; i++)
+            {
+                var delta = sequence[i + 1] - sequence[i];
+
+                if (delta != 0)
+                {
+                    zero = false;
+                }
+                
+                newSequence.Add(delta);
+            }
+            
+            sequences.Add(newSequence);
+            
+            if (zero)
+            {
+                break;
+            }
+
+            sequence = newSequence;
+        }
+
+        return sequences;
+    }
 }
