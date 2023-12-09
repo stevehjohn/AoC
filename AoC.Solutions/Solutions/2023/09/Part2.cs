@@ -10,14 +10,14 @@ public class Part2 : Base
         ParseInput();
 
         var total = 0L;
-        
-        foreach (var sequence in Sequences)
+
+        for (var i = 0; i < Sequences.Count; i++)
         {
-            var sequences = Extrapolate(sequence);
+            var sequences = Extrapolate(Sequences[i]);
 
             total += GetHistory(sequences, (s, l) => s[0] - l);
         }
-        
+
         return total.ToString();
     }
 }
