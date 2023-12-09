@@ -21,13 +21,13 @@ public class Part2 : Base
         return total.ToString();
     }
 
-    private static long GetHistory(List<List<long>> sequences)
+    private static long GetHistory(List<long[]> sequences)
     {
         var last = 0L;
         
         for (var i = sequences.Count - 2; i >= 0; i--)
         {
-            last = sequences[i].First() - last;
+            last = sequences[i][0] - last;
         }
         
         return last;

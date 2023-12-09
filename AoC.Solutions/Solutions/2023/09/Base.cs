@@ -6,29 +6,29 @@ public abstract class Base : Solution
 {
     public override string Description => "Mirage maintenance";
     
-    protected readonly List<List<long>> Sequences = new();
+    protected readonly List<long[]> Sequences = new();
 
     protected void ParseInput()
     {
         foreach (var line in Input)
         {
-            var parts = line.Split(' ', StringSplitOptions.TrimEntries).Select(long.Parse).ToList();
+            var parts = line.Split(' ', StringSplitOptions.TrimEntries).Select(long.Parse).ToArray();
             
             Sequences.Add(parts);
         }
     }
 
-    protected static List<List<long>> Extrapolate(List<long> sequence)
+    protected static List<long[]> Extrapolate(long[] sequence)
     {
-        var sequences = new List<List<long>> { sequence };
+        var sequences = new List<long[]> { sequence };
 
         while (true)
         {
-            var newSequence = new List<long>(sequence.Count - 1);
+            var newSequence = new long[sequence.Length - 1];
 
             var zero = true; 
             
-            for (var i = 0; i < sequence.Count - 1; i++)
+            for (var i = 0; i < sequence.Length - 1; i++)
             {
                 var delta = sequence[i + 1] - sequence[i];
 
@@ -37,7 +37,7 @@ public abstract class Base : Solution
                     zero = false;
                 }
                 
-                newSequence.Add(delta);
+                newSequence[i] = delta;
             }
             
             sequences.Add(newSequence);
