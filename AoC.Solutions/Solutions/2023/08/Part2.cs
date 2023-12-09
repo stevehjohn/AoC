@@ -20,11 +20,11 @@ public class Part2 : Base
     {
         var pathLengths = new ConcurrentBag<long>();
 
-        Parallel.ForEach(Starts, new ParallelOptions { MaxDegreeOfParallelism = 6 } ,node =>
-        {
-            pathLengths.Add(WalkMap(node));
-        });
-
+        Starts
+            .AsParallel()
+            .WithDegreeOfParallelism(6)
+            .ForAll(node => pathLengths.Add(WalkMap(node)));
+        
         return pathLengths;
     }
 }
