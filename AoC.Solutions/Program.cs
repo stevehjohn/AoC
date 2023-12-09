@@ -145,7 +145,7 @@ public static class Program
 
         void CheckAnswer(Type solution, string answer)
         {
-            if (answer == "TESTING")
+            if (answer == "Unknown")
             {
                 var temp = Console.ForegroundColor;
 
