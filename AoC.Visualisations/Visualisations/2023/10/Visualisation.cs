@@ -72,34 +72,37 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     protected override void Update(GameTime gameTime)
     {
-        if (HasNextState)
+        for (var i = 0; i < 12; i++)
         {
-            _state = GetNextState();
-
-            if (_state.Map != null)
+            if (HasNextState)
             {
-                _map = new char[_state.Map.Length][];
+                _state = GetNextState();
 
-                for (var y = 0; y < _map.Length; y++)
+                if (_state.Map != null)
                 {
-                    _map[y] = new char[_state.Map[y].Length];
-                    
-                    Array.Copy(_state.Map[y], 0, _map[y], 0, _state.Map[y].Length);
+                    _map = new char[_state.Map.Length][];
+
+                    for (var y = 0; y < _map.Length; y++)
+                    {
+                        _map[y] = new char[_state.Map[y].Length];
+
+                        Array.Copy(_state.Map[y], 0, _map[y], 0, _state.Map[y].Length);
+                    }
                 }
-            }
-            else
-            {
-                var change = _state.Change;
-            
-                _sparks.Add(new Spark
+                else
                 {
-                    Position = new PointFloat { X = (change.X - 1) / 3f, Y = (change.Y - 1) / 3f },
-                    Vector = new PointFloat { X = (-5f + _rng.Next(11)) / 10, Y = (-10f + _rng.Next(21)) / 10 },
-                    Ticks = 20,
-                    StartTicks = 20
-                });
+                    var change = _state.Change;
 
-                _map[change.Y][change.X] = change.Change;
+                    _sparks.Add(new Spark
+                    {
+                        Position = new PointFloat { X = (change.X - 1) / 3f, Y = (change.Y - 1) / 3f },
+                        Vector = new PointFloat { X = (-5f + _rng.Next(11)) / 10, Y = (-10f + _rng.Next(21)) / 10 },
+                        Ticks = 20,
+                        StartTicks = 20
+                    });
+
+                    _map[change.Y][change.X] = change.Change;
+                }
             }
         }
 
