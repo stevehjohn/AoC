@@ -12,8 +12,40 @@ public class Part2 : Base
     public override string GetAnswer()
     {
         ParseInput();
-        
+
+        FloodFill(0, 0);
+
+        foreach (var line in Map)
+        {
+            Console.WriteLine(new string(line));
+        }
+
         return "Unknown";
+    }
+
+    private void FloodFill(int x, int y)
+    {
+        Map[y][x] = 'X';
+
+        if (x > 0 && Map[y][x - 1] == '.')
+        {
+            FloodFill(x - 1, y);
+        }
+
+        if (x < Width - 1 && Map[y][x + 1] == '.')
+        {
+            FloodFill(x + 1, y);
+        }
+
+        if (y < Height - 1 && Map[y + 1][x] == '.')
+        {
+            FloodFill(x, y + 1);
+        }
+
+        if (y > 0 && Map[y - 1][x] == '.')
+        {
+            FloodFill(x, y - 1);
+        }
     }
 
     private void ParseInput()
