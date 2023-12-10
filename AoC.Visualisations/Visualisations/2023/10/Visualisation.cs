@@ -27,6 +27,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     
     private PuzzleState _state;
 
+    private int _pullSize = 12;
+
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -72,7 +74,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     protected override void Update(GameTime gameTime)
     {
-        for (var i = 0; i < 12; i++)
+        for (var i = 0; i < _pullSize; i++)
         {
             if (HasNextState)
             {
@@ -102,6 +104,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
                             Ticks = 20,
                             StartTicks = 20
                         });
+                    }
+
+                    if (change.Change == '*')
+                    {
+                        _pullSize = 24;
                     }
 
                     _map[change.Y][change.X] = change.Change;
@@ -172,7 +179,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                             if (tile[xx + yy * 3] == '*')
                             {
                                 _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7 + xx * 2, mY * 7 + yy * 2),
-                                    new Rectangle(49, 0, 7, 7), Color.DarkBlue, 0, Vector2.Zero, Vector2.One,
+                                    new Rectangle(49, 0, 7, 7), Color.Gray, 0, Vector2.Zero, Vector2.One,
                                     SpriteEffects.None, 0);
                             }
                         }
