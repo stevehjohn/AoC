@@ -11,11 +11,63 @@ public class Part2 : Base
     
     public override string GetAnswer()
     {
-        ParseInput();
+        var (x, y) = ParseInput();
 
+        WalkPipes(x, y);
+
+        RemoveJunk();
+        
         FloodFill(0, 0);
 
-        return "Unknown";
+        return CountEnclosed().ToString();
+    }
+
+    private void RemoveJunk()
+    {
+        for (var y = 0; y < _height; y++)
+        {
+            for (var x = 0; x < _width; x++)
+            {
+                if (Map[y][x] == '#')
+                {
+                    Map[y][x] = '.';
+                }
+            }
+        }
+    }
+
+    private void WalkPipes(int x, int y)
+    {
+        while (Map[y][x] == '#')
+        {
+            Map[y][x] = 'X';
+
+            WalkPipes(x - 1, y);
+
+            WalkPipes(x + 1, y);
+
+            WalkPipes(x, y - 1);
+            
+            WalkPipes(x, y + 1);
+        }
+    }
+
+    private int CountEnclosed()
+    {
+        var count = 0;
+        
+        for (var y = 2; y < _height; y += 3)
+        {
+            for (var x = 2; x < _width; x += 3)
+            {
+                if (Map[y][x] == '.')
+                {
+                    count++;
+                }
+            }
+        }
+
+        return count;
     }
 
     private void FloodFill(int x, int y)
@@ -43,13 +95,17 @@ public class Part2 : Base
         }
     }
 
-    private void ParseInput()
+    private (int X, int Y) ParseInput()
     {
         _height = Input.Length * 3 + 2;
 
         _width = Input[0].Length * 3 + 2;
 
         Map = new char[_height][];
+
+        var startX = 0;
+
+        var startY = 0;
 
         for (var y = 0; y < _height; y++)
         {
@@ -69,8 +125,17 @@ public class Part2 : Base
             for (var x = 1; x < _width - 1; x += 3)
             {
                 ParseCell(x, y, Input[(y - 1) / 3][(x - 1) / 3]);
+
+                if (Input[(y - 1) / 3][(x - 1) / 3] == 'S')
+                {
+                    startX = x + 1;
+
+                    startY = y + 1;
+                }
             }
         }
+
+        return (startX, startY);
     }
 
     private void ParseCell(int x, int y, char cell)
