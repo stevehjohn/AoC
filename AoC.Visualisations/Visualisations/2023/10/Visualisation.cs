@@ -93,13 +93,16 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 {
                     var change = _state.Change;
 
-                    _sparks.Add(new Spark
+                    if (change.Change != '*')
                     {
-                        Position = new PointFloat { X = (change.X - 1) / 3f, Y = (change.Y - 1) / 3f },
-                        Vector = new PointFloat { X = (-5f + _rng.Next(11)) / 10, Y = (-10f + _rng.Next(21)) / 10 },
-                        Ticks = 20,
-                        StartTicks = 20
-                    });
+                        _sparks.Add(new Spark
+                        {
+                            Position = new PointFloat { X = (change.X - 1) / 3f, Y = (change.Y - 1) / 3f },
+                            Vector = new PointFloat { X = (-5f + _rng.Next(11)) / 10, Y = (-10f + _rng.Next(21)) / 10 },
+                            Ticks = 20,
+                            StartTicks = 20
+                        });
+                    }
 
                     _map[change.Y][change.X] = change.Change;
                 }
@@ -194,7 +197,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                         break;
                     
                     case "*********":
-                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(49, 0, 7, 7), colour, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(49, 0, 7, 7), Color.Magenta, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
                     
                         break;
                 }
