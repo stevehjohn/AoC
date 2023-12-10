@@ -151,27 +151,35 @@ public class Part2 : Base
         {
             (x, y) = queue.Dequeue();
             
-            Map[y][x] = 'X';
+            Map[y][x] = '*';
             
             Visualise(x, y, '*');
             
             if (x > 0 && Map[y][x - 1] == '.')
             {
+                Map[y][x - 1] = '*';
+                
                 queue.Enqueue((x - 1, y));
             }
 
             if (x < _width - 1 && Map[y][x + 1] == '.')
             {
+                Map[y][x + 1] = '*';
+                
                 queue.Enqueue((x + 1, y));
             }
 
             if (y < _height - 1 && Map[y + 1][x] == '.')
             {
+                Map[y + 1][x] = '*';
+                
                 queue.Enqueue((x, y + 1));
             }
 
             if (y > 0 && Map[y - 1][x] == '.')
             {
+                Map[y - 1][x] = '*';
+                
                 queue.Enqueue((x, y - 1));
             }
         }
