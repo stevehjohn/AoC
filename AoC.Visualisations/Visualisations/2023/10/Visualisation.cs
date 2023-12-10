@@ -163,11 +163,20 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                 var mY = (y - 1) / 3;
                 
-                if (tile == "*********")
+                if (tile.Contains('*'))
                 {
-                    _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(49, 0, 7, 7), Color.DarkBlue, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
-                    
-                    continue;
+                    for (var xx = 0; xx < 3; xx++)
+                    {
+                        for (var yy = 0; yy < 3; yy++)
+                        {
+                            if (tile[xx + yy * 3] == '*')
+                            {
+                                _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7 + xx * 2, mY * 7 + yy * 2),
+                                    new Rectangle(49, 0, 7, 7), Color.DarkBlue, 0, Vector2.Zero, Vector2.One,
+                                    SpriteEffects.None, 0);
+                            }
+                        }
+                    }
                 }
 
                 tile = tile.Replace('#', 'X').Replace('*', '.');
@@ -178,31 +187,31 @@ public class Visualisation : VisualisationBase<PuzzleState>
                         break;
                     
                     case "...XXX...":
-                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(0, 0, 7, 7), colour, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(0, 0, 7, 7), colour, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
 
                         break;
                     case ".X..X..X.":
-                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(7, 0, 7, 7), colour, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(7, 0, 7, 7), colour, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
                     
                         break;
                     case ".X..XX...":
-                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(14, 0, 7, 7), colour, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(14, 0, 7, 7), colour, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
                     
                         break;
                     case "....XX.X.":
-                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(21, 0, 7, 7), colour, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(21, 0, 7, 7), colour, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
                     
                         break;
                     case "...XX..X.":
-                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(28, 0, 7, 7), colour, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(28, 0, 7, 7), colour, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
                     
                         break;
                     case ".X.XX....":
-                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(35, 0, 7, 7), colour, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(35, 0, 7, 7), colour, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
                     
                         break;
                     case ".X.XXX.X.":
-                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(42, 0, 7, 7), colour, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(42, 0, 7, 7), colour, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
                     
                         break;
                 }
