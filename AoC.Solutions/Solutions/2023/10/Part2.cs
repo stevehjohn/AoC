@@ -67,7 +67,7 @@ public class Part2 : Base
     {
         if (_visualiser != null)
         {
-            _puzzleState.Changes.Enqueue((x, y, change));
+            _puzzleState.Change = (x, y, change);
         }
     }
 
@@ -95,7 +95,7 @@ public class Part2 : Base
 
     private void WalkPipes(int x, int y)
     {
-        Visualise(x, y, 'X');
+        //Visualise(x, y, 'X');
 
         while (Map[y][x] == '#')
         {
