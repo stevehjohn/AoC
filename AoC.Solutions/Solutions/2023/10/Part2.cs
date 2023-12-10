@@ -30,15 +30,41 @@ public class Part2 : Base
         InitialiseVisualisation();
 
         WalkPipes(x, y);
+        
+        UpdateMap();
 
         RemoveJunk();
         
+        UpdateMap();
+        
         FloodFill(0, 0);
+        
+        UpdateMap();
 
         return CountEnclosed().ToString();
     }
 
     private void InitialiseVisualisation()
+    {
+        if (_visualiser != null)
+        {
+            UpdateMap();
+            
+            _visualiser.PuzzleStateChanged(_puzzleState);
+        }
+    }
+    
+    private void Visualise(int x, int y, char change)
+    {
+        if (_visualiser != null)
+        {
+            _puzzleState = new PuzzleState { Map = null, Change = (x, y, change) };
+
+            _visualiser.PuzzleStateChanged(_puzzleState);
+        }
+    }
+
+    private void UpdateMap()
     {
         if (_visualiser != null)
         {
@@ -56,17 +82,7 @@ public class Part2 : Base
             {
                 Array.Copy(Map[y], 0, _puzzleState.Map[y], 0, Map[y].Length);
             }
-            
-            _visualiser.PuzzleStateChanged(_puzzleState);
-        }
-    }
-    
-    private void Visualise(int x, int y, char change)
-    {
-        if (_visualiser != null)
-        {
-            _puzzleState = new PuzzleState { Map = null, Change = (x, y, change) };
-            
+
             _visualiser.PuzzleStateChanged(_puzzleState);
         }
     }
@@ -79,7 +95,7 @@ public class Part2 : Base
             {
                 if (Map[y][x] == '#')
                 {
-                    Visualise(x, y, '.');
+                    //Visualise(x, y, '.');
                     
                     Map[y][x] = '.';
                 }
@@ -99,7 +115,7 @@ public class Part2 : Base
 
             Map[y][x] = 'X';
             
-            Visualise(x, y, 'X');
+            //Visualise(x, y, 'X');
 
             if (Map[y][x - 1] == '#')
             {
@@ -155,7 +171,7 @@ public class Part2 : Base
             
             Map[y][x] = '*';
             
-            Visualise(x, y, '*');
+            //Visualise(x, y, '*');
             
             if (x > 0 && Map[y][x - 1] == '.')
             {
