@@ -12,7 +12,7 @@ public class Part2 : Base
 
     private readonly IVisualiser<PuzzleState> _visualiser;
 
-    private int _frame;
+    private PuzzleState _puzzleState;
     
     public Part2()
     {
@@ -27,8 +27,12 @@ public class Part2 : Base
     {
         var (x, y) = ParseInput();
 
+        InitialiseVisualisation();
+
         WalkPipes(x, y);
 
+        Visualise();
+        
         RemoveJunk();
         
         FloodFill(0, 0);
@@ -36,30 +40,42 @@ public class Part2 : Base
         return CountEnclosed().ToString();
     }
 
+    private void InitialiseVisualisation()
+    {
+        if (_visualiser != null)
+        {
+            _puzzleState = new PuzzleState
+            {
+                Map = new char[Map.Length][]
+            };
+
+            for (var y = 0; y < Map.Length; y++)
+            {
+                _puzzleState.Map[y] = new char[Map[y].Length];
+            }
+
+            for (var y = 0; y < Map.Length; y++)
+            {
+                Array.Copy(Map[y], 0, _puzzleState.Map[y], 0, Map[y].Length);
+            }
+            
+            _visualiser.PuzzleStateChanged(_puzzleState);
+        }
+    }
+
+    private void Visualise(int x, int y, char change)
+    {
+        if (_visualiser != null)
+        {
+            _puzzleState.Changes.Enqueue((x, y, change));
+        }
+    }
+
     private void Visualise()
     {
         if (_visualiser != null)
         {
-            _frame++;
-
-            if (_frame == 6)
-            {
-                _frame = 0;
-                
-                var map = new char[Map.Length][];
-
-                for (var y = 0; y < Map.Length; y++)
-                {
-                    map[y] = new char[Map[y].Length];
-                }
-
-                for (var y = 0; y < Map.Length; y++)
-                {
-                    Array.Copy(Map[y], 0, map[y], 0, Map[y].Length);
-                }
-
-                _visualiser.PuzzleStateChanged(new PuzzleState { Map = map });
-            }
+            _visualiser.PuzzleStateChanged(_puzzleState);
         }
     }
 
@@ -79,7 +95,7 @@ public class Part2 : Base
 
     private void WalkPipes(int x, int y)
     {
-        Visualise();
+        Visualise(x, y, 'X');
 
         while (Map[y][x] == '#')
         {
