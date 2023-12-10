@@ -51,6 +51,8 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
 
     public string OutputAviPath { get; set; }
 
+    protected bool IgnoreQueueLimit = false;
+    
 #if Windows
     private AviWriter _aviWriter;
 
@@ -142,7 +144,7 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
 
     public void PuzzleStateChanged(T state)
     {
-        if (_stateQueue.Count > 1000)
+        if (_stateQueue.Count > 1000 && ! IgnoreQueueLimit)
         {
             Thread.Sleep(1000);
         }
