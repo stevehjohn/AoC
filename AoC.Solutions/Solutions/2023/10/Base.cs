@@ -20,17 +20,17 @@ public abstract class Base : Solution
         
         Map[Input.Length + 1] = new char[Input[0].Length + 2];
         
-        Array.Fill(Map[0], '.');
+        Array.Fill(Map[0], 'X');
         
-        Array.Fill(Map[Input.Length + 1], '.');
+        Array.Fill(Map[Input.Length + 1], 'X');
         
         for (var i = 0; i < Input.Length; i++)
         {
             Map[i + 1] = new char[Input[i].Length + 2];
 
-            Map[i + 1][0] = '.';
+            Map[i + 1][0] = 'X';
             
-            Map[i + 1][Input[i].Length + 1] = '.';
+            Map[i + 1][Input[i].Length + 1] = 'X';
             
             for (var j = 0; j < Input[i].Length; j++)
             {

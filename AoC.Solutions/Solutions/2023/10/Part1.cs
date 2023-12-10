@@ -9,36 +9,34 @@ public class Part1 : Base
     {
         var (x, y) = ParseInput();
 
-        var allSteps = GetAllSteps(x, y);
+        var result = GetSteps(x, y);
         
-        return allSteps.Max().ToString();
+        return result.ToString();
     }
 
-    private List<int> GetAllSteps(int x, int y)
+    private int GetSteps(int x, int y)
     {
-        var allSteps = new List<int>();
-
         if (! new[] { '-', 'L', 'J', '.' }.Contains(Map[y - 1][x]))
         {
-            allSteps.Add(WalkPipes(x, y - 1, 0, -1));
+            return WalkPipes(x, y - 1, 0, -1);
         }
 
         if (! new[] { '-', 'L', 'J', '.' }.Contains(Map[y + 1][x]))
         {
-            allSteps.Add(WalkPipes(x, y + 1, 0, 1));
+            return WalkPipes(x, y + 1, 0, 1);
         }
 
         if (! new[] { '-', 'L', 'J', '.' }.Contains(Map[y][x - 1]))
         {
-            allSteps.Add(WalkPipes(x - 1, y, -1, 0));
+            return WalkPipes(x - 1, y, -1, 0);
         }
         
         if (! new[] { '-', 'L', 'J', '.' }.Contains(Map[y][x + 1]))
         {
-            allSteps.Add(WalkPipes(x + 1, y, 1, 0));
+            return WalkPipes(x + 1, y, 1, 0);
         }
         
-        return allSteps;
+        return 0;
     }
 
     private int WalkPipes(int startX, int startY, int dX, int dY)
