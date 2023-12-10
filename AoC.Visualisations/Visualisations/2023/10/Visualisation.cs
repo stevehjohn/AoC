@@ -25,8 +25,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private PuzzleState _state;
 
-    private char[][] _previousMap;
-
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -36,7 +34,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                                  };
 
         // Something funky going on with having to add \bin\Windows - investigate.
-        Content.RootDirectory = "./13";
+        Content.RootDirectory = "./10";
     }
 
     public override void SetPart(int part)
@@ -76,7 +74,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             _state = GetNextState();
         }
-        
 
         UpdateSparks();
 
@@ -126,14 +123,13 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 
                 tile += $"{_state.Map[y + 2][x]}{_state.Map[y + 2][x + 1]}{_state.Map[y + 2][x + 2]}";
 
-                var colour = tile.Contains("X") ? Color.Blue : Color.White;
+                var colour = tile.Contains("X") ? Color.Cyan : Color.Red;
                     
                 tile = tile.Replace('#', 'X');
 
                 var mX = (x - 1) / 3;
 
                 var mY = (y - 1) / 3;
-                
                 
                 switch (tile)
                 {
@@ -172,10 +168,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     
     private void UpdateSparks()
     {
-        if (_previousMap == null)
+        if (_state == null)
         {
-            UpdatePreviousMap(); 
-            
             return;
         }
 
@@ -204,48 +198,23 @@ public class Visualisation : VisualisationBase<PuzzleState>
             _sparks.Remove(spark);
         }
 
-        var walkers = new List<(int X, int Y)>();
-        
-        for (var y = 0; y < _state.Map.Length; y++)
+        for (var i = 0; i < 6; i++)
         {
-            for (var x = 0; x < _state.Map[y].Length; x++)
+            if (_state.Changes.Count > 0)
             {
-                if (_state.Map[y][x] == 'X' && _previousMap[y][x] == '#')
+                if (_state.Changes.TryDequeue(out var change))
                 {
-                    walkers.Add(((x - 1) / 3, (y - 1) / 3));
+                    _sparks.Add(new Spark
+                    {
+                        Position = new PointFloat { X = (change.X - 1) / 3f, Y = (change.Y - 1) / 3f },
+                        Vector = new PointFloat { X = (-5f + _rng.Next(11)) / 10, Y = (-10f + _rng.Next(21)) / 10 },
+                        Ticks = 20,
+                        StartTicks = 20
+                    });
+
+                    _state.Map[change.Y][change.X] = change.Change;
                 }
             }
-        }
-
-        foreach (var walker in walkers)
-        {
-            _sparks.Add(new Spark
-                        {
-                            Position = new PointFloat { X = walker.X, Y = walker.Y },
-                            Vector = new PointFloat { X = (-5f + _rng.Next(11)) / 10, Y = (-10f + _rng.Next(21)) / 10 },
-                            Ticks = 20,
-                            StartTicks = 20
-                        });
-        }
-        
-        UpdatePreviousMap();
-    }
-
-    private void UpdatePreviousMap()
-    {
-        if (_previousMap == null)
-        {
-            _previousMap = new char[_state.Map.Length][];
-            
-            for (var y = 0; y < _state.Map.Length; y++)
-            {
-                _previousMap[y] = new char[_state.Map[y].Length];
-            }
-        }
-
-        for (var y = 0; y < _state.Map.Length; y++)
-        {
-            Array.Copy(_state.Map[y], 0, _previousMap[y], 0, _state.Map[y].Length);
         }
     }
 }
