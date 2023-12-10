@@ -159,7 +159,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                 var colour = tile.Contains("X") ? Color.Cyan : Color.Red;
                     
-                tile = tile.Replace('#', 'X');
+                tile = tile.Replace('#', 'X').Replace('*', 'X');
 
                 var mX = (x - 1) / 3;
 
@@ -196,7 +196,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                     
                         break;
                     
-                    case "*********":
+                    case "XXXXXXXXX":
                         _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(49, 0, 7, 7), Color.Magenta, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
                     
                         break;
