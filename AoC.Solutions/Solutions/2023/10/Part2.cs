@@ -5,20 +5,15 @@ namespace AoC.Solutions.Solutions._2023._10;
 [UsedImplicitly]
 public class Part2 : Base
 {
-    private int Width;
+    private int _width;
 
-    private int Height;
+    private int _height;
     
     public override string GetAnswer()
     {
         ParseInput();
 
         FloodFill(0, 0);
-
-        foreach (var line in Map)
-        {
-            Console.WriteLine(new string(line));
-        }
 
         return "Unknown";
     }
@@ -32,12 +27,12 @@ public class Part2 : Base
             FloodFill(x - 1, y);
         }
 
-        if (x < Width - 1 && Map[y][x + 1] == '.')
+        if (x < _width - 1 && Map[y][x + 1] == '.')
         {
             FloodFill(x + 1, y);
         }
 
-        if (y < Height - 1 && Map[y + 1][x] == '.')
+        if (y < _height - 1 && Map[y + 1][x] == '.')
         {
             FloodFill(x, y + 1);
         }
@@ -50,36 +45,31 @@ public class Part2 : Base
 
     private void ParseInput()
     {
-        Height = Input.Length * 3 + 2;
+        _height = Input.Length * 3 + 2;
 
-        Width = Input[0].Length * 3 + 2;
+        _width = Input[0].Length * 3 + 2;
 
-        Map = new char[Height][];
+        Map = new char[_height][];
 
-        for (var y = 0; y < Height; y++)
+        for (var y = 0; y < _height; y++)
         {
-            Map[y] = new char[Width];
+            Map[y] = new char[_width];
         }
 
         Array.Fill(Map[0], '.');
         
-        Array.Fill(Map[Height - 1], '.');
+        Array.Fill(Map[_height - 1], '.');
 
-        for (var y = 1; y < Height - 1; y += 3)
+        for (var y = 1; y < _height - 1; y += 3)
         {
             Array.Fill(Map[y], '.');
             Array.Fill(Map[y + 1], '.');
             Array.Fill(Map[y + 2], '.');
 
-            for (var x = 1; x < Width - 1; x += 3)
+            for (var x = 1; x < _width - 1; x += 3)
             {
                 ParseCell(x, y, Input[(y - 1) / 3][(x - 1) / 3]);
             }
-        }
-
-        foreach (var line in Map)
-        {
-            Console.WriteLine(new string(line));
         }
     }
 
