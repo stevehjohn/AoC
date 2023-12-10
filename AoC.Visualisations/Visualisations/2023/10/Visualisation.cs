@@ -179,7 +179,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                             if (tile[xx + yy * 3] == '*')
                             {
                                 _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7 + xx * 2, mY * 7 + yy * 2),
-                                    new Rectangle(49, 0, 7, 7), Color.Gray, 0, Vector2.Zero, Vector2.One,
+                                    new Rectangle(49, 0, 3, 3), Color.Gray, 0, Vector2.Zero, Vector2.One,
                                     SpriteEffects.None, 0);
                             }
                         }
