@@ -79,6 +79,8 @@ public class Part2 : Base
             {
                 if (Map[y][x] == '#')
                 {
+                    Visualise(x, y, '.');
+                    
                     Map[y][x] = '.';
                 }
             }
@@ -141,26 +143,35 @@ public class Part2 : Base
 
     private void FloodFill(int x, int y)
     {
-        Map[y][x] = 'X';
+        var queue = new Queue<(int X, int Y)>();
+        
+        queue.Enqueue((x, y));
 
-        if (x > 0 && Map[y][x - 1] == '.')
+        while (queue.Count > 0)
         {
-            FloodFill(x - 1, y);
-        }
+            (x, y) = queue.Dequeue();
+            
+            Map[y][x] = 'X';
+            
+            if (x > 0 && Map[y][x - 1] == '.')
+            {
+                queue.Enqueue((x - 1, y));
+            }
 
-        if (x < _width - 1 && Map[y][x + 1] == '.')
-        {
-            FloodFill(x + 1, y);
-        }
+            if (x < _width - 1 && Map[y][x + 1] == '.')
+            {
+                queue.Enqueue((x + 1, y));
+            }
 
-        if (y < _height - 1 && Map[y + 1][x] == '.')
-        {
-            FloodFill(x, y + 1);
-        }
+            if (y < _height - 1 && Map[y + 1][x] == '.')
+            {
+                queue.Enqueue((x, y + 1));
+            }
 
-        if (y > 0 && Map[y - 1][x] == '.')
-        {
-            FloodFill(x, y - 1);
+            if (y > 0 && Map[y - 1][x] == '.')
+            {
+                queue.Enqueue((x, y - 1));
+            }
         }
     }
 
