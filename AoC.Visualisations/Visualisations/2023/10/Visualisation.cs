@@ -73,6 +73,18 @@ public class Visualisation : VisualisationBase<PuzzleState>
         if (HasNextState)
         {
             _state = GetNextState();
+
+            var change = _state.Change;
+            
+            _sparks.Add(new Spark
+            {
+                Position = new PointFloat { X = (change.X - 1) / 3f, Y = (change.Y - 1) / 3f },
+                Vector = new PointFloat { X = (-5f + _rng.Next(11)) / 10, Y = (-10f + _rng.Next(21)) / 10 },
+                Ticks = 20,
+                StartTicks = 20
+            });
+
+            _state.Map[change.Y][change.X] = change.Change;
         }
 
         UpdateSparks();
@@ -196,19 +208,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
         foreach (var spark in toRemove)
         {
             _sparks.Remove(spark);
-        }
-
-        for (var i = 0; i < 6; i++)
-        {
-            var change = _state.Change;
-            
-            _sparks.Add(new Spark
-            {
-                Position = new PointFloat { X = (change.X - 1) / 3f, Y = (change.Y - 1) / 3f },
-                Vector = new PointFloat { X = (-5f + _rng.Next(11)) / 10, Y = (-10f + _rng.Next(21)) / 10 },
-                Ticks = 20,
-                StartTicks = 20
-            });
         }
     }
 }

@@ -31,11 +31,9 @@ public class Part2 : Base
 
         WalkPipes(x, y);
 
-        Visualise();
-        
         RemoveJunk();
         
-        FloodFill(0, 0);
+        //FloodFill(0, 0);
 
         return CountEnclosed().ToString();
     }
@@ -68,13 +66,7 @@ public class Part2 : Base
         if (_visualiser != null)
         {
             _puzzleState.Change = (x, y, change);
-        }
-    }
-
-    private void Visualise()
-    {
-        if (_visualiser != null)
-        {
+            
             _visualiser.PuzzleStateChanged(_puzzleState);
         }
     }
@@ -95,30 +87,36 @@ public class Part2 : Base
 
     private void WalkPipes(int x, int y)
     {
-        //Visualise(x, y, 'X');
+        var queue = new Queue<(int X, int Y)>();
+        
+        queue.Enqueue((x, y));
 
-        while (Map[y][x] == '#')
+        while (queue.Count > 0)
         {
+            (x, y) = queue.Dequeue();
+            
             Map[y][x] = 'X';
+
+            Visualise(x, y, 'X');
 
             if (Map[y][x - 1] == '#')
             {
-                WalkPipes(x - 1, y);
+                queue.Enqueue((x - 1, y));
             }
 
             if (Map[y][x + 1] == '#')
             {
-                WalkPipes(x + 1, y);
+                queue.Enqueue((x + 1, y));
             }
 
             if (Map[y - 1][x] == '#')
             {
-                WalkPipes(x, y - 1);
+                queue.Enqueue((x, y - 1));
             }
 
             if (Map[y + 1][x] == '#')
             {
-                WalkPipes(x, y + 1);
+                queue.Enqueue((x, y + 1));
             }
         }
     }
