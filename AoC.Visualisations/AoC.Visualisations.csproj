@@ -40,6 +40,7 @@
       <DesignData Include="_Content\2020\20\Content.mgcb" />
       <DesignData Include="_Content\2022\12\Content.mgcb" />
       <DesignData Include="_Content\2022\14\Content.mgcb" />
+      <DesignData Include="_Content\2023\10\Content.mgcb" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\AoC.Solutions\AoC.Solutions.csproj" />

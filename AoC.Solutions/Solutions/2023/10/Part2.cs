@@ -1,3 +1,4 @@
+using AoC.Solutions.Infrastructure;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2023._10;
@@ -8,6 +9,17 @@ public class Part2 : Base
     private int _width;
 
     private int _height;
+
+    private readonly IVisualiser<PuzzleState> _visualiser;
+
+    public Part2()
+    {
+    }
+
+    public Part2(IVisualiser<PuzzleState> visualiser)
+    {
+        _visualiser = visualiser;
+    }
     
     public override string GetAnswer()
     {
@@ -20,6 +32,14 @@ public class Part2 : Base
         FloodFill(0, 0);
 
         return CountEnclosed().ToString();
+    }
+
+    private void Visualise()
+    {
+        if (_visualiser != null)
+        {
+            _visualiser.PuzzleStateChanged(new PuzzleState { Map = Map });
+        }
     }
 
     private void RemoveJunk()
@@ -40,6 +60,8 @@ public class Part2 : Base
     {
         while (Map[y][x] == '#')
         {
+            Visualise();
+            
             Map[y][x] = 'X';
 
             WalkPipes(x - 1, y);
