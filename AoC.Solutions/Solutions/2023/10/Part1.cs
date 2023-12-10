@@ -101,4 +101,44 @@ public class Part1 : Base
 
         return steps / 2;
     }
+
+    private (int X, int Y) ParseInput()
+    {
+        Map = new char[Input.Length + 2][];
+
+        var x = 0;
+
+        var y = 0;
+
+        Map[0] = new char[Input[0].Length + 2];
+        
+        Map[Input.Length + 1] = new char[Input[0].Length + 2];
+        
+        Array.Fill(Map[0], 'X');
+        
+        Array.Fill(Map[Input.Length + 1], 'X');
+        
+        for (var i = 0; i < Input.Length; i++)
+        {
+            Map[i + 1] = new char[Input[i].Length + 2];
+
+            Map[i + 1][0] = 'X';
+            
+            Map[i + 1][Input[i].Length + 1] = 'X';
+            
+            for (var j = 0; j < Input[i].Length; j++)
+            {
+                Map[i + 1][j + 1] = Input[i][j];
+
+                if (Input[i][j] == 'S')
+                {
+                    x = j + 1;
+
+                    y = i + 1;
+                }
+            }
+        }
+
+        return (x, y);
+    }
 }
