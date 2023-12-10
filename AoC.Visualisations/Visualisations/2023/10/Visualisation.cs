@@ -158,15 +158,25 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 tile += $"{_map[y + 2][x]}{_map[y + 2][x + 1]}{_map[y + 2][x + 2]}";
 
                 var colour = tile.Contains("X") ? Color.Cyan : Color.Red;
-                    
-                tile = tile.Replace('#', 'X').Replace('*', 'X');
 
                 var mX = (x - 1) / 3;
 
                 var mY = (y - 1) / 3;
                 
+                if (tile == "*********")
+                {
+                    _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(49, 0, 7, 7), Color.DarkBlue, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                    
+                    continue;
+                }
+
+                tile = tile.Replace('#', 'X').Replace('*', '.');
+
                 switch (tile)
                 {
+                    case ".........":
+                        break;
+                    
                     case "...XXX...":
                         _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(0, 0, 7, 7), colour, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
 
@@ -193,11 +203,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
                         break;
                     case ".X.XXX.X.":
                         _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(42, 0, 7, 7), colour, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
-                    
-                        break;
-                    
-                    case "XXXXXXXXX":
-                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(49, 0, 7, 7), Color.Magenta, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
                     
                         break;
                 }
