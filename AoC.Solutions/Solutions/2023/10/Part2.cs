@@ -95,7 +95,7 @@ public class Part2 : Base
             {
                 if (Map[y][x] == '#')
                 {
-                    //Visualise(x, y, '.');
+                    Visualise(x, y, '.');
                     
                     Map[y][x] = '.';
                 }
@@ -115,7 +115,7 @@ public class Part2 : Base
 
             Map[y][x] = 'X';
             
-            //Visualise(x, y, 'X');
+            Visualise(x, y, 'X');
 
             if (Map[y][x - 1] == '#')
             {
@@ -171,7 +171,7 @@ public class Part2 : Base
             
             Map[y][x] = '*';
             
-            //Visualise(x, y, '*');
+            Visualise(x, y, '*');
             
             if (x > 0 && Map[y][x - 1] == '.')
             {
