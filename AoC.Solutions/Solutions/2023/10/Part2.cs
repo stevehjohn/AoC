@@ -133,6 +133,8 @@ public class Part2 : Base
             {
                 if (Map[y][x] == '.')
                 {
+                    Visualise(x, y, '@');
+                    
                     count++;
                 }
             }
