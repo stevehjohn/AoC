@@ -23,6 +23,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private readonly Random _rng = new();
 
+    private char[][] _map;
+    
     private PuzzleState _state;
 
     public Visualisation()
@@ -74,17 +76,31 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             _state = GetNextState();
 
-            var change = _state.Change;
-            
-            _sparks.Add(new Spark
+            if (_state.Map != null)
             {
-                Position = new PointFloat { X = (change.X - 1) / 3f, Y = (change.Y - 1) / 3f },
-                Vector = new PointFloat { X = (-5f + _rng.Next(11)) / 10, Y = (-10f + _rng.Next(21)) / 10 },
-                Ticks = 20,
-                StartTicks = 20
-            });
+                _map = new char[_state.Map.Length][];
 
-            _state.Map[change.Y][change.X] = change.Change;
+                for (var y = 0; y < _map.Length; y++)
+                {
+                    _map[y] = new char[_state.Map[y].Length];
+                    
+                    Array.Copy(_state.Map[y], 0, _map[y], 0, _state.Map[y].Length);
+                }
+            }
+            else
+            {
+                var change = _state.Change;
+            
+                _sparks.Add(new Spark
+                {
+                    Position = new PointFloat { X = (change.X - 1) / 3f, Y = (change.Y - 1) / 3f },
+                    Vector = new PointFloat { X = (-5f + _rng.Next(11)) / 10, Y = (-10f + _rng.Next(21)) / 10 },
+                    Ticks = 20,
+                    StartTicks = 20
+                });
+
+                _map[change.Y][change.X] = change.Change;
+            }
         }
 
         UpdateSparks();
@@ -125,15 +141,15 @@ public class Visualisation : VisualisationBase<PuzzleState>
     [SuppressMessage("ReSharper.DPA", "DPA0000: DPA issues")]
     private void DrawMap()
     {
-        for (var y = 1; y < _state.Map.Length - 1; y += 3)
+        for (var y = 1; y < _map.Length - 1; y += 3)
         {
-            for (var x = 1; x < _state.Map[y].Length - 1; x += 3)
+            for (var x = 1; x < _map[y].Length - 1; x += 3)
             {
-                var tile = $"{_state.Map[y][x]}{_state.Map[y][x + 1]}{_state.Map[y][x + 2]}";
+                var tile = $"{_map[y][x]}{_map[y][x + 1]}{_map[y][x + 2]}";
                 
-                tile += $"{_state.Map[y + 1][x]}{_state.Map[y + 1][x + 1]}{_state.Map[y + 1][x + 2]}";
+                tile += $"{_map[y + 1][x]}{_map[y + 1][x + 1]}{_map[y + 1][x + 2]}";
                 
-                tile += $"{_state.Map[y + 2][x]}{_state.Map[y + 2][x + 1]}{_state.Map[y + 2][x + 2]}";
+                tile += $"{_map[y + 2][x]}{_map[y + 2][x + 1]}{_map[y + 2][x + 2]}";
 
                 var colour = tile.Contains("X") ? Color.Cyan : Color.Red;
                     
