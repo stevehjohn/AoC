@@ -6,7 +6,6 @@ using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Color = Microsoft.Xna.Framework.Color;
-using Point = AoC.Solutions.Common.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace AoC.Visualisations.Visualisations._2023._10;
@@ -26,13 +25,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private PuzzleState _state;
 
-    private Dictionary<int, Point> _carts;
-
-    private Dictionary<int, Point> _nextCarts;
-
-    private readonly List<Collision> _collisions = new();
-
-    private bool _fast;
+    private char[][] _previousMap;
 
     public Visualisation()
     {
@@ -52,8 +45,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             case 2:
                 Puzzle = new Part2(this);
-
-                _fast = true;
 
                 break;
             default:
@@ -86,40 +77,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
             _state = GetNextState();
         }
         
-        // if (HasNextState)
-        // {
-        //     if (_carts == null || _carts.Count > 0)
-        //     {
-        //         if (! UpdateCarts())
-        //         {
-        //             _carts = _nextCarts;
-        //
-        //             _state = GetNextState();
-        //
-        //             _nextCarts = GetTranslatedCarts();
-        //
-        //             if (_carts == null)
-        //             {
-        //                 _carts = _nextCarts;
-        //
-        //                 _state = GetNextState();
-        //
-        //                 _nextCarts = GetTranslatedCarts();
-        //             }
-        //
-        //             UpdateCarts();
-        //         }
-        //     }
-        // }
-        // else if (_nextCarts != null)
-        // {
-        //     _carts = _nextCarts;
-        // }
-        //
-        // // In an ideal world, these should work in either order, but they don't. As it works, gonna leave for now.
-        // UpdateSparks();
-        //
-        // UpdateCollisions();
+
+        UpdateSparks();
 
         base.Update(gameTime);
     }
@@ -134,10 +93,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
             DrawMap();
 
-            // DrawCarts();
-            //
-            // DrawSparks();
-            //
+            DrawSparks();
+            
             _spriteBatch.End();
         }
         else
@@ -148,22 +105,14 @@ public class Visualisation : VisualisationBase<PuzzleState>
         base.Draw(gameTime);
     }
     
-    // private void DrawSparks()
-    // {
-    //     foreach (var spark in _sparks)
-    //     {
-    //         _spriteBatch.Draw(_spark, new Vector2(spark.Position.X, spark.Position.Y), new Rectangle(spark.SpriteOffset, 0, 5, 5), Color.White * ((float) spark.Ticks / spark.StartTicks), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
-    //     }
-    // }
-    //
-    // private void DrawCarts()
-    // {
-    //     foreach (var cart in _carts)
-    //     {
-    //         _spriteBatch.Draw(_spark, new Vector2(cart.Value.X, cart.Value.Y), new Rectangle(0, 0, 5, 5), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
-    //     }
-    // }
-
+    private void DrawSparks()
+    {
+        foreach (var spark in _sparks)
+        {
+            _spriteBatch.Draw(_spark, new Vector2(spark.Position.X * 7, spark.Position.Y * 7), new Rectangle(spark.SpriteOffset, 0, 5, 5), Color.White * ((float) spark.Ticks / spark.StartTicks), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
+        }
+    }
+    
     [SuppressMessage("ReSharper.DPA", "DPA0000: DPA issues")]
     private void DrawMap()
     {
@@ -177,189 +126,126 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 
                 tile += $"{_state.Map[y + 2][x]}{_state.Map[y + 2][x + 1]}{_state.Map[y + 2][x + 2]}";
 
+                var colour = tile.Contains("X") ? Color.Blue : Color.White;
+                    
                 tile = tile.Replace('#', 'X');
 
                 var mX = (x - 1) / 3;
 
                 var mY = (y - 1) / 3;
                 
+                
                 switch (tile)
                 {
                     case "...XXX...":
-                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(0, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(0, 0, 7, 7), colour, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
 
                         break;
-                    
                     case ".X..X..X.":
-                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(7, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(7, 0, 7, 7), colour, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
                     
                         break;
                     case ".X..XX...":
-                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(14, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(14, 0, 7, 7), colour, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
                     
                         break;
                     case "....XX.X.":
-                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(21, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(21, 0, 7, 7), colour, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
                     
                         break;
                     case "...XX..X.":
-                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(28, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(28, 0, 7, 7), colour, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
                     
                         break;
                     case ".X.XX....":
-                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(35, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(35, 0, 7, 7), colour, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
                     
                         break;
                     case ".X.XXX.X.":
-                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(42, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(42, 0, 7, 7), colour, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
                     
                         break;
                 }
             }
         }
     }
-
-    private bool UpdateCarts()
+    
+    private void UpdateSparks()
     {
-        if (_carts == null || _carts.Count == 0)
+        if (_previousMap == null)
         {
-            return false;
+            UpdatePreviousMap(); 
+            
+            return;
         }
 
-        var moved = false;
-
-        foreach (var cart in _carts)
+        var toRemove = new List<Spark>();
+    
+        foreach (var spark in _sparks)
         {
-            if (! _nextCarts.ContainsKey(cart.Key))
+            spark.Ticks--;
+    
+            if (spark.Ticks < 0)
             {
+                toRemove.Add(spark);
+    
                 continue;
             }
+    
+            spark.Position.X += spark.Vector.X;
+    
+            spark.Position.Y += spark.Vector.Y;
+    
+            spark.Vector.Y += spark.YGravity;
+        }
+    
+        foreach (var spark in toRemove)
+        {
+            _sparks.Remove(spark);
+        }
 
-            var target = _nextCarts[cart.Key];
-
-            if (_fast)
+        var walkers = new List<(int X, int Y)>();
+        
+        for (var y = 0; y < _state.Map.Length; y++)
+        {
+            for (var x = 0; x < _state.Map[y].Length; x++)
             {
-                cart.Value.X = target.X;
-
-                cart.Value.Y = target.Y;
-            }
-            else
-            {
-                if (! cart.Value.Equals(target))
+                if (_state.Map[y][x] == 'X' && _previousMap[y][x] == '#')
                 {
-                    cart.Value.X += Math.Sign(target.X - cart.Value.X);
-
-                    cart.Value.Y += Math.Sign(target.Y - cart.Value.Y);
-
-                    moved = true;
+                    walkers.Add(((x - 1) / 3, (y - 1) / 3));
                 }
             }
         }
 
-        return moved;
+        foreach (var walker in walkers)
+        {
+            _sparks.Add(new Spark
+                        {
+                            Position = new PointFloat { X = walker.X, Y = walker.Y },
+                            Vector = new PointFloat { X = (-5f + _rng.Next(11)) / 10, Y = (-10f + _rng.Next(21)) / 10 },
+                            Ticks = 20,
+                            StartTicks = 20
+                        });
+        }
+        
+        UpdatePreviousMap();
     }
-    
-    // private void UpdateCollisions()
-    // {
-    //     if (_state.CollisionPoint != null)
-    //     {
-    //         if (_state.IsFinalState)
-    //         {
-    //             _collisions.Add(new Collision { Position = _state.Carts.Single().Position, Ticks = int.MaxValue, SpriteOffset = 10, IsFinal = true });
-    //
-    //             _collisions.Add(new Collision { Position = _state.CollisionPoint, Ticks = 200, SpriteOffset = 5 });
-    //
-    //             _state.CollisionPoint = null;
-    //         }
-    //         else
-    //         {
-    //             _collisions.Add(new Collision { Position = _state.CollisionPoint, Ticks = 200, SpriteOffset = 5 });
-    //         }
-    //     }
-    //
-    //     var toRemove = new List<Collision>();
-    //
-    //     foreach (var collision in _collisions)
-    //     {
-    //         for (var i = 0; i < 4; i++)
-    //         {
-    //             _sparks.Add(new Spark
-    //                         {
-    //                             SpriteOffset = collision.SpriteOffset,
-    //                             Position = new PointFloat { X = collision.Position.X * 7 + 50, Y = collision.Position.Y * 7 + 50 },
-    //                             Vector = new PointFloat { X = (-10f + _rng.Next(21)) / 10, Y = -_rng.Next(41) / 10f },
-    //                             Ticks = 120,
-    //                             StartTicks = 120,
-    //                             YGravity = collision.IsFinal ? -0.1f : 0.025f
-    //                         });
-    //         }
-    //
-    //         collision.Ticks--;
-    //
-    //         if (collision.Ticks < 0)
-    //         {
-    //             toRemove.Add(collision);
-    //         }
-    //     }
-    //
-    //     foreach (var collision in toRemove)
-    //     {
-    //         _collisions.Remove(collision);
-    //     }
-    // }
-    //
-    // private void UpdateSparks()
-    // {
-    //     var toRemove = new List<Spark>();
-    //
-    //     foreach (var spark in _sparks)
-    //     {
-    //         spark.Ticks--;
-    //
-    //         if (spark.Ticks < 0)
-    //         {
-    //             toRemove.Add(spark);
-    //
-    //             continue;
-    //         }
-    //
-    //         spark.Position.X += spark.Vector.X;
-    //
-    //         spark.Position.Y += spark.Vector.Y;
-    //
-    //         spark.Vector.Y += spark.YGravity;
-    //     }
-    //
-    //     foreach (var spark in toRemove)
-    //     {
-    //         _sparks.Remove(spark);
-    //     }
-    //
-    //     foreach (var cart in _carts)
-    //     {
-    //         if (_state.CollisionPoint != null)
-    //         {
-    //             if (_carts.Count(c => c.Value.X == cart.Value.X && c.Value.Y == cart.Value.Y) > 1)
-    //             {
-    //                 continue;
-    //             }
-    //         }
-    //
-    //         if (_rng.Next(2) == 0)
-    //         {
-    //             _sparks.Add(new Spark
-    //                         {
-    //                             Position = new PointFloat { X = cart.Value.X, Y = cart.Value.Y },
-    //                             Vector = new PointFloat { X = (-5f + _rng.Next(11)) / 10, Y = (-10f + _rng.Next(21)) / 10 },
-    //                             Ticks = 20,
-    //                             StartTicks = 20
-    //                         });
-    //         }
-    //     }
-    // }
-    //
-    // private Dictionary<int, Point> GetTranslatedCarts()
-    // {
-    //     return _state.Carts.ToDictionary(c => c.Id, c => new Point(c.Position.X * 7 + 51, c.Position.Y * 7 + 51));
-    // }
+
+    private void UpdatePreviousMap()
+    {
+        if (_previousMap == null)
+        {
+            _previousMap = new char[_state.Map.Length][];
+            
+            for (var y = 0; y < _state.Map.Length; y++)
+            {
+                _previousMap[y] = new char[_state.Map[y].Length];
+            }
+        }
+
+        for (var y = 0; y < _state.Map.Length; y++)
+        {
+            Array.Copy(_state.Map[y], 0, _previousMap[y], 0, _state.Map[y].Length);
+        }
+    }
 }

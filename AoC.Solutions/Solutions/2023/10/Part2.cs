@@ -12,6 +12,8 @@ public class Part2 : Base
 
     private readonly IVisualiser<PuzzleState> _visualiser;
 
+    private int _frame;
+    
     public Part2()
     {
     }
@@ -38,7 +40,26 @@ public class Part2 : Base
     {
         if (_visualiser != null)
         {
-            _visualiser.PuzzleStateChanged(new PuzzleState { Map = Map });
+            _frame++;
+
+            if (_frame == 6)
+            {
+                _frame = 0;
+                
+                var map = new char[Map.Length][];
+
+                for (var y = 0; y < Map.Length; y++)
+                {
+                    map[y] = new char[Map[y].Length];
+                }
+
+                for (var y = 0; y < Map.Length; y++)
+                {
+                    Array.Copy(Map[y], 0, map[y], 0, Map[y].Length);
+                }
+
+                _visualiser.PuzzleStateChanged(new PuzzleState { Map = map });
+            }
         }
     }
 
@@ -58,19 +79,31 @@ public class Part2 : Base
 
     private void WalkPipes(int x, int y)
     {
+        Visualise();
+
         while (Map[y][x] == '#')
         {
-            Visualise();
-            
             Map[y][x] = 'X';
 
-            WalkPipes(x - 1, y);
+            if (Map[y][x - 1] == '#')
+            {
+                WalkPipes(x - 1, y);
+            }
 
-            WalkPipes(x + 1, y);
+            if (Map[y][x + 1] == '#')
+            {
+                WalkPipes(x + 1, y);
+            }
 
-            WalkPipes(x, y - 1);
-            
-            WalkPipes(x, y + 1);
+            if (Map[y - 1][x] == '#')
+            {
+                WalkPipes(x, y - 1);
+            }
+
+            if (Map[y + 1][x] == '#')
+            {
+                WalkPipes(x, y + 1);
+            }
         }
     }
 
