@@ -186,8 +186,24 @@ public class Visualisation : VisualisationBase<PuzzleState>
                         }
                     }
                 }
+                
+                if (tile.Contains('@'))
+                {
+                    for (var xx = 0; xx < 3; xx++)
+                    {
+                        for (var yy = 0; yy < 3; yy++)
+                        {
+                            if (tile[xx + yy * 3] == '*')
+                            {
+                                _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7 + xx * 2, mY * 7 + yy * 2),
+                                    new Rectangle(49, 0, 3, 3), Color.Yellow, 0, Vector2.Zero, Vector2.One,
+                                    SpriteEffects.None, 0);
+                            }
+                        }
+                    }
+                }
 
-                tile = tile.Replace('#', 'X').Replace('*', '.');
+                tile = tile.Replace('#', 'X').Replace('*', '.').Replace('@', '.');
 
                 switch (tile)
                 {
