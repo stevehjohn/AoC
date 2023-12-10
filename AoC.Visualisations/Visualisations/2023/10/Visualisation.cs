@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using AoC.Solutions.Solutions._2023._10;
+﻿using AoC.Solutions.Solutions._2023._10;
 using AoC.Visualisations.Exceptions;
 using AoC.Visualisations.Infrastructure;
 using JetBrains.Annotations;
