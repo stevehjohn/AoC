@@ -192,6 +192,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
                         _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(42, 0, 7, 7), colour, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
                     
                         break;
+                    
+                    case "*********":
+                        _spriteBatch.Draw(_mapTiles, new Vector2(mX * 7, mY * 7), new Rectangle(49, 0, 7, 7), colour, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                    
+                        break;
                 }
             }
         }

@@ -153,6 +153,8 @@ public class Part2 : Base
             
             Map[y][x] = 'X';
             
+            Visualise(x, y, '*');
+            
             if (x > 0 && Map[y][x - 1] == '.')
             {
                 queue.Enqueue((x - 1, y));
