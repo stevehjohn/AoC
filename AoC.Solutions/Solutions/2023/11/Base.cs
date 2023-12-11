@@ -13,6 +13,10 @@ public abstract class Base : Solution
     private int _height;
     
     private readonly List<Point> _stars = new();
+
+    private readonly HashSet<int> _columns = new();
+
+    private readonly HashSet<int> _rows = new();
     
     protected long SumShortestPaths()
     {
@@ -37,7 +41,7 @@ public abstract class Base : Solution
     {
         for (var y = _height; y > 0; y--)
         {
-            if (_stars.All(s => s.Y != y))
+            if (! _rows.Contains(y))
             {
                 foreach (var star in _stars.Where(s => s.Y > y))
                 {
@@ -48,7 +52,7 @@ public abstract class Base : Solution
 
         for (var x = _width; x > 0; x--)
         {
-            if (_stars.All(s => s.X != x))
+            if (! _columns.Contains(x))
             {
                 foreach (var star in _stars.Where(s => s.X > x))
                 {
@@ -70,6 +74,10 @@ public abstract class Base : Solution
             {
                 if (Input[y][x] != '.')
                 {
+                    _columns.Add(x);
+
+                    _rows.Add(y);
+                    
                     _stars.Add(new Point(x, y));
                 }
             }
