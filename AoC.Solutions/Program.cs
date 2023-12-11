@@ -69,10 +69,22 @@ public static class Program
                 continue;
             }
 
+            var firstTime = double.MaxValue;
+            
+            var stopwatch = new Stopwatch();
+
             if (arguments.Length != 1 || (arguments.Length == 1 && arguments[0].Length < 5))
             {
+                stopwatch.Start();
+                
                 instance.GetAnswer();
+                
+                stopwatch.Stop();
 
+                firstTime = stopwatch.Elapsed.TotalMicroseconds;
+                
+                stopwatch.Reset();
+                
                 instance = Activator.CreateInstance(solution) as Solution;
 
                 if (instance == null)
@@ -82,8 +94,6 @@ public static class Program
             }
 
             GC.Collect();
-
-            var stopwatch = new Stopwatch();
 
             stopwatch.Start();
 
@@ -130,7 +140,7 @@ public static class Program
                 previousDesc = description;
             }
 
-            var microseconds = stopwatch.Elapsed.TotalMicroseconds;
+            var microseconds = Math.Min(stopwatch.Elapsed.TotalMicroseconds, firstTime);
             
             Console.WriteLine($" {year} {int.Parse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0"),2}.{solution.Name[4]}: {displayAnswer,-30} {$"{microseconds:N0}μs",-12}  {description}");
 
