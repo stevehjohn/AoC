@@ -2,7 +2,7 @@ using System.Numerics;
 
 namespace AoC.Solutions.Libraries;
 
-public class Measurement
+public static class Measurement
 {
     public static T GetManhattanDistance<T>(T x1, T y1, T x2, T y2) where T : INumber<T>
     {
