@@ -26,7 +26,7 @@ public abstract class Base : Solution
 
                 var other = _stars[j];
 
-                sum += Maths.GetManhattanDistance(star.X, star.Y, other.X, other.Y);
+                sum += Measurement.GetManhattanDistance(star.X, star.Y, other.X, other.Y);
             }
         }
         
