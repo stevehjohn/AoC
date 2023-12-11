@@ -248,7 +248,11 @@ public class Part2 : Base
 
     private void ParseCell(int x, int y, char cell)
     {
-        if (cell != '.')
+        if (cell == '.')
+        {
+            return;
+        }
+        else
         {
             Map[y + 1][x + 1] = '#';
         }
