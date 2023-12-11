@@ -36,14 +36,21 @@ public class Part2 : Base
         RemoveJunk();
         
         UpdateMap();
-        
-        Parallel.Invoke(
-            () => FloodFill(0, 0),
-            () => FloodFill(_width - 1, _height - 1),
-            () => FloodFill(0, _height - 1),
-            () => FloodFill(_width - 1, 0)
-        );
-        
+
+        if (_visualiser == null)
+        {
+            Parallel.Invoke(
+                () => FloodFill(0, 0),
+                () => FloodFill(_width - 1, _height - 1),
+                () => FloodFill(0, _height - 1),
+                () => FloodFill(_width - 1, 0)
+            );
+        }
+        else
+        {
+            FloodFill(0, 0);
+        }
+
         UpdateMap();
 
         return CountEnclosed().ToString();
