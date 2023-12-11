@@ -13,18 +13,7 @@ public class Part2 : Base
 
         var pathLengths = GetPathLengths().ToList();
         
-        Parallel.Invoke(
-            () => pathLengths[0] = Maths.LowestCommonMultiple(pathLengths[0], pathLengths[1]),
-            () => pathLengths[1] = Maths.LowestCommonMultiple(pathLengths[2], pathLengths[3]),
-            () => pathLengths[2] = Maths.LowestCommonMultiple(pathLengths[4], pathLengths[5])
-        );
-        
-        Parallel.Invoke(
-            () => pathLengths[0] = Maths.LowestCommonMultiple(pathLengths[0], pathLengths[1]),
-            () => pathLengths[1] = Maths.LowestCommonMultiple(pathLengths[2], pathLengths[3])
-        );
-        
-        return Maths.LowestCommonMultiple(pathLengths[0], pathLengths[1]).ToString();
+        return Maths.LowestCommonMultiple(pathLengths.ToList()).ToString();
     }
 
     private ConcurrentBag<long> GetPathLengths()
