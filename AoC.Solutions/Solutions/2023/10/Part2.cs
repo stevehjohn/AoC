@@ -252,10 +252,8 @@ public class Part2 : Base
         {
             return;
         }
-        else
-        {
-            Map[y + 1][x + 1] = '#';
-        }
+
+        Map[y + 1][x + 1] = '#';
 
         switch (cell)
         {
