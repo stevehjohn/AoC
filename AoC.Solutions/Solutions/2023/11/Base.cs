@@ -1,5 +1,6 @@
 using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
+using AoC.Solutions.Libraries;
 
 namespace AoC.Solutions.Solutions._2023._11;
 
@@ -24,8 +25,8 @@ public abstract class Base : Solution
                 var star = _stars[i];
 
                 var other = _stars[j];
-                
-                sum += Math.Abs(star.X - other.X) + Math.Abs(star.Y - other.Y);
+
+                sum += Maths.GetManhattanDistance(star.X, star.Y, other.X, other.Y);
             }
         }
         
