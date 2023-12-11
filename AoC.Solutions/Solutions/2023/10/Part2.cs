@@ -37,7 +37,12 @@ public class Part2 : Base
         
         UpdateMap();
         
-        FloodFill(0, 0);
+        Parallel.Invoke(
+            () => FloodFill(0, 0),
+            () => FloodFill(_width - 1, _height - 1),
+            () => FloodFill(0, _height - 1),
+            () => FloodFill(_width - 1, 0)
+        );
         
         UpdateMap();
 
