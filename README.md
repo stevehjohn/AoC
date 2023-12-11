@@ -4,7 +4,20 @@ Stevo's Advent of Code Repo.
 
 See answers and low-res timings [here](results.md).
 
-# Visualisations
+## Solutions
+
+To run the solutions, navigate to the root of the repository in a terminal, command prompt or shell. Then execute the relevant command.
+
+- `./run.sh` for macOS (and Linux in theory, but untested).
+- `run.bat` for Windows.
+
+Both can take the puzzle year (4 digits), day (2 digits) and part (1 digit) as a parameter. Examples:
+
+- `./run.sh 2023`
+- `./run.sh 2023.01`
+- `./run.sh 2023.01.2`
+
+## Visualisations
 
 Now supports cross-platform visualisations. YouTube playlist of them [here](https://www.youtube.com/playlist?list=PLBtwzTaAY-IWq6Mi1nvwsphMTw-HU13eM).
 
@@ -32,6 +45,6 @@ There are visualisations for:
 - 2022.14.2
 - 2023.10.2
 
-## Visualisations to do (or re-do in MonoGame)
+### Visualisations to do (or re-do in MonoGame)
 
 - 2019.18.2
