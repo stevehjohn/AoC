@@ -5,12 +5,7 @@ namespace AoC.Solutions.Libraries;
 
 public static class Maths
 {
-    public static T GetManhattanDistance<T>(T x1, T y1, T x2, T y2) where T : INumber<T>
-    {
-        return Abs(x1 - x2) + Abs(y1 - y2);
-    }
-
-    private static T Abs<T>(T number) where T : INumber<T>
+    public static T Abs<T>(T number) where T : INumber<T>
     {
         return number < default(T) ? -number : number;
     }
