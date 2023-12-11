@@ -63,7 +63,7 @@ public class Point
         return $"{X,5},{Y,5},{Z,5}";
     }
 
-    protected bool Equals(Point other)
+    private bool Equals(Point other)
     {
         return X == other.X && Y == other.Y && Z == other.Z;
     }
@@ -84,8 +84,8 @@ public class Point
         {
             return false;
         }
-        
-        return Equals((Point)obj);
+
+        return Equals((Point) obj);
     }
 
     public override int GetHashCode()
