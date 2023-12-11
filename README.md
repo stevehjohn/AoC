@@ -23,7 +23,6 @@ Now supports cross-platform visualisations. YouTube playlist of them [here](http
 
 Navigate to the root of the repository and do the following (replacing the puzzle number as required):
 
-- `dotnet build`
 - `dotnet run -c Release --project AoC.Visualisations 2022.12.2`
 
 If on Windows you can automatically save a recording of the visualisation (say, for uploading to YouTube). Specify the path as a second parameter.
