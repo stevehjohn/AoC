@@ -8,7 +8,7 @@ public abstract class Base : Solution
 
     private readonly Dictionary<string, long> _cache = new();
     
-    protected static (string Row, int[] Groups) ParseLine(string line)
+    protected static (string Row, int[] Groups, int Sum) ParseLine(string line)
     {
         var parts = line.Split(' ');
 
@@ -16,10 +16,10 @@ public abstract class Base : Solution
 
         var groups = parts[1].Split(',').Select(int.Parse).ToArray();
 
-        return (row, groups);
+        return (row, groups, groups.Sum());
     }
 
-    protected long GetArrangements(string row, int[] groups)
+    protected long GetArrangements(string row, int[] groups, int sum)
     {
         var key = $"{row}{string.Join(',', groups)}";
         
@@ -28,19 +28,24 @@ public abstract class Base : Solution
             return answer;
         }
 
-        answer = CalculateArrangements(row, groups);
+        answer = CalculateArrangements(row, groups, sum);
         
         _cache.Add(key, answer);
 
         return answer;
     }
 
-    private long CalculateArrangements(string row, int[] groups)
+    private long CalculateArrangements(string row, int[] groups, int sum)
     {
         row = row.TrimStart('.');
 
         var length = row.Length;
-        
+
+        if (sum > length)
+        {
+            return 0;
+        }
+
         var groupLength = groups.Length;
         
         if (length == 0)
@@ -88,9 +93,9 @@ public abstract class Base : Solution
                 return 0;
             }
             
-            return GetArrangements(row[(group + 1)..], groups[1..]);
+            return GetArrangements(row[(group + 1)..], groups[1..], sum - groups[0]);
         }
 
-        return GetArrangements($"#{row[1..]}", groups) + GetArrangements(row[1..], groups);
+        return GetArrangements($"#{row[1..]}", groups, sum) + GetArrangements(row[1..], groups, sum);
     }
 }
