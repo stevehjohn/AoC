@@ -7,6 +7,22 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        return "Unknown";
+        var sum = 0L;
+
+        foreach (var line in Input)
+        {
+            var data = ParseLine(UnfoldLine(line));
+
+            sum += GetArrangements(data.Row, data.Groups);
+        }
+        
+        return sum.ToString();
+    }
+
+    private static string UnfoldLine(string line)
+    {
+        var parts = line.Split(' ');
+
+        return $"{parts[0]}?{parts[0]}?{parts[0]}?{parts[0]}?{parts[0]} {parts[1]},{parts[1]},{parts[1]},{parts[1]},{parts[1]}";
     }
 }

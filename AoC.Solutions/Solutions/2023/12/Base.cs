@@ -35,7 +35,7 @@ public abstract class Base : Solution
         return answer;
     }
 
-    private static long CalculateArrangements(string row, int[] groups)
+    private long CalculateArrangements(string row, int[] groups)
     {
         row = row.TrimStart('.');
 
@@ -72,9 +72,9 @@ public abstract class Base : Solution
                 return 0;
             }
             
-            return CalculateArrangements(row[(group + 1)..], groups[1..]);
+            return GetArrangements(row[(group + 1)..], groups[1..]);
         }
 
-        return CalculateArrangements($"#{row[1..]}", groups) + CalculateArrangements(row[1..], groups);
+        return GetArrangements($"#{row[1..]}", groups) + GetArrangements(row[1..], groups);
     }
 }
