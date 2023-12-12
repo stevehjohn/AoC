@@ -39,12 +39,14 @@ public abstract class Base : Solution
 
         var length = row.Length;
         
+        var groupLength = groups.Length;
+        
         if (length == 0)
         {
-            return groups.Length == 0 ? 1 : 0;
+            return groupLength == 0 ? 1 : 0;
         }
 
-        if (groups.Length == 0)
+        if (groupLength == 0)
         {
             return row.Contains('#') ? 0 : 1;
         }
@@ -60,7 +62,7 @@ public abstract class Base : Solution
 
             if (length == group)
             {
-                return groups.Length == 1 ? 1 : 0;
+                return groupLength == 1 ? 1 : 0;
             }
 
             if (row[group] == '#')
