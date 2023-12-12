@@ -50,16 +50,32 @@ public abstract class Base : Solution
 
         if (groupLength == 0)
         {
-            return row.Contains('#') ? 0 : 1;
+            for (var i = 0; i < length; i++)
+            {
+                if (row[i] == '#')
+                {
+                    return 0;
+                }
+            }
+
+            return 1;
         }
 
         if (row[0] == '#')
         {
             var group = groups[0];
 
-            if (length < group || row[..group].Contains('.'))
+            if (length < group)
             {
                 return 0;
+            }
+
+            for (var i = 0; i < group; i++)
+            {
+                if (row[i] == '.')
+                {
+                    return 0;
+                }
             }
 
             if (length == group)
