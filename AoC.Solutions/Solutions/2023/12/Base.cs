@@ -49,10 +49,10 @@ public abstract class Base : Solution
             return row.Contains('#') ? 0 : 1;
         }
 
-        var group = groups[0];
-
         if (row[0] == '#')
         {
+            var group = groups[0];
+
             if (length < group || row[..group].Contains('.'))
             {
                 return 0;
@@ -60,7 +60,7 @@ public abstract class Base : Solution
 
             if (length == group)
             {
-                return group == 1 ? 1 : 0;
+                return groups.Length == 1 ? 1 : 0;
             }
 
             if (row[group] == '#')

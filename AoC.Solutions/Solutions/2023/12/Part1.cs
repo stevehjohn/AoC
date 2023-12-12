@@ -13,8 +13,6 @@ public class Part1 : Base
         {
             var data = ParseLine(line);
 
-            Console.WriteLine(GetArrangements(data.Row, data.Groups));
-            
             sum += GetArrangements(data.Row, data.Groups);
         }
         
