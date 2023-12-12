@@ -21,14 +21,16 @@ public abstract class Base : Solution
 
     protected long GetArrangements(string row, int[] groups)
     {
-        if (_cache.TryGetValue(row, out var answer))
+        var key = $"{row}{string.Join(',', groups)}";
+        
+        if (_cache.TryGetValue(key, out var answer))
         {
             return answer;
         }
 
         answer = CalculateArrangements(row, groups);
         
-        _cache.Add(row, answer);
+        _cache.Add(key, answer);
 
         return answer;
     }
@@ -37,36 +39,42 @@ public abstract class Base : Solution
     {
         row = row.TrimStart('.');
 
-        if (row == string.Empty)
+        var length = row.Length;
+        
+        var groupLength = groups.Length;
+        
+        if (length == 0)
         {
-            return groups.Length == 0 ? 1 : 0;
+            return groupLength == 0 ? 1 : 0;
         }
 
-        if (groups.Length == 0)
+        if (groupLength == 0)
         {
-            return row.IndexOf('#') == -1 ? 1 : 0;
+            return row.Contains('#') ? 0 : 1;
         }
 
         if (row[0] == '#')
         {
-            if (row.Length < groups[0] || row[..groups[0]].Contains('.'))
+            var group = groups[0];
+
+            if (length < group || row[..group].Contains('.'))
+            {
+                return 0;
+            }
+
+            if (length == group)
+            {
+                return groupLength == 1 ? 1 : 0;
+            }
+
+            if (row[group] == '#')
             {
                 return 0;
             }
             
-            if (row.Length == groups[0])
-            {
-                return groups.Length == 1 ? 1 : 0;
-            }
-            
-            if (row[groups[0]] == '#')
-            {
-                return 0;
-            }
-            
-            return CalculateArrangements(row[(groups[0] + 1)..], groups[1..]);
+            return CalculateArrangements(row[(group + 1)..], groups[1..]);
         }
-        
+
         return CalculateArrangements($"#{row[1..]}", groups) + CalculateArrangements(row[1..], groups);
     }
 }
