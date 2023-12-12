@@ -13,7 +13,7 @@ public class Part2 : Base
         {
             var data = ParseLine(UnfoldLine(line));
 
-            sum += GetArrangements(data.Row, data.Groups);
+            sum += GetArrangements(data.Row, data.Groups, data.Sum);
         }
         
         return sum.ToString();
