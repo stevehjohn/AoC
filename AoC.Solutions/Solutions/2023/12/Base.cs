@@ -33,46 +33,40 @@ public abstract class Base : Solution
         return answer;
     }
 
-    private long CalculateArrangements(string row, int[] groups)
+    private static long CalculateArrangements(string row, int[] groups)
     {
         row = row.TrimStart('.');
 
-        var length = row.Length;
-
-        var groupLength = groups.Length;
-        
-        if (length == 0)
+        if (row == string.Empty)
         {
-            return groupLength == 0 ? 1 : 0;
+            return groups.Length == 0 ? 1 : 0;
         }
 
-        if (groupLength == 0)
+        if (groups.Length == 0)
         {
-            return row.Contains('#') ? 0 : 1;
+            return row.IndexOf('#') == -1 ? 1 : 0;
         }
 
         if (row[0] == '#')
         {
-            var group = groups[0];
-
-            if (length < group || row[..group].Contains('.'))
+            if (row.Length < groups[0] || row[..groups[0]].Contains('.'))
             {
                 return 0;
             }
-
-            if (length == group)
+            
+            if (row.Length == groups[0])
             {
-                return groupLength == 1 ? 1 : 0;
+                return groups.Length == 1 ? 1 : 0;
             }
-
-            if (row[group] == '#')
+            
+            if (row[groups[0]] == '#')
             {
                 return 0;
             }
-
-            return CalculateArrangements(row[(group + 1)..], groups[1..]);
+            
+            return CalculateArrangements(row[(groups[0] + 1)..], groups[1..]);
         }
-
+        
         return CalculateArrangements($"#{row[1..]}", groups) + CalculateArrangements(row[1..], groups);
     }
 }
