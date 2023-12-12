@@ -41,21 +41,6 @@ public abstract class Base : Solution
 
         var length = row.Length;
 
-        var count = 0;
-        
-        for (var i = 0; i < row.Length; i++)
-        {
-            if (row[i] != '.')
-            {
-                count++;
-            }
-        }
-
-        if (sum > count)
-        {
-            return 0;
-        }
-
         var groupLength = groups.Length;
         
         if (length == 0)
@@ -74,6 +59,21 @@ public abstract class Base : Solution
             }
 
             return 1;
+        }
+
+        var count = 0;
+        
+        for (var i = 0; i < length; i++)
+        {
+            if (row[i] != '.')
+            {
+                count++;
+            }
+        }
+
+        if (sum > count)
+        {
+            return 0;
         }
 
         if (row[0] == '#')
