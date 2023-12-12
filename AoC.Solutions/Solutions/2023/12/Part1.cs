@@ -7,6 +7,17 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        return "Unknown";
+        var sum = 0L;
+
+        foreach (var line in Input)
+        {
+            var data = ParseLine(line);
+
+            Console.WriteLine(GetArrangements(data.Row, data.Groups));
+            
+            sum += GetArrangements(data.Row, data.Groups);
+        }
+        
+        return sum.ToString();
     }
 }
