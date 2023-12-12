@@ -33,7 +33,7 @@ public abstract class Base : Solution
         return answer;
     }
 
-    private long CalculateArrangements(string row, int[] groups, int processed = 0)
+    private long CalculateArrangements(string row, int[] groups)
     {
         row = row.TrimStart('.');
 
