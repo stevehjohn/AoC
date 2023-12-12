@@ -33,12 +33,12 @@ public abstract class Base : Solution
         return answer;
     }
 
-    private long CalculateArrangements(string row, int[] groups)
+    private long CalculateArrangements(string row, int[] groups, int processed = 0)
     {
         row = row.TrimStart('.');
 
         var length = row.Length;
-        
+
         var groupLength = groups.Length;
         
         if (length == 0)
@@ -69,10 +69,10 @@ public abstract class Base : Solution
             {
                 return 0;
             }
-            
-            return GetArrangements(row[(group + 1)..], groups[1..]);
+
+            return CalculateArrangements(row[(group + 1)..], groups[1..]);
         }
 
-        return GetArrangements($"#{row[1..]}", groups) + GetArrangements(row[1..], groups);
+        return CalculateArrangements($"#{row[1..]}", groups) + CalculateArrangements(row[1..], groups);
     }
 }
