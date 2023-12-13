@@ -45,6 +45,11 @@ public static class Maths
         }
     }
 
+    public static long LowestCommonMultiple(long left, long right)
+    {
+        return left * right / GreatestCommonFactor(left, right);
+    }
+
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     private static long GreatestCommonFactor(long left, long right)
     {
