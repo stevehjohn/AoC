@@ -34,7 +34,7 @@ public class Part1 : Base
         return sum.ToString();
     }
 
-    private int AnalysePattern(List<string> lines)
+    private static int AnalysePattern(List<string> lines)
     {
         var result = GetVerticalReflectionPoint(lines) * 100;
         
@@ -50,7 +50,7 @@ public class Part1 : Base
         return result;
     }
 
-    private int GetVerticalReflectionPoint(List<string> lines)
+    private static int GetVerticalReflectionPoint(List<string> lines)
     {
         var y = lines.Count / 2;
 
@@ -67,7 +67,7 @@ public class Part1 : Base
         return 0;
     }
 
-    private bool IsReflectionPoint(List<string> lines, int start)
+    private static bool IsReflectionPoint(List<string> lines, int start)
     {
         var top = start;
 
@@ -87,8 +87,8 @@ public class Part1 : Base
 
         return true;
     }
-
-    private List<string> RotateRight(List<string> lines)
+    
+    private static List<string> RotateRight(List<string> lines)
     {
         var rotate = new List<string>();
 
