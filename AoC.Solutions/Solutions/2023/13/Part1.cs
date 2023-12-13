@@ -52,7 +52,7 @@ public class Part1 : Base
 
     private static int GetVerticalReflectionPoint(List<string> lines)
     {
-        var y = lines.Count / 2;
+        var y = 0;
 
         while (y < lines.Count - 1)
         {
