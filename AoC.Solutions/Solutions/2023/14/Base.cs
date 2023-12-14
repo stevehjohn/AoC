@@ -60,25 +60,6 @@ public abstract class Base : Solution
         }
 
         Rocks = rocks;
-
-        // for (var y = 0; y < Input.Length; y++)
-        // {
-        //     for (var x = 0; x < Input[0].Length; x++)
-        //     {
-        //         if (! Rocks.Any(r => r.Point.X == x && r.Point.Y == y))
-        //         {
-        //             Console.Write('.');
-        //         }
-        //         else
-        //         {
-        //             Console.Write(Rocks.First(r => r.Point.X == x && r.Point.Y == y).Round ? 'O' : '#');
-        //         }
-        //     }
-        //     
-        //     Console.WriteLine();
-        // }
-        //
-        // Console.WriteLine();
     }
 
     protected void ParseInput()
