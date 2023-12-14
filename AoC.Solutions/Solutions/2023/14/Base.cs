@@ -32,16 +32,73 @@ public abstract class Base : Solution
 
     protected void MoveRocks(int dX, int dY)
     {
+        if (dY == -1)
+        {
+            for (var y = 0; y < Rows; y++)
+            {
+                for (var x = 0; x < Columns; x++)
+                {
+                    if (Rocks[x, y] == 'O')
+                    {
+                        MoveRock(x, y, dX, dY);
+                    }
+                }
+            }
+        }
+        
+        if (dX == -1)
+        {
+            for (var x = 0; x < Columns; x++)
+            {
+                for (var y = 0; y < Rows; y++)
+                {
+                    if (Rocks[x, y] == 'O')
+                    {
+                        MoveRock(x, y, dX, dY);
+                    }
+                }
+            }
+        }
+        
+        if (dY == 1)
+        {
+            for (var y = Rows - 1; y >= 0; y--)
+            {
+                for (var x = 0; x < Columns; x++)
+                {
+                    if (Rocks[x, y] == 'O')
+                    {
+                        MoveRock(x, y, dX, dY);
+                    }
+                }
+            }
+        }
+        
+        if (dX == 1)
+        {
+            for (var x = Columns - 1; x >= 0; x--)
+            {
+                for (var y = 0; y < Rows; y++)
+                {
+                    if (Rocks[x, y] == 'O')
+                    {
+                        MoveRock(x, y, dX, dY);
+                    }
+                }
+            }
+        }
+
         for (var y = 0; y < Rows; y++)
         {
             for (var x = 0; x < Columns; x++)
             {
-                if (Rocks[x, y] == 'O')
-                {
-                    MoveRock(x, y, dX, dY);
-                }
+                Console.Write(Rocks[x, y]);
             }
+            
+            Console.WriteLine();
         }
+        
+        Console.WriteLine();
     }
 
     private void MoveRock(int x, int y, int dX, int dY)
