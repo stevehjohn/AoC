@@ -93,7 +93,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
                                 5 => Color.Cyan,
                                 _ => Color.White
                             },
-                            Id = i
+                            Id = i,
+                            X = x * 7,
+                            Y = y * 7
                         };
 
                         i++;
@@ -138,11 +140,13 @@ public class Visualisation : VisualisationBase<PuzzleState>
                     continue;
                 }
 
-                var sprite = _map[x, y].Round ? new Rectangle(0, 0, 7, 7) : new Rectangle(7, 0, 7, 7);
+                var rock = _map[x, y];
 
-                var color = _map[x, y].Round ? _map[x, y].Color : Color.FromNonPremultiplied(80, 80, 80, 255);
+                var sprite = rock.Round ? new Rectangle(0, 0, 7, 7) : new Rectangle(7, 0, 7, 7);
+
+                var color = rock.Round ? _map[x, y].Color : Color.FromNonPremultiplied(80, 80, 80, 255);
                 
-                _spriteBatch.Draw(_sprites, new Vector2(x * 7, y * 7), sprite, color, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
+                _spriteBatch.Draw(_sprites, new Vector2(rock.X, rock.Y), sprite, color, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
             }
         }
     }
