@@ -82,29 +82,26 @@ public abstract class Base : Solution
         
         if (dX == 1)
         {
-            for (var x = _columns - 1; x >= 0; x--)
+            var hash = 0;
+            
+            for (var y = 0; y < _rows; y++)
             {
-                for (var y = 0; y < _rows; y++)
+                var hashString = new char[_columns];
+            
+                for (var x = _columns - 1; x >= 0; x--)
                 {
                     if (_rocks[x, y] == 'O')
                     {
                         MoveRock(x, y, dX, dY);
                     }
                 }
-            }
 
-            var hash = 0;
-            
-            for (var y = 0; y < _rows; y++)
-            {
-                var rowString = new char[_columns];
-            
                 for (var x = 0; x < _columns; x++)
                 {
-                    rowString[x] = _rocks[x, y];
+                    hashString[x] = _rocks[x, y];
                 }
 
-                hash = HashCode.Combine(hash, new string(rowString).GetHashCode());
+                hash = HashCode.Combine(hash, new string(hashString).GetHashCode());
             }
 
             return hash;
