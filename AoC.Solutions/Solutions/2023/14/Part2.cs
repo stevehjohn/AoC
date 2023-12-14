@@ -5,15 +5,57 @@ namespace AoC.Solutions.Solutions._2023._14;
 [UsedImplicitly]
 public class Part2 : Base
 {
+    private readonly Dictionary<int, (int Cycle, int Load)> _seen = new();
+
+    private int _cycle;
+    
     public override string GetAnswer()
     {
         ParseInput();
 
-        PerformCycle();
+        var seenCycle = 0;
+        
+        while (true)
+        {
+            PerformCycle();
+            
+            _cycle++;
+
+            seenCycle = CheckHashState();
+            
+            if (seenCycle > 0)
+            {
+                break;
+            }
+        }
+
+        var remainingCycles = (1_000_000_000 - seenCycle) % (_cycle - seenCycle);
+        
+        for (var i = 0; i < remainingCycles; i++)
+        {
+            PerformCycle();
+        }
 
         var result = GetLoad();
 
         return result.ToString();
+    }
+
+    private int CheckHashState()
+    {
+        var hash = 0;
+        
+        foreach (var rock in Rocks)
+        {
+            hash = HashCode.Combine(hash, rock.Point.GetHashCode());
+        }
+
+        if (! _seen.TryAdd(hash, (_cycle, GetLoad())))
+        {
+            return _seen[hash].Cycle;
+        }
+
+        return 0;
     }
 
     private void PerformCycle()

@@ -7,7 +7,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Parabolic reflector dish";
 
-    private List<(Point Point, bool Round)> _rocks;
+    protected List<(Point Point, bool Round)> Rocks;
     
     protected int Rows;
 
@@ -17,7 +17,7 @@ public abstract class Base : Solution
     {
         var load = 0;
         
-        foreach (var rock in _rocks)
+        foreach (var rock in Rocks)
         {
             if (rock.Round)
             {
@@ -35,7 +35,7 @@ public abstract class Base : Solution
         Action<Point> open, 
         Action<Point, Point> blocked)
     {
-        var rocks = sort(_rocks);
+        var rocks = sort(Rocks);
         
         foreach (var rock in rocks)
         {
@@ -59,31 +59,31 @@ public abstract class Base : Solution
             }
         }
 
-        _rocks = rocks;
+        Rocks = rocks;
 
-        for (var y = 0; y < Input.Length; y++)
-        {
-            for (var x = 0; x < Input[0].Length; x++)
-            {
-                if (! _rocks.Any(r => r.Point.X == x && r.Point.Y == y))
-                {
-                    Console.Write('.');
-                }
-                else
-                {
-                    Console.Write(_rocks.First(r => r.Point.X == x && r.Point.Y == y).Round ? 'O' : '#');
-                }
-            }
-            
-            Console.WriteLine();
-        }
-        
-        Console.WriteLine();
+        // for (var y = 0; y < Input.Length; y++)
+        // {
+        //     for (var x = 0; x < Input[0].Length; x++)
+        //     {
+        //         if (! Rocks.Any(r => r.Point.X == x && r.Point.Y == y))
+        //         {
+        //             Console.Write('.');
+        //         }
+        //         else
+        //         {
+        //             Console.Write(Rocks.First(r => r.Point.X == x && r.Point.Y == y).Round ? 'O' : '#');
+        //         }
+        //     }
+        //     
+        //     Console.WriteLine();
+        // }
+        //
+        // Console.WriteLine();
     }
 
     protected void ParseInput()
     {
-        _rocks = new List<(Point Point, bool Round)>();
+        Rocks = new List<(Point Point, bool Round)>();
 
         Rows = Input.Length;
 
@@ -97,7 +97,7 @@ public abstract class Base : Solution
                 
                 if (c != '.')
                 {
-                    _rocks.Add((new Point(x, y), c == 'O'));
+                    Rocks.Add((new Point(x, y), c == 'O'));
                 }
             }
         }
