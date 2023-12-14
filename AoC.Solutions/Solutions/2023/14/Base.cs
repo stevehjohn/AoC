@@ -6,8 +6,8 @@ namespace AoC.Solutions.Solutions._2023._14;
 public abstract class Base : Solution
 {
     public override string Description => "Parabolic reflector dish";
-
-    private char[,] _rocks;
+    
+    protected char[,] Rocks;
 
     private int _rows;
 
@@ -21,7 +21,7 @@ public abstract class Base : Solution
         {
             for (var x = 0; x < _columns; x++)
             {
-                if (_rocks[x, y] == 'O')
+                if (Rocks[x, y] == 'O')
                 {
                     load += _rows - y;
                 }
@@ -39,7 +39,7 @@ public abstract class Base : Solution
             {
                 for (var x = 0; x < _columns; x++)
                 {
-                    if (_rocks[x, y] == 'O')
+                    if (Rocks[x, y] == 'O')
                     {
                         MoveRock(x, y, dX, dY);
                     }
@@ -55,7 +55,7 @@ public abstract class Base : Solution
             {
                 for (var y = 0; y < _rows; y++)
                 {
-                    if (_rocks[x, y] == 'O')
+                    if (Rocks[x, y] == 'O')
                     {
                         MoveRock(x, y, dX, dY);
                     }
@@ -71,7 +71,7 @@ public abstract class Base : Solution
             {
                 for (var x = 0; x < _columns; x++)
                 {
-                    if (_rocks[x, y] == 'O')
+                    if (Rocks[x, y] == 'O')
                     {
                         MoveRock(x, y, dX, dY);
                     }
@@ -93,7 +93,7 @@ public abstract class Base : Solution
             
                 for (var x = _columns - 1; x >= 0; x--)
                 {
-                    if (_rocks[x, y] == 'O')
+                    if (Rocks[x, y] == 'O')
                     {
                         MoveRock(x, y, dX, dY);
                     }
@@ -101,9 +101,9 @@ public abstract class Base : Solution
 
                 for (var x = 0; x < _columns; x++)
                 {
-                    hashString[x] = _rocks[x, y];
+                    hashString[x] = Rocks[x, y];
 
-                    if (_rocks[x, y] == 'O')
+                    if (Rocks[x, y] == 'O')
                     {
                         load += _rows - y;
                     }
@@ -124,15 +124,15 @@ public abstract class Base : Solution
         {
             var oY = y;
             
-            while (y > 0 && _rocks[x, y - 1] == '.')
+            while (y > 0 && Rocks[x, y - 1] == '.')
             {
                 y--;
             }
 
             if (oY != y)
             {
-                _rocks[x, y] = 'O';
-                _rocks[x, oY] = '.';
+                Rocks[x, y] = 'O';
+                Rocks[x, oY] = '.';
             }
             
             return;
@@ -142,15 +142,15 @@ public abstract class Base : Solution
         {
             var oX = x;
             
-            while (x > 0 && _rocks[x - 1, y] == '.')
+            while (x > 0 && Rocks[x - 1, y] == '.')
             {
                 x--;
             }
 
             if (oX != x)
             {
-                _rocks[x, y] = 'O';
-                _rocks[oX, y] = '.';
+                Rocks[x, y] = 'O';
+                Rocks[oX, y] = '.';
             }
             
             return;
@@ -160,15 +160,15 @@ public abstract class Base : Solution
         {
             var oY = y;
             
-            while (y < _rows - 1 && _rocks[x, y + 1] == '.')
+            while (y < _rows - 1 && Rocks[x, y + 1] == '.')
             {
                 y++;
             }
 
             if (oY != y)
             {
-                _rocks[x, y] = 'O';
-                _rocks[x, oY] = '.';
+                Rocks[x, y] = 'O';
+                Rocks[x, oY] = '.';
             }
             
             return;
@@ -178,15 +178,15 @@ public abstract class Base : Solution
         {
             var oX = x;
             
-            while (x < _columns - 1 && _rocks[x + 1, y] == '.')
+            while (x < _columns - 1 && Rocks[x + 1, y] == '.')
             {
                 x++;
             }
 
             if (oX != x)
             {
-                _rocks[x, y] = 'O';
-                _rocks[oX, y] = '.';
+                Rocks[x, y] = 'O';
+                Rocks[oX, y] = '.';
             }
         }
     }
@@ -197,6 +197,6 @@ public abstract class Base : Solution
 
         _columns = Input[0].Length;
         
-        _rocks = Input.To2DArray();
+        Rocks = Input.To2DArray();
     }
 }
