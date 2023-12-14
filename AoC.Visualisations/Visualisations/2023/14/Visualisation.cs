@@ -19,6 +19,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private Texture2D _sprites;
 
+    private int _cycle;
+
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -72,8 +74,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
             var rng = new Random();
 
-            var i = 0;
-            
             for (var x = 0; x < state.Map.GetLength(0); x++)
             {
                 for (var y = 0; y < state.Map.GetLength(1); y++)
@@ -92,21 +92,92 @@ public class Visualisation : VisualisationBase<PuzzleState>
                                 4 => Color.Magenta,
                                 5 => Color.Cyan,
                                 _ => Color.White
-                            },
-                            Id = i,
-                            X = x * 7,
-                            Y = y * 7
+                            }
                         };
-
-                        i++;
                     }
                 }
             }
 
             _state = state;
         }
+        else
+        {
+            switch (_cycle)
+            {
+                case 0:
+                    if (! UpdateMap(0, -1))
+                    {
+                        _cycle = 1;
+                    }
+                    break;
+
+                case 1:
+                    if (! UpdateMap(-1, 0))
+                    {
+                        _cycle = 2;
+                    }
+                    break;
+
+                case 2:
+                    if (! UpdateMap(0, 1))
+                    {
+                        _cycle = 3;
+                    }
+                    break;
+
+                case 3:
+                    if (! UpdateMap(1, 0))
+                    {
+                        _cycle = 0;
+                    }
+                    break;
+            }
+        }
 
         base.Update(gameTime);
+    }
+
+    private bool UpdateMap(int dX, int dY)
+    {
+        var moved = false;
+        
+        for (var x = 0; x < _map.GetLength(0); x++)
+        {
+            for (var y = 0; y < _map.GetLength(1); y++)
+            {
+                var rock = _map[x, y];
+
+                if (rock == null || ! rock.Round)
+                {
+                    continue;
+                }
+
+                var nX = x + dX;
+
+                var nY = y + dY;
+
+                if (nX < 0 || nX >= _map.GetLength(0))
+                {
+                    continue;
+                }
+
+                if (nY < 0 || nY >= _map.GetLength(1))
+                {
+                    continue;
+                }
+
+                if (_map[nX, nY] == null)
+                {
+                    _map[nX, nY] = rock;
+
+                    _map[x, y] = null;
+
+                    moved = true;
+                }
+            }
+        }
+
+        return moved;
     }
 
     protected override void Draw(GameTime gameTime)
@@ -146,7 +217,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                 var color = rock.Round ? _map[x, y].Color : Color.FromNonPremultiplied(80, 80, 80, 255);
                 
-                _spriteBatch.Draw(_sprites, new Vector2(rock.X, rock.Y), sprite, color, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
+                _spriteBatch.Draw(_sprites, new Vector2(x * 7, y * 7), sprite, color, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
             }
         }
     }
