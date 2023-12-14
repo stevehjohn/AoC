@@ -17,11 +17,11 @@ public class Part2 : Base
         
         while (true)
         {
-            PerformCycle();
+            var hash = PerformCycle();
             
             _cycle++;
 
-            seenCycle = CheckHashState();
+            seenCycle = CheckHashState(hash);
             
             if (seenCycle > 0)
             {
@@ -48,22 +48,8 @@ public class Part2 : Base
         return result.ToString();
     }
 
-    private int CheckHashState()
+    private int CheckHashState(int hash)
     {
-        var hash = 0;
-
-        for (var y = 0; y < Rows; y++)
-        {
-            var rowString = new char[Columns];
-            
-            for (var x = 0; x < Columns; x++)
-            {
-                rowString[x] = Rocks[x, y];
-            }
-
-            hash = HashCode.Combine(hash, new string(rowString).GetHashCode());
-        }
-
         if (! _seen.TryAdd(hash, (_cycle, GetLoad())))
         {
             return _seen[hash].Cycle;
@@ -72,7 +58,7 @@ public class Part2 : Base
         return 0;
     }
 
-    private void PerformCycle()
+    private int PerformCycle()
     {
         MoveRocks(0, -1);
         
@@ -80,6 +66,6 @@ public class Part2 : Base
         
         MoveRocks(0, 1);
         
-        MoveRocks(1, 0);
+        return MoveRocks(1, 0);
     }
 }
