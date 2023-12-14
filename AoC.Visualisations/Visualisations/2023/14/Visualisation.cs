@@ -28,6 +28,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private int _totalCycles;
 
+    private Dictionary<int, int> _hashes = new();
+    
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -144,8 +146,17 @@ public class Visualisation : VisualisationBase<PuzzleState>
                         _cycle = 0;
 
                         _totalCycles++;
-                        
-                        Console.Write($"Cycle: {_totalCycles}, Load: {GetLoad()}\n");
+
+                        var hash = GetHash();
+
+                        Console.Write($"Cycle: {_totalCycles}, Load: {GetLoad()}, Hash: {hash}\n");
+
+                        if (! _hashes.TryAdd(hash, _totalCycles))
+                        {
+                            Console.WriteLine("Déjà vu.");
+
+                            Console.WriteLine($"Hash seen before on cycle {_hashes[hash]}");
+                        }
                     }
                     
                     break;
@@ -153,6 +164,31 @@ public class Visualisation : VisualisationBase<PuzzleState>
         }
 
         base.Update(gameTime);
+    }
+
+    private int GetHash()
+    {
+        var hash = 0;
+        
+        for (var y = 0; y < _height; y++)
+        {
+            var hashString = new char[_width];
+            
+            for (var x = 0; x < _width; x++)
+            {
+                var item = _map[x, y];
+
+                hashString[x] = item == null
+                    ? '.'
+                    : item.Round
+                        ? 'O'
+                        : '#';
+            }
+
+            hash = HashCode.Combine(hash, new string(hashString).GetHashCode());
+        }
+
+        return hash;
     }
 
     private bool UpdateMap(int dX, int dY)
