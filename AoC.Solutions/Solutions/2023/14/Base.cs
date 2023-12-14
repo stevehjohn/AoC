@@ -44,6 +44,8 @@ public abstract class Base : Solution
                     }
                 }
             }
+            
+            return;
         }
         
         if (dX == -1)
@@ -58,6 +60,8 @@ public abstract class Base : Solution
                     }
                 }
             }
+            
+            return;
         }
         
         if (dY == 1)
@@ -72,6 +76,8 @@ public abstract class Base : Solution
                     }
                 }
             }
+            
+            return;
         }
         
         if (dX == 1)
@@ -105,6 +111,8 @@ public abstract class Base : Solution
                 Rocks[x, y] = 'O';
                 Rocks[x, oY] = '.';
             }
+            
+            return;
         }
         
         if (dX == -1)
@@ -121,6 +129,8 @@ public abstract class Base : Solution
                 Rocks[x, y] = 'O';
                 Rocks[oX, y] = '.';
             }
+            
+            return;
         }
         
         if (dY == 1)
@@ -137,6 +147,8 @@ public abstract class Base : Solution
                 Rocks[x, y] = 'O';
                 Rocks[x, oY] = '.';
             }
+            
+            return;
         }
         
         if (dX == 1)
