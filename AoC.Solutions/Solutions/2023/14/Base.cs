@@ -6,23 +6,23 @@ public abstract class Base : Solution
 {
     public override string Description => "Parabolic reflector dish";
 
-    protected char[,] Rocks;
-    
-    protected int Rows;
+    private char[,] _rocks;
 
-    protected int Columns;
+    private int _rows;
+
+    private int _columns;
     
     protected int GetLoad()
     {
         var load = 0;
         
-        for (var y = 0; y < Rows; y++)
+        for (var y = 0; y < _rows; y++)
         {
-            for (var x = 0; x < Columns; x++)
+            for (var x = 0; x < _columns; x++)
             {
-                if (Rocks[x, y] == 'O')
+                if (_rocks[x, y] == 'O')
                 {
-                    load += Rows - y;
+                    load += _rows - y;
                 }
             }
         }
@@ -34,11 +34,11 @@ public abstract class Base : Solution
     {
         if (dY == -1)
         {
-            for (var y = 0; y < Rows; y++)
+            for (var y = 0; y < _rows; y++)
             {
-                for (var x = 0; x < Columns; x++)
+                for (var x = 0; x < _columns; x++)
                 {
-                    if (Rocks[x, y] == 'O')
+                    if (_rocks[x, y] == 'O')
                     {
                         MoveRock(x, y, dX, dY);
                     }
@@ -50,11 +50,11 @@ public abstract class Base : Solution
         
         if (dX == -1)
         {
-            for (var x = 0; x < Columns; x++)
+            for (var x = 0; x < _columns; x++)
             {
-                for (var y = 0; y < Rows; y++)
+                for (var y = 0; y < _rows; y++)
                 {
-                    if (Rocks[x, y] == 'O')
+                    if (_rocks[x, y] == 'O')
                     {
                         MoveRock(x, y, dX, dY);
                     }
@@ -66,11 +66,11 @@ public abstract class Base : Solution
         
         if (dY == 1)
         {
-            for (var y = Rows - 1; y >= 0; y--)
+            for (var y = _rows - 1; y >= 0; y--)
             {
-                for (var x = 0; x < Columns; x++)
+                for (var x = 0; x < _columns; x++)
                 {
-                    if (Rocks[x, y] == 'O')
+                    if (_rocks[x, y] == 'O')
                     {
                         MoveRock(x, y, dX, dY);
                     }
@@ -82,11 +82,11 @@ public abstract class Base : Solution
         
         if (dX == 1)
         {
-            for (var x = Columns - 1; x >= 0; x--)
+            for (var x = _columns - 1; x >= 0; x--)
             {
-                for (var y = 0; y < Rows; y++)
+                for (var y = 0; y < _rows; y++)
                 {
-                    if (Rocks[x, y] == 'O')
+                    if (_rocks[x, y] == 'O')
                     {
                         MoveRock(x, y, dX, dY);
                     }
@@ -95,13 +95,13 @@ public abstract class Base : Solution
 
             var hash = 0;
             
-            for (var y = 0; y < Rows; y++)
+            for (var y = 0; y < _rows; y++)
             {
-                var rowString = new char[Columns];
+                var rowString = new char[_columns];
             
-                for (var x = 0; x < Columns; x++)
+                for (var x = 0; x < _columns; x++)
                 {
-                    rowString[x] = Rocks[x, y];
+                    rowString[x] = _rocks[x, y];
                 }
 
                 hash = HashCode.Combine(hash, new string(rowString).GetHashCode());
@@ -119,15 +119,15 @@ public abstract class Base : Solution
         {
             var oY = y;
             
-            while (y > 0 && Rocks[x, y - 1] == '.')
+            while (y > 0 && _rocks[x, y - 1] == '.')
             {
                 y--;
             }
 
             if (oY != y)
             {
-                Rocks[x, y] = 'O';
-                Rocks[x, oY] = '.';
+                _rocks[x, y] = 'O';
+                _rocks[x, oY] = '.';
             }
             
             return;
@@ -137,15 +137,15 @@ public abstract class Base : Solution
         {
             var oX = x;
             
-            while (x > 0 && Rocks[x - 1, y] == '.')
+            while (x > 0 && _rocks[x - 1, y] == '.')
             {
                 x--;
             }
 
             if (oX != x)
             {
-                Rocks[x, y] = 'O';
-                Rocks[oX, y] = '.';
+                _rocks[x, y] = 'O';
+                _rocks[oX, y] = '.';
             }
             
             return;
@@ -155,15 +155,15 @@ public abstract class Base : Solution
         {
             var oY = y;
             
-            while (y < Rows - 1 && Rocks[x, y + 1] == '.')
+            while (y < _rows - 1 && _rocks[x, y + 1] == '.')
             {
                 y++;
             }
 
             if (oY != y)
             {
-                Rocks[x, y] = 'O';
-                Rocks[x, oY] = '.';
+                _rocks[x, y] = 'O';
+                _rocks[x, oY] = '.';
             }
             
             return;
@@ -173,26 +173,26 @@ public abstract class Base : Solution
         {
             var oX = x;
             
-            while (x < Columns - 1 && Rocks[x + 1, y] == '.')
+            while (x < _columns - 1 && _rocks[x + 1, y] == '.')
             {
                 x++;
             }
 
             if (oX != x)
             {
-                Rocks[x, y] = 'O';
-                Rocks[oX, y] = '.';
+                _rocks[x, y] = 'O';
+                _rocks[oX, y] = '.';
             }
         }
     }
 
     protected void ParseInput()
     {
-        Rows = Input.Length;
+        _rows = Input.Length;
 
-        Columns = Input[0].Length;
+        _columns = Input[0].Length;
         
-        Rocks = new char[Input[0].Length, Input.Length];
+        _rocks = new char[Input[0].Length, Input.Length];
 
         var y = 0;
 
@@ -200,7 +200,7 @@ public abstract class Base : Solution
         {
             for (var x = 0; x < line.Length; x++)
             {
-                Rocks[x, y] = line[x];
+                _rocks[x, y] = line[x];
             }
 
             y++;
