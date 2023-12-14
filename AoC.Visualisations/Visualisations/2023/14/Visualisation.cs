@@ -28,6 +28,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private int _totalCycles;
 
+    private bool _solved;
+    
     private Dictionary<int, int> _hashes = new();
     
     public Visualisation()
@@ -117,6 +119,14 @@ public class Visualisation : VisualisationBase<PuzzleState>
         }
         else
         {
+            if (_totalCycles == 1_000_000_000)
+            {
+                Console.WriteLine($"\nAnswer: {GetLoad()}\n\n");
+                base.Update(gameTime);
+                
+                return;
+            }
+
             switch (_cycle)
             {
                 case 0:
@@ -149,13 +159,25 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                         var hash = GetHash();
 
-                        Console.Write($"Cycle: {_totalCycles}, Load: {GetLoad()}, Hash: {hash}\n");
+                        Console.Write($"Cycle: {_totalCycles,13:N0}, Load: {GetLoad(),7:N0}, Hash: {hash:X8}\n");
 
-                        if (! _hashes.TryAdd(hash, _totalCycles))
+                        if (! _hashes.TryAdd(hash, _totalCycles) && ! _solved)
                         {
-                            Console.WriteLine("Déjà vu.");
+                            _solved = true;
+                            
+                            var seenCycle = _hashes[hash];
+                            
+                            Console.WriteLine("\nDéjà vu.");
 
-                            Console.WriteLine($"Hash seen before on cycle {_hashes[hash]}");
+                            Console.WriteLine($"Hash seen before on cycle {seenCycle:N0}");
+                            
+                            var remainingCycles = (1_000_000_000 - seenCycle) % (_cycle - seenCycle);
+
+                            var skip = 1_000_000_000 - _totalCycles - remainingCycles;
+                            
+                            Console.WriteLine($"We can now skip {skip:N0} cycles.\n");
+
+                            _totalCycles += skip;
                         }
                     }
                     
