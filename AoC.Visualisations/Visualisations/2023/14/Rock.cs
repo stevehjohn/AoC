@@ -7,4 +7,6 @@ public class Rock
     public bool Round { get; set; }
 
     public Color Color { get; set; }
+    
+    public int Id { get; set; }
 }

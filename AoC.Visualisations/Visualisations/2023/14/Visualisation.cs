@@ -71,6 +71,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
             _map = new Rock[state.Map.GetLength(0), state.Map.GetLength(1)];
 
             var rng = new Random();
+
+            var i = 0;
             
             for (var x = 0; x < state.Map.GetLength(0); x++)
             {
@@ -90,8 +92,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
                                 4 => Color.Magenta,
                                 5 => Color.Cyan,
                                 _ => Color.White
-                            }
+                            },
+                            Id = i
                         };
+
+                        i++;
                     }
                 }
             }
