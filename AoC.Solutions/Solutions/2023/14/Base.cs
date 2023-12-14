@@ -1,4 +1,3 @@
-using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2023._14;
@@ -7,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Parabolic reflector dish";
 
-    protected List<(Point Point, bool Round)> Rocks;
+    protected char[,] Rocks;
     
     protected int Rows;
 
@@ -17,70 +16,115 @@ public abstract class Base : Solution
     {
         var load = 0;
         
-        foreach (var rock in Rocks)
+        for (var y = 0; y < Rows; y++)
         {
-            if (rock.Round)
+            for (var x = 0; x < Columns; x++)
             {
-                load += Rows - rock.Point.Y;
+                if (Rocks[x, y] == 'O')
+                {
+                    load += Rows - y;
+                }
             }
         }
 
         return load;
     }
 
-    protected void MoveRocks(
-        Func<List<(Point Point, bool Round)>, List<(Point Point, bool Round)>> sort, 
-        Func<Point, bool> shouldMove, 
-        Func<Point, Point, bool> getBlocking, 
-        Action<Point> open, 
-        Action<Point, Point> blocked)
+    protected void MoveRocks(int dX, int dY)
     {
-        var rocks = sort(Rocks);
-        
-        foreach (var rock in rocks)
+        for (var y = 0; y < Rows; y++)
         {
-            if (! rock.Round)
+            for (var x = 0; x < Columns; x++)
             {
-                continue;
-            }
-
-            if (shouldMove(rock.Point))
-            {
-                var blocking = rocks.LastOrDefault(r => getBlocking(rock.Point, r.Point));
-
-                if (blocking.Point == null)
+                if (Rocks[x, y] == 'O')
                 {
-                    open(rock.Point);
-                }
-                else
-                {
-                    blocked(rock.Point, blocking.Point);
+                    MoveRock(x, y, dX, dY);
                 }
             }
         }
+    }
 
-        Rocks = rocks;
+    private void MoveRock(int x, int y, int dX, int dY)
+    {
+        if (dY == -1)
+        {
+            var oY = y;
+            
+            while (y > 0 && Rocks[x, y - 1] == '.')
+            {
+                y--;
+            }
+
+            if (oY != y)
+            {
+                (Rocks[x, y], Rocks[x, oY]) = (Rocks[x, oY], Rocks[x, y]);
+            }
+        }
+        
+        if (dX == -1)
+        {
+            var oX = x;
+            
+            while (x > 0 && Rocks[x - 1, y] == '.')
+            {
+                x--;
+            }
+
+            if (oX != y)
+            {
+                (Rocks[x, y], Rocks[oX, y]) = (Rocks[oX, y], Rocks[x, y]);
+            }
+        }
+        
+        if (dY == 1)
+        {
+            var oY = y;
+            
+            while (y < Rows - 1 && Rocks[x, y + 1] == '.')
+            {
+                y++;
+            }
+
+            if (oY != y)
+            {
+                (Rocks[x, y], Rocks[x, oY]) = (Rocks[x, oY], Rocks[x, y]);
+            }
+        }
+        
+        if (dX == 1)
+        {
+            var oX = x;
+            
+            while (x < Columns - 1 && Rocks[x + 1, y] == '.')
+            {
+                x++;
+            }
+
+            if (oX != y)
+            {
+                (Rocks[x, y], Rocks[oX, y]) = (Rocks[oX, y], Rocks[x, y]);
+            }
+        }
     }
 
     protected void ParseInput()
     {
-        Rocks = new List<(Point Point, bool Round)>();
-
         Rows = Input.Length;
 
         Columns = Input[0].Length;
         
-        for (var y = 0; y < Rows; y++)
+        Rocks = new char[Input[0].Length, Input.Length];
+
+        var y = 0;
+
+        foreach (var line in Input)
         {
-            for (var x = 0; x < Input[0].Length; x++)
+            for (var x = 0; x < line.Length; x++)
             {
-                var c = Input[y][x];
-                
-                if (c != '.')
-                {
-                    Rocks.Add((new Point(x, y), c == 'O'));
-                }
+                Rocks[x, y] = line[x];
             }
+
+            y++;
         }
     }
 }
