@@ -145,7 +145,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                         _totalCycles++;
                         
-                        Debugger.Log(0, "INFO", $"Cycle: {_totalCycles}, Load: {GetLoad()}\n");
+                        Console.Write($"Cycle: {_totalCycles}, Load: {GetLoad()}\n");
                     }
                     
                     break;
