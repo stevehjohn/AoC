@@ -156,9 +156,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         var stepY = sY < eY ? 1 : -1;
 
-        var sX = dX <= 0 ? 0 : _height - 1;
+        var sX = dX <= 0 ? 0 : _width - 1;
         
-        var eX = dX <= 0 ? _height : 0;
+        var eX = dX <= 0 ? _width : 0;
 
         var stepX = sX < eX ? 1 : -1;
         
