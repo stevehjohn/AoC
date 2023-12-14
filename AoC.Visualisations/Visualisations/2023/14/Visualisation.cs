@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Solutions._2023._14;
+﻿using System.Diagnostics;
+using AoC.Solutions.Solutions._2023._14;
 using AoC.Visualisations.Exceptions;
 using AoC.Visualisations.Infrastructure;
 using JetBrains.Annotations;
@@ -20,6 +21,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private Texture2D _sprites;
 
     private int _cycle;
+
+    private int _width;
+
+    private int _height;
 
     public Visualisation()
     {
@@ -70,13 +75,17 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             var state = GetNextState();
 
-            _map = new Rock[state.Map.GetLength(0), state.Map.GetLength(1)];
+            _width = state.Map.GetLength(0);
+
+            _height = state.Map.GetLength(1);
+            
+            _map = new Rock[_width, _height];
 
             var rng = new Random();
 
-            for (var x = 0; x < state.Map.GetLength(0); x++)
+            for (var x = 0; x < _width; x++)
             {
-                for (var y = 0; y < state.Map.GetLength(1); y++)
+                for (var y = 0; y < _height; y++)
                 {
                     if (state.Map[x, y] != '.')
                     {
@@ -140,10 +149,22 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private bool UpdateMap(int dX, int dY)
     {
         var moved = false;
+
+        var sY = dY <= 0 ? 0 : _height - 1;
         
-        for (var x = 0; x < _map.GetLength(0); x++)
+        var eY = dY <= 0 ? _height : 0;
+
+        var stepY = sY < eY ? 1 : -1;
+
+        var sX = dX <= 0 ? 0 : _height - 1;
+        
+        var eX = dX <= 0 ? _height : 0;
+
+        var stepX = sX < eX ? 1 : -1;
+        
+        for (var x = sX; x != eX; x += stepX)
         {
-            for (var y = 0; y < _map.GetLength(1); y++)
+            for (var y = sY; y != eY; y += stepY)
             {
                 var rock = _map[x, y];
 
@@ -156,12 +177,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                 var nY = y + dY;
 
-                if (nX < 0 || nX >= _map.GetLength(0))
+                if (nX < 0 || nX >= _width)
                 {
                     continue;
                 }
 
-                if (nY < 0 || nY >= _map.GetLength(1))
+                if (nY < 0 || nY >= _height)
                 {
                     continue;
                 }
@@ -202,9 +223,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private void DrawState()
     {
-        for (var y = 0; y < _map.GetLength(1); y++)
+        for (var y = 0; y < _width; y++)
         {
-            for (var x = 0; x < _map.GetLength(0); x++)
+            for (var x = 0; x < _height; x++)
             {
                 if (_map[x, y] == null)
                 {
