@@ -1,3 +1,4 @@
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 using JetBrains.Annotations;
 
@@ -64,7 +65,7 @@ public class Part2 : Base
     {
         if (_visualiser != null)
         {
-            _visualiser.PuzzleStateChanged(new PuzzleState { Map = Rocks, PatternStart = patternStart, PatternEnd = patternEnd });
+            _visualiser.PuzzleStateChanged(new PuzzleState { Map = Input.To2DArray(), PatternStart = patternStart, PatternEnd = patternEnd });
         }
     }
 
