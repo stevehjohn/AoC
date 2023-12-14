@@ -17,11 +17,11 @@ public class Part2 : Base
         
         while (true)
         {
-            var hash = PerformCycle();
+            var result = PerformCycle();
             
             _cycle++;
 
-            seenCycle = CheckHashState(hash);
+            seenCycle = CheckHashState(result.Hash, result.Load);
             
             if (seenCycle > 0)
             {
@@ -43,14 +43,12 @@ public class Part2 : Base
             }
         }
 
-        var result = _seen.Single(s => s.Value.Cycle == hashCycle).Value.Load;
-
-        return result.ToString();
+        return _seen.Single(s => s.Value.Cycle == hashCycle).Value.Load.ToString();
     }
 
-    private int CheckHashState(int hash)
+    private int CheckHashState(int hash, int load)
     {
-        if (! _seen.TryAdd(hash, (_cycle, GetLoad())))
+        if (! _seen.TryAdd(hash, (_cycle, load)))
         {
             return _seen[hash].Cycle;
         }
@@ -58,7 +56,7 @@ public class Part2 : Base
         return 0;
     }
 
-    private int PerformCycle()
+    private (int Hash, int Load) PerformCycle()
     {
         MoveRocks(0, -1);
         
