@@ -30,7 +30,7 @@ public abstract class Base : Solution
         return load;
     }
 
-    protected int MoveRocks(int dX, int dY)
+    protected (int Hash, int Load) MoveRocks(int dX, int dY)
     {
         if (dY == -1)
         {
@@ -45,7 +45,7 @@ public abstract class Base : Solution
                 }
             }
             
-            return 0;
+            return (0, 0);
         }
         
         if (dX == -1)
@@ -61,7 +61,7 @@ public abstract class Base : Solution
                 }
             }
             
-            return 0;
+            return (0, 0);
         }
         
         if (dY == 1)
@@ -76,13 +76,15 @@ public abstract class Base : Solution
                     }
                 }
             }
-            
-            return 0;
+
+            return (0, 0);
         }
         
         if (dX == 1)
         {
             var hash = 0;
+
+            var load = 0;
             
             for (var y = 0; y < _rows; y++)
             {
@@ -99,15 +101,20 @@ public abstract class Base : Solution
                 for (var x = 0; x < _columns; x++)
                 {
                     hashString[x] = _rocks[x, y];
+
+                    if (_rocks[x, y] == 'O')
+                    {
+                        load += _rows - y;
+                    }
                 }
 
                 hash = HashCode.Combine(hash, new string(hashString).GetHashCode());
             }
 
-            return hash;
+            return (hash, load);
         }
 
-        return 0;
+        return (0, 0);
     }
 
     private void MoveRock(int x, int y, int dX, int dY)
