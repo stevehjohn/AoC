@@ -2,6 +2,25 @@
 
 public static class ArrayExtensions
 {
+    public static char[,] To2DArray(this string[] array)
+    {
+        var twoDimensionalArray = new char[array[0].Length, array.Length];
+        
+        var y = 0;
+
+        foreach (var line in array)
+        {
+            for (var x = 0; x < line.Length; x++)
+            {
+                twoDimensionalArray[x, y] = line[x];
+            }
+
+            y++;
+        }
+
+        return twoDimensionalArray;
+    }
+
     public static IEnumerable<T[]> GetPermutations<T>(this T[] array)
     {
         return GetPermutationsInternal(array.Length, array);
