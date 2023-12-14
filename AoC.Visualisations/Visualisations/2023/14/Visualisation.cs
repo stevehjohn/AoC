@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Solutions._2023._14;
+﻿using System.Diagnostics;
+using AoC.Solutions.Solutions._2023._14;
 using AoC.Visualisations.Exceptions;
 using AoC.Visualisations.Infrastructure;
 using JetBrains.Annotations;
@@ -24,6 +25,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private int _width;
 
     private int _height;
+
+    private int _totalCycles;
 
     public Visualisation()
     {
@@ -139,7 +142,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
                     if (! UpdateMap(1, 0))
                     {
                         _cycle = 0;
+
+                        _totalCycles++;
+                        
+                        Debugger.Log(0, "INFO", $"Cycle: {_totalCycles}, Load: {GetLoad()}\n");
                     }
+                    
                     break;
             }
         }
@@ -242,5 +250,23 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 _spriteBatch.Draw(_sprites, new Vector2(x * 7, y * 7), sprite, color, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
             }
         }
+    }
+    
+    private int GetLoad()
+    {
+        var load = 0;
+        
+        for (var y = 0; y < _height; y++)
+        {
+            for (var x = 0; x < _width; x++)
+            {
+                if (_map[x, y] != null && _map[x, y].Round)
+                {
+                    load += _height - y;
+                }
+            }
+        }
+
+        return load;
     }
 }
