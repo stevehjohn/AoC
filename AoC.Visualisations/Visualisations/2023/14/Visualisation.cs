@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using AoC.Solutions.Solutions._2023._14;
+﻿using AoC.Solutions.Solutions._2023._14;
 using AoC.Visualisations.Exceptions;
 using AoC.Visualisations.Infrastructure;
 using JetBrains.Annotations;
@@ -152,13 +151,13 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         var sY = dY <= 0 ? 0 : _height - 1;
         
-        var eY = dY <= 0 ? _height : 0;
+        var eY = dY <= 0 ? _height : -1;
 
         var stepY = sY < eY ? 1 : -1;
 
         var sX = dX <= 0 ? 0 : _width - 1;
         
-        var eX = dX <= 0 ? _width : 0;
+        var eX = dX <= 0 ? _width : -1;
 
         var stepX = sX < eX ? 1 : -1;
         
