@@ -13,7 +13,7 @@ public class Part2 : Base
     {
         ParseInput();
 
-        var seenCycle = 0;
+        int seenCycle;
         
         while (true)
         {
@@ -51,10 +51,17 @@ public class Part2 : Base
     private int CheckHashState()
     {
         var hash = 0;
-        
-        foreach (var rock in Rocks)
+
+        for (var y = 0; y < Rows; y++)
         {
-            hash = HashCode.Combine(hash, rock.Point.GetHashCode());
+            var rowString = new char[Columns];
+            
+            for (var x = 0; x < Columns; x++)
+            {
+                rowString[x] = Rocks[x, y];
+            }
+
+            hash = HashCode.Combine(hash, new string(rowString).GetHashCode());
         }
 
         if (! _seen.TryAdd(hash, (_cycle, GetLoad())))
@@ -67,12 +74,12 @@ public class Part2 : Base
 
     private void PerformCycle()
     {
-        MoveRocks(l => l.OrderBy(r => r.Point.Y).ToList(), r => r.Y > 0, (rock, other) => other.X == rock.X && other.Y < rock.Y, p => p.Y = 0, (rock, other) => rock.Y = other.Y + 1);
-
-        MoveRocks(l => l.OrderBy(r => r.Point.X).ToList(), r => r.X > 0, (rock, other) => other.Y == rock.Y && other.X < rock.X, p => p.X = 0, (rock, other) => rock.X = other.X + 1);
-
-        MoveRocks(l => l.OrderByDescending(r => r.Point.Y).ToList(), r => r.Y < Rows - 1, (rock, other) => other.X == rock.X && other.Y > rock.Y, p => p.Y = Rows - 1, (rock, other) => rock.Y = other.Y - 1);
+        MoveRocks(0, -1);
         
-        MoveRocks(l => l.OrderByDescending(r => r.Point.X).ToList(),r => r.X < Columns - 1, (rock, other) => other.Y == rock.Y && other.X > rock.X, p => p.X = Columns - 1, (rock, other) => rock.X = other.X - 1);
+        MoveRocks(-1, 0);
+        
+        MoveRocks(0, 1);
+        
+        MoveRocks(1, 0);
     }
 }

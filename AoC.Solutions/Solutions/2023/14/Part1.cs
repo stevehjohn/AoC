@@ -9,7 +9,7 @@ public class Part1 : Base
     {
         ParseInput();
 
-        MoveRocks(l => l, r => r.Y > 0, (rock, other) => other.X == rock.X && other.Y < rock.Y, p => p.Y = 0, (rock, other) => rock.Y = other.Y + 1);
+        MoveRocks(0, -1);
 
         var result = GetLoad();
 
