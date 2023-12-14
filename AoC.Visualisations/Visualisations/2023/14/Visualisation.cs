@@ -82,6 +82,17 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
             var rng = new Random();
 
+            var palette = PaletteGenerator.GetPalette(26,
+                new[]
+                {
+                    new Color(46, 27, 134),
+                    new Color(119, 35, 172),
+                    new Color(176, 83, 203),
+                    new Color(255, 168, 76),
+                    new Color(254, 211, 56),
+                    new Color(254, 253, 0)
+                });
+            
             for (var x = 0; x < _width; x++)
             {
                 for (var y = 0; y < _height; y++)
@@ -91,16 +102,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                         _map[x, y] = new Rock
                         {
                             Round = state.Map[x, y] == 'O',
-                            Color = rng.Next(6) switch
-                            {
-                                0 => Color.Red,
-                                1 => Color.Green,
-                                2 => Color.Blue,
-                                3 => Color.Yellow,
-                                4 => Color.Magenta,
-                                5 => Color.Cyan,
-                                _ => Color.White
-                            }
+                            Color = palette[rng.Next(26)]
                         };
                     }
                 }
