@@ -9,9 +9,9 @@ public class Part2 : Base
     private readonly Dictionary<int, (int Cycle, int Load)> _seen = new();
 
     private int _cycle;
-    
+
     private readonly IVisualiser<PuzzleState> _visualiser;
-    
+
     public Part2()
     {
     }
@@ -20,12 +20,10 @@ public class Part2 : Base
     {
         _visualiser = visualiser;
     }
-
+    
     public override string GetAnswer()
     {
         ParseInput();
-
-        Visualise();
         
         int seenCycle;
         
@@ -84,18 +82,10 @@ public class Part2 : Base
     {
         MoveRocks(0, -1);
         
-        Visualise();
-        
         MoveRocks(-1, 0);
-        
-        Visualise();
         
         MoveRocks(0, 1);
         
-        var result = MoveRocks(1, 0);
-
-        Visualise();
-        
-        return result;
+        return MoveRocks(1, 0);
     }
 }
