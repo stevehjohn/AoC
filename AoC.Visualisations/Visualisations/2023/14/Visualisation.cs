@@ -13,16 +13,18 @@ public class Visualisation : VisualisationBase<PuzzleState>
 {
     private SpriteBatch _spriteBatch;
     
-    private readonly Queue<char[,]> _maps = new();
+    private Rock[,] _map;
     
     private PuzzleState _state;
+
+    private Texture2D _sprites;
 
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
                                  {
-                                     PreferredBackBufferWidth = 980,
-                                     PreferredBackBufferHeight = 980
+                                     PreferredBackBufferWidth = 700,
+                                     PreferredBackBufferHeight = 700
                                  };
 
         // Something funky going on with having to add \bin\Windows - investigate.
@@ -55,7 +57,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        //_mapTiles = Content.Load<Texture2D>("map-tiles");
+        _sprites = Content.Load<Texture2D>("sprites");
 
         base.LoadContent();
     }
@@ -66,16 +68,35 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             var state = GetNextState();
 
-            var map = new char[state.Map.GetLength(0), state.Map.GetLength(1)];
-            
-            Array.Copy(state.Map, 0, map, 0, state.Map.GetLength(0) * state.Map.GetLength(1));
-            
-            _maps.Enqueue(map);
+            _map = new Rock[state.Map.GetLength(0), state.Map.GetLength(1)];
 
-            if (state.PatternStart > 0)
+            var rng = new Random();
+            
+            for (var x = 0; x < state.Map.GetLength(0); x++)
             {
-                _state = state;
+                for (var y = 0; y < state.Map.GetLength(1); y++)
+                {
+                    if (state.Map[x, y] != '.')
+                    {
+                        _map[x, y] = new Rock
+                        {
+                            Round = state.Map[x, y] == 'O',
+                            Color = rng.Next(6) switch
+                            {
+                                0 => Color.Red,
+                                1 => Color.Green,
+                                2 => Color.Blue,
+                                3 => Color.Yellow,
+                                4 => Color.Magenta,
+                                5 => Color.Cyan,
+                                _ => Color.White
+                            }
+                        };
+                    }
+                }
             }
+
+            _state = state;
         }
 
         base.Update(gameTime);
@@ -89,7 +110,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
             _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
 
-            // Draw
+            DrawState();
             
             _spriteBatch.End();
         }
@@ -99,5 +120,25 @@ public class Visualisation : VisualisationBase<PuzzleState>
         }
 
         base.Draw(gameTime);
+    }
+
+    private void DrawState()
+    {
+        for (var y = 0; y < _map.GetLength(1); y++)
+        {
+            for (var x = 0; x < _map.GetLength(0); x++)
+            {
+                if (_map[x, y] == null)
+                {
+                    continue;
+                }
+
+                var sprite = _map[x, y].Round ? new Rectangle(0, 0, 7, 7) : new Rectangle(7, 0, 7, 7);
+
+                var color = _map[x, y].Round ? _map[x, y].Color : Color.FromNonPremultiplied(80, 80, 80, 255);
+                
+                _spriteBatch.Draw(_sprites, new Vector2(x * 7, y * 7), sprite, color, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
+            }
+        }
     }
 }
