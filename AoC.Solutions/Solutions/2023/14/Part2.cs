@@ -30,13 +30,20 @@ public class Part2 : Base
         }
 
         var remainingCycles = (1_000_000_000 - seenCycle) % (_cycle - seenCycle);
+
+        var hashCycle = seenCycle;
         
         for (var i = 0; i < remainingCycles; i++)
         {
-            PerformCycle();
+            hashCycle++;
+
+            if (hashCycle > _seen.Count)
+            {
+                hashCycle = seenCycle;
+            }
         }
 
-        var result = GetLoad();
+        var result = _seen.Single(s => s.Value.Cycle == hashCycle).Value.Load;
 
         return result.ToString();
     }
