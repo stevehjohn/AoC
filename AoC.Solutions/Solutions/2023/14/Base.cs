@@ -1,3 +1,4 @@
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2023._14;
@@ -196,18 +197,6 @@ public abstract class Base : Solution
 
         _columns = Input[0].Length;
         
-        _rocks = new char[Input[0].Length, Input.Length];
-
-        var y = 0;
-
-        foreach (var line in Input)
-        {
-            for (var x = 0; x < line.Length; x++)
-            {
-                _rocks[x, y] = line[x];
-            }
-
-            y++;
-        }
+        _rocks = Input.To2DArray();
     }
 }
