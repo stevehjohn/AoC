@@ -19,8 +19,6 @@ public class Part2 : Base
         {
             PerformCycle();
             
-            break;
-            
             _cycle++;
 
             seenCycle = CheckHashState();
@@ -30,8 +28,6 @@ public class Part2 : Base
                 break;
             }
         }
-
-        return "0";
 
         var remainingCycles = (1_000_000_000 - seenCycle) % (_cycle - seenCycle);
 
