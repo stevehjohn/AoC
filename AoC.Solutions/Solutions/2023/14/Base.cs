@@ -4,5 +4,5 @@ namespace AoC.Solutions.Solutions._2023._14;
 
 public abstract class Base : Solution
 {
-    public override string Description => "";
+    public override string Description => "Parabolic reflector dish";
 }
