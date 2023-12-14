@@ -87,18 +87,6 @@ public abstract class Base : Solution
                 }
             }
         }
-
-        for (var y = 0; y < Rows; y++)
-        {
-            for (var x = 0; x < Columns; x++)
-            {
-                Console.Write(Rocks[x, y]);
-            }
-            
-            Console.WriteLine();
-        }
-        
-        Console.WriteLine();
     }
 
     private void MoveRock(int x, int y, int dX, int dY)
@@ -114,7 +102,8 @@ public abstract class Base : Solution
 
             if (oY != y)
             {
-                (Rocks[x, y], Rocks[x, oY]) = (Rocks[x, oY], Rocks[x, y]);
+                Rocks[x, y] = 'O';
+                Rocks[x, oY] = '.';
             }
         }
         
@@ -127,9 +116,10 @@ public abstract class Base : Solution
                 x--;
             }
 
-            if (oX != y)
+            if (oX != x)
             {
-                (Rocks[x, y], Rocks[oX, y]) = (Rocks[oX, y], Rocks[x, y]);
+                Rocks[x, y] = 'O';
+                Rocks[oX, y] = '.';
             }
         }
         
@@ -144,7 +134,8 @@ public abstract class Base : Solution
 
             if (oY != y)
             {
-                (Rocks[x, y], Rocks[x, oY]) = (Rocks[x, oY], Rocks[x, y]);
+                Rocks[x, y] = 'O';
+                Rocks[x, oY] = '.';
             }
         }
         
@@ -157,9 +148,10 @@ public abstract class Base : Solution
                 x++;
             }
 
-            if (oX != y)
+            if (oX != x)
             {
-                (Rocks[x, y], Rocks[oX, y]) = (Rocks[oX, y], Rocks[x, y]);
+                Rocks[x, y] = 'O';
+                Rocks[oX, y] = '.';
             }
         }
     }
