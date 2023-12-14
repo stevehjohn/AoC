@@ -28,9 +28,16 @@ public abstract class Base : Solution
         return load;
     }
 
-    protected void MoveRocks(Func<Point, bool> shouldMove, Func<Point, Point, bool> getBlocking, Action<Point> open, Action<Point, Point> blocked)
+    protected void MoveRocks(
+        Func<List<(Point Point, bool Round)>, List<(Point Point, bool Round)>> sort, 
+        Func<Point, bool> shouldMove, 
+        Func<Point, Point, bool> getBlocking, 
+        Action<Point> open, 
+        Action<Point, Point> blocked)
     {
-        foreach (var rock in _rocks)
+        var rocks = sort(_rocks);
+        
+        foreach (var rock in rocks)
         {
             if (! rock.Round)
             {
@@ -39,7 +46,7 @@ public abstract class Base : Solution
 
             if (shouldMove(rock.Point))
             {
-                var blocking = _rocks.LastOrDefault(r => getBlocking(rock.Point, r.Point));
+                var blocking = rocks.LastOrDefault(r => getBlocking(rock.Point, r.Point));
 
                 if (blocking.Point == null)
                 {
@@ -51,6 +58,8 @@ public abstract class Base : Solution
                 }
             }
         }
+
+        _rocks = rocks;
 
         for (var y = 0; y < Input.Length; y++)
         {
@@ -68,6 +77,8 @@ public abstract class Base : Solution
             
             Console.WriteLine();
         }
+        
+        Console.WriteLine();
     }
 
     protected void ParseInput()
