@@ -1,4 +1,3 @@
-using AoC.Solutions.Infrastructure;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2023._14;
@@ -9,23 +8,10 @@ public class Part2 : Base
     private readonly Dictionary<int, (int Cycle, int Load)> _seen = new();
 
     private int _cycle;
-    
-    private readonly IVisualiser<PuzzleState> _visualiser;
-    
-    public Part2()
-    {
-    }
-
-    public Part2(IVisualiser<PuzzleState> visualiser)
-    {
-        _visualiser = visualiser;
-    }
 
     public override string GetAnswer()
     {
         ParseInput();
-
-        Visualise();
         
         int seenCycle;
         
@@ -60,14 +46,6 @@ public class Part2 : Base
         return _seen.Single(s => s.Value.Cycle == hashCycle).Value.Load.ToString();
     }
 
-    private void Visualise()
-    {
-        if (_visualiser != null)
-        {
-            _visualiser.PuzzleStateChanged(new PuzzleState { Map = Rocks});
-        }
-    }
-
     private int CheckHashState(int hash, int load)
     {
         if (! _seen.TryAdd(hash, (_cycle, load)))
@@ -82,18 +60,10 @@ public class Part2 : Base
     {
         MoveRocks(0, -1);
         
-        Visualise();
-        
         MoveRocks(-1, 0);
-        
-        Visualise();
         
         MoveRocks(0, 1);
         
-        var result = MoveRocks(1, 0);
-
-        Visualise();
-        
-        return result;
+        return MoveRocks(1, 0);
     }
 }
