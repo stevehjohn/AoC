@@ -56,15 +56,17 @@ public class Part2 : Base
                 hashCycle = seenCycle;
             }
         }
+        
+        Visualise(seenCycle, hashCycle);
 
         return _seen.Single(s => s.Value.Cycle == hashCycle).Value.Load.ToString();
     }
 
-    private void Visualise()
+    private void Visualise(int patternStart = 0, int patternEnd = 0)
     {
         if (_visualiser != null)
         {
-            _visualiser.PuzzleStateChanged(new PuzzleState { Map = Rocks});
+            _visualiser.PuzzleStateChanged(new PuzzleState { Map = Rocks, PatternStart = patternStart, PatternEnd = patternEnd });
         }
     }
 
