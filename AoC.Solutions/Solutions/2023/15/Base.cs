@@ -14,9 +14,9 @@ public abstract class Base : Solution
         {
             hash += (byte) c;
 
-            hash *= 17;
+            hash = (hash << 4) + hash;
 
-            hash %= 256;
+            hash &= 255;
         }
 
         return hash;
