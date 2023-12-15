@@ -38,7 +38,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
                                     PreferredBackBufferHeight = ScreenHeight
                                 };
 
-        // Something funky going on with having to add \bin\Windows - investigate.
         Content.RootDirectory = "./14";
     }
 
