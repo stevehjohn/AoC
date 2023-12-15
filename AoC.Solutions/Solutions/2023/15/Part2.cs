@@ -20,12 +20,79 @@ public class Part2 : Base
         foreach (var step in steps)
         {
             var task = ParseStep(step);
+
+            PerformStep(boxes, task);
+        }
+
+        var power = 0;
+        
+        for (var i = 0; i < 256; i++)
+        {
+            if (boxes[i].Count > 0)
+            {
+                power += GetBoxPower(i + 1, boxes[i]);
+            }
         }
         
-        return "Unknown";
+        return power.ToString();
     }
 
-    private (string Label, int FocalLength) ParseStep(string step)
+    private static int GetBoxPower(int boxNumber, List<(string Label, int Lense)> box)
+    {
+        var power = 0;
+        
+        for (var i = 0; i < box.Count; i++)
+        {
+            power += boxNumber * (i + 1) * box[i].Lense;
+        }
+
+        return power;
+    }
+
+    private static void PerformStep(List<(string Label, int Lense)>[] boxes, (string Label, int FocalLength) task)
+    {
+        var boxNumber = Hash(task.Label);
+
+        var box = boxes[boxNumber];
+            
+        if (task.FocalLength == 0)
+        {
+            for (var i = 0; i < box.Count; i++)
+            {
+                if (box[i].Label == task.Label)
+                {
+                    box.RemoveAt(i);
+                        
+                    break;
+                }
+            }
+
+            return;
+        }
+
+        var lensIndex = -1;
+            
+        for (var i = 0; i < box.Count; i++)
+        {
+            if (box[i].Label == task.Label)
+            {
+                lensIndex = i;
+                    
+                break;
+            }
+        }
+
+        if (lensIndex == -1)
+        {
+            box.Add(task);
+                
+            return;
+        }
+
+        box[lensIndex] = task;
+    }
+
+    private static (string Label, int FocalLength) ParseStep(string step)
     {
         var label = new StringBuilder();
 
