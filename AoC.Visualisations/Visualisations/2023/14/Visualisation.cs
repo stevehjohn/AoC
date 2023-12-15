@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using AoC.Solutions.Solutions._2023._14;
+﻿using AoC.Solutions.Solutions._2023._14;
 using AoC.Visualisations.Exceptions;
 using AoC.Visualisations.Infrastructure;
 using JetBrains.Annotations;
@@ -122,6 +121,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
             if (_totalCycles == 1_000_000_000)
             {
                 Console.WriteLine($"\nAnswer: {GetLoad()}\n\n");
+
+                _totalCycles++;
+
+                _cycle = 4;
+                
                 base.Update(gameTime);
                 
                 return;
@@ -159,7 +163,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                         var hash = GetHash();
 
-                        Console.Write($"Cycle: {_totalCycles,13:N0}, Load: {GetLoad(),7:N0}, Hash: {hash:X8}\n");
+                        Console.Write($"Cycle: {_totalCycles,13:N0}    Load: {GetLoad(),7:N0}    Hash: {hash:X8}\n");
 
                         if (! _hashes.TryAdd(hash, _totalCycles) && ! _solved)
                         {
@@ -170,8 +174,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
                             Console.WriteLine("\nDéjà vu.");
 
                             Console.WriteLine($"Hash seen before on cycle {seenCycle:N0}");
+
+                            var cycleLength = _totalCycles - seenCycle;
                             
-                            var remainingCycles = (1_000_000_000 - seenCycle) % (_cycle - seenCycle);
+                            Console.WriteLine($"Cycle length is: {cycleLength}");
+
+                            var remainingCycles = (1_000_000_000 - _totalCycles) % cycleLength;
 
                             var skip = 1_000_000_000 - _totalCycles - remainingCycles;
                             
