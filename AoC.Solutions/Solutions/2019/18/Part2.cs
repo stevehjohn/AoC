@@ -38,36 +38,6 @@ public class Part2 : Base
 
         var result = solver.Solve();
 
-#if DEBUG && DUMP
-        var pathToVisualise = result.Path.Where(c => ! char.IsUpper(c)).ToArray();
-
-        var quadrantPositions = new Dictionary<int, char>
-                                {
-                                    { 1, '1' },
-                                    { 2, '2' },
-                                    { 3, '3' },
-                                    { 4, '4' }
-                                };
-
-        var quadrant = GetQuadrant(pathToVisualise[1]);
-
-        for (var i = 0; i < pathToVisualise.Length - 1; i++)
-        {
-            if (char.IsNumber(pathToVisualise[i + 1]))
-            {
-                quadrant = pathToVisualise[i + 1] - '0';
-
-                continue;
-            }
-
-            var subPath = $"{(char.IsNumber(pathToVisualise[i]) ? quadrantPositions[quadrant] : pathToVisualise[i])}{pathToVisualise[i + 1]}";
-
-            Visualiser.ShowSolution(subPath, Paths, ItemLocations, true);
-
-            quadrantPositions[quadrant] = pathToVisualise[i + 1];
-        }
-#endif
-
         return result.Steps;
     }
 
