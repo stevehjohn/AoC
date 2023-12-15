@@ -1,3 +1,5 @@
+using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2023._14;
@@ -9,6 +11,17 @@ public class Part2 : Base
 
     private int _cycle;
 
+    private readonly IVisualiser<PuzzleState> _visualiser;
+
+    public Part2()
+    {
+    }
+
+    public Part2(IVisualiser<PuzzleState> visualiser)
+    {
+        _visualiser = visualiser;
+    }
+    
     public override string GetAnswer()
     {
         ParseInput();
@@ -42,8 +55,18 @@ public class Part2 : Base
                 hashCycle = seenCycle;
             }
         }
+        
+        Visualise(seenCycle, hashCycle);
 
         return _seen.Single(s => s.Value.Cycle == hashCycle).Value.Load.ToString();
+    }
+
+    private void Visualise(int patternStart = 0, int patternEnd = 0)
+    {
+        if (_visualiser != null)
+        {
+            _visualiser.PuzzleStateChanged(new PuzzleState { Map = Input.To2DArray(), PatternStart = patternStart, PatternEnd = patternEnd });
+        }
     }
 
     private int CheckHashState(int hash, int load)
