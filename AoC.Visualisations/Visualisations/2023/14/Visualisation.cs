@@ -98,6 +98,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
                     new Color(254, 211, 56),
                     new Color(254, 253, 0)
                 });
+
+            var i = 0;
             
             for (var x = 0; x < _width; x++)
             {
@@ -105,10 +107,15 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 {
                     if (state.Map[x, y] != '.')
                     {
+                        if (state.Map[x, y] == 'O')
+                        {
+                            i++;
+                        }
+
                         _map[x, y] = new Rock
                         {
                             Round = state.Map[x, y] == 'O',
-                            Color = palette[rng.Next(26)]
+                            Color = i == 150 ? Color.Red : palette[rng.Next(26)]
                         };
                     }
                 }
