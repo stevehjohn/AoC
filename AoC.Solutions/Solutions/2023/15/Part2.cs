@@ -97,8 +97,8 @@ public class Part2 : Base
         var label = new StringBuilder();
 
         int i;
-
-        char c = '\0';
+        
+        var c = '\0';
         
         for (i = 0; i < step.Length; i++)
         {
