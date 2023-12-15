@@ -29,7 +29,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private bool _solved;
     
-    private Dictionary<int, int> _hashes = new();
+    private readonly Dictionary<int, int> _hashes = new();
     
     public Visualisation()
     {
