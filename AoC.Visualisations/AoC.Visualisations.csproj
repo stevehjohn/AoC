@@ -37,6 +37,7 @@
     <ItemGroup>
       <DesignData Include="_Content\2018\13\Content.mgcb" />
       <DesignData Include="_Content\2018\17\Content.mgcb" />
+      <DesignData Include="_Content\2019\18\obj\Content.mgcb" />
       <DesignData Include="_Content\2020\20\Content.mgcb" />
       <DesignData Include="_Content\2022\12\Content.mgcb" />
       <DesignData Include="_Content\2022\14\Content.mgcb" />
@@ -45,6 +46,9 @@
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\AoC.Solutions\AoC.Solutions.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Visualisations\2019\" />
     </ItemGroup>
     <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
         <Message Text="Restoring dotnet tools" Importance="High" />
