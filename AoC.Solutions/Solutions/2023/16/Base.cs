@@ -15,6 +15,25 @@ public abstract class Base : Solution
 
     protected int Height;
 
+    private readonly IVisualiser<PuzzleState> _visualiser;
+
+    protected Base()
+    {
+    }
+
+    protected Base(IVisualiser<PuzzleState> visualiser)
+    {
+        _visualiser = visualiser;
+    }
+
+    protected void Visualise()
+    {
+        if (_visualiser != null)
+        {
+            _visualiser.PuzzleStateChanged(new PuzzleState { Map = Map });
+        }
+    }
+
     protected int CountEnergised()
     {
         var count = 0;
