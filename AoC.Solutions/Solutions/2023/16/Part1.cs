@@ -20,7 +20,22 @@ public class Part1 : Base
 
         SimulateBeams();
         
-        return "0";
+        return CountEnergised().ToString();
+    }
+
+    private int CountEnergised()
+    {
+        var count = 0;
+        
+        for (var y = 0; y < _height; y++)
+        {
+            for (var x = 0; x < _width; x++)
+            {
+                count += _energised[x, y] ? 1 : 0;
+            }
+        }
+
+        return count;
     }
 
     private void Dump(int x, int y)
@@ -55,16 +70,21 @@ public class Part1 : Base
     private void SimulateBeams()
     {
         var beams = new Stack<(int X, int Y, char Direction)>();
+
+        var visited = new HashSet<(int, int, char)>();
         
-        beams.Push((0, 0, 'E'));
+        beams.Push((-1, 0, 'E'));
 
         while (beams.Count > 0)
         {
             var beam = beams.Pop();
 
-            _energised[beam.X, beam.Y] = true;
+            if (! visited.Add(beam))
+            {
+                continue;
+            }
 
-            Dump(beam.X, beam.Y);
+            // Dump(beam.X, beam.Y);
 
             var (x, y) = MoveBeam(beam.X, beam.Y, beam.Direction);
 
@@ -72,6 +92,8 @@ public class Part1 : Base
             {
                 continue;
             }
+
+            _energised[x, y] = true;
 
             switch (_map[x, y])
             {
