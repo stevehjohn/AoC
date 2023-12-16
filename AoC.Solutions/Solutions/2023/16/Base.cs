@@ -42,7 +42,7 @@ public abstract class Base : Solution
 
             if (beam != null)
             {
-                _puzzleState.Beams.Add(beam.Value);
+                _puzzleState.NewBeam = beam.Value;
             }
 
             _visualiser.PuzzleStateChanged(_puzzleState);
