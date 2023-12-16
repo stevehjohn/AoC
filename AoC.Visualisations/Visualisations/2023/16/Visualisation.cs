@@ -19,6 +19,17 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private readonly Dictionary<int, List<(int X, int Y, char Direction)>> _beams = new();
     
+    private readonly Color[] _colors = 
+    {
+        Color.Blue,
+        Color.Red,
+        Color.Magenta,
+        Color.Green,
+        Color.Cyan,
+        Color.Yellow,
+        Color.White
+    };
+
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -105,6 +116,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         var map = _state.Map;
 
+        /*
+         * Have lasers appear over splitters, but under mirrors?
+         */
+        
         for (var y = 0; y < map.GetLength(1); y++)
         {
             for (var x = 0; x < map.GetLength(0); x++)
