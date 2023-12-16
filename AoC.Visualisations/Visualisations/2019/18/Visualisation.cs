@@ -217,6 +217,26 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
             _willys[_activeWilly].MapX = move.X;
             _willys[_activeWilly].MapY = move.Y;
+
+            var cell = _state.Map[move.X, move.Y];
+            
+            if (char.IsLower(cell))
+            {
+                _state.Map[move.X, move.Y] = '.';
+                
+                cell = char.ToUpper(cell);
+                
+                for (var y = 0; y < _state.Map.GetLength(1); y++)
+                {
+                    for (var x = 0; x < _state.Map.GetLength(0); x++)
+                    {
+                        if (_state.Map[x, y] == cell)
+                        {
+                            _state.Map[x, y] = '.';
+                        }
+                    }
+                }
+            }
         }
     }
 
