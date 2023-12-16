@@ -28,7 +28,7 @@ public abstract class Base : Solution
         _visualiser = visualiser;
     }
 
-    protected void Visualise((int X, int Y, char Direction, int Id)? beam = null, bool finished = false)
+    protected void Visualise((int X, int Y, char Direction, int Id, int SourceId)? beam = null, bool finished = false)
     {
         if (_visualiser != null)
         {
@@ -71,13 +71,13 @@ public abstract class Base : Solution
 
     protected void SimulateBeams(int startX, int startY, char direction)
     {
-        var beams = new Stack<(int X, int Y, char Direction, int Id)>();
+        var beams = new Stack<(int X, int Y, char Direction, int Id, int SourceId)>();
 
         _energised = new bool[Width, Height];
 
         var visited = new HashSet<(int, int, char)>();
         
-        beams.Push((startX, startY, direction, 1));
+        beams.Push((startX, startY, direction, 1, 0));
 
         var beamId = 1;
         
@@ -104,7 +104,7 @@ public abstract class Base : Solution
             switch (_map[x, y])
             {
                 case '.':
-                    beams.Push((x, y, beam.Direction, beam.Id));
+                    beams.Push((x, y, beam.Direction, beam.Id, beam.SourceId));
                     
                     continue;
                 
@@ -115,7 +115,7 @@ public abstract class Base : Solution
                         'E' => 'S',
                         'S' => 'E',
                         _ => 'N'
-                    }, beam.Id));
+                    }, beam.Id, beam.SourceId));
                     
                     continue;
                 
@@ -126,33 +126,33 @@ public abstract class Base : Solution
                         'E' => 'N',
                         'S' => 'W',
                         _ => 'S'
-                    }, beam.Id));
+                    }, beam.Id, beam.SourceId));
                     
                     continue;
                 
                 case '|':
                     if (beam.Direction is 'N' or 'S')
                     {
-                        beams.Push((x, y, beam.Direction, beam.Id));
+                        beams.Push((x, y, beam.Direction, beam.Id, beam.SourceId));
                         
                         continue;
                     }
                     
-                    beams.Push((x, y, 'N', ++beamId));
-                    beams.Push((x, y, 'S', ++beamId));
+                    beams.Push((x, y, 'N', ++beamId, beam.Id));
+                    beams.Push((x, y, 'S', ++beamId, beam.Id));
 
                     continue;
                 
                 case '-':
                     if (beam.Direction is 'E' or 'W')
                     {
-                        beams.Push((x, y, beam.Direction, beam.Id));
+                        beams.Push((x, y, beam.Direction, beam.Id, beam.SourceId));
                         
                         continue;
                     }
                     
-                    beams.Push((x, y, 'E', ++beamId));
-                    beams.Push((x, y, 'W', ++beamId));
+                    beams.Push((x, y, 'E', ++beamId, beam.Id));
+                    beams.Push((x, y, 'W', ++beamId, beam.Id));
 
                     continue;
             }
