@@ -6,7 +6,7 @@ namespace AoC.Solutions.Solutions._2019._18;
 [UsedImplicitly]
 public class Part2 : Base
 {
-    private IVisualiser<PuzzleState> _visualiser;
+    private readonly IVisualiser<PuzzleState> _visualiser;
 
     public Part2()
     {
@@ -25,11 +25,21 @@ public class Part2 : Base
 
         FindItemLocations();
 
+        Visualise();
+        
         InterrogateMap();
 
         var result = FindShortestPath();
 
         return result.ToString();
+    }
+
+    private void Visualise()
+    {
+        if (_visualiser != null)
+        {
+            _visualiser.PuzzleStateChanged(new PuzzleState { Map = Map });
+        }
     }
 
     private int FindShortestPath()
