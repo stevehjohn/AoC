@@ -17,7 +17,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private PuzzleState _state;
 
-    private readonly Dictionary<int, List<(int X, int Y, char Direction)>> _beams = new();
+    private readonly Dictionary<int, List<(int X, int Y, char Direction, Color Color)>> _beams = new();
     
     private readonly Color[] _colors = 
     {
@@ -82,16 +82,32 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             _state = GetNextState();
 
+            var beamColor = 0;
+
+            var beamColours = new Dictionary<int, Color>();
+            
             if (_state.Beams != null)
             {
                 foreach (var beam in _state.Beams)
                 {
                     if (! _beams.ContainsKey(beam.Id))
                     { 
-                        _beams.Add(beam.Id, new List<(int X, int Y, char Direction)>());
+                        _beams.Add(beam.Id, new List<(int X, int Y, char Direction, Color Color)>());
                     }
-                    
-                    _beams[beam.Id].Add((beam.X, beam.Y, beam.Direction));
+
+                    if (! beamColours.ContainsKey(beam.SourceId))
+                    {
+                        beamColours.Add(beam.SourceId, _colors[beamColor]);
+
+                        beamColor++;
+
+                        if (beamColor == _colors.Length)
+                        {
+                            beamColor = 0;
+                        }
+                    }
+
+                    _beams[beam.Id].Add((beam.X, beam.Y, beam.Direction, beamColours[beam.SourceId]));
                 }
             }
         }
