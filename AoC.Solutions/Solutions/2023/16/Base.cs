@@ -30,35 +30,6 @@ public abstract class Base : Solution
         return count;
     }
 
-    private void Dump(int x, int y)
-    {
-        for (var yy = 0; yy < Height; yy++)
-        {
-            for (var xx = 0; xx < Width; xx++)
-            {
-                if (xx == x && yy == y)
-                {
-                    Console.Write('O');
-                    continue;
-                }
-
-                if (_energised[xx, yy])
-                {
-                    Console.Write('#');
-                }
-                else
-                {
-                    Console.Write(_map[xx, yy]);
-                }
-            }
-                
-            Console.WriteLine();
-        }
-            
-        Console.WriteLine();
-        Console.ReadKey();
-    }
-
     protected void SimulateBeams(int startX, int startY, char direction)
     {
         var beams = new Stack<(int X, int Y, char Direction)>();
@@ -77,8 +48,6 @@ public abstract class Base : Solution
             {
                 continue;
             }
-
-            // Dump(beam.X, beam.Y);
 
             var (x, y) = MoveBeam(beam.X, beam.Y, beam.Direction);
 
