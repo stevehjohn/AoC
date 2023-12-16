@@ -48,6 +48,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private int _activeWilly;
 
+    private int _pause;
+
     private readonly Queue<AoC.Solutions.Common.Point> _path = new();
     
     public Visualisation()
@@ -212,6 +214,13 @@ public class Visualisation : VisualisationBase<PuzzleState>
     
     private void Move()
     {
+        if (_pause > 0)
+        {
+            _pause--;
+            
+            return;
+        }
+
         if (_path.Count == 0)
         {
             _pathIndex++;
@@ -294,18 +303,19 @@ public class Visualisation : VisualisationBase<PuzzleState>
                         {
                             _state.Map[x, y] = '.';
 
-                            for (var i = 0; i < 20; i++)
+                            for (var i = 0; i < 100; i++)
                             {
                                 _sparks.Add(new Spark
                                 {
-                                    Position = new PointFloat { X = x * 8, Y = y * 8 },
-                                    Vector = new PointFloat
-                                        { X = (-5f + _rng.Next(11)) / 10, Y = (-10f + _rng.Next(21)) / 10 },
-                                    Ticks = 20,
-                                    StartTicks = 20
+                                    Position = new PointFloat { X = x * 8 + 4, Y = y * 8 + 4},
+                                    Vector = new PointFloat { X = (-10f + _rng.Next(21)) / 10, Y = -_rng.Next(41) / 10f },
+                                    Ticks = 1000,
+                                    StartTicks = 1000
                                 });
                             }
                         }
+
+                        _pause = 50;
                     }
                 }
             }
