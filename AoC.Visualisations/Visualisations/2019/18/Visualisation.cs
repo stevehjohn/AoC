@@ -182,8 +182,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
             string key;
 
-            var reverse = false;
-
             if (_willys[_activeWilly].Cell == '\0')
             {
                 key = $"{_state.Path[_pathIndex - 1]}{_state.Path[_pathIndex]}";
@@ -191,8 +189,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 if (! _state.Paths.ContainsKey(key))
                 {
                     key = $"{_state.Path[_pathIndex]}{_state.Path[_pathIndex - 1]}";
-
-                    reverse = true;
                 }
             }
             else
@@ -202,14 +198,14 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 if (! _state.Paths.ContainsKey(key))
                 {
                     key = $"{_state.Path[_pathIndex]}{_willys[_activeWilly].Cell}";
-
-                    reverse = true;
                 }
             }
 
+            Console.WriteLine(key);
+            
             var path = _state.Paths[key];
             
-            if (reverse)
+            if (path[0].X != _willys[_activeWilly].MapX || path[0].Y != _willys[_activeWilly].MapY)
             {
                 path.Reverse();
             }
@@ -230,7 +226,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
             _willys[_activeWilly].MapY = move.Y;
 
             var cell = _state.Map[move.X, move.Y];
-            
+
+            if (char.IsUpper(cell))
+            {
+                _willys[_activeWilly].Cell = cell;
+            }
+
             if (char.IsLower(cell))
             {
                 _willys[_activeWilly].Cell = cell;
