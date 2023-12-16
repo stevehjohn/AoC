@@ -25,8 +25,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
                                  {
-                                     PreferredBackBufferWidth = 784,
-                                     PreferredBackBufferHeight = 784
+                                     PreferredBackBufferWidth = 812,
+                                     PreferredBackBufferHeight = 812
                                  };
 
         Content.RootDirectory = "./16";
@@ -114,17 +114,19 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 switch (map[x, y])
                 {
                     case '\\':
+                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(14, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
                         break;
                     
                     case '/':
+                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(21, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
                         break;
                     
                     case '|':
-                        _spriteBatch.Draw(_tiles, new Vector2(8 + x * 7, 8 + y * 7), new Rectangle(8, 0, 8, 8), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(7, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
                         break;
                     
                     case '-':
-                        _spriteBatch.Draw(_tiles, new Vector2(8 + x * 7, 8 + y * 7), new Rectangle(0, 0, 8, 8), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(0, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
                         break;
                 }
             }
