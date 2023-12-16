@@ -4,5 +4,5 @@ public class PuzzleState
 {
     public char[,] Map { get; set; }
     
-    public (int X, int Y, char Direction, int Id) NewBeam { get; set; }
+    public (int X, int Y, char Direction, int Id)? NewBeam { get; set; }
 }
