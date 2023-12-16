@@ -23,12 +23,18 @@ public class Part1 : Base
         return "0";
     }
 
-    private void Dump()
+    private void Dump(int x, int y)
     {
         for (var yy = 0; yy < _height; yy++)
         {
             for (var xx = 0; xx < _width; xx++)
             {
+                if (xx == x && yy == y)
+                {
+                    Console.Write('O');
+                    continue;
+                }
+
                 if (_energised[xx, yy])
                 {
                     Console.Write('#');
@@ -43,22 +49,22 @@ public class Part1 : Base
         }
             
         Console.WriteLine();
-        // Console.ReadKey();
+        Console.ReadKey();
     }
 
     private void SimulateBeams()
     {
-        var beams = new Queue<(int X, int Y, char Direction, int StartX, int StartY)>();
+        var beams = new Stack<(int X, int Y, char Direction)>();
         
-        beams.Enqueue((0, 0, 'E', -1, 0));
+        beams.Push((0, 0, 'E'));
 
         while (beams.Count > 0)
         {
-            var beam = beams.Dequeue();
+            var beam = beams.Pop();
 
             _energised[beam.X, beam.Y] = true;
 
-            Dump();
+            Dump(beam.X, beam.Y);
 
             var (x, y) = MoveBeam(beam.X, beam.Y, beam.Direction);
 
@@ -66,64 +72,59 @@ public class Part1 : Base
             {
                 continue;
             }
-            
-            if (x == beam.StartX && y == beam.StartY)
-            {
-                continue;
-            }
 
             switch (_map[x, y])
             {
                 case '.':
-                    beams.Enqueue((x, y, beam.Direction, beam.StartX, beam.StartY));
+                    beams.Push((x, y, beam.Direction));
                     
                     continue;
                 
                 case '\\':
-                    beams.Enqueue((x, y, beam.Direction switch
+                    beams.Push((x, y, beam.Direction switch
                     {
                         'N' => 'W',
                         'E' => 'S',
                         'S' => 'E',
                         _ => 'N'
-                    }, beam.StartX, beam.StartY));
+                    }));
                     
                     continue;
                 
                 case '/':
-                    beams.Enqueue((x, y, beam.Direction switch
+                    beams.Push((x, y, beam.Direction switch
                     {
                         'N' => 'E',
                         'E' => 'N',
                         'S' => 'W',
                         _ => 'S'
-                    }, beam.StartX, beam.StartY));
+                    }));
                     
                     continue;
                 
                 case '|':
                     if (beam.Direction is 'N' or 'S')
                     {
-                        beams.Enqueue((x, y, beam.Direction, beam.StartX, beam.StartY));
+                        beams.Push((x, y, beam.Direction));
                         
                         continue;
                     }
                     
-                    beams.Enqueue((x, y, 'N', x, y));
-                    beams.Enqueue((x, y, 'S', x, y));
+                    beams.Push((x, y, 'N'));
+                    beams.Push((x, y, 'S'));
 
                     continue;
                 
                 case '-':
                     if (beam.Direction is 'E' or 'W')
                     {
-                        beams.Enqueue((x, y, beam.Direction, beam.StartX, beam.StartY));
+                        beams.Push((x, y, beam.Direction));
                         
                         continue;
                     }
                     
-                    beams.Enqueue((x, y, 'E', x, y));
-                    beams.Enqueue((x, y, 'W', x, y));
+                    beams.Push((x, y, 'E'));
+                    beams.Push((x, y, 'W'));
 
                     continue;
             }
