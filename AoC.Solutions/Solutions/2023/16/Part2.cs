@@ -6,7 +6,7 @@ namespace AoC.Solutions.Solutions._2023._16;
 [UsedImplicitly]
 public class Part2 : Base
 {
-    private IVisualiser<PuzzleState> _visualiser;
+    private readonly IVisualiser<PuzzleState> _visualiser;
 
     public Part2()
     {
