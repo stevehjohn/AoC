@@ -21,6 +21,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private PuzzleState _state;
 
+    private Texture2D _spark;
+
+    private readonly List<Spark> _sparks = new();
+
+    private readonly Random _rng = new();
+
     private readonly Color[] _colors = 
     {
         Color.Blue,
@@ -115,6 +121,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         _sprites = Content.Load<Texture2D>("willy");
 
+        _spark = Content.Load<Texture2D>("spark");
+
         base.LoadContent();
     }
 
@@ -141,6 +149,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 }
             }
         }
+        
+        UpdateSparks();
 
         base.Update(gameTime);
     }
@@ -157,11 +167,49 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         DrawWillys();
         
+        DrawSparks();
+        
         _spriteBatch.End();
 
         base.Draw(gameTime);
     }
+    
+    private void DrawSparks()
+    {
+        foreach (var spark in _sparks)
+        {
+            _spriteBatch.Draw(_spark, new Vector2(spark.Position.X, spark.Position.Y), new Rectangle(spark.SpriteOffset, 0, 5, 5), Color.White * ((float) spark.Ticks / spark.StartTicks), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
+        }
+    }
 
+    private void UpdateSparks()
+    {
+        var toRemove = new List<Spark>();
+
+        foreach (var spark in _sparks)
+        {
+            spark.Ticks--;
+
+            if (spark.Ticks < 0)
+            {
+                toRemove.Add(spark);
+
+                continue;
+            }
+
+            spark.Position.X += spark.Vector.X;
+
+            spark.Position.Y += spark.Vector.Y;
+
+            spark.Vector.Y += spark.YGravity;
+        }
+
+        foreach (var spark in toRemove)
+        {
+            _sparks.Remove(spark);
+        }
+    }
+    
     private void Move()
     {
         if (_path.Count == 0)
@@ -245,6 +293,18 @@ public class Visualisation : VisualisationBase<PuzzleState>
                         if (_state.Map[x, y] == cell)
                         {
                             _state.Map[x, y] = '.';
+
+                            for (var i = 0; i < 20; i++)
+                            {
+                                _sparks.Add(new Spark
+                                {
+                                    Position = new PointFloat { X = x * 8, Y = y * 8 },
+                                    Vector = new PointFloat
+                                        { X = (-5f + _rng.Next(11)) / 10, Y = (-10f + _rng.Next(21)) / 10 },
+                                    Ticks = 20,
+                                    StartTicks = 20
+                                });
+                            }
                         }
                     }
                 }
