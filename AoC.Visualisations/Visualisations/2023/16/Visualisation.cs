@@ -20,8 +20,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private readonly Dictionary<int, List<(int X, int Y, char Direction, Color Color)>> _beams = new();
 
     private long _frame;
-
-    private long _tick;
     
     private Color[] _palette;
     
@@ -145,12 +143,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             return;
         }
 
-        _tick++;
-
-        //if (_tick % 50 == 0)
-        {
-            _frame++;
-        }
+        _frame++;
 
         var localFrame = 0;
 
