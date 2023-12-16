@@ -15,7 +15,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     
     private Texture2D _sprites;
 
-    private char[,] _map;
+    private PuzzleState _state;
 
     private readonly List<(int X, int Y, char Direction, int Id)> _beams = new();
     
@@ -36,6 +36,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         switch (part)
         {
+            case 1:
+                Puzzle = new Part1(this);
+
+                break;
             case 2:
                 Puzzle = new Part2(this);
 
@@ -65,18 +69,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         if (HasNextState)
         {
-            var state = GetNextState();
-            
-            if (_map == null)
-            {
-                _map = state.Map;
-            }
-
-            if (state.NewBeam != null)
-            {
-                _beams.Add(state.NewBeam.Value);
-            }
+            _state = GetNextState();
         }
+
+        Console.WriteLine(_beams.Count);
 
         base.Update(gameTime);
     }
