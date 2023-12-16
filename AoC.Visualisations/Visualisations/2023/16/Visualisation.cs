@@ -17,8 +17,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private PuzzleState _state;
 
-    private readonly List<(int X, int Y, char Direction, int Id)> _beams = new();
-    
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -71,8 +69,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             _state = GetNextState();
         }
-
-        Console.WriteLine(_beams.Count);
 
         base.Update(gameTime);
     }
