@@ -17,4 +17,6 @@ public class Willy
     public bool Moving;
     
     public int Direction { get; set; }
+
+    public char Cell { get; set; } = '\0';
 }

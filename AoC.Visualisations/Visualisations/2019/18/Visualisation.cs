@@ -180,7 +180,16 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 return;
             }
 
-            var key = $"{_state.Path[_pathIndex - 1]}{_state.Path[_pathIndex]}";
+            string key;
+
+            if (_willys[_activeWilly].Cell == '\0')
+            {
+                key = $"{_state.Path[_pathIndex - 1]}{_state.Path[_pathIndex]}";
+            }
+            else
+            {
+                key = $"{_willys[_activeWilly].Cell}{_state.Path[_pathIndex]}";
+            }
 
             if (_state.Paths.TryGetValue(key, out var path))
             {
