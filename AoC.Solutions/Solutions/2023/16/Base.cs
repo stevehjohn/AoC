@@ -32,13 +32,10 @@ public abstract class Base : Solution
     {
         if (_visualiser != null)
         {
-            if (_puzzleState == null)
+            _puzzleState ??= new PuzzleState
             {
-                _puzzleState = new PuzzleState
-                {
-                    Map = _map
-                };
-            }
+                Map = _map
+            };
 
             if (beam != null)
             {
