@@ -17,6 +17,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private PuzzleState _state;
 
+    private int _beam;
+
+    private readonly Dictionary<int, List<(int X, int Y, char Direction)>> _beams = new();
+    
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -68,6 +72,19 @@ public class Visualisation : VisualisationBase<PuzzleState>
         if (HasNextState)
         {
             _state = GetNextState();
+
+            if (_state.Beams != null)
+            {
+                foreach (var beam in _state.Beams)
+                {
+                    if (! _beams.ContainsKey(beam.Id))
+                    { 
+                        _beams.Add(beam.Id, new List<(int X, int Y, char Direction)>());
+                    }
+                    
+                    _beams[beam.Id].Add((beam.X, beam.Y, beam.Direction));
+                }
+            }
         }
 
         base.Update(gameTime);
