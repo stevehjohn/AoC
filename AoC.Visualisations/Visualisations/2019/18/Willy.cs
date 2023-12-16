@@ -12,5 +12,9 @@ public class Willy
     
     public int Frame { get; set; }
     
+    public int FrameDirection { get; set; }
+
+    public bool Moving;
+    
     public int Direction { get; set; }
 }
