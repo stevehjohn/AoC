@@ -34,11 +34,11 @@ public class Part2 : Base
         return result.ToString();
     }
 
-    private void Visualise()
+    private void Visualise(string path = null)
     {
         if (_visualiser != null)
         {
-            _visualiser.PuzzleStateChanged(new PuzzleState { Map = Map });
+            _visualiser.PuzzleStateChanged(new PuzzleState { Map = Map, Path = path });
         }
     }
 
@@ -57,9 +57,11 @@ public class Part2 : Base
         graphs[3].Build(Distances.Where(d => GetQuadrant(d.Key[0]) == 4 && GetQuadrant(d.Key[1]) == 4).ToDictionary(kvp => kvp.Key, kvp => kvp.Value), Doors);
 
         var solver = new GraphSolver(graphs);
-
+        
         var result = solver.Solve();
 
+        Visualise(result.Path);
+        
         return result.Steps;
     }
 
