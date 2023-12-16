@@ -17,6 +17,8 @@ public abstract class Base : Solution
 
     private readonly IVisualiser<PuzzleState> _visualiser;
 
+    private PuzzleState _puzzleState = new();
+
     protected Base()
     {
     }
@@ -26,11 +28,24 @@ public abstract class Base : Solution
         _visualiser = visualiser;
     }
 
-    protected void Visualise()
+    protected void Visualise((int X, int Y, char Direction, int Id)? beam = null)
     {
         if (_visualiser != null)
         {
-            _visualiser.PuzzleStateChanged(new PuzzleState { Map = _map });
+            if (_puzzleState == null)
+            {
+                _puzzleState = new PuzzleState
+                {
+                    Map = _map
+                };
+            }
+
+            if (beam != null)
+            {
+                _puzzleState.Beams.Add(beam.Value);
+            }
+
+            _visualiser.PuzzleStateChanged(_puzzleState);
         }
     }
 
@@ -70,6 +85,8 @@ public abstract class Base : Solution
 
             var (x, y) = MoveBeam(beam.X, beam.Y, beam.Direction);
 
+            Visualise(beam);
+            
             if (x == -1)
             {
                 continue;
