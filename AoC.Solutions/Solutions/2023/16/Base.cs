@@ -51,19 +51,19 @@ public abstract class Base : Solution
 
     protected void SimulateBeams(int startX, int startY, char direction)
     {
-        var beams = new Stack<(int X, int Y, char Direction)>();
+        var beams = new Stack<(int X, int Y, char Direction, int Id)>();
 
         _energised = new bool[Width, Height];
 
         var visited = new HashSet<(int, int, char)>();
         
-        beams.Push((startX, startY, direction));
+        beams.Push((startX, startY, direction, 1));
 
         while (beams.Count > 0)
         {
             var beam = beams.Pop();
 
-            if (! visited.Add(beam))
+            if (! visited.Add((beam.X, beam.Y, beam.Direction)))
             {
                 continue;
             }
@@ -80,7 +80,7 @@ public abstract class Base : Solution
             switch (_map[x, y])
             {
                 case '.':
-                    beams.Push((x, y, beam.Direction));
+                    beams.Push((x, y, beam.Direction, beam.Id));
                     
                     continue;
                 
@@ -91,7 +91,7 @@ public abstract class Base : Solution
                         'E' => 'S',
                         'S' => 'E',
                         _ => 'N'
-                    }));
+                    }, beam.Id));
                     
                     continue;
                 
@@ -102,33 +102,33 @@ public abstract class Base : Solution
                         'E' => 'N',
                         'S' => 'W',
                         _ => 'S'
-                    }));
+                    }, beam.Id));
                     
                     continue;
                 
                 case '|':
                     if (beam.Direction is 'N' or 'S')
                     {
-                        beams.Push((x, y, beam.Direction));
+                        beams.Push((x, y, beam.Direction, beam.Id));
                         
                         continue;
                     }
                     
-                    beams.Push((x, y, 'N'));
-                    beams.Push((x, y, 'S'));
+                    beams.Push((x, y, 'N', beam.Id + 1));
+                    beams.Push((x, y, 'S', beam.Id + 1));
 
                     continue;
                 
                 case '-':
                     if (beam.Direction is 'E' or 'W')
                     {
-                        beams.Push((x, y, beam.Direction));
+                        beams.Push((x, y, beam.Direction, beam.Id));
                         
                         continue;
                     }
                     
-                    beams.Push((x, y, 'E'));
-                    beams.Push((x, y, 'W'));
+                    beams.Push((x, y, 'E', beam.Id + 1));
+                    beams.Push((x, y, 'W', beam.Id + 1));
 
                     continue;
             }
