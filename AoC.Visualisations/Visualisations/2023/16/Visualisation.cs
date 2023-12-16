@@ -1,4 +1,5 @@
-﻿using AoC.Visualisations.Exceptions;
+﻿using AoC.Solutions.Solutions._2023._16;
+using AoC.Visualisations.Exceptions;
 using AoC.Visualisations.Infrastructure;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
@@ -14,18 +15,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
     
     private Texture2D _sprites;
 
-    private int _cycle;
-
-    private int _width;
-
-    private int _height;
-
-    private int _totalCycles;
-
-    private bool _solved;
-    
-    private readonly Dictionary<int, int> _hashes = new();
-    
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
