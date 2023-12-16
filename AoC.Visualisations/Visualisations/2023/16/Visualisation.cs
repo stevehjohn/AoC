@@ -23,17 +23,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private long _tick;
     
-    private readonly Color[] _colors = 
-    {
-        Color.Blue,
-        Color.Red,
-        Color.Magenta,
-        Color.Green,
-        Color.Cyan,
-        Color.Yellow,
-        Color.White
-    };
-
+    private Color[] _palette;
+    
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -68,6 +59,17 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         IsMouseVisible = true;
 
+        _palette = PaletteGenerator.GetPalette(26,
+            new[]
+            {
+                new Color(46, 27, 134),
+                new Color(119, 35, 172),
+                new Color(176, 83, 203),
+                new Color(255, 168, 76),
+                new Color(254, 211, 56),
+                new Color(254, 253, 0)
+            });
+
         base.Initialize();
     }
 
@@ -88,6 +90,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
             var beamColor = 0;
 
+            var beamColorDirection = 1;
+
             var beamColours = new Dictionary<int, Color>();
             
             if (_state.Beams != null)
@@ -101,13 +105,13 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                     if (! beamColours.ContainsKey(beam.SourceId))
                     {
-                        beamColours.Add(beam.SourceId, _colors[beamColor]);
+                        beamColours.Add(beam.SourceId, _palette[beamColor]);
 
-                        beamColor++;
+                        beamColor += beamColorDirection;
 
-                        if (beamColor == _colors.Length)
+                        if (beamColor == 0 || beamColor == _palette.Length - 1)
                         {
-                            beamColor = 0;
+                            beamColorDirection = -beamColorDirection;
                         }
                     }
 
@@ -190,19 +194,19 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 switch (map[x, y])
                 {
                     case '\\':
-                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(14, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
+                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(14, 0, 7, 7), Color.Cyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
                         break;
                     
                     case '/':
-                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(21, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
+                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(21, 0, 7, 7), Color.Cyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
                         break;
                     
                     case '|':
-                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(7, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
+                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(7, 0, 7, 7), Color.Cyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
                         break;
                     
                     case '-':
-                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(0, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
+                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(0, 0, 7, 7), Color.Cyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
                         break;
                 }
             }
