@@ -15,6 +15,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
     
     private Texture2D _sprites;
 
+    private char[,] _map;
+
+    private readonly List<(int X, int Y, char Direction, int Id)> _beams = new();
+    
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -61,6 +65,17 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         if (HasNextState)
         {
+            var state = GetNextState();
+            
+            if (_map == null)
+            {
+                _map = state.Map;
+            }
+
+            if (state.NewBeam != null)
+            {
+                _beams.Add(state.NewBeam.Value);
+            }
         }
 
         base.Update(gameTime);

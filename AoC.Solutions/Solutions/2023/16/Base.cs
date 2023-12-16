@@ -37,10 +37,7 @@ public abstract class Base : Solution
                 Map = _map
             };
 
-            if (beam != null)
-            {
-                _puzzleState.NewBeam = beam.Value;
-            }
+            _puzzleState.NewBeam = beam;
 
             _visualiser.PuzzleStateChanged(_puzzleState);
         }
