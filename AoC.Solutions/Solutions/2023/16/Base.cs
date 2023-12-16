@@ -28,18 +28,29 @@ public abstract class Base : Solution
         _visualiser = visualiser;
     }
 
-    protected void Visualise((int X, int Y, char Direction, int Id)? beam = null)
+    protected void Visualise((int X, int Y, char Direction, int Id)? beam = null, bool finished = false)
     {
         if (_visualiser != null)
         {
-            _puzzleState ??= new PuzzleState
+            if (_puzzleState == null)
             {
-                Map = _map
-            };
+                _puzzleState = new PuzzleState
+                {
+                    Map = _map
+                };
 
-            _puzzleState.NewBeam = beam;
+                _visualiser.PuzzleStateChanged(_puzzleState);
+            }
 
-            _visualiser.PuzzleStateChanged(_puzzleState);
+            if (beam != null)
+            {
+                _puzzleState.Beams.Add(beam.Value);
+            }
+
+            if (finished)
+            {
+                _visualiser.PuzzleStateChanged(_puzzleState);
+            }
         }
     }
 
@@ -144,6 +155,8 @@ public abstract class Base : Solution
                     continue;
             }
         }
+        
+        Visualise(null, true);
     }
 
     private (int X, int Y) MoveBeam(int x, int y, char direction)
