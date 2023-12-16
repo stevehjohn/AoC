@@ -26,7 +26,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                                      PreferredBackBufferHeight = 656
                                  };
 
-        Content.RootDirectory = "./17";
+        Content.RootDirectory = "./18";
     }
 
     public override void SetPart(int part)
@@ -62,6 +62,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         if (HasNextState)
         {
+            _state = GetNextState();
         }
 
         base.Update(gameTime);
@@ -82,6 +83,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private void DrawMap()
     {
-
+        for (var y = 0; y < _state.Map.GetLength(1); y++)
+        {
+            for (var x = 0; x < _state.Map.GetLength(0); x++)
+            {
+                _spriteBatch.Draw(_tiles, new Vector2(x * 8, y * 8), new Rectangle(0, 0, 8, 8), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+            }
+        }
     }
 }
