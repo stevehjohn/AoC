@@ -21,6 +21,8 @@ public class Part2 : Base
     {
         ParseInput();
 
+        Visualise();
+
         var max = 0;
 
         for (var x = 0; x < Width; x++)
@@ -66,5 +68,13 @@ public class Part2 : Base
         }
         
         return max.ToString();
+    }
+
+    private void Visualise()
+    {
+        if (_visualiser != null)
+        {
+            _visualiser.PuzzleStateChanged(new PuzzleState { Map = Map });
+        }
     }
 }

@@ -7,7 +7,7 @@ public abstract class Base : Solution
 {
     public override string Description => "The floor will be lava";
     
-    private char[,] _map;
+    protected char[,] Map;
 
     private bool[,] _energised;
     
@@ -58,7 +58,7 @@ public abstract class Base : Solution
 
             _energised[x, y] = true;
 
-            switch (_map[x, y])
+            switch (Map[x, y])
             {
                 case '.':
                     beams.Push((x, y, beam.Direction));
@@ -166,6 +166,6 @@ public abstract class Base : Solution
 
         Height = Input.Length;
 
-        _map = Input.To2DArray();
+        Map = Input.To2DArray();
     }
 }
