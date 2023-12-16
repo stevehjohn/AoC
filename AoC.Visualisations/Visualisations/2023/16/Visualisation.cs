@@ -136,15 +136,30 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             return;
         }
+
+        foreach (var beam in _beams)
+        {
+            foreach (var particle in beam.Value)
+            {
+                switch (particle.Direction)
+                {
+                    case 'N':
+                    case 'S':
+                        _spriteBatch.Draw(_tiles, new Vector2(22 + particle.X * 7, 22 + particle.Y * 7), new Rectangle(7, 0, 7, 7), particle.Color, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        break;
+
+                    case 'E':
+                    case 'W':
+                        _spriteBatch.Draw(_tiles, new Vector2(22 + particle.X * 7, 22 + particle.Y * 7), new Rectangle(0, 0, 7, 7), particle.Color, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        break;
+                }
+            }
+        }
     }
 
     private void DrawMap()
     {
         var map = _state.Map;
-
-        /*
-         * Have lasers appear over splitters, but under mirrors?
-         */
         
         for (var y = 0; y < map.GetLength(1); y++)
         {
@@ -153,19 +168,19 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 switch (map[x, y])
                 {
                     case '\\':
-                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(14, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(14, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
                         break;
                     
                     case '/':
-                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(21, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(21, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
                         break;
                     
                     case '|':
-                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(7, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(7, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
                         break;
                     
                     case '-':
-                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(0, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(0, 0, 7, 7), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
                         break;
                 }
             }
