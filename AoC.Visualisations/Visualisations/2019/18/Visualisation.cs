@@ -200,8 +200,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
                     key = $"{_state.Path[_pathIndex]}{_willys[_activeWilly].Cell}";
                 }
             }
-
-            Console.WriteLine(key);
             
             var path = _state.Paths[key];
             
@@ -224,7 +222,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
             _willys[_activeWilly].MapX = move.X;
             _willys[_activeWilly].MapY = move.Y;
-
+            
             var cell = _state.Map[move.X, move.Y];
 
             if (char.IsUpper(cell))
