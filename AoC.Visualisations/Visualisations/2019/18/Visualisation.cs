@@ -182,30 +182,41 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
             string key;
 
+            var reverse = false;
+
             if (_willys[_activeWilly].Cell == '\0')
             {
                 key = $"{_state.Path[_pathIndex - 1]}{_state.Path[_pathIndex]}";
+
+                if (! _state.Paths.ContainsKey(key))
+                {
+                    key = $"{_state.Path[_pathIndex]}{_state.Path[_pathIndex - 1]}";
+
+                    reverse = true;
+                }
             }
             else
             {
                 key = $"{_willys[_activeWilly].Cell}{_state.Path[_pathIndex]}";
-            }
 
-            if (_state.Paths.TryGetValue(key, out var path))
-            {
-                foreach (var point in path)
+                if (! _state.Paths.ContainsKey(key))
                 {
-                    _path.Enqueue(point);
+                    key = $"{_state.Path[_pathIndex]}{_willys[_activeWilly].Cell}";
+
+                    reverse = true;
                 }
             }
-            else
-            {
-                key = $"{_state.Path[_pathIndex]}{_state.Path[_pathIndex - 1]}";
 
-                foreach (var point in _state.Paths[key])
-                {
-                    _path.Enqueue(point);
-                }
+            var path = _state.Paths[key];
+            
+            if (reverse)
+            {
+                path.Reverse();
+            }
+
+            foreach (var point in path)
+            {
+                _path.Enqueue(point);
             }
 
             return;
@@ -222,6 +233,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
             
             if (char.IsLower(cell))
             {
+                _willys[_activeWilly].Cell = cell;
+                
                 _state.Map[move.X, move.Y] = '.';
                 
                 cell = char.ToUpper(cell);
