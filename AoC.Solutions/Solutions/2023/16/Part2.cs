@@ -6,15 +6,12 @@ namespace AoC.Solutions.Solutions._2023._16;
 [UsedImplicitly]
 public class Part2 : Base
 {
-    private readonly IVisualiser<PuzzleState> _visualiser;
-
     public Part2()
     {
     }
 
-    public Part2(IVisualiser<PuzzleState> visualiser)
+    public Part2(IVisualiser<PuzzleState> visualiser) : base(visualiser)
     {
-        _visualiser = visualiser;
     }
     
     public override string GetAnswer()
@@ -68,13 +65,5 @@ public class Part2 : Base
         }
         
         return max.ToString();
-    }
-
-    private void Visualise()
-    {
-        if (_visualiser != null)
-        {
-            _visualiser.PuzzleStateChanged(new PuzzleState { Map = Map });
-        }
     }
 }
