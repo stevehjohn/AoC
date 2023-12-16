@@ -37,6 +37,7 @@
     <ItemGroup>
       <DesignData Include="_Content\2018\13\Content.mgcb" />
       <DesignData Include="_Content\2018\17\Content.mgcb" />
+      <DesignData Include="_Content\2019\18\Content.mgcb" />
       <DesignData Include="_Content\2019\18\obj\Content.mgcb" />
       <DesignData Include="_Content\2020\20\Content.mgcb" />
       <DesignData Include="_Content\2022\12\Content.mgcb" />
