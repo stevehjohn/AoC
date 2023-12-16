@@ -7,7 +7,7 @@ public abstract class Base : Solution
 {
     public override string Description => "The floor will be lava";
     
-    protected char[,] Map;
+    private char[,] _map;
 
     private bool[,] _energised;
     
@@ -30,7 +30,7 @@ public abstract class Base : Solution
     {
         if (_visualiser != null)
         {
-            _visualiser.PuzzleStateChanged(new PuzzleState { Map = Map });
+            _visualiser.PuzzleStateChanged(new PuzzleState { Map = _map });
         }
     }
 
@@ -77,7 +77,7 @@ public abstract class Base : Solution
 
             _energised[x, y] = true;
 
-            switch (Map[x, y])
+            switch (_map[x, y])
             {
                 case '.':
                     beams.Push((x, y, beam.Direction));
@@ -185,6 +185,6 @@ public abstract class Base : Solution
 
         Height = Input.Length;
 
-        Map = Input.To2DArray();
+        _map = Input.To2DArray();
     }
 }
