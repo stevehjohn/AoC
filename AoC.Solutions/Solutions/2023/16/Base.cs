@@ -17,7 +17,7 @@ public abstract class Base : Solution
 
     private readonly IVisualiser<PuzzleState> _visualiser;
 
-    private PuzzleState _puzzleState = new();
+    private PuzzleState _puzzleState;
 
     protected Base()
     {
