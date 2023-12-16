@@ -17,8 +17,19 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private PuzzleState _state;
 
-    private readonly Dictionary<int, List<(int X, int Y, char Direction)>> _beams = new();
+    private readonly Dictionary<int, List<(int X, int Y, char Direction, Color Color)>> _beams = new();
     
+    private readonly Color[] _colors = 
+    {
+        Color.Blue,
+        Color.Red,
+        Color.Magenta,
+        Color.Green,
+        Color.Cyan,
+        Color.Yellow,
+        Color.White
+    };
+
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -71,16 +82,32 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             _state = GetNextState();
 
+            var beamColor = 0;
+
+            var beamColours = new Dictionary<int, Color>();
+            
             if (_state.Beams != null)
             {
                 foreach (var beam in _state.Beams)
                 {
                     if (! _beams.ContainsKey(beam.Id))
                     { 
-                        _beams.Add(beam.Id, new List<(int X, int Y, char Direction)>());
+                        _beams.Add(beam.Id, new List<(int X, int Y, char Direction, Color Color)>());
                     }
-                    
-                    _beams[beam.Id].Add((beam.X, beam.Y, beam.Direction));
+
+                    if (! beamColours.ContainsKey(beam.SourceId))
+                    {
+                        beamColours.Add(beam.SourceId, _colors[beamColor]);
+
+                        beamColor++;
+
+                        if (beamColor == _colors.Length)
+                        {
+                            beamColor = 0;
+                        }
+                    }
+
+                    _beams[beam.Id].Add((beam.X, beam.Y, beam.Direction, beamColours[beam.SourceId]));
                 }
             }
         }
@@ -95,16 +122,30 @@ public class Visualisation : VisualisationBase<PuzzleState>
         _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
 
         DrawMap();
+
+        DrawBeams();
         
         _spriteBatch.End();
 
         base.Draw(gameTime);
     }
 
+    private void DrawBeams()
+    {
+        if (_beams.Count == 0)
+        {
+            return;
+        }
+    }
+
     private void DrawMap()
     {
         var map = _state.Map;
 
+        /*
+         * Have lasers appear over splitters, but under mirrors?
+         */
+        
         for (var y = 0; y < map.GetLength(1); y++)
         {
             for (var x = 0; x < map.GetLength(0); x++)
