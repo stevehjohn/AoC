@@ -1,5 +1,4 @@
-﻿using AoC.Solutions.Solutions._2018._13;
-using AoC.Visualisations.Exceptions;
+﻿using AoC.Visualisations.Exceptions;
 using AoC.Visualisations.Infrastructure;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
@@ -40,6 +39,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private readonly Willy[] _willys = new Willy[4];
 
     private int _pathIndex = -1;
+
+    private int _activeWilly;
+
+    private readonly Queue<AoC.Solutions.Common.Point> _path = new();
     
     public Visualisation()
     {
@@ -161,6 +164,50 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private void Move()
     {
+        if (_path.Count == 0)
+        {
+            _pathIndex++;
+
+            if (_pathIndex >= _state.Path.Length)
+            {
+                return;
+            }
+
+            if (char.IsNumber(_state.Path[_pathIndex]))
+            {
+                return;
+            }
+
+            var key = $"{_state.Path[_pathIndex - 1]}{_state.Path[_pathIndex]}";
+
+            if (_state.Paths.ContainsKey(key))
+            {
+                foreach (var point in _state.Paths[key])
+                {
+                    _path.Enqueue(point);
+                }
+            }
+            else
+            {
+                key = $"{_state.Path[_pathIndex]}{_state.Path[_pathIndex - 1]}";
+
+                foreach (var point in _state.Paths[key])
+                {
+                    _path.Enqueue(point);
+                }
+            }
+
+
+            return;
+        }
+
+        if (_frame % 2 == 0)
+        {
+            var move = _path.Dequeue();
+
+            _willys[_activeWilly].MapX = move.X;
+            _willys[_activeWilly].MapY = move.Y;
+        }
     }
 
     private void StartMove()
@@ -170,7 +217,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
             willy.Moving = false;
         }
 
-        _willys[_state.Path[_pathIndex] - '1'].Moving = true;
+        _activeWilly = _state.Path[_pathIndex] - '1';
+        
+        _willys[_activeWilly].Moving = true;
     }
 
     private void DrawWillys()
