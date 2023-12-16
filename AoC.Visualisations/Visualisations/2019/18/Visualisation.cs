@@ -70,7 +70,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(new Color(9, 10, 17));
+        GraphicsDevice.Clear(Color.Black);
 
         _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
 
