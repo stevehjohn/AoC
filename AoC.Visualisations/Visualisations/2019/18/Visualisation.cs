@@ -228,9 +228,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         if (_path.Count == 0)
         {
             _pathIndex++;
-
-            Console.WriteLine($"Node: {_state.Path[_pathIndex]}");
-
+            
             if (_pathIndex >= _state.Path.Length)
             {
                 return;
@@ -264,12 +262,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
             
             var path = _state.Paths[key];
             
-            Console.WriteLine(key);
-            
             if (path[0].X != _willys[_activeWilly].MapX || path[0].Y != _willys[_activeWilly].MapY)
             {
-                Console.WriteLine("Reversed");
-                
                 path.Reverse();
             }
             
@@ -349,8 +343,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
         }
 
         _activeWilly = _state.Path[_pathIndex] - '1';
-        
-        Console.WriteLine($"Willy: {_activeWilly + 1} ({_willys[_activeWilly].Cell})");
         
         _willys[_activeWilly].Moving = true;
     }
