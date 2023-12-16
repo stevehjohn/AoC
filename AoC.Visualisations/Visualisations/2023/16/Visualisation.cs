@@ -13,7 +13,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 {
     private SpriteBatch _spriteBatch;
     
-    private Texture2D _sprites;
+    private Texture2D _tiles;
 
     private PuzzleState _state;
 
@@ -29,7 +29,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                                      PreferredBackBufferHeight = 896
                                  };
 
-        Content.RootDirectory = "./14";
+        Content.RootDirectory = "./16";
 
         IgnoreQueueLimit = true;
     }
@@ -62,7 +62,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        _sprites = Content.Load<Texture2D>("sprites");
+        _tiles = Content.Load<Texture2D>("map-tiles");
 
         base.LoadContent();
     }
@@ -120,9 +120,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
                         break;
                     
                     case '|':
+                        _spriteBatch.Draw(_tiles, new Vector2(8 + x * 7, 8 + y * 7), new Rectangle(8, 0, 8, 8), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
                         break;
                     
                     case '-':
+                        _spriteBatch.Draw(_tiles, new Vector2(8 + x * 7, 8 + y * 7), new Rectangle(0, 0, 8, 8), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
                         break;
                 }
             }
