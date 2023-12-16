@@ -9,8 +9,50 @@ public class Part2 : Base
     {
         ParseInput();
 
-        SimulateBeams(-1, 0);
+        var max = 0;
+
+        for (var x = 0; x < Width; x++)
+        {
+            SimulateBeams(x, -1, 'S');
+
+            var energised = CountEnergised();
+
+            if (energised > max)
+            {
+                max = energised;
+            }
+
+            SimulateBeams(x, Height, 'N');
+
+            energised = CountEnergised();
+
+            if (energised > max)
+            {
+                max = energised;
+            }
+        }
+
+        for (var y = 0; y < Width; y++)
+        {
+            SimulateBeams(-1, y, 'E');
+
+            var energised = CountEnergised();
+
+            if (energised > max)
+            {
+                max = energised;
+            }
+
+            SimulateBeams(Width, y, 'W');
+
+            energised = CountEnergised();
+
+            if (energised > max)
+            {
+                max = energised;
+            }
+        }
         
-        return CountEnergised().ToString();
+        return max.ToString();
     }
 }

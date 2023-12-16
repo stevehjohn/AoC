@@ -59,13 +59,15 @@ public abstract class Base : Solution
         Console.ReadKey();
     }
 
-    protected void SimulateBeams(int startX, int startY)
+    protected void SimulateBeams(int startX, int startY, char direction)
     {
         var beams = new Stack<(int X, int Y, char Direction)>();
 
+        _energised = new bool[Width, Height];
+
         var visited = new HashSet<(int, int, char)>();
         
-        beams.Push((startX, startY, 'E'));
+        beams.Push((startX, startY, direction));
 
         while (beams.Count > 0)
         {
@@ -196,7 +198,5 @@ public abstract class Base : Solution
         Height = Input.Length;
 
         _map = Input.To2DArray();
-
-        _energised = new bool[Width, Height];
     }
 }

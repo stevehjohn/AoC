@@ -9,7 +9,7 @@ public class Part1 : Base
     {
         ParseInput();
 
-        SimulateBeams(-1, 0);
+        SimulateBeams(-1, 0, 'E');
         
         return CountEnergised().ToString();
     }
