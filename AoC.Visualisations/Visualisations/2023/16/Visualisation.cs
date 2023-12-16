@@ -106,10 +106,20 @@ public class Visualisation : VisualisationBase<PuzzleState>
         _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
 
         DrawMap();
+
+        DrawBeams();
         
         _spriteBatch.End();
 
         base.Draw(gameTime);
+    }
+
+    private void DrawBeams()
+    {
+        if (_beams.Count == 0)
+        {
+            return;
+        }
     }
 
     private void DrawMap()
