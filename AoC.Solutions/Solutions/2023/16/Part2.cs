@@ -1,3 +1,4 @@
+using AoC.Solutions.Infrastructure;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2023._16;
@@ -5,6 +6,17 @@ namespace AoC.Solutions.Solutions._2023._16;
 [UsedImplicitly]
 public class Part2 : Base
 {
+    private IVisualiser<PuzzleState> _visualiser;
+
+    public Part2()
+    {
+    }
+
+    public Part2(IVisualiser<PuzzleState> visualiser)
+    {
+        _visualiser = visualiser;
+    }
+    
     public override string GetAnswer()
     {
         ParseInput();
