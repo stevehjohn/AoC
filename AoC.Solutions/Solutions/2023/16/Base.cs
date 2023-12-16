@@ -79,6 +79,8 @@ public abstract class Base : Solution
         
         beams.Push((startX, startY, direction, 1));
 
+        var beamId = 1;
+        
         while (beams.Count > 0)
         {
             var beam = beams.Pop();
@@ -136,8 +138,8 @@ public abstract class Base : Solution
                         continue;
                     }
                     
-                    beams.Push((x, y, 'N', beam.Id + 1));
-                    beams.Push((x, y, 'S', beam.Id + 1));
+                    beams.Push((x, y, 'N', ++beamId));
+                    beams.Push((x, y, 'S', ++beamId));
 
                     continue;
                 
@@ -149,8 +151,8 @@ public abstract class Base : Solution
                         continue;
                     }
                     
-                    beams.Push((x, y, 'E', beam.Id + 1));
-                    beams.Push((x, y, 'W', beam.Id + 1));
+                    beams.Push((x, y, 'E', ++beamId));
+                    beams.Push((x, y, 'W', ++beamId));
 
                     continue;
             }
