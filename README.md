@@ -37,6 +37,7 @@ There are visualisations for:
 - 2018.13.1
 - 2018.13.2
 - 2018.17.1
+- 2019.18.2
 - 2020.20.1
 - 2022.12.1
 - 2022.12.2
@@ -44,7 +45,3 @@ There are visualisations for:
 - 2022.14.2
 - 2023.10.2
 - 2023.14.2
-
-### Visualisations to do (or re-do in MonoGame)
-
-- 2019.18.2
