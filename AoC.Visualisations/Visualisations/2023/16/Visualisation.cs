@@ -18,6 +18,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private PuzzleState _state;
 
     private readonly Dictionary<int, List<(int X, int Y, char Direction, Color Color)>> _beams = new();
+
+    private long _frame;
+
+    private long _tick;
     
     private readonly Color[] _colors = 
     {
@@ -137,10 +141,24 @@ public class Visualisation : VisualisationBase<PuzzleState>
             return;
         }
 
+        _tick++;
+
+        //if (_tick % 50 == 0)
+        {
+            _frame++;
+        }
+
+        var localFrame = 0;
+
         foreach (var beam in _beams)
         {
             foreach (var particle in beam.Value)
             {
+                if (localFrame > _frame)
+                {
+                    break;
+                }
+
                 switch (particle.Direction)
                 {
                     case 'N':
@@ -153,8 +171,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
                         _spriteBatch.Draw(_tiles, new Vector2(22 + particle.X * 7, 22 + particle.Y * 7), new Rectangle(0, 0, 7, 7), particle.Color, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
                         break;
                 }
+
+                localFrame++;
             }
         }
+
+        _frame++;
     }
 
     private void DrawMap()
