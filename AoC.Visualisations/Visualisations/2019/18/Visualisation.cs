@@ -229,6 +229,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             _pathIndex++;
 
+            Console.WriteLine($"Node: {_state.Path[_pathIndex]}");
+
             if (_pathIndex >= _state.Path.Length)
             {
                 return;
@@ -243,8 +245,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
             if (char.IsUpper(_state.Path[_pathIndex]))
             {
-                _pathIndex++;
-                
                 return;
             }
 
@@ -284,6 +284,17 @@ public class Visualisation : VisualisationBase<PuzzleState>
         if (_frame % 2 == 0)
         {
             var move = _path.Dequeue();
+
+            var wX = _willys[_activeWilly].MapX;
+
+            if (wX > move.X)
+            {
+                _willys[_activeWilly].Direction = -1;
+            }
+            else if (wX < move.X)
+            {
+                _willys[_activeWilly].Direction = 1;
+            }
 
             _willys[_activeWilly].MapX = move.X;
             _willys[_activeWilly].MapY = move.Y;
@@ -338,6 +349,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
         }
 
         _activeWilly = _state.Path[_pathIndex] - '1';
+        
+        Console.WriteLine($"Willy: {_activeWilly + 1} ({_willys[_activeWilly].Cell})");
         
         _willys[_activeWilly].Moving = true;
     }
