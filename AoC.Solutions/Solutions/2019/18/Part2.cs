@@ -38,7 +38,7 @@ public class Part2 : Base
     {
         if (_visualiser != null)
         {
-            _visualiser.PuzzleStateChanged(new PuzzleState { Map = Map, Path = path });
+            _visualiser.PuzzleStateChanged(new PuzzleState { Map = Map, Path = path, Paths = Paths });
         }
     }
 

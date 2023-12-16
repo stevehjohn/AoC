@@ -1,10 +1,12 @@
-﻿using AoC.Solutions.Solutions._2019._18;
+﻿using AoC.Solutions.Solutions._2018._13;
 using AoC.Visualisations.Exceptions;
 using AoC.Visualisations.Infrastructure;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Color = Microsoft.Xna.Framework.Color;
+using Part2 = AoC.Solutions.Solutions._2019._18.Part2;
+using PuzzleState = AoC.Solutions.Solutions._2019._18.PuzzleState;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace AoC.Visualisations.Visualisations._2019._18;
@@ -36,6 +38,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private int _color;
 
     private readonly Willy[] _willys = new Willy[4];
+
+    private int _pathIndex = -1;
     
     public Visualisation()
     {
@@ -70,8 +74,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             MapX = 39,
             MapY = 39,
             Direction = -1,
-            FrameDirection = 1,
-            Moving = true
+            FrameDirection = 1
         };
 
         _willys[1] = new Willy
@@ -119,6 +122,23 @@ public class Visualisation : VisualisationBase<PuzzleState>
             _state = GetNextState();
         }
 
+        if (_state != null)
+        {
+            if (_state.Path != null)
+            {
+                if (_pathIndex == -1)
+                {
+                    _pathIndex = 0;
+
+                    StartMove();
+                }
+                else
+                {
+                    Move();
+                }
+            }
+        }
+
         base.Update(gameTime);
     }
 
@@ -137,6 +157,20 @@ public class Visualisation : VisualisationBase<PuzzleState>
         _spriteBatch.End();
 
         base.Draw(gameTime);
+    }
+
+    private void Move()
+    {
+    }
+
+    private void StartMove()
+    {
+        foreach (var willy in _willys)
+        {
+            willy.Moving = false;
+        }
+
+        _willys[_state.Path[_pathIndex] - '1'].Moving = true;
     }
 
     private void DrawWillys()
