@@ -87,7 +87,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             for (var x = 0; x < _state.Map.GetLength(0); x++)
             {
-                _spriteBatch.Draw(_tiles, new Vector2(x * 8, y * 8), new Rectangle(0, 0, 8, 8), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                switch (_state.Map[x, y])
+                {
+                    case '#':
+                        _spriteBatch.Draw(_tiles, new Vector2(x * 8, y * 8), new Rectangle(0, 0, 8, 8), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        break;
+                }
             }
         }
     }
