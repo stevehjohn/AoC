@@ -264,7 +264,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             {
                 path.Reverse();
             }
-
+            
             foreach (var point in path)
             {
                 _path.Enqueue(point);
