@@ -79,8 +79,36 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
 
+        DrawMap();
+        
         _spriteBatch.End();
 
         base.Draw(gameTime);
+    }
+
+    private void DrawMap()
+    {
+        var map = _state.Map;
+
+        for (var y = 0; y < map.GetLength(1); y++)
+        {
+            for (var x = 0; x < map.GetLength(0); x++)
+            {
+                switch (map[x, y])
+                {
+                    case '\\':
+                        break;
+                    
+                    case '/':
+                        break;
+                    
+                    case '|':
+                        break;
+                    
+                    case '-':
+                        break;
+                }
+            }
+        }
     }
 }
