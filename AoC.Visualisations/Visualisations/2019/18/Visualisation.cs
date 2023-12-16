@@ -31,7 +31,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         Color.White
     };
 
-    private int _frame;
+    private long _frame;
 
     private int _color;
 
@@ -69,28 +69,33 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             MapX = 39,
             MapY = 39,
-            Direction = -1
+            Direction = -1,
+            FrameDirection = 1,
+            Moving = true
         };
 
         _willys[1] = new Willy
         {
             MapX = 41,
             MapY = 39,
-            Direction = 1
+            Direction = 1,
+            FrameDirection = 1
         };
 
         _willys[2] = new Willy
         {
             MapX = 39,
             MapY = 41,
-            Direction = -1
+            Direction = -1,
+            FrameDirection = 1
         };
 
         _willys[3] = new Willy
         {
             MapX = 41,
             MapY = 41,
-            Direction = 1
+            Direction = 1,
+            FrameDirection = 1
         };
         
         base.Initialize();
@@ -138,7 +143,20 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         foreach (var willy in _willys)
         {
-            _spriteBatch.Draw(_sprites, new Vector2(willy.MapX * 8, (willy.MapY - 1) * 8), new Rectangle(0, 0, 10, 16), Color.White, 0, Vector2.Zero, Vector2.One, willy.Direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, .1f);
+            if (willy.Moving)
+            {
+                if (_frame % 7 == 0)
+                {
+                    willy.Frame += willy.FrameDirection;
+
+                    if (willy.Frame == 0 || willy.Frame == 2)
+                    {
+                        willy.FrameDirection = -willy.FrameDirection;
+                    }
+                }
+            }
+
+            _spriteBatch.Draw(_sprites, new Vector2(willy.MapX * 8 - 2, (willy.MapY - 1) * 8 - 1), new Rectangle(willy.Frame * 12, 0, 12, 16), Color.White, 0, Vector2.Zero, Vector2.One, willy.Direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, .1f);
         }
     }
 
