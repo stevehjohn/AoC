@@ -17,8 +17,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private PuzzleState _state;
 
-    private int _beam;
-
     private readonly Dictionary<int, List<(int X, int Y, char Direction)>> _beams = new();
     
     public Visualisation()
