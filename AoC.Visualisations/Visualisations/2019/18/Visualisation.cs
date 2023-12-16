@@ -16,6 +16,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private Texture2D _tiles;
 
+    private Texture2D _sprites;
+
     private PuzzleState _state;
 
     private readonly Color[] _colors = 
@@ -63,6 +65,34 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         IsMouseVisible = true;
 
+        _willys[0] = new Willy
+        {
+            MapX = 39,
+            MapY = 39,
+            Direction = -1
+        };
+
+        _willys[1] = new Willy
+        {
+            MapX = 41,
+            MapY = 39,
+            Direction = 1
+        };
+
+        _willys[2] = new Willy
+        {
+            MapX = 39,
+            MapY = 41,
+            Direction = -1
+        };
+
+        _willys[3] = new Willy
+        {
+            MapX = 41,
+            MapY = 41,
+            Direction = 1
+        };
+        
         base.Initialize();
     }
 
@@ -71,6 +101,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         _tiles = Content.Load<Texture2D>("tiles");
+
+        _sprites = Content.Load<Texture2D>("willy");
 
         base.LoadContent();
     }
@@ -95,9 +127,19 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         DrawMap();
 
+        DrawWillys();
+        
         _spriteBatch.End();
 
         base.Draw(gameTime);
+    }
+
+    private void DrawWillys()
+    {
+        foreach (var willy in _willys)
+        {
+            _spriteBatch.Draw(_sprites, new Vector2(willy.MapX * 8, (willy.MapY - 1) * 8), new Rectangle(0, 0, 10, 16), Color.White, 0, Vector2.Zero, Vector2.One, willy.Direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, .1f);
+        }
     }
 
     private void DrawMap()
