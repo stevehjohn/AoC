@@ -85,7 +85,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
             MapX = 39,
             MapY = 39,
             Direction = -1,
-            FrameDirection = 1
+            FrameDirection = 1,
+            Cell = '1'
         };
 
         _willys[1] = new Willy
@@ -93,7 +94,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
             MapX = 41,
             MapY = 39,
             Direction = 1,
-            FrameDirection = 1
+            FrameDirection = 1,
+            Cell = '2'
         };
 
         _willys[2] = new Willy
@@ -101,7 +103,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
             MapX = 39,
             MapY = 41,
             Direction = -1,
-            FrameDirection = 1
+            FrameDirection = 1,
+            Cell = '3'
         };
 
         _willys[3] = new Willy
@@ -109,7 +112,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
             MapX = 41,
             MapY = 41,
             Direction = 1,
-            FrameDirection = 1
+            FrameDirection = 1,
+            Cell = '4'
         };
         
         base.Initialize();
@@ -237,31 +241,35 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 return;
             }
 
-            string key;
-
-            if (_willys[_activeWilly].Cell == '\0')
+            if (char.IsUpper(_state.Path[_pathIndex]))
             {
-                key = $"{_state.Path[_pathIndex - 1]}{_state.Path[_pathIndex]}";
-
-                if (! _state.Paths.ContainsKey(key))
-                {
-                    key = $"{_state.Path[_pathIndex]}{_state.Path[_pathIndex - 1]}";
-                }
+                _pathIndex++;
+                
+                return;
             }
-            else
-            {
-                key = $"{_willys[_activeWilly].Cell}{_state.Path[_pathIndex]}";
 
-                if (! _state.Paths.ContainsKey(key))
-                {
-                    key = $"{_state.Path[_pathIndex]}{_willys[_activeWilly].Cell}";
-                }
+            var cell = _willys[_activeWilly].Cell;
+
+            if (cell > 127)
+            {
+                cell -= (char) 127;
+            }
+
+            var key = $"{cell}{_state.Path[_pathIndex]}";
+
+            if (! _state.Paths.ContainsKey(key))
+            {
+                key = $"{_state.Path[_pathIndex]}{cell}";
             }
             
             var path = _state.Paths[key];
             
+            Console.WriteLine(key);
+            
             if (path[0].X != _willys[_activeWilly].MapX || path[0].Y != _willys[_activeWilly].MapY)
             {
+                Console.WriteLine("Reversed");
+                
                 path.Reverse();
             }
             
@@ -301,7 +309,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                     {
                         if (_state.Map[x, y] == cell)
                         {
-                            _state.Map[x, y] = '.';
+                            _state.Map[x, y] += (char) 127;
 
                             for (var i = 0; i < 100; i++)
                             {
@@ -384,14 +392,18 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                 if (char.IsLetter(tile))
                 {
-                    if (tile == char.ToLower(tile))
+                    if (char.IsLower(tile))
                     {
                         _spriteBatch.Draw(_tiles, new Vector2(x * 8, y * 8), new Rectangle(16, 0, 8, 8), keyColor, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
                         
                         continue;
                     }
 
-                    _spriteBatch.Draw(_tiles, new Vector2(x * 8, y * 8), new Rectangle(8, 0, 8, 8), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                    if (tile < 127)
+                    {
+                        _spriteBatch.Draw(_tiles, new Vector2(x * 8, y * 8), new Rectangle(8, 0, 8, 8), Color.White, 0,
+                            Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                    }
                 }
             }
         }
