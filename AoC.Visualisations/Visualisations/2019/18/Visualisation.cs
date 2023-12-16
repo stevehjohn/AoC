@@ -175,14 +175,16 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
             if (char.IsNumber(_state.Path[_pathIndex]))
             {
+                StartMove();
+                
                 return;
             }
 
             var key = $"{_state.Path[_pathIndex - 1]}{_state.Path[_pathIndex]}";
 
-            if (_state.Paths.ContainsKey(key))
+            if (_state.Paths.TryGetValue(key, out var path))
             {
-                foreach (var point in _state.Paths[key])
+                foreach (var point in path)
                 {
                     _path.Enqueue(point);
                 }
@@ -196,7 +198,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
                     _path.Enqueue(point);
                 }
             }
-
 
             return;
         }
