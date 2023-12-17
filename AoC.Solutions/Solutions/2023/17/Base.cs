@@ -14,20 +14,18 @@ public abstract class Base : Solution
 
     protected int Solve(int minSteps, int maxSteps)
     {
-        var queue = new PriorityQueue<(int X, int Y, char Direction, int Steps, int Cost), int>();
+        var queue = new PriorityQueue<(int X, int Y, char Direction, int Steps), int>();
 
         var visited = new HashSet<string>();
 
-        queue.Enqueue((0, 0, 'E', 1, 0), _map[0, 0]);
-        queue.Enqueue((0, 0, 'S', 1, 0), _map[0, 0]);
+        queue.Enqueue((0, 0, 'E', 1), 0);
+        queue.Enqueue((0, 0, 'S', 1), 0);
 
-        while (queue.Count > 0)
+        while (queue.TryDequeue(out var item, out var cost))
         {
-            var item = queue.Dequeue();
-
             if (item.X == _width - 1 && item.Y == _height - 1 && item.Steps >= minSteps - 1)
             {
-                return item.Cost;
+                return cost;
             }
 
             var directions = new[] { 'N', 'E' ,'S', 'W' };
@@ -121,7 +119,7 @@ public abstract class Base : Solution
 
                     if (visited.Add(key))
                     {
-                        queue.Enqueue((item.X + 1, item.Y, 'E', newSteps, item.Cost + _map[item.X + 1, item.Y]), item.Cost + _map[item.X + 1, item.Y]);
+                        queue.Enqueue((item.X + 1, item.Y, 'E', newSteps), cost + _map[item.X + 1, item.Y]);
                     }
                 }
 
@@ -131,7 +129,7 @@ public abstract class Base : Solution
 
                     if (visited.Add(key))
                     {
-                        queue.Enqueue((item.X, item.Y + 1, 'S', newSteps, item.Cost + _map[item.X, item.Y + 1]), item.Cost + _map[item.X, item.Y + 1]);
+                        queue.Enqueue((item.X, item.Y + 1, 'S', newSteps), cost + _map[item.X, item.Y + 1]);
                     }
                 }
 
@@ -141,7 +139,7 @@ public abstract class Base : Solution
 
                     if (visited.Add(key))
                     {
-                        queue.Enqueue((item.X, item.Y - 1, 'N', newSteps, item.Cost + _map[item.X, item.Y - 1]), item.Cost + _map[item.X, item.Y - 1]);
+                        queue.Enqueue((item.X, item.Y - 1, 'N', newSteps), cost + _map[item.X, item.Y - 1]);
                     }
                 }
 
@@ -151,7 +149,7 @@ public abstract class Base : Solution
 
                     if (visited.Add(key))
                     {
-                        queue.Enqueue((item.X - 1, item.Y, 'W', newSteps, item.Cost + _map[item.X - 1, item.Y]), item.Cost + _map[item.X - 1, item.Y]);
+                        queue.Enqueue((item.X - 1, item.Y, 'W', newSteps), cost + _map[item.X - 1, item.Y]);
                     }
                 }
             }
