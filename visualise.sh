@@ -1,1 +1,1 @@
-dotnet run --project AoC.Visualisations -c Release 2023.10.2 $*
+dotnet run --project AoC.Visualisations -c Release $*
