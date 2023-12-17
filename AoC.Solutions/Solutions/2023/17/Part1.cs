@@ -28,7 +28,6 @@ public class Part1 : Base
 
         while (queue.Count > 0)
         {
-            Console.WriteLine(queue.Count);
             var item = queue.Dequeue();
 
             if (! visited.Add((item.X, item.Y, item.Direction)))
@@ -79,9 +78,9 @@ public class Part1 : Base
 
             if (item.Direction == 'W')
             {
-                if (item.Steps < 3 && item.X < 0)
+                if (item.Steps < 3 && item.X > 0)
                 {
-                    queue.Enqueue((item.X - 1, item.Y, 'W', item.Steps - 1, item.Cost + _map[item.X - 1, item.Y]), _map[item.X - 1, item.Y]);
+                    queue.Enqueue((item.X - 1, item.Y, 'W', item.Steps + 1, item.Cost + _map[item.X - 1, item.Y]), _map[item.X - 1, item.Y]);
                 }
 
                 if (item.Y > 0)
@@ -97,7 +96,7 @@ public class Part1 : Base
 
             if (item.Direction == 'N')
             {
-                if (item.Steps < 3 && item.Y < 0)
+                if (item.Steps < 3 && item.Y > 0)
                 {
                     queue.Enqueue((item.X, item.Y - 1, 'N', item.Steps + 1, item.Cost + _map[item.X, item.Y - 1]), _map[item.X, item.Y - 1]);
                 }
