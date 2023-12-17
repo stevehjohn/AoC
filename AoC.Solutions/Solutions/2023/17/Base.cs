@@ -30,56 +30,6 @@ public abstract class Base : Solution
 
             var directions = new[] { 'N', 'E' ,'S', 'W' };
 
-            if (item.Steps < minSteps - 1)
-            {
-                switch (item.Direction)
-                {
-                    case 'N':
-                        if (item.Y - (minSteps - item.Steps) < 0)
-                        {
-                            continue;
-                        }
-
-                        directions[1] = ' ';
-                        directions[2] = ' ';
-                        directions[3] = ' ';
-                        break;
-
-                    case 'E':
-                        if (item.X + (minSteps - item.Steps) > _width)
-                        {
-                            continue;
-                        }
-                        
-                        directions[0] = ' ';
-                        directions[2] = ' ';
-                        directions[3] = ' ';
-                        break;
-
-                    case 'S':
-                        if (item.Y + (minSteps - item.Steps) > _height)
-                        {
-                            continue;
-                        }
-                        
-                        directions[0] = ' ';
-                        directions[1] = ' ';
-                        directions[3] = ' ';
-                        break;
-
-                    case 'W':
-                        if (item.X + (minSteps - item.Steps) < 0)
-                        {
-                            continue;
-                        }
-                        
-                        directions[0] = ' ';
-                        directions[1] = ' ';
-                        directions[2] = ' ';
-                        break;
-                }
-            }
-
             switch (item.Direction)
             {
                 case 'N':
@@ -97,6 +47,14 @@ public abstract class Base : Solution
                 case 'W':
                     directions[1] = ' ';
                     break;
+            }
+            
+            if (item.Steps < minSteps - 1)
+            {
+                directions[0] = item.Direction;
+                directions[1] = ' ';
+                directions[2] = ' ';
+                directions[3] = ' ';
             }
             
             for (var i = 0; i < 4; i++)
