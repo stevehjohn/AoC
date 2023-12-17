@@ -112,24 +112,15 @@ public class Cpu
 
     public void SetRegister(char name, long value)
     {
-        if (_registers.ContainsKey(name))
-        {
-            _registers[name] = value;
-        }
-        else
-        {
-            _registers.Add(name, value);
-        }
+        _registers[name] = value;
     }
 
     private long GetRegister(char name)
     {
-        if (_registers.ContainsKey(name))
+        if (! _registers.TryAdd(name, 0))
         {
             return _registers[name];
         }
-
-        _registers.Add(name, 0);
 
         return 0;
     }
