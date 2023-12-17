@@ -7,6 +7,8 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        return "Unknown";
+        ParseInput();
+        
+        return Solve(4, 10).ToString();
     }
 }
