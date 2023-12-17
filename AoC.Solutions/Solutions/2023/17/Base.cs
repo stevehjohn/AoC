@@ -19,8 +19,6 @@ public abstract class Base : Solution
     private static readonly (int, int) South = (0, 1);
     
     private static readonly (int, int) West = (-1, 0);
-    
-    private static readonly (int, int) None = (0, 0);
 
     protected int Solve(int minSteps, int maxSteps)
     {
@@ -31,7 +29,7 @@ public abstract class Base : Solution
         queue.Enqueue((0, 0, East, 1), 0);
         queue.Enqueue((0, 0, South, 1), 0);
 
-        var directions = new (int Dx, int Dy)[4];
+        var directions = new List<(int Dx, int Dy)>();
         
         while (queue.TryDequeue(out var item, out var cost))
         {
@@ -40,31 +38,25 @@ public abstract class Base : Solution
                 return cost;
             }
 
-            int directionCount;
+            directions.Clear();
             
             if (item.Steps < minSteps - 1)
             {
-                directions[0] = item.Direction;
-
-                directionCount = 1;
+                directions.Add(item.Direction);
             }
             else
             {
                 GetDirections(directions, item.Direction);
-
-                directionCount = 4;
             }
 
-            for (var i = 0; i < directionCount; i++)
+            foreach (var direction in directions)
             {
-                var direction = directions[i];
-                
                 if (direction == (0, 0))
                 {
                     continue;
                 }
 
-                var newSteps = directions[i] == item.Direction ? item.Steps + 1 : 0;
+                var newSteps = direction == item.Direction ? item.Steps + 1 : 0;
 
                 if (newSteps == maxSteps)
                 {
@@ -90,30 +82,26 @@ public abstract class Base : Solution
         return 0;
     }
 
-    private static void GetDirections((int, int)[] directions, (int, int) direction)
+    private static void GetDirections(List<(int, int)> directions, (int, int) direction)
     {
-        directions[0] = North;
-        directions[1] = East;
-        directions[2] = South;
-        directions[3] = West;
-
-        switch (direction)
+        if (direction != South)
         {
-            case (0, -1):
-                directions[2] = None;
-                break;
+            directions.Add(North);
+        }
+        
+        if (direction != West)
+        {
+            directions.Add(East);
+        }
+        
+        if (direction != North)
+        {
+            directions.Add(South);
+        }
 
-            case (1, 0):
-                directions[3] = None;
-                break;
-
-            case (0, 1):
-                directions[0] = None;
-                break;
-
-            case (-1, 0):
-                directions[1] = None;
-                break;
+        if (direction != East)
+        {
+            directions.Add(West);
         }
     }
 
