@@ -113,7 +113,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             _carts = _nextCarts;
         }
 
-        // In an ideal world, these should work in either order, but they don't. As it works, gonna leave for now.
+        // In an ideal world, these should work in either order, but they don't. As it works, going to leave for now.
         UpdateSparks();
 
         UpdateCollisions();

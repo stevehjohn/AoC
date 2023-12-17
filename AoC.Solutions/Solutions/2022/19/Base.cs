@@ -79,7 +79,7 @@ public abstract class Base : Solution
 
             foreach (var build in options)
             {
-                // Dunno why / 100 seems so helpful to execution time, but it is.
+                // Don't know why / 100 seems so helpful to execution time, but it is.
                 if (build.Geodes + (minutes - build.ElapsedTime) / 100 >= max)
                 {
                     queue.Enqueue(build, build.ElapsedTime);
