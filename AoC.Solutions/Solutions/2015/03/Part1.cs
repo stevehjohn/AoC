@@ -34,11 +34,7 @@ public class Part1 : Base
                     break;
             }
 
-            if (! houses.ContainsKey(position))
-            {
-                houses.Add(position, 1);
-            }
-            else
+            if (! houses.TryAdd(position, 1))
             {
                 houses[position]++;
             }

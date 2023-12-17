@@ -36,12 +36,10 @@ public class Part2 : Base
         {
             var line = $"{data[..j]}X{data[(j + 1)..]}";
 
-            if (_boxHashes.Contains(line))
+            if (! _boxHashes.Add(line))
             {
                 return line;
             }
-
-            _boxHashes.Add(line);
         }
 
         return null;

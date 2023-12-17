@@ -34,12 +34,10 @@ public class Part2 : Base
             {
                 var node = queue.Dequeue();
 
-                if (visited.Contains(node.Id))
+                if (! visited.Add(node.Id))
                 {
                     continue;
                 }
-
-                visited.Add(node.Id);
 
                 foreach (var connection in node.Connections)
                 {

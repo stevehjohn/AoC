@@ -34,12 +34,10 @@ public class Part2 : Base
 
             _frequency += sign * int.Parse(line[1..]);
 
-            if (_found.Contains(_frequency))
+            if (! _found.Add(_frequency))
             {
                 return _frequency;
             }
-
-            _found.Add(_frequency);
         }
 
         return int.MaxValue;
