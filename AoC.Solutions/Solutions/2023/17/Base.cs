@@ -121,8 +121,6 @@ public abstract class Base : Solution
 
                     if (visited.Add(key))
                     {
-                        visited.Add(key);
-
                         queue.Enqueue((item.X + 1, item.Y, 'E', newSteps, item.Cost + _map[item.X + 1, item.Y]), item.Cost + _map[item.X + 1, item.Y]);
                     }
                 }
@@ -133,8 +131,6 @@ public abstract class Base : Solution
 
                     if (visited.Add(key))
                     {
-                        visited.Add(key);
-
                         queue.Enqueue((item.X, item.Y + 1, 'S', newSteps, item.Cost + _map[item.X, item.Y + 1]), item.Cost + _map[item.X, item.Y + 1]);
                     }
                 }
@@ -145,8 +141,6 @@ public abstract class Base : Solution
 
                     if (visited.Add(key))
                     {
-                        visited.Add(key);
-                    
                         queue.Enqueue((item.X, item.Y - 1, 'N', newSteps, item.Cost + _map[item.X, item.Y - 1]), item.Cost + _map[item.X, item.Y - 1]);
                     }
                 }
@@ -157,8 +151,6 @@ public abstract class Base : Solution
 
                     if (visited.Add(key))
                     {
-                        visited.Add(key);
-
                         queue.Enqueue((item.X - 1, item.Y, 'W', newSteps, item.Cost + _map[item.X - 1, item.Y]), item.Cost + _map[item.X - 1, item.Y]);
                     }
                 }
