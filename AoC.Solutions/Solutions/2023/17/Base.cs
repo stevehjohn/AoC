@@ -12,160 +12,92 @@ public abstract class Base : Solution
 
     private int _height;
 
+    private static readonly (int, int) North = (0, -1);
+    
+    private static readonly (int, int) East = (1, 0);
+    
+    private static readonly (int, int) South = (0, 1);
+    
+    private static readonly (int, int) West = (-1, 0);
+
     protected int Solve(int minSteps, int maxSteps)
     {
-        var queue = new PriorityQueue<(int X, int Y, char Direction, int Steps, int Cost), int>();
+        var queue = new PriorityQueue<(int X, int Y, (int Dx, int Dy) Direction, int Steps), int>();
 
         var visited = new HashSet<string>();
 
-        queue.Enqueue((0, 0, 'E', 1, 0), _map[0, 0]);
-        queue.Enqueue((0, 0, 'S', 1, 0), _map[0, 0]);
+        queue.Enqueue((0, 0, East, 1), 0);
+        queue.Enqueue((0, 0, South, 1), 0);
 
-        while (queue.Count > 0)
+        var directions = new List<(int Dx, int Dy)>();
+        
+        while (queue.TryDequeue(out var item, out var cost))
         {
-            var item = queue.Dequeue();
-
             if (item.X == _width - 1 && item.Y == _height - 1 && item.Steps >= minSteps - 1)
             {
-                return item.Cost;
+                return cost;
             }
 
-            var directions = new[] { 'N', 'E' ,'S', 'W' };
-
+            directions.Clear();
+            
             if (item.Steps < minSteps - 1)
             {
-                switch (item.Direction)
-                {
-                    case 'N':
-                        if (item.Y - (minSteps - item.Steps) < 0)
-                        {
-                            continue;
-                        }
-
-                        directions[1] = ' ';
-                        directions[2] = ' ';
-                        directions[3] = ' ';
-                        break;
-
-                    case 'E':
-                        if (item.X + (minSteps - item.Steps) > _width)
-                        {
-                            continue;
-                        }
-                        
-                        directions[0] = ' ';
-                        directions[2] = ' ';
-                        directions[3] = ' ';
-                        break;
-
-                    case 'S':
-                        if (item.Y + (minSteps - item.Steps) > _height)
-                        {
-                            continue;
-                        }
-                        
-                        directions[0] = ' ';
-                        directions[1] = ' ';
-                        directions[3] = ' ';
-                        break;
-
-                    case 'W':
-                        if (item.X + (minSteps - item.Steps) < 0)
-                        {
-                            continue;
-                        }
-                        
-                        directions[0] = ' ';
-                        directions[1] = ' ';
-                        directions[2] = ' ';
-                        break;
-                }
+                directions.Add(item.Direction);
+            }
+            else
+            {
+                GetDirections(directions, item.Direction);
             }
 
-            switch (item.Direction)
+            foreach (var direction in directions)
             {
-                case 'N':
-                    directions[2] = ' ';
-                    break;
-
-                case 'E':
-                    directions[3] = ' ';
-                    break;
-
-                case 'S':
-                    directions[0] = ' ';
-                    break;
-
-                case 'W':
-                    directions[1] = ' ';
-                    break;
-            }
-            
-            for (var i = 0; i < 4; i++)
-            {
-                if (directions[i] == ' ')
-                {
-                    continue;
-                }
-
-                var newSteps = directions[i] == item.Direction ? item.Steps + 1 : 0;
+                var newSteps = direction == item.Direction ? item.Steps + 1 : 0;
 
                 if (newSteps == maxSteps)
                 {
                     continue;
                 }
 
-                if (directions[i] == 'E' && item.X < _width - 1)
+                var (x, y) = (item.X + direction.Dx, item.Y + direction.Dy);
+
+                if (x < 0 || x == _width || y < 0 || y == _height)
                 {
-                    var key = $"{item.X},{item.Y},{item.X + 1},{item.Y},{newSteps}";
-
-                    if (visited.Add(key))
-                    {
-                        visited.Add(key);
-
-                        queue.Enqueue((item.X + 1, item.Y, 'E', newSteps, item.Cost + _map[item.X + 1, item.Y]), item.Cost + _map[item.X + 1, item.Y]);
-                    }
+                    continue;
                 }
-
-                if (directions[i] == 'S' && item.Y < _height - 1)
+                
+                var key = $"{item.X},{item.Y},{x},{y},{newSteps}";
+                
+                if (visited.Add(key))
                 {
-                    var key = $"{item.X},{item.Y},{item.X},{item.Y + 1},{newSteps}";
-
-                    if (visited.Add(key))
-                    {
-                        visited.Add(key);
-
-                        queue.Enqueue((item.X, item.Y + 1, 'S', newSteps, item.Cost + _map[item.X, item.Y + 1]), item.Cost +  _map[item.X, item.Y + 1]);
-                    }
-                }
-
-                if (directions[i] == 'N' && item.Y > 0)
-                {
-                    var key = $"{item.X},{item.Y},{item.X},{item.Y - 1},{newSteps}";
-
-                    if (visited.Add(key))
-                    {
-                        visited.Add(key);
-                    
-                        queue.Enqueue((item.X, item.Y - 1, 'N', newSteps, item.Cost + _map[item.X, item.Y - 1]), item.Cost +  _map[item.X, item.Y - 1]);
-                    }
-                }
-
-                if (directions[i] == 'W' && item.X > 0)
-                {
-                    var key = $"{item.X},{item.Y},{item.X - 1},{item.Y},{newSteps}";
-
-                    if (visited.Add(key))
-                    {
-                        visited.Add(key);
-
-                        queue.Enqueue((item.X - 1, item.Y, 'W', newSteps, item.Cost + _map[item.X - 1, item.Y]), item.Cost +  _map[item.X - 1, item.Y]);
-                    }
+                    queue.Enqueue((x, y, direction, newSteps), cost + _map[x, y]);
                 }
             }
         }
 
         return 0;
+    }
+
+    private static void GetDirections(List<(int, int)> directions, (int, int) direction)
+    {
+        if (direction != South)
+        {
+            directions.Add(North);
+        }
+        
+        if (direction != West)
+        {
+            directions.Add(East);
+        }
+        
+        if (direction != North)
+        {
+            directions.Add(South);
+        }
+
+        if (direction != East)
+        {
+            directions.Add(West);
+        }
     }
 
     protected void ParseInput()
