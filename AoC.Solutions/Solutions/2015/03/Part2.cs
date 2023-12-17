@@ -58,11 +58,7 @@ public class Part2 : Base
                 roboSanta = position;
             }
 
-            if (! houses.ContainsKey(position))
-            {
-                houses.Add(position, 1);
-            }
-            else
+            if (! houses.TryAdd(position, 1))
             {
                 houses[position]++;
             }

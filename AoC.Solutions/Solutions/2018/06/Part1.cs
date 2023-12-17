@@ -56,13 +56,9 @@ public class Part1 : Base
 
                 if (lowestDistance != secondLowestDistance)
                 {
-                    if (_counts.ContainsKey(closestPoint))
+                    if (! _counts.TryAdd(closestPoint, 1))
                     {
                         _counts[closestPoint]++;
-                    }
-                    else
-                    {
-                        _counts.Add(closestPoint, 1);
                     }
 
                     if (position.X == 0 || position.X == Width - 1 || position.Y == 0 || position.Y == Height - 1)

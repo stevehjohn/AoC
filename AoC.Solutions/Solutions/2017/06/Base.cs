@@ -27,12 +27,10 @@ public abstract class Base : Solution
                 hash = HashCode.Combine(hash, value);
             }
 
-            if (states.Contains(hash))
+            if (! states.Add(hash))
             {
                 break;
             }
-
-            states.Add(hash);
         }
 
         return cycle;
