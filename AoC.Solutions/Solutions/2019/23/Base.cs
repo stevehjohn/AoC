@@ -62,9 +62,9 @@ public abstract class Base : Solution
 
                     List<(long X, long Y)> packets;
 
-                    if (allPackets.ContainsKey(address))
+                    if (allPackets.TryGetValue(address, out var packet))
                     {
-                        packets = allPackets[address];
+                        packets = packet;
                     }
                     else
                     {

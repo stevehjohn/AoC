@@ -24,14 +24,12 @@ public class Part2 : Base
 
             var stateHash = HashState();
 
-            if (_states.ContainsKey(stateHash))
+            if (! _states.TryAdd(stateHash, cycle))
             {
                 repeatIndex = _states[stateHash];
 
                 break;
             }
-
-            _states.Add(stateHash, cycle);
         }
 
         var delta = cycle - repeatIndex;

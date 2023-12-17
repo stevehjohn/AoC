@@ -12,9 +12,9 @@ public abstract class Base : Solution
 
     protected ushort FindOutputValue(string outputWire)
     {
-        if (Values.ContainsKey(outputWire))
+        if (Values.TryGetValue(outputWire, out var value))
         {
-            return Values[outputWire];
+            return value;
         }
 
         var operation = _wires[outputWire];

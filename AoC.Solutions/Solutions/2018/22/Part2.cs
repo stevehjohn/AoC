@@ -42,12 +42,10 @@ public class Part2 : Base
                 return cost;
             }
 
-            if (visited.Contains((state.Position, state.Equipped)))
+            if (! visited.Add((state.Position, state.Equipped)))
             {
                 continue;
             }
-
-            visited.Add((state.Position, state.Equipped));
 
             foreach (var neighbor in GetNeighbors(state.Position))
             {

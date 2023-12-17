@@ -64,14 +64,7 @@ public class Part2 : Base
 
         foreach (var item in locations)
         {
-            if (_memory.ContainsKey(item))
-            {
-                _memory[item] = value;
-            }
-            else
-            {
-                _memory.Add(item, value);
-            }
+            _memory[item] = value;
         }
     }
 

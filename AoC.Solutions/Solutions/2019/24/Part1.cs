@@ -18,12 +18,10 @@ public class Part1 : Base
         {
             grid = PlayRound(grid);
 
-            if (previousStates.Contains(grid))
+            if (! previousStates.Add(grid))
             {
                 return grid.ToString();
             }
-
-            previousStates.Add(grid);
         }
     }
 }

@@ -24,10 +24,8 @@ public class Part1 : Base
 
         while (position <= end)
         {
-            if (firewall.ContainsKey(position))
+            if (firewall.TryGetValue(position, out var layer))
             {
-                var layer = firewall[position];
-
                 if (layer.Position == 0)
                 {
                     severity += position * layer.Depth;

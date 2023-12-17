@@ -106,8 +106,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
             _y = 0;
         }
 
+        // ReSharper disable once PossibleLossOfFraction
         if (_y >= _map.Height - ScreenHeight / TileSize)
         {
+            // ReSharper disable once PossibleLossOfFraction
             _y = _map.Height - ScreenHeight / TileSize;
         }
 

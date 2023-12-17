@@ -25,12 +25,10 @@ public class Part1 : Base
 
         foreach (var word in words)
         {
-            if (encountered.Contains(word))
+            if (! encountered.Add(word))
             {
                 return false;
             }
-
-            encountered.Add(word);
         }
 
         return true;

@@ -24,14 +24,7 @@ public class Part1 : Base
 
             var value = (instruction.Value & mask.And) | mask.Or;
 
-            if (memory.ContainsKey(instruction.Location))
-            {
-                memory[instruction.Location] = value;
-            }
-            else
-            {
-                memory.Add(instruction.Location, value);
-            }
+            memory[instruction.Location] = value;
         }
 
         var result = memory.Sum(kvp => kvp.Value);

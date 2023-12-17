@@ -165,7 +165,7 @@ public class Bot
                 {
                     var pair = new string(new[] { i.Item, c }.OrderBy(x => x).ToArray());
 
-                    if (_distances.ContainsKey(pair))
+                    if (! _distances.TryAdd(pair, currentSteps))
                     {
                         if (_distances[pair] > currentSteps)
                         {
@@ -176,8 +176,6 @@ public class Bot
                     }
                     else
                     {
-                        _distances.Add(pair, currentSteps);
-
                         _paths.Add(pair, _positionsSinceLastItem.ToList());
                     }
                 }
@@ -206,9 +204,9 @@ public class Bot
 
                 HashSet<char> doors;
 
-                if (_doors.ContainsKey(pair))
+                if (_doors.TryGetValue(pair, out var door))
                 {
-                    doors = _doors[pair];
+                    doors = door;
                 }
                 else
                 {
