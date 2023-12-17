@@ -51,11 +51,6 @@ public abstract class Base : Solution
 
             foreach (var direction in directions)
             {
-                if (direction == (0, 0))
-                {
-                    continue;
-                }
-
                 var newSteps = direction == item.Direction ? item.Steps + 1 : 0;
 
                 if (newSteps == maxSteps)
