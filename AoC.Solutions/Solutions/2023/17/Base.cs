@@ -21,32 +21,13 @@ public abstract class Base : Solution
         queue.Enqueue((0, 0, 'E', 1), 0);
         queue.Enqueue((0, 0, 'S', 1), 0);
 
+        var directions = new char[4];
+        
         while (queue.TryDequeue(out var item, out var cost))
         {
             if (item.X == _width - 1 && item.Y == _height - 1 && item.Steps >= minSteps - 1)
             {
                 return cost;
-            }
-
-            var directions = new[] { 'N', 'E' ,'S', 'W' };
-
-            switch (item.Direction)
-            {
-                case 'N':
-                    directions[2] = ' ';
-                    break;
-
-                case 'E':
-                    directions[3] = ' ';
-                    break;
-
-                case 'S':
-                    directions[0] = ' ';
-                    break;
-
-                case 'W':
-                    directions[1] = ' ';
-                    break;
             }
             
             if (item.Steps < minSteps - 1)
@@ -56,7 +37,33 @@ public abstract class Base : Solution
                 directions[2] = ' ';
                 directions[3] = ' ';
             }
-            
+            else
+            {
+                directions[0] = 'N';
+                directions[1] = 'E';
+                directions[2] = 'S';
+                directions[3] = 'W';
+
+                switch (item.Direction)
+                {
+                    case 'N':
+                        directions[2] = ' ';
+                        break;
+
+                    case 'E':
+                        directions[3] = ' ';
+                        break;
+
+                    case 'S':
+                        directions[0] = ' ';
+                        break;
+
+                    case 'W':
+                        directions[1] = ' ';
+                        break;
+                }
+            }
+
             for (var i = 0; i < 4; i++)
             {
                 if (directions[i] == ' ')
