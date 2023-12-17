@@ -30,6 +30,8 @@ public class Part1 : Base
         {
             var item = queue.Dequeue();
 
+            //Console.WriteLine($"{item.X}, {item.Y}: {item.Direction} ({item.Cost})");
+            
             if (! visited.Add((item.X, item.Y, item.Direction)))
             {
                 continue;
@@ -40,75 +42,49 @@ public class Part1 : Base
                 return item.Cost;
             }
 
-            if (item.Direction == 'E')
+            var directions = new[] { 'N', 'E' ,'S', 'W' };
+
+            switch (item.Direction)
             {
-                if (item.Steps < 3 && item.X < _width - 1)
-                {
-                    queue.Enqueue((item.X + 1, item.Y, 'E', item.Steps + 1, item.Cost + _map[item.X + 1, item.Y]), _map[item.X + 1, item.Y]);
-                }
+                case 'N':
+                    directions[2] = ' ';
+                    break;
 
-                if (item.Y > 0)
-                {
-                    queue.Enqueue((item.X, item.Y - 1, 'N', 0, item.Cost + _map[item.X, item.Y - 1]), _map[item.X, item.Y - 1]);
-                }
+                case 'E':
+                    directions[3] = ' ';
+                    break;
 
-                if (item.Y < _height - 1)
-                {
-                    queue.Enqueue((item.X, item.Y + 1, 'S', 0, item.Cost + _map[item.X, item.Y + 1]), _map[item.X, item.Y + 1]);
-                }
+                case 'S':
+                    directions[0] = ' ';
+                    break;
+
+                case 'W':
+                    directions[1] = ' ';
+                    break;
             }
-
-            if (item.Direction == 'S')
+            
+            for (var i = 0; i < 4; i++)
             {
-                if (item.Steps < 3 && item.Y < _height - 1)
+                var newSteps = directions[i] == item.Direction ? item.Steps + 1 : 0;
+                
+                if (directions[i] == 'N' && item.Y > 0)
                 {
-                    queue.Enqueue((item.X, item.Y + 1, 'S', item.Steps + 1, item.Cost + _map[item.X, item.Y + 1]), _map[item.X, item.Y + 1]);
+                    queue.Enqueue((item.X, item.Y - 1, 'N', newSteps, item.Cost + _map[item.X, item.Y - 1]), _map[item.X, item.Y - 1]);
                 }
 
-                if (item.X > 0)
+                if (directions[i] == 'E' && item.X < _width - 1)
                 {
-                    queue.Enqueue((item.X - 1, item.Y, 'W', 0, item.Cost + _map[item.X - 1, item.Y]), _map[item.X - 1, item.Y]);
+                    queue.Enqueue((item.X + 1, item.Y, 'E', newSteps, item.Cost + _map[item.X + 1, item.Y]), _map[item.X + 1, item.Y]);
                 }
 
-                if (item.X < _width - 1)
+                if (directions[i] == 'S' && item.Y < _height - 1)
                 {
-                    queue.Enqueue((item.X + 1, item.Y, 'E', 0, item.Cost + _map[item.X + 1, item.Y]), _map[item.X + 1, item.Y]);
-                }
-            }
-
-            if (item.Direction == 'W')
-            {
-                if (item.Steps < 3 && item.X > 0)
-                {
-                    queue.Enqueue((item.X - 1, item.Y, 'W', item.Steps + 1, item.Cost + _map[item.X - 1, item.Y]), _map[item.X - 1, item.Y]);
+                    queue.Enqueue((item.X, item.Y + 1, 'S', newSteps, item.Cost + _map[item.X, item.Y + 1]), _map[item.X, item.Y + 1]);
                 }
 
-                if (item.Y > 0)
+                if (directions[i] == 'W' && item.X > 0)
                 {
-                    queue.Enqueue((item.X, item.Y - 1, 'N', 0, item.Cost + _map[item.X, item.Y - 1]), _map[item.X, item.Y - 1]);
-                }
-
-                if (item.Y < _height - 1)
-                {
-                    queue.Enqueue((item.X, item.Y + 1, 'S', 0, item.Cost + _map[item.X, item.Y + 1]), _map[item.X, item.Y + 1]);
-                }
-            }
-
-            if (item.Direction == 'N')
-            {
-                if (item.Steps < 3 && item.Y > 0)
-                {
-                    queue.Enqueue((item.X, item.Y - 1, 'N', item.Steps + 1, item.Cost + _map[item.X, item.Y - 1]), _map[item.X, item.Y - 1]);
-                }
-
-                if (item.X > 0)
-                {
-                    queue.Enqueue((item.X - 1, item.Y, 'W', 0, item.Cost + _map[item.X - 1, item.Y]), _map[item.X - 1, item.Y]);
-                }
-
-                if (item.X < _width - 1)
-                {
-                    queue.Enqueue((item.X + 1, item.Y, 'E', 0, item.Cost + _map[item.X + 1, item.Y]), _map[item.X + 1, item.Y]);
+                    queue.Enqueue((item.X - 1, item.Y, 'W', newSteps, item.Cost + _map[item.X - 1, item.Y]), _map[item.X - 1, item.Y]);
                 }
             }
         }
