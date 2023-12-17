@@ -103,6 +103,11 @@ public abstract class Base : Solution
             
             for (var i = 0; i < 4; i++)
             {
+                if (directions[i] == ' ')
+                {
+                    continue;
+                }
+
                 var newSteps = directions[i] == item.Direction ? item.Steps + 1 : 0;
 
                 if (newSteps == maxSteps)
