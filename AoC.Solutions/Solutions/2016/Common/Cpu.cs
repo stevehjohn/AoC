@@ -173,8 +173,6 @@ public class Cpu
         if (! registers.TryAdd(register, value))
         {
             registers[register] = value;
-
-            return;
         }
     }
 }

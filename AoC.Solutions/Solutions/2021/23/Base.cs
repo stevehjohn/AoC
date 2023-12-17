@@ -172,12 +172,10 @@ public abstract class Base : Solution
 
         hash = HashCode.Combine(hash, index);
 
-        if (_encounteredStates.Contains(hash))
+        if (! _encounteredStates.Add(hash))
         {
             return false;
         }
-
-        _encounteredStates.Add(hash);
 
         return true;
     }

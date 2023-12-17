@@ -46,13 +46,9 @@ public abstract class Base : Solution
 
                 var value = long.Parse(line.Split(' ')[0]);
 
-                if (DirectorySizes.ContainsKey(key))
+                if (! DirectorySizes.TryAdd(key, value))
                 {
                     DirectorySizes[key] += value;
-                }
-                else
-                {
-                    DirectorySizes.Add(key, value);
                 }
 
                 i--;

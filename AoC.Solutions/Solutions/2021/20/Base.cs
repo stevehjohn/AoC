@@ -137,7 +137,7 @@ public abstract class Base : Solution
 
         var pixel = new Point(cX, cY);
 
-        if (_algorithm[index] != _image[cX, cY] && ! _pixelsToFlip.Contains(pixel))
+        if (_algorithm[index] != _image[cX, cY])
         {
             _pixelsToFlip.Add(pixel);
         }
