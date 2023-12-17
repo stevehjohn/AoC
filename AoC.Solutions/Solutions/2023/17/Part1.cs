@@ -20,11 +20,11 @@ public class Part1 : Base
 
     private int Solve()
     {
-        var queue = new PriorityQueue<(int X, int Y, char Direction, int Steps, int Cost), int>();
+        var queue = new PriorityQueue<(int X, int Y, char Direction, int Steps, int Cost, string Path), int>();
 
         var visited = new HashSet<string>();
         
-        queue.Enqueue((0, 0, 'E', -1, _map[0, 0]), _map[0, 0]);
+        queue.Enqueue((0, 0, 'E', -1, _map[0, 0], ""), _map[0, 0]);
 
         while (queue.Count > 0)
         {
@@ -32,7 +32,11 @@ public class Part1 : Base
 
             if (item.X == _width - 1 && item.Y == _height - 1)
             {
-                return item.Cost;
+                Console.WriteLine($"{item.Path}, {item.Path.Length}: {item.Cost}");
+                
+                continue;
+                
+                //return item.Cost;
             }
 
             var directions = new[] { 'N', 'E' ,'S', 'W' };
@@ -59,52 +63,57 @@ public class Part1 : Base
             for (var i = 0; i < 4; i++)
             {
                 var newSteps = directions[i] == item.Direction ? item.Steps + 1 : 0;
-                
-                if (directions[i] == 'N' && item.Y > 0)
-                {
-                    var key = $"{item.X},{item.Y},{item.X},{item.Y - 1},{item.Steps}";
 
-                    if (visited.Add(key))
-                    {
-                        visited.Add(key);
-                    
-                        queue.Enqueue((item.X, item.Y - 1, 'N', newSteps, item.Cost + _map[item.X, item.Y - 1]), _map[item.X, item.Y - 1]);
-                    }
+                if (newSteps == 3)
+                {
+                    continue;
                 }
 
                 if (directions[i] == 'E' && item.X < _width - 1)
                 {
-                    var key = $"{item.X},{item.Y},{item.X + 1},{item.Y},{item.Steps}";
+                    var key = $"{item.X},{item.Y},{item.X + 1},{item.Y},{newSteps}";
 
                     if (visited.Add(key))
                     {
                         visited.Add(key);
 
-                        queue.Enqueue((item.X + 1, item.Y, 'E', newSteps, item.Cost + _map[item.X + 1, item.Y]), _map[item.X + 1, item.Y]);
+                        queue.Enqueue((item.X + 1, item.Y, 'E', newSteps, item.Cost + _map[item.X + 1, item.Y], item.Path + 'E'), _map[item.X + 1, item.Y]);
                     }
                 }
 
                 if (directions[i] == 'S' && item.Y < _height - 1)
                 {
-                    var key = $"{item.X},{item.Y},{item.X},{item.Y + 1},{item.Steps}";
+                    var key = $"{item.X},{item.Y},{item.X},{item.Y + 1},{newSteps}";
 
                     if (visited.Add(key))
                     {
                         visited.Add(key);
 
-                        queue.Enqueue((item.X, item.Y + 1, 'S', newSteps, item.Cost + _map[item.X, item.Y + 1]), _map[item.X, item.Y + 1]);
+                        queue.Enqueue((item.X, item.Y + 1, 'S', newSteps, item.Cost + _map[item.X, item.Y + 1], item.Path + 'S'), _map[item.X, item.Y + 1]);
+                    }
+                }
+
+                if (directions[i] == 'N' && item.Y > 0)
+                {
+                    var key = $"{item.X},{item.Y},{item.X},{item.Y - 1},{newSteps}";
+
+                    if (visited.Add(key))
+                    {
+                        visited.Add(key);
+                    
+                        queue.Enqueue((item.X, item.Y - 1, 'N', newSteps, item.Cost + _map[item.X, item.Y - 1], item.Path + 'N'), _map[item.X, item.Y - 1]);
                     }
                 }
 
                 if (directions[i] == 'W' && item.X > 0)
                 {
-                    var key = $"{item.X},{item.Y},{item.X - 1},{item.Y},{item.Steps}";
+                    var key = $"{item.X},{item.Y},{item.X - 1},{item.Y},{newSteps}";
 
                     if (visited.Add(key))
                     {
                         visited.Add(key);
 
-                        queue.Enqueue((item.X - 1, item.Y, 'W', newSteps, item.Cost + _map[item.X - 1, item.Y]), _map[item.X - 1, item.Y]);
+                        queue.Enqueue((item.X - 1, item.Y, 'W', newSteps, item.Cost + _map[item.X - 1, item.Y], item.Path + 'W'), _map[item.X - 1, item.Y]);
                     }
                 }
             }
