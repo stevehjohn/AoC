@@ -23,13 +23,9 @@ public abstract class Base : Solution
         {
             if (nextMarble % 23 == 0)
             {
-                if (playerScores.ContainsKey(player))
+                if (! playerScores.TryAdd(player, nextMarble))
                 {
                     playerScores[player] += nextMarble;
-                }
-                else
-                {
-                    playerScores.Add(player, nextMarble);
                 }
 
                 var toRemove = currentMarble.PreviousCircular().PreviousCircular().PreviousCircular().PreviousCircular().PreviousCircular().PreviousCircular().PreviousCircular();

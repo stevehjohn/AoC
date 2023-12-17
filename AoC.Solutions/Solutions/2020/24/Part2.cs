@@ -65,13 +65,9 @@ public class Part2 : Base
 
         foreach (var point in flips.Distinct())
         {
-            if (BlackTiles.Contains(point))
+            if (! BlackTiles.Add(point))
             {
                 BlackTiles.Remove(point);
-            }
-            else
-            {
-                BlackTiles.Add(point);
             }
         }
     }

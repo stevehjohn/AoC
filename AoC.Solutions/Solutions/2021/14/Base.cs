@@ -14,10 +14,7 @@ public abstract class Base : Solution
         {
             var pair = Input[0].Substring(i, 2);
 
-            if (! pairs.ContainsKey(pair))
-            {
-                pairs.Add(pair, 1);
-            }
+            pairs.TryAdd(pair, 1);
         }
 
         for (var i = 0; i < steps; i++)
@@ -37,22 +34,14 @@ public abstract class Base : Solution
 
                 var incrementBy = pairs[rule[0]];
 
-                if (! pairsToAdd.ContainsKey(newPair))
-                {
-                    pairsToAdd.Add(newPair, incrementBy);
-                }
-                else
+                if (! pairsToAdd.TryAdd(newPair, incrementBy))
                 {
                     pairsToAdd[newPair] += incrementBy;
                 }
 
                 newPair = $"{rule[1][0]}{rule[0][1]}";
 
-                if (! pairsToAdd.ContainsKey(newPair))
-                {
-                    pairsToAdd.Add(newPair, incrementBy);
-                }
-                else
+                if (! pairsToAdd.TryAdd(newPair, incrementBy))
                 {
                     pairsToAdd[newPair] += incrementBy;
                 }
