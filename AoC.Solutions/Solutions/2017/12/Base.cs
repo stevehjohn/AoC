@@ -27,9 +27,9 @@ public abstract class Base : Solution
 
             foreach (var connection in connectionsString)
             {
-                if (Nodes.ContainsKey(connection))
+                if (Nodes.TryGetValue(connection, out var cached))
                 {
-                    node.Connections.Add(Nodes[connection]);
+                    node.Connections.Add(cached);
                 }
                 else
                 {

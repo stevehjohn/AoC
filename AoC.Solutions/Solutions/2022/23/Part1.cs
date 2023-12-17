@@ -80,7 +80,7 @@ public class Part1 : Base
                 continue;
             }
 
-            if (elves.Contains(elf + proposedMove))
+            if (! elves.Add(elf + proposedMove))
             {
                 elves.Add(elf);
 
@@ -92,8 +92,6 @@ public class Part1 : Base
 
                 continue;
             }
-
-            elves.Add(elf + proposedMove);
 
             moved++;
         }

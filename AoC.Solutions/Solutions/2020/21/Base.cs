@@ -20,13 +20,9 @@ public abstract class Base : Solution
 
             foreach (var ingredient in ingredients)
             {
-                if (IngredientOccurrences.ContainsKey(ingredient))
+                if (! IngredientOccurrences.TryAdd(ingredient, 1))
                 {
                     IngredientOccurrences[ingredient]++;
-                }
-                else
-                {
-                    IngredientOccurrences.Add(ingredient, 1);
                 }
             }
 

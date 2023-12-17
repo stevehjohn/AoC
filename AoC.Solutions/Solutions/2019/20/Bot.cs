@@ -139,7 +139,7 @@ public class Bot
                 }
                 else
                 {
-                    if (_visitedPortals.ContainsKey(portal.Id))
+                    if (! _visitedPortals.TryAdd(portal.Id, 0))
                     {
                         if (_visitedPortals[portal.Id] > 1)
                         {
@@ -147,10 +147,6 @@ public class Bot
                         }
 
                         _visitedPortals[portal.Id]++;
-                    }
-                    else
-                    {
-                        _visitedPortals.Add(portal.Id, 0);
                     }
 
                     Level++;

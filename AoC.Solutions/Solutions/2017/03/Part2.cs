@@ -100,9 +100,9 @@ public class Part2 : Base
         {
             var point = new Point(position.X + offset.X, position.Y + offset.Y);
 
-            if (spiral.ContainsKey(point))
+            if (spiral.TryGetValue(point, out var cached))
             {
-                value += spiral[point];
+                value += cached;
             }
         }
 

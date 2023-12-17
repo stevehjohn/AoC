@@ -27,14 +27,12 @@ public class Part2 : Base
 
             var state = new string(dancers);
 
-            if (previous.Contains(state))
+            if (! previous.Add(state))
             {
                 cycleLength = i + 1;
 
                 break;
             }
-
-            previous.Add(state);
         }
 
         for (var i = 1_000_000_000 / cycleLength * cycleLength; i < 1_000_000_000; i++)

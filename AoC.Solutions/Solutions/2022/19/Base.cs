@@ -46,7 +46,7 @@ public abstract class Base : Solution
         return result.ToList();
     }
 
-    private int ExecuteBlueprint(Blueprint blueprint, int minutes)
+    private static int ExecuteBlueprint(Blueprint blueprint, int minutes)
     {
         var start = new State(0, 0, 0, 0, 1, 0, 0, 0, 0);
 
@@ -79,7 +79,7 @@ public abstract class Base : Solution
 
             foreach (var build in options)
             {
-                // Dunno why / 100 seems so helpful to execution time, but it is.
+                // Don't know why / 100 seems so helpful to execution time, but it is.
                 if (build.Geodes + (minutes - build.ElapsedTime) / 100 >= max)
                 {
                     queue.Enqueue(build, build.ElapsedTime);
@@ -90,7 +90,7 @@ public abstract class Base : Solution
         return max;
     }
 
-    private List<State> GenerateBuildOptions(Blueprint blueprint, State state, int minutes)
+    private static List<State> GenerateBuildOptions(Blueprint blueprint, State state, int minutes)
     {
         var options = new List<State>();
 

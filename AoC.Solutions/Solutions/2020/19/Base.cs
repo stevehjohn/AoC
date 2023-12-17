@@ -91,9 +91,9 @@ public abstract class Base : Solution
 
         foreach (var id in ids)
         {
-            if (Rules.ContainsKey(id))
+            if (Rules.TryGetValue(id, out var rule))
             {
-                result.Add(Rules[id]);
+                result.Add(rule);
             }
             else
             {

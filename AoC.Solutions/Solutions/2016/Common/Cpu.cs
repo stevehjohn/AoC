@@ -160,25 +160,19 @@ public class Cpu
 
     private static int GetRegisterValue(Dictionary<char, int> registers, char register)
     {
-        if (registers.ContainsKey(register))
+        if (! registers.TryAdd(register, 0))
         {
             return registers[register];
         }
-
-        registers.Add(register, 0);
 
         return 0;
     }
 
     private static void SetRegisterValue(Dictionary<char, int> registers, char register, int value)
     {
-        if (registers.ContainsKey(register))
+        if (! registers.TryAdd(register, value))
         {
             registers[register] = value;
-
-            return;
         }
-
-        registers.Add(register, value);
     }
 }

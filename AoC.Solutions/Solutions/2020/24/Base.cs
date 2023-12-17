@@ -29,13 +29,9 @@ public abstract class Base : Solution
                 position.Z += movement.Z;
             }
 
-            if (BlackTiles.Contains(position))
+            if (! BlackTiles.Add(position))
             {
                 BlackTiles.Remove(position);
-            }
-            else
-            {
-                BlackTiles.Add(position);
             }
         }
     }
