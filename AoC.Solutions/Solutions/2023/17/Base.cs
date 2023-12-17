@@ -12,20 +12,24 @@ public abstract class Base : Solution
 
     private int _height;
 
+    private static readonly (int, int) North = (0, -1);
+    
+    private static readonly (int, int) East = (1, 0);
+    
+    private static readonly (int, int) South = (0, 1);
+    
+    private static readonly (int, int) West = (-1, 0);
+    
+    private static readonly (int, int) None = (0, 0);
+
     protected int Solve(int minSteps, int maxSteps)
     {
-        var north = (0, -1);
-        var east = (1, 0);
-        var south = (0, 1);
-        var west = (-1, 0);
-        var none = (0, 0);
-        
         var queue = new PriorityQueue<(int X, int Y, (int Dx, int Dy) Direction, int Steps), int>();
 
         var visited = new HashSet<string>();
 
-        queue.Enqueue((0, 0, east, 1), 0);
-        queue.Enqueue((0, 0, south, 1), 0);
+        queue.Enqueue((0, 0, East, 1), 0);
+        queue.Enqueue((0, 0, South, 1), 0);
 
         var directions = new (int Dx, int Dy)[4];
         
@@ -35,42 +39,23 @@ public abstract class Base : Solution
             {
                 return cost;
             }
+
+            int directionCount;
             
             if (item.Steps < minSteps - 1)
             {
                 directions[0] = item.Direction;
-                directions[1] = none;
-                directions[2] = none;
-                directions[3] = none;
+
+                directionCount = 1;
             }
             else
             {
-                directions[0] = north;
-                directions[1] = east;
-                directions[2] = south;
-                directions[3] = west;
+                GetDirections(directions, item.Direction);
 
-                switch (item.Direction)
-                {
-                    case (0, -1):
-                        directions[2] = none;
-                        break;
-
-                    case (1, 0):
-                        directions[3] = none;
-                        break;
-
-                    case (0, 1):
-                        directions[0] = none;
-                        break;
-
-                    case (-1, 0):
-                        directions[1] = none;
-                        break;
-                }
+                directionCount = 4;
             }
 
-            for (var i = 0; i < 4; i++)
+            for (var i = 0; i < directionCount; i++)
             {
                 var direction = directions[i];
                 
@@ -103,6 +88,33 @@ public abstract class Base : Solution
         }
 
         return 0;
+    }
+
+    private static void GetDirections((int, int)[] directions, (int, int) direction)
+    {
+        directions[0] = North;
+        directions[1] = East;
+        directions[2] = South;
+        directions[3] = West;
+
+        switch (direction)
+        {
+            case (0, -1):
+                directions[2] = None;
+                break;
+
+            case (1, 0):
+                directions[3] = None;
+                break;
+
+            case (0, 1):
+                directions[0] = None;
+                break;
+
+            case (-1, 0):
+                directions[1] = None;
+                break;
+        }
     }
 
     protected void ParseInput()
