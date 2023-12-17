@@ -37,24 +37,44 @@ public abstract class Base : Solution
                 switch (item.Direction)
                 {
                     case 'N':
+                        if (item.Y - (minSteps - item.Steps) < 0)
+                        {
+                            continue;
+                        }
+
                         directions[1] = ' ';
                         directions[2] = ' ';
                         directions[3] = ' ';
                         break;
 
                     case 'E':
+                        if (item.X + (minSteps - item.Steps) > _width)
+                        {
+                            continue;
+                        }
+                        
                         directions[0] = ' ';
                         directions[2] = ' ';
                         directions[3] = ' ';
                         break;
 
                     case 'S':
+                        if (item.Y + (minSteps - item.Steps) > _height)
+                        {
+                            continue;
+                        }
+                        
                         directions[0] = ' ';
                         directions[1] = ' ';
                         directions[3] = ' ';
                         break;
 
                     case 'W':
+                        if (item.X + (minSteps - item.Steps) < 0)
+                        {
+                            continue;
+                        }
+                        
                         directions[0] = ' ';
                         directions[1] = ' ';
                         directions[2] = ' ';
