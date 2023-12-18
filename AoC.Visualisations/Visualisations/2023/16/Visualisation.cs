@@ -11,6 +11,8 @@ namespace AoC.Visualisations.Visualisations._2023._16;
 [UsedImplicitly]
 public class Visualisation : VisualisationBase<PuzzleState>
 {
+    private const int FastFrameStart = 4_000;
+    
     private SpriteBatch _spriteBatch;
     
     private Texture2D _tiles;
@@ -233,7 +235,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                     TranslatePuzzleState();
 
-                    _chunkSize = Math.Max(state.Beams.Count / 50, 50);
+                    _chunkSize = _state.Beams.Count < 50 ? 1 : 50;
 
                     _lastLaser = (state.LaserX, state.LaserY, state.StartDirection);
                 }
@@ -247,7 +249,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         _beamEnds.RemoveAll(e => e.Count < 0);
 
-        if (_frame < 1_000)
+        if (_frame < FastFrameStart)
         {
             foreach (var end in _beamEnds)
             {
@@ -262,7 +264,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             }
         }
 
-        if (_frame <= 1_000)
+        if (_frame <= FastFrameStart)
         {
             for (var i = 0; i < _chunkSize; i++)
             {
@@ -276,7 +278,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             }
         }
 
-        var modulo = _frame > 1_000 ? 20 : 50;
+        var modulo = _frame > FastFrameStart ? 20 : 50;
         
         if (_beams.Count == 0 && _frame % modulo == 0)
         {
