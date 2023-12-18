@@ -43,6 +43,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private int _chunkSize;
 
+    private bool _done;
+
     private (int X, int Y) _lastLaser = (0, 0);
 
     public Visualisation()
@@ -138,8 +140,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                 if (state.Map != null && _map == null)
                 {
-                    Console.WriteLine("NEW MAP");
-                    
                     _map = state.Map;
                 }
 
@@ -184,8 +184,13 @@ public class Visualisation : VisualisationBase<PuzzleState>
             CreateSegments();
         }
 
-        if (_beams.Count == 0 && _sparks.Count == 0 && _frame > 50 && _state.LaserX != -1 && _state.LaserY != 0)
+        if (_beams.Count == 0 && _sparks.Count == 0 && _frame > 50)
         {
+            if (_state.LaserX != -1 && _state.LaserY != 0)
+            {
+                _done = true;
+            }
+            
             _allBeams.Clear();
 
             _state = null;
@@ -517,7 +522,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         if (_map == null)
         {
-            Console.WriteLine("NULL MAP");
             return;
         }
 
