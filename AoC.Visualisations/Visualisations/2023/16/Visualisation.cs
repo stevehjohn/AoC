@@ -39,6 +39,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private int _part;
 
+    private int _chunkSize;
+
     private (int X, int Y) _lastLaser = (0, 0);
 
     public Visualisation()
@@ -137,10 +139,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 if (state.LaserX != _lastLaser.X || state.LaserY != _lastLaser.Y)
                 {
                     TranslatePuzzleState();
-
-                    _lastLaser = (state.LaserX, state.LaserY);
                     
-                    Console.WriteLine(_state.LaserX);
+                    _chunkSize = Math.Max(state.Beams.Count / 50, 1);
+
+                    _frame = 0;
+                    
+                    _lastLaser = (state.LaserX, state.LaserY);
                 }
             }
         }
@@ -163,13 +167,13 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 SpriteOffset = _rng.Next(3) * 5
             });
         }
-
-        for (var i = 0; i < 100; i++)
+        
+        for (var i = 0; i < _chunkSize; i++)
         {
             CreateSegments();
         }
 
-        if (_beams.Count == 0 && _sparks.Count == 0)
+        if (_beams.Count == 0 && _sparks.Count == 0 && _frame > 50)
         {
             _allBeams.Clear();
 
