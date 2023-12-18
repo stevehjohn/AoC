@@ -19,7 +19,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private readonly Dictionary<int, List<(int X, int Y, char Direction, char Tile, int SourceId)>> _allBeams = new();
 
-    private readonly List<List<(int X, int Y, char Direction)>> _beams = new ();
+    private readonly List<Segment> _segments = new();
     
     private Color[] _palette;
     
@@ -107,8 +107,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
                         previous = _allBeams[beam.SourceId].Last().Direction;
                         
                         currentBeam.Add((beam.X, beam.Y, beam.Direction, GetTile(previous, beam.Direction), beam.SourceId));
-
-                        previous = currentBeam.Last().Direction;
                         
                         continue;
                     }
