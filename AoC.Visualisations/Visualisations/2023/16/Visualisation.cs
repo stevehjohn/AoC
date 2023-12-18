@@ -47,7 +47,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private bool _done;
 
-    private (int X, int Y) _lastLaser = (0, 0);
+    private (int X, int Y, char Direction) _lastLaser = (0, 0, '\0');
 
     public Visualisation()
     {
@@ -235,7 +235,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                     _chunkSize = Math.Max(state.Beams.Count / 50, 50);
 
-                    _lastLaser = (state.LaserX, state.LaserY);
+                    _lastLaser = (state.LaserX, state.LaserY, state.StartDirection);
                 }
             }
         }
@@ -559,29 +559,31 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private void DrawDish()
     {
-        if (_state == null || _state.StartDirection == '\0')
+        var laser = _lastLaser;
+        
+        if (_state != null && _state.StartDirection == '\0')
         {
-            return;
+            laser = (_state.LaserX, _state.LaserY, _state.StartDirection);
         }
 
-        if (_state.StartDirection == 'S')
+        if (laser.Direction == 'S')
         {
-            _spriteBatch.Draw(_dish, new Vector2(15 + _state.LaserX * 7, 0), new Rectangle(0, 0, 22, 22), Color.DarkMagenta, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+            _spriteBatch.Draw(_dish, new Vector2(15 + laser.X * 7, 0), new Rectangle(0, 0, 22, 22), Color.DarkMagenta, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
         }
 
-        if (_state.StartDirection == 'N')
+        if (laser.Direction == 'N')
         {
-            _spriteBatch.Draw(_dish, new Vector2(15 + _state.LaserX * 7, 790), new Rectangle(0, 0, 22, 22), Color.DarkMagenta, 0, Vector2.Zero, Vector2.One, SpriteEffects.FlipVertically, 0);
+            _spriteBatch.Draw(_dish, new Vector2(15 + laser.X * 7, 790), new Rectangle(0, 0, 22, 22), Color.DarkMagenta, 0, Vector2.Zero, Vector2.One, SpriteEffects.FlipVertically, 0);
         }
 
-        if (_state.StartDirection == 'E')
+        if (laser.Direction == 'E')
         {
-            _spriteBatch.Draw(_dish, new Vector2(0, 15 + _state.LaserY * 7), new Rectangle(22, 0, 22, 22), Color.DarkMagenta, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+            _spriteBatch.Draw(_dish, new Vector2(0, 15 + laser.Y * 7), new Rectangle(22, 0, 22, 22), Color.DarkMagenta, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
         }
 
-        if (_state.StartDirection == 'W')
+        if (laser.Direction == 'W')
         {
-            _spriteBatch.Draw(_dish, new Vector2(790, 15 + _state.LaserY * 7), new Rectangle(22, 0, 22, 22), Color.DarkMagenta, 0, Vector2.Zero, Vector2.One, SpriteEffects.FlipHorizontally, 0);
+            _spriteBatch.Draw(_dish, new Vector2(790, 15 + laser.Y * 7), new Rectangle(22, 0, 22, 22), Color.DarkMagenta, 0, Vector2.Zero, Vector2.One, SpriteEffects.FlipHorizontally, 0);
         }
     }
 
