@@ -22,6 +22,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private readonly List<Segment> _segments = new();
     
     private readonly Dictionary<int, int> _beams = new();
+
+    private readonly List<BeamEnd> _beamEnds = new();
     
     private Color[] _palette;
 
@@ -141,6 +143,13 @@ public class Visualisation : VisualisationBase<PuzzleState>
             }
 
             _segments.RemoveAll(s => s.ColorIndex < 0);
+
+            for (var i = 0; i < _beamEnds.Count; i++)
+            {
+                _beamEnds[i].Count--;
+            }
+
+            _beamEnds.RemoveAll(e => e.Count < 0);
         }
 
         var remove = new List<int>();
@@ -159,9 +168,18 @@ public class Visualisation : VisualisationBase<PuzzleState>
             {
                 remove.Add(beam.Key);
 
+                var found = false;
+                
                 foreach (var newBeam in _allBeams.Where(b => b.Value[0].SourceId == beam.Key))
                 {
                     add.Add(newBeam.Key);
+
+                    found = true;
+                }
+
+                if (! found)
+                {
+                    _beamEnds.Add(new BeamEnd { X = segment.X, Y = segment.Y, Count = _palette.Length - 1 });
                 }
             }
         }
