@@ -116,7 +116,16 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             return;
         }
+        
+        UpdatePuzzleState();
+        
+        UpdateSparks();
+        
+        base.Update(gameTime);
+    }
 
+    private void UpdatePuzzleState()
+    {
         if (_frame % 5 == 0)
         {
             for (var i = 0; i < _segments.Count; i++)
@@ -187,10 +196,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             _beams.Add(item, 0);
         }
-
-        UpdateSparks();
-        
-        base.Update(gameTime);
     }
 
     private void TranslatePuzzleState()
