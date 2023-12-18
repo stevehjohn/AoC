@@ -96,7 +96,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
                     _allBeams.Add(beam.Id, new List<(int X, int Y, char Direction)>());
                 }
 
-                _allBeams[beam.Id].Add((beam.X, beam.Y, beam.Direction));
+                var currentBeam = _allBeams[beam.Id];
+
+                if (currentBeam.Count == 0)
+                {
+                    currentBeam.Add((beam.X, beam.Y, beam.Direction));
+                }
             }
         }
 
