@@ -141,8 +141,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 if (state.LaserX != _lastLaser.X || state.LaserY != _lastLaser.Y)
                 {
                     TranslatePuzzleState();
-                    
-                    _chunkSize = Math.Max(state.Beams.Count / 50, 1);
+
+                    _chunkSize = Math.Max(state.Beams.Count / 50, 50);
 
                     _frame = 0;
                     
