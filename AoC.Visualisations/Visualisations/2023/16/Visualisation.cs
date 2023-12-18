@@ -122,12 +122,84 @@ public class Visualisation : VisualisationBase<PuzzleState>
         }
         else
         {
-            UpdatePart2();
+            if (_done)
+            {
+                MoveLaser();
+            }
+            else
+            {
+                UpdatePart2();
+            }
         }
 
         UpdateSparks();
         
         base.Update(gameTime);
+    }
+
+    private void MoveLaser()
+    {
+        for (var i = 0; i < 5; i++)
+        {
+            _sparks.Add(new Spark
+            {
+                Position = new PointFloat { X = _state.LaserX * 7 + 26, Y = _state.LaserY * 7 + 26 },
+                Vector = new PointFloat { X = (-10f + _rng.Next(21)) / 10, Y = -_rng.Next(31) / 10f },
+                Ticks = 25,
+                StartTicks = 25,
+                SpriteOffset = _rng.Next(3) * 5
+            });
+        }
+
+        if (_state.LaserX == -1)
+        {
+            if (_state.LaserY < _map.GetLength(1))
+            {
+                _state.LaserY++;
+                
+                return;
+            }
+
+            _state.LaserY = _map.GetLength(1);
+            _state.LaserX = 0;
+            _state.StartDirection = 'N';
+        }
+
+        if (_state.LaserY == _map.GetLength(1))
+        {
+            if (_state.LaserX < _map.GetLength(0))
+            {
+                _state.LaserX++;
+                
+                return;
+            }
+
+            _state.LaserY = _map.GetLength(1) - 1;
+            _state.LaserX = _map.GetLength(0);
+            _state.StartDirection = 'W';
+        }
+
+        if (_state.LaserX == _map.GetLength(0))
+        {
+            if (_state.LaserY > 0)
+            {
+                _state.LaserY--;
+                
+                return;
+            }
+
+            _state.LaserY = -1;
+            _state.LaserX = _map.GetLength(0) -1;
+            _state.StartDirection = 'S';
+        }
+
+        if (_state.LaserY == -1)
+        {
+            if (_state.LaserX > 0)
+            {
+                _state.LaserX--;
+            }
+        }
     }
 
     private void UpdatePart2()
@@ -188,12 +260,14 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             if (_state.LaserX != -1 && _state.LaserY != 0)
             {
+                _state = null;
+            }
+            else
+            {
                 _done = true;
             }
-            
-            _allBeams.Clear();
 
-            _state = null;
+            _allBeams.Clear();
         }
     }
 
