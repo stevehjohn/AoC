@@ -101,7 +101,89 @@ public class Visualisation : VisualisationBase<PuzzleState>
     protected override void Update(GameTime gameTime)
     {
         _frame++;
+
+        if (_part == 1)
+        {
+            UpdatePart1();
+        }
+        else
+        {
+            UpdatePart2();
+        }
+
+        UpdateSparks();
         
+        base.Update(gameTime);
+    }
+
+    private void UpdatePart2()
+    {
+        if (HasNextState)
+        {
+            if (_state == null || (_state.Beams != null && _allBeams.Count == 0))
+            {
+                _state = GetNextState();
+
+                TranslatePuzzleState();
+            }
+        }
+
+        CreateSegments();
+    }
+
+    private void CreateSegments()
+    {
+        //do
+        //{
+            var remove = new List<int>();
+
+            var add = new List<int>();
+
+            foreach (var beam in _beams)
+            {
+                var segment = _allBeams[beam.Key][beam.Value];
+
+                var color = (int) (26f / _allBeams[beam.Key].Count * _beams[beam.Key]);
+                
+                _segments.Add(new Segment { X = segment.X, Y = segment.Y, Tile = segment.Tile, ColorIndex = color });
+
+                _beams[beam.Key]++;
+
+                if (_beams[beam.Key] >= _allBeams[beam.Key].Count)
+                {
+                    remove.Add(beam.Key);
+
+                    var found = false;
+
+                    foreach (var newBeam in _allBeams.Where(b => b.Value[0].SourceId == beam.Key))
+                    {
+                        add.Add(newBeam.Key);
+
+                        found = true;
+                    }
+
+                    if (! found)
+                    {
+                        _beamEnds.Add(new BeamEnd { X = segment.X, Y = segment.Y, Count = _palette.Length - 1 });
+                    }
+                }
+            }
+
+            foreach (var item in remove)
+            {
+                _beams.Remove(item);
+            }
+
+            foreach (var item in add)
+            {
+                _beams.Add(item, 0);
+            }
+            
+        //} while (_beams.Count > 0);
+    }
+
+    private void UpdatePart1()
+    {
         if (HasNextState)
         {
             _state = GetNextState();
@@ -118,10 +200,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
         }
         
         UpdatePuzzleState();
-        
-        UpdateSparks();
-        
-        base.Update(gameTime);
     }
 
     private void UpdatePuzzleState()

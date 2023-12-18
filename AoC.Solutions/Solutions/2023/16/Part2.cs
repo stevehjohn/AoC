@@ -18,10 +18,8 @@ public class Part2 : Base
     {
         ParseInput();
 
-        Visualise();
-
         var max = 0;
-
+        
         for (var x = 0; x < Width; x++)
         {
             SimulateBeams(x, -1, 'S');
