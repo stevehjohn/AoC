@@ -246,19 +246,19 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 switch (map[x, y])
                 {
                     case '\\':
-                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(14, 0, 7, 7), Color.Cyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
+                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(14, 0, 7, 7), Color.Cyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .2f);
                         break;
                     
                     case '/':
-                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(21, 0, 7, 7), Color.Cyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
+                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(21, 0, 7, 7), Color.Cyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .2f);
                         break;
                     
                     case '|':
-                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(7, 0, 7, 7), Color.Cyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
+                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(7, 0, 7, 7), Color.Cyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
                         break;
                     
                     case '-':
-                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(0, 0, 7, 7), Color.Cyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
+                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(0, 0, 7, 7), Color.Cyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
                         break;
                 }
             }
