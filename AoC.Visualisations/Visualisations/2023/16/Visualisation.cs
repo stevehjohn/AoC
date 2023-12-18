@@ -314,7 +314,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
             var currentBeam = _allBeams[beam.Id];
 
-            var previous = 'E';
+            var previous = _state.StartDirection;
 
             if (currentBeam.Count == 0)
             {
