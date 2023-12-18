@@ -153,10 +153,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 }
             }
         }
-        
-        _segments.ForEach(s => Console.Write(s.Tile));
-        
-        Console.WriteLine();
 
         foreach (var item in remove)
         {
@@ -212,13 +208,28 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             switch (segment.Tile)
             {
-                    
                 case '|':
                     _spriteBatch.Draw(_tiles, new Vector2(22 + segment.X * 7, 22 + segment.Y * 7), new Rectangle(7, 0, 7, 7), _palette[segment.ColorIndex], 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
                     break;
                     
                 case '-':
                     _spriteBatch.Draw(_tiles, new Vector2(22 + segment.X * 7, 22 + segment.Y * 7), new Rectangle(0, 0, 7, 7), _palette[segment.ColorIndex], 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
+                    break;
+                
+                case 'L':
+                    _spriteBatch.Draw(_tiles, new Vector2(22 + segment.X * 7, 22 + segment.Y * 7), new Rectangle(28, 0, 7, 7), _palette[segment.ColorIndex], 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
+                    break;
+                    
+                case '7':
+                    _spriteBatch.Draw(_tiles, new Vector2(22 + segment.X * 7, 22 + segment.Y * 7), new Rectangle(35, 0, 7, 7), _palette[segment.ColorIndex], 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
+                    break;
+
+                case 'F':
+                    _spriteBatch.Draw(_tiles, new Vector2(22 + segment.X * 7, 22 + segment.Y * 7), new Rectangle(42, 0, 7, 7), _palette[segment.ColorIndex], 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
+                    break;
+                    
+                case 'J':
+                    _spriteBatch.Draw(_tiles, new Vector2(22 + segment.X * 7, 22 + segment.Y * 7), new Rectangle(49, 0, 7, 7), _palette[segment.ColorIndex], 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
                     break;
             }
         }
