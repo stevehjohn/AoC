@@ -430,7 +430,17 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         if (_state.StartDirection == 'N')
         {
-            _spriteBatch.Draw(_dish, new Vector2(15 + _state.LaserX * 7, 790), new Rectangle(0, 0, 22, 22), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+            _spriteBatch.Draw(_dish, new Vector2(15 + _state.LaserX * 7, 790), new Rectangle(0, 0, 22, 22), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.FlipVertically, 0);
+        }
+
+        if (_state.StartDirection == 'E')
+        {
+            _spriteBatch.Draw(_dish, new Vector2(0, 15 + _state.LaserY * 7), new Rectangle(22, 0, 22, 22), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+        }
+
+        if (_state.StartDirection == 'W')
+        {
+            _spriteBatch.Draw(_dish, new Vector2(790, 15 + _state.LaserY * 7), new Rectangle(22, 0, 22, 22), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.FlipHorizontally, 0);
         }
     }
 
