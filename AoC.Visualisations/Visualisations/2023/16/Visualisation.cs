@@ -35,6 +35,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private readonly Random _rng = new();
 
+    private int _part;
+    
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -53,10 +55,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
         switch (part)
         {
             case 1:
+                _part = 1;
                 Puzzle = new Part1(this);
 
                 break;
             case 2:
+                _part = 2;
                 Puzzle = new Part2(this);
 
                 break;
@@ -105,37 +109,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         if (_state.Beams != null && _allBeams.Count == 0)
         {
-            foreach (var beam in _state.Beams[1..])
-            {
-                if (! _allBeams.ContainsKey(beam.Id))
-                { 
-                    _allBeams.Add(beam.Id, new List<(int X, int Y, char Direction, char Tile, int SourceId)>());
-                }
-
-                var currentBeam = _allBeams[beam.Id];
-
-                var previous = 'E';
-
-                if (currentBeam.Count == 0)
-                {
-                    if (_allBeams.ContainsKey(beam.SourceId) && _allBeams[beam.SourceId].Count > 0)
-                    {
-                        previous = _allBeams[beam.SourceId].Last().Direction;
-                        
-                        currentBeam.Add((beam.X, beam.Y, beam.Direction, GetTile(previous, beam.Direction), beam.SourceId));
-                        
-                        continue;
-                    }
-                }
-                else
-                {
-                    previous = currentBeam.Last().Direction;
-                }
-
-                currentBeam.Add((beam.X, beam.Y, beam.Direction, GetTile(previous, beam.Direction), beam.SourceId));
-            }
-            
-            _beams.Add(1, 0);
+            TranslatePuzzleState();
         }
 
         if (_frame % 2 == 0)
@@ -217,6 +191,41 @@ public class Visualisation : VisualisationBase<PuzzleState>
         UpdateSparks();
         
         base.Update(gameTime);
+    }
+
+    private void TranslatePuzzleState()
+    {
+        foreach (var beam in _state.Beams[1..])
+        {
+            if (! _allBeams.ContainsKey(beam.Id))
+            { 
+                _allBeams.Add(beam.Id, new List<(int X, int Y, char Direction, char Tile, int SourceId)>());
+            }
+
+            var currentBeam = _allBeams[beam.Id];
+
+            var previous = 'E';
+
+            if (currentBeam.Count == 0)
+            {
+                if (_allBeams.ContainsKey(beam.SourceId) && _allBeams[beam.SourceId].Count > 0)
+                {
+                    previous = _allBeams[beam.SourceId].Last().Direction;
+                        
+                    currentBeam.Add((beam.X, beam.Y, beam.Direction, GetTile(previous, beam.Direction), beam.SourceId));
+                        
+                    continue;
+                }
+            }
+            else
+            {
+                previous = currentBeam.Last().Direction;
+            }
+
+            currentBeam.Add((beam.X, beam.Y, beam.Direction, GetTile(previous, beam.Direction), beam.SourceId));
+        }
+            
+        _beams.Add(1, 0);
     }
 
     private char GetTile(char d1, char d2)
