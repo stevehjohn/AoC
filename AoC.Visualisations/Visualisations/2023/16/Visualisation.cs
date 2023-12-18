@@ -21,6 +21,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private readonly List<Segment> _segments = new();
     
+    private readonly List<(int BeamId, int Index)> _beams = new();
+    
     private Color[] _palette;
     
     public Visualisation()
@@ -118,6 +120,15 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                 currentBeam.Add((beam.X, beam.Y, beam.Direction, GetTile(previous, beam.Direction), beam.SourceId));
             }
+            
+            _beams.Add((1, 0));
+        }
+
+        foreach (var beam in _beams)
+        {
+            var segment = _allBeams[beam.BeamId][beam.Index];
+            
+            _segments.Add(new Segment { X = segment.X, Y = segment.Y, Tile = segment.Tile, ColorIndex = _palette.Length - 1 });
         }
 
         base.Update(gameTime);
