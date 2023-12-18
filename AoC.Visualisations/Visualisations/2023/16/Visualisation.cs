@@ -160,6 +160,19 @@ public class Visualisation : VisualisationBase<PuzzleState>
             _beamEnds.RemoveAll(e => e.Count < 0);
         }
 
+        foreach (var end in _beamEnds)
+        {
+            _sparks.Add(new Spark
+            {
+                Position = new PointFloat { X = end.X * 7 + 26, Y = end.Y * 7 + 26},
+                Vector = new PointFloat { X = (-10f + _rng.Next(21)) / 10, Y = -_rng.Next(41) / 10f },
+                Ticks = 1000,
+                StartTicks = 1000,
+                SpriteOffset = _rng.Next(3)
+            });
+        }
+
+        
         var remove = new List<int>();
         
         var add = new List<int>();
@@ -202,6 +215,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
             _beams.Add(item, 0);
         }
 
+        UpdateSparks();
+        
         base.Update(gameTime);
     }
 
@@ -225,6 +240,34 @@ public class Visualisation : VisualisationBase<PuzzleState>
         };
     }
 
+    private void UpdateSparks()
+    {
+        var toRemove = new List<Spark>();
+
+        foreach (var spark in _sparks)
+        {
+            spark.Ticks--;
+
+            if (spark.Ticks < 0)
+            {
+                toRemove.Add(spark);
+
+                continue;
+            }
+
+            spark.Position.X += spark.Vector.X;
+
+            spark.Position.Y += spark.Vector.Y;
+
+            spark.Vector.Y += spark.YGravity;
+        }
+
+        foreach (var spark in toRemove)
+        {
+            _sparks.Remove(spark);
+        }
+    }
+    
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.Black);
@@ -234,6 +277,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
         DrawMap();
 
         DrawBeams();
+        
+        DrawSparks();
         
         _spriteBatch.End();
 
@@ -272,6 +317,14 @@ public class Visualisation : VisualisationBase<PuzzleState>
                     _spriteBatch.Draw(_tiles, new Vector2(22 + segment.X * 7, 22 + segment.Y * 7), new Rectangle(49, 0, 7, 7), _palette[segment.ColorIndex], 0, Vector2.Zero, Vector2.One, SpriteEffects.None, z);
                     break;
             }
+        }
+    }
+    
+    private void DrawSparks()
+    {
+        foreach (var spark in _sparks)
+        {
+            _spriteBatch.Draw(_spark, new Vector2(spark.Position.X, spark.Position.Y), new Rectangle(spark.SpriteOffset, 0, 5, 5), Color.White * ((float) spark.Ticks / spark.StartTicks), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
         }
     }
 
