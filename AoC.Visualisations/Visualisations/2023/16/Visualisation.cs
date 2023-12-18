@@ -29,6 +29,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private long _frame;
     
+    private Texture2D _spark;
+
+    private readonly List<Spark> _sparks = new();
+
+    private readonly Random _rng = new();
+
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -82,6 +88,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         _tiles = Content.Load<Texture2D>("map-tiles");
+
+        _spark = Content.Load<Texture2D>("spark");
 
         base.LoadContent();
     }
