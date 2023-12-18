@@ -21,7 +21,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private readonly List<Segment> _segments = new();
     
-    private readonly List<(int BeamId, int Index)> _beams = new();
+    private readonly Dictionary<int, int> _beams = new();
     
     private Color[] _palette;
     
@@ -121,14 +121,44 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 currentBeam.Add((beam.X, beam.Y, beam.Direction, GetTile(previous, beam.Direction), beam.SourceId));
             }
             
-            _beams.Add((1, 0));
+            _beams.Add(1, 0);
         }
 
+        var remove = new List<int>();
+        
+        var add = new List<int>();
+        
         foreach (var beam in _beams)
         {
-            var segment = _allBeams[beam.BeamId][beam.Index];
+            var segment = _allBeams[beam.Key][beam.Value];
             
             _segments.Add(new Segment { X = segment.X, Y = segment.Y, Tile = segment.Tile, ColorIndex = _palette.Length - 1 });
+
+            _beams[beam.Key]++;
+
+            if (_beams[beam.Key] >= _allBeams[beam.Key].Count)
+            {
+                remove.Add(beam.Key);
+
+                foreach (var newBeam in _allBeams.Where(b => b.Value[0].SourceId == beam.Key))
+                {
+                    add.Add(newBeam.Key);
+                }
+            }
+        }
+        
+        _segments.ForEach(s => Console.Write(s.Tile));
+        
+        Console.WriteLine();
+
+        foreach (var item in remove)
+        {
+            _beams.Remove(item);
+        }
+
+        foreach (var item in add)
+        {
+            _beams.Add(item, 0);
         }
 
         base.Update(gameTime);
