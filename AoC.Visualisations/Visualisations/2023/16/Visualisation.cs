@@ -128,7 +128,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
             }
         }
 
-        CreateSegments();
+        for (var i = 0; i < 10; i++)
+        {
+            CreateSegments();
+        }
     }
 
     private void CreateSegments()
