@@ -18,8 +18,6 @@ public class Part1 : Base
     {
         ParseInput();
 
-        Visualise();
-        
         SimulateBeams(-1, 0, 'E');
         
         return CountEnergised().ToString();

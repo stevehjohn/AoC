@@ -28,7 +28,7 @@ public abstract class Base : Solution
         _visualiser = visualiser;
     }
 
-    protected void Visualise((int X, int Y, char Direction, int Id, int SourceId)? beam = null, bool finished = false)
+    private void Visualise((int X, int Y, char Direction, int Id, int SourceId)? beam = null, bool finished = false, int startX = 0, int startY = 0, char startDirection = '\0')
     {
         if (_visualiser != null)
         {
@@ -36,10 +36,22 @@ public abstract class Base : Solution
             {
                 _puzzleState = new PuzzleState
                 {
-                    Map = _map
+                    Map = _map,
+                    StartDirection = startDirection,
+                    LaserX = startX,
+                    LaserY = startY
                 };
-
+                
                 _visualiser.PuzzleStateChanged(_puzzleState);
+            }
+
+            if (startDirection != '\0')
+            {
+                _puzzleState.LaserX = startX;
+
+                _puzzleState.LaserY = startY;
+
+                _puzzleState.StartDirection = startDirection;
             }
 
             if (beam != null)
@@ -50,11 +62,8 @@ public abstract class Base : Solution
             if (finished)
             {
                 _visualiser.PuzzleStateChanged(_puzzleState);
-                
-                _puzzleState = new PuzzleState
-                {
-                    Map = _map
-                };
+
+                _puzzleState = null;
             }
         }
     }
@@ -76,6 +85,8 @@ public abstract class Base : Solution
 
     protected void SimulateBeams(int startX, int startY, char direction)
     {
+        Visualise(null, false, startX, startY, direction);
+        
         var beams = new Stack<(int X, int Y, char Direction, int Id, int SourceId)>();
 
         _energised = new bool[Width, Height];
