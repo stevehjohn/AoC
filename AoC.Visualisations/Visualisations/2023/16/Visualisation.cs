@@ -193,7 +193,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             var segment = _allBeams[beam.Key][beam.Value];
 
-            var color = (int) (26f / _allBeams[beam.Key].Count * _beams[beam.Key]);
+            var color = 25 - (int) (26f / _allBeams[beam.Key].Count * _beams[beam.Key]);
             
             _segments.Add(new Segment { X = segment.X, Y = segment.Y, Tile = segment.Tile, ColorIndex = color });
 
