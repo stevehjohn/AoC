@@ -58,7 +58,7 @@ public class Part2 : Base
             }
         }
 
-        for (var y = 0; y < Height; y++)
+        for (var y = Height; y >= 0; y--)
         {
             SimulateBeams(-1, y, 'E');
 

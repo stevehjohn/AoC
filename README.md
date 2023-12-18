@@ -47,4 +47,3 @@ There are visualisations for:
 - 2023.14.2
 - 2023.16.1
 - 2023.16.2
-- 
