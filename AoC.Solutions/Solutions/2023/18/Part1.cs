@@ -17,19 +17,15 @@ public class Part1 : Base
     {
         ParseInput();
 
-        _width = 9;
+        var trench = DigTrench();
 
-        _height = 12;
-        
-        _map = new char[_width, _height];
-
-        DigTrench();
+        CreateMap(trench);        
         
         FloodFill(0, 0);
-
-        var result = CountArea();
         
         Dump();
+
+        var result = CountArea();
         
         return result.ToString();
     }
@@ -40,7 +36,7 @@ public class Part1 : Base
         {
             for (var x = 0; x < _width; x++)
             {
-                Console.Write(_map[x, y] == '\0' ? ' ' : _map[x, y]);
+                Console.Write(_map[x, y] == '\0' ? '.' : _map[x, y]);
             }
             
             Console.WriteLine();
@@ -60,6 +56,28 @@ public class Part1 : Base
         }
 
         return area;
+    }
+
+    private void CreateMap(List<(int X, int Y)> points)
+    {
+        var minX = points.Min(p => p.X);
+        
+        var maxX = points.Max(p => p.X);
+
+        var minY = points.Min(p => p.Y);
+        
+        var maxY = points.Max(p => p.Y);
+
+        _width = maxX - minX + 3;
+
+        _height = maxY - minY + 3;
+        
+        _map = new char[_width, _height];
+
+        foreach (var point in points)
+        {
+            _map[point.X - minX + 1, point.Y - minY + 1] = '#';
+        }
     }
 
     private void FloodFill(int x, int y)
@@ -104,11 +122,11 @@ public class Part1 : Base
         }
     }
     
-    private void DigTrench()
+    private List<(int X, int Y)> DigTrench()
     {
-        int x = 1, y = 1;
+        int x = 0, y = 0;
 
-        _map[x, y] = '#';
+        var trench = new List<(int X, int Y)>();
 
         foreach (var move in _moves)
         {
@@ -131,9 +149,11 @@ public class Part1 : Base
                 x += dX;
                 y += dY;
 
-                _map[x, y] = '#';
+                trench.Add((x, y));
             }
         }
+        
+        return trench;
     }
 
     private void ParseInput()
