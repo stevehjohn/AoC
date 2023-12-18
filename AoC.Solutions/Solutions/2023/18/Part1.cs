@@ -25,9 +25,13 @@ public class Part1 : Base
 
         DigTrench();
         
+        FloodFill(0, 0);
+
+        var result = CountArea();
+        
         Dump();
         
-        return "Unknown";
+        return result.ToString();
     }
 
     private void Dump()
@@ -36,13 +40,70 @@ public class Part1 : Base
         {
             for (var x = 0; x < _width; x++)
             {
-                Console.Write(_map[x, y] == '#' ? '#' : ' ');
+                Console.Write(_map[x, y] == '\0' ? ' ' : _map[x, y]);
             }
             
             Console.WriteLine();
         }
     }
 
+    private int CountArea()
+    {
+        var area = 0;
+        
+        for (var y = 0; y < _height; y++)
+        {
+            for (var x = 0; x < _width; x++)
+            {
+                area += _map[x, y] is '\0' or '#' ? 1 : 0;
+            }
+        }
+
+        return area;
+    }
+
+    private void FloodFill(int x, int y)
+    {
+        var queue = new Queue<(int X, int Y)>();
+        
+        queue.Enqueue((x, y));
+
+        while (queue.Count > 0)
+        {
+            (x, y) = queue.Dequeue();
+            
+            _map[x, y] = '*';
+            
+            if (x > 0 && _map[x - 1, y] == '\0')
+            {
+                _map[x - 1, y] = '*';
+                
+                queue.Enqueue((x - 1, y));
+            }
+
+            if (x < _width - 1 && _map[x + 1, y] == '\0')
+            {
+                _map[x + 1, y] = '*';
+                
+                queue.Enqueue((x + 1, y));
+            }
+
+            if (y < _height - 1 && _map[x, y + 1] == '\0')
+            {
+                _map[x, y + 1] = '*';
+                
+                queue.Enqueue((x, y + 1));
+            }
+
+            if (y > 0 && _map[x, y - 1] == '\0')
+            {
+                _map[x, y - 1] = '*';
+                
+                queue.Enqueue((x, y - 1));
+            }
+        }
+    }
+    
     private void DigTrench()
     {
         int x = 1, y = 1;
