@@ -19,7 +19,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private readonly Dictionary<int, List<(int X, int Y, char Direction, char Tile, int SourceId)>> _allBeams = new();
 
-    private readonly List<Segment> _segments = new();
+    private List<Segment> _segments = new();
+
+    private readonly List<Segment> _bestSegments = new();
     
     private readonly Dictionary<int, int> _beams = new();
 
@@ -41,7 +43,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private int _part;
 
-    private int _chunkSize;
+    private int _chunkSize = 50;
 
     private bool _done;
 
@@ -200,6 +202,13 @@ public class Visualisation : VisualisationBase<PuzzleState>
             {
                 _state.LaserX--;
             }
+            else
+            {
+                if (_segments == null)
+                {
+                    _segments = _bestSegments;
+                }
+            }
         }
     }
 
@@ -226,8 +235,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                     _chunkSize = Math.Max(state.Beams.Count / 50, 50);
 
-                    _frame = 0;
-                    
                     _lastLaser = (state.LaserX, state.LaserY);
                 }
             }
@@ -257,8 +264,14 @@ public class Visualisation : VisualisationBase<PuzzleState>
             CreateSegments();
         }
 
-        if (_beams.Count == 0 && _sparks.Count == 0 && _frame > 50)
+        if (_beams.Count == 0 && _frame % 50 == 0)
         {
+            // My puzzle input finds most energy at x: 9, y: -1. Hard coding viz for that for now.
+            if (_state.LaserX == 9 && _state.LaserY == -1)
+            {
+                _segments.ForEach(s => _bestSegments.Add(s));
+            }
+            
             if (_state.LaserX != -1 && _state.LaserY != 0)
             {
                 _state = null;
@@ -266,6 +279,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
             else
             {
                 _done = true;
+
+                if (! _done)
+                {
+                    _segments.Clear();
+                }
             }
 
             _allBeams.Clear();

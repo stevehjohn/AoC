@@ -21,56 +21,54 @@ public class Part2 : Base
         var max = 0;
 
         int energised;
-
-        SimulateBeams(-1, 0, 'E');
         
-        // for (var x = 0; x < Width; x++)
-        // {
-        //     SimulateBeams(x, -1, 'S');
-        //
-        //     energised = CountEnergised();
-        //
-        //     if (energised > max)
-        //     {
-        //         max = energised;
-        //     }
-        // }
-        //
-        // for (var y = 0; y < Height; y++)
-        // {
-        //     SimulateBeams(Width, y, 'W');
-        //
-        //     energised = CountEnergised();
-        //
-        //     if (energised > max)
-        //     {
-        //         max = energised;
-        //     }
-        // }
-        //
-        // for (var x = Width - 1; x >= 0; x--)
-        // {
-        //     SimulateBeams(x, Height, 'N');
-        //
-        //     energised = CountEnergised();
-        //
-        //     if (energised > max)
-        //     {
-        //         max = energised;
-        //     }
-        // }
-        //
-        // for (var y = Height - 1; y >= 0; y--)
-        // {
-        //     SimulateBeams(-1, y, 'E');
-        //
-        //     energised = CountEnergised();
-        //
-        //     if (energised > max)
-        //     {
-        //         max = energised;
-        //     }
-        // }
+        for (var x = 0; x < Width; x++)
+        {
+            SimulateBeams(x, -1, 'S');
+        
+            energised = CountEnergised();
+        
+            if (energised > max)
+            {
+                max = energised;
+            }
+        }
+        
+        for (var y = 0; y < Height; y++)
+        {
+            SimulateBeams(Width, y, 'W');
+        
+            energised = CountEnergised();
+        
+            if (energised > max)
+            {
+                max = energised;
+            }
+        }
+        
+        for (var x = Width - 1; x >= 0; x--)
+        {
+            SimulateBeams(x, Height, 'N');
+        
+            energised = CountEnergised();
+        
+            if (energised > max)
+            {
+                max = energised;
+            }
+        }
+        
+        for (var y = Height - 1; y >= 0; y--)
+        {
+            SimulateBeams(-1, y, 'E');
+        
+            energised = CountEnergised();
+        
+            if (energised > max)
+            {
+                max = energised;
+            }
+        }
         
         return max.ToString();
     }
