@@ -34,8 +34,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private readonly List<Spark> _sparks = new();
 
     private readonly Random _rng = new();
-
-    private int _part;
     
     public Visualisation()
     {
@@ -55,15 +53,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
         switch (part)
         {
             case 1:
-                _part = 1;
                 Puzzle = new Part1(this);
 
                 break;
-            case 2:
-                _part = 2;
-                Puzzle = new Part2(this);
 
-                break;
             default:
                 throw new VisualisationParameterException();
         }
