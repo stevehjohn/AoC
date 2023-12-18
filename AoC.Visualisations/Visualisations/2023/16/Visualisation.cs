@@ -124,6 +124,13 @@ public class Visualisation : VisualisationBase<PuzzleState>
             _beams.Add(1, 0);
         }
 
+        for (var i = 0; i < _segments.Count; i++)
+        {
+            _segments[i].ColorIndex--;
+        }
+
+        _segments.RemoveAll(s => s.ColorIndex < 0);
+
         var remove = new List<int>();
         
         var add = new List<int>();
@@ -201,9 +208,19 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private void DrawBeams()
     {
-        if (_allBeams.Count == 0)
+        foreach (var segment in _segments)
         {
-            return;
+            switch (segment.Tile)
+            {
+                    
+                case '|':
+                    _spriteBatch.Draw(_tiles, new Vector2(22 + segment.X * 7, 22 + segment.Y * 7), new Rectangle(7, 0, 7, 7), _palette[segment.ColorIndex], 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
+                    break;
+                    
+                case '-':
+                    _spriteBatch.Draw(_tiles, new Vector2(22 + segment.X * 7, 22 + segment.Y * 7), new Rectangle(0, 0, 7, 7), _palette[segment.ColorIndex], 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
+                    break;
+            }
         }
     }
 
