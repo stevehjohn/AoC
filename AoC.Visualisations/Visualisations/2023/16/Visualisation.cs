@@ -61,7 +61,14 @@ public class Visualisation : VisualisationBase<PuzzleState>
         switch (part)
         {
             case 1:
+                _part = 1;
                 Puzzle = new Part1(this);
+
+                break;
+
+            case 2:
+                _part = 2;
+                Puzzle = new Part2(this);
 
                 break;
 
