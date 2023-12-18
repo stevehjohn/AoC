@@ -18,43 +18,49 @@ public class Part2 : Base
     {
         ParseInput();
 
-        Visualise();
-
         var max = 0;
+
+        int energised;
 
         for (var x = 0; x < Width; x++)
         {
             SimulateBeams(x, -1, 'S');
-
-            var energised = CountEnergised();
-
+        
+            energised = CountEnergised();
+        
             if (energised > max)
             {
                 max = energised;
             }
-
-            SimulateBeams(x, Height, 'N');
-
+        }
+        
+        for (var y = 0; y < Height; y++)
+        {
+            SimulateBeams(Width, y, 'W');
+        
             energised = CountEnergised();
-
+        
+            if (energised > max)
+            {
+                max = energised;
+            }
+        }
+        
+        for (var x = Width - 1; x >= 0; x--)
+        {
+            SimulateBeams(x, Height, 'N');
+        
+            energised = CountEnergised();
+        
             if (energised > max)
             {
                 max = energised;
             }
         }
 
-        for (var y = 0; y < Width; y++)
+        for (var y = 0; y < Height; y++)
         {
             SimulateBeams(-1, y, 'E');
-
-            var energised = CountEnergised();
-
-            if (energised > max)
-            {
-                max = energised;
-            }
-
-            SimulateBeams(Width, y, 'W');
 
             energised = CountEnergised();
 
