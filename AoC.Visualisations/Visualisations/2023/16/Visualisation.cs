@@ -128,6 +128,25 @@ public class Visualisation : VisualisationBase<PuzzleState>
             }
         }
 
+        for (var i = 0; i < _beamEnds.Count; i++)
+        {
+            _beamEnds[i].Count--;
+        }
+
+        _beamEnds.RemoveAll(e => e.Count < 0);
+
+        foreach (var end in _beamEnds)
+        {
+            _sparks.Add(new Spark
+            {
+                Position = new PointFloat { X = end.X * 7 + 26, Y = end.Y * 7 + 26},
+                Vector = new PointFloat { X = (-10f + _rng.Next(21)) / 10, Y = -_rng.Next(31) / 10f },
+                Ticks = 25,
+                StartTicks = 25,
+                SpriteOffset = _rng.Next(3) * 5
+            });
+        }
+
         for (var i = 0; i < 10; i++)
         {
             CreateSegments();
