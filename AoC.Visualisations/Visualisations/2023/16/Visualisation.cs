@@ -141,16 +141,19 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private void MoveLaser()
     {
-        for (var i = 0; i < 5; i++)
+        if (_state.LaserY != -1 || _state.LaserX != 9)
         {
-            _sparks.Add(new Spark
+            for (var i = 0; i < 5; i++)
             {
-                Position = new PointFloat { X = _state.LaserX * 7 + 26, Y = _state.LaserY * 7 + 26 },
-                Vector = new PointFloat { X = (-10f + _rng.Next(21)) / 10, Y = -_rng.Next(31) / 10f },
-                Ticks = 25,
-                StartTicks = 25,
-                SpriteOffset = _rng.Next(3) * 5
-            });
+                _sparks.Add(new Spark
+                {
+                    Position = new PointFloat { X = _state.LaserX * 7 + 26, Y = _state.LaserY * 7 + 26 },
+                    Vector = new PointFloat { X = (-10f + _rng.Next(21)) / 10, Y = -_rng.Next(31) / 10f },
+                    Ticks = 25,
+                    StartTicks = 25,
+                    SpriteOffset = _rng.Next(3) * 5
+                });
+            }
         }
 
         if (_state.LaserX == -1)
