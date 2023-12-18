@@ -36,7 +36,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private readonly Random _rng = new();
 
     private int _part;
-    
+
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -151,57 +151,62 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             CreateSegments();
         }
+
+        if (_beams.Count == 0 && _sparks.Count == 0)
+        {
+            _allBeams.Clear();
+
+            _state = null;
+            
+            _segments.Clear();
+        }
     }
 
     private void CreateSegments()
     {
-        //do
-        //{
-            var remove = new List<int>();
+        var remove = new List<int>();
 
-            var add = new List<int>();
+        var add = new List<int>();
 
-            foreach (var beam in _beams)
+        foreach (var beam in _beams)
+        {
+            var segment = _allBeams[beam.Key][beam.Value];
+
+            var color = (int) (26f / _allBeams[beam.Key].Count * _beams[beam.Key]);
+            
+            _segments.Add(new Segment { X = segment.X, Y = segment.Y, Tile = segment.Tile, ColorIndex = color });
+
+            _beams[beam.Key]++;
+
+            if (_beams[beam.Key] >= _allBeams[beam.Key].Count)
             {
-                var segment = _allBeams[beam.Key][beam.Value];
+                remove.Add(beam.Key);
 
-                var color = (int) (26f / _allBeams[beam.Key].Count * _beams[beam.Key]);
-                
-                _segments.Add(new Segment { X = segment.X, Y = segment.Y, Tile = segment.Tile, ColorIndex = color });
+                var found = false;
 
-                _beams[beam.Key]++;
-
-                if (_beams[beam.Key] >= _allBeams[beam.Key].Count)
+                foreach (var newBeam in _allBeams.Where(b => b.Value[0].SourceId == beam.Key))
                 {
-                    remove.Add(beam.Key);
+                    add.Add(newBeam.Key);
 
-                    var found = false;
+                    found = true;
+                }
 
-                    foreach (var newBeam in _allBeams.Where(b => b.Value[0].SourceId == beam.Key))
-                    {
-                        add.Add(newBeam.Key);
-
-                        found = true;
-                    }
-
-                    if (! found)
-                    {
-                        _beamEnds.Add(new BeamEnd { X = segment.X, Y = segment.Y, Count = _palette.Length - 1 });
-                    }
+                if (! found)
+                {
+                    _beamEnds.Add(new BeamEnd { X = segment.X, Y = segment.Y, Count = _palette.Length - 1 });
                 }
             }
+        }
 
-            foreach (var item in remove)
-            {
-                _beams.Remove(item);
-            }
+        foreach (var item in remove)
+        {
+            _beams.Remove(item);
+        }
 
-            foreach (var item in add)
-            {
-                _beams.Add(item, 0);
-            }
-            
-        //} while (_beams.Count > 0);
+        foreach (var item in add)
+        {
+            _beams.Add(item, 0);
+        }
     }
 
     private void UpdatePart1()
@@ -443,6 +448,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private void DrawMap()
     {
+        if (_state == null || _state.Map == null)
+        {
+            return;
+        }
+
         var map = _state.Map;
         
         for (var y = 0; y < map.GetLength(1); y++)
