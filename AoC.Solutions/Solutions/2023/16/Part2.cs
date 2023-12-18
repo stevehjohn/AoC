@@ -22,18 +22,18 @@ public class Part2 : Base
 
         int energised;
 
-        // for (var x = 0; x < Width; x++)
-        // {
-        //     SimulateBeams(x, -1, 'S');
-        //
-        //     energised = CountEnergised();
-        //
-        //     if (energised > max)
-        //     {
-        //         max = energised;
-        //     }
-        // }
-        //
+        for (var x = 0; x < Width; x++)
+        {
+            SimulateBeams(x, -1, 'S');
+        
+            energised = CountEnergised();
+        
+            if (energised > max)
+            {
+                max = energised;
+            }
+        }
+        
         for (var y = 0; y < Height; y++)
         {
             SimulateBeams(Width, y, 'W');
