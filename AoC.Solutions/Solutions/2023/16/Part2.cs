@@ -57,13 +57,13 @@ public class Part2 : Base
                 max = energised;
             }
         }
-
+        
         for (var y = Height - 1; y >= 0; y--)
         {
             SimulateBeams(-1, y, 'E');
-
+        
             energised = CountEnergised();
-
+        
             if (energised > max)
             {
                 max = energised;

@@ -24,6 +24,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private readonly Dictionary<int, int> _beams = new();
 
     private readonly List<BeamEnd> _beamEnds = new();
+
+    private char[,] _map;
     
     private Color[] _palette;
 
@@ -134,6 +136,13 @@ public class Visualisation : VisualisationBase<PuzzleState>
             {
                 var state = GetNextState();
 
+                if (state.Map != null && _map == null)
+                {
+                    Console.WriteLine("NEW MAP");
+                    
+                    _map = state.Map;
+                }
+
                 _state = state;
                     
                 _segments.Clear();
@@ -175,7 +184,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             CreateSegments();
         }
 
-        if (_beams.Count == 0 && _sparks.Count == 0 && _frame > 50)
+        if (_beams.Count == 0 && _sparks.Count == 0 && _frame > 50 && _state.LaserX != -1 && _state.LaserY != 0)
         {
             _allBeams.Clear();
 
@@ -506,18 +515,17 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private void DrawMap()
     {
-        if (_state == null || _state.Map == null)
+        if (_map == null)
         {
+            Console.WriteLine("NULL MAP");
             return;
         }
 
-        var map = _state.Map;
-        
-        for (var y = 0; y < map.GetLength(1); y++)
+        for (var y = 0; y < _map.GetLength(1); y++)
         {
-            for (var x = 0; x < map.GetLength(0); x++)
+            for (var x = 0; x < _map.GetLength(0); x++)
             {
-                switch (map[x, y])
+                switch (_map[x, y])
                 {
                     case '\\':
                         _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(14, 0, 7, 7), Color.Cyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .9f);
