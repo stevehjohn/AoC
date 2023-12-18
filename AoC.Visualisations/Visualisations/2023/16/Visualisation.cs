@@ -123,6 +123,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
             if (_state == null || (_state.Beams != null && _allBeams.Count == 0))
             {
                 _state = GetNextState();
+            
+                _segments.Clear();
 
                 TranslatePuzzleState();
             }
@@ -157,8 +159,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
             _allBeams.Clear();
 
             _state = null;
-            
-            _segments.Clear();
         }
     }
 
