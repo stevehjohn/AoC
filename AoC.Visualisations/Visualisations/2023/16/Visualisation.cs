@@ -17,7 +17,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private PuzzleState _state;
 
-    private readonly Dictionary<int, List<(int X, int Y, char Direction)>> _allBeams = new();
+    private readonly Dictionary<int, List<(int X, int Y, char Direction, char Tile, int SourceId)>> _allBeams = new();
 
     private readonly List<List<(int X, int Y, char Direction)>> _beams = new ();
     
@@ -89,23 +89,60 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         if (_state.Beams != null && _allBeams.Count == 0)
         {
-            foreach (var beam in _state.Beams)
+            foreach (var beam in _state.Beams[1..])
             {
                 if (! _allBeams.ContainsKey(beam.Id))
                 { 
-                    _allBeams.Add(beam.Id, new List<(int X, int Y, char Direction)>());
+                    _allBeams.Add(beam.Id, new List<(int X, int Y, char Direction, char Tile, int SourceId)>());
                 }
 
                 var currentBeam = _allBeams[beam.Id];
 
+                var previous = 'E';
+
                 if (currentBeam.Count == 0)
                 {
-                    currentBeam.Add((beam.X, beam.Y, beam.Direction));
+                    if (_allBeams.ContainsKey(beam.SourceId) && _allBeams[beam.SourceId].Count > 0)
+                    {
+                        previous = _allBeams[beam.SourceId].Last().Direction;
+                        
+                        currentBeam.Add((beam.X, beam.Y, beam.Direction, GetTile(previous, beam.Direction), beam.SourceId));
+
+                        previous = currentBeam.Last().Direction;
+                        
+                        continue;
+                    }
                 }
+                else
+                {
+                    previous = currentBeam.Last().Direction;
+                }
+
+                currentBeam.Add((beam.X, beam.Y, beam.Direction, GetTile(previous, beam.Direction), beam.SourceId));
             }
         }
 
         base.Update(gameTime);
+    }
+
+    private char GetTile(char d1, char d2)
+    {
+        return (d1, d2) switch
+        {
+            ('E', 'E') => '-',
+            ('W', 'W') => '-',
+            ('N', 'N') => '|',
+            ('S', 'S') => '|',
+            ('E', 'S') => '7',
+            ('N', 'W') => '7',
+            ('S', 'E') => 'L',
+            ('W', 'N') => 'L',
+            ('E', 'N') => 'J',
+            ('S', 'W') => 'J',
+            ('N', 'E') => 'F',
+            ('W', 'S') => 'F',
+            (_, _) => ' '
+        };
     }
 
     protected override void Draw(GameTime gameTime)
