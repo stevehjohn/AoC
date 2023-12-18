@@ -235,7 +235,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                     TranslatePuzzleState();
 
-                    _chunkSize = _state.Beams.Count < 50 ? 1 : 50;
+                    _chunkSize = _state.Beams.Count < 50 ? 1 : _state.Beams.Count / 500;
 
                     _lastLaser = (state.LaserX, state.LaserY, state.StartDirection);
                 }
