@@ -36,6 +36,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private readonly List<Spark> _sparks = new();
 
     private readonly Random _rng = new();
+<<<<<<< HEAD
 
     private int _part;
 
@@ -43,6 +44,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private (int X, int Y) _lastLaser = (0, 0);
 
+=======
+    
+>>>>>>> master
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
