@@ -39,6 +39,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private int _part;
 
+    private (int X, int Y) _lastLaser = (0, 0);
+
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -126,11 +128,20 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             if (_state == null || (_state.Beams != null && _allBeams.Count == 0))
             {
-                _state = GetNextState();
-            
+                var state = GetNextState();
+
+                _state = state;
+                    
                 _segments.Clear();
 
-                TranslatePuzzleState();
+                if (state.LaserX != _lastLaser.X || state.LaserY != _lastLaser.Y)
+                {
+                    TranslatePuzzleState();
+
+                    _lastLaser = (state.LaserX, state.LaserY);
+                    
+                    Console.WriteLine(_state.LaserX);
+                }
             }
         }
 
