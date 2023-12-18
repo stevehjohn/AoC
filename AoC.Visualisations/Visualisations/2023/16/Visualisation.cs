@@ -165,13 +165,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
             _sparks.Add(new Spark
             {
                 Position = new PointFloat { X = end.X * 7 + 26, Y = end.Y * 7 + 26},
-                Vector = new PointFloat { X = (-10f + _rng.Next(21)) / 10, Y = -_rng.Next(41) / 10f },
-                Ticks = 100,
-                StartTicks = 100,
-                SpriteOffset = _rng.Next(3)
+                Vector = new PointFloat { X = (-10f + _rng.Next(21)) / 10, Y = -_rng.Next(31) / 10f },
+                Ticks = 25,
+                StartTicks = 25,
+                SpriteOffset = _rng.Next(3) * 5
             });
         }
-
         
         var remove = new List<int>();
         
