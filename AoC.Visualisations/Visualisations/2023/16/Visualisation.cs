@@ -24,6 +24,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private readonly Dictionary<int, int> _beams = new();
     
     private Color[] _palette;
+
+    private long _frame;
     
     public Visualisation()
     {
@@ -84,6 +86,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     protected override void Update(GameTime gameTime)
     {
+        _frame++;
+        
         if (HasNextState)
         {
             _state = GetNextState();
@@ -124,12 +128,20 @@ public class Visualisation : VisualisationBase<PuzzleState>
             _beams.Add(1, 0);
         }
 
-        for (var i = 0; i < _segments.Count; i++)
+        if (_frame % 2 == 0)
         {
-            _segments[i].ColorIndex--;
+            return;
         }
 
-        _segments.RemoveAll(s => s.ColorIndex < 0);
+        if (_frame % 5 == 0)
+        {
+            for (var i = 0; i < _segments.Count; i++)
+            {
+                _segments[i].ColorIndex--;
+            }
+
+            _segments.RemoveAll(s => s.ColorIndex < 0);
+        }
 
         var remove = new List<int>();
         
@@ -206,30 +218,32 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         foreach (var segment in _segments)
         {
+            var z = segment.ColorIndex / 100f + .1f;
+            
             switch (segment.Tile)
             {
                 case '|':
-                    _spriteBatch.Draw(_tiles, new Vector2(22 + segment.X * 7, 22 + segment.Y * 7), new Rectangle(7, 0, 7, 7), _palette[segment.ColorIndex], 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
+                    _spriteBatch.Draw(_tiles, new Vector2(22 + segment.X * 7, 22 + segment.Y * 7), new Rectangle(7, 0, 7, 7), _palette[segment.ColorIndex], 0, Vector2.Zero, Vector2.One, SpriteEffects.None, z);
                     break;
                     
                 case '-':
-                    _spriteBatch.Draw(_tiles, new Vector2(22 + segment.X * 7, 22 + segment.Y * 7), new Rectangle(0, 0, 7, 7), _palette[segment.ColorIndex], 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
+                    _spriteBatch.Draw(_tiles, new Vector2(22 + segment.X * 7, 22 + segment.Y * 7), new Rectangle(0, 0, 7, 7), _palette[segment.ColorIndex], 0, Vector2.Zero, Vector2.One, SpriteEffects.None, z);
                     break;
                 
                 case 'L':
-                    _spriteBatch.Draw(_tiles, new Vector2(22 + segment.X * 7, 22 + segment.Y * 7), new Rectangle(28, 0, 7, 7), _palette[segment.ColorIndex], 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
+                    _spriteBatch.Draw(_tiles, new Vector2(22 + segment.X * 7, 22 + segment.Y * 7), new Rectangle(28, 0, 7, 7), _palette[segment.ColorIndex], 0, Vector2.Zero, Vector2.One, SpriteEffects.None, z);
                     break;
                     
                 case '7':
-                    _spriteBatch.Draw(_tiles, new Vector2(22 + segment.X * 7, 22 + segment.Y * 7), new Rectangle(35, 0, 7, 7), _palette[segment.ColorIndex], 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
+                    _spriteBatch.Draw(_tiles, new Vector2(22 + segment.X * 7, 22 + segment.Y * 7), new Rectangle(35, 0, 7, 7), _palette[segment.ColorIndex], 0, Vector2.Zero, Vector2.One, SpriteEffects.None, z);
                     break;
 
                 case 'F':
-                    _spriteBatch.Draw(_tiles, new Vector2(22 + segment.X * 7, 22 + segment.Y * 7), new Rectangle(42, 0, 7, 7), _palette[segment.ColorIndex], 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
+                    _spriteBatch.Draw(_tiles, new Vector2(22 + segment.X * 7, 22 + segment.Y * 7), new Rectangle(42, 0, 7, 7), _palette[segment.ColorIndex], 0, Vector2.Zero, Vector2.One, SpriteEffects.None, z);
                     break;
                     
                 case 'J':
-                    _spriteBatch.Draw(_tiles, new Vector2(22 + segment.X * 7, 22 + segment.Y * 7), new Rectangle(49, 0, 7, 7), _palette[segment.ColorIndex], 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
+                    _spriteBatch.Draw(_tiles, new Vector2(22 + segment.X * 7, 22 + segment.Y * 7), new Rectangle(49, 0, 7, 7), _palette[segment.ColorIndex], 0, Vector2.Zero, Vector2.One, SpriteEffects.None, z);
                     break;
             }
         }
@@ -246,11 +260,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 switch (map[x, y])
                 {
                     case '\\':
-                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(14, 0, 7, 7), Color.Cyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .2f);
+                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(14, 0, 7, 7), Color.Cyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .9f);
                         break;
                     
                     case '/':
-                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(21, 0, 7, 7), Color.Cyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .2f);
+                        _spriteBatch.Draw(_tiles, new Vector2(22 + x * 7, 22 + y * 7), new Rectangle(21, 0, 7, 7), Color.Cyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .9f);
                         break;
                     
                     case '|':
