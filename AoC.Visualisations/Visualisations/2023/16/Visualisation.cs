@@ -30,6 +30,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private long _frame;
     
     private Texture2D _spark;
+    
+    private Texture2D _dish;
 
     private readonly List<Spark> _sparks = new();
 
@@ -95,6 +97,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         _spark = Content.Load<Texture2D>("spark");
 
+        _dish = Content.Load<Texture2D>("dish");
+
         base.LoadContent();
     }
 
@@ -149,7 +153,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             });
         }
 
-        for (var i = 0; i < 10; i++)
+        for (var i = 0; i < 100; i++)
         {
             CreateSegments();
         }
@@ -305,10 +309,17 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private void TranslatePuzzleState()
     {
+        var firstBeamId = -1;
+        
         foreach (var beam in _state.Beams[1..])
         {
             if (! _allBeams.ContainsKey(beam.Id))
-            { 
+            {
+                if (firstBeamId == -1)
+                {
+                    firstBeamId = beam.Id;
+                }
+
                 _allBeams.Add(beam.Id, new List<(int X, int Y, char Direction, char Tile, int SourceId)>());
             }
 
@@ -335,7 +346,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             currentBeam.Add((beam.X, beam.Y, beam.Direction, GetTile(previous, beam.Direction), beam.SourceId));
         }
             
-        _beams.Add(1, 0);
+        _beams.Add(firstBeamId, 0);
     }
 
     private char GetTile(char d1, char d2)
@@ -394,6 +405,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         DrawMap();
 
+        DrawDish();
+        
         DrawBeams();
         
         DrawSparks();
@@ -401,6 +414,24 @@ public class Visualisation : VisualisationBase<PuzzleState>
         _spriteBatch.End();
 
         base.Draw(gameTime);
+    }
+
+    private void DrawDish()
+    {
+        if (_state == null || _state.StartDirection == '\0')
+        {
+            return;
+        }
+
+        if (_state.StartDirection == 'S')
+        {
+            _spriteBatch.Draw(_dish, new Vector2(15 + _state.LaserX * 7, 0), new Rectangle(0, 0, 22, 22), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+        }
+
+        if (_state.StartDirection == 'N')
+        {
+            _spriteBatch.Draw(_dish, new Vector2(15 + _state.LaserX * 7, 790), new Rectangle(0, 0, 22, 22), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+        }
     }
 
     private void DrawBeams()
