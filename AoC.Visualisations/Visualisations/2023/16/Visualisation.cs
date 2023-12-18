@@ -17,9 +17,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private PuzzleState _state;
 
-    private readonly Dictionary<int, List<(int X, int Y, char Direction, Color Color)>> _beams = new();
+    private readonly Dictionary<int, List<(int X, int Y, char Direction)>> _allBeams = new();
 
-    private long _frame;
+    private readonly List<List<(int X, int Y, char Direction)>> _beams = new ();
     
     private Color[] _palette;
     
@@ -85,36 +85,18 @@ public class Visualisation : VisualisationBase<PuzzleState>
         if (HasNextState)
         {
             _state = GetNextState();
+        }
 
-            var beamColor = 0;
-
-            var beamColorDirection = 1;
-
-            var beamColours = new Dictionary<int, Color>();
-            
-            if (_state.Beams != null)
+        if (_state.Beams != null && _allBeams.Count == 0)
+        {
+            foreach (var beam in _state.Beams)
             {
-                foreach (var beam in _state.Beams)
-                {
-                    if (! _beams.ContainsKey(beam.Id))
-                    { 
-                        _beams.Add(beam.Id, new List<(int X, int Y, char Direction, Color Color)>());
-                    }
-
-                    if (! beamColours.ContainsKey(beam.SourceId))
-                    {
-                        beamColours.Add(beam.SourceId, _palette[beamColor]);
-
-                        beamColor += beamColorDirection;
-
-                        if (beamColor == 0 || beamColor == _palette.Length - 1)
-                        {
-                            beamColorDirection = -beamColorDirection;
-                        }
-                    }
-
-                    _beams[beam.Id].Add((beam.X, beam.Y, beam.Direction, beamColours[beam.SourceId]));
+                if (! _allBeams.ContainsKey(beam.Id))
+                { 
+                    _allBeams.Add(beam.Id, new List<(int X, int Y, char Direction)>());
                 }
+
+                _allBeams[beam.Id].Add((beam.X, beam.Y, beam.Direction));
             }
         }
 
@@ -138,42 +120,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private void DrawBeams()
     {
-        if (_beams.Count == 0)
+        if (_allBeams.Count == 0)
         {
             return;
         }
-
-        _frame++;
-
-        var localFrame = 0;
-
-        foreach (var beam in _beams)
-        {
-            foreach (var particle in beam.Value)
-            {
-                if (localFrame > _frame)
-                {
-                    break;
-                }
-
-                switch (particle.Direction)
-                {
-                    case 'N':
-                    case 'S':
-                        _spriteBatch.Draw(_tiles, new Vector2(22 + particle.X * 7, 22 + particle.Y * 7), new Rectangle(7, 0, 7, 7), particle.Color, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
-                        break;
-
-                    case 'E':
-                    case 'W':
-                        _spriteBatch.Draw(_tiles, new Vector2(22 + particle.X * 7, 22 + particle.Y * 7), new Rectangle(0, 0, 7, 7), particle.Color, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
-                        break;
-                }
-
-                localFrame++;
-            }
-        }
-
-        _frame++;
     }
 
     private void DrawMap()
