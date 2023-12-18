@@ -204,10 +204,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             }
             else
             {
-                if (_segments == null)
-                {
-                    _segments = _bestSegments;
-                }
+                _segments = _bestSegments;
             }
         }
     }
@@ -226,11 +223,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 }
 
                 _state = state;
-                    
-                _segments.Clear();
 
                 if (state.LaserX != _lastLaser.X || state.LaserY != _lastLaser.Y)
                 {
+                    _segments.Clear();
+
                     TranslatePuzzleState();
 
                     _chunkSize = Math.Max(state.Beams.Count / 50, 50);
@@ -293,11 +290,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
             else
             {
                 _done = true;
-
-                if (! _done)
-                {
-                    _segments.Clear();
-                }
+                
+                _segments.Clear();
             }
 
             _allBeams.Clear();
