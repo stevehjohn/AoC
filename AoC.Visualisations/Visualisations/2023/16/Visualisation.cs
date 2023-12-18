@@ -195,7 +195,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         if (_state.LaserY == -1)
         {
-            if (_state.LaserX > 0)
+            // My puzzle input finds most energy at x: 9, y: -1. Hard coding viz for that for now.
+            if (_state.LaserX > 9)
             {
                 _state.LaserX--;
             }
