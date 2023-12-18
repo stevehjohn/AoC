@@ -15,6 +15,45 @@ public abstract class Base : Solution
 
     protected int Height;
 
+    private readonly IVisualiser<PuzzleState> _visualiser;
+
+    private PuzzleState _puzzleState;
+
+    protected Base()
+    {
+    }
+
+    protected Base(IVisualiser<PuzzleState> visualiser)
+    {
+        _visualiser = visualiser;
+    }
+
+    protected void Visualise((int X, int Y, char Direction, int Id, int SourceId)? beam = null, bool finished = false)
+    {
+        if (_visualiser != null)
+        {
+            if (_puzzleState == null)
+            {
+                _puzzleState = new PuzzleState
+                {
+                    Map = _map
+                };
+
+                _visualiser.PuzzleStateChanged(_puzzleState);
+            }
+
+            if (beam != null)
+            {
+                _puzzleState.Beams.Add(beam.Value);
+            }
+
+            if (finished)
+            {
+                _visualiser.PuzzleStateChanged(_puzzleState);
+            }
+        }
+    }
+
     protected int CountEnergised()
     {
         var count = 0;
@@ -32,25 +71,29 @@ public abstract class Base : Solution
 
     protected void SimulateBeams(int startX, int startY, char direction)
     {
-        var beams = new Stack<(int X, int Y, char Direction)>();
+        var beams = new Stack<(int X, int Y, char Direction, int Id, int SourceId)>();
 
         _energised = new bool[Width, Height];
 
         var visited = new HashSet<(int, int, char)>();
         
-        beams.Push((startX, startY, direction));
+        beams.Push((startX, startY, direction, 1, 0));
 
+        var beamId = 1;
+        
         while (beams.Count > 0)
         {
             var beam = beams.Pop();
 
-            if (! visited.Add(beam))
+            if (! visited.Add((beam.X, beam.Y, beam.Direction)))
             {
                 continue;
             }
 
             var (x, y) = MoveBeam(beam.X, beam.Y, beam.Direction);
 
+            Visualise(beam);
+            
             if (x == -1)
             {
                 continue;
@@ -61,7 +104,7 @@ public abstract class Base : Solution
             switch (_map[x, y])
             {
                 case '.':
-                    beams.Push((x, y, beam.Direction));
+                    beams.Push((x, y, beam.Direction, beam.Id, beam.SourceId));
                     
                     continue;
                 
@@ -72,7 +115,7 @@ public abstract class Base : Solution
                         'E' => 'S',
                         'S' => 'E',
                         _ => 'N'
-                    }));
+                    }, beam.Id, beam.SourceId));
                     
                     continue;
                 
@@ -83,37 +126,39 @@ public abstract class Base : Solution
                         'E' => 'N',
                         'S' => 'W',
                         _ => 'S'
-                    }));
+                    }, beam.Id, beam.SourceId));
                     
                     continue;
                 
                 case '|':
                     if (beam.Direction is 'N' or 'S')
                     {
-                        beams.Push((x, y, beam.Direction));
+                        beams.Push((x, y, beam.Direction, beam.Id, beam.SourceId));
                         
                         continue;
                     }
                     
-                    beams.Push((x, y, 'N'));
-                    beams.Push((x, y, 'S'));
+                    beams.Push((x, y, 'N', ++beamId, beam.Id));
+                    beams.Push((x, y, 'S', ++beamId, beam.Id));
 
                     continue;
                 
                 case '-':
                     if (beam.Direction is 'E' or 'W')
                     {
-                        beams.Push((x, y, beam.Direction));
+                        beams.Push((x, y, beam.Direction, beam.Id, beam.SourceId));
                         
                         continue;
                     }
                     
-                    beams.Push((x, y, 'E'));
-                    beams.Push((x, y, 'W'));
+                    beams.Push((x, y, 'E', ++beamId, beam.Id));
+                    beams.Push((x, y, 'W', ++beamId, beam.Id));
 
                     continue;
             }
         }
+        
+        Visualise(null, true);
     }
 
     private (int X, int Y) MoveBeam(int x, int y, char direction)
