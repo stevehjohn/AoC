@@ -22,25 +22,10 @@ public class Part1 : Base
         CreateMap(trench);        
         
         FloodFill(0, 0);
-        
-        Dump();
 
         var result = CountArea();
         
         return result.ToString();
-    }
-
-    private void Dump()
-    {
-        for (var y = 0; y < _height; y++)
-        {
-            for (var x = 0; x < _width; x++)
-            {
-                Console.Write(_map[x, y] == '\0' ? '.' : _map[x, y]);
-            }
-            
-            Console.WriteLine();
-        }
     }
 
     private int CountArea()
