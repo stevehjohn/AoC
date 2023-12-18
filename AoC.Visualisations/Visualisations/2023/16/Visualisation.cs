@@ -247,24 +247,38 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         _beamEnds.RemoveAll(e => e.Count < 0);
 
-        foreach (var end in _beamEnds)
+        if (_frame < 1_000)
         {
-            _sparks.Add(new Spark
+            foreach (var end in _beamEnds)
             {
-                Position = new PointFloat { X = end.X * 7 + 26, Y = end.Y * 7 + 26},
-                Vector = new PointFloat { X = (-10f + _rng.Next(21)) / 10, Y = -_rng.Next(31) / 10f },
-                Ticks = 25,
-                StartTicks = 25,
-                SpriteOffset = _rng.Next(3) * 5
-            });
-        }
-        
-        for (var i = 0; i < _chunkSize; i++)
-        {
-            CreateSegments();
+                _sparks.Add(new Spark
+                {
+                    Position = new PointFloat { X = end.X * 7 + 26, Y = end.Y * 7 + 26 },
+                    Vector = new PointFloat { X = (-10f + _rng.Next(21)) / 10, Y = -_rng.Next(31) / 10f },
+                    Ticks = 20,
+                    StartTicks = 20,
+                    SpriteOffset = _rng.Next(3) * 5
+                });
+            }
         }
 
-        if (_beams.Count == 0 && _frame % 50 == 0)
+        if (_frame <= 1_000)
+        {
+            for (var i = 0; i < _chunkSize; i++)
+            {
+                CreateSegments();
+            }
+        }
+        else
+        {
+            while (CreateSegments())
+            {
+            }
+        }
+
+        var modulo = _frame > 1_000 ? 20 : 50;
+        
+        if (_beams.Count == 0 && _frame % modulo == 0)
         {
             // My puzzle input finds most energy at x: 9, y: -1. Hard coding viz for that for now.
             if (_state.LaserX == 9 && _state.LaserY == -1)
@@ -272,7 +286,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 _segments.ForEach(s => _bestSegments.Add(s));
             }
             
-            if (_state.LaserX != -1 && _state.LaserY != 0)
+            if (_state.LaserX != -1 || _state.LaserY != 0)
             {
                 _state = null;
             }
@@ -290,12 +304,14 @@ public class Visualisation : VisualisationBase<PuzzleState>
         }
     }
 
-    private void CreateSegments()
+    private bool CreateSegments()
     {
         var remove = new List<int>();
 
         var add = new List<int>();
 
+        var added = false;
+        
         foreach (var beam in _beams)
         {
             var segment = _allBeams[beam.Key][beam.Value];
@@ -303,6 +319,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
             var color = 25 - (int) (26f / _allBeams[beam.Key].Count * _beams[beam.Key]);
             
             _segments.Add(new Segment { X = segment.X, Y = segment.Y, Tile = segment.Tile, ColorIndex = color });
+
+            added = true;
 
             _beams[beam.Key]++;
 
@@ -335,6 +353,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             _beams.Add(item, 0);
         }
+
+        return added;
     }
 
     private void UpdatePart1()
