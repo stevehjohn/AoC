@@ -560,8 +560,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private void DrawDish()
     {
         var laser = _lastLaser;
-        
-        if (_state != null && _state.StartDirection == '\0')
+
+        if (_done || (_state != null && _state.StartDirection == '\0'))
         {
             laser = (_state.LaserX, _state.LaserY, _state.StartDirection);
         }
