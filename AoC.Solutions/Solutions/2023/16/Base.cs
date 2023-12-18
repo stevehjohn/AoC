@@ -50,6 +50,11 @@ public abstract class Base : Solution
             if (finished)
             {
                 _visualiser.PuzzleStateChanged(_puzzleState);
+                
+                _puzzleState = new PuzzleState
+                {
+                    Map = _map
+                };
             }
         }
     }

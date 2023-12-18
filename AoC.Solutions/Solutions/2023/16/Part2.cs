@@ -20,6 +20,8 @@ public class Part2 : Base
 
         var max = 0;
         
+        SimulateBeams(-1, 0, 'E');
+
         for (var x = 0; x < Width; x++)
         {
             SimulateBeams(x, -1, 'S');
