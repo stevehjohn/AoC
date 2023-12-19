@@ -15,19 +15,19 @@ public class Part2 : Base
         
         foreach (var rule in acceptWorkflows)
         {
-            var result = CheckRule(rule.Key, rule.Value, 'x');
+            var result = CheckRule(rule.Key, rule.Value, 'x', new Range(1, 4000));
 
             var accepted = result;
             
-            result = CheckRule(rule.Key, rule.Value, 'm');
+            result = CheckRule(rule.Key, rule.Value, 'm', new Range(1, 4000));
 
             accepted = accepted == 0 ? result : accepted * (result == 0 ? 1 : result);
             
-            result = CheckRule(rule.Key, rule.Value, 'a');
+            result = CheckRule(rule.Key, rule.Value, 'a', new Range(1, 4000));
 
             accepted = accepted == 0 ? result : accepted * (result == 0 ? 1 : result);
             
-            result = CheckRule(rule.Key, rule.Value, 's');
+            result = CheckRule(rule.Key, rule.Value, 's', new Range(1, 4000));
 
             accepted = accepted == 0 ? result : accepted * (result == 0 ? 1 : result);
             
@@ -37,13 +37,11 @@ public class Part2 : Base
         return sum.ToString();
     }
 
-    private int CheckRule(string name, List<Rule> rules, char property)
+    private int CheckRule(string name, List<Rule> rules, char property, Range range)
     {
         rules.Reverse();
 
-        var range = new Range(0, 4000);
-
-        while (name != "in")
+        if (name != "in")
         {
             foreach (var rule in rules)
             {
@@ -64,8 +62,11 @@ public class Part2 : Base
                     }
                 }
             }
-            
-            rules = Workflows.Where(.Where(w => w.Value.Any(r => r.Destination == name));
+
+            foreach (var workflow in Workflows.Where(w => w.Value.Any(r => r.Destination == name)))
+            {
+                CheckRule(workflow.Key, workflow.Value, property, range);
+            }
         }
 
         return range.End - range.Start + 1;
