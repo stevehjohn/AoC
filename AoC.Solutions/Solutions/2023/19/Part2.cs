@@ -37,29 +37,37 @@ public class Part2 : Base
         return sum.ToString();
     }
 
-    private long CheckRule(string name, List<Rule> rules, char property)
+    private int CheckRule(string name, List<Rule> rules, char property)
     {
         rules.Reverse();
 
-        var ranges = new List<Range> { new(0, 4000) };
+        var range = new Range(0, 4000);
 
-        foreach (var rule in rules)
+        while (name != "in")
         {
-            if (rule.Condition == '\0' || rule.Condition != property)
+            foreach (var rule in rules)
             {
-                continue;
-            }
-            
-            var newRanges = new List<Range>();
-            
-            foreach (var range in ranges)
-            {
-                
-            }
+                if (rule.Condition == '\0' || rule.Condition != property)
+                {
+                    continue;
+                }
 
-            ranges = newRanges;
+                if (range.Start < rule.Value && range.End > rule.Value)
+                {
+                    if (rule.Condition == '>')
+                    {
+                        range.Start = rule.Value;
+                    }
+                    else
+                    {
+                        range.End = rule.Value;
+                    }
+                }
+            }
+            
+            rules = Workflows.Where(.Where(w => w.Value.Any(r => r.Destination == name));
         }
 
-        return ranges.Sum(r => r.End - r.Start + 1);
+        return range.End - range.Start + 1;
     }
 }
