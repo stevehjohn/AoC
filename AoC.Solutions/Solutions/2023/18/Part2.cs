@@ -26,7 +26,7 @@ public class Part2 : Base
     {
         long x = 0, y = 0, totalLength = 1;
 
-        var points = new List<(long X, long Y)>() { (0, 0) };
+        var points = new List<(long X, long Y)> { (0, 0) };
 
         foreach (var line in Input)
         {
