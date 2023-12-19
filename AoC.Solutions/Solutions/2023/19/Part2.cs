@@ -39,6 +39,27 @@ public class Part2 : Base
 
     private long CheckRule(string name, List<Rule> rules, char property)
     {
-        return 0;
+        rules.Reverse();
+
+        var ranges = new List<Range> { new(0, 4000) };
+
+        foreach (var rule in rules)
+        {
+            if (rule.Condition == '\0' || rule.Condition != property)
+            {
+                continue;
+            }
+            
+            var newRanges = new List<Range>();
+            
+            foreach (var range in ranges)
+            {
+                
+            }
+
+            ranges = newRanges;
+        }
+
+        return ranges.Sum(r => r.End - r.Start + 1);
     }
 }
