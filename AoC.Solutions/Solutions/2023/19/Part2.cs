@@ -9,85 +9,92 @@ public class Part2 : Base
     {
         ParseInput(false);
 
-        var acceptWorkflows = Workflows.Where(w => w.Value.Any(r => r.Destination == "A"));
-
-        long sum = 0;
-        
-        foreach (var rule in acceptWorkflows)
+        var result = CheckRule("in", new Dictionary<char, (int Start, int End)>
         {
-            var result = CheckRule(rule.Key, rule.Value, 'x', new Range(1, 4000));
-
-            var accepted = result;
-            
-            // result = CheckRule(rule.Key, rule.Value, 'm', new Range(1, 4000));
-            //
-            // accepted = accepted == 0 ? result : accepted * (result == 0 ? 1 : result);
-            //
-            // result = CheckRule(rule.Key, rule.Value, 'a', new Range(1, 4000));
-            //
-            // accepted = accepted == 0 ? result : accepted * (result == 0 ? 1 : result);
-            //
-            // result = CheckRule(rule.Key, rule.Value, 's', new Range(1, 4000));
-            //
-            // accepted = accepted == 0 ? result : accepted * (result == 0 ? 1 : result);
-            
-            sum += accepted;
-        }
+            { 'x', (1, 4000) },
+            { 'm', (1, 4000) },
+            { 'a', (1, 4000) },
+            { 's', (1, 4000) }
+        });
         
-        return sum.ToString();
+        return result.ToString();
     }
 
-    private int CheckRule(string name, List<Rule> rules, char property, Range range)
+    private long CheckRule(string name, Dictionary<char, (int Start, int End)> ranges)
     {
-        rules.Reverse();
-
-        Console.WriteLine($"{name} ({property}): {range}");
-
-        var found = false;
-        
-        foreach (var rule in rules)
+        if (name == "R")
         {
-            if (rule.Destination != "A" && ! found)
+            return 0;
+        }
+
+        if (name == "A")
+        {
+            return ranges.Values.Aggregate<(int Start, int End), long>(1, (total, range) => total * (range.End - range.Start + 1));
+        }
+
+        var workflow = Workflows[name];
+
+        var result = 0L;
+        
+        foreach (var rule in workflow)
+        {
+            if (rule.Condition == '\0')
             {
+                result += CheckRule(rule.Destination, ranges);
+                
                 continue;
             }
 
-            found = true;
-
-            if (rule.Condition == '\0')
+            var range = ranges[rule.Property];
+            
+            switch (rule.Condition)
             {
-                if (rule.Destination == "A")
-                {
-                    continue;
-                }
+                case '<':
+                    if (range.End < rule.Value)
+                    {
+                        result += CheckRule(rule.Destination, ranges);
 
-                if (rule.Destination == "R")
-                {
+                        return result;
+                    }
+
+                    if (range.Start < rule.Value)
+                    {
+                        var newRanges = new Dictionary<char, (int Start, int End)>(ranges)
+                        {
+                            [rule.Property] = (range.Start, rule.Value - 1)
+                        };
+
+                        result += CheckRule(rule.Destination, newRanges);
+
+                        ranges[rule.Property] = (rule.Value, range.End);
+                    }
+
                     break;
-                }
-            }
+                
+                case '>':
+                    if (range.Start > rule.Value)
+                    {
+                        result += CheckRule(rule.Destination, ranges);
 
-            if (rule.Property == property)
-            {
-                if (range.Start < rule.Value && range.End > rule.Value)
-                {
-                    if (rule.Condition == '>')
-                    {
-                        range.Start = rule.Value + 1;
+                        return result;
                     }
-                    else
+
+                    if (range.End > rule.Value)
                     {
-                        range.End = rule.Value - 1;
+                        var newRanges = new Dictionary<char, (int Start, int End)>(ranges)
+                        {
+                            [rule.Property] = (rule.Value + 1, range.End)
+                        };
+
+                        result += CheckRule(rule.Destination, newRanges);
+
+                        ranges[rule.Property] = (range.Start, rule.Value);
                     }
-                }
+
+                    break;
             }
         }
 
-        foreach (var workflow in Workflows.Where(w => w.Value.Any(r => r.Destination == name)))
-        {
-            CheckRule(workflow.Key, workflow.Value, property, range);
-        }
-
-        return range.End - range.Start + 1;
+        return result;
     }
 }
