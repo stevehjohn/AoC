@@ -15,10 +15,22 @@ public class Part2 : Base
         
         foreach (var rule in acceptWorkflows)
         {
-            var accepted = 0L;
-            
-            CheckRule(rule.Key, rule.Value, 'x');
+            var result = CheckRule(rule.Key, rule.Value, 'x');
 
+            var accepted = result;
+            
+            result = CheckRule(rule.Key, rule.Value, 'm');
+
+            accepted = accepted == 0 ? result : accepted * (result == 0 ? 1 : result);
+            
+            result = CheckRule(rule.Key, rule.Value, 'a');
+
+            accepted = accepted == 0 ? result : accepted * (result == 0 ? 1 : result);
+            
+            result = CheckRule(rule.Key, rule.Value, 's');
+
+            accepted = accepted == 0 ? result : accepted * (result == 0 ? 1 : result);
+            
             sum += accepted;
         }
         
