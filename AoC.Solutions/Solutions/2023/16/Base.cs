@@ -91,7 +91,7 @@ public abstract class Base : Solution
 
         _energised = new bool[Width, Height];
 
-        var visited = new HashSet<(int, int, char)>();
+        var visited = new bool[Width, Height, 4];
         
         beams.Push((startX, startY, direction, 1, 0));
 
@@ -101,9 +101,22 @@ public abstract class Base : Solution
         {
             var beam = beams.Pop();
 
-            if (! visited.Add((beam.X, beam.Y, beam.Direction)))
+            var i = beam.Direction switch
             {
-                continue;
+                'N' => 0,
+                'E' => 1,
+                'S' => 2,
+                _ => 3
+            };
+
+            if (beam.X >= 0 && beam.X < Width && beam.Y >= 0 && beam.Y < Height)
+            {
+                if (visited[beam.X, beam.Y, i])
+                {
+                    continue;
+                }
+
+                visited[beam.X, beam.Y, i] = true;
             }
 
             var (x, y) = MoveBeam(beam.X, beam.Y, beam.Direction);
