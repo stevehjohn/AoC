@@ -24,7 +24,7 @@ public abstract class Base : Solution
     {
         var queue = new PriorityQueue<(int X, int Y, (int Dx, int Dy) Direction, int Steps), int>();
 
-        var visited = new HashSet<string>();
+        var visited = new bool[_width, _height, 4, 10];
 
         queue.Enqueue((0, 0, East, 1), 0);
         queue.Enqueue((0, 0, South, 1), 0);
@@ -65,11 +65,19 @@ public abstract class Base : Solution
                     continue;
                 }
                 
-                var key = $"{item.X},{item.Y},{x},{y},{newSteps}";
-                
-                if (visited.Add(key))
+                var i = item.Direction switch
+                {
+                    (0, -1) => 0,
+                    (1, 0) => 1,
+                    (0, 1) => 2,
+                    _ => 3
+                };
+
+                if (! visited[x, y, i, newSteps])
                 {
                     queue.Enqueue((x, y, direction, newSteps), cost + _map[x, y]);
+
+                    visited[x, y, i, newSteps] = true;
                 }
             }
         }
