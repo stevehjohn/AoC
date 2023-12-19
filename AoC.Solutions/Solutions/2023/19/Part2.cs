@@ -19,17 +19,17 @@ public class Part2 : Base
 
             var accepted = result;
             
-            result = CheckRule(rule.Key, rule.Value, 'm', new Range(1, 4000));
-
-            accepted = accepted == 0 ? result : accepted * (result == 0 ? 1 : result);
-            
-            result = CheckRule(rule.Key, rule.Value, 'a', new Range(1, 4000));
-
-            accepted = accepted == 0 ? result : accepted * (result == 0 ? 1 : result);
-            
-            result = CheckRule(rule.Key, rule.Value, 's', new Range(1, 4000));
-
-            accepted = accepted == 0 ? result : accepted * (result == 0 ? 1 : result);
+            // result = CheckRule(rule.Key, rule.Value, 'm', new Range(1, 4000));
+            //
+            // accepted = accepted == 0 ? result : accepted * (result == 0 ? 1 : result);
+            //
+            // result = CheckRule(rule.Key, rule.Value, 'a', new Range(1, 4000));
+            //
+            // accepted = accepted == 0 ? result : accepted * (result == 0 ? 1 : result);
+            //
+            // result = CheckRule(rule.Key, rule.Value, 's', new Range(1, 4000));
+            //
+            // accepted = accepted == 0 ? result : accepted * (result == 0 ? 1 : result);
             
             sum += accepted;
         }
@@ -41,32 +41,51 @@ public class Part2 : Base
     {
         rules.Reverse();
 
-        if (name != "in")
+        Console.WriteLine($"{name} ({property}): {range}");
+
+        var found = false;
+        
+        foreach (var rule in rules)
         {
-            foreach (var rule in rules)
+            if (rule.Destination != "A" && ! found)
             {
-                if (rule.Condition == '\0' || rule.Condition != property)
+                continue;
+            }
+
+            found = true;
+
+            if (rule.Condition == '\0')
+            {
+                if (rule.Destination == "A")
                 {
                     continue;
                 }
 
+                if (rule.Destination == "R")
+                {
+                    break;
+                }
+            }
+
+            if (rule.Property == property)
+            {
                 if (range.Start < rule.Value && range.End > rule.Value)
                 {
                     if (rule.Condition == '>')
                     {
-                        range.Start = rule.Value;
+                        range.Start = rule.Value + 1;
                     }
                     else
                     {
-                        range.End = rule.Value;
+                        range.End = rule.Value - 1;
                     }
                 }
             }
+        }
 
-            foreach (var workflow in Workflows.Where(w => w.Value.Any(r => r.Destination == name)))
-            {
-                CheckRule(workflow.Key, workflow.Value, property, range);
-            }
+        foreach (var workflow in Workflows.Where(w => w.Value.Any(r => r.Destination == name)))
+        {
+            CheckRule(workflow.Key, workflow.Value, property, range);
         }
 
         return range.End - range.Start + 1;
