@@ -7,26 +7,14 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        var (points, length) = ParseInput();
-
-        var shiftedPoints = points.Skip(1).Append(points[0]);
-
-        var zipped = points.Zip(shiftedPoints);
-
-        var laces = zipped.Select(l => l.First.X * l.Second.Y - l.First.Y * l.Second.X);
-
-        var area = Math.Abs(laces.Sum()) / 2;
+        ParseInput();
         
-        area += length / 2 + 1;
-        
-        return area.ToString();
+        return GetArea().ToString();
     }
 
-    private (List<(long X, long Y)> Points, long Length) ParseInput()
+    private void ParseInput()
     {
-        long x = 0, y = 0, totalLength = 1;
-
-        var points = new List<(long X, long Y)> { (0, 0) };
+        long x = 0, y = 0;
 
         foreach (var line in Input)
         {
@@ -34,7 +22,7 @@ public class Part2 : Base
 
             var length = Convert.ToInt32(parts[2][2..7], 16);
 
-            totalLength += length;
+            Length += length;
             
             var direction = parts[2][7];
 
@@ -58,9 +46,7 @@ public class Part2 : Base
                 
             }
             
-            points.Add((x, y));
+            Points.Add((x, y));
         }
-        
-        return (points, totalLength);
     }
 }
