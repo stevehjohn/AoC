@@ -62,6 +62,8 @@ public class Part1 : Base
                 if (pass)
                 {
                     name = rule.Destination;
+                    
+                    break;
                 }
             }
         }
@@ -114,7 +116,7 @@ public class Part1 : Base
 
         l++;
 
-        while (l < Input.Length - 1)
+        while (l < Input.Length)
         {
             var parts = Input[l][1..^1].Split(',');
 
