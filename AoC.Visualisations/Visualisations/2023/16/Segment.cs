@@ -8,5 +8,5 @@ public class Segment
     
     public char Tile { get; set; }
     
-    public int ColorIndex { get; set; }
+    public float ColorIndex { get; set; }
 }
