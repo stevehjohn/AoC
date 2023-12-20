@@ -20,7 +20,7 @@ public abstract class Base : Solution
         {
             if (checkModule != null)
             {
-                if (! pulse.Pulse && pulse.Target == checkModule)
+                if (pulse.Pulse && pulse.Target == checkModule)
                 {
                     return (0, 0);
                 }
