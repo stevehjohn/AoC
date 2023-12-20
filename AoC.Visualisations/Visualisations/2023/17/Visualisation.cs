@@ -73,7 +73,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     protected override void Update(GameTime gameTime)
     {
-        _angle += 0.005f;
+        _angle += 0.001f;
 
         base.Update(gameTime);
     }
