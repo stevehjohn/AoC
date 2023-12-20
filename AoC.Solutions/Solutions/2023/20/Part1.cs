@@ -7,6 +7,14 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
+        ParseInput();
+
+        SendPulse();
+        
         return "Unknown";
+    }
+
+    private void SendPulse()
+    {
     }
 }
