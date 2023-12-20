@@ -83,40 +83,42 @@ public class Visualisation : VisualisationBase<PuzzleState>
         GraphicsDevice.Clear(Color.Black);
 
         for (var i = 1; i < 10; i++)
-        if (HasNextState)
         {
-            if (_state == null)
+            if (HasNextState)
             {
-                _state = GetNextState();
-
-                InitialiseTerrain();
-            }
-            else
-            {
-                _state = GetNextState();
-                
-                if (_state.History != null)
+                if (_state == null)
                 {
-                    for (var x = 0; x < _width; x++)
+                    _state = GetNextState();
+
+                    InitialiseTerrain();
+                }
+                else
+                {
+                    _state = GetNextState();
+
+                    if (_state.History != null)
                     {
-                        for (var y = 0; y < _height; y++)
+                        for (var x = 0; x < _width; x++)
                         {
-                            var height = _state.Map[x, y];
-                
-                            _vertices[x + y * _width].Color = _palette[height];
+                            for (var y = 0; y < _height; y++)
+                            {
+                                var height = _state.Map[x, y];
+
+                                _vertices[x + y * _width].Color = _palette[height];
+                            }
                         }
-                    }
-                
-                    foreach (var point in _state.History)
-                    {
-                        _vertices[point.X + point.Y * _width].Color = Color.AntiqueWhite;
+
+                        foreach (var point in _state.History)
+                        {
+                            _vertices[point.X + point.Y * _width].Color = Color.AntiqueWhite;
+                        }
                     }
                 }
             }
-        }
-        else if (_state != null)
-        {
-            RenderFinalPath();
+            else if (_state != null)
+            {
+                RenderFinalPath();
+            }
         }
 
         if (_state != null)
