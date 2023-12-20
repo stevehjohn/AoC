@@ -10,8 +10,6 @@ public class Part2 : Base
         ParseInput();
 
         var presses = 0;
-
-        DumpTargeting("rx");
         
         // while (true)
         // {
@@ -26,37 +24,5 @@ public class Part2 : Base
         // }
         
         return presses.ToString();
-    }
-
-    private void DumpTargeting(string target)
-    {
-        foreach (var module in Modules)
-        {
-            if (module.Value.Targets.Contains(target) && module.Value.Type == Type.Conjunction)
-            {
-                Console.WriteLine(module.Key);
-                
-                DumpTargeting(module.Key);
-            }
-        }
-    }
-
-    private bool CheckAllConjunctionsOff()
-    {
-        foreach (var module in Modules)
-        {
-            if (module.Value.Type == Type.Conjunction)
-            {
-                foreach (var pulse in module.Value.ReceivedPulses)
-                {
-                    if (pulse.Value)
-                    {
-                        return false;
-                    }
-                }
-            }
-        }
-        
-        return true;
-    }
+    } 
 }
