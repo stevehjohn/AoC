@@ -6,5 +6,7 @@ public class Module
 
     public bool State { get; set; }
 
-    public List<string> Destinations { get; set; }
+    public List<string> Targets { get; set; }
+
+    public Dictionary<string, bool> ReceivedPulses { get; set; }
 }
