@@ -1,5 +1,58 @@
-broadcaster -> a, b, c
-%a -> b
-%b -> c
-%c -> inv
-&inv -> a
+%vg -> lf, vd
+%dr -> kg
+%cn -> mv, pt
+%rq -> bk, gr
+%vp -> lp, bk
+%kg -> lv
+%lv -> jc, tp
+%sj -> rm, vd
+%jc -> tp, qr
+%km -> tp, dr
+%jx -> cn
+&vd -> tf, lf, nb, cx, hx, lr
+%lp -> jt, bk
+%vj -> ps
+broadcaster -> km, lr, xh, rf
+%dj -> pt, gc
+%cg -> vd, hx
+&ln -> tg
+%fl -> pt, sk
+%lm -> tr, bk
+%lr -> vd, vg
+&pt -> vq, rf, cm, jx, rg
+%cx -> gp
+%gp -> vd, sj
+&db -> tg
+%st -> vd
+%jt -> bk
+%jh -> lm, bk
+%xf -> bd, tp
+%gc -> cm, pt
+&tp -> dr, km, kg, db, vj, qr
+%ps -> xf, tp
+%rf -> pt, dj
+%lf -> nb
+%bd -> tp, gg
+%dk -> tp, vj
+%mn -> jh, bk
+&tg -> rx
+%ql -> bk, zx
+%tr -> bk, vp
+%sk -> pt
+%nb -> cg
+%sb -> vd, cx
+%qr -> dk
+%xh -> bk, ql
+%rg -> sd
+%hx -> sb
+%sd -> pt, jx
+%gr -> bk, mn
+%gg -> tp
+%zx -> rq
+&bk -> xh, ln, zx
+%rm -> st, vd
+%hq -> fl, pt
+&vq -> tg
+%cm -> rg
+&tf -> tg
+%mv -> pt, hq

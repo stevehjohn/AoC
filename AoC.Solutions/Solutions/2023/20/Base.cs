@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Pulse propagation";
 
-    private Dictionary<string, Module> _modules = new(); 
+    protected readonly Dictionary<string, Module> Modules = new(); 
     
     protected void ParseInput()
     {
@@ -48,9 +48,28 @@ public abstract class Base : Solution
                     break;
             }
 
-            module.Destinations = parts[1].Split(',', StringSplitOptions.TrimEntries).ToList();
-            
-            _modules.Add(name, module);
+            module.Targets = parts[1].Split(',', StringSplitOptions.TrimEntries).ToList();
+
+            if (module.Type == Type.Conjunction)
+            {
+                module.ReceivedPulses = new Dictionary<string, bool>();
+            }
+
+            Modules.Add(name, module);
+        }
+
+        foreach (var module in Modules)
+        {
+            foreach (var target in module.Value.Targets)
+            {
+                if (Modules.TryGetValue(target, out var targetModule))
+                {
+                    if (targetModule.Type == Type.Conjunction)
+                    {
+                        targetModule.ReceivedPulses[module.Key] = false;
+                    }
+                }
+            }
         }
     }
 }
