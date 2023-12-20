@@ -6,9 +6,9 @@ public abstract class Base : Solution
 {
     public override string Description => "Pulse propagation";
 
-    protected readonly Dictionary<string, Module> Modules = new(); 
+    protected Dictionary<string, Module> Modules; 
     
-    protected (int Lows, int Highs) SendPulses()
+    protected (int Lows, int Highs) SendPulses(string checkModule = null)
     {
         int lows = 0, highs = 0;
         
@@ -18,6 +18,14 @@ public abstract class Base : Solution
 
         while (queue.TryDequeue(out var pulse))
         {
+            if (checkModule != null)
+            {
+                if (! pulse.Pulse && pulse.Target == checkModule)
+                {
+                    return (0, 0);
+                }
+            }
+
             if (pulse.Pulse)
             {
                 highs++;
@@ -86,6 +94,8 @@ public abstract class Base : Solution
     
     protected void ParseInput()
     {
+        Modules = new Dictionary<string, Module>();
+        
         foreach (var line in Input)
         {
             var parts = line.Split("->", StringSplitOptions.TrimEntries);
