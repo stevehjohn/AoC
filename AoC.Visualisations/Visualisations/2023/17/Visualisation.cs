@@ -82,6 +82,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         GraphicsDevice.Clear(Color.Black);
 
+        for (var i = 1; i < 10; i++)
         if (HasNextState)
         {
             if (_state == null)
