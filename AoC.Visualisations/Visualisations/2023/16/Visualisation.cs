@@ -655,16 +655,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             return;
         }
 
-        Color color;
-        
-        if (_frame > FastFrameStart && ! _done)
-        {
-            color = _palette[20];
-        }
-        else
-        {
-            color = Color.DarkCyan;
-        }
+        var color = Color.DarkCyan;
 
         for (var y = 0; y < _map.GetLength(1); y++)
         {
