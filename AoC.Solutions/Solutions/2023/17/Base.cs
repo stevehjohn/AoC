@@ -20,6 +20,17 @@ public abstract class Base : Solution
     
     private static readonly (int, int) West = (-1, 0);
 
+    private readonly IVisualiser<PuzzleState> _visualiser;
+
+    protected Base()
+    {
+    }
+
+    protected Base(IVisualiser<PuzzleState> visualiser)
+    {
+        _visualiser = visualiser;
+    }
+    
     protected int Solve(int minSteps, int maxSteps)
     {
         var queue = new PriorityQueue<(int X, int Y, (int Dx, int Dy) Direction, int Steps), int>();

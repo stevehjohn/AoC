@@ -1,7 +1,6 @@
-﻿using AoC.Solutions.Solutions._2022._12;
+﻿using AoC.Solutions.Solutions._2023._17;
 using AoC.Visualisations.Exceptions;
 using AoC.Visualisations.Infrastructure;
-using AoC.Visualisations.Visualisations._2022._12;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -39,8 +38,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
                                 {
-                                    PreferredBackBufferWidth = Constants.ScreenWidth,
-                                    PreferredBackBufferHeight = Constants.ScreenHeight
+                                    PreferredBackBufferWidth = 980,
+                                    PreferredBackBufferHeight = 980
                                 };
 
         Content.RootDirectory = "./12";
@@ -66,10 +65,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 Puzzle = new Part1(this);
 
                 break;
-            case 2:
-                Puzzle = new Part2(this);
 
-                break;
             default:
                 throw new VisualisationParameterException();
         }
