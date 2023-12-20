@@ -410,8 +410,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
             }
         }
 
-        // _segments.RemoveAll(s => s.ColorIndex < 0);
-
         foreach (var end in _beamEnds)
         {
             _sparks.Add(new Spark
