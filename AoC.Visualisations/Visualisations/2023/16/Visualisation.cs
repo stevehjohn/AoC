@@ -264,7 +264,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             }
         }
 
-        if (_frame <= FastFrameStart)
+        if (_frame <= FastFrameStart || _done)
         {
             for (var i = 0; i < _chunkSize; i++)
             {
@@ -315,9 +315,18 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             var segment = _allBeams[beam.Key][beam.Value];
 
-            var color = 25 - (int) (26f / _allBeams[beam.Key].Count * _beams[beam.Key]);
+            float colorIndex;
+
+            if (_frame > FastFrameStart && ! _done)
+            {
+                colorIndex = 20;
+            }
+            else
+            {
+                colorIndex = 25 - (int) (26f / _allBeams[beam.Key].Count * _beams[beam.Key]);
+            }
             
-            _segments.Add(new Segment { X = segment.X, Y = segment.Y, Tile = segment.Tile, ColorIndex = color });
+            _segments.Add(new Segment { X = segment.X, Y = segment.Y, Tile = segment.Tile, ColorIndex = colorIndex });
 
             added = true;
 
@@ -646,7 +655,16 @@ public class Visualisation : VisualisationBase<PuzzleState>
             return;
         }
 
-        var color = Color.DarkCyan;
+        Color color;
+        
+        if (_frame > FastFrameStart && ! _done)
+        {
+            color = _palette[20];
+        }
+        else
+        {
+            color = Color.DarkCyan;
+        }
 
         for (var y = 0; y < _map.GetLength(1); y++)
         {
