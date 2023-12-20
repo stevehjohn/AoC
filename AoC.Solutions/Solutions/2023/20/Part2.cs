@@ -7,6 +7,22 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        return "Unknown";
+        ParseInput();
+
+        var presses = 0;
+
+        while (true)
+        {
+            presses++;
+
+            var result = SendPulses(true);
+
+            if (result == (0, 0))
+            {
+                break;
+            }
+        }
+        
+        return presses.ToString();
     }
 }
