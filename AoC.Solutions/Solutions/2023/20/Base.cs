@@ -6,9 +6,9 @@ public abstract class Base : Solution
 {
     public override string Description => "Pulse propagation";
 
-    private readonly Dictionary<string, Module> _modules = new(); 
+    protected readonly Dictionary<string, Module> Modules = new(); 
     
-    protected (int Lows, int Highs) SendPulses(bool part2 = false)
+    protected (int Lows, int Highs) SendPulses()
     {
         int lows = 0, highs = 0;
         
@@ -27,7 +27,7 @@ public abstract class Base : Solution
                 lows++;
             }
 
-            if (! _modules.TryGetValue(pulse.Target, out var module))
+            if (! Modules.TryGetValue(pulse.Target, out var module))
             {
                 continue;
             }
@@ -75,14 +75,6 @@ public abstract class Base : Solution
                     case Type.Conjunction:
                         output = ! module.ReceivedPulses.All(r => r.Value);
                         break;
-                }
-                
-                if (part2)
-                {
-                    if (target == "rx" && ! output)
-                    {
-                        return (0, 0);
-                    }
                 }
                 
                 queue.Enqueue((pulse.Target, output, target));
@@ -139,14 +131,14 @@ public abstract class Base : Solution
                 module.ReceivedPulses = new Dictionary<string, bool>();
             }
 
-            _modules.Add(name, module);
+            Modules.Add(name, module);
         }
 
-        foreach (var module in _modules)
+        foreach (var module in Modules)
         {
             foreach (var target in module.Value.Targets)
             {
-                if (_modules.TryGetValue(target, out var targetModule))
+                if (Modules.TryGetValue(target, out var targetModule))
                 {
                     if (targetModule.Type == Type.Conjunction)
                     {
