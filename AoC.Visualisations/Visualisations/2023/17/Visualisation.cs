@@ -38,7 +38,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
                                 {
-                                    PreferredBackBufferWidth = 980,
+                                    PreferredBackBufferWidth = 1480,
                                     PreferredBackBufferHeight = 980
                                 };
 
@@ -93,32 +93,35 @@ public class Visualisation : VisualisationBase<PuzzleState>
             else
             {
                 _state = GetNextState();
-
-                if (_state.History != null)
-                {
-                    for (var x = 0; x < _width; x++)
-                    {
-                        for (var y = 0; y < _height; y++)
-                        {
-                            var height = _state.Map[x, y];
-
-                            _vertices[x + y * _width].Color = _palette[height];
-                        }
-                    }
-
-                    foreach (var point in _state.History)
-                    {
-                        _vertices[point.X + point.Y * _width].Color = Color.AntiqueWhite;
-                    }
-                }
+                //
+                // if (_state.History != null)
+                // {
+                //     for (var x = 0; x < _width; x++)
+                //     {
+                //         for (var y = 0; y < _height; y++)
+                //         {
+                //             var height = _state.Map[x, y];
+                //
+                //             _vertices[x + y * _width].Color = _palette[height];
+                //         }
+                //     }
+                //
+                //     foreach (var point in _state.History)
+                //     {
+                //         _vertices[point.X + point.Y * _width].Color = Color.AntiqueWhite;
+                //     }
+                // }
             }
         }
-        else
+        else if (_state != null)
         {
             RenderFinalPath();
         }
 
-        DrawMap();
+        if (_state != null)
+        {
+            DrawMap();
+        }
 
         base.Draw(gameTime);
     }
@@ -152,15 +155,15 @@ public class Visualisation : VisualisationBase<PuzzleState>
         }
 
         _index++;
-
-        if (_index >= _state.History.Count - 1)
-        {
-            return;
-        }
-
-        var point = _state.History[_index];
-
-        _vertices[point.X + point.Y * _width].Color = Color.Cyan;
+        //
+        // if (_index >= _state.History.Count - 1)
+        // {
+        //     return;
+        // }
+        //
+        // var point = _state.History[_index];
+        //
+        // _vertices[point.X + point.Y * _width].Color = Color.Cyan;
     }
 
     private void InitialiseTerrain()
