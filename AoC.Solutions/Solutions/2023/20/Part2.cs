@@ -14,7 +14,7 @@ public class Part2 : Base
         
         GetAllPenultimateConjunctions();
 
-        var conjunctions = new List<long>();
+        var iterationsToReceiveLow = new List<long>();
         
         foreach (var conjunction in _penultimateConjunctions)
         {
@@ -30,14 +30,14 @@ public class Part2 : Base
         
                 if (result == (0, 0))
                 {
-                    conjunctions.Add(presses);
+                    iterationsToReceiveLow.Add(presses);
                     
                     break;
                 }
             }
         }
         
-        return Maths.LowestCommonMultiple(conjunctions).ToString();
+        return Maths.LowestCommonMultiple(iterationsToReceiveLow).ToString();
     }
 
     private void GetAllPenultimateConjunctions()
