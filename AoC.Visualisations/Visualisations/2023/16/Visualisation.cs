@@ -404,10 +404,13 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         for (var i = 0; i < _segments.Count; i++)
         {
-            _segments[i].ColorIndex -= 0.2f;
+            if (_segments[i].ColorIndex > 0)
+            {
+                _segments[i].ColorIndex -= 0.2f;
+            }
         }
 
-        _segments.RemoveAll(s => s.ColorIndex < 0);
+        // _segments.RemoveAll(s => s.ColorIndex < 0);
 
         foreach (var end in _beamEnds)
         {
