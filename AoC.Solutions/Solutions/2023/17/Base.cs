@@ -30,9 +30,19 @@ public abstract class Base : Solution
     {
         _visualiser = visualiser;
     }
-    
+
+    private void Visualise()
+    {
+        if (_visualiser != null)
+        {
+            _visualiser.PuzzleStateChanged(new PuzzleState { Map = _map });
+        }
+    }
+
     protected int Solve(int minSteps, int maxSteps)
     {
+        Visualise();
+        
         var queue = new PriorityQueue<(int X, int Y, (int Dx, int Dy) Direction, int Steps), int>();
 
         var visited = new bool[_width, _height, 4, 10];
