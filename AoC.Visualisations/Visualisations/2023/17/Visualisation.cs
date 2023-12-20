@@ -32,7 +32,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private readonly Color[] _palette;
     
-    private float _angle;
+    private float _angle = (float) Math.PI;
 
     public Visualisation()
     {
@@ -104,19 +104,22 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                 for (var i = 0; i < 10; i++)
                 {
-                    _state = GetNextState();
-
-                    if (_state.History != null)
+                    if (HasNextState)
                     {
-                        foreach (var point in _state.History)
+                        _state = GetNextState();
+
+                        if (_state.History != null)
                         {
-                            _vertices[point.X + point.Y * _width].Color = Color.AntiqueWhite;
+                            foreach (var point in _state.History)
+                            {
+                                _vertices[point.X + point.Y * _width].Color = Color.AntiqueWhite;
+                            }
                         }
-                    }
 
-                    if (! HasNextState)
-                    {
-                        break;
+                        if (! HasNextState)
+                        {
+                            break;
+                        }
                     }
                 }
             }
