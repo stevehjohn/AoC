@@ -66,6 +66,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                 break;
 
+            case 2:
+                Puzzle = new Part2(this);
+                _angle = 0;
+
+                break;
+
             default:
                 throw new VisualisationParameterException();
         }
@@ -106,7 +112,14 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 {
                     if (HasNextState)
                     {
-                        _state = GetNextState();
+                        var state = GetNextState();
+
+                        if (state == null)
+                        {
+                            break;
+                        }
+
+                        _state = state;
 
                         if (_state.History != null)
                         {
