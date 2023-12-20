@@ -47,8 +47,8 @@ public abstract class Base : Solution
 
         var visited = new bool[_width, _height, 4, 10];
 
-        queue.Enqueue((0, 0, East, 1, new List<(int X, int Y)>()), 0);
-        queue.Enqueue((0, 0, South, 1, new List<(int X, int Y)>()), 0);
+        queue.Enqueue((0, 0, East, 1, new List<(int X, int Y)> { (0, 0) }), 0);
+        queue.Enqueue((0, 0, South, 1, new List<(int X, int Y)> { (0, 0) }), 0);
 
         var directions = new List<(int Dx, int Dy)>();
         
@@ -59,8 +59,6 @@ public abstract class Base : Solution
                 return cost;
             }
 
-            item.History.Add((item.X, item.Y));
-            
             Visualise(item.History);
             
             directions.Clear();
@@ -100,7 +98,14 @@ public abstract class Base : Solution
 
                 if (! visited[x, y, i, newSteps])
                 {
-                    queue.Enqueue((x, y, direction, newSteps, item.History), cost + _map[x, y]);
+                    if (_visualiser != null)
+                    {
+                        queue.Enqueue((x, y, direction, newSteps, new List<(int X, int Y)>(item.History) { (x, y) }), cost + _map[x, y]);
+                    }
+                    else
+                    {
+                        queue.Enqueue((x, y, direction, newSteps, null), cost + _map[x, y]);
+                    }
 
                     visited[x, y, i, newSteps] = true;
                 }
