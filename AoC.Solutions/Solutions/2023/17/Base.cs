@@ -31,11 +31,11 @@ public abstract class Base : Solution
         _visualiser = visualiser;
     }
 
-    private void Visualise()
+    private void Visualise(List<(int X, int Y)> history = null)
     {
         if (_visualiser != null)
         {
-            _visualiser.PuzzleStateChanged(new PuzzleState { Map = _map });
+            _visualiser.PuzzleStateChanged(new PuzzleState { Map = _map, History = history?.ToList() });
         }
     }
 
@@ -43,12 +43,12 @@ public abstract class Base : Solution
     {
         Visualise();
         
-        var queue = new PriorityQueue<(int X, int Y, (int Dx, int Dy) Direction, int Steps), int>();
+        var queue = new PriorityQueue<(int X, int Y, (int Dx, int Dy) Direction, int Steps, List<(int X, int Y)> History), int>();
 
         var visited = new bool[_width, _height, 4, 10];
 
-        queue.Enqueue((0, 0, East, 1), 0);
-        queue.Enqueue((0, 0, South, 1), 0);
+        queue.Enqueue((0, 0, East, 1, new List<(int X, int Y)>()), 0);
+        queue.Enqueue((0, 0, South, 1, new List<(int X, int Y)>()), 0);
 
         var directions = new List<(int Dx, int Dy)>();
         
@@ -59,6 +59,10 @@ public abstract class Base : Solution
                 return cost;
             }
 
+            item.History.Add((item.X, item.Y));
+            
+            Visualise(item.History);
+            
             directions.Clear();
             
             if (item.Steps < minSteps - 1)
@@ -96,7 +100,7 @@ public abstract class Base : Solution
 
                 if (! visited[x, y, i, newSteps])
                 {
-                    queue.Enqueue((x, y, direction, newSteps), cost + _map[x, y]);
+                    queue.Enqueue((x, y, direction, newSteps, item.History), cost + _map[x, y]);
 
                     visited[x, y, i, newSteps] = true;
                 }
