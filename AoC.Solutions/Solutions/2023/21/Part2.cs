@@ -50,6 +50,30 @@ public class Part2 : Base
             return;
         }
 
+        if (position.X == Width)
+        {
+            position.X = 0;
+            position.Ux++;
+            
+            return;
+        }
+
+        if (position.Y < 0)
+        {
+            position.Y = Height - 1;
+            position.Uy--;
+            
+            return;
+        }
+
+        if (position.Y == Height)
+        {
+            position.Y = 0;
+            position.Uy++;
+            
+            return;
+        }
+
         if (Map[position.X, position.Y] == '#')
         {
             return;
