@@ -14,7 +14,7 @@ public class Part2 : Base
         return plots.ToString();
     }
 
-    private int Walk((int X, int Y) start, int maxSteps)
+    private long Walk((int X, int Y) start, int maxSteps)
     {
         var positions = new List<(int X, int Y, int Ux, int Uy)>
         {
@@ -72,7 +72,15 @@ public class Part2 : Base
             history.Add(countInUniverseOne);
         }
 
-        return 0;
+        var target = 26501365 % 2;
+
+        var detail = details[target];
+
+        var m = 26501365L / detail.Step * 8;
+
+        m *= detail.Count;
+        
+        return m;
     }
 
     private void Dump(List<(int X, int Y, int Ux, int Uy)> positions)
