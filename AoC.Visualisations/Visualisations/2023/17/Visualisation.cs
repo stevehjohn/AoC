@@ -34,8 +34,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
     
     private float _angle = (float) Math.PI;
 
-    private int _part;
-    
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -65,14 +63,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             case 1:
                 Puzzle = new Part1(this);
-                _part = 1;
 
                 break;
 
             case 2:
                 Puzzle = new Part2(this);
                 _angle = -(float) Math.PI;
-                _part = 2;
 
                 break;
 
