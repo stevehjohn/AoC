@@ -11,7 +11,7 @@ public class Part2 : Base
     {
         var start = ParseInput();
 
-        var result = Walk(start, Width * 2 + Width / 2);
+        var result = Walk(start, Width * 2 + Width / 2 + 1);
         
         return result.ToString();
     }
@@ -23,11 +23,7 @@ public class Part2 : Base
             (start.X, start.Y, 0, 0)
         };
 
-        var universes = new HashSet<(int Ux, int Uy)>();
-
         var counts = new long[maxSteps];
-        
-        var previousUniverses = 1;
 
         var step = 1;
         
@@ -37,46 +33,36 @@ public class Part2 : Base
 
             foreach (var position in positions)
             {
-                Move(newPositions, position, -1, 0, universes);
+                Move(newPositions, position, -1, 0);
             
-                Move(newPositions, position, 1, 0, universes);
+                Move(newPositions, position, 1, 0);
             
-                Move(newPositions, position, 0, -1, universes);
+                Move(newPositions, position, 0, -1);
             
-                Move(newPositions, position, 0, 1, universes);
+                Move(newPositions, position, 0, 1);
             }
             
             positions = newPositions;
 
             counts[step] = positions.Count;
 
-            if (universes.Count > previousUniverses)
-            {
-                Console.WriteLine($"{step}: {positions.Count}");
-                
-                previousUniverses = universes.Count;
-            }
-
             step++;
         }
 
-        foreach (var position in positions.GroupBy(p => new { p.Ux, p.Uy }))
-        {
-            Console.WriteLine($"{position.Key.Ux}, {position.Key.Uy}: {position.Count()}");
-        }
+        var halfWidth = Width / 2;
+        
+        var delta1 = counts[halfWidth + Width] - counts[halfWidth];
 
-        var delta1 = counts[64 + 131] - counts[64];
+        var delta2 = counts[halfWidth + Width * 2] - counts[halfWidth + Width];
 
-        var delta2 = counts[64 + 131 * 2] - counts[64 + 131];
-
-        var x = TargetSteps / 131;
-
-        var result = counts[64] + (delta1 * x) + (x * (x - 1) / 2) * (delta2 - delta1);
+        var quotient = TargetSteps / Width;
+        
+        var result = counts[halfWidth] + delta1 * quotient + quotient * (quotient - 1) / 2 * (delta2 - delta1);
         
         return result;
     }
 
-    private void Move(HashSet<(int X, int Y, int Ux, int Uy)> positions, (int X, int Y, int Ux, int Uy) position, int dX, int dY, HashSet<(int Ux, int Uy)> universes)
+    private void Move(HashSet<(int X, int Y, int Ux, int Uy)> positions, (int X, int Y, int Ux, int Uy) position, int dX, int dY)
     {
         position = (position.X + dX, position.Y + dY, position.Ux, position.Uy);
 
@@ -84,32 +70,24 @@ public class Part2 : Base
         {
             position.X = Width - 1;
             position.Ux--;
-            
-            universes.Add((position.Ux, position.Uy));
         }
 
         if (position.X == Width)
         {
             position.X = 0;
             position.Ux++;
-            
-            universes.Add((position.Ux, position.Uy));
         }
 
         if (position.Y < 0)
         {
             position.Y = Height - 1;
             position.Uy--;
-            
-            universes.Add((position.Ux, position.Uy));
         }
 
         if (position.Y == Height)
         {
             position.Y = 0;
             position.Uy++;
-            
-            universes.Add((position.Ux, position.Uy));
         }
 
         if (Map[position.X, position.Y] == '#')
