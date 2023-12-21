@@ -31,9 +31,9 @@ public class Part2 : Base
         
         while (step < maxSteps)
         {
-            var sourcePositions = step % 2 == 0 ? evenPositions : oddPositions;
+            var sourcePositions = (step & 1) == 0 ? evenPositions : oddPositions;
 
-            var targetPositions = step % 2 == 0 ? oddPositions : evenPositions;
+            var targetPositions = (step & 1) == 0 ? oddPositions : evenPositions;
 
             targetPositions.Clear();
             
