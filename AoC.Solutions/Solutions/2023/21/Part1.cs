@@ -16,14 +16,14 @@ public class Part1 : Base
 
     private int Walk((int X, int Y) start, int maxSteps)
     {
-        var positions = new List<(int X, int Y)>
+        var positions = new HashSet<(int X, int Y)>
         {
             (start.X, start.Y)
         };
 
         for (var i = 0; i < maxSteps; i++)
         {
-            var newPositions = new List<(int X, int Y)>();
+            var newPositions = new HashSet<(int X, int Y)>();
 
             foreach (var position in positions)
             {
@@ -42,7 +42,7 @@ public class Part1 : Base
         return positions.Count;
     }
 
-    private void Move(List<(int X, int Y)> positions, (int X, int Y) position, int dX, int dY)
+    private void Move(HashSet<(int X, int Y)> positions, (int X, int Y) position, int dX, int dY)
     {
         position = (position.X + dX, position.Y + dY);
 
@@ -55,12 +55,7 @@ public class Part1 : Base
         {
             return;
         }
-
-        if (positions.Any(p => p == position))
-        {
-            return;
-        }
-
+        
         positions.Add((position.X, position.Y));
     }
 }
