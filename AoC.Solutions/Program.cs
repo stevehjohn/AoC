@@ -193,8 +193,15 @@ public static class Program
 
                 Console.ForegroundColor = ConsoleColor.Magenta;
 
-                Console.WriteLine($" Incorrect answer for {key}. Expected {split[1]}, actual {answer}.");
+                Console.Write($" Incorrect answer for {key}. Expected {split[1]}, actual {answer}");
 
+                if (long.TryParse(split[1], out var l) && long.TryParse(answer, out var r))
+                {
+                    Console.Write($", difference: {l - r}");
+                }
+
+                Console.WriteLine(".");
+                
                 Console.ForegroundColor = temp;
             }
         }
