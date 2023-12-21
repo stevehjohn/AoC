@@ -5,16 +5,18 @@ namespace AoC.Solutions.Solutions._2023._21;
 [UsedImplicitly]
 public class Part2 : Base
 {
+    private const long TargetSteps = 26_501_365;
+    
     public override string GetAnswer()
     {
         var start = ParseInput();
 
-        var result = Walk(start);
+        var result = Walk(start, Width * 2 + Width / 2);
         
         return result.ToString();
     }
 
-    private int Walk((int X, int Y) start)
+    private long Walk((int X, int Y) start, int maxSteps)
     {
         var positions = new HashSet<(int X, int Y, int Ux, int Uy)>
         {
@@ -23,11 +25,13 @@ public class Part2 : Base
 
         var universes = new HashSet<(int Ux, int Uy)>();
 
+        var counts = new long[maxSteps];
+        
         var previousUniverses = 1;
 
         var step = 1;
         
-        while (true)
+        while (step < maxSteps)
         {
             var newPositions = new HashSet<(int X, int Y, int Ux, int Uy)>();
 
@@ -44,16 +48,13 @@ public class Part2 : Base
             
             positions = newPositions;
 
+            counts[step] = positions.Count;
+
             if (universes.Count > previousUniverses)
             {
                 Console.WriteLine($"{step}: {positions.Count}");
                 
                 previousUniverses = universes.Count;
-            }
-
-            if (universes.Count > 12)
-            {
-                break;
             }
 
             step++;
@@ -64,7 +65,15 @@ public class Part2 : Base
             Console.WriteLine($"{position.Key.Ux}, {position.Key.Uy}: {position.Count()}");
         }
 
-        return positions.Count;
+        var delta1 = counts[64 + 131] - counts[64];
+
+        var delta2 = counts[64 + 131 * 2] - counts[64 + 131];
+
+        var x = TargetSteps / 131;
+
+        var result = counts[64] + (delta1 * x) + (x * (x - 1) / 2) * (delta2 - delta1);
+        
+        return result;
     }
 
     private void Move(HashSet<(int X, int Y, int Ux, int Uy)> positions, (int X, int Y, int Ux, int Uy) position, int dX, int dY, HashSet<(int Ux, int Uy)> universes)
