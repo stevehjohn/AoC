@@ -9,7 +9,7 @@ public class Part2 : Base
     {
         var start = ParseInput();
 
-        var plots = Walk(start, 50);
+        var plots = Walk(start, 5000);
         
         return plots.ToString();
     }
@@ -21,13 +21,12 @@ public class Part2 : Base
             (start.X, start.Y, 0, 0)
         };
 
+        var history = new List<int>();
+
+        var details = new List<(int Step, int Count, List<int> Counts)>();
+        
         for (var i = 0; i <= maxSteps; i++)
         {
-            //if (i % 10 == 0)
-            {
-                Console.WriteLine($"{i}: {positions.Count}");
-            }
-
             var newPositions = new List<(int X, int Y, int Ux, int Uy)>();
 
             foreach (var position in positions)
@@ -42,9 +41,64 @@ public class Part2 : Base
             }
 
             positions = newPositions;
+
+            // if ((i + 1) % 50 == 0)
+            // {
+            //     Console.WriteLine($"{i + 1}: {positions.Count}");
+            // }
+            //Dump(positions);
+
+            var countInUniverseOne = positions.Count(p => p.Ux == 0 && p.Uy == 0);
+            
+            if (history.Contains(countInUniverseOne))
+            {
+                Console.WriteLine($"{i}: {countInUniverseOne}, {history.Last()}");
+                
+                var universeCounts = positions.GroupBy(p => new { p.Ux, p.Uy }).ToList();
+
+                foreach (var count in universeCounts)
+                {
+                    Console.WriteLine(count.Count());
+                }
+
+                details.Add((i, countInUniverseOne, universeCounts.Where(c => c.Count() != countInUniverseOne).Select(c => c.Count()).ToList()));
+                
+                if (details.Count > 1)
+                {
+                    break;
+                }
+            }
+            
+            history.Add(countInUniverseOne);
         }
 
-        return positions.Count;
+        return 0;
+    }
+
+    private void Dump(List<(int X, int Y, int Ux, int Uy)> positions)
+    {
+        for (var uY = -1; uY < 2; uY++)
+        for (var y = 0; y < Height; y++)
+        {
+            for (var uX = -1; uX < 2; uX++)
+            {
+                Console.ForegroundColor = (uY * 3 + uX) % 2 == 0 ? ConsoleColor.Green : ConsoleColor.Blue;
+                
+                for (var x = 0; x < Width; x++)
+                {
+                    if (! positions.Any(p => p.X == x && p.Y == y && p.Ux == uX && p.Uy == uY))
+                    {
+                        Console.Write(Map[x, y]);
+
+                        continue;
+                    }
+
+                    Console.Write('O');
+                }
+            }
+
+            Console.WriteLine();
+        }
     }
 
     private void Move(List<(int X, int Y, int Ux, int Uy)> positions, int x, int y, int uX, int uY, int dX, int dY)
@@ -78,7 +132,7 @@ public class Part2 : Base
         {
             y = 0;
 
-            uX++;
+            uY++;
         }
 
         if (positions.Contains((x, y, uX, uY)))
