@@ -68,7 +68,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
             case 2:
                 Puzzle = new Part2(this);
-                _angle = -(float) Math.PI;
+                _angle = (float) Math.PI / 4;
 
                 break;
 
