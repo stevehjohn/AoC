@@ -18,33 +18,35 @@ public class Part2 : Base
 
     private long Walk((int X, int Y) start, int maxSteps)
     {
-        var positions = new HashSet<(int X, int Y, int Ux, int Uy)>
+        var oddPositions = new HashSet<(int X, int Y, int Ux, int Uy)>
         {
             (start.X, start.Y, 0, 0)
         };
 
+        var evenPositions = new HashSet<(int X, int Y, int Ux, int Uy)>();
+        
         var counts = new long[maxSteps];
 
         var step = 1;
         
         while (step < maxSteps)
         {
-            var newPositions = new HashSet<(int X, int Y, int Ux, int Uy)>();
+            var sourcePositions = step % 2 == 0 ? evenPositions : oddPositions;
 
-            foreach (var position in positions)
+            var targetPositions = step % 2 == 0 ? oddPositions : evenPositions;
+            
+            foreach (var position in sourcePositions)
             {
-                Move(newPositions, position, -1, 0);
+                Move(targetPositions, position, -1, 0);
             
-                Move(newPositions, position, 1, 0);
+                Move(targetPositions, position, 1, 0);
             
-                Move(newPositions, position, 0, -1);
+                Move(targetPositions, position, 0, -1);
             
-                Move(newPositions, position, 0, 1);
+                Move(targetPositions, position, 0, 1);
             }
-            
-            positions = newPositions;
 
-            counts[step] = positions.Count;
+            counts[step] = targetPositions.Count;
 
             step++;
         }
