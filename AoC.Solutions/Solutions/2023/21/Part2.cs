@@ -34,6 +34,8 @@ public class Part2 : Base
             var sourcePositions = step % 2 == 0 ? evenPositions : oddPositions;
 
             var targetPositions = step % 2 == 0 ? oddPositions : evenPositions;
+
+            targetPositions.Clear();
             
             foreach (var position in sourcePositions)
             {
