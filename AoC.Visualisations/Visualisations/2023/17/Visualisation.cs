@@ -68,7 +68,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
             case 2:
                 Puzzle = new Part2(this);
-                _angle = 0;
+                _angle = (float) Math.PI / 4;
 
                 break;
 
@@ -127,11 +127,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
                             {
                                 _vertices[point.X + point.Y * _width].Color = Color.AntiqueWhite;
                             }
-                        }
-
-                        if (! HasNextState)
-                        {
-                            break;
                         }
                     }
                 }
