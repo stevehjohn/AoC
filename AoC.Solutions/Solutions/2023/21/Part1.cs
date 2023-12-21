@@ -27,30 +27,40 @@ public class Part1 : Base
 
             foreach (var position in positions)
             {
-                if (position.X > 0 && Map[position.X - 1, position.Y] == '.' && ! newPositions.Contains((position.X - 1, position.Y)))
-                {
-                    newPositions.Add((position.X - 1, position.Y));
-                }
-
-                if (position.X < Width - 1 && Map[position.X + 1, position.Y] == '.' && ! newPositions.Contains((position.X + 1, position.Y)))
-                {
-                    newPositions.Add((position.X + 1, position.Y));
-                }
-
-                if (position.Y > 0 && Map[position.X, position.Y - 1] == '.' && ! newPositions.Contains((position.X, position.Y - 1)))
-                {
-                    newPositions.Add((position.X, position.Y - 1));
-                }
-
-                if (position.Y < Height - 1 && Map[position.X, position.Y + 1] == '.' && ! newPositions.Contains((position.X, position.Y + 1)))
-                {
-                    newPositions.Add((position.X, position.Y + 1));
-                }
+                Move(newPositions, position, -1, 0);
+            
+                Move(newPositions, position, 1, 0);
+            
+                Move(newPositions, position, 0, -1);
+            
+                Move(newPositions, position, 0, 1);
             }
-
+            
             positions = newPositions;
         }
 
         return positions.Count;
+    }
+
+    private void Move(List<(int X, int Y)> positions, (int X, int Y) position, int dX, int dY)
+    {
+        position = (position.X + dX, position.Y + dY);
+
+        if (position.X < 0 || position.X == Width || position.Y < 0 || position.Y == Height)
+        {
+            return;
+        }
+
+        if (Map[position.X, position.Y] == '#')
+        {
+            return;
+        }
+
+        if (positions.Any(p => p == position))
+        {
+            return;
+        }
+
+        positions.Add((position.X, position.Y));
     }
 }
