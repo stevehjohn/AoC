@@ -56,6 +56,6 @@ public class Part1 : Base
             return;
         }
         
-        positions.Add((position.X, position.Y));
+        positions.Add(position);
     }
 }
