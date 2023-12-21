@@ -49,7 +49,7 @@ public class Part2 : Base
             }
 
             counts[step] = targetPositions.Count;
-
+            
             step++;
         }
 
