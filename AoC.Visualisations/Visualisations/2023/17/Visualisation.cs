@@ -68,7 +68,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
             case 2:
                 Puzzle = new Part2(this);
-                _angle = (float) Math.PI / 4;
+                _angle = -(float) Math.PI;
 
                 break;
 
@@ -175,7 +175,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         _index++;
         
-        if (_index >= _state.History.Count - 1)
+        if (_index > _state.History.Count - 1)
         {
             return;
         }
