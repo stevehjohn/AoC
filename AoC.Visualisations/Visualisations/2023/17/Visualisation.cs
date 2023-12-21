@@ -34,6 +34,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     
     private float _angle = (float) Math.PI;
 
+    private int _part;
+    
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -63,12 +65,14 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             case 1:
                 Puzzle = new Part1(this);
+                _part = 1;
 
                 break;
 
             case 2:
                 Puzzle = new Part2(this);
                 _angle = (float) Math.PI / 4;
+                _part = 2;
 
                 break;
 
@@ -79,7 +83,14 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     protected override void Update(GameTime gameTime)
     {
-        _angle += 0.001f;
+        if (_part == 2)
+        {
+            _angle -= 0.001f;
+        }
+        else
+        {
+            _angle += 0.001f;
+        }
 
         base.Update(gameTime);
     }
