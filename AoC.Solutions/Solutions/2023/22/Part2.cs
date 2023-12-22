@@ -12,7 +12,7 @@ public class Part2 : Base
         
         SettleBricks();
         
-        var result = CountSupportingBricks();
+        var result = GetSupportingBricks();
 
         var count = 0;
 
@@ -40,7 +40,7 @@ public class Part2 : Base
         return count.ToString();
     }
     
-    private List<int> CountSupportingBricks()
+    private List<int> GetSupportingBricks()
     {
         var result = new List<int>();
 
