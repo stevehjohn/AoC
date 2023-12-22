@@ -34,7 +34,7 @@ public abstract class Base : Solution
             {
                 count++;
 
-                while (move && ! Resting(brick.Points) && brick.Points[0].Z > 1)
+                while (! Resting(brick.Points) && brick.Points[0].Z > 1)
                 {
                     foreach (var item in brick.Points)
                     {
