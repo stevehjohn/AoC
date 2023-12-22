@@ -15,4 +15,22 @@ public class Part1 : Base
         
         return result.ToString();
     }
+    
+    private int CountSupportingBricks()
+    {
+        var count = 0;
+
+        var settledState = Bricks.ToList();
+
+        foreach (var brick in settledState)
+        {
+            Bricks.Remove(brick);
+
+            count += SettleBricks(false) ? 1 : 0;
+
+            Bricks.Add(brick);
+        }
+        
+        return count;
+    }
 }
