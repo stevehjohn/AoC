@@ -7,6 +7,14 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        return "Unknown";
+        ParseInput();
+        
+        SettleBricks();
+
+        var state = Bricks.ToList();
+        
+        var result = Bricks.Count - CountSupportingBricks();
+        
+        return result.ToString();
     }
 }

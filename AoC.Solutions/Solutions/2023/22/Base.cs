@@ -32,8 +32,6 @@ public abstract class Base : Solution
     {
         bool moved;
 
-        var count = 0;
-        
         do
         {
             moved = false;
@@ -56,18 +54,16 @@ public abstract class Base : Solution
                     }
 
                     moved = true;
-
-                    count++;
                 }
             }
 
-            if (count > 0 && ! move)
+            if (moved && ! move)
             {
                 return true;
             }
         } while (moved);
 
-        return count > 0;
+        return false;
     }
 
     private bool Resting(List<Point> brick)
