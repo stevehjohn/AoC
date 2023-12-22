@@ -15,6 +15,8 @@ public abstract class Base : Solution
         bool moved;
 
         var count = 0;
+
+        var rested = new HashSet<int>();
         
         do
         {
@@ -22,7 +24,7 @@ public abstract class Base : Solution
                 
             foreach (var brick in Bricks)
             {
-                if (brick.Points[0].Z == 1)
+                if (brick.Points[0].Z == 1 || rested.Contains(brick.Id))
                 {
                     continue;
                 }
@@ -42,6 +44,8 @@ public abstract class Base : Solution
                             item.Z--;
                         }
                     }
+
+                    rested.Add(brick.Id);
                 }
             }
 
