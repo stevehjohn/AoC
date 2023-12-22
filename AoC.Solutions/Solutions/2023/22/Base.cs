@@ -8,7 +8,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Sand slabs";
     
-    protected List<(char C, List<Point> P)> Bricks = new();
+    protected List<List<Point>> Bricks = new();
     
     protected int CountSupportingBricks()
     {
@@ -40,16 +40,16 @@ public abstract class Base : Solution
                 
             foreach (var brick in Bricks)
             {
-                if (brick.P[0].Z == 1)
+                if (brick[0].Z == 1)
                 {
                     continue;
                 }
 
-                if (! Resting(brick.P))
+                if (! Resting(brick))
                 {
                     if (move)
                     {
-                        foreach (var item in brick.P)
+                        foreach (var item in brick)
                         {
                             item.Z--;
                         }
@@ -74,12 +74,12 @@ public abstract class Base : Solution
     {
         foreach (var item in Bricks)
         {
-            if (item.P == brick)
+            if (item == brick)
             {
                 continue;
             }
 
-            foreach (var left in item.P)
+            foreach (var left in item)
             {
                 foreach (var right in brick)
                 {
@@ -96,8 +96,6 @@ public abstract class Base : Solution
 
     protected void ParseInput()
     {
-        var id = 'A';
-        
         foreach (var line in Input)
         {
             var parts = line.Split('~');
@@ -124,11 +122,9 @@ public abstract class Base : Solution
                 brick.Add(start);
             }
             
-            Bricks.Add((id, brick.OrderBy(p => p.Z).ToList()));
-
-            id++;
+            Bricks.Add(brick.OrderBy(p => p.Z).ToList());
         }
 
-        Bricks = Bricks.OrderBy(b => b.P[0].Z).ToList();
+        Bricks = Bricks.OrderBy(b => b[0].Z).ToList();
     }
 }
