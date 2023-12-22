@@ -61,6 +61,11 @@ public abstract class Base : Solution
                 continue;
             }
 
+            if (item.Points[0].Z >= brick[0].Z)
+            {
+                continue;
+            }
+
             foreach (var left in item.Points)
             {
                 foreach (var right in brick)
@@ -106,7 +111,7 @@ public abstract class Base : Solution
                 brick.Add(start);
             }
             
-            Bricks.Add((id, brick.OrderBy(p => p.Z).ToList()));
+            Bricks.Add((id, brick));
 
             id++;
         }
