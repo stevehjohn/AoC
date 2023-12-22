@@ -61,7 +61,7 @@ public abstract class Base : Solution
                 continue;
             }
 
-            if (item.Points[0].Z >= brick[0].Z)
+            if (item.Points[0].Z >= brick[0].Z || item.Points[0].Z < brick[0].Z - 10)
             {
                 continue;
             }
