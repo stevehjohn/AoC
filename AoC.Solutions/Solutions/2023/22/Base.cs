@@ -60,7 +60,7 @@ public abstract class Base : Solution
                 continue;
             }
 
-            if (item.Points[0].Z >= brick[0].Z || item.Points[0].Z < brick[0].Z - 10)
+            if (item.Points[0].Z >= brick[0].Z || item.Points[0].Z < brick[0].Z - 5)
             {
                 continue;
             }
