@@ -14,10 +14,51 @@ public class Part1 : Base
         ParseInput();
      
         SettleBricks();
+
+        var result = CountSupportingBricks();
         
-        return "Unknown";
+        return result.ToString();
     }
 
+    private int CountSupportingBricks()
+    {
+        var count = 0;
+        
+        foreach (var brick in _bricks)
+        {
+            if (brick[0].Z == 1)
+            {
+                continue;
+            }
+
+            if (! RestedOn(brick))
+            {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    private bool RestedOn(List<Point> brick)
+    {
+        foreach (var item in _bricks)
+        {
+            foreach (var left in item)
+            {
+                foreach (var right in brick)
+                {
+                    if (left.Z == right.Z + 1 && left.X == right.X && left.Y == right.Y)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+    
     private void SettleBricks()
     {
         var moved = false;
@@ -39,8 +80,6 @@ public class Part1 : Base
                     {
                         item.Z--;
                     }
-                    
-                    Console.WriteLine(brick[0]);
                     
                     moved = true;
                 }
@@ -84,12 +123,14 @@ public class Part1 : Base
 
             var brick = new List<Point> { start };
 
-            while (start.X != end.X && start.Y != end.Y && start.Z != end.Z)
+            while (! start.Equals(end))
             {
                 start.X = start.X.Converge(end.X);
                 start.Y = start.Y.Converge(end.Y);
                 start.Z = start.Z.Converge(end.Z);
             }
+            
+            Console.WriteLine();
 
             _bricks.Add(brick);
         }
