@@ -14,46 +14,52 @@ public abstract class Base : Solution
     {
         bool moved;
 
-        var count = 0;
-        
         do
         {
             moved = false;
                 
             foreach (var brick in Bricks)
             {
-                if (brick[0].Z == 1)
+                if (brick.Points[0].Z == 1)
                 {
                     continue;
                 }
 
-                if (! Resting(brick))
+                var restsOn = Resting(brick);
+                
+                if (restsOn.Count == 0)
                 {
                     if (move)
                     {
-                        foreach (var item in brick)
+                        foreach (var item in brick.Points)
                         {
                             item.Z--;
                         }
                     }
 
                     moved = true;
-
-                    count++;
+                }
+                else
+                {
+                    brick.RestsOn.AddRange(restsOn);
+                    
+                    restsOn.ForEach(b => b.Supports.Add(brick));
                 }
             }
 
-            if (count > 0 && ! move)
+            if (moved && ! move)
             {
                 return true;
             }
         } while (moved);
 
-        return count > 0;
+        return false;
     }
 
-    private bool Resting(List<Point> brick)
+    private List<Brick> Resting(Brick brick)
     {
+        var restsOn = new List<Brick>();
+        
         foreach (var item in Bricks)
         {
             if (item == brick)
@@ -61,19 +67,19 @@ public abstract class Base : Solution
                 continue;
             }
 
-            foreach (var left in item)
+            foreach (var left in item.Points)
             {
-                foreach (var right in brick)
+                foreach (var right in brick.Points)
                 {
                     if (left.Z == right.Z - 1 && left.X == right.X && left.Y == right.Y)
                     {
-                        return true;
+                        restsOn.Add(item);
                     }
                 }
             }
         }
 
-        return false;
+        return restsOn;
     }
 
     protected void ParseInput()
@@ -104,9 +110,9 @@ public abstract class Base : Solution
                 brick.Add(start);
             }
             
-            Bricks.Add(brick.OrderBy(p => p.Z).ToList());
+            Bricks.Add(new Brick { Points = brick });
         }
 
-        Bricks = Bricks.OrderBy(b => b[0].Z).ToList();
+        Bricks = Bricks.OrderBy(b => b.Points[0].Z).ToList();
     }
 }
