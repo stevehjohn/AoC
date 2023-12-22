@@ -10,24 +10,6 @@ public abstract class Base : Solution
     
     protected List<List<Point>> Bricks = new();
     
-    protected int CountSupportingBricks()
-    {
-        var count = 0;
-
-        var settledState = Bricks.ToList();
-
-        foreach (var brick in settledState)
-        {
-            Bricks.Remove(brick);
-
-            count += SettleBricks(false) ? 1 : 0;
-
-            Bricks.Add(brick);
-        }
-        
-        return count;
-    }
-    
     protected bool SettleBricks(bool move = true)
     {
         bool moved;
