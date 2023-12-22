@@ -25,6 +25,11 @@ public abstract class Base : Solution
 
             var resting = Resting(brick.Points);
 
+            if (! move && ! resting)
+            {
+                return true;
+            }
+
             if (! resting)
             {
                 count++;
