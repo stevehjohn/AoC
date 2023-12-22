@@ -65,6 +65,14 @@ public class Part2 : Base
                         {
                             item.Z--;
                         }
+
+                        while (! Resting(brick.Points) && brick.Points[0].Z > 1)
+                        {
+                            foreach (var item in brick.Points)
+                            {
+                                item.Z--;
+                            }
+                        }
                     }
 
                     moved = true;
