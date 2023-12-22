@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2023._22;
