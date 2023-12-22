@@ -40,7 +40,7 @@ public class Part2 : Base
         return count.ToString();
     }
     
-    private int SettleBricks2(bool move = true)
+    private int SettleBricks2()
     {
         bool moved;
 
@@ -57,27 +57,23 @@ public class Part2 : Base
                     continue;
                 }
 
-                if (! Resting(brick.Points))
+                var resting = Resting(brick.Points);
+
+                if (! resting)
                 {
-                    if (move)
-                    {
-                        foreach (var item in brick.Points)
-                        {
-                            item.Z--;
-                        }
-
-                        while (! Resting(brick.Points) && brick.Points[0].Z > 1)
-                        {
-                            foreach (var item in brick.Points)
-                            {
-                                item.Z--;
-                            }
-                        }
-                    }
-
                     moved = true;
 
                     movedItems.Add(brick.Id);
+                }
+
+                while (! resting && brick.Points[0].Z > 1)
+                {
+                    foreach (var item in brick.Points)
+                    {
+                        item.Z--;
+                    }
+
+                    resting = Resting(brick.Points);
                 }
             }
         } while (moved);
