@@ -96,19 +96,24 @@ public class Part1 : Base
     {
         foreach (var item in _bricks)
         {
+            if (item.P == brick)
+            {
+                continue;
+            }
+
             foreach (var left in item.P)
             {
                 foreach (var right in brick)
                 {
                     if (left.Z == right.Z + 1 && left.X == right.X && left.Y == right.Y)
                     {
-                        return true;
+                        return false;
                     }
                 }
             }
         }
 
-        return false;
+        return true;
     }
     
     private void SettleBricks()
