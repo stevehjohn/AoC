@@ -11,8 +11,6 @@ public class Part1 : Base
 
         SettleBricks();
         
-        Console.WriteLine("Settled.");
-        
         var result = Bricks.Count - CountSupportingBricks();
         
         return result.ToString();
