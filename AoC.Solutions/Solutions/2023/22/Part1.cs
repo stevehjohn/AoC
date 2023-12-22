@@ -32,7 +32,7 @@ public class Part1 : Base
         {
             foreach (var p in brick.P)
             {
-                if (output[p.X, p.Z] == '\0')
+                if (output[p.X, p.Z] == '\0' || output[p.X, p.Z] == brick.C)
                 {
                     output[p.X, p.Z] = brick.C;
                 }
@@ -41,7 +41,7 @@ public class Part1 : Base
                     output[p.X, p.Z] = '?';
                 }
 
-                if (output[p.Y + 4, p.Z] == '\0')
+                if (output[p.Y + 4, p.Z] == '\0' || output[p.Y + 4, p.Z] == brick.C)
                 {
                     output[p.Y + 4, p.Z] = brick.C;
                 }
@@ -113,18 +113,18 @@ public class Part1 : Base
     
     private void SettleBricks()
     {
-        var moved = false;
+        bool moved;
 
         do
         {
+            moved = false;
+                
             foreach (var brick in _bricks)
             {
                 if (brick.P[0].Z == 1)
                 {
                     continue;
                 }
-
-                moved = false;
 
                 if (! Resting(brick.P))
                 {
@@ -143,6 +143,11 @@ public class Part1 : Base
     {
         foreach (var item in _bricks)
         {
+            if (item.P == brick)
+            {
+                continue;
+            }
+
             foreach (var left in item.P)
             {
                 foreach (var right in brick)
