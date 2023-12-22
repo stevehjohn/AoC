@@ -27,19 +27,21 @@ public abstract class Base : Solution
                     continue;
                 }
 
-                if (! Resting(brick.Points))
+                var resting = Resting(brick.Points);
+
+                if (! resting)
                 {
-                    if (move)
+                    moved = true;
+
+                    count++;
+
+                    while (move && ! Resting(brick.Points) && brick.Points[0].Z > 1)
                     {
                         foreach (var item in brick.Points)
                         {
                             item.Z--;
                         }
                     }
-
-                    moved = true;
-
-                    count++;
                 }
             }
 
