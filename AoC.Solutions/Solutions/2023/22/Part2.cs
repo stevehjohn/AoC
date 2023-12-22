@@ -16,16 +16,16 @@ public class Part2 : Base
 
         var count = 0;
 
-        var settled = new List<List<Point>>();
+        var settled = new List<(int Id, List<Point> Points)>();
 
         foreach (var brick in Bricks)
         {
-            settled.Add(brick.Select(b => new Point(b)).ToList());
+            settled.Add((brick.Id, brick.Points.Select(b => new Point(b)).ToList()));
         }
 
-        foreach (var brick in result)
+        foreach (var brickId in result)
         {
-            Bricks.Remove(brick);
+            Bricks.RemoveAll(b => b.Id == brickId);
 
             count += SettleBricks2();
             
@@ -33,7 +33,7 @@ public class Part2 : Base
 
             foreach (var item in settled)
             {
-                Bricks.Add(item.Select(b => new Point(b)).ToList());
+                Bricks.Add((item.Id, item.Points.Select(b => new Point(b)).ToList()));
             }
         }
         
@@ -44,7 +44,7 @@ public class Part2 : Base
     {
         bool moved;
 
-        var movedItems = new HashSet<List<Point>>();
+        var movedItems = new HashSet<int>();
         
         do
         {
@@ -52,16 +52,16 @@ public class Part2 : Base
                 
             foreach (var brick in Bricks)
             {
-                if (brick[0].Z == 1)
+                if (brick.Points[0].Z == 1)
                 {
                     continue;
                 }
 
-                if (! Resting(brick))
+                if (! Resting(brick.Points))
                 {
                     if (move)
                     {
-                        foreach (var item in brick)
+                        foreach (var item in brick.Points)
                         {
                             item.Z--;
                         }
@@ -69,17 +69,17 @@ public class Part2 : Base
 
                     moved = true;
 
-                    movedItems.Add(brick);
+                    movedItems.Add(brick.Id);
                 }
             }
         } while (moved);
-
+        
         return movedItems.Count;
     }
     
-    private List<List<Point>> CountSupportingBricks()
+    private List<int> CountSupportingBricks()
     {
-        var result = new List<List<Point>>();
+        var result = new List<int>();
 
         var settledState = Bricks.ToList();
 
@@ -89,7 +89,7 @@ public class Part2 : Base
 
             if (SettleBricks(false))
             {
-                result.Add(brick);                    
+                result.Add(brick.Id);                    
             }
 
             Bricks.Add(brick);

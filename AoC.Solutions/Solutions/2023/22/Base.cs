@@ -8,7 +8,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Sand slabs";
     
-    protected List<List<Point>> Bricks = new();
+    protected List<(int Id, List<Point> Points)> Bricks = new();
     
     protected bool SettleBricks(bool move = true)
     {
@@ -22,16 +22,16 @@ public abstract class Base : Solution
                 
             foreach (var brick in Bricks)
             {
-                if (brick[0].Z == 1)
+                if (brick.Points[0].Z == 1)
                 {
                     continue;
                 }
 
-                if (! Resting(brick))
+                if (! Resting(brick.Points))
                 {
                     if (move)
                     {
-                        foreach (var item in brick)
+                        foreach (var item in brick.Points)
                         {
                             item.Z--;
                         }
@@ -56,12 +56,12 @@ public abstract class Base : Solution
     {
         foreach (var item in Bricks)
         {
-            if (item == brick)
+            if (item.Points == brick)
             {
                 continue;
             }
 
-            foreach (var left in item)
+            foreach (var left in item.Points)
             {
                 foreach (var right in brick)
                 {
@@ -78,6 +78,8 @@ public abstract class Base : Solution
 
     protected void ParseInput()
     {
+        var id = 1;
+        
         foreach (var line in Input)
         {
             var parts = line.Split('~');
@@ -104,9 +106,11 @@ public abstract class Base : Solution
                 brick.Add(start);
             }
             
-            Bricks.Add(brick.OrderBy(p => p.Z).ToList());
+            Bricks.Add((id, brick.OrderBy(p => p.Z).ToList()));
+
+            id++;
         }
 
-        Bricks = Bricks.OrderBy(b => b[0].Z).ToList();
+        Bricks = Bricks.OrderBy(b => b.Points[0].Z).ToList();
     }
 }
