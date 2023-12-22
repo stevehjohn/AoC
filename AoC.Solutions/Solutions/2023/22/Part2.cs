@@ -27,7 +27,7 @@ public class Part2 : Base
         {
             Bricks.RemoveAll(b => b.Id == brickId);
 
-            count += SettleBricks2();
+            count += SettleBricks();
             
             Bricks.Clear();
 
@@ -40,43 +40,6 @@ public class Part2 : Base
         return count.ToString();
     }
     
-    private int SettleBricks2(bool move = true)
-    {
-        bool moved;
-
-        var movedItems = new HashSet<int>();
-        
-        do
-        {
-            moved = false;
-                
-            foreach (var brick in Bricks)
-            {
-                if (brick.Points[0].Z == 1)
-                {
-                    continue;
-                }
-
-                if (! Resting(brick.Points))
-                {
-                    if (move)
-                    {
-                        foreach (var item in brick.Points)
-                        {
-                            item.Z--;
-                        }
-                    }
-
-                    moved = true;
-
-                    movedItems.Add(brick.Id);
-                }
-            }
-        } while (moved);
-        
-        return movedItems.Count;
-    }
-    
     private List<int> CountSupportingBricks()
     {
         var result = new List<int>();
@@ -87,7 +50,7 @@ public class Part2 : Base
         {
             Bricks.Remove(brick);
 
-            if (SettleBricks(false))
+            if (SettleBricks(false) > 0)
             {
                 result.Add(brick.Id);                    
             }

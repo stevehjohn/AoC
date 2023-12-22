@@ -10,46 +10,45 @@ public abstract class Base : Solution
     
     protected List<(int Id, List<Point> Points)> Bricks = new();
     
-    protected bool SettleBricks(bool move = true)
+    protected int SettleBricks(bool move = true)
     {
-        bool moved;
-
         var count = 0;
-        
-        do
-        {
-            moved = false;
-                
-            foreach (var brick in Bricks)
-            {
-                if (brick.Points[0].Z == 1)
-                {
-                    continue;
-                }
 
-                if (! Resting(brick.Points))
+        var rested = new HashSet<int>();
+        
+        foreach (var brick in Bricks)
+        {
+            if (brick.Points[0].Z == 1 || rested.Contains(brick.Id))
+            {
+                continue;
+            }
+
+            var resting = Resting(brick.Points);
+
+            if (! move && ! resting)
+            {
+                return 1;
+            }
+
+            if (! resting)
+            {
+                count++;
+
+                while (! resting && brick.Points[0].Z > 1)
                 {
-                    if (move)
+                    foreach (var item in brick.Points)
                     {
-                        foreach (var item in brick.Points)
-                        {
-                            item.Z--;
-                        }
+                        item.Z--;
                     }
 
-                    moved = true;
-
-                    count++;
+                    resting = Resting(brick.Points);
                 }
-            }
 
-            if (count > 0 && ! move)
-            {
-                return true;
+                rested.Add(brick.Id);
             }
-        } while (moved);
+        }
 
-        return count > 0;
+        return count;
     }
 
     protected bool Resting(List<Point> brick)
@@ -57,6 +56,11 @@ public abstract class Base : Solution
         foreach (var item in Bricks)
         {
             if (item.Points == brick)
+            {
+                continue;
+            }
+
+            if (item.Points[0].Z >= brick[0].Z || item.Points[0].Z < brick[0].Z - 10)
             {
                 continue;
             }
@@ -106,7 +110,7 @@ public abstract class Base : Solution
                 brick.Add(start);
             }
             
-            Bricks.Add((id, brick.OrderBy(p => p.Z).ToList()));
+            Bricks.Add((id, brick));
 
             id++;
         }
