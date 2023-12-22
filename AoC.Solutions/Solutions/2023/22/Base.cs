@@ -34,12 +34,14 @@ public abstract class Base : Solution
             {
                 count++;
 
-                while (! Resting(brick.Points) && brick.Points[0].Z > 1)
+                while (! resting && brick.Points[0].Z > 1)
                 {
                     foreach (var item in brick.Points)
                     {
                         item.Z--;
                     }
+
+                    resting = Resting(brick.Points);
                 }
 
                 rested.Add(brick.Id);
