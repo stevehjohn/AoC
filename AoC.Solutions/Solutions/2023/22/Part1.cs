@@ -31,12 +31,16 @@ public class Part1 : Base
                     continue;
                 }
 
+                moved = false;
+
                 if (! Resting(brick))
                 {
                     foreach (var item in brick)
                     {
                         item.Z--;
                     }
+                    
+                    Console.WriteLine(brick[0]);
                     
                     moved = true;
                 }
