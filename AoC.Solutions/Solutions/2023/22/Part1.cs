@@ -7,17 +7,69 @@ namespace AoC.Solutions.Solutions._2023._22;
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private List<List<Point>> _bricks = new();
+    private List<(char C, List<Point> P)> _bricks = new();
     
     public override string GetAnswer()
     {
         ParseInput();
      
+        Dump();
+        
         SettleBricks();
-
+        
+        Dump();
+        
         var result = CountSupportingBricks();
         
         return result.ToString();
+    }
+
+    private void Dump()
+    {
+        var output = new char[7, 10];
+
+        foreach (var brick in _bricks)
+        {
+            foreach (var p in brick.P)
+            {
+                if (output[p.X, p.Z] == '\0')
+                {
+                    output[p.X, p.Z] = brick.C;
+                }
+                else
+                {
+                    output[p.X, p.Z] = '?';
+                }
+
+                if (output[p.Y + 4, p.Z] == '\0')
+                {
+                    output[p.Y + 4, p.Z] = brick.C;
+                }
+                else
+                {
+                    output[p.Y + 4, p.Z] = '?';
+                }
+            }
+        }
+
+        for (var z = 9; z > 0; z--)
+        {
+            for (var x = 0; x < 7; x++)
+            {
+                if (x == 3)
+                {
+                    Console.Write(' ');
+                    
+                    continue;
+                }
+
+                Console.Write(output[x, z] == '\0' ? '.' : output[x, z]);
+            }
+            
+            Console.WriteLine();
+        }
+        
+        Console.WriteLine();
     }
 
     private int CountSupportingBricks()
@@ -26,12 +78,12 @@ public class Part1 : Base
         
         foreach (var brick in _bricks)
         {
-            if (brick[0].Z == 1)
+            if (brick.P[0].Z == 1)
             {
                 continue;
             }
 
-            if (! RestedOn(brick))
+            if (! RestedOn(brick.P))
             {
                 count++;
             }
@@ -44,7 +96,7 @@ public class Part1 : Base
     {
         foreach (var item in _bricks)
         {
-            foreach (var left in item)
+            foreach (var left in item.P)
             {
                 foreach (var right in brick)
                 {
@@ -67,16 +119,16 @@ public class Part1 : Base
         {
             foreach (var brick in _bricks)
             {
-                if (brick[0].Z == 1)
+                if (brick.P[0].Z == 1)
                 {
                     continue;
                 }
 
                 moved = false;
 
-                if (! Resting(brick))
+                if (! Resting(brick.P))
                 {
-                    foreach (var item in brick)
+                    foreach (var item in brick.P)
                     {
                         item.Z--;
                     }
@@ -91,7 +143,7 @@ public class Part1 : Base
     {
         foreach (var item in _bricks)
         {
-            foreach (var left in item)
+            foreach (var left in item.P)
             {
                 foreach (var right in brick)
                 {
@@ -108,6 +160,8 @@ public class Part1 : Base
 
     private void ParseInput()
     {
+        var id = 'A';
+        
         foreach (var line in Input)
         {
             var parts = line.Split('~');
@@ -125,16 +179,20 @@ public class Part1 : Base
 
             while (! start.Equals(end))
             {
-                start.X = start.X.Converge(end.X);
-                start.Y = start.Y.Converge(end.Y);
-                start.Z = start.Z.Converge(end.Z);
+                start = new Point(
+                    start.X.Converge(end.X),
+                    start.Y.Converge(end.Y),
+                    start.Z.Converge(end.Z)
+                );
+                
+                brick.Add(start);
             }
             
-            Console.WriteLine();
+            _bricks.Add((id, brick));
 
-            _bricks.Add(brick);
+            id++;
         }
 
-        _bricks = _bricks.OrderBy(b => b[0].Z).ToList();
+        _bricks = _bricks.OrderBy(b => b.P[0].Z).ToList();
     }
 }
