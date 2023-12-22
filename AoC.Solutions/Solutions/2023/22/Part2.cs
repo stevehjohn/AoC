@@ -15,14 +15,26 @@ public class Part2 : Base
         var result = CountSupportingBricks();
 
         var count = 0;
-        
+
+        var settled = new List<List<Point>>();
+
+        foreach (var brick in Bricks)
+        {
+            settled.Add(brick.Select(b => new Point(b)).ToList());
+        }
+
         foreach (var brick in result)
         {
             Bricks.Remove(brick);
 
             count += SettleBricks2();
             
-            Bricks.Add(brick);
+            Bricks.Clear();
+
+            foreach (var item in settled)
+            {
+                Bricks.Add(item.Select(b => new Point(b)).ToList());
+            }
         }
         
         return count.ToString();
