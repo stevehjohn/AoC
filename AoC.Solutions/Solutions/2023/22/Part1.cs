@@ -26,7 +26,7 @@ public class Part1 : Base
         {
             Bricks.Remove(brick);
 
-            count += SettleBricks(false) ? 1 : 0;
+            count += SettleBricks(false) > 0 ? 1 : 0;
 
             Bricks.Add(brick);
         }

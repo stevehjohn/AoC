@@ -10,7 +10,7 @@ public abstract class Base : Solution
     
     protected List<(int Id, List<Point> Points)> Bricks = new();
     
-    protected bool SettleBricks(bool move = true)
+    protected int SettleBricks(bool move = true)
     {
         var count = 0;
 
@@ -27,7 +27,7 @@ public abstract class Base : Solution
 
             if (! move && ! resting)
             {
-                return true;
+                return 1;
             }
 
             if (! resting)
@@ -48,7 +48,7 @@ public abstract class Base : Solution
             }
         }
 
-        return count > 0;
+        return count;
     }
 
     protected bool Resting(List<Point> brick)
