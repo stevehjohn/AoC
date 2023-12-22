@@ -7,4 +7,6 @@ public class Brick
     public List<Point> Points { get; set; } = new();
 
     public List<Brick> Supports { get; set; } = new();
+
+    public List<Brick> RestsOn { get; set; } = new();
 }
