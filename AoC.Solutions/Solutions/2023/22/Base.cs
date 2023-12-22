@@ -12,48 +12,34 @@ public abstract class Base : Solution
     
     protected bool SettleBricks(bool move = true)
     {
-        bool moved;
-
         var count = 0;
 
         var rested = new HashSet<int>();
         
-        do
+        foreach (var brick in Bricks)
         {
-            moved = false;
-                
-            foreach (var brick in Bricks)
+            if (brick.Points[0].Z == 1 || rested.Contains(brick.Id))
             {
-                if (brick.Points[0].Z == 1 || rested.Contains(brick.Id))
+                continue;
+            }
+
+            var resting = Resting(brick.Points);
+
+            if (! resting)
+            {
+                count++;
+
+                while (move && ! Resting(brick.Points) && brick.Points[0].Z > 1)
                 {
-                    continue;
-                }
-
-                var resting = Resting(brick.Points);
-
-                if (! resting)
-                {
-                    moved = true;
-
-                    count++;
-
-                    while (move && ! Resting(brick.Points) && brick.Points[0].Z > 1)
+                    foreach (var item in brick.Points)
                     {
-                        foreach (var item in brick.Points)
-                        {
-                            item.Z--;
-                        }
+                        item.Z--;
                     }
-
-                    rested.Add(brick.Id);
                 }
-            }
 
-            if (count > 0 && ! move)
-            {
-                return true;
+                rested.Add(brick.Id);
             }
-        } while (moved);
+        }
 
         return count > 0;
     }
