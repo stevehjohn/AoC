@@ -8,8 +8,10 @@ public class Part1 : Base
     public override string GetAnswer()
     {
         ParseInput();
-        
+
         SettleBricks();
+        
+        Console.WriteLine("Settled.");
         
         var result = Bricks.Count - CountSupportingBricks();
         
