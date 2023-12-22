@@ -1,4 +1,5 @@
 using AoC.Solutions.Common;
+using AoC.Solutions.Extensions;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2023._22;
@@ -6,7 +7,7 @@ namespace AoC.Solutions.Solutions._2023._22;
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private List<(Point Start, Point End, Type Type)> _bricks = new();
+    private List<List<Point>> _bricks = new();
     
     public override string GetAnswer()
     {
@@ -25,29 +26,37 @@ public class Part1 : Base
         {
             foreach (var brick in _bricks)
             {
-                if (brick.Start.Z == 1)
+                if (brick[0].Z == 1)
                 {
                     continue;
                 }
 
                 if (! Resting(brick))
                 {
-                    brick.Start.Z--;
-
-                    brick.End.Z--;
-
+                    foreach (var item in brick)
+                    {
+                        item.Z--;
+                    }
+                    
                     moved = true;
                 }
             }
         } while (moved);
     }
 
-    private bool Resting((Point Start, Point End, Type Type) brick)
+    private bool Resting(List<Point> brick)
     {
         foreach (var item in _bricks)
         {
-            if (item.Start.Z == brick.Start.Z - 1 || item.End.Z == brick.Start.Z - 1)
+            foreach (var left in item)
             {
+                foreach (var right in brick)
+                {
+                    if (left.Z == right.Z - 1 && left.X == right.X && left.Y == right.Y)
+                    {
+                        return true;
+                    }
+                }
             }
         }
 
@@ -69,28 +78,18 @@ public class Part1 : Base
                 (start, end) = (end, start);
             }
 
-            Type type;
-            
-            if (start.Z != end.Z)
+            var brick = new List<Point> { start };
+
+            while (start.X != end.X && start.Y != end.Y && start.Z != end.Z)
             {
-                type = Type.Vertical;
-            }
-            else if (start.X != end.X)
-            {
-                type = Type.Horizontal;
-            }
-            else if (start.Y != end.Y)
-            {
-                type = Type.Deep;
-            }
-            else
-            {
-                type = Type.Square;
+                start.X = start.X.Converge(end.X);
+                start.Y = start.Y.Converge(end.Y);
+                start.Z = start.Z.Converge(end.Z);
             }
 
-            _bricks.Add((start, end, type));
+            _bricks.Add(brick);
         }
 
-        _bricks = _bricks.OrderBy(b => b.Start.Z).ToList();
+        _bricks = _bricks.OrderBy(b => b[0].Z).ToList();
     }
 }
