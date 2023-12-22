@@ -6,7 +6,7 @@ namespace AoC.Solutions.Solutions._2023._22;
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private List<(Point Start, Point End)> _bricks = new();
+    private List<(Point Start, Point End, Type Type)> _bricks = new();
     
     public override string GetAnswer()
     {
@@ -42,7 +42,7 @@ public class Part1 : Base
         } while (moved);
     }
 
-    private bool Resting((Point Start, Point End) brick)
+    private bool Resting((Point Start, Point End, Type Type) brick)
     {
         foreach (var item in _bricks)
         {
@@ -69,7 +69,26 @@ public class Part1 : Base
                 (start, end) = (end, start);
             }
 
-            _bricks.Add((start, end));
+            Type type;
+            
+            if (start.Z != end.Z)
+            {
+                type = Type.Vertical;
+            }
+            else if (start.X != end.X)
+            {
+                type = Type.Horizontal;
+            }
+            else if (start.Y != end.Y)
+            {
+                type = Type.Deep;
+            }
+            else
+            {
+                type = Type.Square;
+            }
+
+            _bricks.Add((start, end, type));
         }
 
         _bricks = _bricks.OrderBy(b => b.Start.Z).ToList();
