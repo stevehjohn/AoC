@@ -51,7 +51,7 @@ public abstract class Base : Solution
         return count;
     }
 
-    protected bool Resting(List<Point> brick)
+    private bool Resting(List<Point> brick)
     {
         foreach (var item in Bricks)
         {
