@@ -8,8 +8,6 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var sw = Stopwatch.StartNew();
-        
         ParseInput();
 
         SettleBricks();
