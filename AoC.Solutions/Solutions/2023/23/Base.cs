@@ -32,12 +32,12 @@ public abstract class Base : Solution
     
     protected int Solve(bool isPart2 = false)
     {
-        SolveInternal(isPart2, (1, 1, South, 1), 1);
+        SolveInternal(isPart2, (1, 1, South, 1));
 
         return _stepCounts.Max();
     }
     
-    private void SolveInternal(bool isPart2, (int X, int Y, (int Dx, int Dy) Direction, int Steps) position, int depth)
+    private void SolveInternal(bool isPart2, (int X, int Y, (int Dx, int Dy) Direction, int Steps) position)
     {
         if (position.X == _width - 2 && position.Y == _height - 1)
         {
@@ -48,7 +48,7 @@ public abstract class Base : Solution
                     _max = position.Steps;
                 }
 
-                Console.WriteLine($"{DateTime.Now:hh:mm:ss}  Found: {position.Steps} in {_sw.Elapsed} Depth: {depth}. Current Max: {_max}");
+                Console.WriteLine($"{DateTime.Now:hh:mm:ss}  Found: {position.Steps} in {_sw.Elapsed}. Current Max: {_max}");
 
                 _sw.Restart();
             }
@@ -64,14 +64,14 @@ public abstract class Base : Solution
 
             if (tile == '>')
             {
-                AddNewPosition(true, position, East, depth);
+                AddNewPosition(true, position, East);
 
                 return;
             }
 
             if (tile == 'v')
             {
-                AddNewPosition(true, position, South, depth);
+                AddNewPosition(true, position, South);
 
                 return;
             }
@@ -79,36 +79,35 @@ public abstract class Base : Solution
 
         if (position.Direction != South)
         {
-            AddNewPosition(isPart2, position, North, depth);
+            AddNewPosition(isPart2, position, North);
         }
 
         if (position.Direction != North)
         {
-            AddNewPosition(isPart2, position, South, depth);
+            AddNewPosition(isPart2, position, South);
         }
 
         if (position.Direction != East)
         {
-            AddNewPosition(isPart2, position, West, depth);
+            AddNewPosition(isPart2, position, West);
         }
 
         if (position.Direction != West)
         {
-            AddNewPosition(isPart2, position, East, depth);
+            AddNewPosition(isPart2, position, East);
         }
     }
 
     private void AddNewPosition(
         bool isPart2,
         (int X, int Y, (int Dx, int Dy) Direction, int Steps) position,
-        (int Dx, int Dy) newDirection,
-        int depth)
+        (int Dx, int Dy) newDirection)
     {
         if (_map[position.X + newDirection.Dx, position.Y + newDirection.Dy] != '#')
         {
             if (_visited.Add((position.X + newDirection.Dx, position.Y + newDirection.Dy)))
             {
-                SolveInternal(isPart2, (position.X + newDirection.Dx, position.Y + newDirection.Dy, newDirection, position.Steps + 1), depth + 1);
+                SolveInternal(isPart2, (position.X + newDirection.Dx, position.Y + newDirection.Dy, newDirection, position.Steps + 1));
 
                 _visited.Remove((position.X + newDirection.Dx, position.Y + newDirection.Dy));
             }
