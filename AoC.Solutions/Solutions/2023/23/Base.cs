@@ -24,52 +24,78 @@ public abstract class Base : Solution
     
     protected int Solve(bool isPart2 = false)
     {
-        var queue = new Queue<(int X, int Y, (int Dx, int Dy) Direction, int Steps, HashSet<(int X, int Y)> Visited)>();
+        var queue = new Queue<(int X, int Y, (int Dx, int Dy) Direction, (int Dx, int Dy) SourceDirection, int Steps, HashSet<(int X, int Y)> Visited)>();
         
-        queue.Enqueue((1, 1, South, 1, new HashSet<(int X, int Y)>()));
+        queue.Enqueue((1, 1, South, South, 1, new HashSet<(int X, int Y)>()));
 
         var stepCounts = new List<int>();
 
         var sw = Stopwatch.StartNew();
 
-        var maxSteps = new Dictionary<(int, int, int, int), int>();
+        var maxSteps = new Dictionary<(int, int, int, int, int, int), int>();
 
         var ignored = 0;
+
+        var max = 0;
         
         while (queue.TryDequeue(out var position))
         {
-            var key = (position.X, position.Y, position.Direction.Dx, position.Direction.Dy);
-            
-            if (maxSteps.ContainsKey(key))
-            {
-                if (position.Steps > maxSteps[key])
-                {
-                    maxSteps[key] = position.Steps;
-                }
-                else
-                {
-                    ignored++;
-                    
-                    continue;
-                }
-            }
-            else
-            {
-                maxSteps[key] = position.Steps;
-            }
+            // var key = (position.X, position.Y, position.Direction.Dx, position.Direction.Dy, position.SourceDirection.Dx, position.SourceDirection.Dy);
+            //
+            // if (maxSteps.ContainsKey(key))
+            // {
+            //     if (position.Steps > maxSteps[key])
+            //     {
+            //         maxSteps[key] = position.Steps;
+            //     }
+            //     else
+            //     {
+            //         ignored++;
+            //         
+            //         continue;
+            //     }
+            // }
+            // else
+            // {
+            //     maxSteps[key] = position.Steps;
+            // }
 
             if (position.X == _width - 2 && position.Y == _height - 1)
             {
                 stepCounts.Add(position.Steps);
 
-                 if (isPart2)
-                 {
-                     Console.WriteLine($"{position.Steps}: {sw.Elapsed} ({queue.Count}). Ignored {ignored}.");
-                 }
-            
-                 sw.Restart();
+                if (position.Steps > max)
+                {
+                    max = position.Steps;
 
+                    if (isPart2)
+                    {
+                        Console.WriteLine($"{position.Steps}: {sw.Elapsed} ({queue.Count}). Ignored {ignored}. Max: {max}.");
+        
+                        sw.Restart();
+                    }
+                }
+                
                 continue;
+            }
+            
+            var count = 2;
+            
+            while (count == 2 && _map[position.X + position.Direction.Dx, position.Y + position.Direction.Dy] == '.')
+            {
+                count = 0;
+                
+                count += _map[position.X - 1, position.Y] == '#' ? 1 : 0;
+                count += _map[position.X + 1, position.Y] == '#' ? 1 : 0;
+                count += _map[position.X, position.Y - 1] == '#' ? 1 : 0;
+                count += _map[position.X, position.Y + 1] == '#' ? 1 : 0;
+                
+                position.X += position.Direction.Dx;
+                position.Y += position.Direction.Dy;
+            
+                position.Steps++;
+            
+                position.Visited.Add((position.X, position.Y));
             }
             
             if (! isPart2)
@@ -111,13 +137,13 @@ public abstract class Base : Solution
                 AddNewPosition(queue, position, position.Direction, East);
             }
         }
-        
-        return stepCounts.Max() + (isPart2 ? _height + 3 : 0);
+
+        return stepCounts.Max();
     }
 
     private void AddNewPosition(
-        Queue<(int X, int Y, (int Dx, int Dy) Direction, int Steps, HashSet<(int X, int Y)>)> queue,
-        (int X, int Y, (int Dx, int Dy) Direction, int Steps, HashSet<(int X, int Y)> Visited) position, 
+        Queue<(int X, int Y, (int Dx, int Dy) Direction, (int Dx, int Dy) SourceDirection, int Steps, HashSet<(int X, int Y)>)> queue,
+        (int X, int Y, (int Dx, int Dy) Direction, (int Dx, int Dy) SourceDirection, int Steps, HashSet<(int X, int Y)> Visited) position, 
         (int Dx, int Dy) direction,
         (int Dx, int Dy) newDirection)
     {
@@ -127,12 +153,12 @@ public abstract class Base : Solution
             {
                 if (direction != newDirection)
                 {
-                    queue.Enqueue((position.X + newDirection.Dx, position.Y + newDirection.Dy, newDirection, position.Steps + 1,
+                    queue.Enqueue((position.X + newDirection.Dx, position.Y + newDirection.Dy, newDirection, position.Direction, position.Steps + 1,
                         new HashSet<(int X, int Y)>(position.Visited)));
                 }
                 else
                 {
-                    queue.Enqueue((position.X + newDirection.Dx, position.Y + newDirection.Dy, newDirection, position.Steps + 1,
+                    queue.Enqueue((position.X + newDirection.Dx, position.Y + newDirection.Dy, newDirection, position.Direction, position.Steps + 1,
                         position.Visited));
                 }
             }
