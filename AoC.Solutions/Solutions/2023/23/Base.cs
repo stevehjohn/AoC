@@ -14,8 +14,6 @@ public abstract class Base : Solution
 
     private int _height;
 
-    private int _pathTiles;
-    
     private static readonly (int, int) North = (0, -1);
     
     private static readonly (int, int) East = (1, 0);
@@ -73,8 +71,7 @@ public abstract class Base : Solution
 
                 position.Steps++;
             }
-
-
+            
             var tile = _map[position.X, position.Y];
 
             if (! isPart2)
@@ -149,16 +146,5 @@ public abstract class Base : Solution
         _width = _map.GetLength(0);
 
         _height = _map.GetLength(1);
-
-        for (var y = 0; y < _height; y++)
-        {
-            for (var x = 0; x < _width; x++)
-            {
-                if (_map[x, y] != '#')
-                {
-                    _pathTiles++;
-                }
-            }
-        }
     }
 }
