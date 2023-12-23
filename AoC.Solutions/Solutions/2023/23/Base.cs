@@ -32,14 +32,13 @@ public abstract class Base : Solution
     
     protected int Solve(bool isPart2 = false)
     {
-        SolveInternal(isPart2, (1, 1, South, 0), 1);
+        SolveInternal(isPart2, (1, 1, South, 1), 1);
 
         return _stepCounts.Max();
     }
     
     private void SolveInternal(bool isPart2, (int X, int Y, (int Dx, int Dy) Direction, int Steps) position, int depth)
     {
-        start:
         if (position.X == _width - 2 && position.Y == _height - 1)
         {
             if (isPart2 && ! _stepCounts.Contains(position.Steps))
@@ -57,71 +56,6 @@ public abstract class Base : Solution
             _stepCounts.Add(position.Steps);
             
             return;
-        }
-        
-        var count = 0;
-        
-        count += _map[position.X - 1, position.Y] == '#' ? 1 : 0;
-        count += _map[position.X + 1, position.Y] == '#' ? 1 : 0;
-        count += _map[position.X, position.Y - 1] == '#' ? 1 : 0;
-        count += _map[position.X, position.Y + 1] == '#' ? 1 : 0;
-        
-        while (count == 2 && _map[position.X + position.Direction.Dx, position.Y + position.Direction.Dy] == '.')
-        {
-            position.X += position.Direction.Dx;
-            position.Y += position.Direction.Dy;
-        
-            position.Steps++;
-        
-        
-            if (position.X == _width - 2 && position.Y == _height - 1)
-            {
-                goto start;
-            }
-            
-            count = 0;
-            
-            count += _map[position.X - 1, position.Y] == '#' ? 1 : 0;
-            count += _map[position.X + 1, position.Y] == '#' ? 1 : 0;
-            count += _map[position.X, position.Y - 1] == '#' ? 1 : 0;
-            count += _map[position.X, position.Y + 1] == '#' ? 1 : 0;
-        
-            if (count != 2)
-            {
-                _visited.Add((position.X, position.Y));
-                
-                SolveInternal(false, (position.X, position.Y, position.Direction, position.Steps + 1), depth + 1);
-                
-                _visited.Remove((position.X, position.Y));
-                
-                return;
-            }
-        
-            if (_map[position.X + position.Direction.Dx, position.Y + position.Direction.Dy] == '#')
-            {
-                if (position.Direction == North || position.Direction == South)
-                {
-                    if (_map[position.X + 1, position.Y] == '.')
-                    {
-                        position.Direction = East;
-                    }
-                    else if (_map[position.X - 1, position.Y] == '.')
-                    {
-                        position.Direction = West;
-                    }
-                }
-                else if (position.Direction == East || position.Direction == West)
-                {
-                    if (_map[position.X, position.Y + 1] == '.')
-                    {
-                        position.Direction = South;
-                    }
-                    else if (_map[position.X, position.Y - 1] == '.')
-                    {
-                        position.Direction = North;
-                    }
-                }
-            }
         }
         
         if (! isPart2)
@@ -174,7 +108,6 @@ public abstract class Base : Solution
         {
             if (_visited.Add((position.X + newDirection.Dx, position.Y + newDirection.Dy)))
             {
-                // TODO: Pass in isPart2
                 SolveInternal(isPart2, (position.X + newDirection.Dx, position.Y + newDirection.Dy, newDirection, position.Steps + 1), depth + 1);
 
                 _visited.Remove((position.X + newDirection.Dx, position.Y + newDirection.Dy));
