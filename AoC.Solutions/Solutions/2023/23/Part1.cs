@@ -33,17 +33,15 @@ public class Part1 : Base
 
     private int Solve()
     {
-        var queue = new Queue<(int X, int Y, (int Dx, int Dy) Direction, int Steps)>();
+        var queue = new Queue<(int X, int Y, (int Dx, int Dy) Direction, int Steps, HashSet<(int X, int Y)> Visited)>();
         
-        queue.Enqueue((1, 0, South, 0));
+        queue.Enqueue((1, 0, South, 0, new HashSet<(int X, int Y)>()));
 
         var stepCounts = new List<int>();
-
-        var visited = new HashSet<(int X, int Y, (int Dx, int Dy) Direction, int Steps)>();
         
         while (queue.TryDequeue(out var position))
         {
-            if (! visited.Add(position))
+            if (! position.Visited.Add((position.X, position.Y)))
             {
                 continue;
             }
@@ -106,13 +104,13 @@ public class Part1 : Base
     }
 
     private void AddNewPosition(
-        Queue<(int X, int Y, (int Dx, int Dy) Direction, int Steps)> queue,
-        (int X, int Y, (int Dx, int Dy) Direction, int Steps) position, 
+        Queue<(int X, int Y, (int Dx, int Dy) Direction, int Steps, HashSet<(int X, int Y)>)> queue,
+        (int X, int Y, (int Dx, int Dy) Direction, int Steps, HashSet<(int X, int Y)> Visited) position, 
         (int Dx, int Dy) direction)
     {
         if (_map[position.X + direction.Dx, position.Y + direction.Dy] != '#')
         { 
-            queue.Enqueue((position.X + direction.Dx, position.Y + direction.Dy, direction, position.Steps + 1));
+            queue.Enqueue((position.X + direction.Dx, position.Y + direction.Dy, direction, position.Steps + 1, new HashSet<(int X, int Y)>(position.Visited)));
         }
     }
 
