@@ -35,6 +35,8 @@ public abstract class Base : Solution
         var prev = 0;
 
         var maxSteps = new Dictionary<(int, int, int, int), int>();
+
+        var ignored = 0;
         
         while (queue.TryDequeue(out var position))
         {
@@ -44,27 +46,43 @@ public abstract class Base : Solution
                 {
                     maxSteps[(position.X, position.Y, position.Direction.Dx, position.Direction.Dy)] = position.Steps;
                 }
+                else
+                {
+                    ignored++;
+                    
+                    continue;
+                }
             }
             else
             {
                 maxSteps[(position.X, position.Y, position.Direction.Dx, position.Direction.Dy)] = position.Steps;
             }
-
-
-            if (queue.Count > 1_000)
-            {
-                var all = queue.ToList();
-                
-                queue.Clear();
-
-                foreach (var item in all)
-                {
-                    if (maxSteps[(position.X, position.Y, position.Direction.Dx, position.Direction.Dy)] < item.Steps)
-                    {
-                        queue.Enqueue(item);
-                    }
-                }
-            }
+            
+            // if (queue.Count > 1_000)
+            // {
+            //     var all = queue.ToList();
+            //
+            //     var count = queue.Count;
+            //     
+            //     queue.Clear();
+            //     
+            //     foreach (var item in all)
+            //     {
+            //         if (! maxSteps.ContainsKey((item.X, item.Y, item.Direction.Dx, item.Direction.Dy)))
+            //         {
+            //             queue.Enqueue(item);
+            //             
+            //             continue;
+            //         }
+            //
+            //         if (maxSteps[(item.X, item.Y, item.Direction.Dx, item.Direction.Dy)] < item.Steps)
+            //         {
+            //             queue.Enqueue(item);
+            //         }
+            //     }
+            //
+            //     pruned += count - queue.Count;
+            // }
 
             if (position.X == _width - 2 && position.Y == _height - 1)
             {
@@ -74,7 +92,7 @@ public abstract class Base : Solution
                 {
                     if (isPart2)
                     {
-                        Console.WriteLine($"{position.Steps}: {sw.Elapsed} ({queue.Count})");
+                        Console.WriteLine($"{position.Steps}: {sw.Elapsed} ({queue.Count}). Ignored {ignored}.");
                     }
 
                     sw.Restart();
