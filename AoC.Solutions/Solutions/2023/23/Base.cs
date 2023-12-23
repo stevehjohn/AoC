@@ -40,11 +40,13 @@ public abstract class Base : Solution
         
         while (queue.TryDequeue(out var position))
         {
-            if (maxSteps.ContainsKey((position.X, position.Y, position.Direction.Dx, position.Direction.Dy)))
+            var key = (position.X, position.Y, position.Direction.Dx, position.Direction.Dy);
+            
+            if (maxSteps.ContainsKey(key))
             {
-                if (position.Steps > maxSteps[(position.X, position.Y, position.Direction.Dx, position.Direction.Dy)])
+                if (position.Steps > maxSteps[key])
                 {
-                    maxSteps[(position.X, position.Y, position.Direction.Dx, position.Direction.Dy)] = position.Steps;
+                    maxSteps[key] = position.Steps;
                 }
                 else
                 {
@@ -55,7 +57,7 @@ public abstract class Base : Solution
             }
             else
             {
-                maxSteps[(position.X, position.Y, position.Direction.Dx, position.Direction.Dy)] = position.Steps;
+                maxSteps[key] = position.Steps;
             }
 
             if (position.X == _width - 2 && position.Y == _height - 1)
