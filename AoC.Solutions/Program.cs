@@ -95,7 +95,8 @@ public static class Program
 
             GC.Collect();
 
-            if (firstTime < TimeSpan.FromSeconds(10).TotalMicroseconds)
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            if (firstTime == double.MaxValue || firstTime < TimeSpan.FromSeconds(10).TotalMicroseconds)
             {
                 stopwatch.Reset();
                 
