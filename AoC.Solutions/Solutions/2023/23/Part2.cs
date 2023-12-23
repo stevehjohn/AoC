@@ -7,10 +7,6 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        ParseInput();
-
-        var result = Solve(true);
-        
-        return result.ToString();
+        return "Unknown";
     }
 }
