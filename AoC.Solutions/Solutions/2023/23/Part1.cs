@@ -1,3 +1,4 @@
+using AoC.Solutions.Extensions;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2023._23;
@@ -5,8 +6,133 @@ namespace AoC.Solutions.Solutions._2023._23;
 [UsedImplicitly]
 public class Part1 : Base
 {
+    private char[,] _map;
+
+    private int _width;
+
+    private int _height;
+
+    private int _pathTiles;
+    
+    private static readonly (int, int) North = (0, -1);
+    
+    private static readonly (int, int) East = (1, 0);
+    
+    private static readonly (int, int) South = (0, 1);
+    
+    private static readonly (int, int) West = (-1, 0);
+
     public override string GetAnswer()
     {
-        return "Unknown";
+        ParseInput();
+
+        var result = Solve();
+        
+        return result.ToString();
+    }
+
+    private int Solve()
+    {
+        var queue = new Queue<(int X, int Y, (int Dx, int Dy) Direction, int Steps)>();
+        
+        queue.Enqueue((1, 0, South, 0));
+
+        var stepCounts = new List<int>();
+
+        var visited = new HashSet<(int X, int Y, (int Dx, int Dy) Direction, int Steps)>();
+        
+        while (queue.TryDequeue(out var position))
+        {
+            if (! visited.Add(position))
+            {
+                continue;
+            }
+
+            if (position.Steps > _pathTiles)
+            {
+                continue;
+            }
+
+            if (position.X == _width - 2 && position.Y == _height - 1)
+            {
+                stepCounts.Add(position.Steps);
+                
+                continue;
+            }
+
+            var tile = _map[position.X, position.Y];
+            
+            if (tile == '>')
+            {
+                AddNewPosition(queue, position, East);
+
+                continue;
+            }
+
+            if (tile == 'v')
+            {
+                AddNewPosition(queue, position, South);
+                
+                continue;
+            }
+
+            if (position.Direction != North)
+            {
+                AddNewPosition(queue, position, South);
+            }
+
+            if (position.Direction != East)
+            {
+                AddNewPosition(queue, position, West);
+            }
+
+            if (position.Direction != South)
+            {
+                AddNewPosition(queue, position, North);
+            }
+
+            if (position.Direction != West)
+            {
+                AddNewPosition(queue, position, East);
+            }
+        }
+
+        // foreach (var count in stepCounts)
+        // {
+        //     Console.WriteLine(count);
+        // }
+        
+        return stepCounts.Max();
+    }
+
+    private void AddNewPosition(
+        Queue<(int X, int Y, (int Dx, int Dy) Direction, int Steps)> queue,
+        (int X, int Y, (int Dx, int Dy) Direction, int Steps) position, 
+        (int Dx, int Dy) direction)
+    {
+        if (_map[position.X + direction.Dx, position.Y + direction.Dy] != '#')
+        { 
+            queue.Enqueue((position.X + direction.Dx, position.Y + direction.Dy, direction, position.Steps + 1));
+        }
+    }
+
+    private void ParseInput()
+    {
+        _map = Input.To2DArray();
+
+        _width = _map.GetLength(0);
+
+        _height = _map.GetLength(1);
+
+        for (var y = 0; y < _height; y++)
+        {
+            for (var x = 0; x < _width; x++)
+            {
+                if (_map[x, y] != '#')
+                {
+                    _pathTiles++;
+                }
+            }
+        }
     }
 }
