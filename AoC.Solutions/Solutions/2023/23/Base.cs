@@ -56,7 +56,7 @@ public abstract class Base : Solution
             }
             
             var count = 2;
-
+            
             while (count == 2 && _map[position.X + position.Direction.Dx, position.Y + position.Direction.Dy] != '#')
             {
                 count = 0;
@@ -65,12 +65,12 @@ public abstract class Base : Solution
                 count += _map[position.X + 1, position.Y] == '#' ? 1 : 0;
                 count += _map[position.X, position.Y - 1] == '#' ? 1 : 0;
                 count += _map[position.X, position.Y + 1] == '#' ? 1 : 0;
-
+                
                 position.X += position.Direction.Dx;
                 position.Y += position.Direction.Dy;
-
+            
                 position.Steps++;
-
+            
                 position.Visited.Add((position.X, position.Y));
             }
             
