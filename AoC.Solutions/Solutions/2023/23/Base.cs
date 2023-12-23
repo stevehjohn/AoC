@@ -32,8 +32,6 @@ public abstract class Base : Solution
 
         var sw = Stopwatch.StartNew();
 
-        var prev = 0;
-
         var maxSteps = new Dictionary<(int, int, int, int), int>();
 
         var ignored = 0;
@@ -64,17 +62,12 @@ public abstract class Base : Solution
             {
                 stepCounts.Add(position.Steps);
 
-                //if (position.Steps != prev)
-                {
-                    if (isPart2)
-                    {
-                        Console.WriteLine($"{position.Steps}: {sw.Elapsed} ({queue.Count}). Ignored {ignored}.");
-                    }
-
-                    sw.Restart();
-
-                    prev = position.Steps;
-                }
+                 if (isPart2)
+                 {
+                     Console.WriteLine($"{position.Steps}: {sw.Elapsed} ({queue.Count}). Ignored {ignored}.");
+                 }
+            
+                 sw.Restart();
 
                 continue;
             }
@@ -119,7 +112,7 @@ public abstract class Base : Solution
             }
         }
         
-        return stepCounts.Max() + _height + 3;
+        return stepCounts.Max() + (isPart2 ? _height + 3 : 0);
     }
 
     private void AddNewPosition(
