@@ -9,7 +9,7 @@ public class Part2 : Base
     {
         ParseInput();
 
-        var result = Solve();
+        var result = Solve(true);
         
         return result.ToString();
     }
