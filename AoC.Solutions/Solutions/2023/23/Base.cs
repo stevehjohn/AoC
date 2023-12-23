@@ -64,7 +64,7 @@ public abstract class Base : Solution
             {
                 stepCounts.Add(position.Steps);
 
-                if (position.Steps != prev)
+                //if (position.Steps != prev)
                 {
                     if (isPart2)
                     {
@@ -119,7 +119,7 @@ public abstract class Base : Solution
             }
         }
         
-        return stepCounts.Max();
+        return stepCounts.Max() + _height + 3;
     }
 
     private void AddNewPosition(
