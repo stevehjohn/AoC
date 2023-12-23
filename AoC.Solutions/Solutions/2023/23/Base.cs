@@ -32,7 +32,7 @@ public abstract class Base : Solution
     
     protected int Solve(bool isPart2 = false)
     {
-        SolveInternal(isPart2, (1, 0, South, 0), 1);
+        SolveInternal(isPart2, (1, 1, South, 0), 1);
 
         return _stepCounts.Max();
     }
@@ -60,7 +60,7 @@ public abstract class Base : Solution
         }
         
         var count = 0;
-
+        
         count += _map[position.X - 1, position.Y] == '#' ? 1 : 0;
         count += _map[position.X + 1, position.Y] == '#' ? 1 : 0;
         count += _map[position.X, position.Y - 1] == '#' ? 1 : 0;
@@ -72,8 +72,8 @@ public abstract class Base : Solution
             position.Y += position.Direction.Dy;
         
             position.Steps++;
-
-
+        
+        
             if (position.X == _width - 2 && position.Y == _height - 1)
             {
                 goto start;
@@ -85,14 +85,18 @@ public abstract class Base : Solution
             count += _map[position.X + 1, position.Y] == '#' ? 1 : 0;
             count += _map[position.X, position.Y - 1] == '#' ? 1 : 0;
             count += _map[position.X, position.Y + 1] == '#' ? 1 : 0;
-
+        
             if (count != 2)
             {
                 _visited.Add((position.X, position.Y));
                 
-                break;
+                SolveInternal(false, (position.X, position.Y, position.Direction, position.Steps + 1), depth + 1);
+                
+                _visited.Remove((position.X, position.Y));
+                
+                return;
             }
-
+        
             if (_map[position.X + position.Direction.Dx, position.Y + position.Direction.Dy] == '#')
             {
                 if (position.Direction == North || position.Direction == South)
@@ -172,6 +176,8 @@ public abstract class Base : Solution
             {
                 // TODO: Pass in isPart2
                 SolveInternal(isPart2, (position.X + newDirection.Dx, position.Y + newDirection.Dy, newDirection, position.Steps + 1), depth + 1);
+
+                _visited.Remove((position.X + newDirection.Dx, position.Y + newDirection.Dy));
             }
         }
     }
