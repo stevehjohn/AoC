@@ -49,8 +49,11 @@ public abstract class Base : Solution
 
                 if (position.Steps != prev)
                 {
-                    Console.WriteLine($"{position.Steps}: {sw.Elapsed}");
-                    
+                    if (isPart2)
+                    {
+                        Console.WriteLine($"{position.Steps}: {sw.Elapsed} ({queue.Count})");
+                    }
+
                     sw.Restart();
 
                     prev = position.Steps;
