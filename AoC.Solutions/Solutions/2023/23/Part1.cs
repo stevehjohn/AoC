@@ -31,7 +31,7 @@ public class Part1 : Base
         return result.ToString();
     }
     
-    private int Solve(bool part2 = false)
+    private int Solve()
     {
         var queue = new Queue<(int X, int Y, (int Dx, int Dy) Direction, int Steps, HashSet<(int X, int Y)> Visited)>();
         
@@ -60,21 +60,18 @@ public class Part1 : Base
 
             var tile = _map[position.X, position.Y];
 
-            if (! part2)
+            if (tile == '>')
             {
-                if (tile == '>')
-                {
-                    AddNewPosition(queue, position, East);
+                AddNewPosition(queue, position, East);
 
-                    continue;
-                }
+                continue;
+            }
 
-                if (tile == 'v')
-                {
-                    AddNewPosition(queue, position, South);
+            if (tile == 'v')
+            {
+                AddNewPosition(queue, position, South);
 
-                    continue;
-                }
+                continue;
             }
 
             if (position.Direction != North)
