@@ -36,6 +36,11 @@ public abstract class Base : Solution
         
         while (queue.TryDequeue(out var position))
         {
+            if (queue.Count % 100_000 == 0)
+            {
+                Console.WriteLine($"{DateTime.Now:hh:mm:ss}    Queue Size: {queue.Count}. Current Max: {max}");
+            }
+
             if (position.X == _width - 2 && position.Y == _height - 1)
             {
                 stepCounts.Add(position.Steps);
@@ -46,7 +51,7 @@ public abstract class Base : Solution
 
                     if (isPart2)
                     {
-                        Console.WriteLine($"{DateTime.Now:hh:mm:ss}    {position.Steps}: {sw.Elapsed} ({queue.Count}).");
+                        Console.WriteLine($"{DateTime.Now:hh:mm:ss}    Found {position.Steps} in {sw.Elapsed}. Queue Size: {queue.Count}. Current Max: {max}");
                     }
         
                     sw.Restart();
