@@ -23,7 +23,7 @@ public abstract class Base : Solution
     
     private static readonly (int, int) West = (-1, 0);
 
-    protected int Solve()
+    protected int Solve(bool part2 = false)
     {
         var queue = new Queue<(int X, int Y, (int Dx, int Dy) Direction, int Steps, HashSet<(int X, int Y)> Visited)>();
         
@@ -51,19 +51,22 @@ public abstract class Base : Solution
             }
 
             var tile = _map[position.X, position.Y];
-            
-            if (tile == '>')
-            {
-                AddNewPosition(queue, position, East);
 
-                continue;
-            }
-
-            if (tile == 'v')
+            if (! part2)
             {
-                AddNewPosition(queue, position, South);
-                
-                continue;
+                if (tile == '>')
+                {
+                    AddNewPosition(queue, position, East);
+
+                    continue;
+                }
+
+                if (tile == 'v')
+                {
+                    AddNewPosition(queue, position, South);
+
+                    continue;
+                }
             }
 
             if (position.Direction != North)
