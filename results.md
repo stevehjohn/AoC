@@ -10,469 +10,469 @@ Tests performed on a 2023 MacBook Pro.
 - 2TB SSD
 
 ```
- 2015  1.1: 74                             98μs          Not quite lisp
- 2015  1.2: 1795                           12μs
- 2015  2.1: 1586300                        417μs         Wrapping paper
- 2015  2.2: 3737498                        437μs
- 2015  3.1: 2572                           1,385μs       Perfectly spherical houses in a vacuum
- 2015  3.2: 2631                           1,271μs
- 2015  4.1: 346386                         140,435μs     Crypto stocking stuffer
- 2015  4.2: 9958218                        3,343,625μs
- 2015  5.1: 238                            214μs         Naughty or nice
- 2015  5.2: 69                             884μs
- 2015  6.1: 569999                         26,097μs      Bournville estate lights
- 2015  6.2: 17836115                       29,866μs
- 2015  7.1: 3176                           101μs         Logic gates
- 2015  7.2: 14710                          99μs
- 2015  8.1: 1333                           36μs          Matchsticks
- 2015  8.2: 2046                           43μs
- 2015  9.1: 251                            13,688μs      All in a single night
- 2015  9.2: 898                            13,448μs
- 2015 10.1: 492982                         3,861μs       Elves look, elves say
- 2015 10.2: 6989950                        52,654μs
- 2015 11.1: hepxxyzz                       1,983μs       Password policy
- 2015 11.2: heqaabcc                       7,249μs
- 2015 12.1: 191164                         134μs         Json abacus
- 2015 12.2: 87842                          2,790μs
- 2015 13.1: 664                            19,854μs      Knights of the dinner table
- 2015 13.2: 640                            137,841μs
- 2015 14.1: 2660                           1,542μs       Reindeer olympics
- 2015 14.2: 1256                           1,566μs
- 2015 15.1: 13882464                       732μs         Science for hungry people
- 2015 15.2: 11171160                       731μs
- 2015 16.1: 103                            38μs          Aunt Sue
- 2015 16.2: 405                            131μs
- 2015 17.1: 1638                           130,814μs     Too much eggnog
- 2015 17.2: 17                             497,146μs
- 2015 18.1: 1061                           184,431μs     Bournville GIF
- 2015 18.2: 1006                           183,408μs
- 2015 19.1: 518                            176μs         Medicine for Rudolph
- 2015 19.2: 200                            236μs
- 2015 20.1: 831600                         290,547μs     Infinite elves, infinite houses
- 2015 20.2: 884520                         2,494μs
- 2015 21.1: 121                            646μs         RPG simulator 2015
- 2015 21.2: 201                            607μs
- 2015 22.1: 1824                           1,435,011μs   Wizard simulator 2015
- 2015 22.2: 1937                           58,390μs
- 2015 23.1: 184                            80μs          Opening the Turing lock
- 2015 23.2: 231                            100μs
- 2015 24.1: 11846773891                    100,286μs     It hangs in the balance
- 2015 24.2: 80393059                       146μs
- 2015 25.1: 19980801                       57,627μs      Let it snow
+ 2015  1.1: 74                             105μs         Not quite lisp
+ 2015  1.2: 1795                           14μs
+ 2015  2.1: 1586300                        416μs         Wrapping paper
+ 2015  2.2: 3737498                        443μs
+ 2015  3.1: 2572                           1,311μs       Perfectly spherical houses in a vacuum
+ 2015  3.2: 2631                           1,194μs
+ 2015  4.1: 346386                         146,429μs     Crypto stocking stuffer
+ 2015  4.2: 9958218                        3,540,206μs
+ 2015  5.1: 238                            193μs         Naughty or nice
+ 2015  5.2: 69                             877μs
+ 2015  6.1: 569999                         27,537μs      Bournville estate lights
+ 2015  6.2: 17836115                       31,329μs
+ 2015  7.1: 3176                           107μs         Logic gates
+ 2015  7.2: 14710                          105μs
+ 2015  8.1: 1333                           37μs          Matchsticks
+ 2015  8.2: 2046                           49μs
+ 2015  9.1: 251                            14,254μs      All in a single night
+ 2015  9.2: 898                            14,079μs
+ 2015 10.1: 492982                         4,296μs       Elves look, elves say
+ 2015 10.2: 6989950                        56,655μs
+ 2015 11.1: hepxxyzz                       2,198μs       Password policy
+ 2015 11.2: heqaabcc                       7,723μs
+ 2015 12.1: 191164                         117μs         Json abacus
+ 2015 12.2: 87842                          2,989μs
+ 2015 13.1: 664                            22,065μs      Knights of the dinner table
+ 2015 13.2: 640                            150,239μs
+ 2015 14.1: 2660                           1,694μs       Reindeer olympics
+ 2015 14.2: 1256                           1,710μs
+ 2015 15.1: 13882464                       761μs         Science for hungry people
+ 2015 15.2: 11171160                       748μs
+ 2015 16.1: 103                            34μs          Aunt Sue
+ 2015 16.2: 405                            138μs
+ 2015 17.1: 1638                           143,272μs     Too much eggnog
+ 2015 17.2: 17                             545,362μs
+ 2015 18.1: 1061                           196,654μs     Bournville GIF
+ 2015 18.2: 1006                           195,550μs
+ 2015 19.1: 518                            180μs         Medicine for Rudolph
+ 2015 19.2: 200                            253μs
+ 2015 20.1: 831600                         290,951μs     Infinite elves, infinite houses
+ 2015 20.2: 884520                         2,516μs
+ 2015 21.1: 121                            647μs         RPG simulator 2015
+ 2015 21.2: 201                            621μs
+ 2015 22.1: 1824                           1,495,309μs   Wizard simulator 2015
+ 2015 22.2: 1937                           64,507μs
+ 2015 23.1: 184                            79μs          Opening the Turing lock
+ 2015 23.2: 231                            99μs
+ 2015 24.1: 11846773891                    105,729μs     It hangs in the balance
+ 2015 24.2: 80393059                       165μs
+ 2015 25.1: 19980801                       57,594μs      Let it snow
                                            -------------
-                                           6,745ms
+                                           7.130s
 
- 2016  1.1: 278                            12μs          Manhattan distance
+ 2016  1.1: 278                            13μs          Manhattan distance
  2016  1.2: 161                            20μs
- 2016  2.1: 33444                          22μs          Bathroom security
- 2016  2.2: 446A6                          26μs
- 2016  3.1: 1050                           553μs         Triangle validation
- 2016  3.2: 1921                           688μs
- 2016  4.1: 158835                         4,516μs       Security through obscurity
- 2016  4.2: 993                            4,657μs
- 2016  5.1: 2414bc77                       2,450,148μs   Password hash
- 2016  5.2: 437e60fc                       7,039,318μs
- 2016  6.1: afwlyyyq                       1,334μs       Signals and noise
- 2016  6.2: bhkzekao                       289μs
- 2016  7.1: 115                            829μs         ABBA internet protocol
- 2016  7.2: 231                            1,165μs
- 2016  8.1: 110                            166μs         MFA
- 2016  8.2: ZJHRKCPLYJ                     149μs
- 2016  9.1: 107035                         54μs          Cyberspace explosives
- 2016  9.2: 11451628995                    135μs
- 2016 10.1: 86                             983μs         Balance bots
- 2016 10.2: 22847                          1,991μs
+ 2016  2.1: 33444                          24μs          Bathroom security
+ 2016  2.2: 446A6                          24μs
+ 2016  3.1: 1050                           585μs         Triangle validation
+ 2016  3.2: 1921                           645μs
+ 2016  4.1: 158835                         4,728μs       Security through obscurity
+ 2016  4.2: 993                            4,788μs
+ 2016  5.1: 2414bc77                       2,550,728μs   Password hash
+ 2016  5.2: 437e60fc                       7,392,718μs
+ 2016  6.1: afwlyyyq                       1,105μs       Signals and noise
+ 2016  6.2: bhkzekao                       303μs
+ 2016  7.1: 115                            758μs         ABBA internet protocol
+ 2016  7.2: 231                            1,141μs
+ 2016  8.1: 110                            154μs         MFA
+ 2016  8.2: ZJHRKCPLYJ                     141μs
+ 2016  9.1: 107035                         52μs          Cyberspace explosives
+ 2016  9.2: 11451628995                    142μs
+ 2016 10.1: 86                             1,017μs       Balance bots
+ 2016 10.2: 22847                          2,097μs
  2016 11.1: 37                             66μs          Radioisotope thermoelectric elevators
- 2016 11.2: 61                             117μs
- 2016 12.1: 318003                         50,366μs      Monorail
- 2016 12.2: 9227657                        1,102,673μs
- 2016 13.1: 82                             101μs         Cubicle maze
- 2016 13.2: 138                            90μs
- 2016 14.1: 35186                          12,104μs      One time pad
- 2016 14.2: 22429                          11,059,231μs
- 2016 15.1: 400589                         751μs         Disc timing
- 2016 15.2: 3045959                        5,411μs
- 2016 16.1: 10101001010100001              7μs           Dragon checksum
- 2016 16.2: 10100001110101001              255,966μs
- 2016 17.1: DDRRULRDRD                     24μs          Two steps forward
- 2016 17.2: 536                            29,333μs
- 2016 18.1: 1978                           92μs          Like a rogue
- 2016 18.2: 20003246                       485,882μs
+ 2016 11.2: 61                             113μs
+ 2016 12.1: 318003                         54,012μs      Monorail
+ 2016 12.2: 9227657                        1,153,150μs
+ 2016 13.1: 82                             96μs          Cubicle maze
+ 2016 13.2: 138                            91μs
+ 2016 14.1: 35186                          12,624μs      One time pad
+ 2016 14.2: 22429                          11,762,307μs
+ 2016 15.1: 400589                         738μs         Disc timing
+ 2016 15.2: 3045959                        5,414μs
+ 2016 16.1: 10101001010100001              9μs           Dragon checksum
+ 2016 16.2: 10100001110101001              251,412μs
+ 2016 17.1: DDRRULRDRD                     25μs          Two steps forward
+ 2016 17.2: 536                            29,651μs
+ 2016 18.1: 1978                           84μs          Like a rogue
+ 2016 18.2: 20003246                       495,879μs
  2016 19.1: 1841611                        9μs           The Josephus problem
  2016 19.2: 1423634                        0μs
- 2016 20.1: 19449262                       273μs         Firewall rules
- 2016 20.2: 119                            10,174μs
- 2016 21.1: aefgbcdh                       25μs          Scrambled letters and hash
- 2016 21.2: egcdahbf                       30μs
- 2016 22.1: 981                            320,262μs     Grid computing
- 2016 22.2: 233                            322,226μs
- 2016 23.1: 10890                          2,222μs       Safe cracking
- 2016 23.2: 479007450                      728μs
- 2016 24.1: 430                            20,579μs      Air duct spelunking
- 2016 24.2: 700                            19,903μs
- 2016 25.1: 158                            194,769μs     Clock signal
+ 2016 20.1: 19449262                       315μs         Firewall rules
+ 2016 20.2: 119                            10,981μs
+ 2016 21.1: aefgbcdh                       28μs          Scrambled letters and hash
+ 2016 21.2: egcdahbf                       28μs
+ 2016 22.1: 981                            334,542μs     Grid computing
+ 2016 22.2: 233                            335,591μs
+ 2016 23.1: 10890                          2,335μs       Safe cracking
+ 2016 23.2: 479007450                      796μs
+ 2016 24.1: 430                            22,097μs      Air duct spelunking
+ 2016 24.2: 700                            21,250μs
+ 2016 25.1: 158                            205,235μs     Clock signal
                                            -------------
-                                           23,400ms
+                                           24.660s
 
- 2017  1.1: 1119                           12μs          Captcha
- 2017  1.2: 1420                           14μs
+ 2017  1.1: 1119                           10μs          Captcha
+ 2017  1.2: 1420                           12μs
  2017  2.1: 30994                          14μs          Spreadsheet checksum
  2017  2.2: 233                            28μs
  2017  3.1: 419                            1μs           Spiral memory
- 2017  3.2: 295229                         26μs
- 2017  4.1: 466                            168μs         Passphrase validation
- 2017  4.2: 251                            417,441μs
- 2017  5.1: 315613                         576μs         Memory trampoline
- 2017  5.2: 22570529                       53,574μs
- 2017  6.1: 6681                           6,899μs       Garbage collection
- 2017  6.2: 2392                           9,210μs
- 2017  7.1: bsfpjtc                        250μs         Balancing act
- 2017  7.2: 529                            281μs
- 2017  8.1: 4066                           202μs         I heard you like registers
- 2017  8.2: 4829                           934μs
+ 2017  3.2: 295229                         23μs
+ 2017  4.1: 466                            140μs         Passphrase validation
+ 2017  4.2: 251                            435,534μs
+ 2017  5.1: 315613                         573μs         Memory trampoline
+ 2017  5.2: 22570529                       53,312μs
+ 2017  6.1: 6681                           7,183μs       Garbage collection
+ 2017  6.2: 2392                           9,426μs
+ 2017  7.1: bsfpjtc                        265μs         Balancing act
+ 2017  7.2: 529                            296μs
+ 2017  8.1: 4066                           208μs         I heard you like registers
+ 2017  8.2: 4829                           900μs
  2017  9.1: 17537                          78μs          Stream garbage collection
- 2017  9.2: 7539                           52μs
- 2017 10.1: 19591                          8μs           Knot hash
- 2017 10.2: 62e2204d2ca4f4924f6e7a80f1...  483μs
- 2017 11.1: 643                            608μs         Hex ed
- 2017 11.2: 1471                           256μs
- 2017 12.1: 239                            601μs         Path through the pipes
- 2017 12.2: 215                            8,952μs
- 2017 13.1: 1840                           51μs          Firewall run
- 2017 13.2: 3850260                        15,913μs
- 2017 14.1: 8190                           27,105μs      Defragger
- 2017 14.2: 1134                           27,413μs
- 2017 15.1: 567                            130,272μs     Dueling generators
- 2017 15.2: 323                            275,082μs
- 2017 16.1: ociedpjbmfnkhlga               713μs         Permutation promenade
- 2017 16.2: gnflbkojhicpmead               74,600μs
- 2017 17.1: 2000                           799μs         Spinlock
- 2017 17.2: 10242889                       151,914μs
- 2017 18.1: 3423                           218μs         Soundcard shenanigans
- 2017 18.2: 7493                           20,299μs
- 2017 19.1: EOCZQMURF                      104μs         Packet map
- 2017 19.2: 16312                          110μs
- 2017 20.1: 170                            395μs         Particle swarm
- 2017 20.2: 571                            115,229μs
- 2017 21.1: 190                            552μs         Fractal art
- 2017 21.2: 2335049                        61,385μs
- 2017 22.1: 5266                           526μs         Sporifica virus
- 2017 22.2: 2511895                        736,630μs
- 2017 23.1: 6241                           6,271μs       Coprocessor conflagration
- 2017 23.2: 909                            2,782μs
- 2017 24.1: 2006                           148,360μs     Electromagnetic moat
- 2017 24.2: 1994                           148,309μs
- 2017 25.1: 3745                           144,079μs     Turing tape
+ 2017  9.2: 7539                           49μs
+ 2017 10.1: 19591                          7μs           Knot hash
+ 2017 10.2: 62e2204d2ca4f4924f6e7a80f1...  499μs
+ 2017 11.1: 643                            604μs         Hex ed
+ 2017 11.2: 1471                           255μs
+ 2017 12.1: 239                            622μs         Path through the pipes
+ 2017 12.2: 215                            9,263μs
+ 2017 13.1: 1840                           64μs          Firewall run
+ 2017 13.2: 3850260                        17,502μs
+ 2017 14.1: 8190                           27,610μs      Defragger
+ 2017 14.2: 1134                           28,467μs
+ 2017 15.1: 567                            130,287μs     Dueling generators
+ 2017 15.2: 323                            278,603μs
+ 2017 16.1: ociedpjbmfnkhlga               711μs         Permutation promenade
+ 2017 16.2: gnflbkojhicpmead               80,292μs
+ 2017 17.1: 2000                           821μs         Spinlock
+ 2017 17.2: 10242889                       151,898μs
+ 2017 18.1: 3423                           192μs         Soundcard shenanigans
+ 2017 18.2: 7493                           19,370μs
+ 2017 19.1: EOCZQMURF                      105μs         Packet map
+ 2017 19.2: 16312                          98μs
+ 2017 20.1: 170                            415μs         Particle swarm
+ 2017 20.2: 571                            118,376μs
+ 2017 21.1: 190                            593μs         Fractal art
+ 2017 21.2: 2335049                        66,390μs
+ 2017 22.1: 5266                           547μs         Sporifica virus
+ 2017 22.2: 2511895                        775,624μs
+ 2017 23.1: 6241                           5,777μs       Coprocessor conflagration
+ 2017 23.2: 909                            2,704μs
+ 2017 24.1: 2006                           152,956μs     Electromagnetic moat
+ 2017 24.2: 1994                           153,653μs
+ 2017 25.1: 3745                           156,873μs     Turing tape
                                            -------------
-                                           2,590ms
+                                           2.689s
 
  2018  1.1: 435                            25μs          Tardis calibration
- 2018  1.2: 245                            4,797μs
- 2018  2.1: 8892                           374μs         Warehouse checksum
- 2018  2.2: zihwtxagifpbsnwleydukjmqv      228μs
- 2018  3.1: 105071                         6,073μs       Fabric overlap
- 2018  3.2: 222                            5,313μs
- 2018  4.1: 109659                         941μs         Sleepy guards
- 2018  4.2: 36371                          1,536μs
- 2018  5.1: 10180                          956μs         Polymer reactions
- 2018  5.2: 5668                           36,395μs
- 2018  6.1: 4342                           9,899μs       Safe coordinates
- 2018  6.2: 42966                          6,736μs
- 2018  7.1: JKNSTHCBGRVDXWAYFOQLMPZIUE...  68μs          Ikea sleigh
- 2018  7.2: 755                            261μs
- 2018  8.1: 40977                          53,889μs      Navigation licensing
- 2018  8.2: 27490                          53,898μs
- 2018  9.1: 416424                         1,018μs       Marble madness
- 2018  9.2: 3498287922                     528,549μs
- 2018 10.1: BFFZCNXE                       113,553μs     Writing in the stars
- 2018 10.2: 10391                          17,951μs
- 2018 11.1: 33,54                          354μs         Max power... cell
- 2018 11.2: 232,289,8                      159,190μs
- 2018 12.1: 3725                           2,094μs       Plant potty
- 2018 12.2: 3100000000293                  9,971μs
- 2018 13.1: 130,104                        18,405μs      Crashing carts
- 2018 13.2: 29,83                          57,589μs
- 2018 14.1: 1150511382                     21,606μs      Elf recipes
- 2018 14.2: 20173656                       1,181,491μs
- 2018 15.1: 243390                         105,384μs     Elves vs Goblins
- 2018 15.2: 59886                          481,887μs
- 2018 16.1: 636                            968μs         Opcode reverse-engineering
- 2018 16.2: 674                            1,118μs
- 2018 17.1: 31383                          21,746μs      Don't go chasing waterfalls
- 2018 17.2: 25376                          21,244μs
- 2018 18.1: 545600                         440μs         I'm a lumberjack...
- 2018 18.2: 202272                         19,581μs
- 2018 19.1: 1824                           67,865μs      Tardis halting problem
- 2018 19.2: 21340800                       36,443μs
- 2018 20.1: 4184                           3,074μs       Regex maze
- 2018 20.2: 8596                           3,871μs
- 2018 21.1: 11050031                       56μs          Time machine halting problem
- 2018 21.2: 11341721                       17,713,456μs
- 2018 22.1: 10115                          220μs         Caving capers
- 2018 22.2: 990                            70,377μs
- 2018 23.1: 599                            181μs         Nanobot teleportation
- 2018 23.2: 94481130                       74,200μs
- 2018 24.1: 29865                          7,905μs       Immune system battle
- 2018 24.2: 2444                           342,749μs
- 2018 25.1: 407                            36,594μs      4D chocolate teleportation
+ 2018  1.2: 245                            4,586μs
+ 2018  2.1: 8892                           410μs         Warehouse checksum
+ 2018  2.2: zihwtxagifpbsnwleydukjmqv      218μs
+ 2018  3.1: 105071                         6,220μs       Fabric overlap
+ 2018  3.2: 222                            5,359μs
+ 2018  4.1: 109659                         935μs         Sleepy guards
+ 2018  4.2: 36371                          1,573μs
+ 2018  5.1: 10180                          977μs         Polymer reactions
+ 2018  5.2: 5668                           40,256μs
+ 2018  6.1: 4342                           10,456μs      Safe coordinates
+ 2018  6.2: 42966                          7,000μs
+ 2018  7.1: JKNSTHCBGRVDXWAYFOQLMPZIUE...  59μs          Ikea sleigh
+ 2018  7.2: 755                            275μs
+ 2018  8.1: 40977                          54,324μs      Navigation licensing
+ 2018  8.2: 27490                          52,142μs
+ 2018  9.1: 416424                         1,023μs       Marble madness
+ 2018  9.2: 3498287922                     556,436μs
+ 2018 10.1: BFFZCNXE                       116,839μs     Writing in the stars
+ 2018 10.2: 10391                          16,886μs
+ 2018 11.1: 33,54                          387μs         Max power... cell
+ 2018 11.2: 232,289,8                      162,755μs
+ 2018 12.1: 3725                           2,207μs       Plant potty
+ 2018 12.2: 3100000000293                  10,674μs
+ 2018 13.1: 130,104                        19,309μs      Crashing carts
+ 2018 13.2: 29,83                          61,899μs
+ 2018 14.1: 1150511382                     22,811μs      Elf recipes
+ 2018 14.2: 20173656                       1,228,280μs
+ 2018 15.1: 243390                         111,350μs     Elves vs Goblins
+ 2018 15.2: 59886                          510,290μs
+ 2018 16.1: 636                            1,079μs       Opcode reverse-engineering
+ 2018 16.2: 674                            1,220μs
+ 2018 17.1: 31383                          22,059μs      Don't go chasing waterfalls
+ 2018 17.2: 25376                          21,558μs
+ 2018 18.1: 545600                         452μs         I'm a lumberjack...
+ 2018 18.2: 202272                         19,454μs
+ 2018 19.1: 1824                           69,157μs      Tardis halting problem
+ 2018 19.2: 21340800                       37,318μs
+ 2018 20.1: 4184                           3,436μs       Regex maze
+ 2018 20.2: 8596                           4,275μs
+ 2018 21.1: 11050031                       55μs          Time machine halting problem
+ 2018 21.2: 11341721                       19,357,710μs
+ 2018 22.1: 10115                          230μs         Caving capers
+ 2018 22.2: 990                            74,658μs
+ 2018 23.1: 599                            186μs         Nanobot teleportation
+ 2018 23.2: 94481130                       63,294μs
+ 2018 24.1: 29865                          8,760μs       Immune system battle
+ 2018 24.2: 2444                           373,268μs
+ 2018 25.1: 407                            38,442μs      4D chocolate teleportation
                                            -------------
-                                           21,303ms
+                                           23.103s
 
  2019  1.1: 3325347                        2μs           Calculate launch fuel
  2019  1.2: 4985145                        6μs
- 2019  2.1: 4484226                        37μs          Gravity assist (CPU start)
- 2019  2.2: 5696                           69,097μs
- 2019  3.1: 860                            2,106μs       Path intersections
- 2019  3.2: 9238                           2,214μs
- 2019  4.1: 925                            57,308μs      Forgotten password
- 2019  4.2: 607                            57,098μs
- 2019  5.1: 16434972                       36μs          Air conditioning (CPU extension 1)
+ 2019  2.1: 4484226                        42μs          Gravity assist (CPU start)
+ 2019  2.2: 5696                           64,611μs
+ 2019  3.1: 860                            2,404μs       Path intersections
+ 2019  3.2: 9238                           2,499μs
+ 2019  4.1: 925                            56,823μs      Forgotten password
+ 2019  4.2: 607                            56,500μs
+ 2019  5.1: 16434972                       34μs          Air conditioning (CPU extension 1)
  2019  5.2: 16694270                       30μs
- 2019  6.1: 223251                         246μs         Orbital transfers
- 2019  6.2: 430                            48μs
- 2019  7.1: 38834                          5,454μs       Amplifiers (CPU used unmodified)
- 2019  7.2: 69113332                       7,127μs
- 2019  8.1: 1572                           2,839μs       Space GIF
- 2019  8.2: KYHFE                          2,607μs
+ 2019  6.1: 223251                         263μs         Orbital transfers
+ 2019  6.2: 430                            54μs
+ 2019  7.1: 38834                          5,564μs       Amplifiers (CPU used unmodified)
+ 2019  7.2: 69113332                       7,546μs
+ 2019  8.1: 1572                           1,827μs       Space GIF
+ 2019  8.2: KYHFE                          1,620μs
  2019  9.1: 3454977209                     52μs          Sensor booster (CPU extension 2)
- 2019  9.2: 50120                          33,075μs
- 2019 10.1: 344                            18,744μs      Asteroids
- 2019 10.2: 2732                           1,976μs
- 2019 11.1: 2184                           191,927μs     Personal plate (CPU used unmodified)
- 2019 11.2: AHCHZEPK                       1,247μs
- 2019 12.1: 10055                          511μs         Orbital simulation
- 2019 12.2: 374307970285176                69,967μs
- 2019 13.1: 412                            1,596μs       Arkanoid (CPU used unmodified)
- 2019 13.2: 20940                          73,650μs
- 2019 14.1: 378929                         113μs         Replicator
- 2019 14.2: 3445249                        4,533μs
- 2019 15.1: 232                            18,685μs      Oxygen repair droid (CPU used unmodified)
- 2019 15.2: 320                            158μs
- 2019 16.1: 84487724                       17,691μs      FFT
- 2019 16.2: 84692524                       115,810μs
- 2019 17.1: 5948                           5,425μs       Scaffolding vacuum robot (CPU used unmodified)
- 2019 17.2: 997790                         17,584μs
- 2019 18.1: 5198                           142,317μs     Maze and keys
- 2019 18.2: 1736                           84,476μs
- 2019 19.1: 206                            177,400μs     Tractorrr (CPU used unmodified)
- 2019 19.2: 6190948                        193,758μs
- 2019 20.1: 514                            316μs         Doughnut maze
- 2019 20.2: 6208                           8,582μs
- 2019 21.1: 19359533                       2,460μs       Jumping droids (CPU used unmodified)
- 2019 21.2: 1140310551                     46,799μs
- 2019 22.1: 1498                           898μs         Space shuffle
- 2019 22.2: 74662303452927                 28μs
- 2019 23.1: 22134                          3,059μs       IntCode network (CPU used unmodified)
- 2019 23.2: 16084                          18,225μs
+ 2019  9.2: 50120                          34,373μs
+ 2019 10.1: 344                            19,740μs      Asteroids
+ 2019 10.2: 2732                           1,875μs
+ 2019 11.1: 2184                           193,934μs     Personal plate (CPU used unmodified)
+ 2019 11.2: AHCHZEPK                       1,361μs
+ 2019 12.1: 10055                          553μs         Orbital simulation
+ 2019 12.2: 374307970285176                73,706μs
+ 2019 13.1: 412                            1,714μs       Arkanoid (CPU used unmodified)
+ 2019 13.2: 20940                          77,242μs
+ 2019 14.1: 378929                         111μs         Replicator
+ 2019 14.2: 3445249                        4,758μs
+ 2019 15.1: 232                            19,616μs      Oxygen repair droid (CPU used unmodified)
+ 2019 15.2: 320                            175μs
+ 2019 16.1: 84487724                       15,369μs      FFT
+ 2019 16.2: 84692524                       115,019μs
+ 2019 17.1: 5948                           5,818μs       Scaffolding vacuum robot (CPU used unmodified)
+ 2019 17.2: 997790                         18,747μs
+ 2019 18.1: 5198                           148,102μs     Maze and keys
+ 2019 18.2: 1736                           88,084μs
+ 2019 19.1: 206                            184,295μs     Tractorrr (CPU used unmodified)
+ 2019 19.2: 6190948                        197,734μs
+ 2019 20.1: 514                            331μs         Doughnut maze
+ 2019 20.2: 6208                           9,188μs
+ 2019 21.1: 19359533                       2,663μs       Jumping droids (CPU used unmodified)
+ 2019 21.2: 1140310551                     49,549μs
+ 2019 22.1: 1498                           909μs         Space shuffle
+ 2019 22.2: 74662303452927                 33μs
+ 2019 23.1: 22134                          2,988μs       IntCode network (CPU used unmodified)
+ 2019 23.2: 16084                          19,189μs
  2019 24.1: 23846449                       11μs          Wastl's game of life
- 2019 24.2: 1934                           7,869μs
- 2019 25.1: 35332                          256,058μs     Airlock password (CPU used unmodified)
+ 2019 24.2: 1934                           8,374μs
+ 2019 25.1: 35332                          267,162μs     Airlock password (CPU used unmodified)
                                            -------------
-                                           1,721ms
+                                           1.763s
 
  2020  1.1: 73371                          30μs          Expenses
- 2020  1.2: 127642310                      108μs
- 2020  2.1: 493                            190μs         Password policy
- 2020  2.2: 593                            120μs
- 2020  3.1: 207                            152μs         Tobogganing through the trees
- 2020  3.2: 2655892800                     29μs
- 2020  4.1: 226                            295μs         Passport validation
- 2020  4.2: 160                            667μs
+ 2020  1.2: 127642310                      110μs
+ 2020  2.1: 493                            189μs         Password policy
+ 2020  2.2: 593                            119μs
+ 2020  3.1: 207                            154μs         Tobogganing through the trees
+ 2020  3.2: 2655892800                     31μs
+ 2020  4.1: 226                            319μs         Passport validation
+ 2020  4.2: 160                            724μs
  2020  5.1: 928                            125μs         Boarding parse
- 2020  5.2: 610                            289μs
- 2020  6.1: 6291                           210μs         Customs questions
- 2020  6.2: 3052                           1,722μs
- 2020  7.1: 224                            12,771μs      Recursive bag packing
- 2020  7.2: 1488                           1,054μs
+ 2020  5.2: 610                            290μs
+ 2020  6.1: 6291                           211μs         Customs questions
+ 2020  6.2: 3052                           1,827μs
+ 2020  7.1: 224                            13,961μs      Recursive bag packing
+ 2020  7.2: 1488                           1,188μs
  2020  8.1: 1832                           11μs          Console assembly debugging
- 2020  8.2: 662                            2,673μs
- 2020  9.1: 41682220                       536μs         Cypher cracking
- 2020  9.2: 5388976                        35μs
- 2020 10.1: 1885                           30μs          Joltage meter
- 2020 10.2: 2024782584832                  38μs
- 2020 11.1: 2354                           3,420μs       Conway's game of seating
- 2020 11.2: 2072                           46,554μs
- 2020 12.1: 1631                           24μs          Evergreen ship sailing
- 2020 12.2: 58606                          36μs
- 2020 13.1: 115                            13μs          Bus timetables
- 2020 13.2: 756261495958122                20μs
- 2020 14.1: 10717676595607                 108μs         Memory bit twiddling
- 2020 14.2: 3974538275659                  5,581μs
- 2020 15.1: 240                            20μs          Number memory game
- 2020 15.2: 505                            300,578μs
- 2020 16.1: 18227                          632μs         Ticket deciphering
- 2020 16.2: 2355350878831                  1,113μs
- 2020 17.1: 384                            33,338μs      Conway cubes
- 2020 17.2: 2012                           427,442μs
- 2020 18.1: 6811433855019                  426μs         Operator precedence
+ 2020  8.2: 662                            2,668μs
+ 2020  9.1: 41682220                       543μs         Cypher cracking
+ 2020  9.2: 5388976                        31μs
+ 2020 10.1: 1885                           29μs          Joltage meter
+ 2020 10.2: 2024782584832                  35μs
+ 2020 11.1: 2354                           3,461μs       Conway's game of seating
+ 2020 11.2: 2072                           46,579μs
+ 2020 12.1: 1631                           26μs          Evergreen ship sailing
+ 2020 12.2: 58606                          32μs
+ 2020 13.1: 115                            12μs          Bus timetables
+ 2020 13.2: 756261495958122                16μs
+ 2020 14.1: 10717676595607                 101μs         Memory bit twiddling
+ 2020 14.2: 3974538275659                  4,398μs
+ 2020 15.1: 240                            21μs          Number memory game
+ 2020 15.2: 505                            259,528μs
+ 2020 16.1: 18227                          725μs         Ticket deciphering
+ 2020 16.2: 2355350878831                  1,132μs
+ 2020 17.1: 384                            34,913μs      Conway cubes
+ 2020 17.2: 2012                           433,958μs
+ 2020 18.1: 6811433855019                  454μs         Operator precedence
  2020 18.2: 129770152447927                466μs
- 2020 19.1: 134                            1,678μs       Message pattern matching
- 2020 19.2: 377                            6,944μs
- 2020 20.1: 84116744709593                 10,273μs      Satellite jigsaw
- 2020 20.2: 1957                           1,165μs
- 2020 21.1: 1913                           219μs         Allergen detective
- 2020 21.2: gpgrb,tjlz,gtjmd,spbxz,pfd...  208μs
- 2020 22.1: 32856                          25μs          Crab cards
- 2020 22.2: 33805                          111,330μs
+ 2020 19.1: 134                            1,717μs       Message pattern matching
+ 2020 19.2: 377                            7,446μs
+ 2020 20.1: 84116744709593                 10,489μs      Satellite jigsaw
+ 2020 20.2: 1957                           1,229μs
+ 2020 21.1: 1913                           220μs         Allergen detective
+ 2020 21.2: gpgrb,tjlz,gtjmd,spbxz,pfd...  226μs
+ 2020 22.1: 32856                          26μs          Crab cards
+ 2020 22.2: 33805                          111,185μs
  2020 23.1: 34952786                       4μs           Crab cups
- 2020 23.2: 505334281774                   155,274μs
- 2020 24.1: 320                            724μs         Tile flipping
- 2020 24.2: 3777                           201,796μs
- 2020 25.1: 17673381                       46,033μs      Door cryptography
+ 2020 23.2: 505334281774                   158,790μs
+ 2020 24.1: 320                            790μs         Tile flipping
+ 2020 24.2: 3777                           208,501μs
+ 2020 25.1: 17673381                       45,901μs      Door cryptography
                                            -------------
-                                           1,377ms
+                                           1.355s
 
- 2021  1.1: 1466                           57μs          Depth scan
- 2021  1.2: 1491                           516μs
- 2021  2.1: 1746616                        51μs          Navigate forward
- 2021  2.2: 1741971043                     51μs
- 2021  3.1: 2743844                        56μs          Power consumption
- 2021  3.2: 6677951                        137μs
- 2021  4.1: 32844                          983μs         Squid bingo
- 2021  4.2: 4920                           2,580μs
- 2021  5.1: 7297                           5,661μs       Hydrothermal vents
- 2021  5.2: 21038                          8,661μs
+ 2021  1.1: 1466                           60μs          Depth scan
+ 2021  1.2: 1491                           534μs
+ 2021  2.1: 1746616                        52μs          Navigate forward
+ 2021  2.2: 1741971043                     48μs
+ 2021  3.1: 2743844                        53μs          Power consumption
+ 2021  3.2: 6677951                        143μs
+ 2021  4.1: 32844                          1,028μs       Squid bingo
+ 2021  4.2: 4920                           2,476μs
+ 2021  5.1: 7297                           5,315μs       Hydrothermal vents
+ 2021  5.2: 21038                          7,998μs
  2021  6.1: 391888                         9μs           Lanternfish parthenogenesis
- 2021  6.2: 1754597645339                  13μs
- 2021  7.1: 348664                         108μs         Crab submarines
- 2021  7.2: 100220525                      95μs
- 2021  7.X: Ceci n'est pas une intcode...  44μs          Easter egg (2019 CPU used)
- 2021  8.1: 294                            144μs         Old school displays
- 2021  8.2: 973292                         903μs
- 2021  9.1: 498                            90μs          Lava level
- 2021  9.2: 1071000                        2,208μs
+ 2021  6.2: 1754597645339                  11μs
+ 2021  7.1: 348664                         95μs          Crab submarines
+ 2021  7.2: 100220525                      84μs
+ 2021  7.X: Ceci n'est pas une intcode...  43μs          Easter egg (2019 CPU used)
+ 2021  8.1: 294                            130μs         Old school displays
+ 2021  8.2: 973292                         1,177μs
+ 2021  9.1: 498                            87μs          Lava level
+ 2021  9.2: 1071000                        2,212μs
  2021 10.1: 370407                         418μs         Esoteric language parser
- 2021 10.2: 3249889609                     618μs
- 2021 11.1: 1755                           2,293μs       Flashers
- 2021 11.2: 212                            5,296μs
- 2021 12.1: 3450                           5,191μs       Caving
- 2021 12.2: 96528                          59,465μs
- 2021 13.1: 751                            2,555μs       ZX Spectrum copy protection
- 2021 13.2: PGHRKLKL                       8,407μs
- 2021 14.1: 2170                           216μs         Ablative armour
- 2021 14.2: 2422444761283                  1,151μs
- 2021 15.1: 373                            1,399μs       Risky business
- 2021 15.2: 2868                           70,526μs
- 2021 16.1: 999                            137μs         Packet processing
- 2021 16.2: 3408662834145                  129μs
- 2021 17.1: 19503                          14,489μs      Probe launch trick shot
- 2021 17.2: 5200                           14,388μs
- 2021 18.1: 4072                           4,022μs       Snailfish homework
- 2021 18.2: 4483                           57,239μs
- 2021 19.1: 479                            124,917μs     3D scanners and beacons
- 2021 19.2: 13113                          220,246μs
- 2021 20.1: 5203                           1,284μs       NCIS image enhancement
- 2021 20.2: 18806                          93,464μs
- 2021 21.1: 925605                         17μs          Quantum dice
- 2021 21.2: 486638407378784                669,779μs
- 2021 22.1: 582644                         1,997μs       Reactor reboot
- 2021 22.2: 1263804707062415               25,392μs
- 2021 23.1: 15111                          484,885μs     Hotel amphipod
- 2021 23.2: 47625                          2,171,620μs
+ 2021 10.2: 3249889609                     600μs
+ 2021 11.1: 1755                           2,337μs       Flashers
+ 2021 11.2: 212                            5,390μs
+ 2021 12.1: 3450                           5,352μs       Caving
+ 2021 12.2: 96528                          60,382μs
+ 2021 13.1: 751                            2,640μs       ZX Spectrum copy protection
+ 2021 13.2: PGHRKLKL                       8,768μs
+ 2021 14.1: 2170                           201μs         Ablative armour
+ 2021 14.2: 2422444761283                  1,090μs
+ 2021 15.1: 373                            1,618μs       Risky business
+ 2021 15.2: 2868                           77,289μs
+ 2021 16.1: 999                            146μs         Packet processing
+ 2021 16.2: 3408662834145                  145μs
+ 2021 17.1: 19503                          15,488μs      Probe launch trick shot
+ 2021 17.2: 5200                           15,314μs
+ 2021 18.1: 4072                           4,227μs       Snailfish homework
+ 2021 18.2: 4483                           59,456μs
+ 2021 19.1: 479                            125,408μs     3D scanners and beacons
+ 2021 19.2: 13113                          224,926μs
+ 2021 20.1: 5203                           1,262μs       NCIS image enhancement
+ 2021 20.2: 18806                          84,095μs
+ 2021 21.1: 925605                         18μs          Quantum dice
+ 2021 21.2: 486638407378784                705,730μs
+ 2021 22.1: 582644                         1,962μs       Reactor reboot
+ 2021 22.2: 1263804707062415               25,611μs
+ 2021 23.1: 15111                          550,497μs     Hotel amphipod
+ 2021 23.2: 47625                          2,452,534μs
  2021 24.1: 89913949293989                 5μs           Model number
- 2021 24.2: 12911816171712                 6μs
- 2021 25.1: 504                            106,459μs     Landing among the cucumbers
+ 2021 24.2: 12911816171712                 4μs
+ 2021 25.1: 504                            107,464μs     Landing among the cucumbers
                                            -------------
-                                           4,170ms
+                                           4.562s
 
- 2022  1.1: 66487                          30μs          Calorie counting
- 2022  1.2: 197301                         52μs
- 2022  2.1: 10310                          46μs          Rock paper scissors
- 2022  2.2: 14859                          38μs
- 2022  3.1: 7597                           80μs          Rucksack reorganization
- 2022  3.2: 2607                           123μs
- 2022  4.1: 657                            126μs         Camp cleanup
- 2022  4.2: 938                            126μs
- 2022  5.1: BSDMQFLSP                      99μs          Supply stacks
- 2022  5.2: PGSQBFLDP                      190μs
- 2022  6.1: 1647                           144μs         Tuning trouble
- 2022  6.2: 2447                           262μs
- 2022  7.1: 2104783                        278μs         No space left on device
- 2022  7.2: 5883165                        283μs
- 2022  8.1: 1794                           826μs         Treetop tree house
- 2022  8.2: 199272                         871μs
- 2022  9.1: 5683                           568μs         Rope bridge
- 2022  9.2: 2372                           1,276μs
+ 2022  1.1: 66487                          32μs          Calorie counting
+ 2022  1.2: 197301                         64μs
+ 2022  2.1: 10310                          51μs          Rock paper scissors
+ 2022  2.2: 14859                          42μs
+ 2022  3.1: 7597                           88μs          Rucksack reorganization
+ 2022  3.2: 2607                           142μs
+ 2022  4.1: 657                            136μs         Camp cleanup
+ 2022  4.2: 938                            137μs
+ 2022  5.1: BSDMQFLSP                      114μs         Supply stacks
+ 2022  5.2: PGSQBFLDP                      207μs
+ 2022  6.1: 1647                           161μs         Tuning trouble
+ 2022  6.2: 2447                           249μs
+ 2022  7.1: 2104783                        302μs         No space left on device
+ 2022  7.2: 5883165                        304μs
+ 2022  8.1: 1794                           875μs         Treetop tree house
+ 2022  8.2: 199272                         878μs
+ 2022  9.1: 5683                           602μs         Rope bridge
+ 2022  9.2: 2372                           1,337μs
  2022 10.1: 12460                          4μs           Cathode-Ray tube
  2022 10.2: EZFPRAKL                       6μs
  2022 11.1: 120384                         11μs          Monkey in the middle
- 2022 11.2: 32059801242                    2,830μs
- 2022 12.1: 408                            1,705μs       Hill climbing algorithm
- 2022 12.2: 399                            1,684μs
- 2022 13.1: 6428                           57μs          Distress signal
- 2022 13.2: 22464                          530μs
- 2022 14.1: 1199                           493μs         Regolith reservoir
- 2022 14.2: 23925                          5,874μs
- 2022 15.1: 5256611                        10μs          Beacon exclusion zone
- 2022 15.2: 13337919186981                 11,383μs
- 2022 16.1: 2059                           31,648μs      Proboscidea volcanium
- 2022 16.2: 2790                           16,775μs
- 2022 17.1: 3048                           151μs         Pyroclastic flow
- 2022 17.2: 1504093567249                  1,432μs
- 2022 18.1: 4504                           373μs         Boiling boulders
- 2022 18.2: 2556                           1,664μs
- 2022 19.1: 1346                           27,259μs      Not enough minerals
- 2022 19.2: 7644                           4,736μs
- 2022 20.1: 2203                           13,841μs      Grove positioning system
- 2022 20.2: 6641234038999                  51,330μs
- 2022 21.1: 168502451381566                301μs         Monkey math
- 2022 21.2: 3343167719435                  299μs
- 2022 22.1: 43466                          1,542μs       Monkey map
- 2022 22.2: 162155                         581μs
- 2022 23.1: 3766                           8,706μs       Unstable diffusion
- 2022 23.2: 954                            48,937μs
- 2022 24.1: 305                            26,902μs      Blizzard basin
- 2022 24.2: 905                            75,476μs
+ 2022 11.2: 32059801242                    2,979μs
+ 2022 12.1: 408                            1,844μs       Hill climbing algorithm
+ 2022 12.2: 399                            1,809μs
+ 2022 13.1: 6428                           63μs          Distress signal
+ 2022 13.2: 22464                          567μs
+ 2022 14.1: 1199                           529μs         Regolith reservoir
+ 2022 14.2: 23925                          5,950μs
+ 2022 15.1: 5256611                        11μs          Beacon exclusion zone
+ 2022 15.2: 13337919186981                 11,921μs
+ 2022 16.1: 2059                           32,008μs      Proboscidea volcanium
+ 2022 16.2: 2790                           17,070μs
+ 2022 17.1: 3048                           167μs         Pyroclastic flow
+ 2022 17.2: 1504093567249                  1,579μs
+ 2022 18.1: 4504                           384μs         Boiling boulders
+ 2022 18.2: 2556                           1,622μs
+ 2022 19.1: 1346                           23,471μs      Not enough minerals
+ 2022 19.2: 7644                           4,502μs
+ 2022 20.1: 2203                           13,854μs      Grove positioning system
+ 2022 20.2: 6641234038999                  54,940μs
+ 2022 21.1: 168502451381566                324μs         Monkey math
+ 2022 21.2: 3343167719435                  327μs
+ 2022 22.1: 43466                          1,597μs       Monkey map
+ 2022 22.2: 162155                         597μs
+ 2022 23.1: 3766                           8,759μs       Unstable diffusion
+ 2022 23.2: 954                            48,932μs
+ 2022 24.1: 305                            27,277μs      Blizzard basin
+ 2022 24.2: 905                            74,964μs
  2022 25.1: 2-20=01--0=0=0=2-120           16μs          Full of hot air
                                            -------------
-                                           341.955ms
+                                           343.785ms
 
- 2023  1.1: 54877                          143μs         Trebuchet
- 2023  1.2: 54100                          411μs
- 2023  2.1: 1931                           101μs         Cube conundrum
- 2023  2.2: 83105                          156μs
- 2023  3.1: 540131                         58μs          Gear ratios
- 2023  3.2: 86879020                       210μs
- 2023  4.1: 22674                          228μs         Scratchcards
- 2023  4.2: 5747443                        228μs
- 2023  5.1: 535088217                      63μs          If you give a seed a fertilizer
- 2023  5.2: 51399228                       185μs
- 2023  6.1: 32076                          3μs           Wait for it
- 2023  6.2: 34278221                       54μs
- 2023  7.1: 246795406                      842μs         Camel cards
- 2023  7.2: 249356515                      886μs
- 2023  8.1: 15517                          466μs         Haunted wasteland
- 2023  8.2: 14935034899483                 1,034μs
- 2023  9.1: 1980437560                     580μs         Mirage maintenance
- 2023  9.2: 977                            527μs
- 2023 10.1: 6806                           128μs         Pipe maze
- 2023 10.2: 449                            963μs
- 2023 11.1: 9639160                        367μs         Cosmic expansion
- 2023 11.2: 752936133304                   362μs
- 2023 12.1: 7251                           4,376μs       Hot springs
- 2023 12.2: 2128386729962                  126,643μs
- 2023 13.1: 34821                          128μs         Point of incidence
- 2023 13.2: 36919                          634μs
+ 2023  1.1: 54877                          135μs         Trebuchet
+ 2023  1.2: 54100                          391μs
+ 2023  2.1: 1931                           80μs          Cube conundrum
+ 2023  2.2: 83105                          110μs
+ 2023  3.1: 540131                         71μs          Gear ratios
+ 2023  3.2: 86879020                       233μs
+ 2023  4.1: 22674                          219μs         Scratchcards
+ 2023  4.2: 5747443                        219μs
+ 2023  5.1: 535088217                      40μs          If you give a seed a fertilizer
+ 2023  5.2: 51399228                       156μs
+ 2023  6.1: 32076                          2μs           Wait for it
+ 2023  6.2: 34278221                       65μs
+ 2023  7.1: 246795406                      675μs         Camel cards
+ 2023  7.2: 249356515                      716μs
+ 2023  8.1: 15517                          480μs         Haunted wasteland
+ 2023  8.2: 14935034899483                 2,164μs
+ 2023  9.1: 1980437560                     362μs         Mirage maintenance
+ 2023  9.2: 977                            345μs
+ 2023 10.1: 6806                           110μs         Pipe maze
+ 2023 10.2: 449                            1,025μs
+ 2023 11.1: 9639160                        366μs         Cosmic expansion
+ 2023 11.2: 752936133304                   358μs
+ 2023 12.1: 7251                           3,952μs       Hot springs
+ 2023 12.2: 2128386729962                  129,147μs
+ 2023 13.1: 34821                          122μs         Point of incidence
+ 2023 13.2: 36919                          560μs
  2023 14.1: 112773                         107μs         Parabolic reflector dish
- 2023 14.2: 98894                          15,258μs
- 2023 15.1: 508552                         192μs         Lens library
- 2023 15.2: 265462                         550μs
- 2023 16.1: 7074                           141μs         The floor will be lava
- 2023 16.2: 7530                           31,852μs
- 2023 17.1: 851                            67,150μs      Clumsy crucible
- 2023 17.2: 982                            55,763μs
- 2023 18.1: 50603                          87μs          Lavaduct lagoon
- 2023 18.2: 96556251590677                 98μs
- 2023 19.1: 446517                         233μs         Aplenty
- 2023 19.2: 130090458884662                507μs
- 2023 20.1: 819397964                      8,740μs       Pulse propagation
- 2023 20.2: 252667369442479                129,754μs
- 2023 21.1: 3758                           12,455μs      Step counter
- 2023 21.2: 621494544278648                489,343μs
- 2023 22.1: 416                            1,136,489μs   Sand slabs
- 2023 22.2: 60963                          3,109,705μs
- 2023 23.1: 2202                           407,034μs     A long walk
- 2023 23.2: 6226                           310,393,984μs
+ 2023 14.2: 98894                          15,519μs
+ 2023 15.1: 508552                         202μs         Lens library
+ 2023 15.2: 265462                         563μs
+ 2023 16.1: 7074                           153μs         The floor will be lava
+ 2023 16.2: 7530                           32,187μs
+ 2023 17.1: 851                            58,357μs      Clumsy crucible
+ 2023 17.2: 982                            58,913μs
+ 2023 18.1: 50603                          103μs         Lavaduct lagoon
+ 2023 18.2: 96556251590677                 121μs
+ 2023 19.1: 446517                         268μs         Aplenty
+ 2023 19.2: 130090458884662                498μs
+ 2023 20.1: 819397964                      8,806μs       Pulse propagation
+ 2023 20.2: 252667369442479                69,038μs
+ 2023 21.1: 3758                           10,776μs      Step counter
+ 2023 21.2: 621494544278648                512,938μs
+ 2023 22.1: 416                            1,173,472μs   Sand slabs
+ 2023 22.2: 60963                          3,288,654μs
+ 2023 23.1: 2202                           485,716μs     A long walk
+ 2023 23.2: 6226                           308,575,733μs
                                            -------------
-                                           315,999ms
+                                           314.434s
 ```

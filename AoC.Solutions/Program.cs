@@ -217,11 +217,11 @@ public static class Program
 
             if (yearMs < 1_000_000)
             {
-                Console.WriteLine($"{new string(' ', 43)}{$"{yearMs / 1000d:N3}ms", -13}");
+                Console.WriteLine($"{new string(' ', 43)}{$"{yearMs / 1_000d:N3}ms", -13}");
             }
             else
             {
-                Console.WriteLine($"{new string(' ', 43)}{$"{yearMs / 1000d:N0}ms", -13}");
+                Console.WriteLine($"{new string(' ', 43)}{$"{yearMs / 1_000_000d:N3}s", -13}");
             }
 
             Console.WriteLine();
