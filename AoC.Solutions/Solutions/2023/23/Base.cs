@@ -57,32 +57,6 @@ public abstract class Base : Solution
             {
                 maxSteps[(position.X, position.Y, position.Direction.Dx, position.Direction.Dy)] = position.Steps;
             }
-            
-            // if (queue.Count > 1_000)
-            // {
-            //     var all = queue.ToList();
-            //
-            //     var count = queue.Count;
-            //     
-            //     queue.Clear();
-            //     
-            //     foreach (var item in all)
-            //     {
-            //         if (! maxSteps.ContainsKey((item.X, item.Y, item.Direction.Dx, item.Direction.Dy)))
-            //         {
-            //             queue.Enqueue(item);
-            //             
-            //             continue;
-            //         }
-            //
-            //         if (maxSteps[(item.X, item.Y, item.Direction.Dx, item.Direction.Dy)] < item.Steps)
-            //         {
-            //             queue.Enqueue(item);
-            //         }
-            //     }
-            //
-            //     pruned += count - queue.Count;
-            // }
 
             if (position.X == _width - 2 && position.Y == _height - 1)
             {
