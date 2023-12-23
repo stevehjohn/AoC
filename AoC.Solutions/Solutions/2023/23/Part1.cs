@@ -50,26 +50,24 @@ public class Part1 : Base
             {
                 stepCounts.Add(position.Steps);
 
-                Console.WriteLine(position.Steps);
-
                 continue;
             }
 
-            // var tile = _map[position.X, position.Y];
-            //
-            // if (tile == '>')
-            // {
-            //     AddNewPosition(queue, position, East);
-            //
-            //     continue;
-            // }
-            //
-            // if (tile == 'v')
-            // {
-            //     AddNewPosition(queue, position, South);
-            //
-            //     continue;
-            // }
+            var tile = _map[position.X, position.Y];
+            
+            if (tile == '>')
+            {
+                AddNewPosition(queue, position, East);
+            
+                continue;
+            }
+            
+            if (tile == 'v')
+            {
+                AddNewPosition(queue, position, South);
+            
+                continue;
+            }
 
             if (position.Direction != North)
             {
