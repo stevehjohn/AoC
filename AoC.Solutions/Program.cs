@@ -73,11 +73,13 @@ public static class Program
             
             var stopwatch = new Stopwatch();
 
+            var answer = string.Empty;
+            
             if (arguments.Length != 1 || (arguments.Length == 1 && arguments[0].Length < 5))
             {
                 stopwatch.Start();
                 
-                instance.GetAnswer();
+                answer = instance.GetAnswer();
                 
                 stopwatch.Stop();
 
@@ -95,11 +97,14 @@ public static class Program
 
             GC.Collect();
 
-            stopwatch.Start();
+            if (firstTime < TimeSpan.FromSeconds(10).TotalMicroseconds)
+            {
+                stopwatch.Start();
 
-            var answer = instance.GetAnswer();
+                answer = instance.GetAnswer();
 
-            stopwatch.Stop();
+                stopwatch.Stop();
+            }
 
             if (instance.OcrOutput.HasValue)
             {
