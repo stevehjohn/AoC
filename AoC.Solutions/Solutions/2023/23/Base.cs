@@ -4,5 +4,5 @@ namespace AoC.Solutions.Solutions._2023._23;
 
 public abstract class Base : Solution
 {
-    public override string Description => "";
+    public override string Description => "A long walk";
 }
