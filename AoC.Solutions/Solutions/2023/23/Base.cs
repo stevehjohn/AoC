@@ -78,6 +78,11 @@ public abstract class Base : Solution
                 }
             }
 
+            if (position.Direction != South)
+            {
+                AddNewPosition(queue, position, position.Direction, North);
+            }
+
             if (position.Direction != North)
             {
                 AddNewPosition(queue, position, position.Direction, South);
@@ -86,11 +91,6 @@ public abstract class Base : Solution
             if (position.Direction != East)
             {
                 AddNewPosition(queue, position, position.Direction, West);
-            }
-
-            if (position.Direction != South)
-            {
-                AddNewPosition(queue, position, position.Direction, North);
             }
 
             if (position.Direction != West)
