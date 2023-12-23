@@ -41,11 +41,6 @@ public class Part1 : Base
         
         while (queue.TryDequeue(out var position))
         {
-            if (! position.Visited.Add((position.X, position.Y)))
-            {
-                continue;
-            }
-
             if (position.Steps > _pathTiles)
             {
                 continue;
@@ -104,8 +99,12 @@ public class Part1 : Base
         (int Dx, int Dy) direction)
     {
         if (_map[position.X + direction.Dx, position.Y + direction.Dy] != '#')
-        { 
-            queue.Enqueue((position.X + direction.Dx, position.Y + direction.Dy, direction, position.Steps + 1, new HashSet<(int X, int Y)>(position.Visited)));
+        {
+            if (position.Visited.Add((position.X + direction.Dx, position.Y + direction.Dy)))
+            {
+                queue.Enqueue((position.X + direction.Dx, position.Y + direction.Dy, direction, position.Steps + 1,
+                    new HashSet<(int X, int Y)>(position.Visited)));
+            }
         }
     }
 
