@@ -85,8 +85,6 @@ public static class Program
 
                 firstTime = stopwatch.Elapsed.TotalMicroseconds;
                 
-                stopwatch.Reset();
-                
                 instance = Activator.CreateInstance(solution) as Solution;
 
                 if (instance == null)
@@ -99,6 +97,8 @@ public static class Program
 
             if (firstTime < TimeSpan.FromSeconds(10).TotalMicroseconds)
             {
+                stopwatch.Reset();
+                
                 stopwatch.Start();
 
                 answer = instance.GetAnswer();
