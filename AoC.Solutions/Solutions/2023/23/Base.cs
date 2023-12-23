@@ -33,9 +33,39 @@ public abstract class Base : Solution
         var sw = Stopwatch.StartNew();
 
         var prev = 0;
+
+        var maxSteps = new Dictionary<(int, int, int, int), int>();
         
         while (queue.TryDequeue(out var position))
         {
+            if (maxSteps.ContainsKey((position.X, position.Y, position.Direction.Dx, position.Direction.Dy)))
+            {
+                if (position.Steps > maxSteps[(position.X, position.Y, position.Direction.Dx, position.Direction.Dy)])
+                {
+                    maxSteps[(position.X, position.Y, position.Direction.Dx, position.Direction.Dy)] = position.Steps;
+                }
+            }
+            else
+            {
+                maxSteps[(position.X, position.Y, position.Direction.Dx, position.Direction.Dy)] = position.Steps;
+            }
+
+
+            if (queue.Count > 1_000)
+            {
+                var all = queue.ToList();
+                
+                queue.Clear();
+
+                foreach (var item in all)
+                {
+                    if (maxSteps[(position.X, position.Y, position.Direction.Dx, position.Direction.Dy)] < item.Steps)
+                    {
+                        queue.Enqueue(item);
+                    }
+                }
+            }
+
             if (position.X == _width - 2 && position.Y == _height - 1)
             {
                 stepCounts.Add(position.Steps);
@@ -53,25 +83,6 @@ public abstract class Base : Solution
                 }
 
                 continue;
-            }
-            
-            var count = 2;
-            
-            while (count == 2 && _map[position.X + position.Direction.Dx, position.Y + position.Direction.Dy] != '#')
-            {
-                count = 0;
-                
-                count += _map[position.X - 1, position.Y] == '#' ? 1 : 0;
-                count += _map[position.X + 1, position.Y] == '#' ? 1 : 0;
-                count += _map[position.X, position.Y - 1] == '#' ? 1 : 0;
-                count += _map[position.X, position.Y + 1] == '#' ? 1 : 0;
-                
-                position.X += position.Direction.Dx;
-                position.Y += position.Direction.Dy;
-            
-                position.Steps++;
-            
-                position.Visited.Add((position.X, position.Y));
             }
             
             if (! isPart2)
