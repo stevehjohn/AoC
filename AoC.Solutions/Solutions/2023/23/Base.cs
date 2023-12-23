@@ -74,10 +74,10 @@ public abstract class Base : Solution
                 position.Visited.Add((position.X, position.Y));
             }
             
-            var tile = _map[position.X, position.Y];
-
             if (! isPart2)
             {
+                var tile = _map[position.X, position.Y];
+
                 if (tile == '>')
                 {
                     AddNewPosition(queue, position, position.Direction, East);
