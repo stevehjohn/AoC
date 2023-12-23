@@ -28,7 +28,7 @@ public abstract class Base : Solution
     {
         var queue = new Queue<(int X, int Y, (int Dx, int Dy) Direction, int Steps, HashSet<(int X, int Y)> Visited)>();
         
-        queue.Enqueue((1, 0, South, 0, new HashSet<(int X, int Y)>()));
+        queue.Enqueue((1, 1, South, 1, new HashSet<(int X, int Y)>()));
 
         var stepCounts = new List<int>();
 
@@ -38,11 +38,6 @@ public abstract class Base : Solution
         
         while (queue.TryDequeue(out var position))
         {
-            if (position.Steps > _pathTiles)
-            {
-                continue;
-            }
-
             if (position.X == _width - 2 && position.Y == _height - 1)
             {
                 stepCounts.Add(position.Steps);
@@ -61,6 +56,24 @@ public abstract class Base : Solution
 
                 continue;
             }
+            
+            var count = 2;
+
+            while (count == 2 && _map[position.X + position.Direction.Dx, position.Y + position.Direction.Dy] != '#')
+            {
+                count = 0;
+                
+                count += _map[position.X - 1, position.Y] == '#' ? 1 : 0;
+                count += _map[position.X + 1, position.Y] == '#' ? 1 : 0;
+                count += _map[position.X, position.Y - 1] == '#' ? 1 : 0;
+                count += _map[position.X, position.Y + 1] == '#' ? 1 : 0;
+
+                position.X += position.Direction.Dx;
+                position.Y += position.Direction.Dy;
+
+                position.Steps++;
+            }
+
 
             var tile = _map[position.X, position.Y];
 
