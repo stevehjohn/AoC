@@ -21,163 +21,157 @@ public abstract class Base : Solution
     private static readonly (int, int) South = (0, 1);
     
     private static readonly (int, int) West = (-1, 0);
+
+    private readonly HashSet<(int, int)> _visited = new();
+
+    private readonly List<int> _stepCounts = new();
+
+    private int _max;
+
+    private readonly Stopwatch _sw = Stopwatch.StartNew();
     
     protected int Solve(bool isPart2 = false)
     {
-        var queue = new Queue<(int X, int Y, (int Dx, int Dy) Direction, int Steps, HashSet<(int X, int Y)> Visited)>();
-        
-        queue.Enqueue((1, 1, South, 1, new HashSet<(int X, int Y)>()));
+        SolveInternal(isPart2, (1, 0, South, 0), 1);
 
-        var stepCounts = new List<int>();
-
-        var sw = Stopwatch.StartNew();
-
-        var max = 0;
-        
-        while (queue.TryDequeue(out var position))
+        return _stepCounts.Max();
+    }
+    
+    private void SolveInternal(bool isPart2, (int X, int Y, (int Dx, int Dy) Direction, int Steps) position, int depth)
+    {
+        start:
+        if (position.X == _width - 2 && position.Y == _height - 1)
         {
+            if (isPart2 && ! _stepCounts.Contains(position.Steps))
+            {
+                if (position.Steps > _max)
+                {
+                    _max = position.Steps;
+                }
+
+                Console.WriteLine($"{DateTime.Now:hh:mm:ss}  Found: {position.Steps} in {_sw.Elapsed} Depth: {depth}. Current Max: {_max}");
+
+                _sw.Restart();
+            }
+
+            _stepCounts.Add(position.Steps);
+            
+            return;
+        }
+        
+        var count = 0;
+
+        count += _map[position.X - 1, position.Y] == '#' ? 1 : 0;
+        count += _map[position.X + 1, position.Y] == '#' ? 1 : 0;
+        count += _map[position.X, position.Y - 1] == '#' ? 1 : 0;
+        count += _map[position.X, position.Y + 1] == '#' ? 1 : 0;
+        
+        while (count == 2 && _map[position.X + position.Direction.Dx, position.Y + position.Direction.Dy] == '.')
+        {
+            position.X += position.Direction.Dx;
+            position.Y += position.Direction.Dy;
+        
+            position.Steps++;
+
+
             if (position.X == _width - 2 && position.Y == _height - 1)
             {
-                stepCounts.Add(position.Steps);
-
-                if (position.Steps > max)
-                {
-                    max = position.Steps;
-
-                    if (isPart2)
-                    {
-                        Console.WriteLine($"{DateTime.Now:hh:mm:ss}    {position.Steps}: {sw.Elapsed} ({queue.Count}).");
-                    }
-        
-                    sw.Restart();
-                }
-                
-                continue;
+                goto start;
             }
             
-            var count = 0;
-
+            count = 0;
+            
             count += _map[position.X - 1, position.Y] == '#' ? 1 : 0;
             count += _map[position.X + 1, position.Y] == '#' ? 1 : 0;
             count += _map[position.X, position.Y - 1] == '#' ? 1 : 0;
             count += _map[position.X, position.Y + 1] == '#' ? 1 : 0;
-            
-            while (count == 2 && _map[position.X + position.Direction.Dx, position.Y + position.Direction.Dy] == '.')
+
+            if (count != 2)
             {
-                position.X += position.Direction.Dx;
-                position.Y += position.Direction.Dy;
-            
-                position.Steps++;
-
-                if (position.X == _width - 2 && position.Y == _height - 2)
-                {
-                    break;
-                }
+                _visited.Add((position.X, position.Y));
                 
-                //position.Visited.Add((position.X, position.Y));
+                break;
+            }
 
-                count = 0;
-                
-                count += _map[position.X - 1, position.Y] == '#' ? 1 : 0;
-                count += _map[position.X + 1, position.Y] == '#' ? 1 : 0;
-                count += _map[position.X, position.Y - 1] == '#' ? 1 : 0;
-                count += _map[position.X, position.Y + 1] == '#' ? 1 : 0;
-
-                if (count != 2)
+            if (_map[position.X + position.Direction.Dx, position.Y + position.Direction.Dy] == '#')
+            {
+                if (position.Direction == North || position.Direction == South)
                 {
-                    break;
-                }
-
-                if (_map[position.X + position.Direction.Dx, position.Y + position.Direction.Dy] == '#')
-                {
-                    if (position.Direction == North || position.Direction == South)
+                    if (_map[position.X + 1, position.Y] == '.')
                     {
-                        if (_map[position.X + 1, position.Y] == '.')
-                        {
-                            position.Direction = East;
-                        }
-                        else if (_map[position.X - 1, position.Y] == '.')
-                        {
-                            position.Direction = West;
-                        }
+                        position.Direction = East;
                     }
-                    else if (position.Direction == East || position.Direction == West)
+                    else if (_map[position.X - 1, position.Y] == '.')
                     {
-                        if (_map[position.X, position.Y + 1] == '.')
-                        {
-                            position.Direction = South;
-                        }
-                        else if (_map[position.X, position.Y - 1] == '.')
-                        {
-                            position.Direction = North;
-                        }
+                        position.Direction = West;
+                    }
+                }
+                else if (position.Direction == East || position.Direction == West)
+                {
+                    if (_map[position.X, position.Y + 1] == '.')
+                    {
+                        position.Direction = South;
+                    }
+                    else if (_map[position.X, position.Y - 1] == '.')
+                    {
+                        position.Direction = North;
                     }
                 }
             }
-            
-            if (! isPart2)
+        }
+        
+        if (! isPart2)
+        {
+            var tile = _map[position.X, position.Y];
+
+            if (tile == '>')
             {
-                var tile = _map[position.X, position.Y];
+                AddNewPosition(true, position, East, depth);
 
-                if (tile == '>')
-                {
-                    AddNewPosition(queue, position, position.Direction, East);
-
-                    continue;
-                }
-
-                if (tile == 'v')
-                {
-                    AddNewPosition(queue, position, position.Direction, South);
-
-                    continue;
-                }
+                return;
             }
 
-            if (position.Direction != South)
+            if (tile == 'v')
             {
-                AddNewPosition(queue, position, position.Direction, North);
-            }
+                AddNewPosition(true, position, South, depth);
 
-            if (position.Direction != North)
-            {
-                AddNewPosition(queue, position, position.Direction, South);
-            }
-
-            if (position.Direction != East)
-            {
-                AddNewPosition(queue, position, position.Direction, West);
-            }
-
-            if (position.Direction != West)
-            {
-                AddNewPosition(queue, position, position.Direction, East);
+                return;
             }
         }
 
-        return stepCounts.Max();
+        if (position.Direction != South)
+        {
+            AddNewPosition(isPart2, position, North, depth);
+        }
+
+        if (position.Direction != North)
+        {
+            AddNewPosition(isPart2, position, South, depth);
+        }
+
+        if (position.Direction != East)
+        {
+            AddNewPosition(isPart2, position, West, depth);
+        }
+
+        if (position.Direction != West)
+        {
+            AddNewPosition(isPart2, position, East, depth);
+        }
     }
 
     private void AddNewPosition(
-        Queue<(int X, int Y, (int Dx, int Dy) Direction, int Steps, HashSet<(int X, int Y)>)> queue,
-        (int X, int Y, (int Dx, int Dy) Direction, int Steps, HashSet<(int X, int Y)> Visited) position, 
-        (int Dx, int Dy) direction,
-        (int Dx, int Dy) newDirection)
+        bool isPart2,
+        (int X, int Y, (int Dx, int Dy) Direction, int Steps) position,
+        (int Dx, int Dy) newDirection,
+        int depth)
     {
         if (_map[position.X + newDirection.Dx, position.Y + newDirection.Dy] != '#')
         {
-            if (position.Visited.Add((position.X + newDirection.Dx, position.Y + newDirection.Dy)))
+            if (_visited.Add((position.X + newDirection.Dx, position.Y + newDirection.Dy)))
             {
-                if (direction != newDirection)
-                {
-                    queue.Enqueue((position.X + newDirection.Dx, position.Y + newDirection.Dy, newDirection, position.Steps + 1,
-                        new HashSet<(int X, int Y)>(position.Visited)));
-                }
-                else
-                {
-                    queue.Enqueue((position.X + newDirection.Dx, position.Y + newDirection.Dy, newDirection, position.Steps + 1,
-                        position.Visited));
-                }
+                // TODO: Pass in isPart2
+                SolveInternal(isPart2, (position.X + newDirection.Dx, position.Y + newDirection.Dy, newDirection, position.Steps + 1), depth + 1);
             }
         }
     }
