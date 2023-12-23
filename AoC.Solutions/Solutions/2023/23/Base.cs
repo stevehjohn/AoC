@@ -70,6 +70,8 @@ public abstract class Base : Solution
                 position.Y += position.Direction.Dy;
 
                 position.Steps++;
+
+                position.Visited.Add((position.X, position.Y));
             }
             
             var tile = _map[position.X, position.Y];
