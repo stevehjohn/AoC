@@ -1,19 +1,19 @@
 namespace AoC.Solutions.Solutions._2023._24;
 
-public class LongPoint
+public class DoublePoint
 {
-    public long X { get; set; }
+    public double X { get; set; }
     
-    public long Y { get; set; }
+    public double Y { get; set; }
 
-    public static LongPoint Parse(string input)
+    public static DoublePoint Parse(string input)
     {
         var split = input.Split(',', StringSplitOptions.TrimEntries);
 
-        var point = new LongPoint
+        var point = new DoublePoint
         {
-            X = int.Parse(split[0]),
-            Y = int.Parse(split[1])
+            X = double.Parse(split[0]),
+            Y = double.Parse(split[1])
         };
 
         // if (split.Length > 2)
