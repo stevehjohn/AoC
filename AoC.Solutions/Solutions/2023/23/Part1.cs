@@ -41,11 +41,6 @@ public class Part1 : Base
         
         while (queue.TryDequeue(out var position))
         {
-            if (position.Steps > _pathTiles)
-            {
-                continue;
-            }
-
             if (position.X == _width - 2 && position.Y == _height - 1)
             {
                 stepCounts.Add(position.Steps);
@@ -115,16 +110,5 @@ public class Part1 : Base
         _width = _map.GetLength(0);
 
         _height = _map.GetLength(1);
-
-        for (var y = 0; y < _height; y++)
-        {
-            for (var x = 0; x < _width; x++)
-            {
-                if (_map[x, y] != '#')
-                {
-                    _pathTiles++;
-                }
-            }
-        }
     }
 }
