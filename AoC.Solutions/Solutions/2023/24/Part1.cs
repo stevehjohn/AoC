@@ -12,7 +12,7 @@ public class Part1 : Base
     {
         ParseInput();
 
-        var collisions = CountCollisions(7, 27);
+        var collisions = CountCollisions(200000000000000, 400000000000000);
         
         return collisions.ToString();
     }
@@ -47,11 +47,9 @@ public class Part1 : Base
         var cx = (b2 - b1) / (a1 - a2);
         var cy = cx * a1 + b1;
         
-        Console.WriteLine($"{left.Position.X}, {right.Position.X}: {cx}, {cy}");
-        
         var future = cx > left.Position.X == left.Velocity.X > 0 && cx > right.Position.X == right.Velocity.X > 0;
         
-        Console.WriteLine(cx >= min && cx <= max && cy >= min && cy <= max);
+        // Console.WriteLine($"{cx >= min && cx <= max && cy >= min && cy <= max}: {left.Position.X}, {right.Position.X}: {cx}, {cy}");
         
         return cx >= min && cx <= max && cy >= min && cy <= max && future;
     }
