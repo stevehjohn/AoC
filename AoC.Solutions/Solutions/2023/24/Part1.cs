@@ -9,7 +9,8 @@ public class Part1 : Base
     {
         ParseInput();
 
-        var collisions = CountCollisions(200_000_000_000_000, 400_000_000_000_000);
+        // var collisions = CountCollisions(200_000_000_000_000, 400_000_000_000_000);
+        var collisions = CountCollisions(7, 27);
         
         return collisions.ToString();
     }
@@ -31,21 +32,13 @@ public class Part1 : Base
 
     private static bool CollidesWithin(long min, long max, (DoublePoint Position, DoublePoint Velocity) left, (DoublePoint Position, DoublePoint Velocity) right)
     {
-        var a1 = left.Velocity.Y / left.Velocity.X;
-        var b1 = left.Position.Y - a1 * left.Position.X;
-        var a2 = right.Velocity.Y / right.Velocity.X;
-        var b2 = right.Position.Y - a2 * right.Position.X;
+        var collision = CollidesInFuture(left, right);
 
-        if (IsClose(a1, a2))
+        if (collision == null)
         {
             return false;
         }
 
-        var cx = (b2 - b1) / (a1 - a2);
-        var cy = cx * a1 + b1;
-        
-        var future = cx > left.Position.X == left.Velocity.X > 0 && cx > right.Position.X == right.Velocity.X > 0;
-        
-        return cx >= min && cx <= max && cy >= min && cy <= max && future;
+        return collision.Value.X >= min && collision.Value.X <= max && collision.Value.Y >= min && collision.Value.Y <= max;
     }
 }

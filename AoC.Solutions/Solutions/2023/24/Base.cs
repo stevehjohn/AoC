@@ -7,8 +7,33 @@ public abstract class Base : Solution
     public override string Description => "Never tell me the odds";
 
     protected readonly List<(DoublePoint Position, DoublePoint Velocity)> Hail = new();
+    
+    protected static (double X, double Y)? CollidesInFuture((DoublePoint Position, DoublePoint Velocity) left, (DoublePoint Position, DoublePoint Velocity) right)
+    {
+        var a1 = left.Velocity.Y / left.Velocity.X;
+        var b1 = left.Position.Y - a1 * left.Position.X;
+        var a2 = right.Velocity.Y / right.Velocity.X;
+        var b2 = right.Position.Y - a2 * right.Position.X;
 
-    protected static bool IsClose(double left, double right)
+        if (EqualsWithinTolerance(a1, a2))
+        {
+            return null;
+        }
+
+        var cx = (b2 - b1) / (a1 - a2);
+        var cy = cx * a1 + b1;
+
+        var future = cx > left.Position.X == left.Velocity.X > 0 && cx > right.Position.X == right.Velocity.X > 0;
+
+        if (! future)
+        {
+            return null;
+        }
+
+        return (cx, cy);
+    }
+
+    private static bool EqualsWithinTolerance(double left, double right)
     {
         return Math.Abs(right - left) < .000_000_001f;
     }
