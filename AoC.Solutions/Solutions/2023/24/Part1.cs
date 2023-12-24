@@ -31,7 +31,7 @@ public class Part1 : Base
 
     private static bool CollidesWithin(long min, long max, (DoublePoint Position, DoublePoint Velocity) left, (DoublePoint Position, DoublePoint Velocity) right)
     {
-        var collision = CollidesInFuture(left, right);
+        var collision = CollidesInFutureXy(left, right);
 
         if (collision == null)
         {
