@@ -5,14 +5,6 @@ namespace AoC.Solutions.Solutions._2023._23;
 [UsedImplicitly]
 public class Part2 : Base
 {
-    private static readonly (int, int) North = (0, -1);
-
-    private static readonly (int, int) East = (1, 0);
-
-    private static readonly (int, int) South = (0, 1);
-
-    private static readonly (int, int) West = (-1, 0);
-
     private readonly HashSet<(int, int)> _visited = new();
 
     private readonly List<int> _stepCounts = new();
