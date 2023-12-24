@@ -18,6 +18,12 @@ public class Part2 : Base
         var y = h1.Position.Y;
 
         var vY = h1.Velocity.Y;
+        
+        /*
+         * We have 2 points with a common trajectory on one axis.
+         * We can throw a rock between them using the delta of the other two axis.
+         * We need a point to work out the step size?
+         */
 
         return "Unknown";
     }
