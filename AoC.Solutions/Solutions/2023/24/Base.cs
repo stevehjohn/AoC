@@ -8,7 +8,7 @@ public abstract class Base : Solution
 
     protected readonly List<(DoublePoint Position, DoublePoint Velocity)> Hail = new();
     
-    protected static (double X, double Y)? CollidesInFuture((DoublePoint Position, DoublePoint Velocity) left, (DoublePoint Position, DoublePoint Velocity) right)
+    protected static (double X, double Y, long Time)? CollidesInFuture((DoublePoint Position, DoublePoint Velocity) left, (DoublePoint Position, DoublePoint Velocity) right)
     {
         var a1 = left.Velocity.Y / left.Velocity.X;
         var b1 = left.Position.Y - a1 * left.Position.X;
@@ -30,7 +30,9 @@ public abstract class Base : Solution
             return null;
         }
 
-        return (cx, cy);
+        var time = (long) Math.Ceiling(Math.Abs(cx - left.Position.X) / Math.Abs(left.Velocity.X));
+        
+        return (cx, cy, time);
     }
 
     private static bool EqualsWithinTolerance(double left, double right)
