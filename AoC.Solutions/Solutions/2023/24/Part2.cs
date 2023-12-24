@@ -16,11 +16,11 @@ public class Part2 : Base
 
     private void FindVelocityForCollision()
     {
-        const int area = 100_000;
+        const int area = 1_000;
         
-        for (var x = -area; x < area + 1; x++)
+        for (var x = 0; x < area + 1; x++)
         {
-            for (var y = -area; y < area + 1; y++)
+            for (var y = 0; y < area + 1; y++)
             {
                 var intersection = IntersectionOfHail2D(x, y);
                 
