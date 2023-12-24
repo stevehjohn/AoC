@@ -9,8 +9,7 @@ public class Part1 : Base
     {
         ParseInput();
 
-        // var collisions = CountCollisions(200_000_000_000_000, 400_000_000_000_000);
-        var collisions = CountCollisions(7, 27);
+        var collisions = CountCollisions(200_000_000_000_000, 400_000_000_000_000);
         
         return collisions.ToString();
     }
