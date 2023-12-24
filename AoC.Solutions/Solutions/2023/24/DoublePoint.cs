@@ -8,6 +8,16 @@ public class DoublePoint
     
     public double Z { get; private init; }
 
+    private DoublePoint()
+    {
+    }
+    
+    public DoublePoint(double x, double y)
+    {
+        X = x;
+        Y = y;
+    }
+
     public static DoublePoint Parse(string input)
     {
         var split = input.Split(',', StringSplitOptions.TrimEntries);
