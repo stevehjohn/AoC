@@ -11,12 +11,6 @@ public class DoublePoint
     private DoublePoint()
     {
     }
-    
-    public DoublePoint(double x, double y)
-    {
-        X = x;
-        Y = y;
-    }
 
     public static DoublePoint Parse(string input)
     {
