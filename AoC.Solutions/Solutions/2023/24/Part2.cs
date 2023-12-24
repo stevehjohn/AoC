@@ -9,12 +9,12 @@ public class Part2 : Base
     {
         ParseInput();
      
-        FindVelocityFor2DCollision();
+        FindVelocityForCollision();
         
         return "Unknown";
     }
 
-    private void FindVelocityFor2DCollision()
+    private void FindVelocityForCollision()
     {
         for (var x = -100; x < 101; x++)
         {
@@ -25,6 +25,13 @@ public class Part2 : Base
                 if (intersection != null)
                 {
                     Console.WriteLine($"{x}, {y}, {intersection.Value.Time}");
+
+                    var leftHail = Hail[0];
+
+                    for (var i = 1; i < Hail.Count; i++)
+                    {
+                        var rightHail = Hail[i];
+                    }
 
                     return;
                 }
