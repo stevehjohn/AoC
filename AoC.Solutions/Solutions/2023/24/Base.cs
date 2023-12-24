@@ -35,7 +35,7 @@ public abstract class Base : Solution
         return (cx, cy, time);
     }
 
-    protected static bool EqualsWithinTolerance(double left, double right)
+    private static bool EqualsWithinTolerance(double left, double right)
     {
         return Math.Abs(right - left) < .000_000_001f;
     }
