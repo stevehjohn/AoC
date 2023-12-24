@@ -8,6 +8,15 @@ public class Part2 : Base
     public override string GetAnswer()
     {
         ParseInput();
+
+        var parallel = GetParallelLines();
+
+        return "Unknown";
+    }
+
+    private List<(int FirstIndex, int SecondIndex)> GetParallelLines()
+    {
+        var result = new List<(int FirstIndex, int SecondIndex)>();
         
         for (var left = 0; left < Hail.Count - 1; left++)
         {
@@ -15,12 +24,12 @@ public class Part2 : Base
             {
                 if (CheckIfParallel(Hail[left], Hail[right]))
                 {
-                    Console.WriteLine("Parallel");
+                    result.Add((left, right));
                 }
             }
         }
 
-        return "Unknown";
+        return result;
     }
 
     private static bool CheckIfParallel((DoublePoint Position, DoublePoint Velocity) left, (DoublePoint Position, DoublePoint Velocity) right)
