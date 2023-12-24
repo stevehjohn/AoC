@@ -31,7 +31,7 @@ public class Part1 : Base
 
     private static bool CollidesWithin(long min, long max, (DoublePoint Position, DoublePoint Velocity) left, (DoublePoint Position, DoublePoint Velocity) right)
     {
-        var collision = CollidesInFuture(left, right);
+        var collision = CollidesInFutureXy(left, right);
 
         if (collision == null)
         {
@@ -39,5 +39,37 @@ public class Part1 : Base
         }
 
         return collision.Value.X >= min && collision.Value.X <= max && collision.Value.Y >= min && collision.Value.Y <= max;
+    }
+    
+    private static (double X, double Y, long Time)? CollidesInFutureXy((DoublePoint Position, DoublePoint Velocity) left, (DoublePoint Position, DoublePoint Velocity) right)
+    {
+        var a1 = left.Velocity.Y / left.Velocity.X;
+        var b1 = left.Position.Y - a1 * left.Position.X;
+        var a2 = right.Velocity.Y / right.Velocity.X;
+        var b2 = right.Position.Y - a2 * right.Position.X;
+
+        if (EqualsWithinTolerance(a1, a2))
+        {
+            return null;
+        }
+
+        var cx = (b2 - b1) / (a1 - a2);
+        var cy = cx * a1 + b1;
+
+        var future = cx > left.Position.X == left.Velocity.X > 0 && cx > right.Position.X == right.Velocity.X > 0;
+
+        if (! future)
+        {
+            return null;
+        }
+
+        var time = (long) Math.Ceiling(Math.Abs(cx - left.Position.X) / Math.Abs(left.Velocity.X));
+        
+        return (cx, cy, time);
+    }
+
+    private static bool EqualsWithinTolerance(double left, double right)
+    {
+        return Math.Abs(right - left) < .000_000_001f;
     }
 }
