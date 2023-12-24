@@ -16,15 +16,15 @@ public class Part2 : Base
 
     private void FindVelocityFor2DCollision()
     {
-        for (var x = -10000; x < 10001; x++)
+        for (var x = -100; x < 101; x++)
         {
-            for (var y = -10000; y < 10000; y++)
+            for (var y = -100; y < 100; y++)
             {
-                var intersection = IntersectionOfAllHail2D(x, y);
+                var intersection = IntersectionOfHail2D(x, y);
                 
                 if (intersection != null)
                 {
-                    Console.WriteLine($"{x}, {y}");
+                    Console.WriteLine($"{x}, {y}, {intersection.Value.Time}");
 
                     return;
                 }
@@ -32,36 +32,33 @@ public class Part2 : Base
         }
     }
 
-    private (double X, double Y)? IntersectionOfAllHail2D(int rockVelocityX, int rockVelocityY)
+    private (double X, double Y, long Time)? IntersectionOfHail2D(int rockVelocityX, int rockVelocityY)
     {
-        (double X, double Y)? commonCollision = null;
+        (double X, double Y, long Time)? commonCollision = null;
 
-        for (var left = 0; left < Hail.Count - 1; left++)
+        for (var right = 1; right < Hail.Count; right++)
         {
-            for (var right = left + 1; right < Hail.Count; right++)
+            var leftHail = (Hail[0].Position, new DoublePoint(Hail[0].Velocity.X + rockVelocityX, Hail[0].Velocity.Y + rockVelocityY));
+            
+            var rightHail = (Hail[right].Position, new DoublePoint(Hail[right].Velocity.X + rockVelocityX, Hail[right].Velocity.Y + rockVelocityY));
+
+            var collision = CollidesInFuture(leftHail, rightHail);
+
+            if (collision == null)
             {
-                var leftHail = (Hail[left].Position, new DoublePoint(Hail[left].Velocity.X + rockVelocityX, Hail[left].Velocity.Y + rockVelocityY));
+                return null;
+            }
+
+            if (commonCollision == null)
+            {
+                commonCollision = collision;
                 
-                var rightHail = (Hail[right].Position, new DoublePoint(Hail[right].Velocity.X + rockVelocityX, Hail[right].Velocity.Y + rockVelocityY));
+                continue;
+            }
 
-                var collision = CollidesInFuture(leftHail, rightHail);
-
-                if (collision == null)
-                {
-                    return null;
-                }
-
-                if (commonCollision == null)
-                {
-                    commonCollision = collision;
-                    
-                    continue;
-                }
-
-                if (commonCollision != collision)
-                {
-                    return null;
-                }
+            if (commonCollision != collision)
+            {
+                return null;
             }
         }
 
