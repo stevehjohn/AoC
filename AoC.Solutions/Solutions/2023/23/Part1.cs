@@ -1,4 +1,3 @@
-using AoC.Solutions.Extensions;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2023._23;
@@ -6,12 +5,6 @@ namespace AoC.Solutions.Solutions._2023._23;
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private char[,] _map;
-
-    private int _width;
-
-    private int _height;
-
     private static readonly (int, int) North = (0, -1);
     
     private static readonly (int, int) East = (1, 0);
@@ -39,14 +32,14 @@ public class Part1 : Base
         
         while (queue.TryDequeue(out var position))
         {
-            if (position.X == _width - 2 && position.Y == _height - 1)
+            if (position.X == Width - 2 && position.Y == Height - 1)
             {
                 stepCounts.Add(position.Steps);
 
                 continue;
             }
 
-            var tile = _map[position.X, position.Y];
+            var tile = Map[position.X, position.Y];
             
             if (tile == '>')
             {
@@ -91,7 +84,7 @@ public class Part1 : Base
         (int X, int Y, (int Dx, int Dy) Direction, int Steps, HashSet<(int X, int Y)> Visited) position, 
         (int Dx, int Dy) direction)
     {
-        if (_map[position.X + direction.Dx, position.Y + direction.Dy] != '#')
+        if (Map[position.X + direction.Dx, position.Y + direction.Dy] != '#')
         {
             if (position.Visited.Add((position.X + direction.Dx, position.Y + direction.Dy)))
             {
@@ -99,14 +92,5 @@ public class Part1 : Base
                     new HashSet<(int X, int Y)>(position.Visited)));
             }
         }
-    }
-
-    private void ParseInput()
-    {
-        _map = Input.To2DArray();
-
-        _width = _map.GetLength(0);
-
-        _height = _map.GetLength(1);
     }
 }
