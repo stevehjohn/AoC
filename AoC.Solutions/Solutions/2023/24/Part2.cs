@@ -16,15 +16,19 @@ public class Part2 : Base
 
     private void FindVelocityForCollision()
     {
-        for (var x = -100; x < 101; x++)
+        const int area = 100_000;
+        
+        for (var x = -area; x < area + 1; x++)
         {
-            for (var y = -100; y < 100; y++)
+            for (var y = -area; y < area + 1; y++)
             {
                 var intersection = IntersectionOfHail2D(x, y);
                 
                 if (intersection != null)
                 {
-                    Console.WriteLine($"{x}, {y}, {intersection.Value.Time}");
+                    var z = Hail[0].Position.Z + intersection.Value.Time * 2 * Hail[0].Velocity.Z;
+                    
+                    Console.WriteLine($"v: {x}, {y}    p: {intersection.Value.X}, {intersection.Value.Y}, {z}    t: {intersection.Value.Time}");
 
                     var leftHail = Hail[0];
 
