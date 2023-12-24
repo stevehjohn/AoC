@@ -2,9 +2,11 @@ namespace AoC.Solutions.Solutions._2023._24;
 
 public class DoublePoint
 {
-    public double X { get; set; }
+    public double X { get; private init; }
     
-    public double Y { get; set; }
+    public double Y { get; private init; }
+    
+    public double Z { get; private init; }
 
     public static DoublePoint Parse(string input)
     {
@@ -13,13 +15,9 @@ public class DoublePoint
         var point = new DoublePoint
         {
             X = double.Parse(split[0]),
-            Y = double.Parse(split[1])
+            Y = double.Parse(split[1]),
+            Z = double.Parse(split[2])
         };
-
-        // if (split.Length > 2)
-        // {
-        //     point.Z = int.Parse(split[2]);
-        // }
 
         return point;
     }
