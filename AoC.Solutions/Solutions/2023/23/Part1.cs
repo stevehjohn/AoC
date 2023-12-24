@@ -12,8 +12,6 @@ public class Part1 : Base
 
     private int _height;
 
-    private int _pathTiles;
-    
     private static readonly (int, int) North = (0, -1);
     
     private static readonly (int, int) East = (1, 0);
