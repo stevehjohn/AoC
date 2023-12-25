@@ -22,7 +22,7 @@ public class Part2 : Base
         /*
          * We have 2 points with a common trajectory on one axis.
          * We can throw a rock between them using the delta of the other two axis.
-         * We need a point to work out the step size?
+         * We need third point to work out the step size?
          */
 
         return "Unknown";
