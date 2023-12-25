@@ -45,14 +45,14 @@ public class Part2 : Base
                     var z1 = h1.Position.Z + h1.Velocity.Z * c1.Value.Time;
                     var z2 = h2.Position.Z + h2.Velocity.Z * c2.Value.Time;
 
-                    if (! EqualsWithinTolerance(z1, z2))
+                    if (z1 != z2)
                     {
                         continue;
                     }
 
                     var z3 = h3.Position.Z + h3.Velocity.Z * c3.Value.Time;
 
-                    if (! EqualsWithinTolerance(z1, z3))
+                    if (z1 != z3)
                     {
                         continue;
                     }
