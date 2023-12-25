@@ -12,7 +12,7 @@ public class DoublePoint
     {
     }
 
-    private DoublePoint(double x, double y, double z)
+    public DoublePoint(double x, double y, double z)
     {
         X = x;
         Y = y;
