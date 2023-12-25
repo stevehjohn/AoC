@@ -5,99 +5,39 @@ namespace AoC.Solutions.Solutions._2023._25;
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private readonly Dictionary<string, Node> _nodes = new();
-
-    private readonly List<string> _nodeKeys = new();
-
-    private readonly List<(string, string)> _pairs = new();
+    private readonly List<(string L, string R)> _nodes = new();
     
     public override string GetAnswer()
     {
         ParseInput();
-
-        GeneratePairs();
         
-        TrySplitGroups();
+        Console.WriteLine(Walk());
         
         return "Unknown";
     }
 
-    private void GeneratePairs()
+    private int Walk()
     {
-        for (var i = 0; i < _nodeKeys.Count; i++)
-        {
-            for (var j = 0; j < _nodeKeys.Count; j++)
-            {
-                _pairs.Add((_nodeKeys[i], _nodeKeys[j]));
-            }
-        }
-    }
-
-    private void TrySplitGroups()
-    {
-        for (var i = 0; i < _pairs.Count; i++)
-        {
-            for (var j = 0; j < _pairs.Count; j++)
-            {
-                for (var k = 0; k < _pairs.Count; k++)
-                {
-                    var result = CheckSplit(new List<(string, string)> { _pairs[i], _pairs[j], _pairs[k] });
-
-                    if (result != null)
-                    {
-                        Console.WriteLine($"Split: {result.Value.Item1} {result.Value.Item2}");
-                    }
-                }
-            }
-        }
-    }
-
-    private (int, int)? CheckSplit(List<(string, string)> ignore)
-    {
-        foreach (var item in ignore)
-        {
-            var g1 = CheckGroupSize(item.Item1, ignore);
-
-            var g2 = CheckGroupSize(item.Item2, ignore);
-
-            if (g1 != _nodeKeys.Count)
-            {
-                return (g1, g2);
-            }
-        }
-
-        return null;
-    }
-
-    private int CheckGroupSize(string name, List<(string, string)> ignore)
-    {
-        var visited = new HashSet<string>();
-
         var queue = new Queue<string>();
+    
+        queue.Enqueue(_nodes[0].L);
 
-        queue.Enqueue(_nodes[name].Connections[0]);
-
-        var size = 0;
+        var visited = new HashSet<string>();
         
-        while (queue.TryDequeue(out var key))
+        while (queue.TryDequeue(out var node))
         {
-            foreach (var node in _nodes[key].Connections)
+            if (! visited.Add(node))
             {
-                if (ignore.Contains((key, node)) || ignore.Contains((node, key)))
-                {
-                    continue;
-                }
+                continue;
+            }
 
-                if (visited.Add(node))
-                {
-                    size++;
-            
-                    queue.Enqueue(node);
-                }
+            foreach (var connection in _nodes.Where(n => n.L == node).ToList())
+            {
+                queue.Enqueue(connection.R);
             }
         }
 
-        return size;
+        return visited.Count;
     }
 
     private void ParseInput()
@@ -106,41 +46,13 @@ public class Part1 : Base
         {
             var parts = line.Split(':', StringSplitOptions.TrimEntries);
 
-            var node = new Node
-            {
-                Name = parts[0]
-            };
-
-            _nodes.TryAdd(node.Name, node);
-
-            if (! _nodeKeys.Contains(node.Name))
-            {
-                _nodeKeys.Add(node.Name);
-            }
-
             var connections = parts[1].Split(' ', StringSplitOptions.TrimEntries);
 
             foreach (var connection in connections)
             {
-                if (! _nodeKeys.Contains(connection))
-                {
-                    _nodeKeys.Add(connection);
-                }
+                _nodes.Add((parts[0], connection));
 
-                node.Connections.Add(connection);
-
-                if (_nodes.TryGetValue(connection, out var connectedNode))
-                {
-                    connectedNode.Connections.Add(node.Name);
-                }
-                else
-                {
-                    _nodes.Add(connection, new Node
-                    {
-                        Name = connection,
-                        Connections = { node.Name }
-                    });
-                }
+                _nodes.Add((connection, parts[0]));
             }
         }
     }
