@@ -11,11 +11,11 @@ public class Part1 : Base
 
     public override string GetAnswer()
     {
-        var left = 0;
+        int left = 0;
 
-        var right = 0;
+        int right;
 
-        for (var i = 0; i < 100; i++)
+        while (true)
         {
             ParseInput();
 
@@ -41,15 +41,15 @@ public class Part1 : Base
                 if (left == 0)
                 {
                     left = result;
+                    
+                    continue;
                 }
-                else
-                {
-                    if (result != left)
-                    {
-                        right = result;
 
-                        break;
-                    }
+                if (result != left)
+                {
+                    right = result;
+
+                    break;
                 }
             }
         }
