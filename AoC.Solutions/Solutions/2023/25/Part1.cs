@@ -8,41 +8,68 @@ public class Part1 : Base
     private readonly Dictionary<string, Node> _nodes = new();
 
     private readonly List<string> _nodeKeys = new();
+
+    private readonly List<(string, string)> _pairs = new();
     
     public override string GetAnswer()
     {
         ParseInput();
 
+        GeneratePairs();
+        
         TrySplitGroups();
         
         return "Unknown";
     }
 
+    private void GeneratePairs()
+    {
+        for (var i = 0; i < _nodeKeys.Count; i++)
+        {
+            for (var j = 0; j < _nodeKeys.Count; j++)
+            {
+                _pairs.Add((_nodeKeys[i], _nodeKeys[j]));
+            }
+        }
+    }
+
     private void TrySplitGroups()
     {
-        for (var i = 0; i < _nodes.Count; i++)
+        for (var i = 0; i < _pairs.Count; i++)
         {
-            for (var j = i + 1; j < _nodes.Count; j++)
+            for (var j = 0; j < _pairs.Count; j++)
             {
-                for (var k = j + 1; k < _nodes.Count; k++)
+                for (var k = 0; k < _pairs.Count; k++)
                 {
-                    CheckSplit(new List<string> { _nodeKeys[i], _nodeKeys[j], _nodeKeys[k] });
+                    var result = CheckSplit(new List<(string, string)> { _pairs[i], _pairs[j], _pairs[k] });
+
+                    if (result != null)
+                    {
+                        Console.WriteLine($"Split: {result.Value.Item1} {result.Value.Item2}");
+                    }
                 }
             }
         }
     }
 
-    private void CheckSplit(List<string> ignore)
+    private (int, int)? CheckSplit(List<(string, string)> ignore)
     {
         foreach (var item in ignore)
         {
-            Console.Write($"{CheckGroupSize(item, ignore)} ");
+            var g1 = CheckGroupSize(item.Item1, ignore);
+
+            var g2 = CheckGroupSize(item.Item2, ignore);
+
+            if (g1 != _nodeKeys.Count)
+            {
+                return (g1, g2);
+            }
         }
-        
-        Console.WriteLine();
+
+        return null;
     }
 
-    private int CheckGroupSize(string name, List<string> ignore)
+    private int CheckGroupSize(string name, List<(string, string)> ignore)
     {
         var visited = new HashSet<string>();
 
@@ -54,16 +81,18 @@ public class Part1 : Base
         
         while (queue.TryDequeue(out var key))
         {
-            size++;
-            
             foreach (var node in _nodes[key].Connections)
             {
-                if (! ignore.Contains(node))
+                if (ignore.Contains((key, node)) || ignore.Contains((node, key)))
                 {
-                    if (visited.Add(node))
-                    {
-                        queue.Enqueue(node);
-                    }
+                    continue;
+                }
+
+                if (visited.Add(node))
+                {
+                    size++;
+            
+                    queue.Enqueue(node);
                 }
             }
         }
