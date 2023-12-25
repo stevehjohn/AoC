@@ -42,22 +42,22 @@ public class Part2 : Base
                 
                 for (var z = -area; z < area + 1; z++)
                 {
-                    var z1 = h1.Position.Z + h1.Velocity.Z * c1.Value.Time;
-                    var z2 = h2.Position.Z + h2.Velocity.Z * c2.Value.Time;
+                    var z1 = (long) Math.Round(h1.Position.Z + h1.Velocity.Z * c1.Value.Time);
+                    var z2 = (long) Math.Round(h2.Position.Z + h2.Velocity.Z * c2.Value.Time);
 
-                    if (EqualsWithinTolerance(z1, z2))
+                    if (z1 != z2)
                     {
                         continue;
                     }
 
-                    var z3 = h3.Position.Z + h3.Velocity.Z * c3.Value.Time;
+                    var z3 = (long) Math.Round(h3.Position.Z + h3.Velocity.Z * c3.Value.Time);
 
                     if (EqualsWithinTolerance(z1, z3))
                     {
                         continue;
                     }
 
-                    return (long) (c1.Value.X + c1.Value.Y + z1);
+                    return c1.Value.X + c1.Value.Y + z1;
                 }
             }
         }
@@ -89,7 +89,7 @@ public class Part2 : Base
 
         var time = Math.Abs(cx - left.Position.X) / Math.Abs(left.Velocity.X);
         
-        return ((long) cx, (long) cy, time);
+        return ((long) Math.Round(cx), (long) Math.Round(cy), time);
     }
 
     private static bool EqualsWithinTolerance(double left, double right)
