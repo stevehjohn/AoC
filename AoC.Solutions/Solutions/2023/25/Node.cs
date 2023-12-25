@@ -4,5 +4,5 @@ public class Node
 {
     public string Name { get; set; }
 
-    public List<Node> Connections { get; } = new();
+    public List<string> Connections { get; } = new();
 }
