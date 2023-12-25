@@ -42,7 +42,7 @@ public class Part2 : Base
                 
                 for (var z = -area; z < area + 1; z++)
                 {
-                    var z1 = h1.Position.Z + (h1.Velocity.Z + z)* c1.Value.Time;
+                    var z1 = h1.Position.Z + (h1.Velocity.Z + z) * c1.Value.Time;
                     var z2 = h2.Position.Z + (h2.Velocity.Z + z) * c2.Value.Time;
 
                     if (EqualsWithinTolerance(z1, z2))
