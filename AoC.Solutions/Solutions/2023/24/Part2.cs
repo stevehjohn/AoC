@@ -39,25 +39,25 @@ public class Part2 : Base
                 {
                     continue;
                 }
-
+                
                 for (var z = -area; z < area + 1; z++)
                 {
                     var z1 = h1.Position.Z + h1.Velocity.Z * c1.Value.Time;
                     var z2 = h2.Position.Z + h2.Velocity.Z * c2.Value.Time;
 
-                    if (z1 != z2)
+                    if (EqualsWithinTolerance(z1, z2))
                     {
                         continue;
                     }
 
                     var z3 = h3.Position.Z + h3.Velocity.Z * c3.Value.Time;
 
-                    if (z1 != z3)
+                    if (EqualsWithinTolerance(z1, z3))
                     {
                         continue;
                     }
 
-                    return c1.Value.X + c1.Value.Y + z1;
+                    return (long) (c1.Value.X + c1.Value.Y + z1);
                 }
             }
         }
@@ -65,7 +65,7 @@ public class Part2 : Base
         return 0;
     }
     
-    private static (long X, long Y, long Time)? CollidesInFutureXy((LongPoint Position, LongPoint Velocity) left, (LongPoint Position, LongPoint Velocity) right)
+    private static (long X, long Y, double Time)? CollidesInFutureXy((LongPoint Position, LongPoint Velocity) left, (LongPoint Position, LongPoint Velocity) right)
     {
         var a1 = left.Velocity.Y / (double) left.Velocity.X;
         var b1 = left.Position.Y - a1 * left.Position.X;
@@ -87,7 +87,7 @@ public class Part2 : Base
             return null;
         }
 
-        var time = (long) Math.Abs(cx - left.Position.X) / Math.Abs(left.Velocity.X);
+        var time = Math.Abs(cx - left.Position.X) / Math.Abs(left.Velocity.X);
         
         return ((long) cx, (long) cy, time);
     }
