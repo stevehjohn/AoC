@@ -5,6 +5,8 @@ namespace AoC.Solutions.Solutions._2023._24;
 [UsedImplicitly]
 public class Part1 : Base
 {
+    private readonly List<(DoublePoint Position, DoublePoint Velocity)> _hail = new();
+
     public override string GetAnswer()
     {
         ParseInput();
@@ -18,11 +20,11 @@ public class Part1 : Base
     {
         var count = 0;
 
-        for (var left = 0; left < Hail.Count - 1; left++)
+        for (var left = 0; left < _hail.Count - 1; left++)
         {
-            for (var right = left + 1; right < Hail.Count; right++)
+            for (var right = left + 1; right < _hail.Count; right++)
             {
-                count += CollidesWithin(min, max, Hail[left], Hail[right]) ? 1 : 0;
+                count += CollidesWithin(min, max, _hail[left], _hail[right]) ? 1 : 0;
             }
         }
 
@@ -71,5 +73,15 @@ public class Part1 : Base
     private static bool EqualsWithinTolerance(double left, double right)
     {
         return Math.Abs(right - left) < .000_000_001f;
+    }
+
+    private void ParseInput()
+    {
+        foreach (var line in Input)
+        {
+            var parts = line.Split('@', StringSplitOptions.TrimEntries);
+
+            _hail.Add((DoublePoint.Parse(parts[0]), DoublePoint.Parse(parts[1])));
+        }
     }
 }

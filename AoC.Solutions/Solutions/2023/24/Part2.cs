@@ -5,6 +5,8 @@ namespace AoC.Solutions.Solutions._2023._24;
 [UsedImplicitly]
 public class Part2 : Base
 {
+    private readonly List<(LongPoint Position, LongPoint Velocity)> _hail = new();
+
     public override string GetAnswer()
     {
         ParseInput();
@@ -22,12 +24,12 @@ public class Part2 : Base
         {
             for (var y = -area; y < area + 1; y++)
             {
-                var velocity = new DoublePoint(x, y, 0);
+                var velocity = new LongPoint(x, y, 0);
                 
-                var h1 = Hail[0] with { Velocity = Hail[0].Velocity - velocity };
-                var h2 = Hail[1] with { Velocity = Hail[1].Velocity - velocity };
-                var h3 = Hail[2] with { Velocity = Hail[2].Velocity - velocity };
-                var h4 = Hail[3] with { Velocity = Hail[3].Velocity - velocity };
+                var h1 = _hail[0] with { Velocity = _hail[0].Velocity - velocity };
+                var h2 = _hail[1] with { Velocity = _hail[1].Velocity - velocity };
+                var h3 = _hail[2] with { Velocity = _hail[2].Velocity - velocity };
+                var h4 = _hail[3] with { Velocity = _hail[3].Velocity - velocity };
 
                 var c1 = CollidesInFutureXy(h1, h2);
                 var c2 = CollidesInFutureXy(h1, h3);
@@ -55,7 +57,7 @@ public class Part2 : Base
                         continue;
                     }
 
-                    return (long) (c1.Value.X + c1.Value.Y + z1);
+                    return c1.Value.X + c1.Value.Y + z1;
                 }
             }
         }
@@ -63,11 +65,11 @@ public class Part2 : Base
         return 0;
     }
     
-    private static (double X, double Y, long Time)? CollidesInFutureXy((DoublePoint Position, DoublePoint Velocity) left, (DoublePoint Position, DoublePoint Velocity) right)
+    private static (long X, long Y, long Time)? CollidesInFutureXy((LongPoint Position, LongPoint Velocity) left, (LongPoint Position, LongPoint Velocity) right)
     {
-        var a1 = left.Velocity.Y / left.Velocity.X;
+        var a1 = left.Velocity.Y / (double) left.Velocity.X;
         var b1 = left.Position.Y - a1 * left.Position.X;
-        var a2 = right.Velocity.Y / right.Velocity.X;
+        var a2 = right.Velocity.Y / (double) right.Velocity.X;
         var b2 = right.Position.Y - a2 * right.Position.X;
 
         if (EqualsWithinTolerance(a1, a2))
@@ -85,13 +87,23 @@ public class Part2 : Base
             return null;
         }
 
-        var time = (long) Math.Ceiling(Math.Abs(cx - left.Position.X) / Math.Abs(left.Velocity.X));
+        var time = (long) Math.Abs(cx - left.Position.X) / Math.Abs(left.Velocity.X);
         
-        return (cx, cy, time);
+        return ((long) cx, (long) cy, time);
     }
 
     private static bool EqualsWithinTolerance(double left, double right)
     {
         return Math.Abs(right - left) < .000_000_001f;
+    }
+
+    private void ParseInput()
+    {
+        foreach (var line in Input)
+        {
+            var parts = line.Split('@', StringSplitOptions.TrimEntries);
+
+            _hail.Add((LongPoint.Parse(parts[0]), LongPoint.Parse(parts[1])));
+        }
     }
 }
