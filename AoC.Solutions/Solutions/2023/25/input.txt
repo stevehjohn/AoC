@@ -1,13 +1,1183 @@
-jqt: rhn xhk nvd
-rsh: frs pzl lsr
-xhk: hfx
-cmg: qnr nvd lhk bvb
-rhn: xhk bvb hfx
-bvb: xhk hfx
-pzl: lsr hfx nvd
-qnr: nvd
-ntq: jqt hfx bvb xhk
-nvd: lhk
-lsr: lhk
-rzs: qnr cmg lsr rsh
-frs: qnr lhk lsr
+ggk: tkd
+vcd: nhn
+xhj: mft rtg hvp sgl
+hgx: dxq stc cfn
+qbl: zgp
+txm: xsv xrx mcx ggk
+pks: hfp hhb lgm zvx
+blp: smh npm
+rkz: nlv
+xkc: dkk bsl rcs
+xtb: ssl kxx bsh cqg
+nhx: chb
+sbb: bcn mcm
+gnq: fxd slj kzp
+cmg: jvc ncx rtx gcs
+qdb: ggh ldk vdv pkn
+znn: jpn
+crg: zbn
+ldp: gtl fbl fkg srk
+mzc: ptq bxs vrv
+sns: mbh xpj
+fhx: mcd pmg hxz brj
+qjv: dpc
+pzh: xqs qth
+mjf: gnd dlv
+hmk: gss srb rrp csz
+pqj: sgb qlr jnc
+kcs: frq jht tbf cfn
+gnv: cfk tqb nfv
+zmk: tgl vnq hcq
+gsg: ckb qvz dpr pdx rmb
+qzp: pcc mgv zcx nrm nrl
+nlm: pzq
+pvf: nkh fzd gqg zdf
+qqr: qsx pkn
+bfr: mrg
+jnk: hnx rcs
+vvt: nlq
+bkc: hfp
+gzm: hlh
+mgj: lsl
+snt: vcv kfm kzq qmr
+jtr: xzt qrg fnk
+qvx: dlg pcd
+qbk: rrk jzv vjl gqn
+smj: sjd lhx
+csf: dkl gfv mlq xvp
+tkm: mbx
+gtp: rhf fvv hfz ljg
+qxh: xkx frs
+pqd: nmz rcg qrj nlm
+zgn: rnl rlh gps
+tkn: zjq ftc ddh
+bgn: nrl jht kqf qqj bkn jgl
+zdf: mlv nrl lqj vsj
+vbx: dtd xcq
+qmr: pls snn cmp
+xkd: rpc
+khl: dhj lrv
+gff: kcd pcp hcc
+sjv: tkm chf
+qsg: btm ssz pks fpq
+dxq: pzd
+khf: rcx mtt qcs dsl
+lmp: ztp kss thd bsd
+kbx: fhb tzs jjc
+bft: flm ndl dcp lhz
+ccn: zrr hxq
+nts: rpf fkx
+frx: nvz srl xfk
+gzf: snk tjf
+sbn: xth
+dsk: dnz vrv nsh
+znt: fgx
+fmp: dtd dmr kxj mfh
+jgp: zsk jtm ztq qnn
+qxv: vmb cpc pfh gjb jnk
+tjf: vcv
+lqq: nfv znn nrm fvt
+tsf: kpm hnv gxk vtv
+npk: kcd rgp dll kvb dzc
+tdz: slj rcg
+rcr: nck dnt
+mbx: sjh
+pmp: flm mnb
+cxb: tjf gjv txm
+mjp: tlb jdf
+thg: bfn
+rxp: qxz
+ltz: xjp plc
+dgc: lzd ldk ckp bdb
+bjf: blb sfj nlv
+mjc: shs qzz
+rtd: kqf bmg zql
+zsk: xvn
+bmg: gfg qgj gpb
+xfm: chf mrk fcg
+sks: pbh jmp mrx
+xvp: bsh
+jgm: mnl zqh
+lxn: tdz zbn pcm pkl
+szq: qbl bcn chj
+lhz: ncn czc vrg
+gvj: cgc rfp vls tsq
+bnt: bnz xtg hkt
+mdk: rbh dld lgz snl tmh
+bxs: dfl fnr bzm
+fpk: nzn
+rvb: cfv cck xqs
+ztb: jct fpm dfl
+rdv: prs bfn fqp
+zvs: jpz ssl slq khd vgm
+qch: pbf czd gzm
+rgh: gjb pds czx cgp tkn
+jsr: pck
+khd: dth rxh
+snl: pvq brn
+hhg: fsp mpm tbz qhr kzq
+mcm: vvx
+pzp: xcq
+rcg: zbn
+xlq: gzt dpr
+bjr: bfk lpf skv mvs gtj
+rjd: rhg bkz vfm qmr
+pmg: fbl fbg hbc
+jct: xrc
+hfr: tpv lzd
+lns: qgj
+zkj: pzq bsl
+mdx: ntz nbv kgs
+vgb: xmm pql lsl
+djs: nhx tpt pcm
+rfq: mfl
+snn: xrx
+mqg: tbj
+vnq: xqs
+hrn: pzq mtt nbq
+fhk: mtt
+vxv: vgf
+gmg: bdf krv tjf ltj nmq klx
+xkx: jhr mqg
+hzx: qtj dfv pps
+mvz: xnn tgb pdl czg
+xjx: nhd
+pss: mvh nxd bfr gpm
+qxz: qgk
+rpc: pcd lhx
+rjc: kqn hnf rxp xmm
+mxn: vgj jct jrd
+lhl: hfg
+spn: xck njp trd tvn
+vgq: rgp
+qrg: zlq
+gqm: frf vcv
+fxs: kxz fcg dlz
+vrb: gfz tpm bmk cvv dnk
+lzd: rfz kds
+sds: jrd hfz
+kbj: nrd prr jct bhn
+nsh: ncg cqm
+btj: nts hlr fkl mxn qfh
+jhm: pcm jmd
+mnx: jhj kkf hdn bfd
+njm: dqh
+fhb: gth lcq
+bff: tvc prs kbs
+mrx: jqx
+nqp: cvz
+pvc: xth
+nbq: ccq
+fnx: cdb
+mnk: lsl frp pcv
+znv: btd cgl ddj cvc
+bng: mdg dfv
+fjr: fcm zpp klv
+jnc: bpc
+bgr: nkh qzm cdv cgj
+ntf: ftl gnm bdq zdl
+dzt: tgl lpf
+dds: nbq mlm kxd
+ssb: shs jdc
+nkq: zpr bpc jsv jrj
+hml: rcg
+pkl: xjv hnx lhx
+tvt: dnk ltb
+bkn: hbh xpk vsz
+dqs: vsz
+lbt: nqt jqt
+bmt: vqf fzk fkn
+nmq: npl
+zrc: bqz zgg kjh sck
+mkp: dtb
+lnr: kzp ghs lpc rss hrn
+vfm: qmr mkv
+fff: ddj
+zxt: dhv vcd ltp jmd
+kvl: khj chf
+ncv: dtp zkq txl
+ckt: kcz vhn znt
+rkg: rbh jtt nlm fqh
+ptb: tkm qrt bkb bgb
+vvg: cqg mdx srl rxf
+dfr: nmf glx pbh rzm mrg hfq
+tpt: nxb qrj
+xjn: lhx zdf kpm tsq
+zfk: kbq hlr
+rrj: zvd mfv ndb
+ldg: gxk jsv qhq
+jms: ttz gfg jpg kkk gzm
+rlz: bcn
+dml: lnj mkp kzr gzt
+shb: dqs rbh mmq
+zln: tlb rrc dsc
+kpl: bzq xjp qgc gzr kjr
+jzv: fbg kjv
+kgs: tbz
+rhh: zkv
+nkn: zrt rxs
+hpg: gjg vbx qtf msm
+zjv: crf jzr
+fdd: brt qqs ssb
+sbf: vtv lpm skp
+tpm: kds jjb hkb
+hkt: psb nlf vhs
+kbs: lld ptf
+kzm: fpv msm gcd khj
+xxz: zgd
+psd: pzd
+jlx: khg mjf qhr zkx pdj
+ncl: qxh
+jdc: dzc mdg krv
+mrp: kzp kbq nzx
+ssl: kds
+sgj: rcq rvr prr
+zkx: znl
+nhl: fhr
+pdx: ptq nzn
+mnn: jpz pdc
+ssx: qjv dtj fxs
+tpv: ssl nkl
+bmj: bsl
+ncx: mnk
+nck: tgq tbz
+gnz: tbt dqs frq nsh
+kzg: qtg pcc zbf jhm
+ntk: skk vlk nsd tfn
+bbm: lft qzm
+qkf: lhj xsv bdn tjt
+nkl: fff hrt mfh
+fgz: ptf qch
+ncb: tmh nzx bqz zfk
+cbf: ltm hml ncn
+sck: bnt fhj vdd
+ffb: xqz kks rhh
+dpz: tvj lnj mtn kxh cqm
+mlm: tvc ggm sfz qtg
+qzm: hcr lpm
+kcd: nxm
+mvj: pxn srr fps
+kkx: zgv jjb zgh
+tns: sln nsq
+pdm: lvv ssx svk vzs
+vts: qvn phh tms drt
+btm: mbm rgp
+xxp: chb hrg
+dfv: ltb thk rdl xjx
+tth: czb qcq ttx qbl
+vtg: vkl tbt rxv nxp
+nzs: brn tss zpr hlh
+dvd: nmq dth qfm
+gnm: vcv npl
+qsx: ssz krf jtp
+pfh: ptq
+qgj: pvq
+rpk: hlg pmp lbc
+ffz: kks qlr hdb rkq dzk
+vhr: chd dds npz txn
+qgc: rtx
+snc: hpg vpr grr
+jkl: ktp mfz czg bch vcd
+dpd: pbf lbl nxp gld xkc
+lch: bkv kvl bmk rzz mpt
+mpk: jmx cbr dbh
+rzn: xbq dzp mhb rtd
+vls: tvc blb vfh
+gpb: mhx tzt
+hfg: skg
+jmj: msl ncl xps zjv
+lvh: qjp knx qrj qvx
+ksb: mnb njm ckt
+hqt: jng ppd
+nbt: fhr lmr cck
+lrv: mjc
+vjg: xtx svk php ddj
+xhg: gjh bpc pdx
+qsl: ljg gzm
+sqr: zgv xbt xcm jmp
+zbf: znt mgb
+gck: srk hfq ntz nhd
+ggr: znl hdl lmr mgj
+fzs: xmk jgp xvn mgj
+tph: hnp ksb jzl nkh tvj nsg smj
+jtm: vcv fzk
+xfq: mnl vfm jxd lrv
+lxc: bjf xzn
+tsq: gss znt fsf dpr rmr
+fjd: gth
+tml: ndx nrd thg prs
+ngh: vsj dgg vnb bgr
+smx: lcf msm vgq pnv
+kbd: xpf qtj rhg vkt
+fkx: mlv mzv gzt
+tzp: rcg
+xsv: hxz
+txg: xrc tqb
+bqc: klj ddh tvc
+dkl: rzz txl qnf
+qtz: zrr knp pzh
+sxg: fgz lbg hmm xhf
+nph: dlj smh
+tgf: hml nxp qgj
+dnl: szf jnr sth jjb
+xks: npp
+cpm: mbf sff dfl gvc
+mgd: xpf hlt kvp phq
+mtc: xjp khj zgh
+bkb: sns mdn xzb dtd
+zcx: nzn
+rqr: nnd zxt zhz fhk
+plz: rxh srn dlz ppd xsj zlq rmv
+tjm: ncp sbz kpm rmb
+sjd: dmj
+vsj: tvc
+rxs: msc
+vvk: mrr pck
+rrf: ttx ddb txn bhn vgj zgp
+rbh: kxh
+ktp: fnx ttl qrj
+pcl: kxx phx tgl
+npz: tgf nmd
+lhd: sct gnv tkk npz xbn
+dcm: psn nsd hpp mjp rtg
+cbq: bfr gcv cxb cmh
+mmd: qvj klv
+jdb: rcr jxx
+dll: qnf xjx
+rrz: vbx
+mcx: srk tgl
+vzj: tnd
+vsz: vvx
+nmp: xll
+xbd: hfr jdq rsx xpf
+bsd: pnz
+fcq: mnn
+rcq: qhq vvm psb
+xsp: hvp rxg brt srl
+mgz: nmd
+rfd: xll pdz
+vfh: fvz rkf fgx
+zps: zxx tkz xzb ssp
+zfh: qzr tgt ltp cgl
+npt: csz vhj
+dtj: mfh tvt
+bpn: mnb zhz vrg lnj
+vzs: jgq
+nsq: flm zcp dhd fpl
+kks: cpc vgj
+ppd: szp pzp mrr
+cfz: zpn fcq vvh
+cpq: jlc vbl cfk
+kvx: scn
+ssd: xjx bxg ngq xth
+nzr: fjd jjc
+pps: rdl rrz
+gqn: mks xtv fzt
+hlg: pjq
+fcm: pfh crf kcz
+vbg: kvl vgf vqf fzk nhl
+sss: shb jtt tsg zkh
+svx: mmq rmb
+mgq: sjq hrt hzx bdf
+jkv: zxx
+bnm: kcz lpm dld
+ltj: xjm
+hcv: skp tbt
+czc: vsj
+gmr: nhx fht
+kpt: hlg rbk
+dmr: pdc
+rlc: frs ppc vhn btd
+fgn: jhj
+dxs: gpb vtv jhr ftx
+ddz: lqd cfv
+dqh: vkn
+ldk: jjl mgj
+mjv: xpq hxv hpt
+vnd: nfv npz crt gvp
+fbk: vvn hdr nvn gjk nkh
+lng: fhj mlm qcr hsr
+jrp: zvx ncv gsv
+nnk: rpc bpx rhf
+qcq: jhp tsg
+xbt: ftl qrg fbn
+jdq: rrz jgp
+zkt: gtp dtb fvv kss
+gdz: tgt hnp sds ppc
+nsv: tgp szp lhl mbm pdz
+hcr: xtg
+zbb: vjt vgq szf
+ngq: hvp dkp
+rxg: rrc bfr
+ldq: bhn fkl kpt bjf
+bxg: kmc snn hbj
+jnz: dzc nck qsx mvj
+xpz: sdd mks bsh jqx cgf qtf
+dmj: xrc cvc
+bdb: fjd
+mft: mlq tkd hrt
+xdm: fbn
+pfv: bch bzm
+thk: cqt grc
+tfn: qth kvp
+mdn: ssx kqn ltb pzh
+mfz: rdt ccq
+ftx: nzn mlm
+ndl: pjq slj
+mvs: dvd lhl bqb jvc
+nrl: mgv
+srh: kxz tgl qgc qnc jvq
+lpj: nhl grr btm pmc bzq
+jlk: nbt mgr ssx lpt
+drg: jrp gdc vnq dth
+ghg: qvn zgg brn nkf
+bnz: hcr fnr
+kjq: zqh
+tgb: sgj sjd jqt jqs
+fbz: btt dsl xlm
+cgc: hls grt fqk
+rhg: krv mrx
+sgr: fpm cvz
+fkl: hls zcp fct
+gfz: srk cck ssz
+hnp: kxd fvz
+mbm: lpt
+gjk: dzp sfj xps fvm
+cqg: svk
+nhf: qxx lpb xxz jsr
+tdb: pbf rdt
+fnv: pmp hkt hfz
+gfb: fgl fkj kvp spx
+nzn: ndb
+xnn: grt qbl npz
+csb: ttf fkx fkz
+rgp: ggh
+sgb: mtq phc
+jhv: bkc bbs
+bmc: ndb jmd lnj zgg
+rmd: pdl vbl
+bsz: mnx rqn zxx
+jtt: blb
+xfk: vqf hlt gsj
+mrj: gsv xzb xdt xdm xsv
+qcs: mmd zfk
+rvr: sbb fpm mzv
+kmc: hfg lpf jgq
+czg: czx btt
+htp: xbk lsl mbh sjv
+ztk: ccq lns qfh xpk
+kdf: hqk prd npd mtc
+fck: rjh mbq mtr
+sdg: qjp qqj pgl
+lgm: rrg mgh
+vpg: rdr snc gzf zgn
+hdk: vkn stv msc tdz
+hbc: ttj
+qvd: bzm
+zkq: nbv xcf
+fjf: zps grp grc qxx
+vqk: mgk xfq xcm rnl
+dld: gvc npm
+ptq: vsz
+nxd: hvg
+bfk: kvx
+nhh: qvl jmx bdf qjt gcv
+lrr: dlz dlv
+kfh: kct pzp vzs
+zvx: lhl
+psn: pdj lkv zld lfm
+sdv: klj cdb sln rkz
+zrr: ntz xpf
+mkm: pvq bff stv fnv ckt
+bdn: bkc qvc
+ptd: lbk slz xlb cpc
+rkk: ngq jcz fbn xtf
+dlj: zpp nsg rmb kzr kxh
+dnm: xxp ndl kkk dxv nrd vbl
+sxt: bng prd jtc fps bfd
+zpr: jhp
+hdl: zgh prd
+zdl: lfd
+mcd: vgm ncv vvk
+xzg: phq vgh mbm
+nkf: fnv ncz vhj tmh
+vvn: rxs mgv mbl lbc
+tgp: zld cgr
+ndd: dzc mrx krk
+qvl: tlc dnh qrg
+ljg: nzx zrs
+fct: dhd sbb mgz
+sjz: sjq
+dzp: bmj stt
+vhn: mtt
+cvv: hbj fgp
+fnk: kgs
+cxp: qxp mfl jgl smj
+spx: ggk
+svk: rsx
+zlg: tqb nfg nph
+rtx: qth mzj
+qrf: hbc hpp cmg rhg
+rbn: sbb jqt nkf sbz
+grt: bhn
+mfv: bbm rmr qqj
+sct: mgb bnj
+vvm: fhj nsg znn
+fqk: hlh
+hmt: gjb svx
+pqv: rnl
+mzf: fhr kvx cmp krf
+tkp: dsc jsh dzt tzs
+lqd: lpt
+llj: dfl mff rxv pqj
+tbt: dxv gss
+lpc: dxv mcm
+fgl: qfm
+nhr: qgj gld hrg dxq
+scl: dzk chh mzc
+chh: sgr tdb bbr
+klx: mjf xcm pzb
+jrd: bhn xlm
+qzr: sfj jhr cqm npm chh
+bgb: fjz vkt
+jsh: rxh vkt
+mcs: qzz pls zlq
+xdt: grc rmv
+cfk: nxp nhn
+lfm: lcq
+lvf: jjl prd lrr
+vgn: mbx mjp slc
+rrg: kxj
+mnv: bmc pjq ncg mgz mqz
+tgz: mnk zmt kgs
+qmh: ttf cbs npt mrp
+knx: xjv tqm
+rjx: tpm pqv dnh mkv
+mpm: tkz fcq dpc lfl qvc
+kpm: nlf
+gcd: ktm rrk vfv
+fbg: djr
+tkt: nnd svx bnr qcs
+zhk: mtr xbq nnk
+dhj: fgl bbs
+dcp: hxv mkp xqz
+kps: kvx ltz dbh qjt
+kjt: vgf bdf
+dbh: vpr mnk
+fhr: mgh hbj
+nmf: kbx nsv
+mpq: fpk cbf nxb
+qhs: mvj rqn vzs mkv pqv
+dlp: htq qxz fgn jvq hkb
+mhx: vvx
+bbr: rqd
+trj: ldp lfl tkm qvl dvd
+xtn: qnf vzj jdb
+krv: ltb
+mkk: ncp jqs hfz
+cgk: bfn
+msc: qvj
+gqg: qlr bch tzp
+pcv: fjz
+hbv: lpt mrk
+stc: mtt
+jzl: rmr
+xmm: qzz
+hks: qgj
+zqs: nbt kcd xzg zxp
+nvt: jdc rjt nqd ssp
+tld: lpk cmp rfd tlc
+mtn: ftc qvj
+bdq: jgq ddj
+jmq: xdm jkv bdb zkq fsn
+lfk: bfk frf dmr
+hrg: fhk dlg
+zjk: xkd rss
+vgj: snl kcz
+zhz: fqp btt
+gng: xcm fgk qvc
+bmb: cfn flm dxv lxc
+pcp: xtq hcc
+kdv: bct njm jkl bkn
+kjv: zpn fps rdr
+dhd: zcx mmd
+bpt: cfv hdl jgm gjv snc
+fcz: jhv ftm lmr xzt
+snk: fkj
+kzp: fpk zbf hcv kxh
+sfz: zpp
+dqz: dgk ffz lpm tdz
+njv: xks cbb
+zhp: bzm bpn hrg zgj
+bzq: grc pdc
+ssp: fzt pps hbc
+bnr: stc tkh
+tcv: psb dlg hxv
+lmm: dfv lrr dzt
+glx: lkv
+jdd: ltj hnf bzp
+pkn: rhg sjh
+xfv: cqt vnq qtj fpv
+jhp: rdv kjh
+cjq: tcv mkk rkf
+lgr: vjt dth vvt dtp
+lbk: nrd hnv
+gtj: lrr zxx
+tss: vrv jpg rdt
+lcg: pdj dlv vbg zmk
+tsp: mgv sbz rbf vnb
+ghv: mrx pdn slq
+djr: sjh
+dpc: lqd
+pxn: zpn
+lbf: qfm nxd dlz dth
+chd: rcs
+xjv: mpq sjd kbj
+rvv: hbj hvp bgb drz
+fsf: bpc rjf ttl
+qnv: pcl cfz gbz hdl qgc
+xtm: nhn cgk ztb
+nhd: zgd
+sbk: vdv kkx
+qrt: tkd rrk vlk
+ndq: tms kcz psd tsp rtl qhb
+ztq: sbn vpr xtq
+lzx: tqb mtn npt
+jgl: nkn rjh
+rkq: qnp stt csb
+rtc: plv khl xmk
+zkh: dkk
+kls: slz czd vrm mcm
+rzk: mgh hqt kjq ntf
+tsz: shs rjt
+zzr: ltm prs njm xtg pzq
+frf: nlq cgr
+rmp: jlx ssb mpt nqz
+pdj: rtg
+vmp: mks mbh zlq spx
+pnv: gfv jgm hfr
+ttx: njm jsv zfk npp
+gtq: fps gsv gth pbn
+gxk: qnl ckt
+nkg: bmt jtm pbh
+qxp: fxd rcq zkh
+xzb: jhj
+jvq: frf
+mzj: jmx
+bpx: nqp xqz qsl rkf
+znl: rrg
+mkv: fsp cqt
+mgh: vgf
+sjq: bkj
+cfc: xzj ffm cqg jjc
+xck: xvp jdb
+tbf: lhx
+qbh: dlz pzp vbg xgn jdd
+cgf: mnk rxf qxq
+nqt: tjn qnp
+gtl: zsk cqt
+mmq: czd
+ldj: nqt ccq
+qsk: phh dqh sfz dtb
+kvb: rnl gng pcl
+spk: lpt nvz jpz
+jtc: vcv
+fqh: pdt
+hxq: zgv jtp
+mzt: ldj cvc bjf qvx
+nzz: rpc cdv sln zdd
+vhq: nsq ttf fpk
+tgt: hmt bpx
+vlj: mvh frp
+qcr: frs bbr knx
+gml: xlq pnz gzt pfv
+hlv: fdd cmg tfn nvz
+fkg: bkc fbg qtf
+plv: nvz sgl rfd nzc
+nmv: kjq pmc pck
+txl: brt nxm
+hhb: fbl
+clq: vkl ncp nmd fvm qxh
+gcv: rcr zgd
+cnh: tsg tkk hms nhx
+kfm: fpq zsk
+bdf: vcv
+hpt: czc jht vvx
+gqc: zld xqs szp
+vrv: rjh
+fhj: vxj ddh
+gjs: bhn gfh tbf ffb
+pzb: pmc tgq
+qtb: xhf nsh prr jmd
+bsv: ztp flz lqj
+kct: bfk kkf nmv php
+jzr: nkh crg jqs vrg
+xdb: nhn bmj bsd
+gjb: pzd
+sjg: nzc hfq tzs phx
+pxh: bsz jdb jgq
+fvv: fpl
+zrt: xpk zrs nxp
+nfv: kzr
+lvp: mff nxb smh rpx
+rpf: lzl rqd
+cbs: fgx pnz hdk
+nfp: lqj rdt znn hcv mjk
+txb: tld xdt rxp zxx
+qfh: pds
+mlq: kvp kjt
+krf: tgq
+ftm: xtv gsv
+srr: jsr fkj hhb jtp
+mhb: vtv czd fnx
+qnn: fbg ndd
+dbr: smh
+hmr: krk fgn hch jrm
+hls: mhx
+zvd: blb
+gxh: tlb xtq
+zdd: ppc qcq ttx
+hqk: jgb bqb
+ttz: mkp dtb mll mbq ppc
+vkl: bct
+hdr: lns vhn ggm qvd
+pzq: rrz
+cql: chh vhj
+dgk: tcv mlm
+tvn: kkf mrk jgb
+xxt: hls
+xcf: gjv nlq
+ghs: crg ndb
+gnd: jpd jng bbs pnp qgk
+vml: ndx jgl jjh fck
+jhj: mbh
+php: pdn
+dzb: fpm pbf lld nmd
+mbq: qhq
+hvg: kdr
+cqp: thk mpt
+rfp: jzr gmr bsv
+vpr: lsm
+xps: czd pcd cbf
+btl: hxq sjz cmh lhj
+gsv: mvh
+nzf: fxs vlj slq djr
+bzp: jpd nxm
+njp: ltj jkn brj ghv
+jrm: vcv fmp pls
+rbf: mmd znt
+vxj: rbk flz ggm
+tmm: hbh ngs nbq hcr
+skp: bct
+vmb: tbj mhx
+ndx: vkl vbl
+gjv: kdr
+qzg: bdf nxm ntk hvp
+zcp: nqt ccq
+gpf: lcq fnk sbk
+bxc: qqr fjd ggk smt
+gvm: czx ftx lqj lbt gxk
+bgs: gxh rmv smt jtc drz
+rrp: lpm tzt mgz
+pdt: sct xxt chj
+hlr: bzm
+zld: jmx
+fzk: bzp
+rrc: lrv bkz
+xcn: tkd ccn tlc jjb
+rxn: fcg gps vvt
+fmd: znd ghs dsk plx cvp
+pdn: rtg qgk
+ptl: qsx kxj pnp
+cvb: szf kjr zxx frx
+ltp: jpn slz
+tqz: hkt xlq pjq
+sln: fqk
+qnf: ggh
+drz: rhg pmb
+tkd: sjv
+srn: sjz
+nzc: dpc
+lpk: mcs hvg
+jjf: gth rjt
+jvc: fbn jng
+lnd: dgf zxp gqm qhr xcq
+tkk: hnx jlc rkf
+lfl: ckp fjz
+zxp: nzr ftm mnk
+nxb: qvd
+ffm: hhg hvg rxg hqt
+gld: drt xqz
+rqn: vgh bsh
+pdl: vvx bcf
+xmk: xdm
+gcs: jcz rfz
+sdd: bkz gfv slq
+gvp: cpm blp ncl
+vfv: jzv mcs
+khx: cbr sbn hvg mpk rmv
+fzz: txp sns kvp qfm
+dtd: gbz
+vxn: rbn ncz pdt lxn
+sts: frq bmg bct dgk
+jmd: xkx
+qkd: gfg pcc jpn zpr xxp
+nsd: cmh pls
+fmb: ttj szp lkv
+kdl: rcx fqp lgz
+dnk: vxv xpf
+tkh: qvx tqm vbl
+bkz: dnh
+vdv: jsr
+mtq: hdb jtr
+szf: krk snn pvc
+tdn: bsd cdb zkv fjr
+jqx: pnp
+zzp: lpk lpb vlk qjv kjt
+drd: zkh fhj vhq bnm
+kjz: spx gnm xgf xjp
+vvx: tbj
+vnb: dbr hsr
+hxv: ncg
+pnz: bch stv
+fzt: gjg
+msm: fmp
+hms: lgz bxs
+hnf: dnt brt gqc
+zrs: chb rfq
+clp: gvc nlm xpq skp
+thd: bbr pfh brn
+sbz: vhs
+fqp: tmh tqm
+zjg: msc fhk xks scl
+dnt: cqp
+tlz: qnl tbt rbn kbs
+pbn: fgl jnr qjt
+grp: plc tfx
+fvt: lft cgj xkd
+ncp: ccg
+xpj: pvc
+qhb: hdb
+rrk: djr
+hch: rrg xzt zkx pxn vzj grr
+tjt: jnr lbv
+cpc: klj
+lvv: cmp nlq jgb
+stp: kfh lbv qjv hfq
+kgp: qnp cgp rfq nqt
+fzd: cbb ptf
+glg: rrj lbl dzk skp fnx pzd znn
+qjh: rkz nqp mgv
+ngs: rlz lns cqm xhf
+dhv: rlz czg qtg
+cbr: msm
+xlb: rcg nqt rmr
+pql: kbx zln ggh
+xhf: nlf
+jqs: hks xlm ccg
+scn: sjq pcp xth
+kjh: zbn pvq
+kzq: zvx mnl
+sjr: lpc ggm tsq zjv vrm
+rtl: bnj ktp
+qxx: rfz cqp qqr
+qtr: jgb lvf tgz vgq hbv
+lcf: dtj pnv qxz
+mqr: mgz mhl cdv bcf
+hlt: hrt lfm bfd
+fhf: fzt kdf xxz qhr xsj
+gdc: lfd rjt kjv
+khg: xmk mrg cgr
+ccg: prs mbq
+pbl: htq frf jdq ddz
+stt: ldj sgr
+svc: czc jpg bct vmb
+rdr: jkv
+jjh: rss nts fqh
+pgl: npm zjq bcf xks
+rcd: xzj xfm gqm cbr
+jfz: bsd jhr
+rpx: vhs
+hxz: xzt
+mfp: rjh flm xtg
+hgs: nmq jbq htq bkz
+jjs: phq jmx lmm ncx
+rzc: hpp zbb nqd zqh
+sff: bnj rqd mtr qvz
+cdv: jrd drt
+kkk: xzn txg
+chj: gjb
+jgd: bqc xxt fvv jsv
+fpl: mfl chb
+dpr: ncz
+msl: jnc hml
+qnl: qnp ztk
+dkp: tgq dnt fff xfm fmb
+btr: nmf xll sgl bkv rxn
+dzk: hdr
+kss: stv zkv
+mff: chb nsq
+fsp: lpb mzj
+mhl: bct xzn fqk
+vlk: jdf
+jng: xtv
+gzr: hbv vjt bng jsb kkx
+slz: rbk
+hnv: tqb
+nct: vkn pbf lgz
+psb: kzr
+tcb: dtp lpk fgn zkx
+xbn: tnj ddb xps
+czb: dgk fnr mhb
+fkz: nrm ncz kpt ddh njv
+slr: xgn krk fcq qnv
+crx: tzt smh drt dxq
+zgj: mmq cbb mmd zvd sfz
+nrm: pcc xpq
+fgk: rxp zdl
+dlv: jqx
+jqt: rlz
+cnr: nzn rjf xtg znd
+vvs: jnc rtl blp stc
+vtv: rmb
+grr: zgh tfk rxp
+mbs: nct hsr ddb xtm chj
+hcc: xrx
+dnq: frq csz tvj cgk
+krn: jjh jpn rgh zlg dkk
+lbl: jtt
+nhm: rzz xxz npl
+qjk: dhj sbn fpq xpj znl
+rhf: dlg ltm
+mlv: njm hls
+kjr: pbn grp ttj
+phq: pdc tlc xcf
+rhn: bdq qtz ptl nkg
+bbs: hcc khd
+mrg: vgm vlj
+zql: zcx qqj vhj
+ktm: pzb tfk jxx
+qcz: hnv skp nlm zjk
+rsm: zgp njv vnb rss xlm
+jhd: ssz nxd lmm mrx
+zzm: fkn hdn hvg mgj
+vkt: fpv
+qxq: dnh jkv dzt
+dnz: lld zvd tsq
+znd: hdr sjs rpk gld bsl
+zfz: bcf mfp kpt pfp
+hgn: lbl cjq kxd pfv
+jbq: frx vgb dmr
+hcq: nmp pvx jjl htq
+cvp: rpx bct grt
+mgk: kvb tvn tsz
+nqk: ccq nlv bnz
+vtx: zjk fqk mzv pfp
+tjn: tzt npp tbj
+bgd: rhh pzq kdl nqp
+kln: hgx psd dbr rjf
+hbh: crf
+flz: xpk dqh vkl
+jpg: qhb
+zzq: crg njh qbl ldg
+svn: tqz znv fbz ptf
+nrq: kxz ddz tfk bmk
+lfb: lhz tpt rfq hcv
+nfg: hlr dlj
+rsj: thg bqz qjp zjv
+ckb: tjm bcn dbr
+pcm: fst
+gjg: phx
+pmb: jtp lhj gxh skk ktm
+txp: vzj mvh qjt
+gps: qzz
+dsc: mcx bqb
+tnj: cvz bnr tns psd sgb
+zjq: chd hmt
+fpq: hrt
+xsj: ggk jpz spk
+nnd: zgp klj
+rml: btd gss fht pfp
+nqd: bkj hqk
+hmb: shs krf
+cbb: btd
+frn: sbk xbk bzp jxx
+jrj: zkj lzx hml tbf
+tsg: bct
+dgg: xxt kqf vrv cgk
+ggq: cdb bcn rbk sqd
+mrr: mdg nzr
+mxj: jmp rtc jtm bqb
+mbf: cbf qhq qzm
+lbg: kxd fpl xzn
+kzd: djs bzr xxp cql fgx
+srb: rkz klv cdv
+hqs: cdz qxq jjf gtj
+bzr: snl rpf tgt
+vrr: mfz pfv fgz qjp
+ksn: hdn lqd rxn
+zgd: fnk mgr vxv
+xgf: hvp lmr tvt sks
+zst: hnx rjf cvc rmd
+tms: qvd qjh thg
+qbz: ltb ncx skg ksn cvv
+mnb: tvj
+tkz: xcq
+rsx: frp xmm
+bnj: ncn cgj bfn
+smt: jcz pvc
+vdd: zkj psb mqg
+pvx: vxv mnl zdl lgm
+fsn: qgk nhd fkn fzk
+lfc: lfm cgr jsr ccn plc
+nlf: vrg
+rqm: zhp cgl lhz szq nlv rrv
+nmz: nqt lld mzc jnk vkn
+hrf: mtq cgl chd pmp
+sth: pmc pxn gpm
+vqf: vvh hxz
+gvv: vcd txg bbm fsf hms kxd zkv
+csn: jpz pqv jgb xtn
+sqg: pnz mfv rrv crg hlg pds
+mjk: rxs xkc mgb nfg zpp
+ckp: fff ztq
+frs: csz
+ftl: mgr
+gxt: dgc mjf nmp gps lfl qnn
+xtf: ftl pks mpt hpp pck
+mtv: khj gtx vvt mgq qjt
+mll: mqg hks cgj gvc
+xbk: dnt rzz
+rxv: qtg hml
+ttf: jlc
+qnc: dzt mgh
+tnd: gff nbv sbn
+rxf: gtl btl sjg
+gjh: btt
+slc: tjt mnn mbx
+skg: vgh
+lzl: bzm klv
+hfp: fpv
+mbl: rbk xjv dpz
+jkn: phx fkj srl
+nsg: klj
+knp: tzs vdv mtc brj
+fvm: prr cgp
+dzc: lfd
+phh: ltm tzp
+hlh: tqm
+lbc: pjq
+rrv: qhq jzl
+slj: xzn
+pcr: xhg lbk mzv rpx qvj
+phc: nqp fzd
+jht: rcx
+nvn: sds cbb mjv
+jsb: khl bdb krf msm
+gls: php lzd vgm jgb
+lhf: npt lhz nxb hbh cql
+rcx: dfl
+mqz: gmr rhh tcv
+gfg: tdb
+dgf: xmg zld nhl
+ttj: ltb
+xgn: mks snk
+qtj: dtp mdg bkj
+sjs: vhs rbf lbt qhb
+mzv: pfp lpm
+ttl: gzm
+xjm: vgm
+npp: cdb nhn
+nbv: tbz
+bsl: prs
+bsh: gbz
+gpm: rxh fhb
+bgk: sdg hlg xdb mqz mzv
+vrm: cfn prs
+cgg: tbj bmj ttl gsg mtr bqz ztp nqk
+fbl: kdr
+gtx: tfk vgf
+txn: cpq qsl
+krk: kdr
+kqn: mrg zgv hfg
+gfh: xtm sbf fnr nzx
+spl: vzj xdm tkz vgh
+qff: bdn vgn rdr pcv xck
+htq: jxx
+kxz: jpd
+xpq: ldj
+nqz: rlh zmt tgp qtf
+skv: hmb gzf pdz snk lkv
+ckd: prd nqd vzs jjc kct tpv nmp
+mrk: xrx
+rlh: ggh lrr
+gfv: lfd zqh gcs
+ftc: rqd zkv
+npd: glx ntz ssz
+pbh: vvh
+kxm: jmp nhm lsm brj pcv
+czx: jfz
+vjt: mjc bqb
+xtq: sbn
+jjl: mzj tkm
+fst: dsl fht
+xsb: hks qlr znt tss
+kqf: phc
+hhp: dmr fjz hhb qnv
+lft: jsv
+kbq: jlc dsl
+cvz: crf
+trd: pvc dll xvn
+fxd: ncn cgp jhm
+bdv: fgk chf nxd gjv
+lsm: npl lcq
+gnb: gjh lbc fst csz
+dgz: jhv tkd gjg jtc rvb
+brj: kds kps jpd
+jdf: jcz plc
+jsv: fht
+bkv: sjz krv
+cdz: frp skk cmh
+qvn: thd ncl ncg rcs zhk
+mmp: sgl bgb xjm qth
+xqn: qnc vjt xvp lfk
+fvz: fpm xrc
+fgp: xrx xll
+lhj: kxj
+qvz: lft tzp
+qqs: rtg glx mvs
+tfx: jjf fmp mzj
+rdl: thk mgr
+hkb: kjq skk
+zns: mfh ltz pxh tlb
+dvv: mtt hsr rmd lxc
+lbv: fkn dzc
+kkp: lmr sjh hmb bmk
+qvc: bkj
+crt: npt pds dqs
+gsj: vvh jtr xjm gbz rfz
+szp: pdz
+zjc: mgb znv ztp ndb
+vjl: cmp fgp lpf bfd
+zmt: zsk rrk
+hmm: rrv mzv gnq
+rzm: kkf jnr srn ssb
+njh: xkd lzl pcd dkk
+zpn: dtd xzj
+snb: lpk srn jcz gpf
+dmb: sfj hfz gjh ddb
+cck: pnp rjt
+xtx: xpj rrc kfm hfg
+xbq: zcx vtv
+vbp: rtc mgj lpb rrz
+flm: hdb jzl
+xmg: xvn nmq rgp
+nvm: jvq nbt fcg gtx
+plx: fct nph bnm rmr nkn kcs qfh fqh
+sqd: zgg dmj dzk tns
+jxd: jsh kcd kvx phq
+lqx: hdl nzc tsz vfv
+kxx: xtv xzj
+qjp: jfz msl mfl
+jlq: cfv skg vvk pcp
+xvh: vvk gtq hdn hfp dkp
