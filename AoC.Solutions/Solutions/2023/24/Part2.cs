@@ -25,6 +25,10 @@ public class Part2 : Base
          * We need third point to work out the step size?
          */
 
+        var dX = h1.Position.X - h2.Position.X;
+
+        var dZ = h1.Position.Z - h2.Position.Z;
+
         return "Unknown";
     }
     
