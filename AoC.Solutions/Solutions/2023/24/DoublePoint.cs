@@ -12,7 +12,7 @@ public class DoublePoint
     {
     }
 
-    protected DoublePoint(double x, double y, double z)
+    private DoublePoint(double x, double y, double z)
     {
         X = x;
         Y = y;
