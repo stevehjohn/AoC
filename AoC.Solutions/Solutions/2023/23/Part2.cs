@@ -5,68 +5,35 @@ namespace AoC.Solutions.Solutions._2023._23;
 [UsedImplicitly]
 public class Part2 : Base
 {
-    private readonly HashSet<(int, int)> _visited = new();
-
-    private readonly List<int> _stepCounts = new();
+    private Edge _start;
     
     public override string GetAnswer()
     {
         ParseInput();
+        
+        CreateEdges();
 
-        var result = Solve();
+        var result = 0;
 
         return result.ToString();
     }
-    
-    private int Solve()
+
+    private void CreateEdges()
     {
-        SolveInternal((1, 1, South, 1));
+        var queue = new Queue<(int X, int Y)>();
 
-        return _stepCounts.Max();
-    }
+        var visited = new HashSet<(int X, int Y)>();
+        
+        queue.Enqueue((1, 0));
 
-    private void SolveInternal((int X, int Y, (int Dx, int Dy) Direction, int Steps) position)
-    {
-        if (position.X == Width - 2 && position.Y == Height - 1)
+        while (queue.TryDequeue(out var position))
         {
-            _stepCounts.Add(position.Steps);
-
-            return;
-        }
-
-        if (position.Direction != South)
-        {
-            AddNewPosition(position, North);
-        }
-
-        if (position.Direction != North)
-        {
-            AddNewPosition(position, South);
-        }
-
-        if (position.Direction != East)
-        {
-            AddNewPosition(position, West);
-        }
-
-        if (position.Direction != West)
-        {
-            AddNewPosition(position, East);
-        }
-    }
-
-    private void AddNewPosition(
-        (int X, int Y, (int Dx, int Dy) Direction, int Steps) position,
-        (int Dx, int Dy) newDirection)
-    {
-        if (Map[position.X + newDirection.Dx, position.Y + newDirection.Dy] != '#')
-        {
-            if (_visited.Add((position.X + newDirection.Dx, position.Y + newDirection.Dy)))
+            if (! visited.Add(position))
             {
-                SolveInternal((position.X + newDirection.Dx, position.Y + newDirection.Dy, newDirection, position.Steps + 1));
-
-                _visited.Remove((position.X + newDirection.Dx, position.Y + newDirection.Dy));
+                continue;
             }
+            
+            var count = 
         }
     }
 }
