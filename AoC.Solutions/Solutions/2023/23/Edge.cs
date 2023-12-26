@@ -6,5 +6,9 @@ public class Edge
 
     public int Length { get; set; }
 
+    public int X { get; set; }
+    
+    public int Y { get; set; }
+
     public List<Edge> Connections { get; } = new();
 }
