@@ -14,7 +14,7 @@ public class Part2 : Base
         ParseInput();
         
         CreateEdges();
-
+        
         var result = FindLongestPath();
 
         return result.ToString();
