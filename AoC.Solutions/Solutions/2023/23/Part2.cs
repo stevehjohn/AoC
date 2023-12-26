@@ -105,11 +105,11 @@ public class Part2 : Base
                 continue;
             }
             
-            Console.WriteLine($"{x}, {y}: {edge.Length}");
-            
             if (Map[x + 1, y] != '#' && ! visited.Contains((x + 1, y)))
             {
                 var newEdge = new Edge { Id = _id };
+
+                _id++;
                 
                 edge.Connections.Add(edge);
                 
@@ -119,6 +119,8 @@ public class Part2 : Base
             if (Map[x - 1, y] != '#' && ! visited.Contains((x - 1, y)))
             {
                 var newEdge = new Edge { Id = _id };
+
+                _id++;
                 
                 edge.Connections.Add(edge);
                 
@@ -129,6 +131,8 @@ public class Part2 : Base
             {
                 var newEdge = new Edge { Id = _id };
                 
+                _id++;
+
                 edge.Connections.Add(edge);
                 
                 queue.Enqueue((x, y + 1, newEdge));
@@ -138,6 +142,8 @@ public class Part2 : Base
             {
                 var newEdge = new Edge { Id = _id };
                 
+                _id++;
+
                 edge.Connections.Add(edge);
                 
                 queue.Enqueue((x, y - 1, newEdge));
