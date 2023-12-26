@@ -6,6 +6,8 @@ namespace AoC.Solutions.Solutions._2023._23;
 public class Part2 : Base
 {
     private Edge _start;
+
+    private int _id = 1;
     
     public override string GetAnswer()
     {
@@ -20,23 +22,23 @@ public class Part2 : Base
 
     private void CreateEdges()
     {
-        var queue = new Queue<(int X, int Y, (int Dx, int Dy), int Steps)>();
+        var queue = new Queue<(int X, int Y, Edge edge)>();
 
         var visited = new HashSet<(int X, int Y)> { (1, 0) };
+
+        _start = new Edge { Id = _id, Length = 1 };
         
-        queue.Enqueue((1, 1, South, 1));
+        queue.Enqueue((1, 1, _start));
 
         while (queue.TryDequeue(out var position))
         {
-            var (x, y, direction, steps) = position;
+            var (x, y, edge) = position;
 
-            var (dX, dY) = direction;
-            
             if (! visited.Add((x, y)))
             {
                 continue;
             }
-            
+
             var count = 0;
 
             count += Map[x - 1, y] == '#' ? 1 : 0;
@@ -46,48 +48,48 @@ public class Part2 : Base
 
             while (count > 1)
             {
-                var tDx = 0;
-                var tDy = 0;
+                var dX = 0;
+                var dY = 0;
                 
                 if (Map[x + 1, y] != '#' && ! visited.Contains((x + 1, y)))
                 {
-                    tDx = 1;
-                    tDy = 0;
+                    dX = 1;
+                    dY = 0;
                 }
                 
                 if (Map[x - 1, y] != '#' && ! visited.Contains((x - 1, y)))
                 {
-                    tDx = -1;
-                    tDy = 0;
+                    dX = -1;
+                    dY = 0;
                 }
                 
                 if (Map[x, y + 1] != '#' && ! visited.Contains((x, y + 1)))
                 {
-                    tDx = 0;
-                    tDy = 1;
+                    dX = 0;
+                    dY = 1;
                 }
                 
                 if (Map[x, y - 1] != '#' && ! visited.Contains((x, y - 1)))
                 {
-                    tDx = 0;
-                    tDy = -1;
+                    dX = 0;
+                    dY = -1;
                 }
 
-                if (tDx == 0 && tDy == 0)
+                if (dX == 0 && dY == 0)
+                {
+                    break;
+                }
+                
+                x += dX;
+                y += dY;
+
+                if (x == Width - 2 && y == Height - 1)
                 {
                     break;
                 }
 
-                dX = tDx;
-                dY = tDy;
-
-                x += dX;
-                y += dY;
-
                 visited.Add((x, y));
 
-                Console.WriteLine($"{x}, {y}");
-                
                 count = 0;
 
                 count += Map[x - 1, y] == '#' ? 1 : 0;
@@ -95,12 +97,51 @@ public class Part2 : Base
                 count += Map[x, y - 1] == '#' ? 1 : 0;
                 count += Map[x, y + 1] == '#' ? 1 : 0;
 
-                steps++;
+                edge.Length++;
+            }
+
+            if (x == Width - 2 && y == Height - 1)
+            {
+                continue;
             }
             
-            Console.WriteLine(count);
+            Console.WriteLine($"{x}, {y}: {edge.Length}");
             
-            Console.WriteLine($"{x}, {y}: {steps}");
+            if (Map[x + 1, y] != '#' && ! visited.Contains((x + 1, y)))
+            {
+                var newEdge = new Edge { Id = _id };
+                
+                edge.Connections.Add(edge);
+                
+                queue.Enqueue((x + 1, y, newEdge));
+            }
+                
+            if (Map[x - 1, y] != '#' && ! visited.Contains((x - 1, y)))
+            {
+                var newEdge = new Edge { Id = _id };
+                
+                edge.Connections.Add(edge);
+                
+                queue.Enqueue((x - 1, y, newEdge));
+            }
+                
+            if (Map[x, y + 1] != '#' && ! visited.Contains((x, y + 1)))
+            {
+                var newEdge = new Edge { Id = _id };
+                
+                edge.Connections.Add(edge);
+                
+                queue.Enqueue((x, y + 1, newEdge));
+            }
+                
+            if (Map[x, y - 1] != '#' && ! visited.Contains((x, y - 1)))
+            {
+                var newEdge = new Edge { Id = _id };
+                
+                edge.Connections.Add(edge);
+                
+                queue.Enqueue((x, y - 1, newEdge));
+            }
         }
     }
 }
