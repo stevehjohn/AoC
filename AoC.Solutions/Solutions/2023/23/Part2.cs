@@ -5,11 +5,9 @@ namespace AoC.Solutions.Solutions._2023._23;
 [UsedImplicitly]
 public class Part2 : Base
 {
-    private Edge _start;
+    private readonly List<(int X, int Y)> _intersections = new();
 
-    private readonly List<Edge> _edges = new();
-
-    private int _id = 0;
+    private readonly List<((int X, int Y) Start, (int X, int Y) End, int Steps)> _edges = new();
     
     public override string GetAnswer()
     {
@@ -17,218 +15,149 @@ public class Part2 : Base
         
         CreateEdges();
 
-        Dump();
+        var longest = FindLongestPath();
         
-        foreach (var edge in _edges)
-        {
-            Console.WriteLine($"{edge.StartX}, {edge.StartY} -> {edge.EndX}, {edge.EndY}: {edge.Id}   -> {string.Join(" -> ", edge.Connections.Select(e => e.Id.ToString()))}");
-        }
-
-        var result = 0; //FindLongestPath();
-
-        return result.ToString();
-    }
-
-    private void Dump()
-    {
-        for (var y = 0; y < Height; y++)
-        {
-            for (var x = 0; x < Width; x++)
-            {
-                var edge = _edges.FirstOrDefault(e => e.StartX == x && e.StartY == y);
-                
-                if (edge != null)
-                {
-                    Console.Write(edge.Id);
-                }
-                else
-                {
-                    Console.Write(Map[x, y] == '#' ? '#' : ' ');
-                }
-            }
-            
-            Console.WriteLine();
-        }
+        return longest.ToString();
     }
 
     private int FindLongestPath()
     {
-        var queue = new Queue<(Edge Edge, int Steps, HashSet<int> History)>();
+        var queue = new Queue<((int X, int Y) Position, int Steps, HashSet<(int, int)> History)>();
+        
+        queue.Enqueue((_intersections[0], 0, new HashSet<(int, int)>()));
 
-        queue.Enqueue((_start, 0, new HashSet<int> { _start.Id }));
+        var counts = new List<int>();
 
-        var lengths = new List<int>();
+        var max = 0;
         
         while (queue.TryDequeue(out var node))
         {
-            if (node.Edge.Connections.Count == 0)
+            if (! node.History.Add(node.Position))
             {
-                lengths.Add(node.Steps);
-                
                 continue;
             }
 
-            foreach (var connection in node.Edge.Connections)
+            if (node.Position == _intersections[^1])
             {
-                if (! node.History.Contains(connection.Id))
+                counts.Add(node.Steps);
+
+                if (node.Steps > max)
                 {
-                    queue.Enqueue((connection, node.Steps + connection.Length, new HashSet<int>(node.History) { connection.Id} ));
+                    Console.WriteLine(node.Steps);
+
+                    max = node.Steps;
                 }
+
+                continue;
+            }
+
+            var reaches = _edges.Where(e => e.Start == node.Position).ToList();
+
+            foreach (var item in reaches)
+            {
+                queue.Enqueue(((item.End), node.Steps + item.Steps, new HashSet<(int, int)>(node.History)));
             }
         }
 
-        return lengths.Max();
+        return counts.Max();
     }
 
     private void CreateEdges()
     {
-        var queue = new Queue<(int X, int Y, Edge edge)>();
+        FindIntersections();
 
-        var visited = new HashSet<(int X, int Y)> { (1, 0) };
-
-        _id++;
-
-        _start = new Edge { Id = _id, Length = 1, StartX = 1, StartY = 1 };
-        
-        _edges.Add(_start);
-        
-        queue.Enqueue((1, 1, _start));
-
-        while (queue.TryDequeue(out var position))
+        foreach (var intersection in _intersections)
         {
-            var (x, y, edge) = position;
+            foreach (var other in _intersections)
+            {
+                if (other == intersection)
+                {
+                    continue;
+                }
+        
+                var distance = CanReach(intersection, other);
+        
+                if (distance > 0)
+                {
+                    _edges.Add((intersection, other, distance));
+                }
+            }
+        }
+    }
 
-            if (! visited.Add((x, y)))
+    private int CanReach((int X, int Y) start, (int X, int Y) end)
+    {
+        var queue = new Queue<((int X, int Y) Position, int Steps)>();
+        
+        queue.Enqueue((start, 0));
+
+        var visited = new HashSet<(int, int)>();
+
+        while (queue.TryDequeue(out var node))
+        {
+            var (position, steps) = node;
+            
+            if (! visited.Add(position))
+            {
+                continue;
+            }
+            
+            if (position == end)
+            {
+                return steps;
+            }
+
+            if (position != start && _intersections.Contains(position))
             {
                 continue;
             }
 
-            var count = 0;
-
-            count += Map[x - 1, y] == '#' ? 1 : 0;
-            count += Map[x + 1, y] == '#' ? 1 : 0;
-            count += Map[x, y - 1] == '#' ? 1 : 0;
-            count += Map[x, y + 1] == '#' ? 1 : 0;
-
-            while (count > 1)
+            if (position.X > 0 && Map[position.X - 1, position.Y] != '#')
             {
-                var dX = 0;
-                var dY = 0;
-                
-                if (Map[x + 1, y] != '#' && ! visited.Contains((x + 1, y)))
-                {
-                    dX = 1;
-                    dY = 0;
-                }
-                
-                if (Map[x - 1, y] != '#' && ! visited.Contains((x - 1, y)))
-                {
-                    dX = -1;
-                    dY = 0;
-                }
-                
-                if (Map[x, y + 1] != '#' && ! visited.Contains((x, y + 1)))
-                {
-                    dX = 0;
-                    dY = 1;
-                }
-                
-                if (Map[x, y - 1] != '#' && ! visited.Contains((x, y - 1)))
-                {
-                    dX = 0;
-                    dY = -1;
-                }
+                queue.Enqueue(((position.X - 1, position.Y), steps + 1));
+            }
 
-                if (dX == 0 && dY == 0)
-                {
-                    break;
-                }
-                
-                x += dX;
-                y += dY;
+            if (position.X < Width - 1 && Map[position.X + 1, position.Y] != '#')
+            {
+                queue.Enqueue(((position.X + 1, position.Y), steps + 1));
+            }
 
-                if (x == Width - 2 && y == Height - 1)
-                {
-                    break;
-                }
+            if (position.Y > 0 && Map[position.X, position.Y - 1] != '#')
+            {
+                queue.Enqueue(((position.X, position.Y - 1), steps + 1));
+            }
 
-                visited.Add((x, y));
+            if (position.Y < Height - 1 && Map[position.X, position.Y + 1] != '#')
+            {
+                queue.Enqueue(((position.X, position.Y + 1), steps + 1));
+            }
+        }
 
-                count = 0;
+        return 0;
+    }
+
+    private void FindIntersections()
+    {
+        _intersections.Add((1, 0));
+        
+        for (var x = 1; x < Width - 1; x++)
+        {
+            for (var y = 1; y < Height - 1; y++)
+            {
+                var count = 0;
 
                 count += Map[x - 1, y] == '#' ? 1 : 0;
                 count += Map[x + 1, y] == '#' ? 1 : 0;
                 count += Map[x, y - 1] == '#' ? 1 : 0;
                 count += Map[x, y + 1] == '#' ? 1 : 0;
 
-                edge.Length++;
-            }
-
-            if (x == Width - 2 && y == Height - 1)
-            {
-                NewEdge(edge, x, y);
-                
-                continue;
-            }
-            
-            if (Map[x + 1, y] != '#')
-            {
-                if (! visited.Contains((x + 1, y)))
+                if (count < 2 && Map[x, y] != '#')
                 {
-                    edge.EndX = x;
-                    edge.EndY = y;
-                    
-                    queue.Enqueue((x + 1, y, NewEdge(edge, x, y)));
-                }
-            }
-                
-            if (Map[x - 1, y] != '#')
-            {
-                if (! visited.Contains((x - 1, y)))
-                {
-                    edge.EndX = x;
-                    edge.EndY = y;
-                    
-                    queue.Enqueue((x - 1, y, NewEdge(edge, x, y)));
-                }
-            }
-                
-            if (Map[x, y + 1] != '#')
-            {
-                if (! visited.Contains((x, y + 1)))
-                {
-                    edge.EndX = x;
-                    edge.EndY = y;
-                    
-                    queue.Enqueue((x, y + 1, NewEdge(edge, x, y)));
-                }
-            }
-                
-            if (Map[x, y - 1] != '#')
-            {
-                if (! visited.Contains((x, y - 1)))
-                {
-                    edge.EndX = x;
-                    edge.EndY = y;
-                    
-                    queue.Enqueue((x, y - 1, NewEdge(edge, x, y)));
+                    _intersections.Add((x, y));
                 }
             }
         }
-    }
-
-    private Edge NewEdge(Edge edge, int x, int y)
-    {
-        _id++;
-                
-        var newEdge = new Edge { Id = _id, StartX = x, StartY = y };
-
-        _edges.Add(newEdge);
         
-        edge.Connections.Add(newEdge);
-
-        Console.WriteLine($"{newEdge.StartX}, {newEdge.StartY}: {newEdge.Id} -> {string.Join(" -> ", newEdge.Connections.Select(e => e.Id.ToString()))}");
-
-        return newEdge;
+        _intersections.Add((Width - 2, Height - 1));
     }
 }
