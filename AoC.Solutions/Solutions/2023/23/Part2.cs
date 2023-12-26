@@ -17,14 +17,36 @@ public class Part2 : Base
         
         CreateEdges();
 
-        foreach (var edge in _edges)
-        {
-            Console.WriteLine($"{edge.Id}: {edge.Connections.Count}");
-        }
+        Dump();
+        
+        // foreach (var edge in _edges)
+        // {
+        //     Console.WriteLine($"{edge.Id}: {edge.Connections.Count}");
+        // }
         
         var result = FindLongestPath();
 
         return result.ToString();
+    }
+
+    private void Dump()
+    {
+        for (var y = 0; y < Width; y++)
+        {
+            for (var x = 0; x < Height; x++)
+            {
+                if (_edges.Any(e => e.X == x && e.Y == y))
+                {
+                    Console.Write('*');
+                }
+                else
+                {
+                    Console.Write(Map[x, y] == '#' ? '#' : ' ');
+                }
+            }
+            
+            Console.WriteLine();
+        }
     }
 
     private int FindLongestPath()
