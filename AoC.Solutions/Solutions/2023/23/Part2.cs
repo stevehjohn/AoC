@@ -7,8 +7,10 @@ public class Part2 : Base
 {
     private readonly List<(int X, int Y)> _intersections = new();
 
-    private readonly List<((int X, int Y) Start, (int X, int Y) End, int Steps)> _edges = new();
+    private readonly Dictionary<int, ((int X, int Y) Start, (int X, int Y) End, int Steps)> _edges = new();
 
+    private readonly Dictionary<(int X, int Y), List<int>> _startIndexes = new();
+    
     private readonly HashSet<(int, int)> _history = new();
 
     private readonly List<int> _counts = new();
@@ -33,10 +35,12 @@ public class Part2 : Base
             return;
         }
 
-        var reaches = _edges.Where(e => e.Start == position).ToList();
+        var reaches = _startIndexes[position];
 
-        foreach (var item in reaches)
+        foreach (var id in reaches)
         {
+            var item = _edges[id];
+            
             if (_history.Add(item.End))
             {
                 FindLongestPath(item.End, steps + item.Steps);
@@ -50,6 +54,8 @@ public class Part2 : Base
     {
         FindIntersections();
 
+        var id = 0;
+        
         foreach (var intersection in _intersections)
         {
             foreach (var other in _intersections)
@@ -63,7 +69,18 @@ public class Part2 : Base
         
                 if (distance > 0)
                 {
-                    _edges.Add((intersection, other, distance));
+                    _edges.Add(id, (intersection, other, distance));
+
+                    if (! _startIndexes.ContainsKey(intersection))
+                    {
+                        _startIndexes[intersection] = new List<int> { id };
+                    }
+                    else
+                    {
+                        _startIndexes[intersection].Add(id);
+                    }
+
+                    id++;
                 }
             }
         }
