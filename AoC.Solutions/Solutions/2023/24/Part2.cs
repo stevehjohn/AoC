@@ -18,7 +18,7 @@ public class Part2 : Base
 
     private long Solve()
     {
-        const int area = 4;
+        const int area = 3;
 
         for (var x = -area; x < area + 1; x++)
         {
@@ -29,70 +29,73 @@ public class Part2 : Base
                 var h1 = _hail[0] with { Velocity = _hail[0].Velocity - velocity };
                 var h2 = _hail[1] with { Velocity = _hail[1].Velocity - velocity };
                 var h3 = _hail[2] with { Velocity = _hail[2].Velocity - velocity };
-                var h4 = _hail[^2] with { Velocity = _hail[^2].Velocity - velocity };
-                var h5 = _hail[^1] with { Velocity = _hail[^1].Velocity - velocity };
-                var h6 = _hail[^3] with { Velocity = _hail[^3].Velocity - velocity };
+                var h4 = _hail[3] with { Velocity = _hail[3].Velocity - velocity };
+                var h5 = _hail[4] with { Velocity = _hail[4].Velocity - velocity };
 
                 var c1 = CollidesInFutureXy(h1, h2);
                 var c2 = CollidesInFutureXy(h1, h3);
                 var c3 = CollidesInFutureXy(h1, h4);
                 var c4 = CollidesInFutureXy(h1, h5);
-                var c5 = CollidesInFutureXy(h1, h6);
 
-                if (c1 == null || c2 == null || c3 == null || c4 == null || c5 == null)
+                if (c1 == null || c2 == null || c3 == null || c4 == null)
                 {
                     continue;
                 }
 
-                if (c1.Value.Time != c2.Value.Time || c1.Value.Time != c3.Value.Time || c1.Value.Time != c4.Value.Time || c1.Value.Time != c5.Value.Time)
+                if (c1.Value.Time != c2.Value.Time || c1.Value.Time != c3.Value.Time || c1.Value.Time != c4.Value.Time)
                 {
                     continue;
                 }
 
-                Console.WriteLine(c1.Value.Time);
+                if (c1.Value.X != c2.Value.X || c1.Value.X != c3.Value.X || c1.Value.X != c4.Value.X)
+                {
+                    continue;
+                }
+
+                if (c1.Value.Y != c2.Value.Y || c1.Value.Y != c3.Value.Y || c1.Value.Y != c4.Value.Y)
+                {
+                    continue;
+                }
                 
-                for (var z = -area; z < area + 1; z++)
+                var collisionTime = c1.Value.Time;
+                
+                for (var z = 0; z < area + 1; z++)
                 {
-                    var z1 = h1.Position.Z + (h1.Velocity.Z - z) * c1.Value.Time;
-                    var z2 = h2.Position.Z + (h2.Velocity.Z - z) * c2.Value.Time;
-
+                    var z1 = h1.Position.Z + (h1.Velocity.Z - z) * collisionTime;
+                    var z2 = h2.Position.Z + (h2.Velocity.Z - z) * collisionTime;
+                
                     if (EqualsWithinTolerance(z1, z2))
                     {
                         continue;
                     }
-
-                    var z3 = h3.Position.Z + (h3.Velocity.Z - z) * c3.Value.Time;
-
+                
+                    var z3 = h3.Position.Z + (h3.Velocity.Z - z) * collisionTime;
+                
                     if (EqualsWithinTolerance(z1, z3))
                     {
                         continue;
                     }
-
-                    var z4 = h4.Position.Z + (h4.Velocity.Z - z) * c4.Value.Time;
-
+                    
+                    var z4 = h4.Position.Z + (h4.Velocity.Z - z) * collisionTime;
+                    
                     if (EqualsWithinTolerance(z1, z4))
                     {
                         continue;
                     }
-
-                    var z5 = h5.Position.Z + (h5.Velocity.Z - z) * c5.Value.Time;
-
-                    if (EqualsWithinTolerance(z1, z5))
-                    {
-                        continue;
-                    }
-
-                    // Console.WriteLine($"{x}, {y}, {z}");
-                    // Console.WriteLine($"{c1.Value.X}, {c1.Value.Y}, {z1}");
-                    // Console.WriteLine((long) (c1.Value.X + c1.Value.Y + z1));
-
+                
+                    Console.WriteLine($"\n{z1} {z2} {z3} {z4}");
+                
                     var result = c1.Value.X + c1.Value.Y + z1;
-
-                    //if (result == 47 || result == 606772018765659)
+                
+                    if (result == 47 || result == 606772018765659)
                     {
-                        Console.WriteLine($"{result} {c1.Value.X}, {c1.Value.Y}, {z1} {x}, {y}, {z}: Bingo!");
+                        Console.WriteLine($"{result}: ({c1.Value.X}, {c1.Value.Y}, {z1}) ({x}, {y}, {z}): Bingo!");
                     }
-
+                    else
+                    {
+                        Console.WriteLine($"{result}: ({c1.Value.X}, {c1.Value.Y}, {z1}) ({x}, {y}, {z}): Nope!");
+                    }
+                
                     //return (long) (c1.Value.X + c1.Value.Y + z1);
                 }
             }
