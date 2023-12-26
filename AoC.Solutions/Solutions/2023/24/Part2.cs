@@ -18,10 +18,8 @@ public class Part2 : Base
 
     private long Solve()
     {
-        const int area = 300;
+        const int area = 4;
 
-        const int stones = 5;
-        
         for (var x = -area; x < area + 1; x++)
         {
             for (var y = -area; y < area + 1; y++)
@@ -33,18 +31,20 @@ public class Part2 : Base
                 var h3 = _hail[2] with { Velocity = _hail[2].Velocity - velocity };
                 var h4 = _hail[^2] with { Velocity = _hail[^2].Velocity - velocity };
                 var h5 = _hail[^1] with { Velocity = _hail[^1].Velocity - velocity };
+                var h6 = _hail[^3] with { Velocity = _hail[^3].Velocity - velocity };
 
                 var c1 = CollidesInFutureXy(h1, h2);
                 var c2 = CollidesInFutureXy(h1, h3);
                 var c3 = CollidesInFutureXy(h1, h4);
                 var c4 = CollidesInFutureXy(h1, h5);
+                var c5 = CollidesInFutureXy(h1, h6);
 
-                if (c1 == null || c2 == null || c3 == null || c4 == null)
+                if (c1 == null || c2 == null || c3 == null || c4 == null || c5 == null)
                 {
                     continue;
                 }
 
-                if (c1.Value.Time != c2.Value.Time && c1.Value.Time != c3.Value.Time && c1.Value.Time != c4.Value.Time)
+                if (c1.Value.Time != c2.Value.Time || c1.Value.Time != c3.Value.Time || c1.Value.Time != c4.Value.Time || c1.Value.Time != c5.Value.Time)
                 {
                     continue;
                 }
@@ -71,6 +71,13 @@ public class Part2 : Base
                     var z4 = h4.Position.Z + (h4.Velocity.Z - z) * c4.Value.Time;
 
                     if (EqualsWithinTolerance(z1, z4))
+                    {
+                        continue;
+                    }
+
+                    var z5 = h5.Position.Z + (h5.Velocity.Z - z) * c5.Value.Time;
+
+                    if (EqualsWithinTolerance(z1, z5))
                     {
                         continue;
                     }
