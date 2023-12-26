@@ -19,25 +19,27 @@ public class Part2 : Base
 
         Dump();
         
-        // foreach (var edge in _edges)
-        // {
-        //     Console.WriteLine($"{edge.Id}: {edge.Connections.Count}");
-        // }
-        
-        var result = FindLongestPath();
+        foreach (var edge in _edges)
+        {
+            Console.WriteLine($"{edge.X}, {edge.Y}: {edge.Id} -> {string.Join(" -> ", edge.Connections.Select(e => e.Id.ToString()))}");
+        }
+
+        var result = 0; //FindLongestPath();
 
         return result.ToString();
     }
 
     private void Dump()
     {
-        for (var y = 0; y < Width; y++)
+        for (var y = 0; y < Height; y++)
         {
-            for (var x = 0; x < Height; x++)
+            for (var x = 0; x < Width; x++)
             {
-                if (_edges.Any(e => e.X == x && e.Y == y))
+                var edge = _edges.FirstOrDefault(e => e.X == x && e.Y == y);
+                
+                if (edge != null)
                 {
-                    Console.Write('*');
+                    Console.Write(edge.Id);
                 }
                 else
                 {
@@ -164,27 +166,57 @@ public class Part2 : Base
 
             if (x == Width - 2 && y == Height - 1)
             {
+                NewEdge(edge, x, y);
+                
                 continue;
             }
             
-            if (Map[x + 1, y] != '#' && ! visited.Contains((x + 1, y)))
+            if (Map[x + 1, y] != '#')
             {
-                queue.Enqueue((x + 1, y, NewEdge(edge, x, y)));
+                if (! visited.Contains((x + 1, y)))
+                {
+                    queue.Enqueue((x + 1, y, NewEdge(edge, x, y)));
+                }
+                else
+                {
+                    _edges.Where(e => e.X == x + 1 && e.Y == y).ToList().ForEach(e => e.Connections.Add(edge));
+                }
             }
                 
-            if (Map[x - 1, y] != '#' && ! visited.Contains((x - 1, y)))
+            if (Map[x - 1, y] != '#')
             {
-                queue.Enqueue((x - 1, y, NewEdge(edge, x, y)));
+                if (! visited.Contains((x - 1, y)))
+                {
+                    queue.Enqueue((x - 1, y, NewEdge(edge, x, y)));
+                }
+                else
+                {
+                    _edges.Where(e => e.X == x - 1 && e.Y == y).ToList().ForEach(e => e.Connections.Add(edge));
+                }
             }
                 
-            if (Map[x, y + 1] != '#' && ! visited.Contains((x, y + 1)))
+            if (Map[x, y + 1] != '#')
             {
-                queue.Enqueue((x, y + 1, NewEdge(edge, x, y)));
+                if (! visited.Contains((x, y + 1)))
+                {
+                    queue.Enqueue((x, y + 1, NewEdge(edge, x, y)));
+                }
+                else
+                {
+                    _edges.Where(e => e.X == x && e.Y == y + 1).ToList().ForEach(e => e.Connections.Add(edge));
+                }
             }
                 
-            if (Map[x, y - 1] != '#' && ! visited.Contains((x, y - 1)))
+            if (Map[x, y - 1] != '#')
             {
-                queue.Enqueue((x, y - 1, NewEdge(edge, x, y)));
+                if (! visited.Contains((x, y - 1)))
+                {
+                    queue.Enqueue((x, y - 1, NewEdge(edge, x, y)));
+                }
+                else
+                {
+                    _edges.Where(e => e.X == x && e.Y == y - 1).ToList().ForEach(e => e.Connections.Add(edge));
+                }
             }
         }
     }
@@ -198,6 +230,8 @@ public class Part2 : Base
         _edges.Add(newEdge);
         
         edge.Connections.Add(newEdge);
+
+        Console.WriteLine($"{newEdge.X}, {newEdge.Y}: {newEdge.Id} -> {string.Join(" -> ", newEdge.Connections.Select(e => e.Id.ToString()))}");
 
         return newEdge;
     }
