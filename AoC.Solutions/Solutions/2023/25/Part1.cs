@@ -14,16 +14,23 @@ public class Part1 : Base
         int left = 0;
 
         int right;
+        
+        ParseInput();
+
+        var backup = _nodes.ToList();
 
         while (true)
         {
-            ParseInput();
-
             var rng = new Random();
 
             var l = _distinct[rng.Next(_distinct.Count)];
             var r = _distinct[rng.Next(_distinct.Count)];
-            
+
+            if (l == r)
+            {
+                continue;
+            }
+
             Walk(l, r);
             
             Walk(l, r);
@@ -52,6 +59,8 @@ public class Part1 : Base
                     break;
                 }
             }
+
+            _nodes = backup.ToList();
         }
 
         return (left * right).ToString();
