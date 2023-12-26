@@ -8,6 +8,10 @@ public class Part2 : Base
     private readonly List<(int X, int Y)> _intersections = new();
 
     private readonly List<((int X, int Y) Start, (int X, int Y) End, int Steps)> _edges = new();
+
+    private readonly HashSet<(int, int)> _history = new();
+
+    private readonly List<int> _counts = new();
     
     public override string GetAnswer()
     {
@@ -15,51 +19,31 @@ public class Part2 : Base
         
         CreateEdges();
 
-        var longest = FindLongestPath();
+        FindLongestPath(_intersections[0], 0);
         
-        return longest.ToString();
+        return _counts.Max().ToString();
     }
 
-    private int FindLongestPath()
+    private void FindLongestPath((int X, int Y) position, int steps)
     {
-        var queue = new Queue<((int X, int Y) Position, int Steps, HashSet<(int, int)> History)>();
-        
-        queue.Enqueue((_intersections[0], 0, new HashSet<(int, int)>()));
-
-        var counts = new List<int>();
-
-        var max = 0;
-        
-        while (queue.TryDequeue(out var node))
+        if (position == _intersections[^1])
         {
-            if (! node.History.Add(node.Position))
-            {
-                continue;
-            }
-
-            if (node.Position == _intersections[^1])
-            {
-                counts.Add(node.Steps);
-
-                if (node.Steps > max)
-                {
-                    Console.WriteLine(node.Steps);
-
-                    max = node.Steps;
-                }
-
-                continue;
-            }
-
-            var reaches = _edges.Where(e => e.Start == node.Position).ToList();
-
-            foreach (var item in reaches)
-            {
-                queue.Enqueue(((item.End), node.Steps + item.Steps, new HashSet<(int, int)>(node.History)));
-            }
+            _counts.Add(steps);
+            
+            return;
         }
 
-        return counts.Max();
+        var reaches = _edges.Where(e => e.Start == position).ToList();
+
+        foreach (var item in reaches)
+        {
+            if (_history.Add(item.End))
+            {
+                FindLongestPath(item.End, steps + item.Steps);
+
+                _history.Remove(item.End);
+            }
+        }
     }
 
     private void CreateEdges()
