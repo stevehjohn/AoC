@@ -23,13 +23,7 @@ public abstract class Base : Solution
     
     protected void ParseInput()
     {
-        var safeInput = Input.ToList();
-        
-        safeInput.Insert(0, Input[0]);
-
-        safeInput.Add(Input[^1]);
-        
-        Map = safeInput.ToArray().To2DArray();
+        Map = Input.To2DArray();
 
         Width = Map.GetLength(0);
 

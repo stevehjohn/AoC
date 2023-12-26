@@ -18,13 +18,13 @@ public class Part1 : Base
     {
         var queue = new Queue<(int X, int Y, (int Dx, int Dy) Direction, int Steps, HashSet<(int X, int Y)> Visited)>();
         
-        queue.Enqueue((1, 1, South, 0, new HashSet<(int X, int Y)>()));
+        queue.Enqueue((1, 0, South, 0, new HashSet<(int X, int Y)>()));
 
         var stepCounts = new List<int>();
         
         while (queue.TryDequeue(out var position))
         {
-            if (position.X == Width - 2 && position.Y == Height - 2)
+            if (position.X == Width - 2 && position.Y == Height - 1)
             {
                 stepCounts.Add(position.Steps);
 
