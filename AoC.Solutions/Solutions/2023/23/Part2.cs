@@ -7,7 +7,7 @@ public class Part2 : Base
 {
     private Edge _start;
 
-    private List<Edge> _edges = new();
+    private readonly List<Edge> _edges = new();
 
     private int _id = 0;
     
@@ -21,7 +21,7 @@ public class Part2 : Base
         
         foreach (var edge in _edges)
         {
-            Console.WriteLine($"{edge.X}, {edge.Y}: {edge.Id} -> {string.Join(" -> ", edge.Connections.Select(e => e.Id.ToString()))}");
+            Console.WriteLine($"{edge.StartX}, {edge.StartY} -> {edge.EndX}, {edge.EndY}: {edge.Id} -> {string.Join(" -> ", edge.Connections.Select(e => e.Id.ToString()))}");
         }
 
         var result = 0; //FindLongestPath();
@@ -35,7 +35,7 @@ public class Part2 : Base
         {
             for (var x = 0; x < Width; x++)
             {
-                var edge = _edges.FirstOrDefault(e => e.X == x && e.Y == y);
+                var edge = _edges.FirstOrDefault(e => e.StartX == x && e.StartY == y);
                 
                 if (edge != null)
                 {
@@ -88,7 +88,7 @@ public class Part2 : Base
 
         _id++;
 
-        _start = new Edge { Id = _id, Length = 1, X = 1, Y = 1 };
+        _start = new Edge { Id = _id, Length = 1, StartX = 1, StartY = 1 };
         
         _edges.Add(_start);
         
@@ -175,11 +175,10 @@ public class Part2 : Base
             {
                 if (! visited.Contains((x + 1, y)))
                 {
+                    edge.EndX = x;
+                    edge.EndY = y;
+                    
                     queue.Enqueue((x + 1, y, NewEdge(edge, x, y)));
-                }
-                else
-                {
-                    _edges.Where(e => e.X == x + 1 && e.Y == y).ToList().ForEach(e => e.Connections.Add(edge));
                 }
             }
                 
@@ -187,11 +186,10 @@ public class Part2 : Base
             {
                 if (! visited.Contains((x - 1, y)))
                 {
+                    edge.EndX = x;
+                    edge.EndY = y;
+                    
                     queue.Enqueue((x - 1, y, NewEdge(edge, x, y)));
-                }
-                else
-                {
-                    _edges.Where(e => e.X == x - 1 && e.Y == y).ToList().ForEach(e => e.Connections.Add(edge));
                 }
             }
                 
@@ -199,11 +197,10 @@ public class Part2 : Base
             {
                 if (! visited.Contains((x, y + 1)))
                 {
+                    edge.EndX = x;
+                    edge.EndY = y;
+                    
                     queue.Enqueue((x, y + 1, NewEdge(edge, x, y)));
-                }
-                else
-                {
-                    _edges.Where(e => e.X == x && e.Y == y + 1).ToList().ForEach(e => e.Connections.Add(edge));
                 }
             }
                 
@@ -211,11 +208,10 @@ public class Part2 : Base
             {
                 if (! visited.Contains((x, y - 1)))
                 {
+                    edge.EndX = x;
+                    edge.EndY = y;
+                    
                     queue.Enqueue((x, y - 1, NewEdge(edge, x, y)));
-                }
-                else
-                {
-                    _edges.Where(e => e.X == x && e.Y == y - 1).ToList().ForEach(e => e.Connections.Add(edge));
                 }
             }
         }
@@ -225,13 +221,13 @@ public class Part2 : Base
     {
         _id++;
                 
-        var newEdge = new Edge { Id = _id, X = x, Y = y };
+        var newEdge = new Edge { Id = _id, StartX = x, StartY = y };
 
         _edges.Add(newEdge);
         
         edge.Connections.Add(newEdge);
 
-        Console.WriteLine($"{newEdge.X}, {newEdge.Y}: {newEdge.Id} -> {string.Join(" -> ", newEdge.Connections.Select(e => e.Id.ToString()))}");
+        Console.WriteLine($"{newEdge.StartX}, {newEdge.StartY}: {newEdge.Id} -> {string.Join(" -> ", newEdge.Connections.Select(e => e.Id.ToString()))}");
 
         return newEdge;
     }
