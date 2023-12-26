@@ -7,7 +7,7 @@ public class Part2 : Base
 {
     private Edge _start;
 
-    private int _id = 1;
+    private int _id = 0;
     
     public override string GetAnswer()
     {
@@ -15,9 +15,38 @@ public class Part2 : Base
         
         CreateEdges();
 
-        var result = 0;
+        var result = FindLongestPath();
 
         return result.ToString();
+    }
+
+    private int FindLongestPath()
+    {
+        var queue = new Queue<(Edge Edge, int Steps, HashSet<int> History)>();
+
+        queue.Enqueue((_start, 0, new HashSet<int> { _start.Id }));
+
+        var lengths = new List<int>();
+        
+        while (queue.TryDequeue(out var node))
+        {
+            if (node.Edge.Connections.Count == 0)
+            {
+                lengths.Add(node.Steps);
+                
+                continue;
+            }
+
+            foreach (var connection in node.Edge.Connections)
+            {
+                if (! node.History.Contains(connection.Id))
+                {
+                    queue.Enqueue((connection, node.Steps + connection.Length, new HashSet<int>(node.History) { connection.Id} ));
+                }
+            }
+        }
+
+        return lengths.Max();
     }
 
     private void CreateEdges()
@@ -25,6 +54,8 @@ public class Part2 : Base
         var queue = new Queue<(int X, int Y, Edge edge)>();
 
         var visited = new HashSet<(int X, int Y)> { (1, 0) };
+
+        _id++;
 
         _start = new Edge { Id = _id, Length = 1 };
         
@@ -107,44 +138,44 @@ public class Part2 : Base
             
             if (Map[x + 1, y] != '#' && ! visited.Contains((x + 1, y)))
             {
-                var newEdge = new Edge { Id = _id };
-
                 _id++;
                 
-                edge.Connections.Add(edge);
+                var newEdge = new Edge { Id = _id };
+
+                edge.Connections.Add(newEdge);
                 
                 queue.Enqueue((x + 1, y, newEdge));
             }
                 
             if (Map[x - 1, y] != '#' && ! visited.Contains((x - 1, y)))
             {
-                var newEdge = new Edge { Id = _id };
-
                 _id++;
                 
-                edge.Connections.Add(edge);
+                var newEdge = new Edge { Id = _id };
+                
+                edge.Connections.Add(newEdge);
                 
                 queue.Enqueue((x - 1, y, newEdge));
             }
                 
             if (Map[x, y + 1] != '#' && ! visited.Contains((x, y + 1)))
             {
-                var newEdge = new Edge { Id = _id };
-                
                 _id++;
+                
+                var newEdge = new Edge { Id = _id };
 
-                edge.Connections.Add(edge);
+                edge.Connections.Add(newEdge);
                 
                 queue.Enqueue((x, y + 1, newEdge));
             }
                 
             if (Map[x, y - 1] != '#' && ! visited.Contains((x, y - 1)))
             {
-                var newEdge = new Edge { Id = _id };
-                
                 _id++;
+                
+                var newEdge = new Edge { Id = _id };
 
-                edge.Connections.Add(edge);
+                edge.Connections.Add(newEdge);
                 
                 queue.Enqueue((x, y - 1, newEdge));
             }
