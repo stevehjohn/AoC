@@ -21,7 +21,7 @@ public class Part2 : Base
         
         foreach (var edge in _edges)
         {
-            Console.WriteLine($"{edge.StartX}, {edge.StartY} -> {edge.EndX}, {edge.EndY}: {edge.Id} -> {string.Join(" -> ", edge.Connections.Select(e => e.Id.ToString()))}");
+            Console.WriteLine($"{edge.StartX}, {edge.StartY} -> {edge.EndX}, {edge.EndY}: {edge.Id}   -> {string.Join(" -> ", edge.Connections.Select(e => e.Id.ToString()))}");
         }
 
         var result = 0; //FindLongestPath();
