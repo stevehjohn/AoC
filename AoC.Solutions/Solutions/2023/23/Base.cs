@@ -64,7 +64,7 @@ public abstract class Base : Solution
                 {
                     if (! _startIndexes.ContainsKey(intersection))
                     {
-                        _startIndexes[intersection] = new List<((int X, int Y) Start, (int X, int Y) End, int Steps)> { (intersection, other, distance) };
+                        _startIndexes[intersection] = [(intersection, other, distance)];
                     }
                     else
                     {
