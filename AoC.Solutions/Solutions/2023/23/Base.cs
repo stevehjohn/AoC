@@ -17,9 +17,7 @@ public abstract class Base : Solution
 
     private int _height;
 
-    private readonly Dictionary<int, ((int X, int Y) Start, (int X, int Y) End, int Steps)> _edges = new();
-
-    private readonly Dictionary<(int X, int Y), List<int>> _startIndexes = new();
+    private readonly Dictionary<(int X, int Y), List<((int X, int Y) Start, (int X, int Y) End, int Steps)>> _startIndexes = new();
     
     private readonly HashSet<(int, int)> _history = new();
 
@@ -27,6 +25,8 @@ public abstract class Base : Solution
     {
         if (position == Intersections[^1])
         {
+            //Console.WriteLine(steps);
+            
             Counts.Add(steps);
             
             return;
@@ -34,10 +34,8 @@ public abstract class Base : Solution
 
         var reaches = _startIndexes[position];
 
-        foreach (var id in reaches)
+        foreach (var item in reaches)
         {
-            var item = _edges[id];
-            
             if (_history.Add(item.End))
             {
                 FindLongestPath(item.End, steps + item.Steps);
@@ -51,8 +49,6 @@ public abstract class Base : Solution
     {
         FindIntersections();
 
-        var id = 0;
-        
         foreach (var intersection in Intersections)
         {
             foreach (var other in Intersections)
@@ -66,18 +62,14 @@ public abstract class Base : Solution
         
                 if (distance > 0)
                 {
-                    _edges.Add(id, (intersection, other, distance));
-
                     if (! _startIndexes.ContainsKey(intersection))
                     {
-                        _startIndexes[intersection] = new List<int> { id };
+                        _startIndexes[intersection] = new List<((int X, int Y) Start, (int X, int Y) End, int Steps)> { (intersection, other, distance) };
                     }
                     else
                     {
-                        _startIndexes[intersection].Add(id);
+                        _startIndexes[intersection].Add((intersection, other, distance));
                     }
-
-                    id++;
                 }
             }
         }
