@@ -17,7 +17,7 @@ public abstract class Base : Solution
 
     private int _height;
 
-    private readonly Dictionary<(int X, int Y), List<((int X, int Y) Start, (int X, int Y) End, int Steps)>> _startIndexes = new();
+    private readonly Dictionary<(int X, int Y), List<((int X, int Y) Start, (int X, int Y) End, int Steps)>> _edges = new();
     
     private readonly HashSet<(int, int)> _history = new();
 
@@ -32,7 +32,7 @@ public abstract class Base : Solution
             return;
         }
 
-        var reaches = _startIndexes[position];
+        var reaches = _edges[position];
 
         foreach (var item in reaches)
         {
@@ -62,13 +62,13 @@ public abstract class Base : Solution
         
                 if (distance > 0)
                 {
-                    if (! _startIndexes.ContainsKey(intersection))
+                    if (! _edges.ContainsKey(intersection))
                     {
-                        _startIndexes[intersection] = [(intersection, other, distance)];
+                        _edges[intersection] = [(intersection, other, distance)];
                     }
                     else
                     {
-                        _startIndexes[intersection].Add((intersection, other, distance));
+                        _edges[intersection].Add((intersection, other, distance));
                     }
                 }
             }
