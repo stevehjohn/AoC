@@ -10,7 +10,7 @@ public class Part2 : Base
     public override string GetAnswer()
     {
         ParseInput();
-
+        
         var result = Solve();
 
         return result.ToString();
@@ -18,15 +18,15 @@ public class Part2 : Base
 
     private long Solve()
     {
-        const int area = 3;
+        const int area = 300;
 
-        const int stoneCount = 5;
+        const int stoneCount = 4;
 
         var stones = new (LongPoint Position, LongPoint Velocity)[stoneCount];
 
-        var collisions = new (long X, long Y, long Time)[stoneCount - 1];
+        var collisions = new (long X, long Y, double Time)[stoneCount - 1];
 
-        (long X, long Y, long Time) firstCollision = (0, 0, 0);
+        (long X, long Y, double Time) firstCollision = (0, 0, 0);
         
         for (var x = -area; x < area + 1; x++)
         {
@@ -43,7 +43,7 @@ public class Part2 : Base
                 
                 for (var i = 1; i < stoneCount; i++)
                 {
-                    var collision = CollidesInFutureXy(stones[0], stones[i]);
+                    var collision = CollidesInFutureXy(stones[i], stones[0]);
                     
                     if (collision == null)
                     {
@@ -61,7 +61,7 @@ public class Part2 : Base
                         continue;
                     }
 
-                    if (firstCollision.Time != collision.Value.Time || firstCollision.X != collision.Value.X || firstCollision.Y != collision.Value.Y)
+                    if (firstCollision.X != collision.Value.X || firstCollision.Y != collision.Value.Y)
                     {
                         pass = false;
                         
@@ -74,37 +74,31 @@ public class Part2 : Base
                     continue;
                 }
 
-                var collisionTime = firstCollision.Time;
-                
-                for (var z = 0; z < area + 1; z++)
+                for (var z = -area; z < area + 1; z++)
                 {
-                    var pZ = stones[0].Position.Z + (stones[0].Velocity.Z - z) * collisionTime;
-                    
-                    Console.Write($"\n{pZ} ");
+                    var pZ = stones[1].Position.Z + (stones[1].Velocity.Z - z) * collisions[0].Time;
 
-                    for (var i = 1; i < stoneCount; i++)
-                    {
-                        var pZ2 = stones[i].Position.Z + (stones[i].Velocity.Z - z) * collisionTime;
-                        
-                        Console.Write($"{pZ2} ");
-                        
-                        // TODO: Equality check with pZ
-                    }
+                    pass = true;
                     
-                    Console.WriteLine();
+                    for (var i = 2; i < stoneCount; i++)
+                    {
+                        var pZ2 = stones[i].Position.Z + (stones[i].Velocity.Z - z) * collisions[i - 1].Time;
+
+                        // ReSharper disable once CompareOfFloatsByEqualityOperator
+                        if (pZ2 != pZ)
+                        {
+                            pass = false;
+                        }
+                    }
+
+                    if (! pass)
+                    {
+                        continue;
+                    }
                     
                     var result = firstCollision.X + firstCollision.Y + pZ;
-                
-                    if (result == 47 || result == 606772018765659)
-                    {
-                        Console.WriteLine($"{result}: ({firstCollision.X}, {firstCollision.Y}, {pZ}) ({x}, {y}, {z}): Bingo!");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"{result}: ({firstCollision.X}, {firstCollision.Y}, {pZ}) ({x}, {y}, {z}): Nope!");
-                    }
-                
-                    //return result;
+                    
+                    return (long) result;
                 }
             }
         }
@@ -112,36 +106,31 @@ public class Part2 : Base
         return 0;
     }
     
-    private static (long X, long Y, long Time)? CollidesInFutureXy((LongPoint Position, LongPoint Velocity) left, (LongPoint Position, LongPoint Velocity) right)
+    private static (long X, long Y, double Time)? CollidesInFutureXy((LongPoint Position, LongPoint Velocity) left, (LongPoint Position, LongPoint Velocity) right)
     {
+        if (left.Velocity.X == 0 || right.Velocity.X == 0)
+        {
+            return null;
+        }
+
         var a1 = left.Velocity.Y / (double) left.Velocity.X;
         var b1 = left.Position.Y - a1 * left.Position.X;
         var a2 = right.Velocity.Y / (double) right.Velocity.X;
         var b2 = right.Position.Y - a2 * right.Position.X;
 
-        if (EqualsWithinTolerance(a1, a2))
-        {
-            return null;
-        }
-
         var cx = (b2 - b1) / (a1 - a2);
-        var cy = cx * a1 + b1;
+        
+        var t1 = (cx - left.Position.X) / left.Velocity.X;
+        var t2 = (cx - right.Position.X) / right.Velocity.X;
 
-        var future = cx > left.Position.X == left.Velocity.X > 0 && cx > right.Position.X == right.Velocity.X > 0;
-
-        if (! future)
+        if (t1 < 0 || t2 < 0)
         {
             return null;
         }
 
-        var time = Math.Abs(cx - left.Position.X) / Math.Abs(left.Velocity.X);
+        var cy = a1 * (cx - left.Position.X) + left.Position.Y;
         
-        return ((long) Math.Round(cx), (long) Math.Round(cy), (long) Math.Round(time));
-    }
-
-    private static bool EqualsWithinTolerance(double left, double right)
-    {
-        return Math.Abs(right - left) < .000_000_001f;
+        return ((long) Math.Round(cx), (long) Math.Round(cy), Math.Round(t1, 3));
     }
 
     private void ParseInput()
