@@ -5,8 +5,6 @@ namespace AoC.Solutions.Solutions._2023._24;
 [UsedImplicitly]
 public class Part2 : Base
 {
-    private readonly List<(LongPoint Position, LongPoint Velocity)> _hail = new();
-
     public override string GetAnswer()
     {
         ParseInput();
@@ -36,7 +34,7 @@ public class Part2 : Base
 
                 for (var i = 0; i < stoneCount; i++)
                 {
-                    stones[i] = _hail[i] with { Velocity = _hail[i].Velocity - velocity }; 
+                    stones[i] = Hail[i] with { Velocity = Hail[i].Velocity - velocity }; 
                 }
 
                 var pass = true;
@@ -104,42 +102,5 @@ public class Part2 : Base
         }
 
         return 0;
-    }
-    
-    private static (long X, long Y, double Time)? CollidesInFutureXy((LongPoint Position, LongPoint Velocity) left, (LongPoint Position, LongPoint Velocity) right)
-    {
-        if (left.Velocity.X == 0 || right.Velocity.X == 0)
-        {
-            return null;
-        }
-
-        var a1 = left.Velocity.Y / (double) left.Velocity.X;
-        var b1 = left.Position.Y - a1 * left.Position.X;
-        var a2 = right.Velocity.Y / (double) right.Velocity.X;
-        var b2 = right.Position.Y - a2 * right.Position.X;
-
-        var cx = (b2 - b1) / (a1 - a2);
-        
-        var t1 = (cx - left.Position.X) / left.Velocity.X;
-        var t2 = (cx - right.Position.X) / right.Velocity.X;
-
-        if (t1 < 0 || t2 < 0)
-        {
-            return null;
-        }
-
-        var cy = a1 * (cx - left.Position.X) + left.Position.Y;
-        
-        return ((long) Math.Round(cx), (long) Math.Round(cy), Math.Round(t1, 3));
-    }
-
-    private void ParseInput()
-    {
-        foreach (var line in Input)
-        {
-            var parts = line.Split('@', StringSplitOptions.TrimEntries);
-
-            _hail.Add((LongPoint.Parse(parts[0]), LongPoint.Parse(parts[1])));
-        }
     }
 }
