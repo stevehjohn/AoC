@@ -507,7 +507,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         _beams.Add(firstBeamId, 0);
     }
 
-    private char GetTile(char d1, char d2)
+    private static char GetTile(char d1, char d2)
     {
         return (d1, d2) switch
         {
