@@ -25,8 +25,6 @@ public abstract class Base : Solution
     {
         if (position == Intersections[^1])
         {
-            //Console.WriteLine(steps);
-            
             Counts.Add(steps);
             
             return;
