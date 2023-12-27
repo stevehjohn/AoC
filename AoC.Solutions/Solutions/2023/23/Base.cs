@@ -21,11 +21,13 @@ public abstract class Base : Solution
     
     private readonly HashSet<(int, int)> _history = new();
 
+    private int _lastSteps;
+    
     protected void FindLongestPath((int X, int Y) position, int steps)
     {
-        if (position == Intersections[^1])
+        if (position == Intersections[^2])
         {
-            Counts.Add(steps);
+            Counts.Add(steps + _lastSteps);
             
             return;
         }
@@ -57,7 +59,12 @@ public abstract class Base : Solution
                 }
         
                 var distance = CanReach(intersection, other, isPart2);
-        
+
+                if (other == (_width - 2, _height - 1))
+                {
+                    _lastSteps = distance;
+                }
+
                 if (distance > 0)
                 {
                     if (! _edges.ContainsKey(intersection))
