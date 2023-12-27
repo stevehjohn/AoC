@@ -20,83 +20,91 @@ public class Part2 : Base
     {
         const int area = 3;
 
+        const int stoneCount = 5;
+
+        var stones = new (LongPoint Position, LongPoint Velocity)[stoneCount];
+
+        var collisions = new (long X, long Y, long Time)[stoneCount - 1];
+
+        (long X, long Y, long Time) firstCollision = (0, 0, 0);
+        
         for (var x = -area; x < area + 1; x++)
         {
             for (var y = -area; y < area + 1; y++)
             {
                 var velocity = new LongPoint(x, y, 0);
+
+                for (var i = 0; i < stoneCount; i++)
+                {
+                    stones[i] = _hail[i] with { Velocity = _hail[i].Velocity - velocity }; 
+                }
+
+                var pass = true;
                 
-                var h1 = _hail[0] with { Velocity = _hail[0].Velocity - velocity };
-                var h2 = _hail[1] with { Velocity = _hail[1].Velocity - velocity };
-                var h3 = _hail[2] with { Velocity = _hail[2].Velocity - velocity };
-                var h4 = _hail[3] with { Velocity = _hail[3].Velocity - velocity };
-                var h5 = _hail[4] with { Velocity = _hail[4].Velocity - velocity };
+                for (var i = 1; i < stoneCount; i++)
+                {
+                    var collision = CollidesInFutureXy(stones[0], stones[i]);
+                    
+                    if (collision == null)
+                    {
+                        pass = false;
 
-                var c1 = CollidesInFutureXy(h1, h2);
-                var c2 = CollidesInFutureXy(h1, h3);
-                var c3 = CollidesInFutureXy(h1, h4);
-                var c4 = CollidesInFutureXy(h1, h5);
+                        break;
+                    }
 
-                if (c1 == null || c2 == null || c3 == null || c4 == null)
+                    collisions[i - 1] = collision.Value;
+
+                    if (i == 1)
+                    {
+                        firstCollision = collision.Value;
+                        
+                        continue;
+                    }
+
+                    if (firstCollision.Time != collision.Value.Time || firstCollision.X != collision.Value.X || firstCollision.Y != collision.Value.Y)
+                    {
+                        pass = false;
+                        
+                        break;
+                    }
+                }
+
+                if (! pass)
                 {
                     continue;
                 }
 
-                if (c1.Value.Time != c2.Value.Time || c1.Value.Time != c3.Value.Time || c1.Value.Time != c4.Value.Time)
-                {
-                    continue;
-                }
-
-                if (c1.Value.X != c2.Value.X || c1.Value.X != c3.Value.X || c1.Value.X != c4.Value.X)
-                {
-                    continue;
-                }
-
-                if (c1.Value.Y != c2.Value.Y || c1.Value.Y != c3.Value.Y || c1.Value.Y != c4.Value.Y)
-                {
-                    continue;
-                }
-                
-                var collisionTime = c1.Value.Time;
+                var collisionTime = firstCollision.Time;
                 
                 for (var z = 0; z < area + 1; z++)
                 {
-                    var z1 = h1.Position.Z + (h1.Velocity.Z - z) * collisionTime;
-                    var z2 = h2.Position.Z + (h2.Velocity.Z - z) * collisionTime;
-                
-                    if (EqualsWithinTolerance(z1, z2))
+                    var pZ = stones[0].Position.Z + (stones[0].Velocity.Z - z) * collisionTime;
+                    
+                    Console.Write($"\n{pZ} ");
+
+                    for (var i = 1; i < stoneCount; i++)
                     {
-                        continue;
-                    }
-                
-                    var z3 = h3.Position.Z + (h3.Velocity.Z - z) * collisionTime;
-                
-                    if (EqualsWithinTolerance(z1, z3))
-                    {
-                        continue;
+                        var pZ2 = stones[i].Position.Z + (stones[i].Velocity.Z - z) * collisionTime;
+                        
+                        Console.Write($"{pZ2} ");
+                        
+                        // TODO: Equality check with pZ
                     }
                     
-                    var z4 = h4.Position.Z + (h4.Velocity.Z - z) * collisionTime;
+                    Console.WriteLine();
                     
-                    if (EqualsWithinTolerance(z1, z4))
-                    {
-                        continue;
-                    }
-                
-                    Console.WriteLine($"\n{z1} {z2} {z3} {z4}");
-                
-                    var result = c1.Value.X + c1.Value.Y + z1;
+                    var result = firstCollision.X + firstCollision.Y + pZ;
                 
                     if (result == 47 || result == 606772018765659)
                     {
-                        Console.WriteLine($"{result}: ({c1.Value.X}, {c1.Value.Y}, {z1}) ({x}, {y}, {z}): Bingo!");
+                        Console.WriteLine($"{result}: ({firstCollision.X}, {firstCollision.Y}, {pZ}) ({x}, {y}, {z}): Bingo!");
                     }
                     else
                     {
-                        Console.WriteLine($"{result}: ({c1.Value.X}, {c1.Value.Y}, {z1}) ({x}, {y}, {z}): Nope!");
+                        Console.WriteLine($"{result}: ({firstCollision.X}, {firstCollision.Y}, {pZ}) ({x}, {y}, {z}): Nope!");
                     }
                 
-                    //return (long) (c1.Value.X + c1.Value.Y + z1);
+                    //return result;
                 }
             }
         }
