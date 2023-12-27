@@ -13,14 +13,6 @@ public abstract class Base : Solution
 
     protected int Height;
     
-    protected static readonly (int, int) North = (0, -1);
-    
-    protected static readonly (int, int) East = (1, 0);
-    
-    protected static readonly (int, int) South = (0, 1);
-    
-    protected static readonly (int, int) West = (-1, 0);
-    
     protected void ParseInput()
     {
         Map = Input.To2DArray();
