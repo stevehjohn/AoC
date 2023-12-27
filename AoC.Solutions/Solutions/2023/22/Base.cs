@@ -10,18 +10,18 @@ public abstract class Base : Solution
     
     protected List<(int Id, List<Point> Points)> Bricks = new();
     
-    protected int SettleBricks(bool move = true)
+    protected int SettleBricks(List<(int Id, List<Point> Points)> bricks, bool move = true)
     {
         var count = 0;
 
-        foreach (var brick in Bricks)
+        foreach (var brick in bricks)
         {
             if (brick.Points[0].Z == 1)
             {
                 continue;
             }
 
-            var resting = Resting(brick.Points);
+            var resting = Resting(bricks, brick.Points);
 
             if (! move && ! resting)
             {
@@ -39,7 +39,7 @@ public abstract class Base : Solution
                         item.Z--;
                     }
 
-                    resting = Resting(brick.Points);
+                    resting = Resting(bricks, brick.Points);
                 }
             }
         }
@@ -47,9 +47,9 @@ public abstract class Base : Solution
         return count;
     }
 
-    private bool Resting(List<Point> brick)
+    private bool Resting(List<(int Id, List<Point> Points)> bricks, List<Point> brick)
     {
-        foreach (var item in Bricks)
+        foreach (var item in bricks)
         {
             if (item.Points == brick)
             {

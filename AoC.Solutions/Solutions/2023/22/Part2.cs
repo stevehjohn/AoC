@@ -10,32 +10,28 @@ public class Part2 : Base
     {
         ParseInput();
         
-        SettleBricks();
+        SettleBricks(Bricks);
         
         var result = GetSupportingBricks();
 
         var count = 0;
 
-        var settled = new List<(int Id, List<Point> Points)>();
-
-        foreach (var brick in Bricks)
-        {
-            settled.Add((brick.Id, brick.Points.Select(b => new Point(b)).ToList()));
-        }
-
-        foreach (var brickId in result)
-        {
-            Bricks.RemoveAll(b => b.Id == brickId);
-
-            count += SettleBricks();
-            
-            Bricks.Clear();
-
-            foreach (var item in settled)
+        Parallel.ForEach(result,
+            () => 0,
+            (brickId, _, c) =>
             {
-                Bricks.Add((item.Id, item.Points.Select(b => new Point(b)).ToList()));
-            }
-        }
+                var settled = new List<(int Id, List<Point> Points)>();
+
+                foreach (var brick in Bricks)
+                {
+                    if (brick.Id != brickId)
+                    {
+                        settled.Add((brick.Id, brick.Points.Select(b => new Point(b)).ToList()));
+                    }
+                }
+
+                return c + SettleBricks(settled);
+            }, c => Interlocked.Add(ref count, c));
         
         return count.ToString();
     }
@@ -50,7 +46,7 @@ public class Part2 : Base
         {
             Bricks.Remove(brick);
 
-            if (SettleBricks(false) > 0)
+            if (SettleBricks(Bricks, false) > 0)
             {
                 result.Add(brick.Id);                    
             }
