@@ -9,7 +9,7 @@ public class Part1 : Base
     {
         ParseInput();
 
-        SettleBricks();
+        SettleBricks(Map);
 
         var result = CountNonSupportingBricks();
         
@@ -40,7 +40,7 @@ public class Part1 : Base
                 }
             }
 
-            result += 1 - SettleBricks(false);
+            result += 1 - SettleBricks(Map, false);
         
             Array.Copy(copy, Map, MaxHeight * 100);
         }

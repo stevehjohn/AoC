@@ -14,7 +14,7 @@ public abstract class Base : Solution
 
     protected int Count;
 
-    protected int SettleBricks(bool move = true)
+    protected int SettleBricks(int[,,] map, bool move = true)
     {
         var found = new HashSet<int>();
 
@@ -34,7 +34,7 @@ public abstract class Base : Solution
                 {
                     for (var y = 0; y < 10; y++)
                     {
-                        var brick = Map[z, x, y];
+                        var brick = map[z, x, y];
 
                         if (brick == 0)
                         {
@@ -43,7 +43,7 @@ public abstract class Base : Solution
 
                         found.Add(brick);
 
-                        if (Map[z - 1, x, y] != 0)
+                        if (map[z - 1, x, y] != 0)
                         {
                             supported.Add(brick);
                         }
@@ -54,13 +54,13 @@ public abstract class Base : Solution
                 {
                     for (var y = 0; y < 10; y++)
                     {
-                        var brick = Map[z, x, y];
+                        var brick = map[z, x, y];
 
                         if (found.Contains(brick) && ! supported.Contains(brick))
                         {
-                            Map[z - 1, x, y] = brick;
+                            map[z - 1, x, y] = brick;
 
-                            Map[z, x, y] = 0;
+                            map[z, x, y] = 0;
 
                             if (! move)
                             {

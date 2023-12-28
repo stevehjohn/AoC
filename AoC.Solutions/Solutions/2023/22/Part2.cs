@@ -1,4 +1,3 @@
-using AoC.Solutions.Common;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2023._22;
@@ -10,11 +9,9 @@ public class Part2 : Base
     {
         ParseInput();
         
-        SettleBricks();
+        SettleBricks(Map);
         
         var result = GetNonSupportingBricks();
-
-        Console.WriteLine(result.Count);
         
         var count = 0;
         
@@ -32,18 +29,18 @@ public class Part2 : Base
                     {
                         for (var y = 0; y < 10; y++)
                         {
-                            if (Map[z, x, y] == brickId)
+                            if (copy[z, x, y] == brickId)
                             {
-                                Map[z, x, y] = 0;
+                                copy[z, x, y] = 0;
                             }
                         }
                     }
                 }
         
-                return c + SettleBricks();
+                return c + SettleBricks(copy);
             }, c => Interlocked.Add(ref count, c));
 
-        return "0"; //count.ToString();
+        return count.ToString();
     }
     
     private List<int> GetNonSupportingBricks()
@@ -70,7 +67,7 @@ public class Part2 : Base
                 }
             }
 
-            if (SettleBricks(false) > 0)
+            if (SettleBricks(Map, false) > 0)
             {
                 result.Add(id);
             }
