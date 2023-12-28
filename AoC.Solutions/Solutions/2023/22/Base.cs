@@ -7,79 +7,131 @@ namespace AoC.Solutions.Solutions._2023._22;
 public abstract class Base : Solution
 {
     public override string Description => "Sand slabs";
+
+    private readonly int[,,] _map = new int[300, 10, 10];
+
+    protected readonly HashSet<(int Id, int SupportedById)> Supported = new();
+
+    protected int Count;
     
-    protected List<(int Id, List<Point> Points)> Bricks = new();
-    
-    protected int SettleBricks(List<(int Id, List<Point> Points)> bricks, bool move = true)
+    protected void BuildStructure()
     {
-        var count = 0;
-
-        foreach (var brick in bricks)
+        for (var z = 2; z < 300; z++)
         {
-            if (brick.Points[0].Z == 1)
+            for (var x = 0; x < 10; x++)
             {
-                continue;
-            }
-
-            var resting = Resting(bricks, brick.Points);
-
-            if (! move && ! resting)
-            {
-                return 1;
-            }
-
-            if (! resting)
-            {
-                count++;
-
-                while (! resting && brick.Points[0].Z > 1)
+                for (var y = 0; y < 10; y++)
                 {
-                    foreach (var item in brick.Points)
+                    var brick = _map[z, x, y];
+
+                    if (brick == 0)
                     {
-                        item.Z--;
+                        continue;
                     }
 
-                    resting = Resting(bricks, brick.Points);
+                    var below = _map[z - 1, x, y];
+                    
+                    if (below != 0 && below != brick)
+                    {
+                        Supported.Add((brick, below));
+                    }
                 }
             }
         }
-
-        return count;
     }
 
-    private bool Resting(List<(int Id, List<Point> Points)> bricks, List<Point> brick)
+    protected void Dump()
     {
-        foreach (var item in bricks)
+        for (var z = 9; z > 0; z--)
         {
-            if (item.Points == brick)
+            for (int y = 0; y < 10; y++)
             {
-                continue;
-            }
-
-            if (item.Points[0].Z >= brick[0].Z || item.Points[0].Z < brick[0].Z - 5)
-            {
-                continue;
-            }
-
-            foreach (var left in item.Points)
-            {
-                foreach (var right in brick)
+                var found = 0;
+                
+                for (int x = 0; x < 10; x++)
                 {
-                    if (left.Z == right.Z - 1 && left.X == right.X && left.Y == right.Y)
+                    if (_map[z, x, y] != 0)
                     {
-                        return true;
+                        found = _map[z, x, y];
+                        
+                        break;
                     }
                 }
+    
+                if (found > 0)
+                {
+                    Console.Write(found);
+                }
+                else
+                {
+                    Console.Write(' ');
+                }
+            }
+                
+            Console.WriteLine();
+        }
+    }
+
+    protected void SettleBricks()
+    {
+        var found = new HashSet<int>();
+
+        var supported = new HashSet<int>();
+
+        var dropped = true;
+
+        while (dropped)
+        {
+            dropped = false;
+
+            for (var z = 2; z < 300; z++)
+            {
+                for (var x = 0; x < 10; x++)
+                {
+                    for (var y = 0; y < 10; y++)
+                    {
+                        var brick = _map[z, x, y];
+
+                        if (brick == 0)
+                        {
+                            continue;
+                        }
+
+                        found.Add(brick);
+
+                        if (_map[z - 1, x, y] != 0)
+                        {
+                            supported.Add(brick);
+                        }
+                    }
+                }
+
+                for (var x = 0; x < 10; x++)
+                {
+                    for (var y = 0; y < 10; y++)
+                    {
+                        var brick = _map[z, x, y];
+
+                        if (found.Contains(brick) && ! supported.Contains(brick))
+                        {
+                            _map[z - 1, x, y] = brick;
+
+                            _map[z, x, y] = 0;
+
+                            dropped = true;
+                        }
+                    }
+                }
+
+                found.Clear();
+
+                supported.Clear();
             }
         }
-
-        return false;
     }
 
     protected void ParseInput()
     {
-        var id = 1;
-        
         foreach (var line in Input)
         {
             var parts = line.Split('~');
@@ -93,24 +145,19 @@ public abstract class Base : Solution
                 (start, end) = (end, start);
             }
 
-            var brick = new List<Point> { start };
+            Count++;
+
+            _map[start.Z, start.X, start.Y] = Count;
 
             while (! start.Equals(end))
             {
                 start = new Point(
                     start.X.Converge(end.X),
                     start.Y.Converge(end.Y),
-                    start.Z.Converge(end.Z)
-                );
-                
-                brick.Add(start);
+                    start.Z.Converge(end.Z));
+
+                _map[start.Z, start.X, start.Y] = Count;
             }
-            
-            Bricks.Add((id, brick));
-
-            id++;
         }
-
-        Bricks = Bricks.OrderBy(b => b.Points[0].Z).ToList();
     }
 }

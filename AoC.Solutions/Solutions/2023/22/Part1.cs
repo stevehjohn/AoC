@@ -9,28 +9,46 @@ public class Part1 : Base
     {
         ParseInput();
 
-        SettleBricks(Bricks);
+        SettleBricks();
 
-        var result = Bricks.Count - CountSupportingBricks();
+        BuildStructure();
 
+        var result = 0;
+
+        for (var id = 1; id <= Count; id++)
+        {
+            var supporting = Supported.Where(b => b.SupportedById == id).ToList();
+            
+            if (supporting.Count == 0)
+            { 
+                result++;
+                
+                continue;
+            }
+
+            var supportedByOther = false; 
+
+            foreach (var brick in supporting)
+            {
+                supportedByOther = Supported.Count(b => b.Id == brick.Id) > 1;
+
+                if (supportedByOther)
+                {
+                    break;
+                }
+            }
+
+            if (supportedByOther)
+            {
+                result++;
+            }
+        }
+        
         return result.ToString();
     }
     
     private int CountSupportingBricks()
     {
-        var count = 0;
-
-        var settledState = Bricks.ToList();
-
-        foreach (var brick in settledState)
-        {
-            Bricks.Remove(brick);
-
-            count += SettleBricks(Bricks, false) > 0 ? 1 : 0;
-
-            Bricks.Add(brick);
-        }
-        
-        return count;
+        return 0;
     }
 }
