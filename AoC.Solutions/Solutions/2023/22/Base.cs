@@ -40,38 +40,6 @@ public abstract class Base : Solution
         }
     }
 
-    protected void Dump()
-    {
-        for (var z = 150; z > 0; z--)
-        {
-            for (int y = 0; y < 10; y++)
-            {
-                var found = 0;
-                
-                for (int x = 0; x < 10; x++)
-                {
-                    if (_map[z, x, y] != 0)
-                    {
-                        found = _map[z, x, y];
-                        
-                        break;
-                    }
-                }
-    
-                if (found > 0)
-                {
-                    Console.Write((char) (255 + found));
-                }
-                else
-                {
-                    Console.Write(' ');
-                }
-            }
-                
-            Console.WriteLine();
-        }
-    }
-
     protected void SettleBricks()
     {
         var found = new HashSet<int>();
