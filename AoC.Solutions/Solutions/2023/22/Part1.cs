@@ -40,7 +40,7 @@ public class Part1 : Base
                 }
             }
 
-            result += SettleBricks(false) ? 0 : 1;
+            result += 1 - SettleBricks(false);
         
             Array.Copy(copy, Map, MaxHeight * 100);
         }

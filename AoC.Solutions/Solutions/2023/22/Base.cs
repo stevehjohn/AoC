@@ -14,7 +14,7 @@ public abstract class Base : Solution
 
     protected int Count;
 
-    protected bool SettleBricks(bool move = true)
+    protected int SettleBricks(bool move = true)
     {
         var found = new HashSet<int>();
 
@@ -22,6 +22,8 @@ public abstract class Base : Solution
 
         var dropped = true;
 
+        var droppedIds = new HashSet<int>();
+        
         while (dropped)
         {
             dropped = false;
@@ -62,8 +64,10 @@ public abstract class Base : Solution
 
                             if (! move)
                             {
-                                return true;
+                                return 1;
                             }
+
+                            droppedIds.Add(brick);
 
                             dropped = true;
                         }
@@ -76,7 +80,7 @@ public abstract class Base : Solution
             }
         }
 
-        return false;
+        return droppedIds.Count;
     }
 
     protected void ParseInput()
