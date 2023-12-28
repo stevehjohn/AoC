@@ -1,3 +1,4 @@
+using AoC.Solutions.Extensions;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2023._21;
@@ -58,19 +59,9 @@ public class Part2 : Base
             
             step++;
 
-            source--;
-
-            if (source < 0)
-            {
-                source = 2;
-            }
-
-            target--;
-
-            if (target < 0)
-            {
-                target = 2;
-            }
+            source = source.DecRotate(2);
+            
+            target = target.DecRotate(2);
         }
 
         var halfWidth = Width / 2;
