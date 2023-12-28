@@ -1,4 +1,3 @@
-using AoC.Solutions.Common;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2023._22;
@@ -10,50 +9,72 @@ public class Part2 : Base
     {
         ParseInput();
         
-        SettleBricks(Bricks);
+        SettleBricks(Map);
         
-        var result = GetSupportingBricks();
-
+        var result = GetNonSupportingBricks();
+        
         var count = 0;
-
+        
         Parallel.ForEach(result,
             () => 0,
             (brickId, _, c) =>
             {
-                var settled = new List<(int Id, List<Point> Points)>();
-
-                foreach (var brick in Bricks)
+                var copy = new int[MaxHeight, 10, 10];
+        
+                Array.Copy(Map, copy, MaxHeight * 100);
+                
+                for (var z = 1; z < MaxHeight; z++)
                 {
-                    if (brick.Id != brickId)
+                    for (var x = 0; x < 10; x++)
                     {
-                        settled.Add((brick.Id, brick.Points.Select(b => new Point(b)).ToList()));
+                        for (var y = 0; y < 10; y++)
+                        {
+                            if (copy[z, x, y] == brickId)
+                            {
+                                copy[z, x, y] = 0;
+                            }
+                        }
                     }
                 }
-
-                return c + SettleBricks(settled);
-            }, c => Interlocked.Add(ref count, c));
         
+                return c + SettleBricks(copy);
+            }, c => Interlocked.Add(ref count, c));
+
         return count.ToString();
     }
     
-    private List<int> GetSupportingBricks()
+    private List<int> GetNonSupportingBricks()
     {
         var result = new List<int>();
 
-        var settledState = Bricks.ToList();
-
-        foreach (var brick in settledState)
+        var copy = new int[MaxHeight, 10, 10];
+        
+        Array.Copy(Map, copy, MaxHeight * 100);
+        
+        for (var id = 1; id <= Count; id++)
         {
-            Bricks.Remove(brick);
-
-            if (SettleBricks(Bricks, false) > 0)
+            for (var z = 1; z < MaxHeight; z++)
             {
-                result.Add(brick.Id);                    
+                for (var x = 0; x < 10; x++)
+                {
+                    for (var y = 0; y < 10; y++)
+                    {
+                        if (Map[z, x, y] == id)
+                        {
+                            Map[z, x, y] = 0;
+                        }
+                    }
+                }
             }
 
-            Bricks.Add(brick);
+            if (SettleBricks(Map, false) > 0)
+            {
+                result.Add(id);
+            }
+
+            Array.Copy(copy, Map, MaxHeight * 100);
         }
-        
+
         return result;
     }
 }

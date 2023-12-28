@@ -7,79 +7,84 @@ namespace AoC.Solutions.Solutions._2023._22;
 public abstract class Base : Solution
 {
     public override string Description => "Sand slabs";
+
+    protected const int MaxHeight = 300;
     
-    protected List<(int Id, List<Point> Points)> Bricks = new();
-    
-    protected int SettleBricks(List<(int Id, List<Point> Points)> bricks, bool move = true)
+    protected readonly int[,,] Map = new int[MaxHeight, 10, 10];
+
+    protected int Count;
+
+    protected int SettleBricks(int[,,] map, bool move = true)
     {
-        var count = 0;
+        var found = new HashSet<int>();
 
-        foreach (var brick in bricks)
+        var supported = new HashSet<int>();
+
+        var dropped = true;
+
+        var droppedIds = new HashSet<int>();
+        
+        while (dropped)
         {
-            if (brick.Points[0].Z == 1)
+            dropped = false;
+
+            for (var z = 2; z < MaxHeight; z++)
             {
-                continue;
-            }
-
-            var resting = Resting(bricks, brick.Points);
-
-            if (! move && ! resting)
-            {
-                return 1;
-            }
-
-            if (! resting)
-            {
-                count++;
-
-                while (! resting && brick.Points[0].Z > 1)
+                for (var x = 0; x < 10; x++)
                 {
-                    foreach (var item in brick.Points)
+                    for (var y = 0; y < 10; y++)
                     {
-                        item.Z--;
-                    }
+                        var brick = map[z, x, y];
 
-                    resting = Resting(bricks, brick.Points);
+                        if (brick == 0)
+                        {
+                            continue;
+                        }
+
+                        found.Add(brick);
+
+                        if (map[z - 1, x, y] != 0)
+                        {
+                            supported.Add(brick);
+                        }
+                    }
                 }
+
+                for (var x = 0; x < 10; x++)
+                {
+                    for (var y = 0; y < 10; y++)
+                    {
+                        var brick = map[z, x, y];
+
+                        if (found.Contains(brick) && ! supported.Contains(brick))
+                        {
+                            map[z - 1, x, y] = brick;
+
+                            map[z, x, y] = 0;
+
+                            if (! move)
+                            {
+                                return 1;
+                            }
+
+                            droppedIds.Add(brick);
+
+                            dropped = true;
+                        }
+                    }
+                }
+
+                found.Clear();
+
+                supported.Clear();
             }
         }
 
-        return count;
-    }
-
-    private bool Resting(List<(int Id, List<Point> Points)> bricks, List<Point> brick)
-    {
-        foreach (var item in bricks)
-        {
-            if (item.Points == brick)
-            {
-                continue;
-            }
-
-            if (item.Points[0].Z >= brick[0].Z || item.Points[0].Z < brick[0].Z - 5)
-            {
-                continue;
-            }
-
-            foreach (var left in item.Points)
-            {
-                foreach (var right in brick)
-                {
-                    if (left.Z == right.Z - 1 && left.X == right.X && left.Y == right.Y)
-                    {
-                        return true;
-                    }
-                }
-            }
-        }
-
-        return false;
+        return droppedIds.Count;
     }
 
     protected void ParseInput()
     {
-        var id = 1;
-        
         foreach (var line in Input)
         {
             var parts = line.Split('~');
@@ -93,24 +98,19 @@ public abstract class Base : Solution
                 (start, end) = (end, start);
             }
 
-            var brick = new List<Point> { start };
+            Count++;
+
+            Map[start.Z, start.X, start.Y] = Count;
 
             while (! start.Equals(end))
             {
                 start = new Point(
                     start.X.Converge(end.X),
                     start.Y.Converge(end.Y),
-                    start.Z.Converge(end.Z)
-                );
-                
-                brick.Add(start);
+                    start.Z.Converge(end.Z));
+
+                Map[start.Z, start.X, start.Y] = Count;
             }
-            
-            Bricks.Add((id, brick));
-
-            id++;
         }
-
-        Bricks = Bricks.OrderBy(b => b.Points[0].Z).ToList();
     }
 }
