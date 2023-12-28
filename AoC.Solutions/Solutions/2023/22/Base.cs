@@ -8,7 +8,9 @@ public abstract class Base : Solution
 {
     public override string Description => "Sand slabs";
 
-    private readonly int[,,] _map = new int[300, 10, 10];
+    protected const int MaxHeight = 300;
+    
+    protected readonly int[,,] Map = new int[MaxHeight, 10, 10];
 
     protected readonly HashSet<(int Id, int SupportedById)> Supported = new();
 
@@ -16,20 +18,20 @@ public abstract class Base : Solution
     
     protected void BuildStructure()
     {
-        for (var z = 2; z < 300; z++)
+        for (var z = 2; z < MaxHeight; z++)
         {
             for (var x = 0; x < 10; x++)
             {
                 for (var y = 0; y < 10; y++)
                 {
-                    var brick = _map[z, x, y];
+                    var brick = Map[z, x, y];
 
                     if (brick == 0)
                     {
                         continue;
                     }
 
-                    var below = _map[z - 1, x, y];
+                    var below = Map[z - 1, x, y];
                     
                     if (below != 0 && below != brick)
                     {
@@ -40,7 +42,7 @@ public abstract class Base : Solution
         }
     }
 
-    protected void SettleBricks()
+    protected bool SettleBricks(bool move = true)
     {
         var found = new HashSet<int>();
 
@@ -52,13 +54,13 @@ public abstract class Base : Solution
         {
             dropped = false;
 
-            for (var z = 2; z < 300; z++)
+            for (var z = 2; z < MaxHeight; z++)
             {
                 for (var x = 0; x < 10; x++)
                 {
                     for (var y = 0; y < 10; y++)
                     {
-                        var brick = _map[z, x, y];
+                        var brick = Map[z, x, y];
 
                         if (brick == 0)
                         {
@@ -67,7 +69,7 @@ public abstract class Base : Solution
 
                         found.Add(brick);
 
-                        if (_map[z - 1, x, y] != 0)
+                        if (Map[z - 1, x, y] != 0)
                         {
                             supported.Add(brick);
                         }
@@ -78,13 +80,18 @@ public abstract class Base : Solution
                 {
                     for (var y = 0; y < 10; y++)
                     {
-                        var brick = _map[z, x, y];
+                        var brick = Map[z, x, y];
 
                         if (found.Contains(brick) && ! supported.Contains(brick))
                         {
-                            _map[z - 1, x, y] = brick;
+                            Map[z - 1, x, y] = brick;
 
-                            _map[z, x, y] = 0;
+                            Map[z, x, y] = 0;
+
+                            if (! move)
+                            {
+                                return true;
+                            }
 
                             dropped = true;
                         }
@@ -96,6 +103,8 @@ public abstract class Base : Solution
                 supported.Clear();
             }
         }
+
+        return false;
     }
 
     protected void ParseInput()
@@ -115,7 +124,7 @@ public abstract class Base : Solution
 
             Count++;
 
-            _map[start.Z, start.X, start.Y] = Count;
+            Map[start.Z, start.X, start.Y] = Count;
 
             while (! start.Equals(end))
             {
@@ -124,7 +133,7 @@ public abstract class Base : Solution
                     start.Y.Converge(end.Y),
                     start.Z.Converge(end.Z));
 
-                _map[start.Z, start.X, start.Y] = Count;
+                Map[start.Z, start.X, start.Y] = Count;
             }
         }
     }

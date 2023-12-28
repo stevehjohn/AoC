@@ -22,33 +22,29 @@ public class Part1 : Base
     {
         var result = 0;
 
+        var copy = new int[MaxHeight, 10, 10];
+        
+        Array.Copy(Map, copy, MaxHeight * 100);
+        
         for (var id = 1; id <= Count; id++)
         {
-            var supporting = Supported.Where(b => b.SupportedById == id).ToList();
-            
-            if (supporting.Count == 0)
-            { 
-                result++;
-                
-                continue;
-            }
-
-            var supportedByOther = false; 
-            
-            foreach (var brick in supporting)
+            for (var z = 1; z < MaxHeight; z++)
             {
-                supportedByOther = Supported.Count(b => b.Id == brick.Id) > 1;
-            
-                if (supportedByOther)
+                for (var x = 0; x < 10; x++)
                 {
-                    break;
+                    for (var y = 0; y < 10; y++)
+                    {
+                        if (Map[z, x, y] == id)
+                        {
+                            Map[z, x, y] = 0;
+                        }
+                    }
                 }
             }
-            
-            if (supportedByOther)
-            {
-                result++;
-            }
+
+            result += SettleBricks(false) ? 0 : 1;
+        
+            Array.Copy(copy, Map, MaxHeight * 100);
         }
 
         return result;
