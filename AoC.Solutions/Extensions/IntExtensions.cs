@@ -2,6 +2,18 @@
 
 public static class IntExtensions
 {
+    public static int DecRotate(this int input, int rotateTo)
+    {
+        input -= 1;
+
+        if (input < 0)
+        {
+            input = rotateTo;
+        }
+
+        return input;
+    }
+
     public static int Converge(this int input, int target)
     {
         if (input == target)

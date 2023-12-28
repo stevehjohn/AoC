@@ -1,3 +1,4 @@
+using AoC.Solutions.Extensions;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2023._21;
@@ -18,12 +19,18 @@ public class Part2 : Base
 
     private long Walk((int X, int Y) start, int maxSteps)
     {
-        var oddPositions = new HashSet<(int X, int Y, int Ux, int Uy)>
+        var positions = new HashSet<(int X, int Y, int Ux, int Uy)>[]
         {
-            (start.X, start.Y, 0, 0)
+            [],
+            [],
+            []
         };
+        
+        positions[0].Add((start.X, start.Y, 0, 0));
 
-        var evenPositions = new HashSet<(int X, int Y, int Ux, int Uy)>();
+        var source = 0;
+
+        var target = 2;
         
         var counts = new long[maxSteps];
 
@@ -31,9 +38,9 @@ public class Part2 : Base
         
         while (step < maxSteps)
         {
-            var sourcePositions = (step & 1) == 0 ? evenPositions : oddPositions;
+            var sourcePositions = positions[source];
 
-            var targetPositions = (step & 1) == 0 ? oddPositions : evenPositions;
+            var targetPositions = positions[target];
 
             targetPositions.Clear();
             
@@ -47,10 +54,14 @@ public class Part2 : Base
             
                 Move(targetPositions, position, 0, 1);
             }
-
+            
             counts[step] = targetPositions.Count;
             
             step++;
+
+            source = source.DecRotate(2);
+            
+            target = target.DecRotate(2);
         }
 
         var halfWidth = Width / 2;
