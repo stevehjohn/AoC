@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
@@ -17,7 +18,7 @@ public abstract class Base : Solution
 
     private int _height;
 
-    private readonly Dictionary<(int X, int Y), List<((int X, int Y) Start, (int X, int Y) End, int Steps)>> _edges = new();
+    private readonly ConcurrentDictionary<(int X, int Y), List<((int X, int Y) Start, (int X, int Y) End, int Steps)>> _edges = new();
     
     private readonly HashSet<(int, int)> _history = new();
 
@@ -49,7 +50,7 @@ public abstract class Base : Solution
     {
         FindIntersections();
 
-        foreach (var intersection in Intersections)
+        Parallel.ForEach(Intersections, intersection =>
         {
             foreach (var other in Intersections)
             {
@@ -57,10 +58,10 @@ public abstract class Base : Solution
                 {
                     continue;
                 }
-        
+
                 var distance = CanReach(intersection, other, isPart2);
 
-                if (other == (_width - 2, _height - 1))
+                if (other == (_width - 2, _height - 1) && _lastSteps == 0)
                 {
                     _lastSteps = distance;
                 }
@@ -77,7 +78,7 @@ public abstract class Base : Solution
                     }
                 }
             }
-        }
+        });
     }
 
     private int CanReach((int X, int Y) start, (int X, int Y) end, bool isPart2)
