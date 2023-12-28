@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using AoC.Solutions.Libraries;
 using JetBrains.Annotations;
 
@@ -14,30 +15,32 @@ public class Part2 : Base
         
         GetAllPenultimateConjunctions();
 
-        var iterationsToReceiveLow = new List<long>();
-        
-        foreach (var conjunction in _penultimateConjunctions)
+        var iterationsToReceiveLow = new ConcurrentBag<long>();
+
+        Parallel.ForEach(_penultimateConjunctions, conjunction =>
         {
-            ParseInput();
+            var machine = new Machine();
+
+            machine.ParseInput(Input);
 
             var presses = 0;
 
             while (true)
             {
                 presses++;
-        
-                var result = SendPulses(conjunction);
-        
+
+                var result = machine.SendPulses(conjunction);
+
                 if (result == (0, 0))
                 {
                     iterationsToReceiveLow.Add(presses);
-                    
+
                     break;
                 }
             }
-        }
+        });
         
-        return Maths.LowestCommonMultiple(iterationsToReceiveLow).ToString();
+        return Maths.LowestCommonMultiple(iterationsToReceiveLow.ToList()).ToString();
     }
 
     private void GetAllPenultimateConjunctions()
