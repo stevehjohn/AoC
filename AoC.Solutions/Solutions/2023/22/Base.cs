@@ -12,35 +12,7 @@ public abstract class Base : Solution
     
     protected readonly int[,,] Map = new int[MaxHeight, 10, 10];
 
-    protected readonly HashSet<(int Id, int SupportedById)> Supported = new();
-
     protected int Count;
-    
-    protected void BuildStructure()
-    {
-        for (var z = 2; z < MaxHeight; z++)
-        {
-            for (var x = 0; x < 10; x++)
-            {
-                for (var y = 0; y < 10; y++)
-                {
-                    var brick = Map[z, x, y];
-
-                    if (brick == 0)
-                    {
-                        continue;
-                    }
-
-                    var below = Map[z - 1, x, y];
-                    
-                    if (below != 0 && below != brick)
-                    {
-                        Supported.Add((brick, below));
-                    }
-                }
-            }
-        }
-    }
 
     protected bool SettleBricks(bool move = true)
     {

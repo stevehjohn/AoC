@@ -11,8 +11,6 @@ public class Part1 : Base
 
         SettleBricks();
 
-        BuildStructure();
-
         var result = CountNonSupportingBricks();
         
         return result.ToString();

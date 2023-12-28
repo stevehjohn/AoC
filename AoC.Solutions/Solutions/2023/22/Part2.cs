@@ -10,7 +10,7 @@
 //     {
 //         ParseInput();
 //         
-//         SettleBricks(Bricks);
+//         SettleBricks();
 //         
 //         var result = GetSupportingBricks();
 //
