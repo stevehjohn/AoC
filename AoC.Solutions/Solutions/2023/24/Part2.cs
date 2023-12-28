@@ -18,7 +18,7 @@ public class Part2 : Base
     {
         const int area = 270;
 
-        const int stoneCount = 4;
+        const int stoneCount = 3;
 
         var stones = new (LongPoint Position, LongPoint Velocity)[stoneCount];
 
