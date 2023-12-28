@@ -34,17 +34,17 @@ public class Part1 : Base
             }
 
             var supportedByOther = false; 
-
+            
             foreach (var brick in supporting)
             {
                 supportedByOther = Supported.Count(b => b.Id == brick.Id) > 1;
-
+            
                 if (supportedByOther)
                 {
                     break;
                 }
             }
-
+            
             if (supportedByOther)
             {
                 result++;

@@ -42,7 +42,7 @@ public abstract class Base : Solution
 
     protected void Dump()
     {
-        for (var z = 9; z > 0; z--)
+        for (var z = 150; z > 0; z--)
         {
             for (int y = 0; y < 10; y++)
             {
@@ -60,7 +60,7 @@ public abstract class Base : Solution
     
                 if (found > 0)
                 {
-                    Console.Write(found);
+                    Console.Write((char) (255 + found));
                 }
                 else
                 {
