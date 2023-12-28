@@ -13,6 +13,13 @@ public class Part1 : Base
 
         BuildStructure();
 
+        var result = CountNonSupportingBricks();
+        
+        return result.ToString();
+    }
+    
+    private int CountNonSupportingBricks()
+    {
         var result = 0;
 
         for (var id = 1; id <= Count; id++)
@@ -43,12 +50,7 @@ public class Part1 : Base
                 result++;
             }
         }
-        
-        return result.ToString();
-    }
-    
-    private int CountSupportingBricks()
-    {
-        return 0;
+
+        return result;
     }
 }
