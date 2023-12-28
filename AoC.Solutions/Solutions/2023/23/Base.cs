@@ -24,13 +24,13 @@ public abstract class Base : Solution
 
     private int _lastSteps;
     
-    protected void FindLongestPath((int X, int Y) position, int steps)
+    protected bool FindLongestPath((int X, int Y) position, int steps, bool isPart2 = false)
     {
         if (position == Intersections[^2])
         {
             Counts.Add(steps + _lastSteps);
             
-            return;
+            return true;
         }
 
         var reaches = _edges[position];
@@ -39,11 +39,18 @@ public abstract class Base : Solution
         {
             if (_history.Add(item.End))
             {
-                FindLongestPath(item.End, steps + item.Steps);
+                var result = FindLongestPath(item.End, steps + item.Steps, isPart2);
+
+                if ((! isPart2 || Counts.Count > 100_000) && result)
+                {
+                    return true;
+                }
 
                 _history.Remove(item.End);
             }
         }
+
+        return false;
     }
 
     protected void CreateEdges(bool isPart2 = false)
@@ -74,7 +81,19 @@ public abstract class Base : Solution
                     }
                     else
                     {
-                        _edges[intersection].Add((intersection, other, distance));
+                        var insertAt = 0;
+
+                        foreach (var edge in _edges[intersection])
+                        {
+                            if (edge.Steps < distance)
+                            {
+                                break;
+                            }
+                        
+                            insertAt++;
+                        }
+                        
+                        _edges[intersection].Insert(insertAt, (intersection, other, distance));
                     }
                 }
             }

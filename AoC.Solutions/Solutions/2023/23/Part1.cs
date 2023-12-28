@@ -12,7 +12,11 @@ public class Part1 : Base
         CreateEdges();
 
         FindLongestPath(Intersections[0], 0);
-        
+
+        Console.WriteLine(Counts.Count);
+
+        Console.WriteLine(Counts.IndexOf(Counts.Max()));
+
         return Counts.Max().ToString();
     }
 }
