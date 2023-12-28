@@ -41,11 +41,6 @@ public class Part2 : Base
 
             var targetPositions = positions[target];
 
-            if (step > 2)
-            {
-                sourcePositions.ExceptWith(positions[target]);
-            }
-
             targetPositions.Clear();
             
             foreach (var position in sourcePositions)
@@ -58,16 +53,9 @@ public class Part2 : Base
             
                 Move(targetPositions, position, 0, 1);
             }
-
-            if (step > 2)
-            {
-                counts[step] = counts[step - 2] + targetPositions.Count;
-            }
-            else
-            {
-                counts[step] = targetPositions.Count;
-            }
-
+            
+            counts[step] = targetPositions.Count;
+            
             step++;
 
             source--;
