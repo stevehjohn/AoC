@@ -7,17 +7,17 @@ namespace AoC.Solutions.Solutions._2023._20;
 [UsedImplicitly]
 public class Part2 : Base
 {
-    private readonly List<string> _penultimateConjunctions = new();
-    
     public override string GetAnswer()
     {
-        ParseInput();
+        var baseMachine = new Machine();
         
-        GetAllPenultimateConjunctions();
+        baseMachine.ParseInput(Input);
+        
+        var penultimateConjunctions = baseMachine.GetAllPenultimateConjunctions();
 
         var iterationsToReceiveLow = new ConcurrentBag<long>();
 
-        Parallel.ForEach(_penultimateConjunctions, conjunction =>
+        Parallel.ForEach(penultimateConjunctions, conjunction =>
         {
             var machine = new Machine();
 
@@ -41,19 +41,5 @@ public class Part2 : Base
         });
         
         return Maths.LowestCommonMultiple(iterationsToReceiveLow.ToList()).ToString();
-    }
-
-    private void GetAllPenultimateConjunctions()
-    {
-        foreach (var module in Modules.Where(m => m.Value.Targets.Contains("rx")))
-        {
-            foreach (var item in Modules)
-            {
-                if (item.Value.Targets.Contains(module.Key))
-                {
-                    _penultimateConjunctions.Add(item.Key);
-                }
-            }
-        }
     }
 }

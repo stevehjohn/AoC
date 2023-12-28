@@ -88,6 +88,24 @@ public class Machine
         return (lows, highs);
     }
     
+    public List<string> GetAllPenultimateConjunctions()
+    {
+        var result = new List<string>();
+        
+        foreach (var module in _modules.Where(m => m.Value.Targets.Contains("rx")))
+        {
+            foreach (var item in _modules)
+            {
+                if (item.Value.Targets.Contains(module.Key))
+                {
+                    result.Add(item.Key);
+                }
+            }
+        }
+
+        return result;
+    }
+    
     public void ParseInput(string[] input)
     {
         _modules = new Dictionary<string, Module>();

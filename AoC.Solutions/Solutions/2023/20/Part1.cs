@@ -7,13 +7,15 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        ParseInput();
+        var machine = new Machine();
+        
+        machine.ParseInput(Input);
 
         (int Lows, int Highs) total = (0, 0);
 
         for (var i = 0; i < 1_000; i++)
         {
-            var result = SendPulses();
+            var result = machine.SendPulses();
 
             total.Lows += result.Lows;
 
