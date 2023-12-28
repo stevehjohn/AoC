@@ -19,10 +19,10 @@ public class Part1 : Base
 
         var backup = _nodes.ToList();
 
+        var rng = new Random();
+
         while (true)
         {
-            var rng = new Random();
-
             var l = _distinct[rng.Next(_distinct.Count)];
             var r = _distinct[rng.Next(_distinct.Count)];
 
