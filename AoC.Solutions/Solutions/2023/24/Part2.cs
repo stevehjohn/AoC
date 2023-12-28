@@ -26,9 +26,9 @@ public class Part2 : Base
 
         (long X, long Y, double Time) firstCollision = (0, 0, 0);
         
-        for (var x = -area; x < area + 1; x++)
+        for (var x = 0; x < area + 1; x++)
         {
-            for (var y = -area; y < area + 1; y++)
+            for (var y = 0; y < area + 1; y++)
             {
                 var velocity = new LongPoint(x, y, 0);
 
@@ -72,7 +72,7 @@ public class Part2 : Base
                     continue;
                 }
 
-                for (var z = -area; z < area + 1; z++)
+                for (var z = -0; z < area + 1; z++)
                 {
                     var pZ = stones[1].Position.Z + (stones[1].Velocity.Z - z) * collisions[0].Time;
 
