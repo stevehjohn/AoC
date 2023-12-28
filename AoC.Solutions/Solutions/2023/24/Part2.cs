@@ -16,7 +16,7 @@ public class Part2 : Base
 
     private long Solve()
     {
-        const int area = 300;
+        const int area = 270;
 
         const int stoneCount = 4;
 
