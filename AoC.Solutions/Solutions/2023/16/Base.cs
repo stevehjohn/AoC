@@ -9,13 +9,11 @@ public abstract class Base : Solution
     
     private char[,] _map;
 
-    private bool[,] _energised;
-    
     protected int Width;
 
     protected int Height;
 
-    private readonly IVisualiser<PuzzleState> _visualiser;
+    protected readonly IVisualiser<PuzzleState> Visualiser;
 
     private PuzzleState _puzzleState;
 
@@ -25,12 +23,12 @@ public abstract class Base : Solution
 
     protected Base(IVisualiser<PuzzleState> visualiser)
     {
-        _visualiser = visualiser;
+        Visualiser = visualiser;
     }
 
     private void Visualise((int X, int Y, char Direction, int Id, int SourceId)? beam = null, bool finished = false, int startX = 0, int startY = 0, char startDirection = '\0')
     {
-        if (_visualiser != null)
+        if (Visualiser != null)
         {
             if (_puzzleState == null)
             {
@@ -42,7 +40,7 @@ public abstract class Base : Solution
                     LaserY = startY
                 };
                 
-                _visualiser.PuzzleStateChanged(_puzzleState);
+                Visualiser.PuzzleStateChanged(_puzzleState);
             }
 
             if (startDirection != '\0')
@@ -61,14 +59,14 @@ public abstract class Base : Solution
 
             if (finished)
             {
-                _visualiser.PuzzleStateChanged(_puzzleState);
+                Visualiser.PuzzleStateChanged(_puzzleState);
 
                 _puzzleState = null;
             }
         }
     }
 
-    protected int CountEnergised()
+    protected int CountEnergised(bool[,] energised)
     {
         var count = 0;
         
@@ -76,20 +74,20 @@ public abstract class Base : Solution
         {
             for (var x = 0; x < Width; x++)
             {
-                count += _energised[x, y] ? 1 : 0;
+                count += energised[x, y] ? 1 : 0;
             }
         }
 
         return count;
     }
 
-    protected void SimulateBeams(int startX, int startY, char direction)
+    protected bool[,] SimulateBeams(int startX, int startY, char direction)
     {
         Visualise(null, false, startX, startY, direction);
         
         var beams = new Stack<(int X, int Y, char Direction, int Id, int SourceId)>();
 
-        _energised = new bool[Width, Height];
+        var energised = new bool[Width, Height];
 
         var visited = new bool[Width, Height, 4];
         
@@ -128,7 +126,7 @@ public abstract class Base : Solution
                 continue;
             }
 
-            _energised[x, y] = true;
+            energised[x, y] = true;
 
             switch (_map[x, y])
             {
@@ -188,6 +186,8 @@ public abstract class Base : Solution
         }
         
         Visualise(null, true);
+
+        return energised;
     }
 
     private (int X, int Y) MoveBeam(int x, int y, char direction)

@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using AoC.Solutions.Infrastructure;
 using JetBrains.Annotations;
 
@@ -13,8 +14,57 @@ public class Part2 : Base
     public Part2(IVisualiser<PuzzleState> visualiser) : base(visualiser)
     {
     }
-    
+
     public override string GetAnswer()
+    {
+        if (Visualiser == null)
+        {
+            return GetAnswerParallel();
+        }
+
+        return GetAnswerConcurrent();
+    }
+
+    private string GetAnswerParallel()
+    {
+        ParseInput();
+
+        var maxes = new ConcurrentBag<int>();
+
+        Parallel.For(0, Width, x =>
+        {
+            var result = SimulateBeams(x, -1, 'S');
+
+            var energised = CountEnergised(result);
+
+            maxes.Add(energised);
+
+            result = SimulateBeams(x, Height, 'N');
+
+            energised = CountEnergised(result);
+
+            maxes.Add(energised);
+        });
+
+        Parallel.For(0, Height, y =>
+        {
+            var result = SimulateBeams(Width, y, 'W');
+
+            var energised = CountEnergised(result);
+
+            maxes.Add(energised);
+
+            result = SimulateBeams(-1, y, 'E');
+
+            energised = CountEnergised(result);
+
+            maxes.Add(energised);
+        });
+        
+        return maxes.Max().ToString();
+    }
+
+    private string GetAnswerConcurrent()
     {
         ParseInput();
 
@@ -24,9 +74,9 @@ public class Part2 : Base
         
         for (var x = 0; x < Width; x++)
         {
-            SimulateBeams(x, -1, 'S');
+            var result = SimulateBeams(x, -1, 'S');
         
-            energised = CountEnergised();
+            energised = CountEnergised(result);
         
             if (energised > max)
             {
@@ -36,9 +86,9 @@ public class Part2 : Base
         
         for (var y = 0; y < Height; y++)
         {
-            SimulateBeams(Width, y, 'W');
+            var result =SimulateBeams(Width, y, 'W');
         
-            energised = CountEnergised();
+            energised = CountEnergised(result);
         
             if (energised > max)
             {
@@ -48,9 +98,9 @@ public class Part2 : Base
         
         for (var x = Width - 1; x >= 0; x--)
         {
-            SimulateBeams(x, Height, 'N');
+            var result =SimulateBeams(x, Height, 'N');
         
-            energised = CountEnergised();
+            energised = CountEnergised(result);
         
             if (energised > max)
             {
@@ -60,9 +110,9 @@ public class Part2 : Base
         
         for (var y = Height - 1; y >= 0; y--)
         {
-            SimulateBeams(-1, y, 'E');
+            var result =SimulateBeams(-1, y, 'E');
         
-            energised = CountEnergised();
+            energised = CountEnergised(result);
         
             if (energised > max)
             {
