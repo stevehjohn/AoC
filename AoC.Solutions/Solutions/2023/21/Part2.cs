@@ -64,6 +64,8 @@ public class Part2 : Base
 
             Console.WriteLine(_counts[step]);
             
+            Dump();
+            
             (_sourcePositions, _targetPositions) = (_targetPositions, _sourcePositions);
             
             _targetPositions.Clear();
@@ -71,7 +73,27 @@ public class Part2 : Base
             step++;
         }
     }
+    
+    private void Dump()
+    {
+        for (var y = 50; y < Height - 50; y++)
+        {
+            for (var x = 50; x < Width - 50; x++)
+            {
+                if (_targetPositions.Any(p => p.X == x && p.Y == y))
+                    Console.Write("O");
+                else
+                    Console.Write(' ');
+            }
+            
+            Console.WriteLine();
+        }
+        
+        Console.WriteLine();
 
+        Console.ReadKey();
+    }
+    
     private void Move((int X, int Y, int Ux, int Uy, (int X, int Y) D) position, (int X, int Y) d)
     {
         if (position.D == North && d == South)
@@ -94,7 +116,7 @@ public class Part2 : Base
             return;
         }
 
-        position = (position.X + d.X, position.Y + d.Y, position.Ux, position.Uy, position.D);
+        position = (position.X + d.X, position.Y + d.Y, position.Ux, position.Uy, d);
 
         if (position.X < 0)
         {
