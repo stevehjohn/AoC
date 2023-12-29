@@ -6,17 +6,21 @@ namespace AoC.Solutions.Solutions._2023._21;
 public class Part2 : Base
 {
     private const long TargetSteps = 26_501_365;
+
+    private long[] _counts;
     
     public override string GetAnswer()
     {
         var start = ParseInput();
 
-        var result = Walk(start, Width * 2 + Width / 2 + 1);
+        Walk(start, Width * 2 + Width / 2 + 1);
+
+        var result = ExtrapolateAnswer();
         
         return result.ToString();
     }
 
-    private long Walk((int X, int Y) start, int maxSteps)
+    private void Walk((int X, int Y) start, int maxSteps)
     {
         var oddPositions = new HashSet<(int X, int Y, int Ux, int Uy)>
         {
@@ -25,7 +29,7 @@ public class Part2 : Base
 
         var evenPositions = new HashSet<(int X, int Y, int Ux, int Uy)>();
         
-        var counts = new long[maxSteps];
+        _counts = new long[maxSteps];
 
         var step = 1;
         
@@ -52,22 +56,10 @@ public class Part2 : Base
                 Move(targetPositions, position, 0, 1);
             }
 
-            counts[step] = targetPositions.Count;
+            _counts[step] = targetPositions.Count;
 
             step++;
         }
-
-        var halfWidth = Width / 2;
-        
-        var delta1 = counts[halfWidth + Width] - counts[halfWidth];
-
-        var delta2 = counts[halfWidth + Width * 2] - counts[halfWidth + Width];
-
-        var quotient = TargetSteps / Width;
-        
-        var result = counts[halfWidth] + delta1 * quotient + quotient * (quotient - 1) / 2 * (delta2 - delta1);
-        
-        return result;
     }
 
     private void Move(HashSet<(int X, int Y, int Ux, int Uy)> positions, (int X, int Y, int Ux, int Uy) position, int dX, int dY)
@@ -104,5 +96,20 @@ public class Part2 : Base
         }
 
         positions.Add(position);
+    }
+    
+    private long ExtrapolateAnswer()
+    {
+        var halfWidth = Width / 2;
+        
+        var delta1 = _counts[halfWidth + Width] - _counts[halfWidth];
+
+        var delta2 = _counts[halfWidth + Width * 2] - _counts[halfWidth + Width];
+
+        var quotient = TargetSteps / Width;
+        
+        var result = _counts[halfWidth] + delta1 * quotient + quotient * (quotient - 1) / 2 * (delta2 - delta1);
+        
+        return result;
     }
 }
