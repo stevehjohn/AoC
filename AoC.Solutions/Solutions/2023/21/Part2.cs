@@ -23,6 +23,8 @@ public class Part2 : Base
         {
             [],
             [],
+            [],
+            [],
             []
         };
         
@@ -30,7 +32,7 @@ public class Part2 : Base
 
         var source = 0;
 
-        var target = 2;
+        var target = 4;
         
         var counts = new long[maxSteps];
 
@@ -43,25 +45,36 @@ public class Part2 : Base
             var targetPositions = positions[target];
 
             targetPositions.Clear();
+
+            var count = 0;
             
             foreach (var position in sourcePositions)
             {
-                Move(targetPositions, position, -1, 0);
+                count += Move(targetPositions, position, -1, 0);
             
-                Move(targetPositions, position, 1, 0);
+                count += Move(targetPositions, position, 1, 0);
             
-                Move(targetPositions, position, 0, -1);
+                count += Move(targetPositions, position, 0, -1);
             
-                Move(targetPositions, position, 0, 1);
+                count += Move(targetPositions, position, 0, 1);
             }
             
             counts[step] = targetPositions.Count;
-            
+
+            if (step > 4)
+            {
+                var delta = new HashSet<(int X, int Y, int Ux, int Uy)>(positions[source.DecRotate(4).DecRotate(4)]);
+                
+                delta.ExceptWith(targetPositions);
+                
+                Console.WriteLine($"{counts[step]} {delta.Count + count}");
+            }
+
             step++;
 
-            source = source.DecRotate(2);
+            source = source.DecRotate(4);
             
-            target = target.DecRotate(2);
+            target = target.DecRotate(4);
         }
 
         var halfWidth = Width / 2;
@@ -77,7 +90,7 @@ public class Part2 : Base
         return result;
     }
 
-    private void Move(HashSet<(int X, int Y, int Ux, int Uy)> positions, (int X, int Y, int Ux, int Uy) position, int dX, int dY)
+    private int Move(HashSet<(int X, int Y, int Ux, int Uy)> positions, (int X, int Y, int Ux, int Uy) position, int dX, int dY)
     {
         position = (position.X + dX, position.Y + dY, position.Ux, position.Uy);
 
@@ -107,9 +120,9 @@ public class Part2 : Base
 
         if (Map[position.X, position.Y] == '#')
         {
-            return;
+            return 0;
         }
 
-        positions.Add(position);
+        return positions.Add(position) ? 1 : 0;
     }
 }
