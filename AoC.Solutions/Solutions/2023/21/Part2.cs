@@ -34,11 +34,11 @@ public class Part2 : Base
 
         var target = bufferSize - 1;
         
-        var counts = new long[maxSteps];
+        var counts = new long[maxSteps + 10];
 
         var step = 1;
         
-        while (step < maxSteps)
+        while (step < maxSteps + 10)
         {
             var sourcePositions = positions[source];
 
@@ -110,10 +110,16 @@ public class Part2 : Base
             
             target = target.DecRotate(bufferSize - 1);
         }
-
+        
         var halfWidth = Width / 2;
+
+        Console.WriteLine(halfWidth + Width);
         
         var delta1 = counts[halfWidth + Width] - counts[halfWidth];
+
+        Console.WriteLine(halfWidth + Width * 2);
+
+        Console.WriteLine(halfWidth);
 
         var delta2 = counts[halfWidth + Width * 2] - counts[halfWidth + Width];
 
