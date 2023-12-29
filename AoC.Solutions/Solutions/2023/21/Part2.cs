@@ -1,3 +1,4 @@
+using AoC.Solutions.Extensions;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2023._21;
@@ -7,12 +8,16 @@ public class Part2 : Base
 {
     private const long TargetSteps = 26_501_365;
 
+    private const int Buffers = 2;
+    
     private long[] _counts;
+    
+    private readonly HashSet<(int X, int Y, int Ux, int Uy)>[] _buffers = new HashSet<(int X, int Y, int Ux, int Uy)>[Buffers];
 
-    private HashSet<(int X, int Y, int Ux, int Uy)> _sourcePositions = new();
+    private int _source;
 
-    private HashSet<(int X, int Y, int Ux, int Uy)> _targetPositions = new();
-
+    private int _target = Buffers - 1;
+    
     private static readonly (int, int) North = (0, -1);
     
     private static readonly (int, int) East = (1, 0);
@@ -34,7 +39,12 @@ public class Part2 : Base
 
     private void Walk((int X, int Y) start, int maxSteps)
     {
-        _sourcePositions.Add((start.X, start.Y, 0, 0));
+        for (var i = 0; i < Buffers; i++)
+        {
+            _buffers[i] = new HashSet<(int X, int Y, int Ux, int Uy)>();
+        }
+
+        _buffers[_source].Add((start.X, start.Y, 0, 0));
         
         _counts = new long[maxSteps];
 
@@ -44,7 +54,7 @@ public class Part2 : Base
         {
             var count = 0;
             
-            foreach (var position in _sourcePositions)
+            foreach (var position in _buffers[_source])
             {
                 count += Move(position, North);
             
@@ -56,11 +66,13 @@ public class Part2 : Base
             }
 
             _counts[step] = count;
-            
-            (_sourcePositions, _targetPositions) = (_targetPositions, _sourcePositions);
-            
-            _targetPositions.Clear();
 
+            _source = _source.DecRotate(Buffers - 1);
+
+            _target = _target.DecRotate(Buffers - 1);
+
+            _buffers[_target].Clear();
+            
             step++;
         }
     }
@@ -98,7 +110,7 @@ public class Part2 : Base
             return 0;
         }
 
-        return _targetPositions.Add(position) ? 1 : 0;
+        return _buffers[_target].Add(position) ? 1 : 0;
     }
     
     private long ExtrapolateAnswer()
