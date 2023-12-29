@@ -8,7 +8,11 @@ public class Part2 : Base
     private const long TargetSteps = 26_501_365;
 
     private long[] _counts;
-    
+
+    private readonly HashSet<(int X, int Y, int Ux, int Uy, (int X, int Y) D)> _sourcePositions = new();
+
+    private readonly HashSet<(int X, int Y, int Ux, int Uy, (int X, int Y) D)> _targetPositions = new();
+
     public override string GetAnswer()
     {
         var start = ParseInput();
