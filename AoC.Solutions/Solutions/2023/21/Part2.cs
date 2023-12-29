@@ -67,16 +67,6 @@ public class Part2 : Base
 
             _counts[step] = count;
 
-            /*
-             * On to something here...
-             */
-            
-            var d = _buffers[_target].ToHashSet();
-            
-            d.ExceptWith(_buffers[_target.DecRotate(Buffers - 1)]);
-            
-            Console.WriteLine($"Step: {step}    Count: {_counts[step]}   Act D: {_counts[step] - _counts[step - 1]}    Calc D: {d.Count}");
-
             _source = _source.DecRotate(Buffers - 1);
 
             _target = _target.DecRotate(Buffers - 1);
