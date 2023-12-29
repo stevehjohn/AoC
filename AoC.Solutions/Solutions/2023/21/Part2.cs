@@ -67,9 +67,9 @@ public class Part2 : Base
 
             _counts[step] = count;
 
-            _source = _source.DecRotate(Buffers - 1);
+            _source = _source.DecrementRotate(Buffers);
 
-            _target = _target.DecRotate(Buffers - 1);
+            _target = _target.DecrementRotate(Buffers);
 
             _buffers[_target].Clear();
             
