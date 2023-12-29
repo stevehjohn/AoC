@@ -9,9 +9,9 @@ public class Part2 : Base
 
     private long[] _counts;
 
-    private HashSet<(int X, int Y, int Ux, int Uy, (int X, int Y) D)> _sourcePositions = new();
+    private HashSet<(int X, int Y, int Ux, int Uy, (int X, int Y) Direction)> _sourcePositions = new();
 
-    private HashSet<(int X, int Y, int Ux, int Uy, (int X, int Y) D)> _targetPositions = new();
+    private HashSet<(int X, int Y, int Ux, int Uy, (int X, int Y) Direction)> _targetPositions = new();
 
     private static readonly (int, int) North = (0, -1);
     
@@ -94,29 +94,29 @@ public class Part2 : Base
         Console.ReadKey();
     }
     
-    private void Move((int X, int Y, int Ux, int Uy, (int X, int Y) D) position, (int X, int Y) d)
+    private void Move((int X, int Y, int Ux, int Uy, (int X, int Y) Direction) position, (int X, int Y) direction)
     {
-        if (position.D == North && d == South)
+        if (position.Direction == North && direction == South)
         {
             return;
         }
 
-        if (position.D == South && d == North)
+        if (position.Direction == South && direction == North)
         {
             return;
         }
 
-        if (position.D == East && d == West)
+        if (position.Direction == East && direction == West)
         {
             return;
         }
 
-        if (position.D == West && d == East)
+        if (position.Direction == West && direction == East)
         {
             return;
         }
 
-        position = (position.X + d.X, position.Y + d.Y, position.Ux, position.Uy, d);
+        position = (position.X + direction.X, position.Y + direction.Y, position.Ux, position.Uy, direction);
 
         if (position.X < 0)
         {
