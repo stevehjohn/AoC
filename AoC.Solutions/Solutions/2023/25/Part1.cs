@@ -7,7 +7,7 @@ public class Part1 : Base
 {
     private List<(string L, string R)> _nodes;
 
-    private Dictionary<string, List<string>> _links = new();
+    private readonly Dictionary<string, List<string>> _links = new();
     
     private List<string> _distinct;
 
