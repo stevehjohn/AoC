@@ -6,6 +6,14 @@ namespace AoC.Solutions.Solutions._2023._21;
 public class Part2 : Base
 {
     private const long TargetSteps = 26_501_365;
+
+    private long[] _counts;
+
+    private HashSet<(int X, int Y, int Ux, int Uy)> _sourcePositions = new();
+
+    private HashSet<(int X, int Y, int Ux, int Uy)> _targetPositions = new();
+
+    private static readonly (int, int) North = (0, -1);
     
     public override string GetAnswer()
     {
@@ -18,12 +26,7 @@ public class Part2 : Base
 
     private long Walk((int X, int Y) start, int maxSteps)
     {
-        var oddPositions = new HashSet<(int X, int Y, int Ux, int Uy)>
-        {
-            (start.X, start.Y, 0, 0)
-        };
-
-        var evenPositions = new HashSet<(int X, int Y, int Ux, int Uy)>();
+        _sourcePositions.Add((start.X, start.Y, 0, 0));
         
         var counts = new long[maxSteps];
 
@@ -31,44 +34,54 @@ public class Part2 : Base
         
         while (step < maxSteps)
         {
-            var sourcePositions = (step & 1) == 0 ? evenPositions : oddPositions;
-
-            var targetPositions = (step & 1) == 0 ? oddPositions : evenPositions;
-
-            targetPositions.Clear();
+            var count = 0;
             
-            foreach (var position in sourcePositions)
+            foreach (var position in _sourcePositions)
             {
-                Move(targetPositions, position, -1, 0);
+                count += Move(position, North);
             
-                Move(targetPositions, position, 1, 0);
+                count += Move(position, South);
             
-                Move(targetPositions, position, 0, -1);
+                count += Move(position, East);
             
-                Move(targetPositions, position, 0, 1);
+                count += Move(position, West);
             }
 
-            counts[step] = targetPositions.Count;
+            _counts[step] = count;
+
+            //Dump();
+            
+            (_sourcePositions, _targetPositions) = (_targetPositions, _sourcePositions);
+            
+            _targetPositions.Clear();
 
             step++;
         }
-
-        var halfWidth = Width / 2;
-        
-        var delta1 = counts[halfWidth + Width] - counts[halfWidth];
-
-        var delta2 = counts[halfWidth + Width * 2] - counts[halfWidth + Width];
-
-        var quotient = TargetSteps / Width;
-        
-        var result = counts[halfWidth] + delta1 * quotient + quotient * (quotient - 1) / 2 * (delta2 - delta1);
-        
-        return result;
     }
-
-    private void Move(HashSet<(int X, int Y, int Ux, int Uy)> positions, (int X, int Y, int Ux, int Uy) position, int dX, int dY)
+    
+    private void Dump()
     {
-        position = (position.X + dX, position.Y + dY, position.Ux, position.Uy);
+        for (var y = 50; y < Height - 50; y++)
+        {
+            for (var x = 50; x < Width - 50; x++)
+            {
+                if (_targetPositions.Any(p => p.X == x && p.Y == y))
+                    Console.Write("O");
+                else
+                    Console.Write(' ');
+            }
+            
+            Console.WriteLine();
+        }
+        
+        Console.WriteLine();
+
+        Console.ReadKey();
+    }
+    
+    private int Move((int X, int Y, int Ux, int Uy) position, (int X, int Y) direction)
+    {
+        position = (position.X + direction.X, position.Y + direction.Y, position.Ux, position.Uy);
 
         if (position.X < 0)
         {
@@ -96,9 +109,24 @@ public class Part2 : Base
 
         if (Map[position.X, position.Y] == '#')
         {
-            return;
+            return 0;
         }
 
-        positions.Add(position);
+        return _targetPositions.Add(position) ? 1 : 0;
+    }
+    
+    private long ExtrapolateAnswer()
+    {
+        var halfWidth = Width / 2;
+        
+        var delta1 = _counts[halfWidth + Width] - _counts[halfWidth];
+
+        var delta2 = _counts[halfWidth + Width * 2] - _counts[halfWidth + Width];
+
+        var quotient = TargetSteps / Width;
+        
+        var result = _counts[halfWidth] + delta1 * quotient + quotient * (quotient - 1) / 2 * (delta2 - delta1);
+        
+        return result;
     }
 }
