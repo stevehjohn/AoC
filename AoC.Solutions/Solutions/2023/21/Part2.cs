@@ -19,22 +19,20 @@ public class Part2 : Base
 
     private long Walk((int X, int Y) start, int maxSteps)
     {
-        var positions = new HashSet<(int X, int Y, int Ux, int Uy)>[]
+        const int bufferSize = 7;
+
+        var positions = new HashSet<(int X, int Y, int Ux, int Uy)>[bufferSize];
+
+        for (var i = 0; i < bufferSize; i++)
         {
-            [],
-            [],
-            [],
-            [],
-            [],
-            [],
-            []
-        };
-        
+            positions[i] = new HashSet<(int X, int Y, int Ux, int Uy)>();
+        }
+
         positions[0].Add((start.X, start.Y, 0, 0));
 
         var source = 0;
 
-        var target = 6;
+        var target = bufferSize - 1;
         
         var counts = new long[maxSteps];
 
@@ -71,7 +69,14 @@ public class Part2 : Base
 
                 var x = new HashSet<(int X, int Y, int Ux, int Uy)>(sourcePositions);
 
-                x.ExceptWith(positions[source.DecRotate(6).DecRotate(6).DecRotate(6).DecRotate(6).DecRotate(6)]);
+                var t = source;
+
+                for (var i = 0; i < bufferSize - 2; i++)
+                {
+                    t = t.DecRotate(bufferSize - 1);
+                }
+
+                x.ExceptWith(positions[t]);
                 
                 foreach (var position in x)
                 {
@@ -101,9 +106,9 @@ public class Part2 : Base
 
             step++;
 
-            source = source.DecRotate(6);
+            source = source.DecRotate(bufferSize - 1);
             
-            target = target.DecRotate(6);
+            target = target.DecRotate(bufferSize - 1);
         }
 
         var halfWidth = Width / 2;
