@@ -19,7 +19,7 @@ public class Part1 : Base
 
         var backup = _nodes.ToList();
 
-        var rng = new Random();
+        var rng = new Random(0);
 
         while (true)
         {
