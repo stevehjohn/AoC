@@ -9,9 +9,9 @@ public class Part2 : Base
 
     private long[] _counts;
 
-    private HashSet<(int X, int Y, int Ux, int Uy, (int X, int Y) Direction)> _sourcePositions = new();
+    private HashSet<(int X, int Y, int Ux, int Uy)> _sourcePositions = new();
 
-    private HashSet<(int X, int Y, int Ux, int Uy, (int X, int Y) Direction)> _targetPositions = new();
+    private HashSet<(int X, int Y, int Ux, int Uy)> _targetPositions = new();
 
     private static readonly (int, int) North = (0, -1);
     
@@ -34,10 +34,7 @@ public class Part2 : Base
 
     private void Walk((int X, int Y) start, int maxSteps)
     {
-        _sourcePositions.Add((start.X, start.Y, 0, 0, North));
-        _sourcePositions.Add((start.X, start.Y, 0, 0, South));
-        _sourcePositions.Add((start.X, start.Y, 0, 0, East));
-        _sourcePositions.Add((start.X, start.Y, 0, 0, West));
+        _sourcePositions.Add((start.X, start.Y, 0, 0));
         
         _counts = new long[maxSteps];
 
@@ -49,22 +46,31 @@ public class Part2 : Base
         
         while (step < maxSteps)
         {
+            var count = 0;
+            
             foreach (var position in _sourcePositions)
             {
-                Move(position, North);
+                count += Move(position, North);
             
-                Move(position, South);
+                count += Move(position, South);
             
-                Move(position, East);
+                count += Move(position, East);
             
-                Move(position, West);
+                count += Move(position, West);
             }
 
-            _counts[step] = _targetPositions.DistinctBy(p => new { p.X, p.Y, p.Ux, p.Uy }).Count(); // + _counts[step - 1];
+            if (step > 1)
+            {
+                _counts[step] = count + _counts[step - 2];
+            }
+            else
+            {
+                _counts[step] = count;
+            }
 
-            // Console.WriteLine(_counts[step]);
+            //Console.WriteLine(_counts[step]);
             //
-            // Dump();
+            //Dump();
             
             (_sourcePositions, _targetPositions) = (_targetPositions, _sourcePositions);
             
@@ -94,29 +100,9 @@ public class Part2 : Base
         Console.ReadKey();
     }
     
-    private void Move((int X, int Y, int Ux, int Uy, (int X, int Y) Direction) position, (int X, int Y) direction)
+    private int Move((int X, int Y, int Ux, int Uy) position, (int X, int Y) direction)
     {
-        if (position.Direction == North && direction == South)
-        {
-            return;
-        }
-
-        if (position.Direction == South && direction == North)
-        {
-            return;
-        }
-
-        if (position.Direction == East && direction == West)
-        {
-            return;
-        }
-
-        if (position.Direction == West && direction == East)
-        {
-            return;
-        }
-
-        position = (position.X + direction.X, position.Y + direction.Y, position.Ux, position.Uy, direction);
+        position = (position.X + direction.X, position.Y + direction.Y, position.Ux, position.Uy);
 
         if (position.X < 0)
         {
@@ -144,10 +130,10 @@ public class Part2 : Base
 
         if (Map[position.X, position.Y] == '#')
         {
-            return;
+            return 0;
         }
 
-        _targetPositions.Add(position);
+        return _targetPositions.Add(position) ? 1 : 0;
     }
     
     private long ExtrapolateAnswer()
