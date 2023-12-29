@@ -9,9 +9,17 @@ public class Part2 : Base
 
     private long[] _counts;
 
-    private readonly HashSet<(int X, int Y, int Ux, int Uy, (int X, int Y) D)> _sourcePositions = new();
+    private HashSet<(int X, int Y, int Ux, int Uy, (int X, int Y) D)> _sourcePositions = new();
 
-    private readonly HashSet<(int X, int Y, int Ux, int Uy, (int X, int Y) D)> _targetPositions = new();
+    private HashSet<(int X, int Y, int Ux, int Uy, (int X, int Y) D)> _targetPositions = new();
+
+    private static readonly (int, int) North = (0, -1);
+    
+    private static readonly (int, int) East = (1, 0);
+    
+    private static readonly (int, int) South = (0, 1);
+    
+    private static readonly (int, int) West = (-1, 0);
 
     public override string GetAnswer()
     {
@@ -26,12 +34,10 @@ public class Part2 : Base
 
     private void Walk((int X, int Y) start, int maxSteps)
     {
-        var oddPositions = new HashSet<(int X, int Y, int Ux, int Uy)>
-        {
-            (start.X, start.Y, 0, 0)
-        };
-
-        var evenPositions = new HashSet<(int X, int Y, int Ux, int Uy)>();
+        _sourcePositions.Add((start.X, start.Y, 0, 0, North));
+        _sourcePositions.Add((start.X, start.Y, 0, 0, South));
+        _sourcePositions.Add((start.X, start.Y, 0, 0, East));
+        _sourcePositions.Add((start.X, start.Y, 0, 0, West));
         
         _counts = new long[maxSteps];
 
@@ -43,32 +49,52 @@ public class Part2 : Base
         
         while (step < maxSteps)
         {
-            var sourcePositions = (step & 1) == 0 ? evenPositions : oddPositions;
-
-            var targetPositions = (step & 1) == 0 ? oddPositions : evenPositions;
-
-            targetPositions.Clear();
-            
-            foreach (var position in sourcePositions)
+            foreach (var position in _sourcePositions)
             {
-                Move(targetPositions, position, -1, 0);
+                Move(position, North);
             
-                Move(targetPositions, position, 1, 0);
+                Move(position, South);
             
-                Move(targetPositions, position, 0, -1);
+                Move(position, East);
             
-                Move(targetPositions, position, 0, 1);
+                Move(position, West);
             }
 
-            _counts[step] = targetPositions.Count;
+            _counts[step] = _targetPositions.DistinctBy(p => new { p.X, p.Y, p.Ux, p.Uy }).Count() + _counts[step - 1];
+
+            Console.WriteLine(_counts[step]);
+            
+            (_sourcePositions, _targetPositions) = (_targetPositions, _sourcePositions);
+            
+            _targetPositions.Clear();
 
             step++;
         }
     }
 
-    private void Move(HashSet<(int X, int Y, int Ux, int Uy)> positions, (int X, int Y, int Ux, int Uy) position, int dX, int dY)
+    private void Move((int X, int Y, int Ux, int Uy, (int X, int Y) D) position, (int X, int Y) d)
     {
-        position = (position.X + dX, position.Y + dY, position.Ux, position.Uy);
+        if (position.D == North && d == South)
+        {
+            return;
+        }
+
+        if (position.D == South && d == North)
+        {
+            return;
+        }
+
+        if (position.D == East && d == West)
+        {
+            return;
+        }
+
+        if (position.D == West && d == East)
+        {
+            return;
+        }
+
+        position = (position.X + d.X, position.Y + d.Y, position.Ux, position.Uy, position.D);
 
         if (position.X < 0)
         {
@@ -99,7 +125,7 @@ public class Part2 : Base
             return;
         }
 
-        positions.Add(position);
+        _targetPositions.Add(position);
     }
     
     private long ExtrapolateAnswer()
