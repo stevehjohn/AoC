@@ -23,6 +23,8 @@ public class Part2 : Base
         {
             [],
             [],
+            [],
+            [],
             []
         };
         
@@ -30,7 +32,7 @@ public class Part2 : Base
 
         var source = 0;
 
-        var target = 2;
+        var target = 4;
         
         var counts = new long[maxSteps];
 
@@ -46,6 +48,8 @@ public class Part2 : Base
 
             var count = 0;
             
+            Console.WriteLine(sourcePositions.Count);
+            
             foreach (var position in sourcePositions)
             {
                 count += Move(targetPositions, position, -1, 0);
@@ -57,24 +61,26 @@ public class Part2 : Base
                 count += Move(targetPositions, position, 0, 1);
             }
             
-            if (step > 2)
-            {
-                var delta = new HashSet<(int X, int Y, int Ux, int Uy)>(positions[source.DecRotate(2).DecRotate(2)]);
-                
-                delta.ExceptWith(targetPositions);
-
-                counts[step] = delta.Count + count;
-            }
-            else
+//             if (step > 2)
+//             {
+// //                var delta = new HashSet<(int X, int Y, int Ux, int Uy)>(positions[source.DecRotate(2).DecRotate(2)]);
+//
+//                 var delta = source.DecRotate(4).DecRotate(4).DecRotate(4).DecRotate(4);
+//
+//                 targetPositions.ExceptWith(positions[delta]);
+//                 
+//                 counts[step] = positions[delta].Count + count;
+//             }
+            //else
             {
                 counts[step] = targetPositions.Count;
             }
 
             step++;
 
-            source = source.DecRotate(2);
+            source = source.DecRotate(4);
             
-            target = target.DecRotate(2);
+            target = target.DecRotate(4);
         }
 
         var halfWidth = Width / 2;
