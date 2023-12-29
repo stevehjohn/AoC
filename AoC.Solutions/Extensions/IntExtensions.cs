@@ -2,13 +2,13 @@
 
 public static class IntExtensions
 {
-    public static int DecRotate(this int input, int rotateTo)
+    public static int DecrementRotate(this int input, int rotateAmount, int decrementBy = 1)
     {
-        input -= 1;
+        input -= decrementBy;
 
         if (input < 0)
         {
-            input = rotateTo;
+            input += rotateAmount;
         }
 
         return input;

@@ -56,7 +56,7 @@ public class Part2 : Base
         {
             var count = 0;
 
-            _buffers[_source].ExceptWith(_buffers[_source.DecRotate(Buffers - 1).DecRotate(Buffers - 1)]);
+            _buffers[_source].ExceptWith(_buffers[_source.DecrementRotate(Buffers).DecrementRotate(Buffers)]);
             
             foreach (var position in _buffers[_source])
             {
@@ -78,9 +78,9 @@ public class Part2 : Base
 
             Console.WriteLine($"Step: {step} - {_counts[step]}");
 
-            _source = _source.DecRotate(Buffers - 1);
+            _source = _source.DecrementRotate(Buffers);
 
-            _target = _target.DecRotate(Buffers - 1);
+            _target = _target.DecrementRotate(Buffers);
 
             _buffers[_target].Clear();
             
