@@ -48,11 +48,15 @@ public class Part2 : Base
         
         _counts = new long[maxSteps];
 
+        _counts[0] = 1;
+        
         var step = 1;
         
         while (step < maxSteps)
         {
             var count = 0;
+
+            _buffers[_source].ExceptWith(_buffers[_source.DecRotate(Buffers - 1).DecRotate(Buffers - 1)]);
             
             foreach (var position in _buffers[_source])
             {
@@ -67,15 +71,12 @@ public class Part2 : Base
 
             _counts[step] = count;
 
-            /*
-             * On to something here...
-             */
-            
-            var d = _buffers[_target].ToHashSet();
-            
-            d.ExceptWith(_buffers[_target.DecRotate(Buffers - 1)]);
-            
-            Console.WriteLine($"Step: {step}    Count: {_counts[step]}   Act D: {_counts[step] - _counts[step - 1]}    Calc D: {d.Count}");
+            if (step > 3)
+            {
+                _counts[step] += _counts[step - 4];
+            }
+
+            Console.WriteLine($"Step: {step}    Count: {_counts[step]}   Delta: {count}");
 
             _source = _source.DecRotate(Buffers - 1);
 
