@@ -56,7 +56,7 @@ public class Part2 : Base
         {
             var count = 0;
 
-            _buffers[_source].ExceptWith(_buffers[_source.DecrementRotate(Buffers).DecrementRotate(Buffers)]);
+            _buffers[_source].ExceptWith(_buffers[_source.DecrementRotate(Buffers, Buffers / 2)]);
             
             foreach (var position in _buffers[_source])
             {
