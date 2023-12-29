@@ -95,7 +95,7 @@ public class Part2 : Base
                 }
                 else
                 {
-                    Console.WriteLine($"\u2713: {counts[step]} != Σ: {count + counts[step - 4]} Δ: {count} Diff: {counts[step] - (count + counts[step - 4])}");
+                    Console.WriteLine($"\u2713: {counts[step]} != Σ: {count + counts[step - 4]} Δ: {count} Diff: {counts[step] - (count + counts[step - 4])} Step: {step}");
                 }
             }
             else
