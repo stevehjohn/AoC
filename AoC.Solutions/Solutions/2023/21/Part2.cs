@@ -15,20 +15,28 @@ public class Part2 : Base
 
     private static readonly (int, int) North = (0, -1);
     
+    private static readonly (int, int) East = (1, 0);
+    
+    private static readonly (int, int) South = (0, 1);
+    
+    private static readonly (int, int) West = (-1, 0);
+    
     public override string GetAnswer()
     {
         var start = ParseInput();
 
-        var result = Walk(start, Width * 2 + Width / 2 + 1);
+        Walk(start, Width * 2 + Width / 2 + 1);
+
+        var result = ExtrapolateAnswer();
         
         return result.ToString();
     }
 
-    private long Walk((int X, int Y) start, int maxSteps)
+    private void Walk((int X, int Y) start, int maxSteps)
     {
         _sourcePositions.Add((start.X, start.Y, 0, 0));
         
-        var counts = new long[maxSteps];
+        _counts = new long[maxSteps];
 
         var step = 1;
         
