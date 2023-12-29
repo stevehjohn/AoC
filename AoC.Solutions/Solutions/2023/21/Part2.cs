@@ -1,4 +1,3 @@
-using AoC.Solutions.Extensions;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2023._21;
@@ -19,20 +18,12 @@ public class Part2 : Base
 
     private long Walk((int X, int Y) start, int maxSteps)
     {
-        const int bufferSize = 8;
-
-        var positions = new HashSet<(int X, int Y, int Ux, int Uy)>[bufferSize];
-
-        for (var i = 0; i < bufferSize; i++)
+        var oddPositions = new HashSet<(int X, int Y, int Ux, int Uy)>
         {
-            positions[i] = new HashSet<(int X, int Y, int Ux, int Uy)>();
-        }
+            (start.X, start.Y, 0, 0)
+        };
 
-        positions[0].Add((start.X, start.Y, 0, 0));
-
-        var source = 0;
-
-        var target = bufferSize - 1;
+        var evenPositions = new HashSet<(int X, int Y, int Ux, int Uy)>();
         
         var counts = new long[maxSteps];
 
@@ -40,90 +31,31 @@ public class Part2 : Base
         
         while (step < maxSteps)
         {
-            var sourcePositions = positions[source];
+            var sourcePositions = (step & 1) == 0 ? evenPositions : oddPositions;
 
-            var targetPositions = positions[target];
+            var targetPositions = (step & 1) == 0 ? oddPositions : evenPositions;
 
-            var count = 0;
-                        
             targetPositions.Clear();
-
+            
             foreach (var position in sourcePositions)
             {
-                count += Move(targetPositions, position, -1, 0);
+                Move(targetPositions, position, -1, 0);
             
-                count += Move(targetPositions, position, 1, 0);
+                Move(targetPositions, position, 1, 0);
             
-                count += Move(targetPositions, position, 0, -1);
+                Move(targetPositions, position, 0, -1);
             
-                count += Move(targetPositions, position, 0, 1);
+                Move(targetPositions, position, 0, 1);
             }
 
             counts[step] = targetPositions.Count;
 
-            if (step > 6)
-            {
-                count = 0;
-
-                var y = new HashSet<(int X, int Y, int Ux, int Uy)>();
-
-                var x = new HashSet<(int X, int Y, int Ux, int Uy)>(sourcePositions);
-
-                var t = source;
-
-                for (var i = 0; i < bufferSize - 2; i++)
-                {
-                    t = t.DecRotate(bufferSize - 1);
-                }
-
-                x.ExceptWith(positions[t]);
-                
-                foreach (var position in x)
-                {
-                    count += Move(y, position, -1, 0);
-
-                    count += Move(y, position, 1, 0);
-
-                    count += Move(y, position, 0, -1);
-
-                    count += Move(y, position, 0, 1);
-                }
-
-                Dump(targetPositions, y);
-
-                Console.ReadKey();
-
-                if (count + counts[step - 4] == counts[step])
-                {
-                    Console.WriteLine($"\u2713: {counts[step]} == Σ: {count + counts[step - 4]} Δ: {count} ");
-                }
-                else
-                {
-                    Console.WriteLine($"\u2713: {counts[step]} != Σ: {count + counts[step - 4]} Δ: {count} Diff: {counts[step] - (count + counts[step - 4])} Step: {step}");
-                }
-            }
-            else
-            {
-                Console.WriteLine($"\u2713: {counts[step]} ");
-
-            }
-
             step++;
-
-            source = source.DecRotate(bufferSize - 1);
-            
-            target = target.DecRotate(bufferSize - 1);
         }
-        
-        var halfWidth = Width / 2;
 
-        Console.WriteLine(halfWidth + Width);
+        var halfWidth = Width / 2;
         
         var delta1 = counts[halfWidth + Width] - counts[halfWidth];
-
-        Console.WriteLine(halfWidth + Width * 2);
-
-        Console.WriteLine(halfWidth);
 
         var delta2 = counts[halfWidth + Width * 2] - counts[halfWidth + Width];
 
@@ -134,29 +66,7 @@ public class Part2 : Base
         return result;
     }
 
-    private void Dump(HashSet<(int X, int Y, int Ux, int Uy)> c, HashSet<(int X, int Y, int Ux, int Uy)> d)
-    {
-        for (var y = 50; y < Height - 50; y++)
-        {
-            for (var x = 50; x < Width - 50; x++)
-            {
-                if (c.Any(p => p.X == x && p.Y == y) && ! d.Any(p => p.X == x && p.Y == y))
-                    Console.Write("X");
-                else if (c.Any(p => p.X == x && p.Y == y))
-                    Console.Write("@");
-                else if (d.Any(p => p.X == x && p.Y == y))
-                    Console.Write("O");
-                else
-                    Console.Write(' ');
-            }
-            
-            Console.WriteLine();
-        }
-        
-        Console.WriteLine();
-    }
-
-    private int Move(HashSet<(int X, int Y, int Ux, int Uy)> positions, (int X, int Y, int Ux, int Uy) position, int dX, int dY)
+    private void Move(HashSet<(int X, int Y, int Ux, int Uy)> positions, (int X, int Y, int Ux, int Uy) position, int dX, int dY)
     {
         position = (position.X + dX, position.Y + dY, position.Ux, position.Uy);
 
@@ -186,9 +96,9 @@ public class Part2 : Base
 
         if (Map[position.X, position.Y] == '#')
         {
-            return 0;
+            return;
         }
 
-        return positions.Add(position) ? 1 : 0;
+        positions.Add(position);
     }
 }
