@@ -66,7 +66,7 @@ public class Part1 : Base
         return (left * right).ToString();
     }
 
-    private int Walk(string start, string end, bool remove = true)
+    private int Walk(string start, string end)
     {
         var queue = new Queue<(string Name, List<(string L, string R)> History)>();
 
@@ -83,12 +83,9 @@ public class Part1 : Base
 
             if (node.Name == end)
             {
-                if (remove)
+                foreach (var item in node.History)
                 {
-                    foreach (var item in node.History)
-                    {
-                        _nodes.Remove(item);
-                    }
+                    _nodes.Remove(item);
                 }
 
                 break;
