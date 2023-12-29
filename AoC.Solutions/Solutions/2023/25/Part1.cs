@@ -7,6 +7,8 @@ public class Part1 : Base
 {
     private List<(string L, string R)> _nodes;
 
+    private Dictionary<string, List<string>> _links = new();
+    
     private List<string> _distinct;
 
     public override string GetAnswer()
@@ -19,7 +21,7 @@ public class Part1 : Base
 
         var backup = _nodes.ToList();
 
-        var rng = new Random();
+        var rng = new Random(0);
 
         while (true)
         {
@@ -91,9 +93,9 @@ public class Part1 : Base
                 break;
             }
 
-            foreach (var connection in _nodes.Where(n => n.L == node.Name).ToList())
+            foreach (var connection in _links[node.Name])
             {
-                queue.Enqueue((connection.R, new List<(string L, string R)>(node.History) { connection }));
+                queue.Enqueue((connection, new List<(string L, string R)>(node.History) { (node.Name, connection) }));
             }
         }
 
@@ -124,6 +126,18 @@ public class Part1 : Base
                 {
                     _distinct.Add(connection);
                 }
+            }
+        }
+
+        foreach (var node in _nodes)
+        {
+            if (_links.TryGetValue(node.L, out List<string> value))
+            {
+                value.Add(node.R);
+            }
+            else
+            {
+                _links.Add(node.L, [node.R]);
             }
         }
     }
