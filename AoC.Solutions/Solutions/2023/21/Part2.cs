@@ -44,12 +44,19 @@ public class Part2 : Base
 
             var targetPositions = positions[target];
 
-            targetPositions.Clear();
-
             var count = 0;
             
             Console.WriteLine(sourcePositions.Count);
-            
+
+            if (step > 4)
+            {
+                sourcePositions.ExceptWith(targetPositions);
+            }
+            // else
+            {
+                targetPositions.Clear();
+            }
+
             foreach (var position in sourcePositions)
             {
                 count += Move(targetPositions, position, -1, 0);
@@ -60,18 +67,12 @@ public class Part2 : Base
             
                 count += Move(targetPositions, position, 0, 1);
             }
-            
-//             if (step > 2)
-//             {
-// //                var delta = new HashSet<(int X, int Y, int Ux, int Uy)>(positions[source.DecRotate(2).DecRotate(2)]);
-//
-//                 var delta = source.DecRotate(4).DecRotate(4).DecRotate(4).DecRotate(4);
-//
-//                 targetPositions.ExceptWith(positions[delta]);
-//                 
-//                 counts[step] = positions[delta].Count + count;
-//             }
-            //else
+
+            if (step > 4)
+            {
+                counts[step] = counts[step - 4] + count;
+            }
+            else
             {
                 counts[step] = targetPositions.Count;
             }
