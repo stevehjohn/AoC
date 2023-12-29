@@ -34,11 +34,11 @@ public class Part2 : Base
 
         var target = bufferSize - 1;
         
-        var counts = new long[maxSteps + 10];
+        var counts = new long[maxSteps];
 
         var step = 1;
         
-        while (step < maxSteps + 10)
+        while (step < maxSteps)
         {
             var sourcePositions = positions[source];
 
