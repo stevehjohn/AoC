@@ -84,7 +84,14 @@ public class Part2 : Base
                     count += Move(y, position, 0, 1);
                 }
 
-                Console.WriteLine($"\u2713: {counts[step]} {(count + counts[step - 4] == counts[step] ? "==" : "!=")} Σ: {count + counts[step - 4]} Δ: {count} ");
+                if (count + counts[step - 4] == counts[step])
+                {
+                    Console.WriteLine($"\u2713: {counts[step]} == Σ: {count + counts[step - 4]} Δ: {count} ");
+                }
+                else
+                {
+                    Console.WriteLine($"\u2713: {counts[step]} != Σ: {count + counts[step - 4]} Δ: {count} Diff: {counts[step] - (count + counts[step - 4])}");
+                }
             }
             else
             {
