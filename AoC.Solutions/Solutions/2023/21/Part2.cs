@@ -59,15 +59,17 @@ public class Part2 : Base
                 count += Move(targetPositions, position, 0, 1);
             }
             
-            counts[step] = targetPositions.Count;
-
             if (step > 4)
             {
                 var delta = new HashSet<(int X, int Y, int Ux, int Uy)>(positions[source.DecRotate(4).DecRotate(4)]);
                 
                 delta.ExceptWith(targetPositions);
-                
-                Console.WriteLine($"{counts[step]} {delta.Count + count}");
+
+                counts[step] = delta.Count + count;
+            }
+            else
+            {
+                counts[step] = targetPositions.Count;
             }
 
             step++;
