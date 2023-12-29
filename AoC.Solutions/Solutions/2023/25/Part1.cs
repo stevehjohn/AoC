@@ -23,7 +23,7 @@ public class Part1 : Base
 
         var links = _links.ToDictionary(l => l.Key, l => l.Value.ToList());
 
-        var rng = new Random(0);
+        var rng = new Random();
 
         while (true)
         {
@@ -66,7 +66,7 @@ public class Part1 : Base
 
             _nodes = backup.ToList();
             
-            _links = links.ToDictionary(l => l.Key, l => l.Value.ToList());
+            _links = links.ToDictionary(i => i.Key, i => i.Value.ToList());
         }
 
         return (left * right).ToString();
