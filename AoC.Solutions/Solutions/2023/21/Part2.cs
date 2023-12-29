@@ -48,8 +48,6 @@ public class Part2 : Base
             
             targetPositions.Clear();
 
-            Console.WriteLine(sourcePositions.Count);
-
             foreach (var position in sourcePositions)
             {
                 count += Move(targetPositions, position, -1, 0);
@@ -62,6 +60,8 @@ public class Part2 : Base
             }
 
             counts[step] = targetPositions.Count;
+            
+            Console.WriteLine($"{counts[step]} {count}");
 
             step++;
 
