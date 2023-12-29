@@ -7,6 +7,8 @@ public class Part1 : Base
 {
     private List<(string L, string R)> _nodes;
 
+    private Dictionary<string, List<string>> _links;
+    
     private List<string> _distinct;
 
     public override string GetAnswer()
@@ -19,7 +21,9 @@ public class Part1 : Base
 
         var backup = _nodes.ToList();
 
-        var rng = new Random(0);
+        var links = _links.ToDictionary(l => l.Key, l => l.Value.ToList());
+
+        var rng = new Random();
 
         while (true)
         {
@@ -61,6 +65,8 @@ public class Part1 : Base
             }
 
             _nodes = backup.ToList();
+            
+            _links = links.ToDictionary(i => i.Key, i => i.Value.ToList());
         }
 
         return (left * right).ToString();
@@ -86,14 +92,16 @@ public class Part1 : Base
                 foreach (var item in node.History)
                 {
                     _nodes.Remove(item);
+
+                    _links[item.L].Remove(item.R);
                 }
 
                 break;
             }
 
-            foreach (var connection in _nodes.Where(n => n.L == node.Name).ToList())
+            foreach (var connection in _links[node.Name])
             {
-                queue.Enqueue((connection.R, new List<(string L, string R)>(node.History) { connection }));
+                queue.Enqueue((connection, new List<(string L, string R)>(node.History) { (node.Name, connection) }));
             }
         }
 
@@ -124,6 +132,20 @@ public class Part1 : Base
                 {
                     _distinct.Add(connection);
                 }
+            }
+        }
+
+        _links = new Dictionary<string, List<string>>();
+
+        foreach (var node in _nodes)
+        {
+            if (_links.TryGetValue(node.L, out List<string> value))
+            {
+                value.Add(node.R);
+            }
+            else
+            {
+                _links.Add(node.L, [node.R]);
             }
         }
     }
