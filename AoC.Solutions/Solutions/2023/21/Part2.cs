@@ -29,6 +29,10 @@ public class Part2 : Base
 
         var step = 1;
         
+        /*
+         * TODO: Just move out from the center tracking new points on the frontier.
+         */
+        
         while (step < maxSteps)
         {
             var sourcePositions = (step & 1) == 0 ? evenPositions : oddPositions;
