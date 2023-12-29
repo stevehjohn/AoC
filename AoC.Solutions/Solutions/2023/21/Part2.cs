@@ -46,16 +46,9 @@ public class Part2 : Base
 
             var count = 0;
             
-            Console.WriteLine(sourcePositions.Count);
+            targetPositions.Clear();
 
-            if (step > 4)
-            {
-                sourcePositions.ExceptWith(targetPositions);
-            }
-            // else
-            {
-                targetPositions.Clear();
-            }
+            Console.WriteLine(sourcePositions.Count);
 
             foreach (var position in sourcePositions)
             {
@@ -68,14 +61,7 @@ public class Part2 : Base
                 count += Move(targetPositions, position, 0, 1);
             }
 
-            if (step > 4)
-            {
-                counts[step] = counts[step - 4] + count;
-            }
-            else
-            {
-                counts[step] = targetPositions.Count;
-            }
+            counts[step] = targetPositions.Count;
 
             step++;
 
