@@ -59,17 +59,8 @@ public class Part2 : Base
                 count += Move(position, West);
             }
 
-            if (step > 1)
-            {
-                _counts[step] = count + _counts[step - 2];
-            }
-            else
-            {
-                _counts[step] = count;
-            }
+            _counts[step] = count;
 
-            //Console.WriteLine(_counts[step]);
-            //
             //Dump();
             
             (_sourcePositions, _targetPositions) = (_targetPositions, _sourcePositions);
