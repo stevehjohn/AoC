@@ -76,7 +76,7 @@ public class Part2 : Base
                 _counts[step] += _counts[step - 4];
             }
 
-            // Console.WriteLine($"Step: {step}    Count: {_counts[step]}   Delta: {count}");
+            Console.WriteLine($"Step: {step} - {_counts[step]}");
 
             _source = _source.DecRotate(Buffers - 1);
 
