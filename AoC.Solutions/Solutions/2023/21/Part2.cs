@@ -61,7 +61,31 @@ public class Part2 : Base
 
             counts[step] = targetPositions.Count;
             
-            Console.WriteLine($"{counts[step]} {count}");
+            if (step > 4)
+            {
+                Console.Write($"{counts[step]} ");
+
+                count = 0;
+
+                var y = new HashSet<(int X, int Y, int Ux, int Uy)>();
+
+                var x = new HashSet<(int X, int Y, int Ux, int Uy)>(sourcePositions);
+
+                x.ExceptWith(positions[source.DecRotate(4).DecRotate(4).DecRotate(4)]);
+                
+                foreach (var position in x)
+                {
+                    count += Move(y, position, -1, 0);
+
+                    count += Move(y, position, 1, 0);
+
+                    count += Move(y, position, 0, -1);
+
+                    count += Move(y, position, 0, 1);
+                }
+
+                Console.WriteLine($"{counts[step - 4] + count}");
+            }
 
             step++;
 
