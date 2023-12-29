@@ -7,7 +7,7 @@ public class Part1 : Base
 {
     private List<(string L, string R)> _nodes;
 
-    private readonly Dictionary<string, List<string>> _links = new();
+    private Dictionary<string, List<string>> _links;
     
     private List<string> _distinct;
 
@@ -20,6 +20,8 @@ public class Part1 : Base
         ParseInput();
 
         var backup = _nodes.ToList();
+
+        var links = _links.ToDictionary(l => l.Key, l => l.Value.ToList());
 
         var rng = new Random(0);
 
@@ -63,6 +65,8 @@ public class Part1 : Base
             }
 
             _nodes = backup.ToList();
+            
+            _links = links.ToDictionary(l => l.Key, l => l.Value.ToList());
         }
 
         return (left * right).ToString();
@@ -88,6 +92,8 @@ public class Part1 : Base
                 foreach (var item in node.History)
                 {
                     _nodes.Remove(item);
+
+                    _links[item.L].Remove(item.R);
                 }
 
                 break;
@@ -128,6 +134,8 @@ public class Part1 : Base
                 }
             }
         }
+
+        _links = new Dictionary<string, List<string>>();
 
         foreach (var node in _nodes)
         {
