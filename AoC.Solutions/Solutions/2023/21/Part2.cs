@@ -8,7 +8,7 @@ public class Part2 : Base
 {
     private const long TargetSteps = 26_501_365;
 
-    private const int Buffers = 4;
+    private const int Buffers = 8;
     
     private long[] _counts;
     
@@ -56,7 +56,7 @@ public class Part2 : Base
         {
             var count = 0;
 
-            _buffers[_source].ExceptWith(_buffers[_source.DecrementRotate(Buffers, Buffers / 2)]);
+            _buffers[_source].ExceptWith(_buffers[_source.DecrementRotate(Buffers, Buffers - 2)]);
             
             foreach (var position in _buffers[_source])
             {
