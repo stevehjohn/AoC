@@ -60,11 +60,11 @@ public class Part2 : Base
                 Move(position, West);
             }
 
-            _counts[step] = _targetPositions.DistinctBy(p => new { p.X, p.Y, p.Ux, p.Uy }).Count() + _counts[step - 1];
+            _counts[step] = _targetPositions.DistinctBy(p => new { p.X, p.Y, p.Ux, p.Uy }).Count(); // + _counts[step - 1];
 
-            Console.WriteLine(_counts[step]);
-            
-            Dump();
+            // Console.WriteLine(_counts[step]);
+            //
+            // Dump();
             
             (_sourcePositions, _targetPositions) = (_targetPositions, _sourcePositions);
             
