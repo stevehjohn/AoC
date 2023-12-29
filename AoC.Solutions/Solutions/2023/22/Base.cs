@@ -50,6 +50,11 @@ public abstract class Base : Solution
                     }
                 }
 
+                if (found.Count == 0)
+                {
+                    continue;
+                }
+
                 for (var x = 0; x < 10; x++)
                 {
                     for (var y = 0; y < 10; y++)
