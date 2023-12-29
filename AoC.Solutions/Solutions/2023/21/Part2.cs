@@ -25,6 +25,8 @@ public class Part2 : Base
             [],
             [],
             [],
+            [],
+            [],
             []
         };
         
@@ -32,7 +34,7 @@ public class Part2 : Base
 
         var source = 0;
 
-        var target = 4;
+        var target = 6;
         
         var counts = new long[maxSteps];
 
@@ -45,7 +47,7 @@ public class Part2 : Base
             var targetPositions = positions[target];
 
             var count = 0;
-            
+                        
             targetPositions.Clear();
 
             foreach (var position in sourcePositions)
@@ -60,18 +62,16 @@ public class Part2 : Base
             }
 
             counts[step] = targetPositions.Count;
-            
-            if (step > 4)
-            {
-                Console.Write($"{counts[step]} ");
 
+            if (step > 6)
+            {
                 count = 0;
 
                 var y = new HashSet<(int X, int Y, int Ux, int Uy)>();
 
                 var x = new HashSet<(int X, int Y, int Ux, int Uy)>(sourcePositions);
 
-                x.ExceptWith(positions[source.DecRotate(4).DecRotate(4).DecRotate(4)]);
+                x.ExceptWith(positions[source.DecRotate(6).DecRotate(6).DecRotate(6).DecRotate(6).DecRotate(6)]);
                 
                 foreach (var position in x)
                 {
@@ -84,14 +84,19 @@ public class Part2 : Base
                     count += Move(y, position, 0, 1);
                 }
 
-                Console.WriteLine($"{counts[step - 4] + count}");
+                Console.WriteLine($"\u2713: {counts[step]} {(count + counts[step - 4] == counts[step] ? "==" : "!=")} Σ: {count + counts[step - 4]} Δ: {count} ");
+            }
+            else
+            {
+                Console.WriteLine($"\u2713: {counts[step]} ");
+
             }
 
             step++;
 
-            source = source.DecRotate(4);
+            source = source.DecRotate(6);
             
-            target = target.DecRotate(4);
+            target = target.DecRotate(6);
         }
 
         var halfWidth = Width / 2;
