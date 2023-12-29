@@ -19,7 +19,7 @@ public class Part2 : Base
 
     private long Walk((int X, int Y) start, int maxSteps)
     {
-        const int bufferSize = 7;
+        const int bufferSize = 8;
 
         var positions = new HashSet<(int X, int Y, int Ux, int Uy)>[bufferSize];
 
@@ -89,6 +89,10 @@ public class Part2 : Base
                     count += Move(y, position, 0, 1);
                 }
 
+                Dump(targetPositions, y);
+
+                Console.ReadKey();
+
                 if (count + counts[step - 4] == counts[step])
                 {
                     Console.WriteLine($"\u2713: {counts[step]} == Σ: {count + counts[step - 4]} Δ: {count} ");
@@ -128,6 +132,28 @@ public class Part2 : Base
         var result = counts[halfWidth] + delta1 * quotient + quotient * (quotient - 1) / 2 * (delta2 - delta1);
         
         return result;
+    }
+
+    private void Dump(HashSet<(int X, int Y, int Ux, int Uy)> c, HashSet<(int X, int Y, int Ux, int Uy)> d)
+    {
+        for (var y = 50; y < Height - 50; y++)
+        {
+            for (var x = 50; x < Width - 50; x++)
+            {
+                if (c.Any(p => p.X == x && p.Y == y) && ! d.Any(p => p.X == x && p.Y == y))
+                    Console.Write("X");
+                else if (c.Any(p => p.X == x && p.Y == y))
+                    Console.Write("@");
+                else if (d.Any(p => p.X == x && p.Y == y))
+                    Console.Write("O");
+                else
+                    Console.Write(' ');
+            }
+            
+            Console.WriteLine();
+        }
+        
+        Console.WriteLine();
     }
 
     private int Move(HashSet<(int X, int Y, int Ux, int Uy)> positions, (int X, int Y, int Ux, int Uy) position, int dX, int dY)
