@@ -88,7 +88,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                     if (id > 0)
                     {
-                        _spriteBatch.Draw(_tile, new Vector2(x * 7, 980 - 7 * z), new Rectangle(0, 0, 7, 9),
+                        _spriteBatch.Draw(_tile, new Vector2(20 + x * 3 + y * 3, 960 - 7 * z + y * 3), new Rectangle(0, 0, 7, 9),
                             GetBrickColor(id), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .9f);
                     }
                 }
