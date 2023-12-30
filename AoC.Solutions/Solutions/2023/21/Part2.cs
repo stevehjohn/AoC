@@ -54,31 +54,28 @@ public class Part2 : Base
 
         while (step < maxSteps)
         {
-            var count = 0;
-
-            _buffers[_source].ExceptWith(_buffers[_source.DecrementRotate(Buffers, Buffers - 2)]);
-
-            foreach (var position in _buffers[_source])
-            {
-                count += Move(position, North);
-
-                count += Move(position, South);
-
-                count += Move(position, East);
-
-                count += Move(position, West);
-            }
-
+            var count = ProcessStep(_buffers[_source], _buffers[_target]);
+            
             _counts[step] = count;
 
-            if (step > 3)
+            var copySource = new HashSet<(int X, int Y, int Ux, int Uy)>(_buffers[_source]);
+            
+            copySource.ExceptWith(_buffers[_source.DecrementRotate(Buffers, 2)]);
+            
+            var target = new HashSet<(int X, int Y, int Ux, int Uy)>();
+            
+            count = ProcessStep(_buffers[_source], _buffers[_target]);
+            
+            if (step >= Buffers)
             {
-                _counts[step] += _counts[step - 4];
+                count += _counts[step - Buffers];
             }
 
-            Console.WriteLine($"Step: {step} - {_counts[step]}");
+            Console.WriteLine($"Step: {step} - {_counts[step]} - {count} {_counts[step] - count}");
 
-            Dump([_buffers[_source], _buffers[_target]]);
+            _counts[step] = count;
+            
+            Dump([_buffers[_source], _buffers[_target], copySource, target]);
 
             _source = _source.DecrementRotate(Buffers);
 
@@ -90,9 +87,29 @@ public class Part2 : Base
         }
     }
 
+    private long ProcessStep(HashSet<(int X, int Y, int Ux, int Uy)> source, HashSet<(int X, int Y, int Ux, int Uy)> target)
+    {
+        var count = 0;
+        
+        foreach (var position in source)
+        {
+            count += Move(target, position, North);
+
+            count += Move(target, position, South);
+
+            count += Move(target, position, East);
+
+            count += Move(target, position, West);
+        }
+
+        return count;
+    }
+
     private void Dump(HashSet<(int X, int Y, int Ux, int Uy)>[] t)
     {
-        const int offset = 50;
+        Console.WriteLine();
+        
+        const int offset = 54;
 
         for (var y = offset; y < Width - offset; y++)
         {
@@ -100,11 +117,34 @@ public class Part2 : Base
             {
                 for (var x = offset; x < Height - offset; x++)
                 {
-                    if (t[i].Any(p => p.X == x && p.Y == y))
+                    if (i > 1)
                     {
-                        Console.Write('O');
+                        if (t[i].Any(p => p.X == x && p.Y == y))
+                        {
+                            Console.Write('O');
+                        
+                            continue;
+                        }
 
-                        continue;
+                        if (t[i - 2].Any(p => p.X == x && p.Y == y))
+                        {
+                            Console.ForegroundColor = ConsoleColor.Magenta;
+                            
+                            Console.Write('O');
+
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        if (t[i].Any(p => p.X == x && p.Y == y))
+                        {
+                            Console.Write('O');
+                        
+                            continue;
+                        }
                     }
 
                     if (Map[x, y] == '#')
@@ -128,7 +168,7 @@ public class Part2 : Base
         Console.ReadKey();
     }
 
-    private int Move((int X, int Y, int Ux, int Uy) position, (int X, int Y) direction)
+    private int Move(HashSet<(int X, int Y, int Ux, int Uy)> target, (int X, int Y, int Ux, int Uy) position, (int X, int Y) direction)
     {
         position = (position.X + direction.X, position.Y + direction.Y, position.Ux, position.Uy);
 
@@ -161,7 +201,7 @@ public class Part2 : Base
             return 0;
         }
 
-        return _buffers[_target].Add(position) ? 1 : 0;
+        return target.Add(position) ? 1 : 0;
     }
 
     private long ExtrapolateAnswer()
