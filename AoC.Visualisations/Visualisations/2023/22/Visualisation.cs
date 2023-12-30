@@ -246,22 +246,24 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private static Color GetBrickColor(int id)
     {
+        const int opacity = 208;
+        
         return (id % 14) switch
         {
-            1 => Color.FromNonPremultiplied(0, 0, 255, 255),
-            2 => Color.FromNonPremultiplied(255, 0, 0, 255),
-            3 => Color.FromNonPremultiplied(255, 0, 255, 255),
-            4 => Color.FromNonPremultiplied(0, 255, 0, 255),
-            5 => Color.FromNonPremultiplied(0, 255, 255, 255),
-            6 => Color.FromNonPremultiplied(255, 255, 0, 255),
-            7 => Color.FromNonPremultiplied(255, 255, 255, 255),
-            8 => Color.FromNonPremultiplied(0, 0, 192, 255),
-            9 => Color.FromNonPremultiplied(192, 0, 0, 255),
-            10 => Color.FromNonPremultiplied(192, 0, 192, 255),
-            11 => Color.FromNonPremultiplied(0, 192, 0, 255),
-            12 => Color.FromNonPremultiplied(0, 192, 192, 255),
-            13 => Color.FromNonPremultiplied(192, 192, 0, 255),
-            _ => Color.FromNonPremultiplied(192, 192, 192, 255)
+            1 => Color.FromNonPremultiplied(0, 0, 255, opacity),
+            2 => Color.FromNonPremultiplied(255, 0, 0, opacity),
+            3 => Color.FromNonPremultiplied(255, 0, 255, opacity),
+            4 => Color.FromNonPremultiplied(0, 255, 0, opacity),
+            5 => Color.FromNonPremultiplied(0, 255, 255, opacity),
+            6 => Color.FromNonPremultiplied(255, 255, 0, opacity),
+            7 => Color.FromNonPremultiplied(255, 255, 255, opacity),
+            8 => Color.FromNonPremultiplied(0, 0, 192, opacity),
+            9 => Color.FromNonPremultiplied(192, 0, 0, opacity),
+            10 => Color.FromNonPremultiplied(192, 0, 192, opacity),
+            11 => Color.FromNonPremultiplied(0, 192, 0, opacity),
+            12 => Color.FromNonPremultiplied(0, 192, 192, opacity),
+            13 => Color.FromNonPremultiplied(192, 192, 0, opacity),
+            _ => Color.FromNonPremultiplied(192, 192, 192, opacity)
         };
     }
 
