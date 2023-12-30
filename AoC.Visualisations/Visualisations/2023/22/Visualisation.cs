@@ -10,13 +10,15 @@ namespace AoC.Visualisations.Visualisations._2023._22;
 [UsedImplicitly]
 public class Visualisation : VisualisationBase<PuzzleState>
 {
-    private const int TileWidth = 7;
+    private const int TileWidth = 42;
 
-    private const int TileHeight = 9;
+    private const int TileHeight = 38;
     
-    private const int HalfTileWidth = 3;
+    private const int HalfTileWidth = 21;
 
-    private const int HalfTileHeight = 4;
+    private const int HalfTileHeight = 19;
+    
+    private const int TileIsoHeight = 10;
     
     private SpriteBatch _spriteBatch;
     
@@ -28,7 +30,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
         {
-            PreferredBackBufferWidth = 200,
+            PreferredBackBufferWidth = 430,
             PreferredBackBufferHeight = 980
         };
 
@@ -88,20 +90,22 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         for (var z = 1; z < _state.Height; z++)
         {
-            for (var x = 0; x < 10; x++)
+            for (var x = 9; x >= 0; x--)
             {
                 for (var y = 0; y < 10; y++)
                 {
                     var id = _state.Map[z, x, y];
 
                     /*
-                     * TODO: 4x the tiles. Sort draw order. Scroll up as they settle.
+                     * TODO: Sort draw order. Scroll up as they settle.
                      */
                     
                     if (id > 0)
                     {
-                        _spriteBatch.Draw(_tile, new Rectangle(95 + (x - y) * HalfTileHeight * 2, 970 - (HalfTileWidth * 2 * z + (x + y) * HalfTileHeight * 2), TileWidth * 2, TileHeight * 2), new Rectangle(0, 0, TileWidth, TileHeight),
-                            GetBrickColor(id), 0, Vector2.Zero, SpriteEffects.None, .9f);
+                        _spriteBatch.Draw(_tile, 
+                            new Vector2(195 + (x - y) * HalfTileWidth, 970 - (TileIsoHeight * z + (x + y) * (TileIsoHeight + 4))), 
+                            new Rectangle(0, 0, TileWidth, TileHeight),
+                            GetBrickColor(id), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .9f);
                     }
                 }
             }
