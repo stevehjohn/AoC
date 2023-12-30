@@ -62,10 +62,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                 break;
 
-            case 2:
-                Puzzle = new Part2(this);
-
-                break;
+            // case 2:
+            //     Puzzle = new Part2(this);
+            //
+            //     break;
 
             default:
                 throw new VisualisationParameterException();
