@@ -83,17 +83,18 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     protected override void Update(GameTime gameTime)
     {
-        _frame++;
-
         if (HasNextState)
         {
-            _state = GetNextState();
+            if (_frame % 2 == 0 || ! _state.Settling)
+            {
+                _state = GetNextState();
+            }
 
             if (_state.Settling)
             {
                 _map = _state.Map;
 
-                _yOffset += 5;
+                _yOffset += 2.5f;
             }
             else
             {
@@ -159,6 +160,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
         }
 
         UpdateSparks();
+
+        _frame++;
 
         base.Update(gameTime);
     }
