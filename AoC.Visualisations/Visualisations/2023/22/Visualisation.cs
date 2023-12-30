@@ -116,6 +116,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                         for (var i = 0; i < 100; i++)
                         {
+                            var depth = z / 1_000f + (10 - x) / 10_000f + (10 - y) / 100_000f;
+
                             _sparks.Add(new Spark
                             {
                                 Position = new PointFloat { X = 195 + (x - y) * HalfTileWidth, Y = 960 - (TileIsoHeight * z + (x + y) * (TileIsoHeight + 4)) },
@@ -123,7 +125,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
                                 Ticks = 100,
                                 StartTicks = 100,
                                 SpriteOffset = 0,
-                                Color = GetBrickColor(_destroying.Value)
+                                Color = GetBrickColor(_destroying.Value),
+                                Z = depth
                             });
                         }
                     }
@@ -168,19 +171,14 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private void DrawBricks()
     {
-        var depth = 0f;
-        
-        /*
-         * TODO:
-         *   Once settled, scroll to brick being removed and explode it.
-         */
-        
         for (var z = 1; z < _state.Height; z++)
         {
             for (var x = 9; x >= 0; x--)
             {
                 for (var y = 9; y >= 0; y--)
                 {
+                    var depth = z / 1_000f + (10 - x) / 10_000f + (10 - y) / 100_000f;
+                        
                     var id = _map[z, x, y];
 
                     if (id > 0)
@@ -189,8 +187,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
                             new Vector2(195 + (x - y) * HalfTileWidth, _yOffset + 960 - (TileIsoHeight * z + (x + y) * (TileIsoHeight + 4))), 
                             new Rectangle(0, 0, TileWidth, TileHeight),
                             GetBrickColor(id), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, depth);
-
-                        depth += 0.0001f;
                     }
                 }
             }
@@ -229,7 +225,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         foreach (var spark in _sparks)
         {
-            _spriteBatch.Draw(_spark, new Vector2(spark.Position.X, _yOffset + spark.Position.Y), new Rectangle(spark.SpriteOffset, 0, 5, 5), spark.Color * ((float) spark.Ticks / spark.StartTicks), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1f);
+            _spriteBatch.Draw(_spark, new Vector2(spark.Position.X, _yOffset + spark.Position.Y), new Rectangle(spark.SpriteOffset, 0, 5, 5), spark.Color * ((float) spark.Ticks / spark.StartTicks), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, spark.Z);
         }
     }
 
