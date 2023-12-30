@@ -1,3 +1,4 @@
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Solutions._2023._22;
 using AoC.Visualisations.Exceptions;
 using AoC.Visualisations.Infrastructure;
@@ -27,6 +28,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private int[,,] _map;
 
     private int _yOffset;
+
+    private readonly Queue<int> _destroy = new();
+
+    private int? _destroying;
+
+    private int _scrollTo;
 
     public Visualisation()
     {
@@ -74,7 +81,44 @@ public class Visualisation : VisualisationBase<PuzzleState>
             if (_state.Settling)
             {
                 _map = _state.Map;
+
+                _yOffset += 5;
             }
+            else
+            {
+                _destroy.Enqueue(_state.DestroyBrickId);
+            }
+        }
+
+        if (_destroying != null)
+        {
+            _yOffset = _yOffset.Converge(_scrollTo).Converge(_scrollTo).Converge(_scrollTo).Converge(_scrollTo);
+
+            if (_yOffset == _scrollTo)
+            {
+                WalkUpMap((x, y, z) =>
+                {
+                    if (_map[z, x, y] == _destroying.Value)
+                    {
+                        _map[z, x, y] = 0;
+                    }
+                });
+
+                _destroying = null;
+            }
+        }
+
+        if (! _state.Settling && _destroying == null && _destroy.Count > 0)
+        {
+            _destroying = _destroy.Dequeue();
+            
+            WalkUpMap((x, y, z) =>
+            {
+                if (_map[z, x, y] == _destroying.Value)
+                {
+                    _scrollTo = z * 4;
+                }
+            });
         }
 
         base.Update(gameTime);
@@ -122,11 +166,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 }
             }
         }
-
-        if (_state.Settling)
-        {
-            _yOffset += 5;
-        }
     }
 
     private static Color GetBrickColor(int id)
@@ -148,5 +187,19 @@ public class Visualisation : VisualisationBase<PuzzleState>
             13 => Color.FromNonPremultiplied(192, 192, 0, 255),
             _ => Color.FromNonPremultiplied(192, 192, 192, 255)
         };
+    }
+
+    protected void WalkUpMap(Action<int, int, int> action)
+    {
+        for (var z = 1; z < _state.Height; z++)
+        {
+            for (var x = 0; x < 10; x++)
+            {
+                for (var y = 0; y < 10; y++)
+                {
+                    action(x, y, z);
+                }
+            }
+        }
     }
 }
