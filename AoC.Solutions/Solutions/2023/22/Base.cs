@@ -108,9 +108,9 @@ public abstract class Base : Solution
                 found.Clear();
 
                 supported.Clear();
-
-                Visualise();
             }
+
+            Visualise();
         }
         
         return droppedIds.Count;
