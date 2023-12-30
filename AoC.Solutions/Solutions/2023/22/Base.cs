@@ -16,7 +16,7 @@ public abstract class Base : Solution
 
     private int _highestZ;
 
-    private IVisualiser<PuzzleState> _visualiser;
+    private readonly IVisualiser<PuzzleState> _visualiser;
 
     protected Base()
     {
@@ -26,7 +26,15 @@ public abstract class Base : Solution
     {
         _visualiser = visualiser;
     }
-    
+
+    private void Visualise()
+    {
+        if (_visualiser != null)
+        {
+            _visualiser.PuzzleStateChanged(new PuzzleState(Map, MaxHeight));
+        }
+    }
+
     protected int SettleBricks(int[,,] map, bool move = true)
     {
         var found = new HashSet<int>();
@@ -97,12 +105,14 @@ public abstract class Base : Solution
                     }
                 }
 
+                Visualise();
+                
                 found.Clear();
 
                 supported.Clear();
             }
         }
-
+        
         return droppedIds.Count;
     }
 
