@@ -14,6 +14,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     
     private Texture2D _tile;
 
+    private PuzzleState _state;
+
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -49,6 +51,21 @@ public class Visualisation : VisualisationBase<PuzzleState>
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         _tile = Content.Load<Texture2D>("tile");
+    }
+
+    protected override void Update(GameTime gameTime)
+    {
+        if (HasNextState)
+        {
+            _state = GetNextState();
+        }
+
+        base.Update(gameTime);
+    }
+
+    protected override void Draw(GameTime gameTime)
+    {
+        base.Draw(gameTime);
     }
 
     private static Color GetBrickColor(int id)
