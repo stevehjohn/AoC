@@ -30,7 +30,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
         {
-            PreferredBackBufferWidth = 430,
+            PreferredBackBufferWidth = 433,
             PreferredBackBufferHeight = 980
         };
 
@@ -105,7 +105,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                     if (id > 0)
                     {
                         _spriteBatch.Draw(_tile, 
-                            new Vector2(195 + (x - y) * HalfTileWidth, 970 - (TileIsoHeight * z + (x + y) * (TileIsoHeight + 4))), 
+                            new Vector2(195 + (x - y) * HalfTileWidth, 960 - (TileIsoHeight * z + (x + y) * (TileIsoHeight + 4))), 
                             new Rectangle(0, 0, TileWidth, TileHeight),
                             GetBrickColor(id), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, depth);
 
