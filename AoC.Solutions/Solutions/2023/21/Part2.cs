@@ -9,23 +9,24 @@ public class Part2 : Base
     private const long TargetSteps = 26_501_365;
 
     private const int Buffers = 8;
-    
+
     private long[] _counts;
-    
-    private readonly HashSet<(int X, int Y, int Ux, int Uy)>[] _buffers = new HashSet<(int X, int Y, int Ux, int Uy)>[Buffers];
+
+    private readonly HashSet<(int X, int Y, int Ux, int Uy)>[] _buffers =
+        new HashSet<(int X, int Y, int Ux, int Uy)>[Buffers];
 
     private int _source;
 
     private int _target = Buffers - 1;
-    
+
     private static readonly (int, int) North = (0, -1);
-    
+
     private static readonly (int, int) East = (1, 0);
-    
+
     private static readonly (int, int) South = (0, 1);
-    
+
     private static readonly (int, int) West = (-1, 0);
-    
+
     public override string GetAnswer()
     {
         var start = ParseInput();
@@ -33,7 +34,7 @@ public class Part2 : Base
         Walk(start, Width * 2 + Width / 2 + 1);
 
         var result = ExtrapolateAnswer();
-        
+
         return result.ToString();
     }
 
@@ -45,27 +46,27 @@ public class Part2 : Base
         }
 
         _buffers[_source].Add((start.X, start.Y, 0, 0));
-        
+
         _counts = new long[maxSteps];
 
         _counts[0] = 1;
-        
+
         var step = 1;
-        
+
         while (step < maxSteps)
         {
             var count = 0;
 
             _buffers[_source].ExceptWith(_buffers[_source.DecrementRotate(Buffers, Buffers - 2)]);
-            
+
             foreach (var position in _buffers[_source])
             {
                 count += Move(position, North);
-            
+
                 count += Move(position, South);
-            
+
                 count += Move(position, East);
-            
+
                 count += Move(position, West);
             }
 
@@ -78,16 +79,56 @@ public class Part2 : Base
 
             Console.WriteLine($"Step: {step} - {_counts[step]}");
 
+            Dump([_buffers[_source], _buffers[_target]]);
+
             _source = _source.DecrementRotate(Buffers);
 
             _target = _target.DecrementRotate(Buffers);
 
             _buffers[_target].Clear();
-            
+
             step++;
         }
     }
-    
+
+    private void Dump(HashSet<(int X, int Y, int Ux, int Uy)>[] t)
+    {
+        const int offset = 50;
+
+        for (var y = offset; y < Width - offset; y++)
+        {
+            for (var i = 0; i < t.Length; i++)
+            {
+                for (var x = offset; x < Height - offset; x++)
+                {
+                    if (t[i].Any(p => p.X == x && p.Y == y))
+                    {
+                        Console.Write('O');
+
+                        continue;
+                    }
+
+                    if (Map[x, y] == '#')
+                    {
+                        Console.Write('.');
+                    }
+                    else
+                    {
+                        Console.Write(' ');
+                    }
+                }
+                
+                Console.Write("    ");
+            }
+
+            Console.WriteLine();
+        }
+
+        Console.WriteLine();
+
+        Console.ReadKey();
+    }
+
     private int Move((int X, int Y, int Ux, int Uy) position, (int X, int Y) direction)
     {
         position = (position.X + direction.X, position.Y + direction.Y, position.Ux, position.Uy);
@@ -123,19 +164,19 @@ public class Part2 : Base
 
         return _buffers[_target].Add(position) ? 1 : 0;
     }
-    
+
     private long ExtrapolateAnswer()
     {
         var halfWidth = Width / 2;
-        
+
         var delta1 = _counts[halfWidth + Width] - _counts[halfWidth];
 
         var delta2 = _counts[halfWidth + Width * 2] - _counts[halfWidth + Width];
 
         var quotient = TargetSteps / Width;
-        
+
         var result = _counts[halfWidth] + delta1 * quotient + quotient * (quotient - 1) / 2 * (delta2 - delta1);
-        
+
         return result;
     }
 }
