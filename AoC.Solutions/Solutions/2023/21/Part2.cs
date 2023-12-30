@@ -61,8 +61,6 @@ public class Part2 : Base
 
             var copySource = new HashSet<(int X, int Y, int Ux, int Uy)>(_buffers[_source]);
             
-            copySource.ExceptWith(_buffers[_source.DecrementRotate(Buffers, 2)]);
-            
             var target = new HashSet<(int X, int Y, int Ux, int Uy)>();
             
             var sum = ProcessStep(step, copySource, target, true);
@@ -80,7 +78,7 @@ public class Part2 : Base
 
             _counts[step] = count;
             
-            Dump([_buffers[_source], _buffers[_target], copySource, target]);
+            Dump([_buffers[_source], _buffers[_target], copySource, target, _buffers[_target.DecrementRotate(Buffers, 3)]]);
 
             _source = _source.DecrementRotate(Buffers);
 
@@ -100,19 +98,19 @@ public class Part2 : Base
         {
             if (exclude)
             {
-                if (Measurement.GetManhattanDistance(65, 65, position.X + position.Ux * 131, position.Y - 1 + position.Uy * 131) > step - 3)
+                if (Measurement.GetManhattanDistance(65, 65, position.X + position.Ux * 131, position.Y - 1 + position.Uy * 131) > step - Buffers + 3)
                 {
                     count += Move(target, position, North);
                 }
-                if (Measurement.GetManhattanDistance(65, 65, position.X + position.Ux * 131, position.Y + 1 + position.Uy * 131) > step - 3)
+                if (Measurement.GetManhattanDistance(65, 65, position.X + position.Ux * 131, position.Y + 1 + position.Uy * 131) > step - Buffers + 3)
                 {
                     count += Move(target, position, South);
                 }
-                if (Measurement.GetManhattanDistance(65, 65, position.X + 1 + position.Ux * 131, position.Y + position.Uy * 131) > step - 3)
+                if (Measurement.GetManhattanDistance(65, 65, position.X + 1 + position.Ux * 131, position.Y + position.Uy * 131) > step - Buffers + 3)
                 {
                     count += Move(target, position, East);
                 }
-                if (Measurement.GetManhattanDistance(65, 65, position.X - 1 + position.Ux * 131, position.Y + position.Uy * 131) > step - 3)
+                if (Measurement.GetManhattanDistance(65, 65, position.X - 1 + position.Ux * 131, position.Y + position.Uy * 131) > step - Buffers + 3)
                 {
                     count += Move(target, position, West);
                 }
