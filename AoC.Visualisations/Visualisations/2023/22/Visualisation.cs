@@ -3,12 +3,17 @@ using AoC.Visualisations.Exceptions;
 using AoC.Visualisations.Infrastructure;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace AoC.Visualisations.Visualisations._2023._22;
 
 [UsedImplicitly]
 public class Visualisation : VisualisationBase<PuzzleState>
 {
+    private SpriteBatch _spriteBatch;
+    
+    private Texture2D _tile;
+
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -37,5 +42,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
             default:
                 throw new VisualisationParameterException();
         }
+    }
+
+    protected override void LoadContent()
+    {
+        _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+        _tile = Content.Load<Texture2D>("tile");
     }
 }
