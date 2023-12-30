@@ -50,4 +50,19 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         _tile = Content.Load<Texture2D>("tile");
     }
+
+    private static Color GetBrickColor(int id)
+    {
+        return (id % 8) switch
+        {
+            1 => Color.FromNonPremultiplied(0, 0, 255, 255),
+            2 => Color.FromNonPremultiplied(255, 0, 0, 255),
+            3 => Color.FromNonPremultiplied(255, 0, 255, 255),
+            4 => Color.FromNonPremultiplied(0, 255, 0, 255),
+            5 => Color.FromNonPremultiplied(0, 255, 255, 255),
+            6 => Color.FromNonPremultiplied(255, 255, 0, 255),
+            7 => Color.FromNonPremultiplied(255, 255, 255, 255),
+            _ => Color.FromNonPremultiplied(0, 0, 0, 255)
+        };
+    }
 }
