@@ -96,7 +96,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                     if (id > 0)
                     {
-                        _spriteBatch.Draw(_tile, new Rectangle(95 + (x - y) * HalfTileHeight * 2, 970 - (HalfTileWidth * 2 * z + (x + y) * HalfTileHeight * 2), TileWidth, TileHeight), new Rectangle(0, 0, TileWidth, TileHeight),
+                        _spriteBatch.Draw(_tile, new Rectangle(95 + (x - y) * HalfTileHeight * 2, 970 - (HalfTileWidth * 2 * z + (x + y) * HalfTileHeight * 2), TileWidth * 2, TileHeight * 2), new Rectangle(0, 0, TileWidth, TileHeight),
                             GetBrickColor(id), 0, Vector2.Zero, SpriteEffects.None, .9f);
                     }
                 }
