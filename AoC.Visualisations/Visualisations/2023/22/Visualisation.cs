@@ -94,6 +94,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 {
                     var id = _state.Map[z, x, y];
 
+                    /*
+                     * TODO: 4x the tiles. Sort draw order. Scroll up as they settle.
+                     */
+                    
                     if (id > 0)
                     {
                         _spriteBatch.Draw(_tile, new Rectangle(95 + (x - y) * HalfTileHeight * 2, 970 - (HalfTileWidth * 2 * z + (x + y) * HalfTileHeight * 2), TileWidth * 2, TileHeight * 2), new Rectangle(0, 0, TileWidth, TileHeight),
