@@ -24,6 +24,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private PuzzleState _state;
 
+    private int[,,] _map;
+
     private int _yOffset;
 
     public Visualisation()
@@ -68,6 +70,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
         if (HasNextState)
         {
             _state = GetNextState();
+
+            if (_state.Settling)
+            {
+                _map = _state.Map;
+            }
         }
 
         base.Update(gameTime);
@@ -101,7 +108,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             {
                 for (var y = 9; y >= 0; y--)
                 {
-                    var id = _state.Map[z, x, y];
+                    var id = _map[z, x, y];
 
                     if (id > 0)
                     {
@@ -118,7 +125,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         if (_state.Settling)
         {
-            _yOffset += 4;
+            _yOffset += 5;
         }
     }
 

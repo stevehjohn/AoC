@@ -27,11 +27,11 @@ public abstract class Base : Solution
         _visualiser = visualiser;
     }
 
-    private void Visualise(bool settling)
+    protected void Visualise(bool settling, int brickId = 0)
     {
         if (_visualiser != null)
         {
-            _visualiser.PuzzleStateChanged(new PuzzleState(Map, MaxHeight) { Settling = settling });
+            _visualiser.PuzzleStateChanged(new PuzzleState(Map, MaxHeight) { Settling = settling, DestroyBrickId = brickId });
         }
     }
 

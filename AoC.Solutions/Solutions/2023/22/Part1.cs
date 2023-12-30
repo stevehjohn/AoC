@@ -44,8 +44,15 @@ public class Part1 : Base
                 }
             });
 
-            result += 1 - SettleBricks(Map, false);
-        
+            var count = SettleBricks(Map, false);
+            
+            result += 1 - count;
+
+            if (count == 0)
+            {
+                Visualise(false, id);
+            }
+
             Array.Copy(copy, Map, MaxHeight * 100);
         }
 

@@ -6,7 +6,9 @@ public class PuzzleState
 
     public int Height { get; }
 
-    public bool Settling { get; set; }
+    public bool Settling { get; init; }
+    
+    public int DestroyBrickId { get; init; }
     
     public PuzzleState(int[,,] map, int height)
     {
