@@ -135,6 +135,8 @@ public abstract class Base : Solution
 
     protected void ParseInput()
     {
+        var items = new List<(Point Start, Point End)>();
+
         foreach (var line in Input)
         {
             var parts = line.Split('~');
@@ -148,18 +150,25 @@ public abstract class Base : Solution
                 (start, end) = (end, start);
             }
 
+            items.Add((start, end));
+        }
+
+        foreach (var (start, end) in items.OrderBy(i => i.Start.Z))
+        {
             Count++;
 
             Map[start.Z, start.X, start.Y] = Count;
 
-            while (! start.Equals(end))
+            var next = start;
+            
+            while (! next.Equals(end))
             {
-                start = new Point(
-                    start.X.Converge(end.X),
-                    start.Y.Converge(end.Y),
-                    start.Z.Converge(end.Z));
+                next = new Point(
+                    next.X.Converge(end.X),
+                    next.Y.Converge(end.Y),
+                    next.Z.Converge(end.Z));
 
-                Map[start.Z, start.X, start.Y] = Count;
+                Map[next.Z, next.X, next.Y] = Count;
             }
         }
     }
