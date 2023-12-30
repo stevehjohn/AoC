@@ -129,7 +129,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             }
         }
 
-        if (! _state.Settling && _destroying == null && _destroy.Count > 0 && _sparks.Count == 0)
+        if (! _state.Settling && _destroying == null && _destroy.Count > 0)// && _sparks.Count == 0)
         {
             _destroying = _destroy.Dequeue();
             
@@ -137,7 +137,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             {
                 if (_map[z, x, y] == _destroying.Value)
                 {
-                    _scrollTo = z * 4;
+                    _scrollTo = z * 5;
                 }
             });
         }
