@@ -22,6 +22,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private SpriteBatch _spriteBatch;
     
     private Texture2D _tile;
+    
+    private Texture2D _spark;
 
     private PuzzleState _state;
 
@@ -34,6 +36,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private int? _destroying;
 
     private int _scrollTo;
+
+    private readonly List<Spark> _sparks = new();
 
     public Visualisation()
     {
@@ -70,6 +74,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         _tile = Content.Load<Texture2D>("tile");
+
+        _spark = Content.Load<Texture2D>("spark");
     }
 
     protected override void Update(GameTime gameTime)
@@ -132,6 +138,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
         
         DrawBricks();
         
+        DrawSparks();
+        
         _spriteBatch.End();
         
         base.Draw(gameTime);
@@ -167,6 +175,14 @@ public class Visualisation : VisualisationBase<PuzzleState>
             }
         }
     }
+    
+    private void DrawSparks()
+    {
+        foreach (var spark in _sparks)
+        {
+            _spriteBatch.Draw(_spark, new Vector2(spark.Position.X, spark.Position.Y), new Rectangle(spark.SpriteOffset, 0, 5, 5), Color.White * ((float) spark.Ticks / spark.StartTicks), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
+        }
+    }
 
     private static Color GetBrickColor(int id)
     {
@@ -189,7 +205,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         };
     }
 
-    protected void WalkUpMap(Action<int, int, int> action)
+    private void WalkUpMap(Action<int, int, int> action)
     {
         for (var z = 1; z < _state.Height; z++)
         {
