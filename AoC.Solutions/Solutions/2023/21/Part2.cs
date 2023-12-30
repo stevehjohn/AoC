@@ -12,8 +12,7 @@ public class Part2 : Base
 
     private long[] _counts;
 
-    private readonly HashSet<(int X, int Y, int Ux, int Uy)>[] _buffers =
-        new HashSet<(int X, int Y, int Ux, int Uy)>[Buffers];
+    private readonly HashSet<(int X, int Y, int Ux, int Uy)>[] _buffers = new HashSet<(int X, int Y, int Ux, int Uy)>[Buffers];
 
     private int _source;
 
