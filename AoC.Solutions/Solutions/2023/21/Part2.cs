@@ -64,14 +64,14 @@ public class Part2 : Base
             
             var target = new HashSet<(int X, int Y, int Ux, int Uy)>();
             
-            count = ProcessStep(_buffers[_source], _buffers[_target]);
+            count = ProcessStep(copySource, target);
             
             if (step >= Buffers)
             {
                 count += _counts[step - Buffers];
             }
 
-            Console.WriteLine($"Step: {step} - {_counts[step]} - {count} {_counts[step] - count}");
+            Console.WriteLine($"Step: {step} - {_counts[step]} - {count} Diff: {_counts[step] - count}");
 
             _counts[step] = count;
             
