@@ -1,4 +1,3 @@
-using AoC.Solutions.Extensions;
 using AoC.Solutions.Solutions._2023._22;
 using AoC.Visualisations.Exceptions;
 using AoC.Visualisations.Infrastructure;
@@ -14,35 +13,35 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private const int TileWidth = 42;
 
     private const int TileHeight = 38;
-    
+
     private const int HalfTileWidth = 21;
-    
+
     private const int TileIsoHeight = 10;
-    
+
     private SpriteBatch _spriteBatch;
-    
+
     private Texture2D _tile;
-    
+
     private Texture2D _spark;
 
     private PuzzleState _state;
 
     private int[,,] _map;
 
-    private int _yOffset;
+    private float _yOffset;
 
     private readonly Queue<int> _destroy = new();
 
     private int? _destroying;
-
-    private int _scrollTo;
 
     private readonly List<Spark> _sparks = new();
 
     private readonly Random _rng = new();
 
     private long _frame;
-    
+
+    private bool _resetting = true;
+
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -85,7 +84,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     protected override void Update(GameTime gameTime)
     {
         _frame++;
-        
+
         if (HasNextState)
         {
             _state = GetNextState();
@@ -102,61 +101,63 @@ public class Visualisation : VisualisationBase<PuzzleState>
             }
         }
 
-        if (_destroying != null)
+        if (! _state.Settling && _resetting)
         {
-            _yOffset = _yOffset.Converge(_scrollTo).Converge(_scrollTo).Converge(_scrollTo).Converge(_scrollTo);
+            _yOffset -= 5;
 
-            if (_yOffset == _scrollTo)
+            if (_yOffset == 0)
             {
-                WalkUpMap((x, y, z) =>
-                {
-                    if (_map[z, x, y] == _destroying.Value)
-                    {
-                        _map[z, x, y] = 0;
-
-                        for (var xO = 0; xO < TileWidth; xO += 2)
-                        {
-                            for (var yO = 0; yO < TileHeight; yO += 2)
-                            {
-                                var depth = z / 1_000f + (10 - x) / 10_000f + (10 - y) / 100_000f;
-
-                                _sparks.Add(new Spark
-                                {
-                                    Position = new PointFloat
-                                    {
-                                        X = 195 + (x - y) * HalfTileWidth + xO,
-                                        Y = 960 - (TileIsoHeight * z + (x + y) * (TileIsoHeight + 4)) + yO
-                                    },
-                                    Vector = new PointFloat
-                                        { X = (-20f + _rng.Next(41)) / 10, Y = -_rng.Next(41) / 10f },
-                                    Ticks = 100,
-                                    StartTicks = 100,
-                                    SpriteOffset = 0,
-                                    Color = GetBrickColor(_destroying.Value),
-                                    Z = depth
-                                });
-                            }
-                        }
-                    }
-                });
-                
-                _destroying = null;
+                _resetting = false;
             }
         }
 
-        if (! _state.Settling && _destroying == null && _destroy.Count > 0 && _frame % 10 == 0)
+        if (! _state.Settling && ! _resetting)
         {
-            _destroying = _destroy.Dequeue();
-            
+            _yOffset += 0.4f;
+        }
+
+        if (_destroying != null && ! _resetting)
+        {
             WalkUpMap((x, y, z) =>
             {
                 if (_map[z, x, y] == _destroying.Value)
                 {
-                    _scrollTo = z * 5;
+                    _map[z, x, y] = 0;
+
+                    for (var xO = 0; xO < TileWidth; xO += 2)
+                    {
+                        for (var yO = 0; yO < TileHeight; yO += 2)
+                        {
+                            var depth = z / 1_000f + (10 - x) / 10_000f + (10 - y) / 100_000f;
+
+                            _sparks.Add(new Spark
+                            {
+                                Position = new PointFloat
+                                {
+                                    X = 195 + (x - y) * HalfTileWidth + xO,
+                                    Y = 960 - (TileIsoHeight * z + (x + y) * (TileIsoHeight + 4)) + yO
+                                },
+                                Vector = new PointFloat
+                                    { X = (-20f + _rng.Next(41)) / 10, Y = -_rng.Next(41) / 10f },
+                                Ticks = 100,
+                                StartTicks = 100,
+                                SpriteOffset = 0,
+                                Color = GetBrickColor(_destroying.Value),
+                                Z = depth
+                            });
+                        }
+                    }
                 }
             });
+
+            _destroying = null;
         }
-        
+
+        if (! _state.Settling && _destroying == null && _destroy.Count > 0 && _frame % 5 == 0)
+        {
+            _destroying = _destroy.Dequeue();
+        }
+
         UpdateSparks();
 
         base.Update(gameTime);
@@ -167,13 +168,13 @@ public class Visualisation : VisualisationBase<PuzzleState>
         GraphicsDevice.Clear(Color.Black);
 
         _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
-        
+
         DrawBricks();
-        
+
         DrawSparks();
-        
+
         _spriteBatch.End();
-        
+
         base.Draw(gameTime);
     }
 
@@ -186,13 +187,14 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 for (var y = 9; y >= 0; y--)
                 {
                     var depth = z / 1_000f + (10 - x) / 10_000f + (10 - y) / 100_000f;
-                        
+
                     var id = _map[z, x, y];
 
                     if (id > 0)
                     {
-                        _spriteBatch.Draw(_tile, 
-                            new Vector2(195 + (x - y) * HalfTileWidth, _yOffset + 960 - (TileIsoHeight * z + (x + y) * (TileIsoHeight + 4))), 
+                        _spriteBatch.Draw(_tile,
+                            new Vector2(195 + (x - y) * HalfTileWidth,
+                                _yOffset + 960 - (TileIsoHeight * z + (x + y) * (TileIsoHeight + 4))),
                             new Rectangle(0, 0, TileWidth, TileHeight),
                             GetBrickColor(id), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, depth);
                     }
@@ -200,7 +202,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             }
         }
     }
-    
+
     private void UpdateSparks()
     {
         var toRemove = new List<Spark>();
@@ -228,12 +230,14 @@ public class Visualisation : VisualisationBase<PuzzleState>
             _sparks.Remove(spark);
         }
     }
-    
+
     private void DrawSparks()
     {
         foreach (var spark in _sparks)
         {
-            _spriteBatch.Draw(_spark, new Vector2(spark.Position.X, _yOffset + spark.Position.Y), new Rectangle(spark.SpriteOffset, 0, 5, 5), spark.Color * ((float) spark.Ticks / spark.StartTicks), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, spark.Z);
+            _spriteBatch.Draw(_spark, new Vector2(spark.Position.X, _yOffset + spark.Position.Y),
+                new Rectangle(spark.SpriteOffset, 0, 5, 5), spark.Color * ((float) spark.Ticks / spark.StartTicks), 0,
+                Vector2.Zero, Vector2.One, SpriteEffects.None, spark.Z);
         }
     }
 
