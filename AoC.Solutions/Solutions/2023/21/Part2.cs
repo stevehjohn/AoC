@@ -1,4 +1,5 @@
 using AoC.Solutions.Extensions;
+using AoC.Solutions.Libraries;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2023._21;
@@ -8,7 +9,7 @@ public class Part2 : Base
 {
     private const long TargetSteps = 26_501_365;
 
-    private const int Buffers = 8;
+    private const int Buffers = 6;
 
     private long[] _counts;
 
@@ -54,7 +55,7 @@ public class Part2 : Base
 
         while (step < maxSteps)
         {
-            var count = ProcessStep(_buffers[_source], _buffers[_target]);
+            var count = ProcessStep(step, _buffers[_source], _buffers[_target]);
             
             _counts[step] = count;
 
@@ -64,14 +65,18 @@ public class Part2 : Base
             
             var target = new HashSet<(int X, int Y, int Ux, int Uy)>();
             
-            count = ProcessStep(copySource, target);
+            var sum = ProcessStep(step, copySource, target, true);
+
+            var delta = sum;
             
-            if (step >= Buffers)
+            if (step >= Buffers - 2)
             {
-                count += _counts[step - Buffers];
+                sum += _counts[step - Buffers + 2];
+                
+                Console.WriteLine(sum);
             }
 
-            Console.WriteLine($"Step: {step} - {_counts[step]} - {count} Diff: {_counts[step] - count}");
+            Console.WriteLine($"Step: {step} - {_counts[step]} <-> {sum} New: {delta} Diff: {_counts[step] - sum}");
 
             _counts[step] = count;
             
@@ -87,12 +92,17 @@ public class Part2 : Base
         }
     }
 
-    private long ProcessStep(HashSet<(int X, int Y, int Ux, int Uy)> source, HashSet<(int X, int Y, int Ux, int Uy)> target)
+    private long ProcessStep(int step, HashSet<(int X, int Y, int Ux, int Uy)> source, HashSet<(int X, int Y, int Ux, int Uy)> target, bool exclude = false)
     {
         var count = 0;
         
         foreach (var position in source)
         {
+            if (exclude && Measurement.GetManhattanDistance(65, 65, position.X + position.Ux * 131, position.Y + position.Uy * 131) < step - 1)
+            {
+                continue;
+            }
+
             count += Move(target, position, North);
 
             count += Move(target, position, South);
