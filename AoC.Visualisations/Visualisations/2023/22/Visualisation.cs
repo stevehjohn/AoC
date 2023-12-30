@@ -90,6 +90,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         var depth = 0f;
         
+        /*
+         * TODO:
+         *   Once settled, scroll to brick being removed and explode it.
+         */
+        
         for (var z = 1; z < _state.Height; z++)
         {
             for (var x = 9; x >= 0; x--)
