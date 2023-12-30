@@ -117,11 +117,13 @@ public class Part2 : Base
             {
                 for (var x = offset; x < Height - offset; x++)
                 {
+                    var c = (char) (x - offset + 'A');
+                    
                     if (i > 1)
                     {
                         if (t[i].Any(p => p.X == x && p.Y == y))
                         {
-                            Console.Write('O');
+                            Console.Write(c);
                         
                             continue;
                         }
@@ -130,7 +132,7 @@ public class Part2 : Base
                         {
                             Console.ForegroundColor = ConsoleColor.Magenta;
                             
-                            Console.Write('O');
+                            Console.Write(c);
 
                             Console.ForegroundColor = ConsoleColor.Green;
                             
@@ -141,7 +143,7 @@ public class Part2 : Base
                     {
                         if (t[i].Any(p => p.X == x && p.Y == y))
                         {
-                            Console.Write('O');
+                            Console.Write(c);
                         
                             continue;
                         }
