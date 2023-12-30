@@ -6,6 +6,8 @@ public class PuzzleState
 
     public int Height { get; }
 
+    public bool Settling { get; set; }
+    
     public PuzzleState(int[,,] map, int height)
     {
         Map = new int[height, 10, 10];

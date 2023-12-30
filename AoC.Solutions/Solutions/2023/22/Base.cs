@@ -27,11 +27,11 @@ public abstract class Base : Solution
         _visualiser = visualiser;
     }
 
-    private void Visualise()
+    private void Visualise(bool settling)
     {
         if (_visualiser != null)
         {
-            _visualiser.PuzzleStateChanged(new PuzzleState(Map, MaxHeight));
+            _visualiser.PuzzleStateChanged(new PuzzleState(Map, MaxHeight) { Settling = settling });
         }
     }
 
@@ -110,7 +110,7 @@ public abstract class Base : Solution
                 supported.Clear();
             }
 
-            Visualise();
+            Visualise(move);
         }
         
         return droppedIds.Count;

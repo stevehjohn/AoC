@@ -15,8 +15,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private const int TileHeight = 38;
     
     private const int HalfTileWidth = 21;
-
-    private const int HalfTileHeight = 19;
     
     private const int TileIsoHeight = 10;
     
@@ -25,6 +23,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private Texture2D _tile;
 
     private PuzzleState _state;
+
+    private int _yOffset;
 
     public Visualisation()
     {
@@ -98,14 +98,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 {
                     var id = _state.Map[z, x, y];
 
-                    /*
-                     * TODO: Sort draw order. Scroll up as they settle.
-                     */
-                    
                     if (id > 0)
                     {
                         _spriteBatch.Draw(_tile, 
-                            new Vector2(195 + (x - y) * HalfTileWidth, 960 - (TileIsoHeight * z + (x + y) * (TileIsoHeight + 4))), 
+                            new Vector2(195 + (x - y) * HalfTileWidth, _yOffset + 960 - (TileIsoHeight * z + (x + y) * (TileIsoHeight + 4))), 
                             new Rectangle(0, 0, TileWidth, TileHeight),
                             GetBrickColor(id), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, depth);
 
@@ -113,6 +109,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
                     }
                 }
             }
+        }
+
+        if (_state.Settling)
+        {
+            _yOffset += 4;
         }
     }
 
