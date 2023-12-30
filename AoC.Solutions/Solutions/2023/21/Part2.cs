@@ -98,18 +98,35 @@ public class Part2 : Base
         
         foreach (var position in source)
         {
-            if (exclude && Measurement.GetManhattanDistance(65, 65, position.X + position.Ux * 131, position.Y + position.Uy * 131) < step - 1)
+            if (exclude)
             {
-                continue;
+                if (Measurement.GetManhattanDistance(65, 65, position.X + position.Ux * 131, position.Y - 1 + position.Uy * 131) > step - 3)
+                {
+                    count += Move(target, position, North);
+                }
+                if (Measurement.GetManhattanDistance(65, 65, position.X + position.Ux * 131, position.Y + 1 + position.Uy * 131) > step - 3)
+                {
+                    count += Move(target, position, South);
+                }
+                if (Measurement.GetManhattanDistance(65, 65, position.X + 1 + position.Ux * 131, position.Y + position.Uy * 131) > step - 3)
+                {
+                    count += Move(target, position, East);
+                }
+                if (Measurement.GetManhattanDistance(65, 65, position.X - 1 + position.Ux * 131, position.Y + position.Uy * 131) > step - 3)
+                {
+                    count += Move(target, position, West);
+                }
             }
+            else
+            {
+                count += Move(target, position, North);
 
-            count += Move(target, position, North);
+                count += Move(target, position, South);
 
-            count += Move(target, position, South);
+                count += Move(target, position, East);
 
-            count += Move(target, position, East);
-
-            count += Move(target, position, West);
+                count += Move(target, position, West);
+            }
         }
 
         return count;
@@ -119,7 +136,7 @@ public class Part2 : Base
     {
         Console.WriteLine();
         
-        const int offset = 54;
+        const int offset = 52;
 
         for (var y = offset; y < Width - offset; y++)
         {
