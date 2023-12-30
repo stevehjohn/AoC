@@ -88,11 +88,13 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private void DrawBricks()
     {
+        var depth = 0f;
+        
         for (var z = 1; z < _state.Height; z++)
         {
             for (var x = 9; x >= 0; x--)
             {
-                for (var y = 0; y < 10; y++)
+                for (var y = 9; y >= 0; y--)
                 {
                     var id = _state.Map[z, x, y];
 
@@ -105,7 +107,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
                         _spriteBatch.Draw(_tile, 
                             new Vector2(195 + (x - y) * HalfTileWidth, 970 - (TileIsoHeight * z + (x + y) * (TileIsoHeight + 4))), 
                             new Rectangle(0, 0, TileWidth, TileHeight),
-                            GetBrickColor(id), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .9f);
+                            GetBrickColor(id), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, depth);
+
+                        depth += 0.0001f;
                     }
                 }
             }
