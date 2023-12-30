@@ -16,6 +16,17 @@ public abstract class Base : Solution
 
     private int _highestZ;
 
+    private IVisualiser<PuzzleState> _visualiser;
+
+    protected Base()
+    {
+    }
+
+    protected Base(IVisualiser<PuzzleState> visualiser)
+    {
+        _visualiser = visualiser;
+    }
+    
     protected int SettleBricks(int[,,] map, bool move = true)
     {
         var found = new HashSet<int>();
