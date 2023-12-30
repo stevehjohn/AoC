@@ -10,6 +10,14 @@ namespace AoC.Visualisations.Visualisations._2023._22;
 [UsedImplicitly]
 public class Visualisation : VisualisationBase<PuzzleState>
 {
+    private const int TileWidth = 7;
+
+    private const int TileHeight = 9;
+    
+    private const int HalfTileWidth = 3;
+
+    private const int HalfTileHeight = 4;
+    
     private SpriteBatch _spriteBatch;
     
     private Texture2D _tile;
@@ -20,7 +28,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
         {
-            PreferredBackBufferWidth = 100,
+            PreferredBackBufferWidth = 200,
             PreferredBackBufferHeight = 980
         };
 
@@ -67,7 +75,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         GraphicsDevice.Clear(Color.Black);
 
-        _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
+        _spriteBatch.Begin(SpriteSortMode.Immediate, samplerState: SamplerState.PointClamp);
         
         DrawBricks();
         
@@ -88,8 +96,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                     if (id > 0)
                     {
-                        _spriteBatch.Draw(_tile, new Vector2(20 + (x + y) * 3, 960 - 4 * z + (y - x / 2f) * 3), new Rectangle(0, 0, 7, 9),
-                            GetBrickColor(id), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .9f);
+                        _spriteBatch.Draw(_tile, new Rectangle(95 + (x - y) * HalfTileHeight * 2, 970 - (HalfTileWidth * 2 * z + (x + y) * HalfTileHeight * 2), TileWidth, TileHeight), new Rectangle(0, 0, TileWidth, TileHeight),
+                            GetBrickColor(id), 0, Vector2.Zero, SpriteEffects.None, .9f);
                     }
                 }
             }
@@ -98,7 +106,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private static Color GetBrickColor(int id)
     {
-        return (id % 7) switch
+        return (id % 14) switch
         {
             1 => Color.FromNonPremultiplied(0, 0, 255, 255),
             2 => Color.FromNonPremultiplied(255, 0, 0, 255),
@@ -106,7 +114,14 @@ public class Visualisation : VisualisationBase<PuzzleState>
             4 => Color.FromNonPremultiplied(0, 255, 0, 255),
             5 => Color.FromNonPremultiplied(0, 255, 255, 255),
             6 => Color.FromNonPremultiplied(255, 255, 0, 255),
-            _ => Color.FromNonPremultiplied(255, 255, 255, 255)
+            7 => Color.FromNonPremultiplied(255, 255, 255, 255),
+            8 => Color.FromNonPremultiplied(0, 0, 192, 255),
+            9 => Color.FromNonPremultiplied(192, 0, 0, 255),
+            10 => Color.FromNonPremultiplied(192, 0, 192, 255),
+            11 => Color.FromNonPremultiplied(0, 192, 0, 255),
+            12 => Color.FromNonPremultiplied(0, 192, 192, 255),
+            13 => Color.FromNonPremultiplied(192, 192, 0, 255),
+            _ => Color.FromNonPremultiplied(192, 192, 192, 255)
         };
     }
 }
