@@ -41,6 +41,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private readonly Random _rng = new();
 
+    private long _frame;
+    
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -82,6 +84,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     protected override void Update(GameTime gameTime)
     {
+        _frame++;
+        
         if (HasNextState)
         {
             _state = GetNextState();
@@ -129,7 +133,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             }
         }
 
-        if (! _state.Settling && _destroying == null && _destroy.Count > 0)// && _sparks.Count == 0)
+        if (! _state.Settling && _destroying == null && _destroy.Count > 0 && _frame % 5 == 0)
         {
             _destroying = _destroy.Dequeue();
             
