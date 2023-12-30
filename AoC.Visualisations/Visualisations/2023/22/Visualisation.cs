@@ -65,7 +65,35 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     protected override void Draw(GameTime gameTime)
     {
+        GraphicsDevice.Clear(Color.Black);
+
+        _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
+        
+        DrawBricks();
+        
+        _spriteBatch.End();
+        
         base.Draw(gameTime);
+    }
+
+    private void DrawBricks()
+    {
+        for (var z = 1; z < _state.Height; z++)
+        {
+            for (var x = 0; x < 10; x++)
+            {
+                for (var y = 0; y < 10; y++)
+                {
+                    var id = _state.Map[z, x, y];
+
+                    if (id > 0)
+                    {
+                        _spriteBatch.Draw(_tile, new Vector2(x * 7, 980 - 7 * z), new Rectangle(0, 0, 7, 9),
+                            GetBrickColor(id), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .9f);
+                    }
+                }
+            }
+        }
     }
 
     private static Color GetBrickColor(int id)
