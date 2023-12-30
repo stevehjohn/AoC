@@ -88,7 +88,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                     if (id > 0)
                     {
-                        _spriteBatch.Draw(_tile, new Vector2(20 + x * 3 + y * 3, 960 - 7 * z + y * 3), new Rectangle(0, 0, 7, 9),
+                        _spriteBatch.Draw(_tile, new Vector2(20 + (x + y) * 3, 960 - 4 * z + (y - x / 2f) * 3), new Rectangle(0, 0, 7, 9),
                             GetBrickColor(id), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .9f);
                     }
                 }
@@ -98,7 +98,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private static Color GetBrickColor(int id)
     {
-        return (id % 8) switch
+        return (id % 7) switch
         {
             1 => Color.FromNonPremultiplied(0, 0, 255, 255),
             2 => Color.FromNonPremultiplied(255, 0, 0, 255),
@@ -106,8 +106,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             4 => Color.FromNonPremultiplied(0, 255, 0, 255),
             5 => Color.FromNonPremultiplied(0, 255, 255, 255),
             6 => Color.FromNonPremultiplied(255, 255, 0, 255),
-            7 => Color.FromNonPremultiplied(255, 255, 255, 255),
-            _ => Color.FromNonPremultiplied(0, 0, 0, 255)
+            _ => Color.FromNonPremultiplied(255, 255, 255, 255)
         };
     }
 }
