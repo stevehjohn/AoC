@@ -110,7 +110,10 @@ public abstract class Base : Solution
                 supported.Clear();
             }
 
-            Visualise(move);
+            if (move)
+            {
+                Visualise(true);
+            }
         }
         
         return droppedIds.Count;
