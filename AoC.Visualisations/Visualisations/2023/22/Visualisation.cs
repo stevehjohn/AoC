@@ -114,20 +114,28 @@ public class Visualisation : VisualisationBase<PuzzleState>
                     {
                         _map[z, x, y] = 0;
 
-                        for (var i = 0; i < 100; i++)
+                        for (var xO = 0; xO < TileWidth; xO += 2)
                         {
-                            var depth = z / 1_000f + (10 - x) / 10_000f + (10 - y) / 100_000f;
-
-                            _sparks.Add(new Spark
+                            for (var yO = 0; yO < TileHeight; yO += 2)
                             {
-                                Position = new PointFloat { X = 195 + (x - y) * HalfTileWidth, Y = 960 - (TileIsoHeight * z + (x + y) * (TileIsoHeight + 4)) },
-                                Vector = new PointFloat { X = (-20f + _rng.Next(41)) / 10, Y = -_rng.Next(41) / 10f },
-                                Ticks = 100,
-                                StartTicks = 100,
-                                SpriteOffset = 0,
-                                Color = GetBrickColor(_destroying.Value),
-                                Z = depth
-                            });
+                                var depth = z / 1_000f + (10 - x) / 10_000f + (10 - y) / 100_000f;
+
+                                _sparks.Add(new Spark
+                                {
+                                    Position = new PointFloat
+                                    {
+                                        X = 195 + (x - y) * HalfTileWidth + xO,
+                                        Y = 960 - (TileIsoHeight * z + (x + y) * (TileIsoHeight + 4)) + yO
+                                    },
+                                    Vector = new PointFloat
+                                        { X = (-20f + _rng.Next(41)) / 10, Y = -_rng.Next(41) / 10f },
+                                    Ticks = 100,
+                                    StartTicks = 100,
+                                    SpriteOffset = 0,
+                                    Color = GetBrickColor(_destroying.Value),
+                                    Z = depth
+                                });
+                            }
                         }
                     }
                 });
@@ -136,7 +144,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             }
         }
 
-        if (! _state.Settling && _destroying == null && _destroy.Count > 0 && _frame % 5 == 0)
+        if (! _state.Settling && _destroying == null && _destroy.Count > 0 && _frame % 10 == 0)
         {
             _destroying = _destroy.Dequeue();
             
