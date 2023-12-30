@@ -1,4 +1,6 @@
-﻿namespace AoC.Visualisations.Visualisations._2023._22;
+﻿using Microsoft.Xna.Framework;
+
+namespace AoC.Visualisations.Visualisations._2023._22;
 
 public class Spark
 {
@@ -11,6 +13,8 @@ public class Spark
     public int StartTicks { get; set; }
 
     public int SpriteOffset { get; set; }
+    
+    public Color Color { get; set; }
 
     public float YGravity { get; set; } = 0.1f;
 }

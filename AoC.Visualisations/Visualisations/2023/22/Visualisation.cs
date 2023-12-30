@@ -39,6 +39,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private readonly List<Spark> _sparks = new();
 
+    private readonly Random _rng = new();
+
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -107,14 +109,27 @@ public class Visualisation : VisualisationBase<PuzzleState>
                     if (_map[z, x, y] == _destroying.Value)
                     {
                         _map[z, x, y] = 0;
+
+                        for (var i = 0; i < 100; i++)
+                        {
+                            _sparks.Add(new Spark
+                            {
+                                Position = new PointFloat { X = 195 + (x - y) * HalfTileWidth, Y = 960 - (TileIsoHeight * z + (x + y) * (TileIsoHeight + 4)) },
+                                Vector = new PointFloat { X = (-20f + _rng.Next(41)) / 10, Y = -_rng.Next(41) / 10f },
+                                Ticks = 100,
+                                StartTicks = 100,
+                                SpriteOffset = 0,
+                                Color = GetBrickColor(_destroying.Value)
+                            });
+                        }
                     }
                 });
-
+                
                 _destroying = null;
             }
         }
 
-        if (! _state.Settling && _destroying == null && _destroy.Count > 0)
+        if (! _state.Settling && _destroying == null && _destroy.Count > 0 && _sparks.Count == 0)
         {
             _destroying = _destroy.Dequeue();
             
@@ -126,6 +141,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 }
             });
         }
+        
+        UpdateSparks();
 
         base.Update(gameTime);
     }
@@ -134,7 +151,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         GraphicsDevice.Clear(Color.Black);
 
-        _spriteBatch.Begin(SpriteSortMode.Immediate, samplerState: SamplerState.PointClamp);
+        _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
         
         DrawBricks();
         
@@ -176,11 +193,39 @@ public class Visualisation : VisualisationBase<PuzzleState>
         }
     }
     
+    private void UpdateSparks()
+    {
+        var toRemove = new List<Spark>();
+
+        foreach (var spark in _sparks)
+        {
+            spark.Ticks--;
+
+            if (spark.Ticks < 0)
+            {
+                toRemove.Add(spark);
+
+                continue;
+            }
+
+            spark.Position.X += spark.Vector.X;
+
+            spark.Position.Y += spark.Vector.Y;
+
+            spark.Vector.Y += spark.YGravity;
+        }
+
+        foreach (var spark in toRemove)
+        {
+            _sparks.Remove(spark);
+        }
+    }
+    
     private void DrawSparks()
     {
         foreach (var spark in _sparks)
         {
-            _spriteBatch.Draw(_spark, new Vector2(spark.Position.X, spark.Position.Y), new Rectangle(spark.SpriteOffset, 0, 5, 5), Color.White * ((float) spark.Ticks / spark.StartTicks), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
+            _spriteBatch.Draw(_spark, new Vector2(spark.Position.X, _yOffset + spark.Position.Y), new Rectangle(spark.SpriteOffset, 0, 5, 5), spark.Color * ((float) spark.Ticks / spark.StartTicks), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1f);
         }
     }
 
