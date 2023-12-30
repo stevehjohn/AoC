@@ -103,7 +103,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         if (! _state.Settling && _resetting)
         {
-            _yOffset -= 5;
+            _yOffset -= 2.5f;
 
             if (_yOffset == 0)
             {
@@ -113,7 +113,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         if (! _state.Settling && ! _resetting)
         {
-            _yOffset += 0.4f;
+            _yOffset += 0.2f;
         }
 
         if (_destroying != null && ! _resetting)
@@ -153,7 +153,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             _destroying = null;
         }
 
-        if (! _state.Settling && _destroying == null && _destroy.Count > 0 && _frame % 5 == 0)
+        if (! _state.Settling && _destroying == null && _destroy.Count > 0 && _frame % 10 == 0)
         {
             _destroying = _destroy.Dequeue();
         }
