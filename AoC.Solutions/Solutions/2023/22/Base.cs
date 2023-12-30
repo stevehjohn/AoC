@@ -104,13 +104,13 @@ public abstract class Base : Solution
                         }
                     }
                 }
-
-                Visualise();
                 
                 found.Clear();
 
                 supported.Clear();
             }
+
+            Visualise();
         }
         
         return droppedIds.Count;
