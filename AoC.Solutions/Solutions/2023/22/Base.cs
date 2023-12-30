@@ -14,6 +14,8 @@ public abstract class Base : Solution
 
     protected int Count;
 
+    private int _highestZ;
+
     protected int SettleBricks(int[,,] map, bool move = true)
     {
         var found = new HashSet<int>();
@@ -72,6 +74,11 @@ public abstract class Base : Solution
                                 return 1;
                             }
 
+                            if (z - 1 > _highestZ)
+                            {
+                                _highestZ = z - 1;
+                            }
+
                             droppedIds.Add(brick);
 
                             dropped = true;
@@ -86,6 +93,20 @@ public abstract class Base : Solution
         }
 
         return droppedIds.Count;
+    }
+
+    protected void WalkUpMap(Action<int, int, int> action)
+    {
+        for (var z = 1; z < _highestZ; z++)
+        {
+            for (var x = 0; x < 10; x++)
+            {
+                for (var y = 0; y < 10; y++)
+                {
+                    action(x, y, z);
+                }
+            }
+        }
     }
 
     protected void ParseInput()

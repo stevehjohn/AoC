@@ -23,19 +23,13 @@ public class Part2 : Base
         
                 Array.Copy(Map, copy, MaxHeight * 100);
                 
-                for (var z = 1; z < MaxHeight; z++)
+                WalkUpMap((x, y, z) =>
                 {
-                    for (var x = 0; x < 10; x++)
+                    if (copy[z, x, y] == brickId)
                     {
-                        for (var y = 0; y < 10; y++)
-                        {
-                            if (copy[z, x, y] == brickId)
-                            {
-                                copy[z, x, y] = 0;
-                            }
-                        }
+                        copy[z, x, y] = 0;
                     }
-                }
+                });
         
                 return c + SettleBricks(copy);
             }, c => Interlocked.Add(ref count, c));
@@ -53,19 +47,14 @@ public class Part2 : Base
         
         for (var id = 1; id <= Count; id++)
         {
-            for (var z = 1; z < MaxHeight; z++)
+            WalkUpMap((x, y, z) =>
             {
-                for (var x = 0; x < 10; x++)
+                // ReSharper disable once AccessToModifiedClosure
+                if (Map[z, x, y] == id)
                 {
-                    for (var y = 0; y < 10; y++)
-                    {
-                        if (Map[z, x, y] == id)
-                        {
-                            Map[z, x, y] = 0;
-                        }
-                    }
+                    Map[z, x, y] = 0;
                 }
-            }
+            });
 
             if (SettleBricks(Map, false) > 0)
             {

@@ -26,19 +26,14 @@ public class Part1 : Base
         
         for (var id = 1; id <= Count; id++)
         {
-            for (var z = 1; z < MaxHeight; z++)
+            WalkUpMap((x, y, z) =>
             {
-                for (var x = 0; x < 10; x++)
+                // ReSharper disable once AccessToModifiedClosure
+                if (Map[z, x, y] == id)
                 {
-                    for (var y = 0; y < 10; y++)
-                    {
-                        if (Map[z, x, y] == id)
-                        {
-                            Map[z, x, y] = 0;
-                        }
-                    }
+                    Map[z, x, y] = 0;
                 }
-            }
+            });
 
             result += 1 - SettleBricks(Map, false);
         
