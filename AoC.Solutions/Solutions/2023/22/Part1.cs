@@ -1,3 +1,4 @@
+using AoC.Solutions.Infrastructure;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2023._22;
@@ -15,7 +16,15 @@ public class Part1 : Base
         
         return result.ToString();
     }
-    
+
+    public Part1()
+    {
+    }
+
+    public Part1(IVisualiser<PuzzleState> visualiser) : base(visualiser)
+    {
+    }
+
     private int CountNonSupportingBricks()
     {
         var result = 0;
@@ -35,8 +44,15 @@ public class Part1 : Base
                 }
             });
 
-            result += 1 - SettleBricks(Map, false);
-        
+            var count = SettleBricks(Map, false);
+            
+            result += 1 - count;
+
+            if (count == 0)
+            {
+                Visualise(false, id);
+            }
+
             Array.Copy(copy, Map, MaxHeight * 100);
         }
 

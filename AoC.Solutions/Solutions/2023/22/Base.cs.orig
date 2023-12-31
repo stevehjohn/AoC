@@ -15,6 +15,7 @@ public abstract class Base : Solution
     protected int Count;
 
     private int _highestZ;
+<<<<<<< HEAD
 
     private readonly IVisualiser<PuzzleState> _visualiser;
 
@@ -35,6 +36,9 @@ public abstract class Base : Solution
         }
     }
 
+=======
+    
+>>>>>>> master
     protected int SettleBricks(int[,,] map, bool move = true)
     {
         var found = new HashSet<int>();
