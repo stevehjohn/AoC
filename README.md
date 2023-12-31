@@ -21,16 +21,17 @@ Both can take the puzzle year (4 digits), day (2 digits) and part (1 digit) as a
 
 Now supports cross-platform visualisations. YouTube playlist of them [here](https://www.youtube.com/playlist?list=PLBtwzTaAY-IWq6Mi1nvwsphMTw-HU13eM).
 
-Navigate to the root of the repository and do the following (replacing the puzzle number as required):
+To run the visualisation, navigate to the root of the repository in a terminal, command prompt or shell. 
+Then execute the relevant command with the desired visualisation as a parameter.
 
-- `dotnet run -c Release --project AoC.Visualisations 2022.12.2`
+- `./visualise.sh 2023.16.1` for macOS (and Linux in theory, but untested).
+- `visualise.bat 2023.16.1` for Windows.
 
-If on Windows you can automatically save a recording of the visualisation (say, for uploading to YouTube). Specify the path as a second parameter.
+The parameter is exactly the same as for `run.[bat|sh]` as above; `yyyy.dd.p` with `p` being `1` or `2`.
 
-- `dotnet run -c Release --project AoC.Visualisations 2022.12.2 C:\Videos\AoC\visualisation.avi`
+If using Windows you can automatically save a recording of the visualisation (say, for uploading to YouTube). Specify the path as a second parameter.
 
-Run the visualisation project with the visualisation as a parameter.
-The format is `year.day.part`, with part being 1 or 2.
+- `visualise.bat 2023.16.1 C:\Videos\AoC\visualisation.avi`
 
 There are visualisations for:
 
@@ -49,3 +50,4 @@ There are visualisations for:
 - 2023.16.2
 - 2023.17.1
 - 2023.17.2
+- 2023.22.1
