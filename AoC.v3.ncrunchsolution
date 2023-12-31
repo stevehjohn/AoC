@@ -1,0 +1,11 @@
+﻿<SolutionConfiguration>
+  <Settings>
+    <AllowParallelTestExecution>False</AllowParallelTestExecution>
+    <AllowTestsToRunInParallelWithThemselves>False</AllowTestsToRunInParallelWithThemselves>
+    <MetricsExclusionList>
+      <Value>AoC.Visualisations\AoC.Visualisations.csproj</Value>
+      <Value>AoC.Tests\AoC.Tests.csproj</Value>
+    </MetricsExclusionList>
+    <SolutionConfigured>True</SolutionConfigured>
+  </Settings>
+</SolutionConfiguration>
