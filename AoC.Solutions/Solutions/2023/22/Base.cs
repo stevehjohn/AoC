@@ -71,7 +71,7 @@ public abstract class Base : Solution
                     }
                 }
 
-                if (found.Count == 0)
+                if (found.Count == 0 || found.Count == supported.Count)
                 {
                     continue;
                 }
