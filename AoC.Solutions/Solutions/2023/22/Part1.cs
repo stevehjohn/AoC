@@ -29,9 +29,7 @@ public class Part1 : Base
     {
         var result = 0;
 
-        var copy = new int[MaxHeight, 10, 10];
-        
-        Array.Copy(Map, copy, MaxHeight * 100);
+        var replace = new HashSet<(int X, int Y, int Z)>();
         
         for (var id = 1; id <= Count; id++)
         {
@@ -51,6 +49,8 @@ public class Part1 : Base
                                 if (Map[z + zD, x, y] == id)
                                 {
                                     Map[z + zD, x, y] = -1;
+                                    
+                                    replace.Add((x, y, z + zD));
                                 }
                             }
 
@@ -74,7 +74,12 @@ public class Part1 : Base
                 Visualise(false, id);
             }
 
-            Array.Copy(copy, Map, MaxHeight * 100);
+            foreach (var brick in replace)
+            {
+                Map[brick.Z, brick.X, brick.Y] = id;
+            }
+            
+            replace.Clear();
         }
 
         return result;

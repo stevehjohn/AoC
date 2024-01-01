@@ -86,14 +86,14 @@ public abstract class Base : Solution
 
                         if (found.Contains(brick))
                         {
-                            map[z - 1, x, y] = brick;
-
-                            map[z, x, y] = -1;
-
                             if (! move)
                             {
                                 return 1;
                             }
+
+                            map[z - 1, x, y] = brick;
+
+                            map[z, x, y] = -1;
 
                             if (z - 1 > HighestZ)
                             {
