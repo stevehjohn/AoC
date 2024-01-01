@@ -32,6 +32,8 @@ public class Part2 : Base
         
                 Array.Copy(Map, copy, MaxHeight * 100);
 
+                var removed = false;
+                
                 for (var z = 1; z < HighestZ; z++)
                 {
                     for (var x = 0; x < 10; x++)
@@ -40,9 +42,22 @@ public class Part2 : Base
                         {
                             if (copy[z, x, y] == brickId)
                             {
-                                copy[z, x, y] = -1;
+                                for (var zD = 0; zD < 5; zD++)
+                                {
+                                    if (copy[z + zD, x, y] == brickId)
+                                    {
+                                        copy[z + zD, x, y] = -1;
+                                    }
+                                }
+
+                                removed = true;
                             }
                         }
+                    }
+
+                    if (removed)
+                    {
+                        break;
                     }
                 }
 
@@ -85,18 +100,32 @@ public class Part2 : Base
         
         for (var id = 1; id <= Count; id++)
         {
+            var removed = false;
+                
             for (var z = 1; z < HighestZ; z++)
             {
                 for (var x = 0; x < 10; x++)
                 {
                     for (var y = 0; y < 10; y++)
                     {
-                        // ReSharper disable once AccessToModifiedClosure
                         if (Map[z, x, y] == id)
                         {
-                            Map[z, x, y] = -1;
+                            for (var zD = 0; zD < 5; zD++)
+                            {
+                                if (Map[z + zD, x, y] == id)
+                                {
+                                    Map[z + zD, x, y] = -1;
+                                }
+                            }
+
+                            removed = true;
                         }
                     }
+                }
+                
+                if (removed)
+                {
+                    break;
                 }
             }
 
