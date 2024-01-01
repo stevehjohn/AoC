@@ -25,7 +25,8 @@
     <None Remove="2019.15.1.result" />
     <None Remove="2020.09.1.result" />
     <None Remove="2020.20.1.result" />
-    <None Update="Solutions\**\input.txt" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
+    <None Update="Solutions\**\input.clear" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
+    <None Update="Solutions\**\input.encrypted" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
   </ItemGroup>
 
 
