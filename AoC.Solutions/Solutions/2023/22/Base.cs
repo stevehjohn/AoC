@@ -75,6 +75,8 @@ public abstract class Base : Solution
                 {
                     continue;
                 }
+                
+                found.ExceptWith(supported);
 
                 for (var x = 0; x < 10; x++)
                 {
@@ -82,7 +84,7 @@ public abstract class Base : Solution
                     {
                         var brick = map[z, x, y];
 
-                        if (found.Contains(brick) && ! supported.Contains(brick))
+                        if (found.Contains(brick))
                         {
                             map[z - 1, x, y] = brick;
 
