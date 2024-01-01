@@ -35,6 +35,8 @@ public class Part1 : Base
         
         for (var id = 1; id <= Count; id++)
         {
+            var removed = false;
+            
             for (var z = 1; z < HighestZ; z++)
             {
                 for (var x = 0; x < 10; x++)
@@ -44,9 +46,22 @@ public class Part1 : Base
                         // ReSharper disable once AccessToModifiedClosure
                         if (Map[z, x, y] == id)
                         {
-                            Map[z, x, y] = -1;
+                            for (var zD = 0; zD < 5; zD++)
+                            {
+                                if (Map[z + zD, x, y] == id)
+                                {
+                                    Map[z + zD, x, y] = -1;
+                                }
+                            }
+
+                            removed = true;
                         }
                     }
+                }
+
+                if (removed)
+                {
+                    break;
                 }
             }
 
