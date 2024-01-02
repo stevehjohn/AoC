@@ -7,7 +7,7 @@ public static class InputProvider
 {
     public static string[] GetInput(string nameSpace)
     {
-        if (!File.Exists("./AoC.Key"))
+        if (GetKeyPath() == null)
         {
             Console.Write("Please provide input decryption credentials in ./AoC.Key\n\n");
             
@@ -78,7 +78,7 @@ public static class InputProvider
 
         var cipherProvider = new SymmetricCipher();
 
-        var keyData = File.ReadLines("./AoC.Key").Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1]).ToArray();
+        var keyData = File.ReadLines(GetKeyPath()).Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1]).ToArray();
         
         var iv = Convert.FromBase64String(keyData[1]);
 
@@ -95,7 +95,7 @@ public static class InputProvider
     {
         var cipherProvider = new SymmetricCipher();
 
-        var keyData = File.ReadLines("./AoC.Key").Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1]).ToArray();
+        var keyData = File.ReadLines(GetKeyPath()).Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1]).ToArray();
 
         var iv = Convert.FromBase64String(keyData[1]);
 
@@ -106,5 +106,20 @@ public static class InputProvider
         var decrypted = cipherProvider.Decrypt(File.ReadAllBytes(encryptedPath), key, iv, salt);
 
         File.WriteAllBytes(clearPath, decrypted);
+    }
+
+    private static string GetKeyPath()
+    {
+        if (File.Exists("./AoC.Key"))
+        {
+            return "./AoC.Key";
+        }
+
+        if (File.Exists("./AoC.Solutions/AoC.Key"))
+        {
+            return "./AoC.Solutions/AoC.Key";
+        }
+
+        return null;
     }
 }
