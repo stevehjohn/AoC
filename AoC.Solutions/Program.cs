@@ -154,7 +154,7 @@ public static class Program
 
             var part = solution.Name[4];
 
-            var summary = $" {year} {day,2}.{part.ToString()}: {displayAnswer,-30} {$"{microseconds:N0}μs",-12}  {description}";
+            var summary = $" {year} {day,2}.{part}: {displayAnswer,-30} {$"{microseconds:N0}μs",-12}  {description}";
 
             results.Add((year, day, part), (microseconds, summary));
 
