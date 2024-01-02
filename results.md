@@ -432,7 +432,7 @@ Tests performed on a 2023 MacBook Pro.
  2023  2.1: 1931                           68μs          Cube conundrum
  2023  2.2: 83105                          98μs          
  2023  3.1: 540131                         53μs          Gear ratios
- 2023  3.2: 86879020                       193μs         
+ 2023  3.2: 86879020                       184μs         
  2023  4.1: 22674                          176μs         Scratchcards
  2023  4.2: 5747443                        167μs         
  2023  5.1: 535088217                      40μs          If you give a seed a fertilizer
@@ -454,14 +454,14 @@ Tests performed on a 2023 MacBook Pro.
  2023 13.1: 34821                          111μs         Point of incidence
  2023 13.2: 36919                          555μs         
  2023 14.1: 112773                         100μs         Parabolic reflector dish
- 2023 14.2: 98894                          14,107μs      
- 2023 15.1: 508552                         189μs         Lens library
+ 2023 14.2: 98894                          13,991μs      
+ 2023 15.1: 508552                         188μs         Lens library
  2023 15.2: 265462                         531μs
  2023 16.1: 7074                           142μs         The floor will be lava
  2023 16.2: 7530                           6,608μs
  2023 17.1: 851                            54,323μs      Clumsy crucible
  2023 17.2: 982                            48,032μs
- 2023 18.1: 50603                          82μs          Lavaduct lagoon
+ 2023 18.1: 50603                          81μs          Lavaduct lagoon
  2023 18.2: 96556251590677                 90μs          
  2023 19.1: 446517                         231μs         Aplenty
  2023 19.2: 130090458884662                450μs         
@@ -475,7 +475,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 23.2: 6226                           63,661μs      
  2023 24.1: 16727                          1,606μs       Never tell me the odds
  2023 24.2: 606772018765659                5,680μs       
- 2023 25.1: 527790                         21,369μs      Snowverload
+ 2023 25.1: 522006                         20,273μs      Snowverload
                                            -------------
-                                           544.242ms    
+                                           543.019ms    
 ```
