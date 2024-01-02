@@ -54,7 +54,7 @@ public static class Program
                 continue;
             }
 
-            if (arguments.Length > 0)
+            if (arguments.Length > 0 && arguments[0].ToLower() != "true")
             {
                 var solutionKey = $"{int.Parse(solution.Namespace?.Split('.')[3].Replace("_", string.Empty) ?? "0")}.{int.Parse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0"):D2}.{solution.Name[4]}";
 
