@@ -18,7 +18,11 @@ public static class Program
             .OrderBy(t => t.Namespace)
             .ThenBy(t => t.Name);
 
+        var totalMs = 0L;
+        
         var yearMs = 0L;
+
+        var count = 0;
 
         int? previousYear = null;
 
@@ -151,7 +155,7 @@ public static class Program
             }
 
             var microseconds = Math.Min(stopwatch.Elapsed.TotalMicroseconds, firstTime);
-
+            
             var part = solution.Name[4];
 
             var summary = $" {year} {day,2}.{part}: {displayAnswer,-30} {$"{microseconds:N0}μs",-12}  {description}";
@@ -161,11 +165,17 @@ public static class Program
             Console.WriteLine(summary);
 
             yearMs += (long) microseconds;
+
+            totalMs += (long) microseconds;
+
+            count++;
         }
 
         CleanUp();
 
         WriteYearSummary();
+        
+        Console.WriteLine($" {count} puzzle{(count != 1 ? "s" : string.Empty)} solved in {totalMs / 1_000_000d:N3}ms.\n");
 
         if (arguments.Length > 0)
         {
