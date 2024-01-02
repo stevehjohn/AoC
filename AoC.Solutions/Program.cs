@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
+using Microsoft.Diagnostics.Tracing.Parsers.IIS_Trace;
 
 namespace AoC.Solutions;
 
@@ -208,10 +209,16 @@ public static class Program
 
                 if (index < 0)
                 {
-                    Console.WriteLine($" {year} {day,2}.{part} not found.");
+                    var insert = file.FindLastIndex(l => l.StartsWith("```"));
                     
-                    // TODO: Add to end?
+                    if (day == 1 && part == 1)
+                    {
+                        file.Insert(insert, $"{new string(' ', 43)}{"0ms",-13}");
+                        file.Insert(insert, $"{new string(' ', 43)}-------------"); 
+                    }
                     
+                    file.Insert(insert, result.Value.Summary);
+
                     continue;
                 }
                 
