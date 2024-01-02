@@ -478,4 +478,6 @@ Tests performed on a 2023 MacBook Pro.
  2023 25.1: 522006                         20,273μs      Snowverload
                                            -------------
                                            539.129ms    
+
+ 49 puzzles solved in 1.088ms.
 ```
