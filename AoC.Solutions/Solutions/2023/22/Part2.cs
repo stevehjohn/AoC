@@ -134,10 +134,7 @@ public class Part2 : Base
             if (count > 0)
             {
                 result.Add(id);
-            }
-            
-            if (count != 0)
-            {
+
                 Visualise(false, id);
             }
             
