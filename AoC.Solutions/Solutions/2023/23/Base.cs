@@ -19,7 +19,9 @@ public abstract class Base : Solution
     private int _height;
 
     private readonly ConcurrentDictionary<(int X, int Y), List<((int X, int Y) Start, (int X, int Y) End, int Steps)>> _edges = new();
-    
+
+    private readonly ConcurrentDictionary<(int, int, int, int), int> _reachCache = new();
+
     private readonly HashSet<(int, int)> _history = new();
 
     private int _lastSteps;
@@ -101,6 +103,25 @@ public abstract class Base : Solution
     }
 
     private int CanReach((int X, int Y) start, (int X, int Y) end, bool isPart2)
+    {
+        if (_reachCache.TryGetValue((start.X, start.Y, end.X, end.Y), out var distance))
+        {
+            return distance;
+        }
+
+        if (isPart2 && _reachCache.TryGetValue((end.X, end.Y, start.X, start.Y), out distance))
+        {
+            return distance;
+        }
+
+        distance = CanReachInternal(start, end, isPart2);
+
+        _reachCache.TryAdd((start.X, start.Y, end.X, end.Y), distance);
+
+        return distance;
+    }
+
+    private int CanReachInternal((int X, int Y) start, (int X, int Y) end, bool isPart2)
     {
         var queue = new Queue<((int X, int Y) Position, int Steps)>();
         
