@@ -428,7 +428,7 @@ Tests performed on a 2023 MacBook Pro.
                                            327.504ms    
 
  2023  1.1: 54877                          121μs         Trebuchet
- 2023  1.2: 54100                          341μs
+ 2023  1.2: 54100                          337μs         
  2023  2.1: 1931                           68μs          Cube conundrum
  2023  2.2: 83105                          98μs          
  2023  3.1: 540131                         53μs          Gear ratios
@@ -446,7 +446,7 @@ Tests performed on a 2023 MacBook Pro.
  2023  9.1: 1980437560                     357μs         Mirage maintenance
  2023  9.2: 977                            322μs         
  2023 10.1: 6806                           98μs          Pipe maze
- 2023 10.2: 449                            919μs         
+ 2023 10.2: 449                            918μs         
  2023 11.1: 9639160                        337μs         Cosmic expansion
  2023 11.2: 752936133304                   334μs         
  2023 12.1: 7251                           3,674μs       Hot springs
@@ -467,17 +467,17 @@ Tests performed on a 2023 MacBook Pro.
  2023 19.2: 130090458884662                450μs         
  2023 20.1: 819397964                      8,182μs       Pulse propagation
  2023 20.2: 252667369442479                38,074μs      
- 2023 21.1: 3758                           58μs          Step counter
- 2023 21.2: 621494544278648                442μs         
+ 2023 21.1: 3758                           57μs          Step counter
+ 2023 21.2: 621494544278648                440μs         
  2023 22.1: 416                            39,935μs      Sand slabs
  2023 22.2: 60963                          79,783μs      
- 2023 23.1: 2202                           29,745μs      A long walk
+ 2023 23.1: 2202                           29,320μs      A long walk
  2023 23.2: 6226                           63,661μs      
  2023 24.1: 16727                          1,582μs       Never tell me the odds
- 2023 24.2: 606772018765659                5,680μs       
- 2023 25.1: 522006                         20,273μs      Snowverload
+ 2023 24.2: 606772018765659                5,489μs       
+ 2023 25.1: 522006                         20,058μs      Snowverload
                                            -------------
-                                           538.704ms    
+                                           537.865ms    
 
- 442 puzzles solved in 61.396ms.
+ 442 puzzles solved in 61.395ms.
 ```
