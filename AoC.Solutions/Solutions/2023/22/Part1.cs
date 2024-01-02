@@ -29,12 +29,16 @@ public class Part1 : Base
     {
         var result = 0;
 
-        var replace = new HashSet<(int X, int Y, int Z)>();
-        
-        for (var id = 1; id <= Count; id++)
+        Parallel.For(1, Count + 1,
+            () => 0,
+            (id, _, c) =>
         {
+            var copy = new int[MaxHeight, 10, 10];
+
+            Array.Copy(Map, copy, MaxHeight * 100);
+
             var removed = false;
-            
+
             for (var z = 1; z < HighestZ; z++)
             {
                 for (var x = 0; x < 10; x++)
@@ -42,15 +46,13 @@ public class Part1 : Base
                     for (var y = 0; y < 10; y++)
                     {
                         // ReSharper disable once AccessToModifiedClosure
-                        if (Map[z, x, y] == id)
+                        if (copy[z, x, y] == id)
                         {
                             for (var zD = 0; zD < 5; zD++)
                             {
-                                if (Map[z + zD, x, y] == id)
+                                if (copy[z + zD, x, y] == id)
                                 {
-                                    Map[z + zD, x, y] = -1;
-                                    
-                                    replace.Add((x, y, z + zD));
+                                    copy[z + zD, x, y] = -1;
                                 }
                             }
 
@@ -65,22 +67,15 @@ public class Part1 : Base
                 }
             }
 
-            var count = SettleBricks(Map, false);
-            
-            result += 1 - count;
+            var count = SettleBricks(copy, false);
 
             if (count == 0)
             {
                 Visualise(false, id);
             }
 
-            foreach (var brick in replace)
-            {
-                Map[brick.Z, brick.X, brick.Y] = id;
-            }
-            
-            replace.Clear();
-        }
+            return c + (1 - count);
+        }, c => Interlocked.Add(ref result, c));
 
         return result;
     }
