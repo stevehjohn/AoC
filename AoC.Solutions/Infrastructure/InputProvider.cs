@@ -10,7 +10,7 @@ public static class InputProvider
         if (GetKeyPath() == null)
         {
             Console.Write("Please provide input decryption credentials in ./AoC.Key\n\n");
-            
+
             Environment.Exit(0);
         }
 
@@ -18,7 +18,8 @@ public static class InputProvider
 
         var pathParts = parts.Skip(2).Select(s => s.Replace("_", string.Empty)).ToArray();
 
-        var input = LoadInput($"./Aoc.Solutions/{string.Join(Path.DirectorySeparatorChar, pathParts)}{Path.DirectorySeparatorChar}");
+        var input = LoadInput(
+            $"./Aoc.Solutions/{string.Join(Path.DirectorySeparatorChar, pathParts)}{Path.DirectorySeparatorChar}");
 
         if (input == null)
         {
@@ -40,13 +41,13 @@ public static class InputProvider
             if (! File.Exists(encryptedPath))
             {
                 var tempPath = $"{path}input.backup";
-                
+
                 File.Copy(clearPath, tempPath);
-                
+
                 Encrypt(clearPath, encryptedPath);
-                
+
                 File.Delete(clearPath);
-                
+
                 Decrypt(encryptedPath, clearPath);
 
                 if (! File.ReadAllBytes(clearPath).SequenceEqual(File.ReadAllBytes(tempPath)))
@@ -55,14 +56,14 @@ public static class InputProvider
 
                     return null;
                 }
-                
+
                 File.Delete(tempPath);
             }
 
             return File.ReadAllLines(clearPath);
         }
 
-        if (File.Exists(encryptedPath))
+        if (File.Exists(encryptedPath) && ! File.Exists(clearPath))
         {
             Decrypt(encryptedPath, clearPath);
 
@@ -78,16 +79,17 @@ public static class InputProvider
 
         var cipherProvider = new SymmetricCipher();
 
-        var keyData = File.ReadLines(GetKeyPath()).Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1]).ToArray();
-        
+        var keyData = File.ReadLines(GetKeyPath()).Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1])
+            .ToArray();
+
         var iv = Convert.FromBase64String(keyData[1]);
 
         var salt = Convert.FromBase64String(keyData[2]);
 
         var key = Convert.FromBase64String(keyData[0]);
-        
+
         var encrypted = cipherProvider.Encrypt(data, key, iv, salt);
-        
+
         File.WriteAllBytes(encryptedPath, encrypted);
     }
 
@@ -95,14 +97,15 @@ public static class InputProvider
     {
         var cipherProvider = new SymmetricCipher();
 
-        var keyData = File.ReadLines(GetKeyPath()).Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1]).ToArray();
+        var keyData = File.ReadLines(GetKeyPath()).Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1])
+            .ToArray();
 
         var iv = Convert.FromBase64String(keyData[1]);
 
         var salt = Convert.FromBase64String(keyData[2]);
 
         var key = Convert.FromBase64String(keyData[0]);
-        
+
         var decrypted = cipherProvider.Decrypt(File.ReadAllBytes(encryptedPath), key, iv, salt);
 
         File.WriteAllBytes(clearPath, decrypted);
