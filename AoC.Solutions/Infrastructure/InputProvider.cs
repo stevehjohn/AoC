@@ -1,4 +1,3 @@
-using System.Net;
 using JetBrains.Annotations;
 using Security.Crypto;
 
