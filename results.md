@@ -446,7 +446,7 @@ Tests performed on a 2023 MacBook Pro.
  2023  9.1: 1980437560                     385μs         Mirage maintenance
  2023  9.2: 977                            344μs         
  2023 10.1: 6806                           100μs         Pipe maze
- 2023 10.2: 449                            920μs         
+ 2023 10.2: 449                            919μs         
  2023 11.1: 9639160                        337μs         Cosmic expansion
  2023 11.2: 752936133304                   334μs         
  2023 12.1: 7251                           3,674μs       Hot springs
@@ -477,5 +477,5 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 606772018765659                5,680μs       
  2023 25.1: 522006                         20,273μs      Snowverload
                                            -------------
-                                           543.019ms    
+                                           543.018ms    
 ```
