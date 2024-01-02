@@ -8,7 +8,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Sand slabs";
 
-    protected const int MaxHeight = 300;
+    protected const int MaxHeight = 290;
     
     protected readonly int[,,] Map = new int[MaxHeight, 10, 10];
 
