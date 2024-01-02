@@ -136,12 +136,12 @@ public class Part2 : Base
             {
                 result.TryAdd(id, true);
             }
-
-            if (count != 0)
-            {
-                Visualise(false, id);
-            }
         });
+
+        if (Visualiser != null)
+        {
+            result.Select(b => b.Key).Order().ToList().ForEach(b => Visualise(false, b));
+        }
 
         return result.Select(b => b.Key).ToList();
     }
