@@ -243,13 +243,22 @@ public static class Program
 
         void RecalculateTotals(List<string> file)
         {
+            var overall = 0L;
+            
             var year = 0;
 
             var sum = 0L;
+
+            var puzzles = 0;
             
             for (var i = 0; i < file.Count; i++)
             {
                 var line = file[i];
+
+                if (line.Contains("solved in"))
+                {
+                    file[i] = $" {puzzles} puzzle{(count != 1 ? "s" : string.Empty)} solved in {overall / 1_000_000d:N3}ms.";
+                }
 
                 if (line.StartsWith(" 20") && year == 0)
                 {
@@ -260,7 +269,13 @@ public static class Program
 
                 if (line.StartsWith(" 20") && year != 0)
                 {
-                    sum += int.Parse(line[43..].Split(' ', StringSplitOptions.TrimEntries)[0][..^2], NumberStyles.AllowThousands);
+                    var time = int.Parse(line[43..].Split(' ', StringSplitOptions.TrimEntries)[0][..^2], NumberStyles.AllowThousands);
+
+                    sum += time;
+
+                    overall += time;
+
+                    puzzles++;
                 }
 
                 if (line.StartsWith("     ") && year != 0)
