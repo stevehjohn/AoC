@@ -188,7 +188,7 @@ public static class Program
 
             var file = File.ReadAllLines(resultsFileName).ToList();
 
-            var updated = false;
+            var updated = 0;
             
             foreach (var result in results)
             {
@@ -213,17 +213,19 @@ public static class Program
                 {
                     file[index] = result.Value.Summary;
 
-                    updated = true;
+                    updated++;
                 }
             }
 
-            if (!updated)
+            if (updated == 0)
             {
                 Console.WriteLine(" No times were quicker, will not update results.md.\n");
             }
             else
             {
                 File.WriteAllLines(resultsFileName, file);
+                
+                Console.WriteLine($" {updated} times were updated in results.md.\n");
             }
         }
 
