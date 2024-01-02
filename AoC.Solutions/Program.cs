@@ -222,7 +222,7 @@ public static class Program
                     }
                     else
                     {
-                        insert -= 5;
+                        insert -= 4;
                         
                         file.Insert(insert, result.Value.Summary);
                     }
