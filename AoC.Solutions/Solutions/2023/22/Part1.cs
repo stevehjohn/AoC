@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using AoC.Solutions.Infrastructure;
 using JetBrains.Annotations;
 
@@ -28,7 +29,9 @@ public class Part1 : Base
     private int CountNonSupportingBricks()
     {
         var result = 0;
-
+        
+        var brickIds = new ConcurrentDictionary<int, bool>();
+        
         Parallel.For(1, Count + 1,
             () => 0,
             (id, _, c) =>
@@ -71,11 +74,16 @@ public class Part1 : Base
 
                 if (count == 0)
                 {
-                    Visualise(false, id);
+                    brickIds.TryAdd(id, true);
                 }
 
                 return c + (1 - count);
             }, c => Interlocked.Add(ref result, c));
+
+        if (Visualiser != null)
+        {
+            brickIds.Select(b => b.Key).Order().ToList().ForEach(b => Visualise(false, b));
+        }
 
         return result;
     }
