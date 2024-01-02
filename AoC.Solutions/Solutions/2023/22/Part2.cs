@@ -1,3 +1,5 @@
+using System.Collections.Concurrent;
+using System.Diagnostics;
 using AoC.Solutions.Infrastructure;
 using JetBrains.Annotations;
 
@@ -21,7 +23,7 @@ public class Part2 : Base
         SettleBricks(Map);
         
         var result = GetSupportingBricks();
-        
+
         var count = 0;
         
         Parallel.ForEach(result,
@@ -92,29 +94,29 @@ public class Part2 : Base
     
     private List<int> GetSupportingBricks()
     {
-        var result = new List<int>();
+        var result = new ConcurrentDictionary<int, bool>();
 
-        var replace = new HashSet<(int X, int Y, int Z)>();
-        
-        for (var id = 1; id <= Count; id++)
+        Parallel.For(1, Count, id =>
         {
+            var copy = new int[MaxHeight, 10, 10];
+
+            Array.Copy(Map, copy, MaxHeight * 100);
+
             var removed = false;
-                
+
             for (var z = 1; z < HighestZ; z++)
             {
                 for (var x = 0; x < 10; x++)
                 {
                     for (var y = 0; y < 10; y++)
                     {
-                        if (Map[z, x, y] == id)
+                        if (copy[z, x, y] == id)
                         {
                             for (var zD = 0; zD < 5; zD++)
                             {
-                                if (Map[z + zD, x, y] == id)
+                                if (copy[z + zD, x, y] == id)
                                 {
-                                    Map[z + zD, x, y] = -1;
-                                    
-                                    replace.Add((x, y, z + zD));
+                                    copy[z + zD, x, y] = -1;
                                 }
                             }
 
@@ -122,30 +124,26 @@ public class Part2 : Base
                         }
                     }
                 }
-                
+
                 if (removed)
                 {
                     break;
                 }
             }
 
-            var count = SettleBricks(Map, false);
-            
+            var count = SettleBricks(copy, false);
+
             if (count > 0)
             {
-                result.Add(id);
+                result.TryAdd(id, true);
+            }
 
+            if (count != 0)
+            {
                 Visualise(false, id);
             }
-            
-            foreach (var brick in replace)
-            {
-                Map[brick.Z, brick.X, brick.Y] = id;
-            }
-            
-            replace.Clear();
-        }
+        });
 
-        return result;
+        return result.Select(b => b.Key).ToList();
     }
 }
