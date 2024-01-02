@@ -54,7 +54,7 @@ public static class Program
                 continue;
             }
 
-            if (arguments.Length == 1)
+            if (arguments.Length > 0)
             {
                 var solutionKey = $"{int.Parse(solution.Namespace?.Split('.')[3].Replace("_", string.Empty) ?? "0")}.{int.Parse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0"):D2}.{solution.Name[4]}";
 
@@ -164,14 +164,20 @@ public static class Program
         CleanUp();
         
         WriteYearSummary();
-        
-        UpdateResults();
+
+        if (arguments.Length > 0)
+        {
+            if (arguments[0].ToLower() == "true" || (arguments.Length > 1 && arguments[1].ToLower() == "true"))
+            {
+                UpdateResults();
+            }
+        }
         
         return;
 
         void UpdateResults()
         {
-            if (!File.Exists("./results.md"))
+            if (!File.Exists("../results.md"))
             {
                 Console.WriteLine("results.md not found, will not update.\n");
             }
