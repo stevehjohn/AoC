@@ -83,9 +83,9 @@ public static class InputProvider
 
     private static void DownloadInput(string path)
     {
-        var parts = path.Split(Path.DirectorySeparatorChar);
+        var parts = path.Split(Path.DirectorySeparatorChar, StringSplitOptions.RemoveEmptyEntries);
         
-        using var request = new HttpRequestMessage(HttpMethod.Get, $"https://adventofcode.com/{parts[^3]}/day/{parts[^2]}/input");
+        using var request = new HttpRequestMessage(HttpMethod.Get, $"https://adventofcode.com/{parts[^2]}/day/{parts[^1]}/input");
         
         var keyData = File.ReadLines(GetKeyPath()).Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1]).ToArray();
 
