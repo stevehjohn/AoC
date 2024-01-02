@@ -210,13 +210,20 @@ public static class Program
                 if (index < 0)
                 {
                     var insert = file.FindLastIndex(l => l.StartsWith("```"));
-                    
+
                     if (day == 1 && part == 1)
                     {
-                        file.Insert(insert, $"{new string(' ', 43)}{"0ms",-13}");
-                        file.Insert(insert, $"{new string(' ', 43)}-------------"); 
-                    }
+                        insert--;
                     
+                        file.Insert(insert, string.Empty);
+                        file.Insert(insert, $"{new string(' ', 43)}{"0ms",-13}");
+                        file.Insert(insert, $"{new string(' ', 43)}-------------");
+                    }
+                    else
+                    {
+                        insert -= 3;
+                    }
+
                     file.Insert(insert, result.Value.Summary);
 
                     continue;
