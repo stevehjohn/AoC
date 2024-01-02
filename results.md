@@ -445,7 +445,7 @@ Tests performed on a 2023 MacBook Pro.
  2023  8.2: 14935034899483                 767μs         
  2023  9.1: 1980437560                     357μs         Mirage maintenance
  2023  9.2: 977                            322μs         
- 2023 10.1: 6806                           98μs          Pipe maze
+ 2023 10.1: 6806                           97μs          Pipe maze
  2023 10.2: 449                            918μs         
  2023 11.1: 9639160                        337μs         Cosmic expansion
  2023 11.2: 752936133304                   334μs         
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 606772018765659                5,489μs       
  2023 25.1: 522006                         20,058μs      Snowverload
                                            -------------
-                                           537.865ms    
+                                           537.864ms    
 
  442 puzzles solved in 61.395ms.
 ```
