@@ -25,6 +25,8 @@ public static class Program
 
         string[] answers = null;
 
+        var results = new Dictionary<(int Yeat, int Day, int Part), (double Microseconds, string Summary)>();
+        
         try
         {
             answers = File.ReadAllLines($"Solutions{Path.DirectorySeparatorChar}AllAnswers.txt");
@@ -147,8 +149,14 @@ public static class Program
             }
 
             var microseconds = Math.Min(stopwatch.Elapsed.TotalMicroseconds, firstTime);
+
+            var part = solution.Name[4] - '0';
             
-            Console.WriteLine($" {year} {int.Parse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0"),2}.{solution.Name[4]}: {displayAnswer,-30} {$"{microseconds:N0}μs",-12}  {description}");
+            var summary = $" {year} {day,2}.{part}: {displayAnswer,-30} {$"{microseconds:N0}μs",-12}  {description}";
+            
+            results.Add((year, day, part), (microseconds, summary));
+            
+            Console.WriteLine(summary);
 
             yearMs += (long) microseconds;
         }
@@ -157,7 +165,19 @@ public static class Program
         
         WriteYearSummary();
         
+        UpdateResults();
+        
         return;
+
+        void UpdateResults()
+        {
+            if (!File.Exists("./results.md"))
+            {
+                Console.WriteLine("results.md not found, will not update.\n");
+            }
+            
+            
+        }
 
         void CheckAnswer(Type solution, string answer)
         {

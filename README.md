@@ -13,9 +13,10 @@ To run the solutions, navigate to the root of the repository in a terminal, comm
 
 Both can take the puzzle year (4 digits), day (2 digits) and part (1 digit) as a parameter. Examples:
 
-- `./run.sh 2023`
-- `./run.sh 2023.01`
-- `./run.sh 2023.01.2`
+- `./run.sh` runs all puzzles.
+- `./run.sh 2023` runs puzzles from 2023.
+- `./run.sh 2023.01` runs both parts of the puzzle from 2023 day 1.
+- `./run.sh 2023.01.2` runs part 2 of the puzzle for 2023 day 1.
 
 ## Visualisations
 
