@@ -1,3 +1,4 @@
+using System.Net;
 using JetBrains.Annotations;
 using Security.Crypto;
 
@@ -39,6 +40,11 @@ public static class InputProvider
 
         var encryptedPath = $"{path}input.encrypted";
 
+        if (! File.Exists(clearPath) && ! File.Exists(encryptedPath))
+        {
+            DownloadInput(path);
+        }
+
         if (File.Exists(clearPath))
         {
             if (! File.Exists(encryptedPath))
@@ -74,6 +80,25 @@ public static class InputProvider
         }
 
         return null;
+    }
+
+    private static void DownloadInput(string path)
+    {
+        var parts = path.Split(Path.DirectorySeparatorChar);
+        
+        using var request = new HttpRequestMessage(HttpMethod.Get, $"https://adventofcode.com/{parts[^3]}/day/{parts[^2]}/input");
+        
+        var keyData = File.ReadLines(GetKeyPath()).Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1]).ToArray();
+
+        request.Headers.Add("Cookie", $"session={keyData[3]}");
+
+        using var client = new HttpClient();
+
+        using var response = client.Send(request);
+
+        var input = response.Content.ReadAsStringAsync().Result;
+        
+        File.WriteAllText($"{path}input.clear", input);
     }
 
     private static void Encrypt(string clearPath, string encryptedPath)
