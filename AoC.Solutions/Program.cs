@@ -211,20 +211,21 @@ public static class Program
                 {
                     var insert = file.FindLastIndex(l => l.StartsWith("```"));
 
-                    if (day == 1 && part == 1)
+                    if (day == 1 && part == '1')
                     {
                         insert--;
                     
                         file.Insert(insert, string.Empty);
                         file.Insert(insert, $"{new string(' ', 43)}{"0ms",-13}");
                         file.Insert(insert, $"{new string(' ', 43)}-------------");
+                        file.Insert(insert, result.Value.Summary);
                     }
                     else
                     {
-                        insert -= 3;
+                        insert -= 5;
+                        
+                        file.Insert(insert, result.Value.Summary);
                     }
-
-                    file.Insert(insert, result.Value.Summary);
 
                     updated++;
                 }
