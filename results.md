@@ -18,7 +18,7 @@ Tests performed on a 2023 MacBook Pro.
  2015  3.2: 2631                           1,155μs       
  2015  4.1: 346386                         139,365μs     Crypto stocking stuffer
  2015  4.2: 9958218                        3,315,892μs   
- 2015  5.1: 238                            197μs         Naughty or nice
+ 2015  5.1: 238                            192μs         Naughty or nice
  2015  5.2: 69                             871μs
  2015  6.1: 569999                         25,555μs      Bournville estate lights
  2015  6.2: 17836115                       29,143μs      
@@ -47,22 +47,22 @@ Tests performed on a 2023 MacBook Pro.
  2015 18.1: 1061                           185,329μs     Bournville GIF
  2015 18.2: 1006                           183,222μs     
  2015 19.1: 518                            176μs         Medicine for Rudolph
- 2015 19.2: 200                            222μs         
+ 2015 19.2: 200                            221μs         
  2015 20.1: 831600                         289,471μs     Infinite elves, infinite houses
- 2015 20.2: 884520                         2,474μs       
+ 2015 20.2: 884520                         2,437μs       
  2015 21.1: 121                            559μs         RPG simulator 2015
- 2015 21.2: 201                            566μs         
+ 2015 21.2: 201                            548μs         
  2015 22.1: 1824                           1,408,198μs   Wizard simulator 2015
  2015 22.2: 1937                           58,350μs      
  2015 23.1: 184                            78μs          Opening the Turing lock
  2015 23.2: 231                            95μs          
  2015 24.1: 11846773891                    95,753μs      It hangs in the balance
  2015 24.2: 80393059                       141μs         
- 2015 25.1: 19980801                       57,467μs      Let it snow
+ 2015 25.1: 19980801                       57,455μs      Let it snow
                                            -------------
                                            6.675s       
 
- 2016  1.1: 278                            12μs          Manhattan distance
+ 2016  1.1: 278                            11μs          Manhattan distance
  2016  1.2: 161                            19μs          
  2016  2.1: 33444                          19μs          Bathroom security
  2016  2.2: 446A6                          20μs          
@@ -72,12 +72,12 @@ Tests performed on a 2023 MacBook Pro.
  2016  4.2: 993                            4,412μs       
  2016  5.1: 2414bc77                       2,442,360μs   Password hash
  2016  5.2: 437e60fc                       7,050,272μs   
- 2016  6.1: afwlyyyq                       1,055μs       Signals and noise
+ 2016  6.1: afwlyyyq                       1,030μs       Signals and noise
  2016  6.2: bhkzekao                       277μs         
- 2016  7.1: 115                            754μs         ABBA internet protocol
+ 2016  7.1: 115                            752μs         ABBA internet protocol
  2016  7.2: 231                            1,126μs       
  2016  8.1: 110                            151μs         MFA
- 2016  8.2: ZJHRKCPLYJ                     138μs         
+ 2016  8.2: ZJHRKCPLYJ                     137μs         
  2016  9.1: 107035                         50μs          Cyberspace explosives
  2016  9.2: 11451628995                    130μs         
  2016 10.1: 86                             962μs         Balance bots
@@ -91,7 +91,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 14.1: 35186                          11,780μs      One time pad
  2016 14.2: 22429                          11,010,510μs  
  2016 15.1: 400589                         719μs         Disc timing
- 2016 15.2: 3045959                        5,348μs       
+ 2016 15.2: 3045959                        5,326μs       
  2016 16.1: 10101001010100001              7μs           Dragon checksum
  2016 16.2: 10100001110101001              249,585μs     
  2016 17.1: DDRRULRDRD                     23μs          Two steps forward
@@ -130,12 +130,12 @@ Tests performed on a 2023 MacBook Pro.
  2017  7.2: 529                            264μs         
  2017  8.1: 4066                           186μs         I heard you like registers
  2017  8.2: 4829                           912μs         
- 2017  9.1: 17537                          77μs          Stream garbage collection
+ 2017  9.1: 17537                          75μs          Stream garbage collection
  2017  9.2: 7539                           50μs          
- 2017 10.1: 19591                          7μs           Knot hash
- 2017 10.2: 62e2204d2ca4f4924f6e7a80f1...  466μs         
+ 2017 10.1: 19591                          6μs           Knot hash
+ 2017 10.2: 62e2204d2ca4f4924f6e7a80f1...  442μs         
  2017 11.1: 643                            548μs         Hex ed
- 2017 11.2: 1471                           252μs         
+ 2017 11.2: 1471                           250μs         
  2017 12.1: 239                            559μs         Path through the pipes
  2017 12.2: 215                            8,604μs       
  2017 13.1: 1840                           55μs          Firewall run
@@ -174,7 +174,7 @@ Tests performed on a 2023 MacBook Pro.
  2018  3.2: 222                            4,968μs       
  2018  4.1: 109659                         895μs         Sleepy guards
  2018  4.2: 36371                          1,390μs       
- 2018  5.1: 10180                          958μs         Polymer reactions
+ 2018  5.1: 10180                          951μs         Polymer reactions
  2018  5.2: 5668                           36,345μs
  2018  6.1: 4342                           9,610μs       Safe coordinates
  2018  6.2: 42966                          6,443μs       
@@ -185,7 +185,7 @@ Tests performed on a 2023 MacBook Pro.
  2018  9.1: 416424                         939μs         Marble madness
  2018  9.2: 3498287922                     513,516μs     
  2018 10.1: BFFZCNXE                       95,940μs      Writing in the stars
- 2018 10.2: 10391                          16,051μs      
+ 2018 10.2: 10391                          14,168μs      
  2018 11.1: 33,54                          349μs         Max power... cell
  2018 11.2: 232,289,8                      158,733μs     
  2018 12.1: 3725                           2,130μs       Plant potty
@@ -216,7 +216,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 2444                           338,378μs     
  2018 25.1: 407                            35,914μs      4D chocolate teleportation
                                            -------------
-                                           18.695s      
+                                           18.694s      
 
  2019  1.1: 3325347                        2μs           Calculate launch fuel
  2019  1.2: 4985145                        6μs           
@@ -299,7 +299,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 14.1: 10717676595607                 96μs          Memory bit twiddling
  2020 14.2: 3974538275659                  3,900μs       
  2020 15.1: 240                            19μs          Number memory game
- 2020 15.2: 505                            234,491μs     
+ 2020 15.2: 505                            234,158μs     
  2020 16.1: 18227                          631μs         Ticket deciphering
  2020 16.2: 2355350878831                  1,035μs       
  2020 17.1: 384                            32,694μs      Conway cubes
@@ -339,7 +339,7 @@ Tests performed on a 2023 MacBook Pro.
  2021  7.X: Ceci n'est pas une intcode...  44μs          Easter egg (2019 CPU used)
  2021  8.1: 294                            128μs         Old school displays
  2021  8.2: 973292                         893μs
- 2021  9.1: 498                            89μs          Lava level
+ 2021  9.1: 498                            86μs          Lava level
  2021  9.2: 1071000                        2,111μs       
  2021 10.1: 370407                         381μs         Esoteric language parser
  2021 10.2: 3249889609                     558μs         
@@ -402,7 +402,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 13.1: 6428                           53μs          Distress signal
  2022 13.2: 22464                          516μs         
  2022 14.1: 1199                           465μs         Regolith reservoir
- 2022 14.2: 23925                          5,440μs       
+ 2022 14.2: 23925                          5,182μs       
  2022 15.1: 5256611                        10μs          Beacon exclusion zone
  2022 15.2: 13337919186981                 11,131μs      
  2022 16.1: 2059                           30,270μs      Proboscidea volcanium
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 905                            72,189μs      
  2022 25.1: 2-20=01--0=0=0=2-120           14μs          Full of hot air
                                            -------------
-                                           325.974ms    
+                                           325.716ms    
 
  2023  1.1: 54877                          120μs         Trebuchet
  2023  1.2: 54100                          337μs         
@@ -452,7 +452,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 12.1: 7251                           3,674μs       Hot springs
  2023 12.2: 2128386729962                  116,261μs
  2023 13.1: 34821                          111μs         Point of incidence
- 2023 13.2: 36919                          554μs         
+ 2023 13.2: 36919                          553μs         
  2023 14.1: 112773                         100μs         Parabolic reflector dish
  2023 14.2: 98894                          13,991μs      
  2023 15.1: 508552                         183μs         Lens library
@@ -469,7 +469,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 20.2: 252667369442479                37,601μs      
  2023 21.1: 3758                           57μs          Step counter
  2023 21.2: 621494544278648                440μs         
- 2023 22.1: 416                            39,935μs      Sand slabs
+ 2023 22.1: 416                            39,678μs      Sand slabs
  2023 22.2: 60963                          77,140μs      
  2023 23.1: 2202                           29,320μs      A long walk
  2023 23.2: 6226                           63,661μs      
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 606772018765659                5,489μs       
  2023 25.1: 527790                         14,901μs      Snowverload
                                            -------------
-                                           529.389ms    
+                                           529.131ms    
 
- 442 puzzles solved in 58.987ms.
+ 442 puzzles solved in 58.984ms.
 ```
