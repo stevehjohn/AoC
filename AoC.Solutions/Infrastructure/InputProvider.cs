@@ -36,6 +36,11 @@ public static class InputProvider
 
         var encryptedPath = $"{path}input.encrypted";
 
+        if (! File.Exists(clearPath) && ! File.Exists(encryptedPath))
+        {
+            // TODO: Download.
+        }
+
         if (File.Exists(clearPath))
         {
             if (! File.Exists(encryptedPath))
