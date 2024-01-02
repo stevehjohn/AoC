@@ -60,7 +60,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 24.2: 80393059                       145μs
  2015 25.1: 19980801                       57,522μs      Let it snow
                                            -------------
-                                           6.741s
+                                           6.741s       
 
  2016  1.1: 278                            13μs          Manhattan distance
  2016  1.2: 161                            21μs
@@ -112,7 +112,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 24.2: 700                            19,812μs
  2016 25.1: 158                            189,160μs     Clock signal
                                            -------------
-                                           23.358s
+                                           23.358s      
 
  2017  1.1: 1119                           12μs          Captcha
  2017  1.2: 1420                           13μs
@@ -164,7 +164,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 24.2: 1994                           143,886μs
  2017 25.1: 3745                           143,640μs     Turing tape
                                            -------------
-                                           2.571s
+                                           2.571s       
 
  2018  1.1: 435                            26μs          Tardis calibration
  2018  1.2: 245                            4,112μs
@@ -216,7 +216,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 2444                           346,688μs
  2018 25.1: 407                            36,270μs      4D chocolate teleportation
                                            -------------
-                                           21.595s
+                                           21.595s      
 
  2019  1.1: 3325347                        2μs           Calculate launch fuel
  2019  1.2: 4985145                        6μs
@@ -268,7 +268,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 24.2: 1934                           7,825μs
  2019 25.1: 35332                          252,924μs     Airlock password (CPU used unmodified)
                                            -------------
-                                           1.750s
+                                           1.750s       
 
  2020  1.1: 73371                          28μs          Expenses
  2020  1.2: 127642310                      110μs
@@ -320,7 +320,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 24.2: 3777                           197,623μs
  2020 25.1: 17673381                       46,138μs      Door cryptography
                                            -------------
-                                           1.354s
+                                           1.354s       
 
  2021  1.1: 1466                           57μs          Depth scan
  2021  1.2: 1491                           521μs
@@ -373,7 +373,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 24.2: 12911816171712                 4μs
  2021 25.1: 504                            106,674μs     Landing among the cucumbers
                                            -------------
-                                           4.168s
+                                           4.168s       
 
  2022  1.1: 66487                          27μs          Calorie counting
  2022  1.2: 197301                         59μs
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 905                            72,537μs
  2022 25.1: 2-20=01--0=0=0=2-120           15μs          Full of hot air
                                            -------------
-                                           333.170ms
+                                           333.190ms    
 
  2023  1.1: 54877                          127μs         Trebuchet
  2023  1.2: 54100                          341μs
@@ -442,7 +442,7 @@ Tests performed on a 2023 MacBook Pro.
  2023  7.1: 246795406                      638μs         Camel cards
  2023  7.2: 249356515                      654μs
  2023  8.1: 15517                          426μs         Haunted wasteland
- 2023  8.2: 14935034899483                 1,935μs
+ 2023  8.2: 14935034899483                 1,625μs       
  2023  9.1: 1980437560                     390μs         Mirage maintenance
  2023  9.2: 977                            352μs
  2023 10.1: 6806                           100μs         Pipe maze
@@ -477,5 +477,5 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 606772018765659                5,911μs
  2023 25.1: 527790                         21,369μs      Snowverload
                                            -------------
-                                           557.662ms
+                                           557.378ms    
 ```

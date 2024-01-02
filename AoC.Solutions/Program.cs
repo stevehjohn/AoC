@@ -256,7 +256,14 @@ public static class Program
 
                 if (line.StartsWith("     ") && year != 0)
                 {
-                    file[i + 1] = $"{new string(' ', 43)}{$"{yearMs / 1_000d:N3}ms",-13}";
+                    if (sum < 1_000_000)
+                    {
+                        file[i + 1] = $"{new string(' ', 43)}{$"{sum / 1_000d:N3}ms",-13}";
+                    }
+                    else
+                    {
+                        file[i + 1] = $"{new string(' ', 43)}{$"{sum / 1_000_000d:N3}s",-13}";
+                    }
 
                     year = 0;
                 }
