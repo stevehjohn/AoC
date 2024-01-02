@@ -7,6 +7,13 @@ public static class InputProvider
 {
     public static string[] GetInput(string nameSpace)
     {
+        if (!File.Exists("./AoC.Key"))
+        {
+            Console.Write("Please provide input decryption credentials in ./AoC.Key\n\n");
+            
+            Environment.Exit(0);
+        }
+
         var parts = nameSpace.Split('.');
 
         var pathParts = parts.Skip(2).Select(s => s.Replace("_", string.Empty)).ToArray();
