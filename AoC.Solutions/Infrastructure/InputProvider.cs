@@ -18,8 +18,7 @@ public static class InputProvider
 
         var pathParts = parts.Skip(2).Select(s => s.Replace("_", string.Empty)).ToArray();
 
-        var input = LoadInput(
-            $"./Aoc.Solutions/{string.Join(Path.DirectorySeparatorChar, pathParts)}{Path.DirectorySeparatorChar}");
+        var input = LoadInput($"./Aoc.Solutions/{string.Join(Path.DirectorySeparatorChar, pathParts)}{Path.DirectorySeparatorChar}");
 
         if (input == null)
         {
@@ -35,11 +34,6 @@ public static class InputProvider
         var clearPath = $"{path}input.clear";
 
         var encryptedPath = $"{path}input.encrypted";
-
-        if (! File.Exists(clearPath) && ! File.Exists(encryptedPath))
-        {
-            // TODO: Download.
-        }
 
         if (File.Exists(clearPath))
         {
