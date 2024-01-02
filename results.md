@@ -16,7 +16,7 @@ Tests performed on a 2023 MacBook Pro.
  2015  2.2: 3737498                        445μs         
  2015  3.1: 2572                           1,261μs       Perfectly spherical houses in a vacuum
  2015  3.2: 2631                           1,170μs       
- 2015  4.1: 346386                         140,158μs     Crypto stocking stuffer
+ 2015  4.1: 346386                         139,477μs     Crypto stocking stuffer
  2015  4.2: 9958218                        3,318,924μs   
  2015  5.1: 238                            198μs         Naughty or nice
  2015  5.2: 69                             871μs
@@ -60,7 +60,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 24.2: 80393059                       145μs
  2015 25.1: 19980801                       57,492μs      Let it snow
                                            -------------
-                                           6.680s       
+                                           6.679s       
 
  2016  1.1: 278                            12μs          Manhattan distance
  2016  1.2: 161                            19μs          
@@ -76,8 +76,8 @@ Tests performed on a 2023 MacBook Pro.
  2016  6.2: bhkzekao                       282μs         
  2016  7.1: 115                            754μs         ABBA internet protocol
  2016  7.2: 231                            1,126μs       
- 2016  8.1: 110                            152μs         MFA
- 2016  8.2: ZJHRKCPLYJ                     139μs         
+ 2016  8.1: 110                            151μs         MFA
+ 2016  8.2: ZJHRKCPLYJ                     138μs         
  2016  9.1: 107035                         50μs          Cyberspace explosives
  2016  9.2: 11451628995                    132μs         
  2016 10.1: 86                             978μs         Balance bots
@@ -318,7 +318,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 23.2: 505334281774                   139,840μs     
  2020 24.1: 320                            718μs         Tile flipping
  2020 24.2: 3777                           196,903μs     
- 2020 25.1: 17673381                       45,954μs      Door cryptography
+ 2020 25.1: 17673381                       45,905μs      Door cryptography
                                            -------------
                                            1.269s       
 
@@ -366,7 +366,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 21.1: 925605                         17μs          Quantum dice
  2021 21.2: 486638407378784                650,112μs     
  2021 22.1: 582644                         1,914μs       Reactor reboot
- 2021 22.2: 1263804707062415               24,744μs      
+ 2021 22.2: 1263804707062415               24,527μs      
  2021 23.1: 15111                          485,040μs     Hotel amphipod
  2021 23.2: 47625                          2,157,897μs   
  2021 24.1: 89913949293989                 4μs           Model number
@@ -381,7 +381,7 @@ Tests performed on a 2023 MacBook Pro.
  2022  2.2: 14859                          33μs          
  2022  3.1: 7597                           77μs          Rucksack reorganization
  2022  3.2: 2607                           120μs         
- 2022  4.1: 657                            121μs         Camp cleanup
+ 2022  4.1: 657                            120μs         Camp cleanup
  2022  4.2: 938                            121μs         
  2022  5.1: BSDMQFLSP                      98μs          Supply stacks
  2022  5.2: PGSQBFLDP                      184μs         
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 905                            72,189μs      
  2022 25.1: 2-20=01--0=0=0=2-120           14μs          Full of hot air
                                            -------------
-                                           327.311ms    
+                                           327.310ms    
 
  2023  1.1: 54877                          121μs         Trebuchet
  2023  1.2: 54100                          337μs         
@@ -479,5 +479,5 @@ Tests performed on a 2023 MacBook Pro.
                                            -------------
                                            532.120ms    
 
- 442 puzzles solved in 61.312ms.
+ 442 puzzles solved in 61.311ms.
 ```
