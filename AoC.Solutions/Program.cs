@@ -226,18 +226,20 @@ public static class Program
 
                     file.Insert(insert, result.Value.Summary);
 
-                    continue;
-                }
-                
-                var line = file[index];
-
-                var time = int.Parse(line[43..].Split(' ', StringSplitOptions.TrimEntries)[0][..^2], NumberStyles.AllowThousands);
-
-                if (result.Value.Microseconds < time)
-                {
-                    file[index] = result.Value.Summary;
-
                     updated++;
+                }
+                else
+                {
+                    var line = file[index];
+
+                    var time = int.Parse(line[43..].Split(' ', StringSplitOptions.TrimEntries)[0][..^2], NumberStyles.AllowThousands);
+
+                    if (result.Value.Microseconds < time)
+                    {
+                        file[index] = result.Value.Summary;
+
+                        updated++;
+                    }
                 }
             }
 
