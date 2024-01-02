@@ -18,9 +18,13 @@ public static class InputProvider
 
         var pathParts = parts.Skip(2).Select(s => s.Replace("_", string.Empty)).ToArray();
 
-        var input = LoadInput($"./Aoc.Solutions/{string.Join(Path.DirectorySeparatorChar, pathParts)}{Path.DirectorySeparatorChar}");
-
-        if (input == null)
+        string[] input;
+        
+        if (! Path.Exists("./Solutions"))
+        {
+            input = LoadInput($"./Aoc.Solutions/{string.Join(Path.DirectorySeparatorChar, pathParts)}{Path.DirectorySeparatorChar}");
+        }
+        else
         {
             input = LoadInput($"./{string.Join(Path.DirectorySeparatorChar, pathParts)}{Path.DirectorySeparatorChar}");
         }
