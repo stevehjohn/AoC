@@ -457,7 +457,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 14.2: 98894                          13,991μs      
  2023 15.1: 508552                         187μs         Lens library
  2023 15.2: 265462                         531μs
- 2023 16.1: 7074                           142μs         The floor will be lava
+ 2023 16.1: 7074                           140μs         The floor will be lava
  2023 16.2: 7530                           6,608μs
  2023 17.1: 851                            54,323μs      Clumsy crucible
  2023 17.2: 982                            48,032μs
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 606772018765659                5,680μs       
  2023 25.1: 522006                         20,273μs      Snowverload
                                            -------------
-                                           539.129ms    
+                                           539.127ms    
 
- 49 puzzles solved in 1.088ms.
+ 442 puzzles solved in 61.607ms.
 ```
