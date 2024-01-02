@@ -47,8 +47,8 @@ public abstract class Base : Solution
 
         var visited = new bool[_width, _height, 4, 10];
 
-        queue.Enqueue((0, 0, East, 1, new List<(int X, int Y)> { (0, 0) }), 0);
-        queue.Enqueue((0, 0, South, 1, new List<(int X, int Y)> { (0, 0) }), 0);
+        queue.Enqueue((0, 0, East, 1, [(0, 0)]), 0);
+        queue.Enqueue((0, 0, South, 1, [(0, 0)]), 0);
 
         var directions = new List<(int Dx, int Dy)>();
         

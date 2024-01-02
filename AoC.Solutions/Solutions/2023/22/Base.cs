@@ -75,8 +75,10 @@ public abstract class Base : Solution
                 {
                     continue;
                 }
-                
+
                 found.ExceptWith(supported);
+                
+                droppedIds.UnionWith(found);
 
                 for (var x = 0; x < 10; x++)
                 {
@@ -99,8 +101,6 @@ public abstract class Base : Solution
                             {
                                 HighestZ = z - 1;
                             }
-
-                            droppedIds.Add(brick);
 
                             dropped = true;
                         }
