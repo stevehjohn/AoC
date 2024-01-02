@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
-using AoC.Solutions.Solutions._2019._03;
 
 namespace AoC.Solutions;
 
@@ -342,9 +341,9 @@ public static class Program
 
         void CleanUp()
         {
-            var results = Directory.EnumerateFiles("./").Where(f => f.EndsWith(".result")).ToList();
+            var clear = Directory.EnumerateFiles("./").Where(f => f.EndsWith(".result")).ToList();
 
-            foreach (var result in results)
+            foreach (var result in clear)
             {
                 File.Delete(result);
             }
