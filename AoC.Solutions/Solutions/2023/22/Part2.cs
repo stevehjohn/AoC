@@ -1,5 +1,4 @@
 using System.Collections.Concurrent;
-using System.Diagnostics;
 using AoC.Solutions.Infrastructure;
 using JetBrains.Annotations;
 
