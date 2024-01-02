@@ -76,6 +76,11 @@ public abstract class Base : Solution
                     continue;
                 }
 
+                if (! move)
+                {
+                    return 1;
+                }
+
                 found.ExceptWith(supported);
                 
                 droppedIds.UnionWith(found);
@@ -88,11 +93,6 @@ public abstract class Base : Solution
 
                         if (found.Contains(brick))
                         {
-                            if (! move)
-                            {
-                                return 1;
-                            }
-
                             map[z - 1, x, y] = brick;
 
                             map[z, x, y] = -1;
