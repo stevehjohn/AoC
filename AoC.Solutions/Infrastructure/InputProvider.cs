@@ -19,7 +19,7 @@ public static class InputProvider
         var pathParts = parts.Skip(2).Select(s => s.Replace("_", string.Empty)).ToArray();
 
         string[] input;
-        
+
         if (! Path.Exists("./Solutions"))
         {
             input = LoadInput($"./Aoc.Solutions/{string.Join(Path.DirectorySeparatorChar, pathParts)}{Path.DirectorySeparatorChar}");
@@ -82,8 +82,7 @@ public static class InputProvider
 
         var cipherProvider = new SymmetricCipher();
 
-        var keyData = File.ReadLines(GetKeyPath()).Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1])
-            .ToArray();
+        var keyData = File.ReadLines(GetKeyPath()).Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1]).ToArray();
 
         var iv = Convert.FromBase64String(keyData[1]);
 
@@ -100,8 +99,7 @@ public static class InputProvider
     {
         var cipherProvider = new SymmetricCipher();
 
-        var keyData = File.ReadLines(GetKeyPath()).Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1])
-            .ToArray();
+        var keyData = File.ReadLines(GetKeyPath()).Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1]).ToArray();
 
         var iv = Convert.FromBase64String(keyData[1]);
 
