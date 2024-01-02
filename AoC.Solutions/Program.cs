@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
+using AoC.Solutions.Solutions._2019._03;
 
 namespace AoC.Solutions;
 
@@ -223,9 +224,42 @@ public static class Program
             }
             else
             {
+                RecalculateTotals(file);
+                
                 File.WriteAllLines(resultsFileName, file);
                 
                 Console.WriteLine($" {updated} times were updated in results.md.\n");
+            }
+        }
+
+        void RecalculateTotals(List<string> file)
+        {
+            var year = 0;
+
+            var sum = 0L;
+            
+            for (var i = 0; i < file.Count; i++)
+            {
+                var line = file[i];
+
+                if (line.StartsWith(" 20") && year == 0)
+                {
+                    sum = 0;
+
+                    year = int.Parse(line[1..5]);
+                }
+
+                if (line.StartsWith(" 20") && year != 0)
+                {
+                    sum += int.Parse(line[43..].Split(' ', StringSplitOptions.TrimEntries)[0][..^2], NumberStyles.AllowThousands);
+                }
+
+                if (line.StartsWith("     ") && year != 0)
+                {
+                    file[i + 1] = $"{new string(' ', 43)}{$"{yearMs / 1_000d:N3}ms",-13}";
+
+                    year = 0;
+                }
             }
         }
 
