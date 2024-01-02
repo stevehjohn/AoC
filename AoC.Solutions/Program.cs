@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
-using Microsoft.Diagnostics.Tracing.Parsers.IIS_Trace;
 
 namespace AoC.Solutions;
 
