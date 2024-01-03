@@ -19,7 +19,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private readonly List<(int X, int Y)> _moves = [];
 
-    private int _move = -1;
+    private int _move = 0;
 
     private int _elfFrame;
 
@@ -76,6 +76,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
         base.LoadContent();
     }
 
+    private int _frame;
+    
     protected override void Update(GameTime gameTime)
     {
         if (HasNextState)
@@ -91,6 +93,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 _blizzardHeight = (_map.GetUpperBound(1) - 1) * TileHeight;
 
                 CreateBlizzards();
+                
+                var move = state.Moves[0];
+
+                _elfPosition = (move.X * TileWidth, move.Y * TileHeight);
+
+                _elfTarget = (move.X * TileWidth, move.Y * TileHeight);
             }
 
             _moves.AddRange(state.Moves);
@@ -100,6 +108,15 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             return;
         }
+
+        _frame++;
+        
+        if (_frame < 15)
+        {
+            return;
+        }
+
+        _frame = 0;
 
         _elfPosition = (_elfPosition.X.Converge(_elfTarget.X), _elfPosition.Y.Converge(_elfTarget.Y).Converge(_elfTarget.Y));
 
@@ -111,11 +128,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
             {
                 var move = _moves[_move];
                 
-                if (_move == 0)
-                {
-                    _elfPosition = (move.X * TileWidth, move.Y * TileHeight);
-                }
-
                 _elfTarget = (move.X * TileWidth, move.Y * TileHeight);
             }
         }
@@ -125,6 +137,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
         if (_elfFrame >= TileWidth)
         {
             _elfFrame = 0;
+
+            Console.ReadKey();
         }
         
         MoveBlizzards();
