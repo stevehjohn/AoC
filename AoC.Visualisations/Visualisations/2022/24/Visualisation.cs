@@ -41,8 +41,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
         {
-            PreferredBackBufferWidth = 1464,
-            PreferredBackBufferHeight = 648
+            PreferredBackBufferWidth = 1440,
+            PreferredBackBufferHeight = 600
         };
 
         Content.RootDirectory = "./24";
@@ -96,9 +96,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 
                 var move = state.Moves[0];
 
-                _elfPosition = (move.X * TileWidth, move.Y * TileHeight);
+                _elfPosition = ((move.X - 1) * TileWidth, (move.Y - 1) * TileHeight);
 
-                _elfTarget = (move.X * TileWidth, move.Y * TileHeight);
+                _elfTarget = ((move.X - 1) * TileWidth, (move.Y - 1) * TileHeight);
             }
 
             _moves.AddRange(state.Moves);
@@ -123,7 +123,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             {
                 var move = _moves[_move];
                 
-                _elfTarget = (move.X * TileWidth, move.Y * TileHeight);
+                _elfTarget = ((move.X - 1) * TileWidth, (move.Y - 1) * TileHeight);
             }
         }
 
@@ -209,8 +209,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
         
-        DrawMap();
-
         DrawBlizzards();
 
         DrawElf();
@@ -220,32 +218,26 @@ public class Visualisation : VisualisationBase<PuzzleState>
         base.Draw(gameTime);
     }
 
-    private void DrawMap()
-    {
-        _map.ForAll((x, y, c) =>
-        {
-            if (c == '#')
-            {
-                _spriteBatch.Draw(_tiles, 
-                    new Vector2(x * TileWidth, y * TileHeight), 
-                    new Rectangle(0, 0, TileWidth, TileHeight), 
-                    Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0.9f);
-            }
-        });
-    }
-
     private void DrawBlizzards()
     {
         var z = 0.0001f;
         
         _blizzards.ForAll((_, b) =>
         {
-            // TODO: Draw the wrap around.
+            _spriteBatch.Draw(_tiles, 
+                new Vector2(b.X, b.Y), 
+                new Rectangle(TileWidth, 0, TileWidth, TileHeight), 
+                Color.FromNonPremultiplied(64, 64, 64, 255), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, z);
             
             _spriteBatch.Draw(_tiles, 
-                new Vector2(b.X + TileWidth, b.Y + TileHeight), 
+                new Vector2(b.X - _blizzardWidth, b.Y), 
                 new Rectangle(TileWidth, 0, TileWidth, TileHeight), 
-                Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, z);
+                Color.FromNonPremultiplied(64, 64, 64, 255), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, z);
+            
+            _spriteBatch.Draw(_tiles, 
+                new Vector2(b.X, b.Y - _blizzardHeight), 
+                new Rectangle(TileWidth, 0, TileWidth, TileHeight), 
+                Color.FromNonPremultiplied(64, 64, 64, 255), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, z);
             
             z += 0.0001f;
         });
@@ -255,7 +247,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         _spriteBatch.Draw(_tiles, 
             new Vector2(_elfPosition.X, _elfPosition.Y), 
-            new Rectangle(TileWidth * 2, 0, TileWidth, TileHeight), 
-            Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
+            new Rectangle(TileWidth, 0, TileWidth, TileHeight), 
+            Color.FromNonPremultiplied(0, 255, 0, 255), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
     }
 }
