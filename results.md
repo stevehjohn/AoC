@@ -153,7 +153,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 19.1: EOCZQMURF                      94μs          Packet map
  2017 19.2: 16312                          93μs          
  2017 20.1: 170                            375μs         Particle swarm
- 2017 20.2: 571                            90,207μs      
+ 2017 20.2: 571                            90,168μs      
  2017 21.1: 190                            544μs         Fractal art
  2017 21.2: 2335049                        54,778μs      
  2017 22.1: 5266                           502μs         Sporifica virus
@@ -184,7 +184,7 @@ Tests performed on a 2023 MacBook Pro.
  2018  8.2: 27490                          22,629μs      
  2018  9.1: 416424                         939μs         Marble madness
  2018  9.2: 3498287922                     513,516μs     
- 2018 10.1: BFFZCNXE                       19,994μs      Writing in the stars
+ 2018 10.1: BFFZCNXE                       19,924μs      Writing in the stars
  2018 10.2: 10391                          14,168μs      
  2018 11.1: 33,54                          349μs         Max power... cell
  2018 11.2: 232,289,8                      158,733μs     
@@ -228,7 +228,7 @@ Tests performed on a 2023 MacBook Pro.
  2019  4.2: 607                            55,217μs      
  2019  5.1: 16434972                       30μs          Air conditioning (CPU extension 1)
  2019  5.2: 16694270                       24μs          
- 2019  6.1: 223251                         244μs         Orbital transfers
+ 2019  6.1: 223251                         242μs         Orbital transfers
  2019  6.2: 430                            47μs          
  2019  7.1: 38834                          5,310μs       Amplifiers (CPU used unmodified)
  2019  7.2: 69113332                       6,983μs
@@ -253,7 +253,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 17.1: 5948                           5,370μs       Scaffolding vacuum robot (CPU used unmodified)
  2019 17.2: 997790                         17,468μs      
  2019 18.1: 5198                           136,348μs     Maze and keys
- 2019 18.2: 1736                           67,768μs      
+ 2019 18.2: 1736                           66,650μs      
  2019 19.1: 206                            113,305μs     Tractorrr (CPU used unmodified)
  2019 19.2: 6190948                        183,356μs     
  2019 20.1: 514                            291μs         Doughnut maze
@@ -268,7 +268,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 24.2: 1934                           7,807μs       
  2019 25.1: 35332                          252,924μs     Airlock password (CPU used unmodified)
                                            -------------
-                                           1.583s       
+                                           1.582s       
 
  2020  1.1: 73371                          26μs          Expenses
  2020  1.2: 127642310                      105μs         
@@ -422,10 +422,10 @@ Tests performed on a 2023 MacBook Pro.
  2022 23.1: 3766                           8,181μs       Unstable diffusion
  2022 23.2: 954                            46,972μs      
  2022 24.1: 305                            25,914μs      Blizzard basin
- 2022 24.2: 905                            62,088μs      
+ 2022 24.2: 905                            61,456μs      
  2022 25.1: 2-20=01--0=0=0=2-120           14μs          Full of hot air
                                            -------------
-                                           315.607ms    
+                                           314.975ms    
 
  2023  1.1: 54877                          120μs         Trebuchet
  2023  1.2: 54100                          337μs         
@@ -479,5 +479,5 @@ Tests performed on a 2023 MacBook Pro.
                                            -------------
                                            424.982ms    
 
- 442 puzzles solved in 58.657ms.
+ 442 puzzles solved in 58.655ms.
 ```
