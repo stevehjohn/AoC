@@ -19,7 +19,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private readonly List<(int X, int Y)> _moves = [];
 
-    private int _move = 0;
+    private int _move;
 
     private int _elfFrame;
 
@@ -75,8 +75,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         base.LoadContent();
     }
-
-    private int _frame;
     
     protected override void Update(GameTime gameTime)
     {
@@ -108,10 +106,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             return;
         }
-
-        _frame++;
-        
-        _frame = 0;
 
         _elfPosition = (_elfPosition.X.Converge(_elfTarget.X), _elfPosition.Y.Converge(_elfTarget.Y).Converge(_elfTarget.Y));
 
