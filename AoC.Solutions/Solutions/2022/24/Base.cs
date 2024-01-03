@@ -27,6 +27,17 @@ public abstract class Base : Solution
 
     private int _end;
 
+    private IVisualiser<PuzzleState> _visualiser;
+
+    protected Base()
+    {
+    }
+
+    protected Base(IVisualiser<PuzzleState> visualiser)
+    {
+        _visualiser = visualiser;
+    }
+    
     protected void ParseInput()
     {
         _width = Input[0].Length;
@@ -111,15 +122,15 @@ public abstract class Base : Solution
 
     private int RunSimulationStep(int startIteration, int loop)
     {
-        var queue = new PriorityQueue<(int Position, int Steps), int>();
+        var queue = new PriorityQueue<(int Position, int Steps, List<int> History), int>();
 
         var visited = new HashSet<int>();
 
         var origin = loop == 1 ? _end : _start;
 
         var target = loop == 1 ? _start : _end;
-
-        queue.Enqueue((origin, 0), 0);
+        
+        queue.Enqueue((origin, 0, _visualiser == null ? null : [origin]), 0);
 
         while (queue.Count > 0)
         {
@@ -143,7 +154,7 @@ public abstract class Base : Solution
 
                 if (! visited.Contains(code))
                 {
-                    queue.Enqueue((move, item.Steps + 1), Math.Abs(target % _width - move % _width) + Math.Abs(target / _width - move / _width) + item.Steps);
+                    queue.Enqueue((move, item.Steps + 1, _visualiser == null ? null : [..item.History, move]), Math.Abs(target % _width - move % _width) + Math.Abs(target / _width - move / _width) + item.Steps);
 
                     visited.Add(code);
                 }
