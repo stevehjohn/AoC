@@ -2,7 +2,7 @@
 
 Stevo's Advent of Code Repo.
 
-See answers and low-res timings [here](results.md).
+See timings [here](results.md).
 
 ## Solutions
 
