@@ -175,8 +175,13 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         GraphicsDevice.Clear(Color.Black);
 
-        _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
+        if (_map == null)
+        {
+            return;
+        }
 
+        _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
+        
         DrawMap();
 
         DrawBlizzards();
