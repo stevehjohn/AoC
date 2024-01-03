@@ -21,8 +21,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private int _move = -1;
 
-    private int _frame;
-
     private int _elfFrame;
 
     private SpriteBatch _spriteBatch;
@@ -130,8 +128,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
         }
         
         MoveBlizzards();
-        
-        _frame++;
         
         base.Update(gameTime);
     }
