@@ -2,6 +2,17 @@
 
 public static class ArrayExtensions
 {
+    public static void ForAll<T>(this T[,] array, Action<int, int, T> action)
+    {
+        for (var x = 0; x <= array.GetUpperBound(0); x++)
+        {
+            for (var y = 0; y <= array.GetUpperBound(1); y++)
+            {
+                action(x, y, array[x, y]);
+            }
+        }
+    }
+
     public static char[,] To2DArray(this string[] array)
     {
         var twoDimensionalArray = new char[array[0].Length, array.Length];

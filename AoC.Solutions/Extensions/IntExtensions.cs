@@ -2,18 +2,6 @@
 
 public static class IntExtensions
 {
-    public static int DecrementRotate(this int input, int rotateAmount, int decrementBy = 1)
-    {
-        input -= decrementBy;
-
-        if (input < 0)
-        {
-            input += rotateAmount;
-        }
-
-        return input;
-    }
-
     public static int Converge(this int input, int target)
     {
         if (input == target)

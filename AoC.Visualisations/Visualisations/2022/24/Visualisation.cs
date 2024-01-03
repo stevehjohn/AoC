@@ -1,3 +1,4 @@
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Solutions._2022._24;
 using AoC.Visualisations.Exceptions;
 using AoC.Visualisations.Infrastructure;
@@ -10,6 +11,10 @@ namespace AoC.Visualisations.Visualisations._2022._24;
 [UsedImplicitly]
 public class Visualisation : VisualisationBase<PuzzleState>
 {
+    private const int TileWidth = 12;
+
+    private const int TileHeight = 24;
+    
     private char[,] _map;
 
     private List<(int X, int Y)> _moves;
@@ -19,6 +24,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private int _frame;
 
     private SpriteBatch _spriteBatch;
+
+    private readonly List<(int X, int Y, int Dx, int Dy)> _blizzards = [];
+
+    private int _width;
+
+    private int _height;
     
     public Visualisation()
     {
@@ -63,6 +74,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
             _map = state.Map;
 
             _moves = state.Moves;
+
+            CreateBlizzards();
         }
 
         if (_moves == null)
@@ -70,7 +83,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             return;
         }
 
-        if (_frame % 12 == 0)
+        if (_frame % TileWidth == 0)
         {
             _move++;
 
@@ -80,11 +93,39 @@ public class Visualisation : VisualisationBase<PuzzleState>
             }
         }
         
-        // Move blizzards
+        _blizzards.ForAll((i, b) =>
+        {
+            var x = b.X + b.Dx;
+            var y = b.Y + b.Dy;
+
+            _blizzards[i] = (x, y, b.Dx, b.Dy);
+        });
 
         _frame++;
         
         base.Update(gameTime);
+    }
+
+    private void CreateBlizzards()
+    {
+        _map.ForAll((x, y, c) =>
+        {
+            var dX = c switch
+            {
+                '<' => -1,
+                '>' => 1,
+                _ => 0
+            };
+            
+            var dY = c switch
+            {
+                '^' => -1,
+                'v' => 1,
+                _ => 0
+            };
+            
+            _blizzards.Add((x * TileWidth, y * TileHeight, dX, dY * 2));
+        });
     }
 
     protected override void Draw(GameTime gameTime)
