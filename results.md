@@ -153,7 +153,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 19.1: EOCZQMURF                      94μs          Packet map
  2017 19.2: 16312                          93μs          
  2017 20.1: 170                            375μs         Particle swarm
- 2017 20.2: 571                            108,095μs     
+ 2017 20.2: 571                            90,207μs      
  2017 21.1: 190                            544μs         Fractal art
  2017 21.2: 2335049                        58,245μs      
  2017 22.1: 5266                           502μs         Sporifica virus
@@ -164,7 +164,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 24.2: 1994                           143,886μs
  2017 25.1: 3745                           142,927μs     Turing tape
                                            -------------
-                                           2.529s       
+                                           2.511s       
 
  2018  1.1: 435                            21μs          Tardis calibration
  2018  1.2: 245                            3,955μs       
@@ -181,17 +181,17 @@ Tests performed on a 2023 MacBook Pro.
  2018  7.1: JKNSTHCBGRVDXWAYFOQLMPZIUE...  56μs          Ikea sleigh
  2018  7.2: 755                            261μs         
  2018  8.1: 40977                          47,742μs      Navigation licensing
- 2018  8.2: 27490                          48,279μs
+ 2018  8.2: 27490                          22,629μs      
  2018  9.1: 416424                         939μs         Marble madness
  2018  9.2: 3498287922                     513,516μs     
- 2018 10.1: BFFZCNXE                       95,940μs      Writing in the stars
+ 2018 10.1: BFFZCNXE                       19,994μs      Writing in the stars
  2018 10.2: 10391                          14,168μs      
  2018 11.1: 33,54                          349μs         Max power... cell
  2018 11.2: 232,289,8                      158,733μs     
  2018 12.1: 3725                           2,130μs       Plant potty
  2018 12.2: 3100000000293                  9,873μs       
  2018 13.1: 130,104                        18,080μs      Crashing carts
- 2018 13.2: 29,83                          57,154μs      
+ 2018 13.2: 29,83                          33,336μs      
  2018 14.1: 1150511382                     21,303μs      Elf recipes
  2018 14.2: 20173656                       1,171,890μs   
  2018 15.1: 243390                         104,452μs     Elves vs Goblins
@@ -211,12 +211,12 @@ Tests performed on a 2023 MacBook Pro.
  2018 22.1: 10115                          218μs         Caving capers
  2018 22.2: 990                            68,581μs
  2018 23.1: 599                            179μs         Nanobot teleportation
- 2018 23.2: 94481130                       52,142μs      
+ 2018 23.2: 94481130                       13,904μs      
  2018 24.1: 29865                          7,970μs       Immune system battle
  2018 24.2: 2444                           338,378μs     
  2018 25.1: 407                            35,914μs      4D chocolate teleportation
                                            -------------
-                                           18.694s      
+                                           18.530s      
 
  2019  1.1: 3325347                        2μs           Calculate launch fuel
  2019  1.2: 4985145                        6μs           
@@ -228,7 +228,7 @@ Tests performed on a 2023 MacBook Pro.
  2019  4.2: 607                            55,217μs      
  2019  5.1: 16434972                       30μs          Air conditioning (CPU extension 1)
  2019  5.2: 16694270                       24μs          
- 2019  6.1: 223251                         246μs         Orbital transfers
+ 2019  6.1: 223251                         244μs         Orbital transfers
  2019  6.2: 430                            47μs          
  2019  7.1: 38834                          5,310μs       Amplifiers (CPU used unmodified)
  2019  7.2: 69113332                       6,983μs
@@ -253,7 +253,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 17.1: 5948                           5,370μs       Scaffolding vacuum robot (CPU used unmodified)
  2019 17.2: 997790                         17,468μs      
  2019 18.1: 5198                           136,348μs     Maze and keys
- 2019 18.2: 1736                           72,920μs      
+ 2019 18.2: 1736                           67,768μs      
  2019 19.1: 206                            113,305μs     Tractorrr (CPU used unmodified)
  2019 19.2: 6190948                        183,356μs     
  2019 20.1: 514                            291μs         Doughnut maze
@@ -268,7 +268,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 24.2: 1934                           7,807μs       
  2019 25.1: 35332                          252,924μs     Airlock password (CPU used unmodified)
                                            -------------
-                                           1.589s       
+                                           1.584s       
 
  2020  1.1: 73371                          26μs          Expenses
  2020  1.2: 127642310                      105μs         
@@ -323,7 +323,7 @@ Tests performed on a 2023 MacBook Pro.
                                            1.265s       
 
  2021  1.1: 1466                           49μs          Depth scan
- 2021  1.2: 1491                           202μs         
+ 2021  1.2: 1491                           186μs         
  2021  2.1: 1746616                        48μs          Navigate forward
  2021  2.2: 1741971043                     48μs          
  2021  3.1: 2743844                        53μs          Power consumption
@@ -355,8 +355,8 @@ Tests performed on a 2023 MacBook Pro.
  2021 15.2: 2868                           69,869μs      
  2021 16.1: 999                            133μs         Packet processing
  2021 16.2: 3408662834145                  129μs         
- 2021 17.1: 19503                          14,568μs      Probe launch trick shot
- 2021 17.2: 5200                           14,260μs      
+ 2021 17.1: 19503                          12,437μs      Probe launch trick shot
+ 2021 17.2: 5200                           12,497μs      
  2021 18.1: 4072                           3,890μs       Snailfish homework
  2021 18.2: 4483                           52,850μs      
  2021 19.1: 479                            122,023μs     3D scanners and beacons
@@ -373,7 +373,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 24.2: 12911816171712                 3μs           
  2021 25.1: 504                            105,271μs     Landing among the cucumbers
                                            -------------
-                                           4.110s       
+                                           4.106s       
 
  2022  1.1: 66487                          26μs          Calorie counting
  2022  1.2: 197301                         49μs          
@@ -422,10 +422,10 @@ Tests performed on a 2023 MacBook Pro.
  2022 23.1: 3766                           8,181μs       Unstable diffusion
  2022 23.2: 954                            46,972μs      
  2022 24.1: 305                            25,914μs      Blizzard basin
- 2022 24.2: 905                            72,189μs      
+ 2022 24.2: 905                            62,088μs      
  2022 25.1: 2-20=01--0=0=0=2-120           14μs          Full of hot air
                                            -------------
-                                           325.716ms    
+                                           315.615ms    
 
  2023  1.1: 54877                          120μs         Trebuchet
  2023  1.2: 54100                          337μs         
@@ -479,5 +479,5 @@ Tests performed on a 2023 MacBook Pro.
                                            -------------
                                            529.129ms    
 
- 442 puzzles solved in 58.981ms.
+ 442 puzzles solved in 58.781ms.
 ```
