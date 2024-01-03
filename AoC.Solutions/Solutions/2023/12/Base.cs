@@ -14,9 +14,22 @@ public abstract class Base : Solution
 
         var row = parts[0].Trim('.');
 
-        var groups = parts[1].Split(',').Select(int.Parse).ToArray();
+        var right = parts[1].Split(',');
 
-        return (row, groups, groups.Sum());
+        var groups = new int[right.Length];
+
+        var sum = 0;
+        
+        for (var i = 0; i < right.Length; i++)
+        {
+            var value = int.Parse(right[i]);
+
+            groups[i] = value;
+
+            sum += value;
+        }
+
+        return (row, groups, sum);
     }
 
     protected long GetArrangements(string row, int[] groups, int sum)
@@ -59,6 +72,11 @@ public abstract class Base : Solution
             }
 
             return 1;
+        }
+
+        if (sum + groups.Length - 1 > row.Length)
+        {
+            return 0;
         }
 
         var count = 0;
