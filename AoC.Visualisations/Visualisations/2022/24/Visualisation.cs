@@ -80,15 +80,18 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         if (HasNextState)
         {
-            var state = GetNextState();
+            if (_moves == null || _move == _moves.Count)
+            {
+                var state = GetNextState();
 
-            _map = state.Map;
+                _map = state.Map;
 
-            _moves = state.Moves;
+                _moves = state.Moves;
 
-            _width = (_map.GetUpperBound(0) + 1) * TileWidth;
+                _width = (_map.GetUpperBound(0) + 1) * TileWidth;
 
-            _height = (_map.GetUpperBound(1) + 1) * TileHeight;
+                _height = (_map.GetUpperBound(1) + 1) * TileHeight;
+            }
 
             CreateBlizzards();
         }
@@ -214,19 +217,23 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 _spriteBatch.Draw(_tiles, 
                     new Vector2(x * TileWidth, y * TileHeight), 
                     new Rectangle(0, 0, TileWidth, TileHeight), 
-                    Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0.5f);
+                    Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0.9f);
             }
         });
     }
 
     private void DrawBlizzards()
     {
+        var z = 0.00001f;
+        
         _blizzards.ForAll((_, b) =>
         {
             _spriteBatch.Draw(_tiles, 
                 new Vector2(b.X, b.Y), 
                 new Rectangle(TileWidth, 0, TileWidth, TileHeight), 
-                Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0.5f);
+                Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, z);
+
+            z += 0.00001f;
         });
     }
 
@@ -235,6 +242,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
         _spriteBatch.Draw(_tiles, 
             new Vector2(_elfPosition.X, _elfPosition.Y), 
             new Rectangle(TileWidth * 2, 0, TileWidth, TileHeight), 
-            Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0.5f);
+            Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 1);
     }
 }
