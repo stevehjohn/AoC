@@ -28,22 +28,23 @@ public static class Program
 
         Console.WriteLine();
 
-        string[] answers = null;
+        string[] answers;
 
         var results = new Dictionary<(int Yeat, int Day, int Part), (double Microseconds, string Summary)>();
 
-        try
+        string path;
+        
+        if (! Path.Exists("./Solutions"))
         {
-            answers = File.ReadAllLines($"Solutions{Path.DirectorySeparatorChar}AllAnswers.clear");
+            path = "./Aoc.Solutions/Solutions/";
+            
+            answers = CryptoFileProvider.LoadFile(path, "AllAnswers");
         }
-        catch
+        else
         {
-            //
-        }
-
-        if (answers == null)
-        {
-            answers = File.ReadAllLines($"./Aoc.Solutions/Solutions{Path.DirectorySeparatorChar}AllAnswers.clear");
+            path = "./Solutions/";
+            
+            answers = CryptoFileProvider.LoadFile(path, "AllAnswers");
         }
 
         var previousDesc = string.Empty;
