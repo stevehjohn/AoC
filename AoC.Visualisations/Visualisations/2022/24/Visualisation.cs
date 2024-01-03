@@ -57,6 +57,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                 break;
 
+            case 2:
+                Puzzle = new Part2(this);
+
+                break;
+
             default:
                 throw new VisualisationParameterException();
         }
@@ -207,7 +212,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             if (c == '#')
             {
                 _spriteBatch.Draw(_tiles, 
-                    new Vector2(x * TileWidth, y * TileWidth), 
+                    new Vector2(x * TileWidth, y * TileHeight), 
                     new Rectangle(0, 0, TileWidth, TileHeight), 
                     Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0.5f);
             }
@@ -219,7 +224,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         _blizzards.ForAll((_, b) =>
         {
             _spriteBatch.Draw(_tiles, 
-                new Vector2(b.X * TileWidth, b.Y * TileWidth), 
+                new Vector2(b.X, b.Y), 
                 new Rectangle(TileWidth, 0, TileWidth, TileHeight), 
                 Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0.5f);
         });
@@ -228,7 +233,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private void DrawElf()
     {
         _spriteBatch.Draw(_tiles, 
-            new Vector2(_elfPosition.X * TileWidth, _elfPosition.Y * TileWidth), 
+            new Vector2(_elfPosition.X, _elfPosition.Y), 
             new Rectangle(TileWidth * 2, 0, TileWidth, TileHeight), 
             Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0.5f);
     }
