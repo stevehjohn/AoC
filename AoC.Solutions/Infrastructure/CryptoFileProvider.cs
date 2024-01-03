@@ -2,67 +2,19 @@ using Security.Crypto;
 
 namespace AoC.Solutions.Infrastructure;
 
-public static class InputProvider
+public static class CryptoFileProvider
 {
-    public static string[] GetInput(string nameSpace)
+    public static string[] LoadInput(string path, string filename)
     {
-        if (GetKeyPath() == null)
-        {
-            Console.Write("Please provide input decryption credentials in ./AoC.Solutions/AoC.Key\n\n");
+        var clearPath = $"{path}{filename}.clear";
 
-            Environment.Exit(0);
-        }
-
-        var parts = nameSpace.Split('.');
-
-        var pathParts = parts.Skip(2).Select(s => s.Replace("_", string.Empty)).ToArray();
-
-        string[] input;
-
-        string path;
-        
-        if (! Path.Exists("./Solutions"))
-        {
-            path = $"./Aoc.Solutions/{string.Join(Path.DirectorySeparatorChar, pathParts)}{Path.DirectorySeparatorChar}";
-            
-            if (! File.Exists($"{path}input.clear") && ! File.Exists($"{path}input.encrypted"))
-            {
-                DownloadInput(path);
-            }
-            
-            input = LoadInput(path);
-        }
-        else
-        {
-            path = $"./{string.Join(Path.DirectorySeparatorChar, pathParts)}{Path.DirectorySeparatorChar}";
-            
-            if (! File.Exists($"{path}input.clear") && ! File.Exists($"{path}input.encrypted"))
-            {
-                DownloadInput(path);
-            }
-            
-            input = LoadInput(path);
-        }
-
-        return input;
-    }
-
-    private static string[] LoadInput(string path)
-    {
-        var clearPath = $"{path}input.clear";
-
-        var encryptedPath = $"{path}input.encrypted";
-
-        if (! File.Exists(clearPath) && ! File.Exists(encryptedPath))
-        {
-            DownloadInput(path);
-        }
+        var encryptedPath = $"{path}{filename}.encrypted";
 
         if (File.Exists(clearPath))
         {
             if (! File.Exists(encryptedPath))
             {
-                var tempPath = $"{path}input.backup";
+                var tempPath = $"{path}{filename}.backup";
 
                 File.Copy(clearPath, tempPath);
 
@@ -93,25 +45,6 @@ public static class InputProvider
         }
 
         return null;
-    }
-
-    private static void DownloadInput(string path)
-    {
-        var parts = path.Split(Path.DirectorySeparatorChar, StringSplitOptions.RemoveEmptyEntries);
-        
-        using var request = new HttpRequestMessage(HttpMethod.Get, $"https://adventofcode.com/{parts[^2]}/day/{parts[^1]}/input");
-        
-        var keyData = File.ReadLines(GetKeyPath()).Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1]).ToArray();
-
-        request.Headers.Add("Cookie", $"session={keyData[3]}");
-
-        using var client = new HttpClient();
-
-        using var response = client.Send(request);
-
-        var input = response.Content.ReadAsStringAsync().Result;
-        
-        File.WriteAllText($"{path}input.clear", input);
     }
 
     private static void Encrypt(string clearPath, string encryptedPath)
