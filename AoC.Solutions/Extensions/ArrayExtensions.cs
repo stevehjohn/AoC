@@ -4,9 +4,9 @@ public static class ArrayExtensions
 {
     public static void ForAll<T>(this T[,] array, Action<int, int, T> action)
     {
-        for (var x = 0; x <= array.GetUpperBound(0); x++)
+        for (var y = 0; y <= array.GetUpperBound(1); y++)
         {
-            for (var y = 0; y <= array.GetUpperBound(1); y++)
+            for (var x = 0; x <= array.GetUpperBound(0); x++)
             {
                 action(x, y, array[x, y]);
             }

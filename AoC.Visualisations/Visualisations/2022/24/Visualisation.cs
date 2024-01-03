@@ -79,9 +79,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
             _moves = state.Moves;
 
-            _width = _map.GetUpperBound(0) * TileWidth;
+            _width = (_map.GetUpperBound(0) + 1) * TileWidth;
 
-            _height = _map.GetUpperBound(1) * TileHeight;
+            _height = (_map.GetUpperBound(1) + 1) * TileHeight;
 
             CreateBlizzards();
         }
@@ -123,26 +123,26 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             var x = b.X + b.Dx;
 
-            if (x < 0)
+            if (x < TileWidth)
             {
-                x += _width;
+                x += _width - TileWidth * 2;
             }
 
-            if (x >= _width)
+            if (x >= _width - TileWidth)
             {
-                x -= _width;
+                x -= _width - TileWidth * 2;
             }
 
             var y = b.Y + b.Dy;
 
-            if (y < 0)
+            if (y < TileHeight)
             {
-                y += _height;
+                y += _height - TileHeight * 2;
             }
 
-            if (y >= _height)
+            if (y >= _height - TileHeight)
             {
-                y -= _height;
+                y -= _height - TileHeight * 2;
             }
 
             _blizzards[i] = (x, y, b.Dx, b.Dy);
@@ -153,6 +153,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         _map.ForAll((x, y, c) =>
         {
+            if (c == '#' || c == '.')
+            {
+                return;
+            }
+
             var dX = c switch
             {
                 '<' => -1,
