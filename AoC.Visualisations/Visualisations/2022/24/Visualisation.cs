@@ -13,8 +13,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
         {
-            PreferredBackBufferWidth = 980,
-            PreferredBackBufferHeight = 980
+            PreferredBackBufferWidth = 1464,
+            PreferredBackBufferHeight = 648
         };
 
         Content.RootDirectory = "./24";
