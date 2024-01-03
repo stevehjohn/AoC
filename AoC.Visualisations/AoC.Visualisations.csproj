@@ -1,0 +1,56 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net8.0</TargetFramework>
+        <RollForward>Major</RollForward>
+        <PublishReadyToRun>false</PublishReadyToRun>
+        <TieredCompilation>false</TieredCompilation>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+    <PropertyGroup>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+        <ApplicationIcon>Icon.ico</ApplicationIcon>
+    </PropertyGroup>
+    <PropertyGroup>
+        <IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</IsWindows>
+        <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(IsWindows)'=='true'">
+        <DefineConstants>Windows</DefineConstants>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Remove="Icon.ico" />
+        <None Remove="Icon.bmp" />
+    </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Include="Icon.ico" />
+        <EmbeddedResource Include="Icon.bmp" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.1.303" />
+        <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(IsWindows)'=='true'">
+	    <PackageReference Include="SharpAvi" Version="3.0.1" />
+	    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+    </ItemGroup>
+    <ItemGroup>
+      <DesignData Include="_Content\2018\13\Content.mgcb" />
+      <DesignData Include="_Content\2018\17\Content.mgcb" />
+      <DesignData Include="_Content\2019\18\Content.mgcb" />
+      <DesignData Include="_Content\2020\20\Content.mgcb" />
+      <DesignData Include="_Content\2022\12\Content.mgcb" />
+      <DesignData Include="_Content\2022\14\Content.mgcb" />
+      <DesignData Include="_Content\2023\10\Content.mgcb" />
+      <DesignData Include="_Content\2023\14\Content.mgcb" />
+      <DesignData Include="_Content\2023\16\Content.mgcb" />
+      <DesignData Include="_Content\2023\17\Content.mgcb" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\AoC.Solutions\AoC.Solutions.csproj" />
+    </ItemGroup>
+    <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
+        <Message Text="Restoring dotnet tools" Importance="High" />
+        <Exec Command="dotnet tool restore" />
+    </Target>
+</Project>
