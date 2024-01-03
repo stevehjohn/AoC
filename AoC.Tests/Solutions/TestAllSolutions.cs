@@ -17,7 +17,20 @@ public class TestAllSolutions
     {
         _testOutputHelper = testOutputHelper;
 
-        _answers = File.ReadAllLines($"Solutions{Path.DirectorySeparatorChar}AllAnswers.clear");
+        string path;
+        
+        if (! Path.Exists("./Solutions"))
+        {
+            path = "./Aoc.Solutions/Solutions/";
+            
+            _answers = CryptoFileProvider.LoadFile(path, "AllAnswers");
+        }
+        else
+        {
+            path = "./Solutions/";
+            
+            _answers = CryptoFileProvider.LoadFile(path, "AllAnswers");
+        }
     }
 
     [Theory]
