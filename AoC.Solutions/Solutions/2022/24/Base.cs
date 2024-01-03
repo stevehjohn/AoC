@@ -1,4 +1,5 @@
 ﻿using AoC.Solutions.Exceptions;
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2022._24;
@@ -27,7 +28,7 @@ public abstract class Base : Solution
 
     private int _end;
 
-    private IVisualiser<PuzzleState> _visualiser;
+    private readonly IVisualiser<PuzzleState> _visualiser;
 
     protected Base()
     {
@@ -37,7 +38,23 @@ public abstract class Base : Solution
     {
         _visualiser = visualiser;
     }
-    
+
+    private void Visualise(List<int> moves)
+    {
+        if (_visualiser != null)
+        {
+            var state = new PuzzleState
+            {
+                Start = (_start % _width, _start / _width),
+                End = (_end % _width, _end / _width),
+                Map = Input.To2DArray(),
+                Moves = moves.Select(m => (m % _width, m / _width)).ToList()
+            };
+            
+            _visualiser.PuzzleStateChanged(state);
+        }
+    }
+
     protected void ParseInput()
     {
         _width = Input[0].Length;
@@ -138,6 +155,8 @@ public abstract class Base : Solution
 
             if (item.Position == target && item.Position == target)
             {
+                Visualise(item.History);
+                
                 return item.Steps;
             }
 
