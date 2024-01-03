@@ -30,6 +30,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private int _width;
 
     private int _height;
+
+    private (int X, int Y) _elfPosition;
+
+    private (int X, int Y) _elfTarget;
     
     public Visualisation()
     {
@@ -87,18 +91,27 @@ public class Visualisation : VisualisationBase<PuzzleState>
             return;
         }
 
+        _elfPosition = (_elfPosition.X.Converge(_elfTarget.X), _elfPosition.Y.Converge(_elfTarget.Y));
+
         if (_frame % TileWidth == 0)
         {
             _move++;
 
             if (_move < _moves.Count)
             {
-                // Move elf
+                var move = _moves[_move];
+                
+                if (_move == 0)
+                {
+                    _elfPosition = move;
+                }
+
+                _elfTarget = move;
             }
         }
         
         MoveBlizzards();
-
+        
         _frame++;
         
         base.Update(gameTime);
