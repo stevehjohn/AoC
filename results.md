@@ -88,16 +88,16 @@ Tests performed on a 2023 MacBook Pro.
  2016 12.2: 9227657                        1,058,260μs
  2016 13.1: 82                             97μs          Cubicle maze
  2016 13.2: 138                            88μs          
- 2016 14.1: 35186                          11,780μs      One time pad
+ 2016 14.1: 35186                          11,778μs      One time pad
  2016 14.2: 22429                          11,010,510μs  
- 2016 15.1: 400589                         719μs         Disc timing
+ 2016 15.1: 400589                         718μs         Disc timing
  2016 15.2: 3045959                        5,326μs       
  2016 16.1: 10101001010100001              7μs           Dragon checksum
  2016 16.2: 10100001110101001              247,552μs     
  2016 17.1: DDRRULRDRD                     23μs          Two steps forward
  2016 17.2: 536                            28,917μs      
  2016 18.1: 1978                           80μs          Like a rogue
- 2016 18.2: 20003246                       470,216μs     
+ 2016 18.2: 20003246                       469,853μs     
  2016 19.1: 1841611                        6μs           The Josephus problem
  2016 19.2: 1423634                        0μs
  2016 20.1: 19449262                       268μs         Firewall rules
@@ -112,7 +112,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 24.2: 700                            19,812μs
  2016 25.1: 158                            189,160μs     Clock signal
                                            -------------
-                                           23.263s      
+                                           23.262s      
 
  2017  1.1: 1119                           10μs          Captcha
  2017  1.2: 1420                           11μs          
@@ -155,7 +155,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 20.1: 170                            375μs         Particle swarm
  2017 20.2: 571                            90,207μs      
  2017 21.1: 190                            544μs         Fractal art
- 2017 21.2: 2335049                        58,245μs      
+ 2017 21.2: 2335049                        54,778μs      
  2017 22.1: 5266                           502μs         Sporifica virus
  2017 22.2: 2511895                        726,274μs     
  2017 23.1: 6241                           5,220μs       Coprocessor conflagration
@@ -164,7 +164,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 24.2: 1994                           143,886μs
  2017 25.1: 3745                           142,927μs     Turing tape
                                            -------------
-                                           2.511s       
+                                           2.507s       
 
  2018  1.1: 435                            21μs          Tardis calibration
  2018  1.2: 245                            3,955μs       
@@ -176,7 +176,7 @@ Tests performed on a 2023 MacBook Pro.
  2018  4.2: 36371                          1,390μs       
  2018  5.1: 10180                          951μs         Polymer reactions
  2018  5.2: 5668                           36,345μs
- 2018  6.1: 4342                           9,610μs       Safe coordinates
+ 2018  6.1: 4342                           9,603μs       Safe coordinates
  2018  6.2: 42966                          6,443μs       
  2018  7.1: JKNSTHCBGRVDXWAYFOQLMPZIUE...  56μs          Ikea sleigh
  2018  7.2: 755                            261μs         
@@ -327,11 +327,11 @@ Tests performed on a 2023 MacBook Pro.
  2021  2.1: 1746616                        48μs          Navigate forward
  2021  2.2: 1741971043                     48μs          
  2021  3.1: 2743844                        53μs          Power consumption
- 2021  3.2: 6677951                        134μs         
+ 2021  3.2: 6677951                        132μs         
  2021  4.1: 32844                          937μs         Squid bingo
  2021  4.2: 4920                           2,485μs       
- 2021  5.1: 7297                           4,908μs       Hydrothermal vents
- 2021  5.2: 21038                          7,678μs       
+ 2021  5.1: 7297                           4,899μs       Hydrothermal vents
+ 2021  5.2: 21038                          7,636μs       
  2021  6.1: 391888                         8μs           Lanternfish parthenogenesis
  2021  6.2: 1754597645339                  11μs          
  2021  7.1: 348664                         92μs          Crab submarines
@@ -384,7 +384,7 @@ Tests performed on a 2023 MacBook Pro.
  2022  4.1: 657                            120μs         Camp cleanup
  2022  4.2: 938                            119μs         
  2022  5.1: BSDMQFLSP                      98μs          Supply stacks
- 2022  5.2: PGSQBFLDP                      184μs         
+ 2022  5.2: PGSQBFLDP                      183μs         
  2022  6.1: 1647                           132μs         Tuning trouble
  2022  6.2: 2447                           219μs         
  2022  7.1: 2104783                        268μs         No space left on device
@@ -399,7 +399,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 11.2: 32059801242                    2,787μs
  2022 12.1: 408                            1,748μs       Hill climbing algorithm
  2022 12.2: 399                            1,674μs       
- 2022 13.1: 6428                           51μs          Distress signal
+ 2022 13.1: 6428                           50μs          Distress signal
  2022 13.2: 22464                          516μs         
  2022 14.1: 1199                           465μs         Regolith reservoir
  2022 14.2: 23925                          5,182μs       
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 905                            62,088μs      
  2022 25.1: 2-20=01--0=0=0=2-120           14μs          Full of hot air
                                            -------------
-                                           315.613ms    
+                                           315.611ms    
 
  2023  1.1: 54877                          120μs         Trebuchet
  2023  1.2: 54100                          337μs         
@@ -450,7 +450,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 11.1: 9639160                        336μs         Cosmic expansion
  2023 11.2: 752936133304                   333μs         
  2023 12.1: 7251                           3,137μs       Hot springs
- 2023 12.2: 2128386729962                  113,981μs     
+ 2023 12.2: 2128386729962                  107,638μs     
  2023 13.1: 34821                          111μs         Point of incidence
  2023 13.2: 36919                          553μs         
  2023 14.1: 112773                         100μs         Parabolic reflector dish
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 606772018765659                5,489μs       
  2023 25.1: 527790                         14,901μs      Snowverload
                                            -------------
-                                           526.312ms    
+                                           519.969ms    
 
- 442 puzzles solved in 58.764ms.
+ 442 puzzles solved in 58.753ms.
 ```
