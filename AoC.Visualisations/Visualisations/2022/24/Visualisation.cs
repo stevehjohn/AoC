@@ -103,10 +103,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 
                 if (_move == 0)
                 {
-                    _elfPosition = move;
+                    _elfPosition = (move.X * TileWidth, move.Y * TileHeight);
                 }
 
-                _elfTarget = move;
+                _elfTarget = (move.X * TileWidth, move.Y * TileHeight);
             }
         }
         
@@ -190,13 +190,25 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private void DrawMap()
     {
+        _map.ForAll((x, y, c) =>
+        {
+            if (c == '#')
+            {
+                // Draw at: x * TileWidth, y * TileHeigh
+            }
+        });
     }
 
     private void DrawBlizzards()
     {
+        _blizzards.ForAll((_, b) =>
+        {
+            // Draw at: b.X, b.Y
+        });
     }
 
     private void DrawElf()
     {
+        // Draw at: _elfPosition
     }
 }
