@@ -1,4 +1,5 @@
 ﻿using AoC.Solutions.Exceptions;
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2022._24;
@@ -26,6 +27,31 @@ public abstract class Base : Solution
     private int _start;
 
     private int _end;
+
+    private readonly IVisualiser<PuzzleState> _visualiser;
+
+    protected Base()
+    {
+    }
+
+    protected Base(IVisualiser<PuzzleState> visualiser)
+    {
+        _visualiser = visualiser;
+    }
+
+    private void Visualise(List<int> moves)
+    {
+        if (_visualiser != null)
+        {
+            var state = new PuzzleState
+            {
+                Map = Input.To2DArray(),
+                Moves = moves.Select(m => (m % _width, m / _width)).ToList()
+            };
+            
+            _visualiser.PuzzleStateChanged(state);
+        }
+    }
 
     protected void ParseInput()
     {
@@ -111,15 +137,15 @@ public abstract class Base : Solution
 
     private int RunSimulationStep(int startIteration, int loop)
     {
-        var queue = new PriorityQueue<(int Position, int Steps), int>();
+        var queue = new PriorityQueue<(int Position, int Steps, List<int> History), int>();
 
         var visited = new HashSet<int>();
 
         var origin = loop == 1 ? _end : _start;
 
         var target = loop == 1 ? _start : _end;
-
-        queue.Enqueue((origin, 0), 0);
+        
+        queue.Enqueue((origin, 0, _visualiser == null ? null : [origin]), 0);
 
         while (queue.Count > 0)
         {
@@ -127,6 +153,8 @@ public abstract class Base : Solution
 
             if (item.Position == target && item.Position == target)
             {
+                Visualise(item.History);
+                
                 return item.Steps;
             }
 
@@ -143,7 +171,7 @@ public abstract class Base : Solution
 
                 if (! visited.Contains(code))
                 {
-                    queue.Enqueue((move, item.Steps + 1), Math.Abs(target % _width - move % _width) + Math.Abs(target / _width - move / _width) + item.Steps);
+                    queue.Enqueue((move, item.Steps + 1, _visualiser == null ? null : [..item.History, move]), Math.Abs(target % _width - move % _width) + Math.Abs(target / _width - move / _width) + item.Steps);
 
                     visited.Add(code);
                 }
