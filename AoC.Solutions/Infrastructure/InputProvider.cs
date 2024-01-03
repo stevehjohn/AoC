@@ -1,5 +1,3 @@
-using Security.Crypto;
-
 namespace AoC.Solutions.Infrastructure;
 
 public static class InputProvider
