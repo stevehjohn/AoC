@@ -28,7 +28,6 @@
     <None Update="Solutions\**\input.clear" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="Never" />
     <None Update="Solutions\**\input.encrypted" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
     <None Update="AoC.Key" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="Never" />
-    <None Update="Solutions\AllAnswers.clear" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="Never" />
     <None Update="Solutions\AllAnswers.encrypted" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
   
