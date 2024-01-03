@@ -103,13 +103,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
             return;
         }
 
-        if (_frame % 12 != 0)
-        {
-            _frame++;
-            
-            return;
-        }
-
         _elfPosition = (_elfPosition.X.Converge(_elfTarget.X), _elfPosition.Y.Converge(_elfTarget.Y).Converge(_elfTarget.Y));
 
         if (_elfFrame == 0)
@@ -244,23 +237,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
         
         _blizzards.ForAll((_, b) =>
         {
-            // TODO: Draw twice when on edge for Y.
-            if (b.X >= _blizzardWidth - TileWidth)
-            {
-                _spriteBatch.Draw(_tiles, 
-                    new Vector2(b.X + TileWidth - _blizzardWidth, b.Y + TileHeight), 
-                    new Rectangle(TileWidth, 0, TileWidth, TileHeight), 
-                    Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, z);
-            }
-
-            if (b.X < TileWidth)
-            {
-                _spriteBatch.Draw(_tiles, 
-                    new Vector2(b.X + TileWidth + _blizzardWidth, b.Y + TileHeight), 
-                    new Rectangle(TileWidth, 0, TileWidth, TileHeight), 
-                    Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, z);
-            }
-
+            // TODO: Draw the wrap around.
+            
             _spriteBatch.Draw(_tiles, 
                 new Vector2(b.X + TileWidth, b.Y + TileHeight), 
                 new Rectangle(TileWidth, 0, TileWidth, TileHeight), 
