@@ -153,7 +153,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 19.1: 95μs          Packet map
  2017 19.2: 94μs          
  2017 20.1: 372μs         Particle swarm
- 2017 20.2: 92,294μs      
+ 2017 20.2: 90,921μs      
  2017 21.1: 543μs         Fractal art
  2017 21.2: 57,013μs      
  2017 22.1: 498μs         Sporifica virus
@@ -164,7 +164,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 24.2: 143,418μs     
  2017 25.1: 142,839μs     Turing tape
             -------------
-            2.521s       
+            2.520s       
 
  2018  1.1: 19μs          Tardis calibration
  2018  1.2: 4,066μs       
@@ -184,14 +184,14 @@ Tests performed on a 2023 MacBook Pro.
  2018  8.2: 22,592μs      
  2018  9.1: 940μs         Marble madness
  2018  9.2: 520,404μs     
- 2018 10.1: 19,939μs      Writing in the stars
+ 2018 10.1: 19,819μs      Writing in the stars
  2018 10.2: 16,506μs      
  2018 11.1: 350μs         Max power... cell
  2018 11.2: 157,856μs     
  2018 12.1: 2,116μs       Plant potty
  2018 12.2: 9,959μs       
  2018 13.1: 17,664μs      Crashing carts
- 2018 13.2: 43,419μs      
+ 2018 13.2: 31,589μs      
  2018 14.1: 21,266μs      Elf recipes
  2018 14.2: 1,169,788μs   
  2018 15.1: 104,013μs     Elves vs Goblins
@@ -211,12 +211,12 @@ Tests performed on a 2023 MacBook Pro.
  2018 22.1: 215μs         Caving capers
  2018 22.2: 69,834μs      
  2018 23.1: 177μs         Nanobot teleportation
- 2018 23.2: 17,835μs      
+ 2018 23.2: 14,654μs      
  2018 24.1: 7,976μs       Immune system battle
  2018 24.2: 331,654μs     
  2018 25.1: 35,908μs      4D chocolate teleportation
             -------------
-            20.481s      
+            20.466s      
 
  2019  1.1: 2μs           Calculate launch fuel
  2019  1.2: 5μs           
@@ -228,7 +228,7 @@ Tests performed on a 2023 MacBook Pro.
  2019  4.2: 54,796μs      
  2019  5.1: 31μs          Air conditioning (CPU extension 1)
  2019  5.2: 27μs          
- 2019  6.1: 242μs         Orbital transfers
+ 2019  6.1: 241μs         Orbital transfers
  2019  6.2: 47μs          
  2019  7.1: 5,274μs       Amplifiers (CPU used unmodified)
  2019  7.2: 7,034μs       
@@ -323,7 +323,7 @@ Tests performed on a 2023 MacBook Pro.
             1.252s       
 
  2021  1.1: 52μs          Depth scan
- 2021  1.2: 259μs         
+ 2021  1.2: 219μs         
  2021  2.1: 48μs          Navigate forward
  2021  2.2: 47μs          
  2021  3.1: 52μs          Power consumption
@@ -355,7 +355,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 15.2: 69,211μs      
  2021 16.1: 134μs         Packet processing
  2021 16.2: 129μs         
- 2021 17.1: 12,582μs      Probe launch trick shot
+ 2021 17.1: 12,482μs      Probe launch trick shot
  2021 17.2: 12,318μs      
  2021 18.1: 3,898μs       Snailfish homework
  2021 18.2: 53,050μs      
@@ -422,10 +422,10 @@ Tests performed on a 2023 MacBook Pro.
  2022 23.1: 8,153μs       Unstable diffusion
  2022 23.2: 46,428μs      
  2022 24.1: 25,283μs      Blizzard basin
- 2022 24.2: 71,298μs      
+ 2022 24.2: 60,123μs      
  2022 25.1: 10μs          Full of hot air
             -------------
-            323.942ms    
+            312.767ms    
 
  2023  1.1: 120μs         Trebuchet
  2023  1.2: 338μs         
@@ -479,5 +479,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             448.856ms    
 
- 442 puzzles solved in 60.652ms.
+ 442 puzzles solved in 60.625ms.
 ```
