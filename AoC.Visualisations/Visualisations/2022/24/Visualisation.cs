@@ -199,7 +199,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             if (c == '#')
             {
-                // Draw at: x * TileWidth, y * TileHeigh
+                // Draw at: x * TileWidth, y * TileHeight
             }
         });
     }
