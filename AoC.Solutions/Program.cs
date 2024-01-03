@@ -34,7 +34,7 @@ public static class Program
 
         try
         {
-            answers = File.ReadAllLines($"Solutions{Path.DirectorySeparatorChar}AllAnswers.txt");
+            answers = File.ReadAllLines($"Solutions{Path.DirectorySeparatorChar}AllAnswers.clear");
         }
         catch
         {
@@ -43,7 +43,7 @@ public static class Program
 
         if (answers == null)
         {
-            answers = File.ReadAllLines($"./Aoc.Solutions/Solutions{Path.DirectorySeparatorChar}AllAnswers.txt");
+            answers = File.ReadAllLines($"./Aoc.Solutions/Solutions{Path.DirectorySeparatorChar}AllAnswers.clear");
         }
 
         var previousDesc = string.Empty;
@@ -332,7 +332,7 @@ public static class Program
 
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
 
-                Console.WriteLine($" Please add the correct answer for {key} to AllAnswers.txt.");
+                Console.WriteLine($" Please add the correct answer for {key} to AllAnswers.clear.");
 
                 Console.ForegroundColor = temp;
 

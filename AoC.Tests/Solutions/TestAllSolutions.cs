@@ -17,7 +17,7 @@ public class TestAllSolutions
     {
         _testOutputHelper = testOutputHelper;
 
-        _answers = File.ReadAllLines($"Solutions{Path.DirectorySeparatorChar}AllAnswers.txt");
+        _answers = File.ReadAllLines($"Solutions{Path.DirectorySeparatorChar}AllAnswers.clear");
     }
 
     [Theory]
@@ -30,7 +30,7 @@ public class TestAllSolutions
 
         if (correctAnswerLine == null)
         {
-            throw new TestException($"Please add the correct answer for {key} to AllAnswers.txt.");
+            throw new TestException($"Please add the correct answer for {key} to AllAnswers.clear.");
         }
 
         var instance = Activator.CreateInstance(solution) as Solution;
