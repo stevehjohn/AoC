@@ -24,7 +24,7 @@ public abstract class Base : Solution
         return (parts[0], groups);
     }
 
-    protected long GetArrangements(string row, int[] groups)
+    protected static long GetArrangements(string row, int[] groups)
     {
         row = $".{row}.";
         var damaged = DamagedList(groups).ToArray();
@@ -48,7 +48,7 @@ public abstract class Base : Solution
         return table[0, 0];
     }
 
-    private IEnumerable<bool> DamagedList(int[] lengths)
+    private static IEnumerable<bool> DamagedList(int[] lengths)
     {
         yield return false;
 
