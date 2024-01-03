@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using Security.Crypto;
 
 namespace AoC.Solutions.Infrastructure;
@@ -32,7 +31,6 @@ public static class InputProvider
         return input;
     }
 
-    [CanBeNull]
     private static string[] LoadInput(string path)
     {
         var clearPath = $"{path}input.clear";
