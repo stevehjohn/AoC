@@ -66,8 +66,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        _tiles = new Texture2D(GraphicsDevice, TileWidth, TileHeight);
-        // _tiles = Content.Load<Texture2D>("tiles");
+        _tiles = Content.Load<Texture2D>("tiles");
 
         base.LoadContent();
     }
