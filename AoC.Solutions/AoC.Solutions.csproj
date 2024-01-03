@@ -29,6 +29,8 @@
     <None Update="Solutions\**\input.encrypted" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
     <None Update="AoC.Key" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="Never" />
     <None Update="Solutions\AllAnswers.encrypted" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <None Update="Common\Ocr\OcrTemplate-Large.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <None Update="Common\Ocr\OcrTemplate-Small.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
   
   <ItemGroup>
