@@ -9,13 +9,11 @@ public class Part2 : Base
     {
         var sum = 0L;
 
-        var lines = Input.OrderBy(l => l.Length).Select(l => ParseLine(UnfoldLine(l))).ToArray();
-        
-        foreach (var line in lines)
+        foreach (var line in Input)
         {
-            //var data = ParseLine(UnfoldLine(line));
+            var data = ParseLine(UnfoldLine(line));
 
-            sum += GetArrangements(line.Row, line.Groups, line.Sum);
+            sum += GetArrangements(data.Row, data.Groups);
         }
         
         return sum.ToString();

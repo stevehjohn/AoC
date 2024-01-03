@@ -6,124 +6,60 @@ public abstract class Base : Solution
 {
     public override string Description => "Hot springs";
 
-    private readonly Dictionary<string, long> _cache = new();
-    
-    protected static (string Row, int[] Groups, int Sum) ParseLine(string line)
+    protected static (string Row, int[] Groups) ParseLine(string line)
     {
         var parts = line.Split(' ');
-
-        var row = parts[0].Trim('.');
 
         var right = parts[1].Split(',');
 
         var groups = new int[right.Length];
 
-        var sum = 0;
-        
         for (var i = 0; i < right.Length; i++)
         {
             var value = int.Parse(right[i]);
 
             groups[i] = value;
-
-            sum += value;
         }
 
-        return (row, groups, sum);
+        return (parts[0], groups);
     }
 
-    protected long GetArrangements(string row, int[] groups, int sum)
+    protected long GetArrangements(string row, int[] groups)
     {
-        var key = $"{row}{string.Join(',', groups)}";
-        
-        if (_cache.TryGetValue(key, out var answer))
+        row = $".{row}.";
+        var damaged = DamagedList(groups).ToArray();
+
+        var table = new long[row.Length + 1, damaged.Length + 1];
+        table[table.GetUpperBound(0), table.GetUpperBound(1)] = 1;
+
+        for (var c = row.Length - 1; c >= 0; c--)
         {
-            return answer;
+            for (var d = damaged.Length - 1; d >= 0; d--)
+            {
+                table[c, d] = (row[c] != '.', row[c] != '#', damaged[d]) switch
+                {
+                    (true, _, true) => table[c + 1, d + 1],
+                    (_, true, false) => table[c + 1, d + 1] + table[c + 1, d],
+                    _ => 0
+                };
+            }
         }
 
-        answer = CalculateArrangements(row, groups, sum);
-        
-        _cache.Add(key, answer);
-
-        return answer;
+        return table[0, 0];
     }
 
-    private long CalculateArrangements(string row, int[] groups, int sum)
+    private IEnumerable<bool> DamagedList(int[] lengths)
     {
-        row = row.TrimStart('.');
+        yield return false;
 
-        var length = row.Length;
-
-        var groupLength = groups.Length;
-        
-        if (length == 0)
-        {
-            return groupLength == 0 ? 1 : 0;
-        }
-
-        if (groupLength == 0)
+        foreach (var length in lengths)
         {
             for (var i = 0; i < length; i++)
             {
-                if (row[i] == '#')
-                {
-                    return 0;
-                }
+                yield return true;
             }
 
-            return 1;
+            yield return false;
         }
-
-        if (sum + groups.Length - 1 > row.Length)
-        {
-            return 0;
-        }
-
-        var count = 0;
-        
-        for (var i = 0; i < length; i++)
-        {
-            if (row[i] != '.')
-            {
-                count++;
-            }
-        }
-
-        if (sum > count)
-        {
-            return 0;
-        }
-
-        if (row[0] == '#')
-        {
-            var group = groups[0];
-
-            if (length < group)
-            {
-                return 0;
-            }
-
-            for (var i = 0; i < group; i++)
-            {
-                if (row[i] == '.')
-                {
-                    return 0;
-                }
-            }
-
-            if (length == group)
-            {
-                return groupLength == 1 ? 1 : 0;
-            }
-
-            if (row[group] == '#')
-            {
-                return 0;
-            }
-            
-            return GetArrangements(row[(group + 1)..], groups[1..], sum - groups[0]);
-        }
-
-        return GetArrangements($"#{row[1..]}", groups, sum) + GetArrangements(row[1..], groups, sum);
     }
 }
