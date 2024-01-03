@@ -17,7 +17,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     
     private char[,] _map;
 
-    private List<(int X, int Y)> _moves;
+    private readonly List<(int X, int Y)> _moves = [];
 
     private int _move = -1;
 
@@ -82,15 +82,18 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             var state = GetNextState();
 
-            _map = state.Map;
+            if (_map == null)
+            {
+                _map = state.Map;
 
-            _moves = state.Moves;
+                _width = (_map.GetUpperBound(0) + 1) * TileWidth;
 
-            _width = (_map.GetUpperBound(0) + 1) * TileWidth;
+                _height = (_map.GetUpperBound(1) + 1) * TileHeight;
 
-            _height = (_map.GetUpperBound(1) + 1) * TileHeight;
+                CreateBlizzards();
+            }
 
-            CreateBlizzards();
+            _moves.AddRange(state.Moves);
         }
 
         if (_moves == null)
