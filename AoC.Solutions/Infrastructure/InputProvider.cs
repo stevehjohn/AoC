@@ -6,13 +6,6 @@ public static class InputProvider
 {
     public static string[] GetInput(string nameSpace)
     {
-        if (GetKeyPath() == null)
-        {
-            Console.Write("Please provide input decryption credentials in ./AoC.Solutions/AoC.Key\n\n");
-
-            Environment.Exit(0);
-        }
-
         var parts = nameSpace.Split('.');
 
         var pathParts = parts.Skip(2).Select(s => s.Replace("_", string.Empty)).ToArray();
@@ -30,7 +23,7 @@ public static class InputProvider
                 DownloadInput(path);
             }
             
-            input = LoadInput(path);
+            input = CryptoFileProvider.LoadFile(path, "input");
         }
         else
         {
@@ -41,58 +34,10 @@ public static class InputProvider
                 DownloadInput(path);
             }
             
-            input = LoadInput(path);
+            input = CryptoFileProvider.LoadFile(path, "input");
         }
 
         return input;
-    }
-
-    private static string[] LoadInput(string path)
-    {
-        var clearPath = $"{path}input.clear";
-
-        var encryptedPath = $"{path}input.encrypted";
-
-        if (! File.Exists(clearPath) && ! File.Exists(encryptedPath))
-        {
-            DownloadInput(path);
-        }
-
-        if (File.Exists(clearPath))
-        {
-            if (! File.Exists(encryptedPath))
-            {
-                var tempPath = $"{path}input.backup";
-
-                File.Copy(clearPath, tempPath);
-
-                Encrypt(clearPath, encryptedPath);
-
-                File.Delete(clearPath);
-
-                Decrypt(encryptedPath, clearPath);
-
-                if (! File.ReadAllBytes(clearPath).SequenceEqual(File.ReadAllBytes(tempPath)))
-                {
-                    Console.WriteLine("Encryption verification failure.");
-
-                    return null;
-                }
-
-                File.Delete(tempPath);
-            }
-
-            return File.ReadAllLines(clearPath);
-        }
-
-        if (File.Exists(encryptedPath) && ! File.Exists(clearPath))
-        {
-            Decrypt(encryptedPath, clearPath);
-
-            return File.ReadAllLines(clearPath);
-        }
-
-        return null;
     }
 
     private static void DownloadInput(string path)
@@ -112,42 +57,6 @@ public static class InputProvider
         var input = response.Content.ReadAsStringAsync().Result;
         
         File.WriteAllText($"{path}input.clear", input);
-    }
-
-    private static void Encrypt(string clearPath, string encryptedPath)
-    {
-        var data = File.ReadAllBytes(clearPath);
-
-        var cipherProvider = new SymmetricCipher();
-
-        var keyData = File.ReadLines(GetKeyPath()).Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1]).ToArray();
-
-        var iv = Convert.FromBase64String(keyData[1]);
-
-        var salt = Convert.FromBase64String(keyData[2]);
-
-        var key = Convert.FromBase64String(keyData[0]);
-
-        var encrypted = cipherProvider.Encrypt(data, key, iv, salt);
-
-        File.WriteAllBytes(encryptedPath, encrypted);
-    }
-
-    private static void Decrypt(string encryptedPath, string clearPath)
-    {
-        var cipherProvider = new SymmetricCipher();
-
-        var keyData = File.ReadLines(GetKeyPath()).Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1]).ToArray();
-
-        var iv = Convert.FromBase64String(keyData[1]);
-
-        var salt = Convert.FromBase64String(keyData[2]);
-
-        var key = Convert.FromBase64String(keyData[0]);
-
-        var decrypted = cipherProvider.Decrypt(File.ReadAllBytes(encryptedPath), key, iv, salt);
-
-        File.WriteAllBytes(clearPath, decrypted);
     }
 
     private static string GetKeyPath()

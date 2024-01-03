@@ -4,8 +4,15 @@ namespace AoC.Solutions.Infrastructure;
 
 public static class CryptoFileProvider
 {
-    public static string[] LoadInput(string path, string filename)
+    public static string[] LoadFile(string path, string filename)
     {
+        if (GetKeyPath() == null)
+        {
+            Console.Write("Please provide input decryption credentials in ./AoC.Solutions/AoC.Key\n\n");
+
+            Environment.Exit(0);
+        }
+        
         var clearPath = $"{path}{filename}.clear";
 
         var encryptedPath = $"{path}{filename}.encrypted";
