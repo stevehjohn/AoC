@@ -45,8 +45,6 @@ public abstract class Base : Solution
         {
             var state = new PuzzleState
             {
-                Start = (_start % _width, _start / _width),
-                End = (_end % _width, _end / _width),
                 Map = Input.To2DArray(),
                 Moves = moves.Select(m => (m % _width, m / _width)).ToList()
             };
