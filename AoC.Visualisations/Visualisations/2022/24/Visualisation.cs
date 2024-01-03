@@ -34,6 +34,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private (int X, int Y) _elfPosition;
 
     private (int X, int Y) _elfTarget;
+
+    private Texture2D _tiles;
     
     public Visualisation()
     {
@@ -64,6 +66,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+        _tiles = new Texture2D(GraphicsDevice, TileWidth, TileHeight);
         // _tiles = Content.Load<Texture2D>("tiles");
 
         base.LoadContent();
@@ -204,7 +207,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             if (c == '#')
             {
-                // Draw at: x * TileWidth, y * TileHeight
+                _spriteBatch.Draw(_tiles, 
+                    new Vector2(x * TileWidth, y * TileWidth), 
+                    new Rectangle(0, 0, TileWidth, TileHeight), 
+                    Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0.5f);
             }
         });
     }
@@ -213,12 +219,18 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         _blizzards.ForAll((_, b) =>
         {
-            // Draw at: b.X, b.Y
+            _spriteBatch.Draw(_tiles, 
+                new Vector2(b.X * TileWidth, b.Y * TileWidth), 
+                new Rectangle(TileWidth, 0, TileWidth, TileHeight), 
+                Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0.5f);
         });
     }
 
     private void DrawElf()
     {
-        // Draw at: _elfPosition
+        _spriteBatch.Draw(_tiles, 
+            new Vector2(_elfPosition.X * TileWidth, _elfPosition.Y * TileWidth), 
+            new Rectangle(TileWidth * 2, 0, TileWidth, TileHeight), 
+            Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0.5f);
     }
 }
