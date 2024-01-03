@@ -23,13 +23,15 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private int _frame;
 
+    private int _elfFrame;
+
     private SpriteBatch _spriteBatch;
 
     private readonly List<(int X, int Y, int Dx, int Dy)> _blizzards = [];
 
-    private int _width;
+    private int _blizzardWidth;
 
-    private int _height;
+    private int _blizzardHeight;
 
     private (int X, int Y) _elfPosition;
 
@@ -86,9 +88,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
             {
                 _map = state.Map;
 
-                _width = (_map.GetUpperBound(0) + 1) * TileWidth;
+                _blizzardWidth = (_map.GetUpperBound(0) - 1) * TileWidth;
 
-                _height = (_map.GetUpperBound(1) + 1) * TileHeight;
+                _blizzardHeight = (_map.GetUpperBound(1) - 1) * TileHeight;
 
                 CreateBlizzards();
             }
@@ -96,18 +98,25 @@ public class Visualisation : VisualisationBase<PuzzleState>
             _moves.AddRange(state.Moves);
         }
 
-        if (_moves == null)
+        if (_moves.Count == 0)
         {
             return;
         }
 
-        _elfPosition = (_elfPosition.X.Converge(_elfTarget.X), _elfPosition.Y.Converge(_elfTarget.Y));
+        if (_frame % 12 != 0)
+        {
+            _frame++;
+            
+            return;
+        }
 
-        if (_frame % TileWidth == 0)
+        _elfPosition = (_elfPosition.X.Converge(_elfTarget.X), _elfPosition.Y.Converge(_elfTarget.Y).Converge(_elfTarget.Y));
+
+        if (_elfFrame == 0)
         {
             _move++;
 
-            if (_move < _moves.Count)
+            if (_move > - 1 &&_move < _moves.Count)
             {
                 var move = _moves[_move];
                 
@@ -118,6 +127,13 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                 _elfTarget = (move.X * TileWidth, move.Y * TileHeight);
             }
+        }
+
+        _elfFrame++;
+
+        if (_elfFrame >= TileWidth)
+        {
+            _elfFrame = 0;
         }
         
         MoveBlizzards();
@@ -133,26 +149,26 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             var x = b.X + b.Dx;
 
-            if (x < TileWidth)
+            if (x < 0)
             {
-                x += _width - TileWidth * 2;
+                x += _blizzardWidth;
             }
 
-            if (x >= _width - TileWidth)
+            if (x >= _blizzardWidth)
             {
-                x -= _width - TileWidth * 2;
+                x -= _blizzardWidth;
             }
 
             var y = b.Y + b.Dy;
 
-            if (y < TileHeight)
+            if (y < 0)
             {
-                y += _height - TileHeight * 2;
+                y += _blizzardHeight;
             }
 
-            if (y >= _height - TileHeight)
+            if (y >= _blizzardHeight)
             {
-                y -= _height - TileHeight * 2;
+                y -= _blizzardHeight;
             }
 
             _blizzards[i] = (x, y, b.Dx, b.Dy);
@@ -182,7 +198,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 _ => 0
             };
             
-            _blizzards.Add((x * TileWidth, y * TileHeight, dX, dY * 2));
+            _blizzards.Add(((x - 1) * TileWidth, (y - 1) * TileHeight, dX, dY * 2));
         });
     }
 
@@ -228,8 +244,25 @@ public class Visualisation : VisualisationBase<PuzzleState>
         
         _blizzards.ForAll((_, b) =>
         {
+            // TODO: Draw twice when on edge for Y.
+            if (b.X >= _blizzardWidth - TileWidth)
+            {
+                _spriteBatch.Draw(_tiles, 
+                    new Vector2(b.X + TileWidth - _blizzardWidth, b.Y + TileHeight), 
+                    new Rectangle(TileWidth, 0, TileWidth, TileHeight), 
+                    Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, z);
+            }
+
+            if (b.X < TileWidth)
+            {
+                _spriteBatch.Draw(_tiles, 
+                    new Vector2(b.X + TileWidth + _blizzardWidth, b.Y + TileHeight), 
+                    new Rectangle(TileWidth, 0, TileWidth, TileHeight), 
+                    Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, z);
+            }
+
             _spriteBatch.Draw(_tiles, 
-                new Vector2(b.X, b.Y), 
+                new Vector2(b.X + TileWidth, b.Y + TileHeight), 
                 new Rectangle(TileWidth, 0, TileWidth, TileHeight), 
                 Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, z);
             
