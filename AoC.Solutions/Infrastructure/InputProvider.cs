@@ -8,7 +8,7 @@ public static class InputProvider
     {
         if (GetKeyPath() == null)
         {
-            Console.Write("Please provide input decryption credentials in ./AoC.Key\n\n");
+            Console.Write("Please provide input decryption credentials in ./AoC.Solutions/AoC.Key\n\n");
 
             Environment.Exit(0);
         }
