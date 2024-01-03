@@ -431,10 +431,10 @@ Tests performed on a 2023 MacBook Pro.
  2023  1.2: 340μs         
  2023  2.1: 69μs          Cube conundrum
  2023  2.2: 97μs          
- 2023  3.1: 54μs          Gear ratios
- 2023  3.2: 219μs         
- 2023  4.1: 200μs         Scratchcards
- 2023  4.2: 205μs         
+ 2023  3.1: 53μs          Gear ratios
+ 2023  3.2: 186μs         
+ 2023  4.1: 177μs         Scratchcards
+ 2023  4.2: 168μs         
  2023  5.1: 37μs          If you give a seed a fertilizer
  2023  5.2: 137μs         
  2023  6.1: 2μs           Wait for it
@@ -442,42 +442,42 @@ Tests performed on a 2023 MacBook Pro.
  2023  7.1: 622μs         Camel cards
  2023  7.2: 648μs         
  2023  8.1: 424μs         Haunted wasteland
- 2023  8.2: 1,075μs       
+ 2023  8.2: 747μs         
  2023  9.1: 355μs         Mirage maintenance
  2023  9.2: 319μs         
  2023 10.1: 99μs          Pipe maze
- 2023 10.2: 991μs         
+ 2023 10.2: 917μs         
  2023 11.1: 336μs         Cosmic expansion
  2023 11.2: 334μs         
- 2023 12.1: 3,298μs       Hot springs
- 2023 12.2: 20,547μs      
+ 2023 12.1: 3,274μs       Hot springs
+ 2023 12.2: 19,234μs      
  2023 13.1: 110μs         Point of incidence
- 2023 13.2: 557μs         
+ 2023 13.2: 556μs         
  2023 14.1: 100μs         Parabolic reflector dish
- 2023 14.2: 14,832μs      
+ 2023 14.2: 14,020μs      
  2023 15.1: 185μs         Lens library
  2023 15.2: 513μs         
  2023 16.1: 144μs         The floor will be lava
- 2023 16.2: 6,204μs       
- 2023 17.1: 55,125μs      Clumsy crucible
+ 2023 16.2: 6,047μs       
+ 2023 17.1: 49,718μs      Clumsy crucible
  2023 17.2: 51,274μs      
  2023 18.1: 87μs          Lavaduct lagoon
- 2023 18.2: 103μs         
+ 2023 18.2: 98μs          
  2023 19.1: 228μs         Aplenty
  2023 19.2: 454μs         
- 2023 20.1: 8,495μs       Pulse propagation
+ 2023 20.1: 8,285μs       Pulse propagation
  2023 20.2: 38,162μs      
- 2023 21.1: 58μs          Step counter
- 2023 21.2: 445μs         
+ 2023 21.1: 57μs          Step counter
+ 2023 21.2: 439μs         
  2023 22.1: 40,401μs      Sand slabs
  2023 22.2: 81,723μs      
  2023 23.1: 30,045μs      A long walk
- 2023 23.2: 88,422μs      
+ 2023 23.2: 86,410μs      
  2023 24.1: 1,623μs       Never tell me the odds
- 2023 24.2: 5,946μs       
+ 2023 24.2: 5,631μs       
  2023 25.1: 17,129μs      Snowverload
             -------------
-            472.947ms    
+            462.188ms    
 
- 442 puzzles solved in 62.001ms.
+ 442 puzzles solved in 61.991ms.
 ```
