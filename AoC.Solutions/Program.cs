@@ -141,10 +141,6 @@ public static class Program
 
             CheckAnswer(instance.GetType(), answer);
 
-            var displayAnswer = answer.Length < 26
-                ? answer
-                : $"{answer[..26]}...";
-
             var description = string.Empty;
 
             if (instance.Description != previousDesc)
@@ -158,7 +154,7 @@ public static class Program
             
             var part = solution.Name[4];
 
-            var summary = $" {year} {day,2}.{part}: {displayAnswer,-30} {$"{microseconds:N0}μs",-12}  {description}";
+            var summary = $" {year} {day,2}.{part}: {$"{microseconds:N0}μs",-12}  {description}";
 
             results.Add((year, day, part), (microseconds, summary));
 
@@ -215,8 +211,8 @@ public static class Program
                         insert--;
                     
                         file.Insert(insert, string.Empty);
-                        file.Insert(insert, $"{new string(' ', 43)}{"0ms",-13}");
-                        file.Insert(insert, $"{new string(' ', 43)}-------------");
+                        file.Insert(insert, $"{new string(' ', 12)}{"0ms",-13}");
+                        file.Insert(insert, $"{new string(' ', 12)}-------------");
                         file.Insert(insert, result.Value.Summary);
                     }
                     else
@@ -232,7 +228,7 @@ public static class Program
                 {
                     var line = file[index];
 
-                    var time = int.Parse(line[43..].Split(' ', StringSplitOptions.TrimEntries)[0][..^2], NumberStyles.AllowThousands);
+                    var time = int.Parse(line[12..].Split(' ', StringSplitOptions.TrimEntries)[0][..^2], NumberStyles.AllowThousands);
 
                     if (result.Value.Microseconds < time)
                     {
@@ -285,7 +281,7 @@ public static class Program
 
                 if (line.StartsWith(" 20") && year != 0)
                 {
-                    var time = int.Parse(line[43..].Split(' ', StringSplitOptions.TrimEntries)[0][..^2], NumberStyles.AllowThousands);
+                    var time = int.Parse(line[12..].Split(' ', StringSplitOptions.TrimEntries)[0][..^2], NumberStyles.AllowThousands);
 
                     sum += time;
 
@@ -298,11 +294,11 @@ public static class Program
                 {
                     if (sum < 1_000_000)
                     {
-                        file[i + 1] = $"{new string(' ', 43)}{$"{sum / 1_000d:N3}ms",-13}";
+                        file[i + 1] = $"{new string(' ', 12)}{$"{sum / 1_000d:N3}ms",-13}";
                     }
                     else
                     {
-                        file[i + 1] = $"{new string(' ', 43)}{$"{sum / 1_000_000d:N3}s",-13}";
+                        file[i + 1] = $"{new string(' ', 12)}{$"{sum / 1_000_000d:N3}s",-13}";
                     }
 
                     year = 0;
@@ -366,15 +362,15 @@ public static class Program
 
         void WriteYearSummary()
         {
-            Console.WriteLine($"{new string(' ', 43)}-------------");
+            Console.WriteLine($"{new string(' ', 12)}-------------");
 
             if (yearMs < 1_000_000)
             {
-                Console.WriteLine($"{new string(' ', 43)}{$"{yearMs / 1_000d:N3}ms",-13}");
+                Console.WriteLine($"{new string(' ', 12)}{$"{yearMs / 1_000d:N3}ms",-13}");
             }
             else
             {
-                Console.WriteLine($"{new string(' ', 43)}{$"{yearMs / 1_000_000d:N3}s",-13}");
+                Console.WriteLine($"{new string(' ', 12)}{$"{yearMs / 1_000_000d:N3}s",-13}");
             }
 
             Console.WriteLine();
