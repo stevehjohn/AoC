@@ -111,11 +111,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         _frame++;
         
-        if (_frame < 15)
-        {
-            return;
-        }
-
         _frame = 0;
 
         _elfPosition = (_elfPosition.X.Converge(_elfTarget.X), _elfPosition.Y.Converge(_elfTarget.Y).Converge(_elfTarget.Y));
@@ -137,8 +132,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
         if (_elfFrame >= TileWidth)
         {
             _elfFrame = 0;
-
-            Console.ReadKey();
         }
         
         MoveBlizzards();
