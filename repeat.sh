@@ -1,0 +1,1 @@
+for i in $(seq $1); do ./run.sh true; done
