@@ -1,8 +1,10 @@
 ﻿using System.Text;
 using AoC.Solutions.Common.Ocr;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2022._10;
 
+[UsedImplicitly]
 public class Part2 : Base
 {
     public override Variant? OcrOutput => Variant.Small;

@@ -1,5 +1,8 @@
-﻿namespace AoC.Solutions.Solutions._2017._25;
+﻿using JetBrains.Annotations;
 
+namespace AoC.Solutions.Solutions._2017._25;
+
+[UsedImplicitly]
 public class Part1 : Base
 {
     private readonly Dictionary<char, State> _states = new();

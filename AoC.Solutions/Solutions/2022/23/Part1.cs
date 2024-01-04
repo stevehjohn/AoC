@@ -1,7 +1,9 @@
 ﻿using AoC.Solutions.Common;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2022._23;
 
+[UsedImplicitly]
 public class Part1 : Base
 {
     private HashSet<Point> _elves = new(SetMaxSize);

@@ -1,5 +1,8 @@
-﻿namespace AoC.Solutions.Solutions._2022._03;
+﻿using JetBrains.Annotations;
 
+namespace AoC.Solutions.Solutions._2022._03;
+
+[UsedImplicitly]
 public class Part2 : Base
 {
     public override string GetAnswer()

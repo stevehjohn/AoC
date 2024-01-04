@@ -1,8 +1,10 @@
 ﻿// ReSharper disable SpecifyACultureInStringConversionExplicitly
 using AoC.Solutions.Exceptions;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2022._21;
 
+[UsedImplicitly]
 public class Part2 : Base
 {
     public override string GetAnswer()
