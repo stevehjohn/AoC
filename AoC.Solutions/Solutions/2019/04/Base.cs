@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Forgotten password";
 
-    public string GetAnswer(bool singlePairRequired)
+    protected string GetAnswer(bool singlePairRequired)
     {
         var range = Input[0].Split('-', StringSplitOptions.TrimEntries).Select(int.Parse).ToArray();
 

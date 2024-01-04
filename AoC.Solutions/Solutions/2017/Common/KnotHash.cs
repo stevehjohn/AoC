@@ -3,7 +3,7 @@ using AoC.Solutions.Exceptions;
 
 namespace AoC.Solutions.Solutions._2017.Common;
 
-public class KnotHash
+public static class KnotHash
 {
     public static string MakeHash(string input)
     {

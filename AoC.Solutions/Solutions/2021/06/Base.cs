@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Lanternfish parthenogenesis";
 
-    public string GetAnswer(int days)
+    protected string GetAnswer(int days)
     {
         var fish = Input[0].Split(',').Select(int.Parse).ToList();
 

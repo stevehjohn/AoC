@@ -6,32 +6,32 @@ public abstract class Base : Solution
 {
     public override string Description => "Caving";
 
-    protected readonly List<Node> Nodes = new();
+    private readonly List<Node> _nodes = new();
 
     protected Node Start;
 
-    public void LoadMap()
+    protected void LoadMap()
     {
         foreach (var line in Input)
         {
             var caves = line.Split('-');
 
-            var node = Nodes.FirstOrDefault(n => n.Name == caves[0]);
+            var node = _nodes.FirstOrDefault(n => n.Name == caves[0]);
 
             if (node == null)
             {
                 node = new Node(caves[0]);
 
-                Nodes.Add(node);
+                _nodes.Add(node);
             }
 
-            var connection = Nodes.FirstOrDefault(c => c.Name == caves[1]);
+            var connection = _nodes.FirstOrDefault(c => c.Name == caves[1]);
 
             if (connection == null)
             {
                 connection = new Node(caves[1]);
 
-                Nodes.Add(connection);
+                _nodes.Add(connection);
             }
 
             node.Connections.Add(connection);
@@ -39,6 +39,6 @@ public abstract class Base : Solution
             connection.Connections.Add(node);
         }
 
-        Start = Nodes.Single(n => n.IsStart);
+        Start = _nodes.Single(n => n.IsStart);
     }
 }

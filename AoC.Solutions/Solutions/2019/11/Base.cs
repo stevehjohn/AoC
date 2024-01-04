@@ -12,7 +12,7 @@ public abstract class Base : Solution
 
     private Cpu _cpu;
 
-    public void RunRobot(int startColour)
+    protected void RunRobot(int startColour)
     {
         _cpu = new Cpu();
 

@@ -2,7 +2,7 @@
 
 namespace AoC.Solutions.Solutions._2016.Common;
 
-public class Cpu
+public static class Cpu
 {
     public static int RunProgram(string[] input, Dictionary<char, int> registers)
     {

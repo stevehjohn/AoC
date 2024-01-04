@@ -21,7 +21,7 @@ public abstract class Base : Solution
 
     private bool _infinityLit;
 
-    public string GetAnswer(int iterations)
+    protected string GetAnswer(int iterations)
     {
         _padBy = iterations;
 

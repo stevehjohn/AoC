@@ -7,7 +7,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Amplifiers (CPU used unmodified)";
 
-    public string GetAnswer(IEnumerable<int[]> phases)
+    protected string GetAnswer(IEnumerable<int[]> phases)
     {
         var highestOutput = 0L;
 

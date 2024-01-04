@@ -33,7 +33,7 @@ public abstract class Base : Solution
 
     private int _oxygenY = int.MinValue;
 
-    public void GetMap()
+    protected void GetMap()
     {
 #if DEBUG && DUMP
         Console.Clear();

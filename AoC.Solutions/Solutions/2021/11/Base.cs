@@ -13,7 +13,7 @@ public abstract class Base : Solution
 
     private int[,] _grid;
 
-    public string GetAnswer(int iterations, bool endWhenAllFlash = false)
+    protected string GetAnswer(int iterations, bool endWhenAllFlash = false)
     {
         _width = Input[0].Length;
 

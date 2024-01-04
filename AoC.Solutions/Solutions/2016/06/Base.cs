@@ -7,7 +7,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Signals and noise";
 
-    public string GetAnswer(bool isPart2)
+    protected string GetAnswer(bool isPart2)
     {
         var columns = new List<List<char>>();
 

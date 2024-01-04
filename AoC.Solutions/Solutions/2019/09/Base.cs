@@ -7,7 +7,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Sensor booster (CPU extension 2)";
 
-    public string GetAnswer(int input)
+    protected string GetAnswer(int input)
     {
         var cpu = new Cpu();
 

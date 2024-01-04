@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Hydrothermal vents";
 
-    public string GetAnswer(bool includeDiagonal)
+    protected string GetAnswer(bool includeDiagonal)
     {
         var lines = Input.Select(Line.Parse).ToList();
 

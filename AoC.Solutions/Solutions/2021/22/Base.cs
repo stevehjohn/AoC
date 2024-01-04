@@ -11,7 +11,7 @@ public abstract class Base : Solution
 
     private readonly List<Instruction> _instructions = new ();
 
-    public void ParseInput()
+    protected void ParseInput()
     {
         foreach (var line in Input)
         {

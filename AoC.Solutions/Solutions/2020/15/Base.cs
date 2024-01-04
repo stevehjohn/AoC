@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Number memory game";
 
-    public int GetAnswer(int turns)
+    protected int GetAnswer(int turns)
     {
         var split = Input[0].Split(',').ToList();
 

@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Ablative armour";
 
-    public string GetAnswer(int steps)
+    protected string GetAnswer(int steps)
     {
         var pairs = new Dictionary<string, long>();
 
