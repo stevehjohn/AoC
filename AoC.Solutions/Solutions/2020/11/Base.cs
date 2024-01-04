@@ -7,23 +7,23 @@ public abstract class Base : Solution
 {
     public override string Description => "Conway's game of seating";
 
-    protected int Width;
+    private int _width;
 
-    protected int Height;
+    private int _height;
 
     protected char[,] Map;
 
     protected void ParseInput()
     {
-        Width = Input[0].Length;
+        _width = Input[0].Length;
 
-        Height = Input.Length;
+        _height = Input.Length;
 
-        Map = new char[Width + 2, Height + 2];
+        Map = new char[_width + 2, _height + 2];
 
-        for (var y = 0; y < Height; y++)
+        for (var y = 0; y < _height; y++)
         {
-            for (var x = 0; x < Width; x++)
+            for (var x = 0; x < _width; x++)
             {
                 Map[x + 1, y + 1] = Input[y][x];
             }
@@ -38,9 +38,9 @@ public abstract class Base : Solution
         {
             flips.Clear();
 
-            for (var y = 1; y <= Height; y++)
+            for (var y = 1; y <= _height; y++)
             {
-                for (var x = 1; x <= Width; x++)
+                for (var x = 1; x <= _width; x++)
                 {
                     if (Map[x, y] == '.' )
                     {
@@ -74,9 +74,9 @@ public abstract class Base : Solution
 
         var occupied = 0;
 
-        for (var y = 1; y <= Height; y++)
+        for (var y = 1; y <= _height; y++)
         {
-            for (var x = 1; x <= Width; x++)
+            for (var x = 1; x <= _width; x++)
             {
                 occupied += Map[x, y] == '#' ? 1 : 0;
             }

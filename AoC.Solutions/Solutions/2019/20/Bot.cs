@@ -4,7 +4,7 @@ namespace AoC.Solutions.Solutions._2019._20;
 
 public class Bot
 {
-    public Point Position { get; }
+    private Point Position { get; }
 
     public int Steps { get; private set; }
 
@@ -24,7 +24,7 @@ public class Bot
     public List<Point> History { get; }
 #endif
 
-    public int Level { get; set; }
+    private int Level { get; set; }
 
     private readonly bool _recursive;
 
