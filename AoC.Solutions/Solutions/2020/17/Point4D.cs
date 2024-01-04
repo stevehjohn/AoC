@@ -26,7 +26,7 @@ public class Point4D
         return $"{X,5},{Y,5},{Z,5},{W,5}";
     }
 
-    protected bool Equals(Point4D other)
+    private bool Equals(Point4D other)
     {
         return X == other.X && Y == other.Y && Z == other.Z && W == other.W;
     }

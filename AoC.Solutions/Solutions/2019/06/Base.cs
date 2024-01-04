@@ -6,18 +6,16 @@ public abstract class Base : Solution
 {
     public override string Description => "Orbital transfers";
 
-    protected Body Root;
-
     protected readonly List<Body> Nodes = new();
 
     protected Base()
     {
-        Root = new Body("COM");
+        var root = new Body("COM");
 
-        Root.Orbiters.AddRange(GetOrbiters(Root));
+        root.Orbiters.AddRange(GetOrbiters(root));
     }
 
-    protected List<Body> GetOrbiters(Body body)
+    private List<Body> GetOrbiters(Body body)
     {
         var orbiters = Input.Where(i => i.StartsWith($"{body.Name})")).Select(i => new Body(i.Split(')')[1]) { Orbits = body }).ToList();
 

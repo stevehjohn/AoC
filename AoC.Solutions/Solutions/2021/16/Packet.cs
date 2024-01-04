@@ -14,7 +14,7 @@ public class Packet
 
     public List<Packet> SubPackets { get; }
 
-    public Packet()
+    private Packet()
     {
         SubPackets = new List<Packet>();
     }

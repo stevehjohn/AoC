@@ -18,7 +18,7 @@ public class Part1 : Base
         return result.ToString();
     }
 
-    public int FindShortestPath()
+    private int FindShortestPath()
     {
         var graph = new Graph();
 

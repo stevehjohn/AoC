@@ -48,7 +48,7 @@ public abstract class Base : Solution
         }
     }
 
-    protected static void ApplyGravity(Moon comparer, Moon comparee)
+    private static void ApplyGravity(Moon comparer, Moon comparee)
     {
         comparer.Velocity.X += GetGravity(comparer.Position.X, comparee.Position.X);
 

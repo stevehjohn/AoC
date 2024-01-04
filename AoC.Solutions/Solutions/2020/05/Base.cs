@@ -15,7 +15,7 @@ public abstract class Base : Solution
         return (Row: row, Column: column);
     }
 
-    protected static int ParseBinarySpace(string input, int max)
+    private static int ParseBinarySpace(string input, int max)
     {
         var min = 0;
 

@@ -27,15 +27,15 @@ public class Part1 : Base
         _visualiser = visualiser;
     }
 
-    protected void Visualise(int tileId, string transform)
+    private void Visualise(int tileId, string transform)
     {
         if (_visualiser != null)
         {
             _visualiser.PuzzleStateChanged(new PuzzleState { Tiles = _tiles.Select(t => t.Id).ToList(), Jigsaw = Jigsaw.ToDictionary(kvp => kvp.Value.Id, kvp => kvp.Key), TileId = tileId, Transform = transform });
         }
     }
-    
-    protected void EndVisualisation()
+
+    private void EndVisualisation()
     {
         if (_visualiser != null)
         {

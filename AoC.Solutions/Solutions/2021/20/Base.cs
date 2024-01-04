@@ -35,7 +35,7 @@ public abstract class Base : Solution
         return CountLitPixels().ToString();
     }
 
-    protected void ParseInput()
+    private void ParseInput()
     {
         _algorithm = Input[0].Select(c => c == '#').ToArray();
 
@@ -65,7 +65,7 @@ public abstract class Base : Solution
 #endif
     }
 
-    public void Enhance()
+    private void Enhance()
     {
         _pixelsToFlip.Clear();
 
@@ -89,7 +89,7 @@ public abstract class Base : Solution
 #endif
     }
 
-    public int CountLitPixels()
+    private int CountLitPixels()
     {
         var lit = 0;
 

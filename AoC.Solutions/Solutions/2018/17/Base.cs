@@ -28,15 +28,15 @@ public abstract class Base : Solution
         _visualiser = visualiser;
     }
 
-    protected void Visualise()
+    private void Visualise()
     {
         if (_visualiser != null)
         {
             _visualiser.PuzzleStateChanged(new PuzzleState(_map));
         }
     }
-    
-    protected void EndVisualisation()
+
+    private void EndVisualisation()
     {
         if (_visualiser != null)
         {

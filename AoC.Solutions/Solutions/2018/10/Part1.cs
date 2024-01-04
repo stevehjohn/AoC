@@ -16,7 +16,7 @@ public class Part1 : Base
         return ResultToString();
     }
 
-    protected string ResultToString()
+    private string ResultToString()
     {
         var xMin = Stars.Min(s => s.Position.X);
 

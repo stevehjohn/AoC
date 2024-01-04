@@ -37,7 +37,7 @@ public class PointDecimal
         return $"{X,5},{Y,5},{Z,5}";
     }
 
-    protected bool Equals(PointDecimal other)
+    private bool Equals(PointDecimal other)
     {
         return X == other.X && Y == other.Y && Z == other.Z;
     }
