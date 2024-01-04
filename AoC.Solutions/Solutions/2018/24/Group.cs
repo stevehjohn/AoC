@@ -2,8 +2,6 @@
 
 public class Group
 {
-    public int Id { get; set; }
-
     public Type Type { get; }
 
     public int Units { get; set; }

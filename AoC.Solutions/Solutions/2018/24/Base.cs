@@ -126,8 +126,8 @@ public abstract class Base : Solution
             }
 
             _groups.Add(isInfection
-                            ? new Group(Input[i], Type.Infection) { Id = id }
-                            : new Group(Input[i], Type.ImmuneSystem) { Id = id });
+                            ? new Group(Input[i], Type.Infection) { }
+                            : new Group(Input[i], Type.ImmuneSystem) { });
 
             i++;
 

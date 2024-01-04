@@ -31,7 +31,7 @@ public class Part1 : Base
     {
         if (_visualiser != null)
         {
-            _visualiser.PuzzleStateChanged(new PuzzleState { Tiles = _tiles.Select(t => t.Id).ToList(), Jigsaw = Jigsaw.ToDictionary(kvp => kvp.Value.Id, kvp => kvp.Key), TileId = tileId, Transform = transform });
+            _visualiser.PuzzleStateChanged(new PuzzleState { TileId = tileId });
         }
     }
 
