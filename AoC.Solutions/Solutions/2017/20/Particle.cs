@@ -12,7 +12,7 @@ public class Particle
 
     public Point Acceleration { get; }
 
-    public Particle(int id, Point position, Point velocity, Point acceleration)
+    private Particle(int id, Point position, Point velocity, Point acceleration)
     {
         Id = id;
 

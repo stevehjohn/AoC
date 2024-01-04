@@ -58,7 +58,7 @@ public class Bot
         Steps = 0;
     }
 
-    protected Bot(Bot bot, Point direction)
+    private Bot(Bot bot, Point direction)
     {
         Position = new Point(bot.Position);
 
