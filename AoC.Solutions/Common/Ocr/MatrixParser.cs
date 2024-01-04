@@ -23,11 +23,8 @@ public class MatrixParser
         {
             //
         }
-
-        if (templateData == null)
-        {
-            templateData = File.ReadAllLines($"AoC.Solutions/Common{Path.DirectorySeparatorChar}Ocr{Path.DirectorySeparatorChar}OcrTemplate-{variant}.txt");
-        }
+        
+        templateData ??= File.ReadAllLines($"AoC.Solutions/Common{Path.DirectorySeparatorChar}Ocr{Path.DirectorySeparatorChar}OcrTemplate-{variant}.txt");
 
         if (variant == Variant.Small)
         {

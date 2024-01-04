@@ -1,7 +1,9 @@
 ﻿using AoC.Solutions.Infrastructure;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2022._14;
 
+[UsedImplicitly]
 public class Part1 : Base
 {
     public Part1()
