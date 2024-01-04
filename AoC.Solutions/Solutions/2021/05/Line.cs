@@ -5,9 +5,9 @@ namespace AoC.Solutions.Solutions._2021._05;
 
 public class Line
 {
-    public Point Start { get; private set; }
+    public Point Start { get; private init; }
 
-    public Point End { get; private set; }
+    public Point End { get; private init; }
 
     public bool IsAxial => Start.X == End.X || Start.Y == End.Y;
 

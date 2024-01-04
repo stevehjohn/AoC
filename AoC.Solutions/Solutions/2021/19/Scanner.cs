@@ -12,7 +12,7 @@ public class Scanner
 
     public Scanner Origin { get; private set; }
 
-    private List<Point> Beacons { get; }
+    private List<Point> Beacons { get; } = new();
 
     private List<Distance> Distances
     {
@@ -28,11 +28,6 @@ public class Scanner
     }
 
     private List<Distance> _distances;
-
-    public Scanner()
-    {
-        Beacons = new List<Point>();
-    }
 
     public void AddBeacon(int x, int y, int z)
     {
