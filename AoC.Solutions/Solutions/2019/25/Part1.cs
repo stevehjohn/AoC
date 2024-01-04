@@ -59,17 +59,6 @@ public class Part1 : Base
 
         foreach (var command in _commands)
         {
-#if DEBUG && DUMP
-            if (! string.IsNullOrWhiteSpace(output.Room))
-            {
-                Console.WriteLine(output.Room);
-            }
-
-            output.Directions.ForEach(Console.WriteLine);
-
-            output.Items.ForEach(Console.WriteLine);
-#endif
-
             WriteString(_cpu, command);
 
             _cpu.Run();
@@ -78,14 +67,6 @@ public class Part1 : Base
 
             output = ParseOutput(response);
         }
-
-#if DEBUG && DUMP
-        Console.WriteLine(output.Room);
-
-        output.Directions.ForEach(Console.WriteLine);
-
-        output.Items.ForEach(Console.WriteLine);
-#endif
 
         return PassCheckpoint(output.Items);
     }
@@ -111,10 +92,6 @@ public class Part1 : Base
             var command = change.Value
                               ? $"drop {items[change.Index]}"
                               : $"take {items[change.Index]}";
-
-#if DEBUG && DUMP
-            Console.WriteLine(command);
-#endif
 
             WriteString(_cpu, command);
 
