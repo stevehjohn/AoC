@@ -112,8 +112,6 @@ public abstract class Base : Solution
 
         var isInfection = false;
 
-        var id = 1;
-
         while (i < Input.Length)
         {
             if (string.IsNullOrWhiteSpace(Input[i]))
@@ -121,17 +119,13 @@ public abstract class Base : Solution
                 i += 2;
 
                 isInfection = true;
-
-                id = 1;
             }
 
             _groups.Add(isInfection
-                            ? new Group(Input[i], Type.Infection) { }
-                            : new Group(Input[i], Type.ImmuneSystem) { });
+                            ? new Group(Input[i], Type.Infection)
+                            : new Group(Input[i], Type.ImmuneSystem));
 
             i++;
-
-            id++;
         }
     }
 }

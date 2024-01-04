@@ -27,7 +27,7 @@ public class Part1 : Base
         _visualiser = visualiser;
     }
 
-    private void Visualise(int tileId, string transform)
+    private void Visualise(int tileId)
     {
         if (_visualiser != null)
         {
@@ -235,7 +235,7 @@ public class Part1 : Base
 
         Transforms.Add(match.Id, transformString);
 
-        Visualise(match.Id, transformString);
+        Visualise(match.Id);
 
         return true;
     }

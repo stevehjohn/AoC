@@ -56,12 +56,12 @@ public class Part2 : Base
             }
         }
         
-        Visualise(seenCycle, hashCycle);
+        Visualise();
 
         return _seen.Single(s => s.Value.Cycle == hashCycle).Value.Load.ToString();
     }
 
-    private void Visualise(int patternStart = 0, int patternEnd = 0)
+    private void Visualise()
     {
         if (_visualiser != null)
         {
