@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using JetBrains.Annotations;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Color = Microsoft.Xna.Framework.Color;
 
@@ -6,8 +7,11 @@ namespace AoC.Visualisations.Infrastructure;
 
 public struct VertexPositionColorNormal : IVertexType
 {
+    [UsedImplicitly] 
     public Vector3 Position;
+    [UsedImplicitly] 
     public Color Color;
+    [UsedImplicitly] 
     public Vector3 Normal;
 
     public static readonly VertexDeclaration VertexDeclaration = new
