@@ -6,33 +6,33 @@ public abstract class Base : Solution
 {
     public override string Description => "Conway cubes";
 
-    protected HashSet<Point4D> ActiveCubes = new();
+    protected readonly HashSet<Point4D> ActiveCubes = new();
 
-    protected int XMin;
-    
-    protected int XMax;
-    
-    protected int YMin;
+    private int _xMin;
 
-    protected int YMax;
-    
-    protected int ZMin;
+    private int _xMax;
 
-    protected int ZMax = 1;
-    
-    protected int WMin;
+    private int _yMin;
 
-    protected int WMax = 1;
+    private int _yMax;
+
+    private int _zMin;
+
+    private int _zMax = 1;
+
+    private int _wMin;
+
+    private int _wMax = 1;
 
     protected void ParseInput()
     {
-        XMax = Input[0].Length;
+        _xMax = Input[0].Length;
 
-        YMax = Input.Length;
+        _yMax = Input.Length;
 
-        for (var y = 0; y < XMax; y++)
+        for (var y = 0; y < _xMax; y++)
         {
-            for (var x = 0; x < YMax; x++)
+            for (var x = 0; x < _yMax; x++)
             {
                 if (Input[y][x] == '#')
                 {
@@ -44,36 +44,36 @@ public abstract class Base : Solution
 
     protected void RunCycle(bool exploreW = false)
     {
-        XMax++;
+        _xMax++;
 
-        XMin--;
+        _xMin--;
 
-        YMax++;
+        _yMax++;
 
-        YMin--;
+        _yMin--;
 
-        ZMax++;
+        _zMax++;
 
-        ZMin--;
+        _zMin--;
 
         if (exploreW)
         {
-            WMax++;
+            _wMax++;
 
-            WMin--;
+            _wMin--;
         }
 
         var add = new List<Point4D>();
         
         var remove = new List<Point4D>();
 
-        for (var w = WMin; w < WMax; w++)
+        for (var w = _wMin; w < _wMax; w++)
         {
-            for (var z = ZMin; z < ZMax; z++)
+            for (var z = _zMin; z < _zMax; z++)
             {
-                for (var y = YMin; y < YMax; y++)
+                for (var y = _yMin; y < _yMax; y++)
                 {
-                    for (var x = XMin; x < XMax; x++)
+                    for (var x = _xMin; x < _xMax; x++)
                     {
                         var position = new Point4D(x, y, z, w);
 

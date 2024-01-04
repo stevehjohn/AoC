@@ -17,21 +17,21 @@ public class Tile
 
     public int Left { get; private set; }
 
-    public int TopFlipped { get; private set; }
+    private int TopFlipped { get; set; }
 
-    public int RightFlipped { get; private set; }
+    private int RightFlipped { get; set; }
 
-    public int BottomFlipped { get; private set; }
+    private int BottomFlipped { get; set; }
 
-    public int LeftFlipped { get; private set; }
+    private int LeftFlipped { get; set; }
 
-    public string TopEdge { get; private set; }
+    private string TopEdge { get; set; }
 
-    public string RightEdge { get; private set; }
+    private string RightEdge { get; set; }
 
-    public string BottomEdge { get; private set; }
+    private string BottomEdge { get; set; }
 
-    public string LeftEdge { get; private set; }
+    private string LeftEdge { get; set; }
 
     public char[,] Image { get; private set; }
 

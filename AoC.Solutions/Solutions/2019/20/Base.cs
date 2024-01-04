@@ -8,17 +8,17 @@ public abstract class Base : Solution
 {
     public override string Description => "Doughnut maze";
 
-    protected int[,] Maze;
+    private int[,] _maze;
 
-    protected int Width;
+    private int _width;
 
-    protected int Height;
+    private int _height;
 
-    protected List<(int Id, Point Position)> Portals = new();
+    private readonly List<(int Id, Point Position)> _portals = new();
 
-    protected Point Start;
+    private Point _start;
 
-    protected Point End;
+    private Point _end;
 
     protected string TravelMaze(bool recursive = false)
     {
@@ -49,7 +49,7 @@ public abstract class Base : Solution
     {
         var queue = new PriorityQueue<Bot, int>();
 
-        queue.Enqueue(new Bot(new Point(Start), new Point(End), Maze, Portals, recursive), 0);
+        queue.Enqueue(new Bot(new Point(_start), new Point(_end), _maze, _portals, recursive), 0);
 
 #if DEBUG && DUMP
         var list = new List<Point>
@@ -93,28 +93,28 @@ public abstract class Base : Solution
 
     private void ParseInput()
     {
-        Width = Input[2].Length - 2;
+        _width = Input[2].Length - 2;
 
-        Height = Input.Length - 2;
+        _height = Input.Length - 2;
 
-        Maze = new int[Width, Height];
+        _maze = new int[_width, _height];
 
-        for (var y = 0; y < Height; y++)
+        for (var y = 0; y < _height; y++)
         {
-            for (var x = 0; x < Width; x++)
+            for (var x = 0; x < _width; x++)
             {
                 var c = Input[y + 1][x + 1];
 
                 if (c == ' ')
                 {
-                    Maze[x, y] = -2;
+                    _maze[x, y] = -2;
 
                     continue;
                 }
 
                 if (c == '#')
                 {
-                    Maze[x, y] = -1;
+                    _maze[x, y] = -1;
 
                     continue;
                 }
@@ -126,17 +126,17 @@ public abstract class Base : Solution
 
                 var portal = EncodePortal(x + 1, y + 1);
 
-                Maze[x, y] = portal;
+                _maze[x, y] = portal;
 
-                Portals.Add((portal, new Point(x, y)));
+                _portals.Add((portal, new Point(x, y)));
             }
         }
 
         TrimPortals();
 
-        Start = FindPortalExit(Portals.Single(p => p.Id == 27).Position);
+        _start = FindPortalExit(_portals.Single(p => p.Id == 27).Position);
 
-        End = FindPortalExit(Portals.Single(p => p.Id == 702).Position);
+        _end = FindPortalExit(_portals.Single(p => p.Id == 702).Position);
     }
 
     private Point FindPortalExit(Point location)
@@ -151,32 +151,32 @@ public abstract class Base : Solution
             return new Point(location.X, location.Y + 1);
         }
 
-        if (location.X == Width - 1)
+        if (location.X == _width - 1)
         {
             return new Point(location.X - 1, location.Y);
         }
 
-        if (location.Y == Height - 1)
+        if (location.Y == _height - 1)
         {
             return new Point(location.X, location.Y - 1);
         }
 
-        if (Maze[location.X, location.Y - 1] == 0)
+        if (_maze[location.X, location.Y - 1] == 0)
         {
             return new Point(location.X, location.Y - 1);
         }
 
-        if (Maze[location.X - 1, location.Y] == 0)
+        if (_maze[location.X - 1, location.Y] == 0)
         {
             return new Point(location.X - 1, location.Y);
         }
 
-        if (Maze[location.X + 1, location.Y] == 0)
+        if (_maze[location.X + 1, location.Y] == 0)
         {
             return new Point(location.X + 1, location.Y);
         }
 
-        if (Maze[location.X, location.Y + 1] == 0)
+        if (_maze[location.X, location.Y + 1] == 0)
         {
             return new Point(location.X, location.Y + 1);
         }
@@ -188,22 +188,22 @@ public abstract class Base : Solution
     {
         var toRemove = new Stack<int>();
 
-        for (var i = 0; i < Portals.Count; i++)
+        for (var i = 0; i < _portals.Count; i++)
         {
-            var portal = Portals[i];
+            var portal = _portals[i];
 
             var x = portal.Position.X;
 
             var y = portal.Position.Y;
 
-            if (x == 0 || y == 0 || x == Width - 1 || y == Height - 1)
+            if (x == 0 || y == 0 || x == _width - 1 || y == _height - 1)
             {
                 continue;
             }
 
-            if (Maze[x - 1, y] != 0 && Maze[x, y - 1] != 0 && Maze[x + 1, y] != 0 && Maze[x, y + 1] != 0)
+            if (_maze[x - 1, y] != 0 && _maze[x, y - 1] != 0 && _maze[x + 1, y] != 0 && _maze[x, y + 1] != 0)
             {
-                Maze[x, y] = -2;
+                _maze[x, y] = -2;
 
                 toRemove.Push(i);
             }
@@ -211,7 +211,7 @@ public abstract class Base : Solution
 
         while (toRemove.Count > 0)
         {
-            Portals.RemoveAt(toRemove.Pop());
+            _portals.RemoveAt(toRemove.Pop());
         }
     }
 

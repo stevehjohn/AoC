@@ -4,11 +4,11 @@ namespace AoC.Solutions.Solutions._2019._18;
 
 public class Bot
 {
-    public char Name { get; }
+    private char Name { get; }
 
-    public Point Position { get; }
+    private Point Position { get; }
 
-    public int Steps { get; private set; }
+    private int Steps { get; set; }
 
     private Point _direction;
 

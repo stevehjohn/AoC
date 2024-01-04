@@ -6,9 +6,9 @@ namespace AoC.Solutions.Solutions._2017._22;
 [UsedImplicitly]
 public class Part2 : Base
 {
-    protected readonly HashSet<Point> Weakened = new();
-    
-    protected readonly HashSet<Point> Flagged = new();
+    private readonly HashSet<Point> _weakened = new();
+
+    private readonly HashSet<Point> _flagged = new();
 
     public override string GetAnswer()
     {
@@ -34,17 +34,17 @@ public class Part2 : Base
 
             Infected.Remove(Position);
 
-            Flagged.Add(Position);
+            _flagged.Add(Position);
         }
-        else if (Flagged.Contains(Position))
+        else if (_flagged.Contains(Position))
         {
             Direction = new Point(-Direction.X, -Direction.Y);
 
-            Flagged.Remove(Position);
+            _flagged.Remove(Position);
         }
-        else if (Weakened.Contains(Position))
+        else if (_weakened.Contains(Position))
         {
-            Weakened.Remove(Position);
+            _weakened.Remove(Position);
 
             Infected.Add(Position);
 
@@ -54,7 +54,7 @@ public class Part2 : Base
         {
             Direction = new Point(Direction.Y, -Direction.X);
 
-            Weakened.Add(new Point(Position));
+            _weakened.Add(new Point(Position));
         }
 
         Position.X += Direction.X;
