@@ -53,3 +53,7 @@ There are visualisations for:
 - 2023.17.2
 - 2023.22.1
 - 2023.22.2
+
+## Visualisation Candidates
+
+- 2016.24
