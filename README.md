@@ -57,3 +57,4 @@ There are visualisations for:
 ## Visualisation Candidates
 
 - 2016.24
+- 2017.19
