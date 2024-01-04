@@ -8,9 +8,9 @@ public class Scanner
 
     public int BeaconCount => Beacons.Count;
 
-    public Transform Transform { get; set; }
+    public Transform Transform { get; private set; }
 
-    public Scanner Origin { get; set; }
+    public Scanner Origin { get; private set; }
 
     private List<Point> Beacons { get; }
 

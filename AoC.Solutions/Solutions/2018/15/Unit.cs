@@ -6,9 +6,9 @@ public class Unit
 {
     public Type Type { get; }
 
-    public Point Position { get; set; }
+    public Point Position { get; private set; }
 
-    public int Health { get; set; } = 200;
+    public int Health { get; private set; } = 200;
 
     public int Power { get; set; }
 

@@ -7,21 +7,21 @@ public abstract class Base : Solution
     // ReSharper disable once StringLiteralTypo
     public override string Description => "Joltage meter";
 
-    protected List<long> Data;
+    private List<long> _data;
 
     protected void ParseData()
     {
-        Data = new List<long>();
+        _data = new List<long>();
 
         foreach (var line in Input)
         {
-            Data.Add(long.Parse(line));
+            _data.Add(long.Parse(line));
         }
     }
 
     protected List<long> GetDifferences()
     {
-        var ordered = Data.OrderBy(n => n).ToList();
+        var ordered = _data.OrderBy(n => n).ToList();
 
         var differences = new List<long>
                           {
