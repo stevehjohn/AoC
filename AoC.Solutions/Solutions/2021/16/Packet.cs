@@ -6,11 +6,11 @@ public class Packet
 {
     public int Version { get; private init; }
 
-    public int Type { get; private init; }
+    private int Type { get; init; }
 
-    public int Length { get; private set; }
+    private int Length { get; set; }
 
-    public long Value { get; private set; }
+    private long Value { get; set; }
 
     public List<Packet> SubPackets { get; }
 

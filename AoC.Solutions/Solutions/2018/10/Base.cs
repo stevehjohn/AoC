@@ -30,14 +30,14 @@ public abstract class Base : Solution
         return cycles;
     }
 
-    protected bool SpellsWord()
+    private bool SpellsWord()
     {
         var height = Stars.Max(s => s.Position.Y) - Stars.Min(s => s.Position.Y);
 
         return height < 10;
     }
 
-    protected void Cycle()
+    private void Cycle()
     {
         foreach (var star in Stars)
         {
@@ -47,7 +47,7 @@ public abstract class Base : Solution
         }
     }
 
-    protected void ParseInput()
+    private void ParseInput()
     {
         Stars = new (Point Position, Point Velocity)[Input.Length];
 

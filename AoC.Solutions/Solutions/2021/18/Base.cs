@@ -33,7 +33,7 @@ public abstract class Base : Solution
         return GetMagnitude(number.Left) * 3 + GetMagnitude(number.Right) * 2;
     }
 
-    protected static void Reduce(Number number)
+    private static void Reduce(Number number)
     {
         var modified = true;
 

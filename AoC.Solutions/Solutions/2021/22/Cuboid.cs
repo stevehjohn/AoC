@@ -4,9 +4,9 @@ namespace AoC.Solutions.Solutions._2021._22;
 
 public class Cuboid
 {
-    public Point A { get; }
+    private Point A { get; }
 
-    public Point B { get; }
+    private Point B { get; }
 
     public long Volume => ((long) B.X - A.X + 1) * ((long) B.Y - A.Y + 1) * ((long) B.Z - A.Z + 1);
 

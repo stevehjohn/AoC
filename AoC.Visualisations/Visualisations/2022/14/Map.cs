@@ -12,7 +12,7 @@ public class Map
 
     public int XMin { get; private set; }
 
-    public int YMax { get; private set; }
+    private int YMax { get; set; }
 
     public void CreateMap(char[,] puzzleMap)
     {

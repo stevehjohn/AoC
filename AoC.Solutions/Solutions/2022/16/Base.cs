@@ -8,7 +8,7 @@ public abstract class Base : Solution
 
     private readonly List<Valve> _valves = new();
 
-    protected Valve Start;
+    private Valve _start;
 
     protected readonly Dictionary<int, (int Flow, int OpenedCount)> StateCache = new();
 
@@ -30,7 +30,7 @@ public abstract class Base : Solution
 
             if (name == "AA")
             {
-                Start = valve;
+                _start = valve;
             }
 
             var connectedValves = parts[1][22..].Trim().Split(",", StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
@@ -74,7 +74,7 @@ public abstract class Base : Solution
     {
         var queue = new Queue<(Valve Valve, int Time, int Opened, int OpenedCount, int Flow)>();
 
-        foreach (var valve in Start.WorkingValves)
+        foreach (var valve in _start.WorkingValves)
         {
             queue.Enqueue((valve.Valve, startMinutes - valve.Cost, 0, 0, 0));
         }

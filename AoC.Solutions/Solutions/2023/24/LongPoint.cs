@@ -2,11 +2,11 @@ namespace AoC.Solutions.Solutions._2023._24;
 
 public class LongPoint
 {
-    public long X { get; set; }
+    public long X { get; private init; }
 
-    public long Y { get; set; }
+    public long Y { get; private init; }
 
-    public long Z { get; set; }
+    public long Z { get; private init; }
 
     private LongPoint()
     {

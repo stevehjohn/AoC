@@ -8,7 +8,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Cubicle maze";
 
-    protected bool[,] Maze;
+    private bool[,] _maze;
 
     protected int Width;
 
@@ -16,7 +16,7 @@ public abstract class Base : Solution
 
     protected void BuildMaze()
     {
-        Maze = new bool[Width, Height];
+        _maze = new bool[Width, Height];
 
         var designerNumber = int.Parse(Input[0]);
 
@@ -32,7 +32,7 @@ public abstract class Base : Solution
 
                 if (bits % 2 == 1)
                 {
-                    Maze[x, y] = true;
+                    _maze[x, y] = true;
                 }
             }
         }
@@ -70,28 +70,28 @@ public abstract class Base : Solution
                 locations++;
             }
 
-            if (position.Y > 0 && ! Maze[position.X, position.Y - 1] && ! visited.Contains(new Point(position.X, position.Y - 1)))
+            if (position.Y > 0 && ! _maze[position.X, position.Y - 1] && ! visited.Contains(new Point(position.X, position.Y - 1)))
             {
                 queue.Enqueue((new Point(position.X, position.Y - 1), item.Steps + 1), item.Steps + 1);
 
                 visited.Add(new Point(position.X, position.Y - 1));
             }
 
-            if (position.X < Width - 1 && ! Maze[position.X + 1, position.Y] && ! visited.Contains(new Point(position.X + 1, position.Y)))
+            if (position.X < Width - 1 && ! _maze[position.X + 1, position.Y] && ! visited.Contains(new Point(position.X + 1, position.Y)))
             {
                 queue.Enqueue((new Point(position.X + 1, position.Y), item.Steps + 1), item.Steps + 1);
 
                 visited.Add(new Point(position.X + 1, position.Y));
             }
 
-            if (position.Y < Height - 1 && ! Maze[position.X, position.Y + 1] && ! visited.Contains(new Point(position.X, position.Y + 1)))
+            if (position.Y < Height - 1 && ! _maze[position.X, position.Y + 1] && ! visited.Contains(new Point(position.X, position.Y + 1)))
             {
                 queue.Enqueue((new Point(position.X, position.Y + 1), item.Steps + 1), item.Steps + 1);
 
                 visited.Add(new Point(position.X, position.Y + 1));
             }
 
-            if (position.X > 0 && ! Maze[position.X - 1, position.Y] && ! visited.Contains(new Point(position.X - 1, position.Y)))
+            if (position.X > 0 && ! _maze[position.X - 1, position.Y] && ! visited.Contains(new Point(position.X - 1, position.Y)))
             {
                 queue.Enqueue((new Point(position.X - 1, position.Y), item.Steps + 1), item.Steps + 1);
 

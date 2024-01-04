@@ -7,7 +7,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Supply stacks";
 
-    protected Stack<char>[] Stacks;
+    private Stack<char>[] _stacks;
 
     private void ParseStacks()
     {
@@ -45,7 +45,7 @@ public abstract class Base : Solution
             index--;
         }
 
-        Stacks = stacks;
+        _stacks = stacks;
     }
 
     private void DoMove(string instruction)
@@ -54,7 +54,7 @@ public abstract class Base : Solution
 
         for (var i = 0; i < int.Parse(parts[1]); i++)
         {
-            Stacks[int.Parse(parts[5]) - 1].Push(Stacks[int.Parse(parts[3]) - 1].Pop());
+            _stacks[int.Parse(parts[5]) - 1].Push(_stacks[int.Parse(parts[3]) - 1].Pop());
         }
     }
 
@@ -66,12 +66,12 @@ public abstract class Base : Solution
 
         for (var i = 0; i < int.Parse(parts[1]); i++)
         {
-            tempStack.Push(Stacks[int.Parse(parts[3]) - 1].Pop());
+            tempStack.Push(_stacks[int.Parse(parts[3]) - 1].Pop());
         }
 
         for (var i = 0; i < int.Parse(parts[1]); i++)
         {
-            Stacks[int.Parse(parts[5]) - 1].Push(tempStack.Pop());
+            _stacks[int.Parse(parts[5]) - 1].Push(tempStack.Pop());
         }
     }
 
@@ -104,7 +104,7 @@ public abstract class Base : Solution
 
         var result = new StringBuilder();
 
-        foreach (var stack in Stacks)
+        foreach (var stack in _stacks)
         {
             result.Append(stack.Pop());
         }
