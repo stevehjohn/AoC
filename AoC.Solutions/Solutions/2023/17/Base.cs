@@ -100,7 +100,7 @@ public abstract class Base : Solution
                 {
                     if (_visualiser != null)
                     {
-                        queue.Enqueue((x, y, direction, newSteps, new List<(int X, int Y)>(item.History) { (x, y) }), cost + _map[x, y]);
+                        queue.Enqueue((x, y, direction, newSteps, [..item.History, (x, y)]), cost + _map[x, y]);
                     }
                     else
                     {

@@ -93,21 +93,21 @@ public class Transform
 
         foreach (var axisPermutation in axisPermutations)
         {
-            permutations.Add(new TransformParameters(axisPermutation, new[] { Sign.Positive, Sign.Positive, Sign.Positive }));
+            permutations.Add(new TransformParameters(axisPermutation, [Sign.Positive, Sign.Positive, Sign.Positive]));
 
-            permutations.Add(new TransformParameters(axisPermutation, new[] { Sign.Positive, Sign.Positive, Sign.Negative }));
+            permutations.Add(new TransformParameters(axisPermutation, [Sign.Positive, Sign.Positive, Sign.Negative]));
 
-            permutations.Add(new TransformParameters(axisPermutation, new[] { Sign.Positive, Sign.Negative, Sign.Positive }));
+            permutations.Add(new TransformParameters(axisPermutation, [Sign.Positive, Sign.Negative, Sign.Positive]));
 
-            permutations.Add(new TransformParameters(axisPermutation, new[] { Sign.Positive, Sign.Negative, Sign.Negative }));
+            permutations.Add(new TransformParameters(axisPermutation, [Sign.Positive, Sign.Negative, Sign.Negative]));
 
-            permutations.Add(new TransformParameters(axisPermutation, new[] { Sign.Negative, Sign.Positive, Sign.Positive }));
+            permutations.Add(new TransformParameters(axisPermutation, [Sign.Negative, Sign.Positive, Sign.Positive]));
 
-            permutations.Add(new TransformParameters(axisPermutation, new[] { Sign.Negative, Sign.Positive, Sign.Negative }));
+            permutations.Add(new TransformParameters(axisPermutation, [Sign.Negative, Sign.Positive, Sign.Negative]));
 
-            permutations.Add(new TransformParameters(axisPermutation, new[] { Sign.Negative, Sign.Negative, Sign.Positive }));
+            permutations.Add(new TransformParameters(axisPermutation, [Sign.Negative, Sign.Negative, Sign.Positive]));
 
-            permutations.Add(new TransformParameters(axisPermutation, new[] { Sign.Negative, Sign.Negative, Sign.Negative }));
+            permutations.Add(new TransformParameters(axisPermutation, [Sign.Negative, Sign.Negative, Sign.Negative]));
         }
 
         return permutations;

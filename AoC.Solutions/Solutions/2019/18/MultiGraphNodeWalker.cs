@@ -55,15 +55,9 @@ public class MultiGraphNodeWalker : INodeWalker
 
         _graphIndex = startGraphIndex;
 
-        _visited = new HashSet<char>
-                   {
-                       _graphNodes[_graphIndex].Name
-                   };
+        _visited = [_graphNodes[_graphIndex].Name];
 
-        AllVisited = new List<char>
-                      {
-                          _graphNodes[_graphIndex].Name
-                      };
+        AllVisited = [_graphNodes[_graphIndex].Name];
     }
 
     private MultiGraphNodeWalker(MultiGraphNodeWalker previous, Node node, int distance)
@@ -76,15 +70,9 @@ public class MultiGraphNodeWalker : INodeWalker
        
         _graphNodes[_graphIndex] = node;
 
-        _visited = new HashSet<char>(previous._visited)
-                   {
-                       node.Name
-                   };
+        _visited = [..previous._visited, node.Name];
 
-        AllVisited = new List<char>(previous.AllVisited)
-                      {
-                          node.Name
-                      };
+        AllVisited = [..previous.AllVisited, node.Name];
 
         Steps = previous.Steps + distance;
     }
@@ -97,15 +85,9 @@ public class MultiGraphNodeWalker : INodeWalker
 
         _graphIndex = newGraphIndex;
 
-        _visited = new HashSet<char>(previous._visited)
-                  {
-                      (char) ('1' + newGraphIndex)
-                  };
+        _visited = [..previous._visited, (char) ('1' + newGraphIndex)];
 
-        AllVisited = new List<char>(previous.AllVisited)
-                      {
-                          (char) ('1' + newGraphIndex)
-                      };
+        AllVisited = [..previous.AllVisited, (char) ('1' + newGraphIndex)];
 
         Steps = previous.Steps;
     }

@@ -6,7 +6,7 @@ namespace AoC.Solutions.Solutions._2017._03;
 [UsedImplicitly]
 public class Part2 : Base
 {
-    private static readonly Point[] Offsets = { new(-1, -1), new(0, -1), new(1, -1), new(-1, 0), new(1, 0), new(-1, 1), new(0, 1), new(1, 1) };
+    private static readonly Point[] Offsets = [new(-1, -1), new(0, -1), new(1, -1), new(-1, 0), new(1, 0), new(-1, 1), new(0, 1), new(1, 1)];
 
     public override string GetAnswer()
     {

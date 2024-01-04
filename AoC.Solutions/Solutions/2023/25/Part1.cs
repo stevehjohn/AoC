@@ -76,7 +76,7 @@ public class Part1 : Base
     {
         var queue = new Queue<(string Name, List<(string L, string R)> History)>();
 
-        queue.Enqueue((start, new List<(string L, string R)>()));
+        queue.Enqueue((start, []));
 
         var visited = new HashSet<string>();
 
@@ -101,7 +101,7 @@ public class Part1 : Base
 
             foreach (var connection in _links[node.Name])
             {
-                queue.Enqueue((connection, new List<(string L, string R)>(node.History) { (node.Name, connection) }));
+                queue.Enqueue((connection, [..node.History, (node.Name, connection)]));
             }
         }
 
@@ -110,9 +110,9 @@ public class Part1 : Base
 
     private void ParseInput()
     {
-        _nodes = new List<(string L, string R)>();
+        _nodes = [];
 
-        _distinct = new List<string>();
+        _distinct = [];
 
         foreach (var line in Input)
         {

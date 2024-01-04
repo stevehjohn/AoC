@@ -16,7 +16,7 @@ public abstract class Base : Solution
 
     private static int _burrowDepth = 2;
 
-    private static readonly int[] Hallway = { 0, 1, 3, 5, 7, 9, 10 };
+    private static readonly int[] Hallway = [0, 1, 3, 5, 7, 9, 10];
 
     protected void ParseInput(bool insertExtra = false)
     {
@@ -76,7 +76,7 @@ public abstract class Base : Solution
 
         _queue = new PriorityQueue<(int[] State, int Index, int Cost), int>();
 
-        _encounteredStates = new HashSet<int>();
+        _encounteredStates = [];
 
         for (var i = 0; i < _initialAmphipodState.Length; i++)
         {

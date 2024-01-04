@@ -24,7 +24,7 @@ public class Part2 : Base
             {
                 total += commonCharacters.Count;
 
-                commonCharacters = new HashSet<char>(allCharacters);
+                commonCharacters = [..allCharacters];
 
                 continue;
             }

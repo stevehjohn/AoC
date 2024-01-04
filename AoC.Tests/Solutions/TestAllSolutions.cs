@@ -84,7 +84,7 @@ public class TestAllSolutions
 
             foreach (var solution in solutions)
             {
-                yield return new object[] { solution };
+                yield return [solution];
             }
         }
     }

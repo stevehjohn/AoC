@@ -17,7 +17,7 @@ public abstract class Base : Solution
 
     private Point _end;
 
-    private readonly HashSet<Point> _visited = new();
+    private readonly HashSet<Point> _visited = [];
 
     private readonly PriorityQueue<(Point Position, int Steps, List<Point> History), int> _queue = new();
     
@@ -75,11 +75,11 @@ public abstract class Base : Solution
 
         if (startFromEnd)
         {
-            _queue.Enqueue((_end, 0, new List<Point> { _end }), 0);
+            _queue.Enqueue((_end, 0, [_end]), 0);
         }
         else
         {
-            _queue.Enqueue((_start, 0, new List<Point> { _start }), 0);
+            _queue.Enqueue((_start, 0, [_start]), 0);
         }
         
         Func<byte, byte, bool> comparer;
@@ -141,7 +141,7 @@ public abstract class Base : Solution
 
             if (comparer(_map[newPosition.X, newPosition.Y], height) && ! _visited.Contains(newPosition))
             {
-                _queue.Enqueue((newPosition, steps + 1, new List<Point>(history) { newPosition }), manhattan + steps);
+                _queue.Enqueue((newPosition, steps + 1, [..history, newPosition]), manhattan + steps);
 
                 _visited.Add(newPosition);
             }
@@ -153,7 +153,7 @@ public abstract class Base : Solution
 
             if (comparer(_map[newPosition.X, newPosition.Y], height) && ! _visited.Contains(newPosition))
             {
-                _queue.Enqueue((newPosition, steps + 1, new List<Point>(history) { newPosition }), manhattan + steps);
+                _queue.Enqueue((newPosition, steps + 1, [..history, newPosition]), manhattan + steps);
 
                 _visited.Add(newPosition);
             }
@@ -165,7 +165,7 @@ public abstract class Base : Solution
 
             if (comparer(_map[newPosition.X, newPosition.Y], height) && ! _visited.Contains(newPosition))
             {
-                _queue.Enqueue((newPosition, steps + 1, new List<Point>(history) { newPosition }), manhattan + steps);
+                _queue.Enqueue((newPosition, steps + 1, [..history, newPosition]), manhattan + steps);
 
                 _visited.Add(newPosition);
             }
@@ -177,7 +177,7 @@ public abstract class Base : Solution
 
             if (comparer(_map[newPosition.X, newPosition.Y], height) && ! _visited.Contains(newPosition))
             {
-                _queue.Enqueue((newPosition, steps + 1, new List<Point>(history) { newPosition }), manhattan + steps);
+                _queue.Enqueue((newPosition, steps + 1, [..history, newPosition]), manhattan + steps);
 
                 _visited.Add(newPosition);
             }

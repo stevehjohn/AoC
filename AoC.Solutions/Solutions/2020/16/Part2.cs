@@ -32,7 +32,7 @@ public class Part2 : Base
 
         for (var i = 0; i < YourTicket.Count; i++)
         {
-            rules[i] = new List<Rule>(Rules);
+            rules[i] = [..Rules];
         }
 
         while (rules.Any(r => r.Count > 1))

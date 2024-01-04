@@ -25,45 +25,40 @@ public abstract class Base : Solution
     private int _startHeight;
 
     private readonly int[][] _rocks =
-    {
-        new[]
-        {
+    [
+        [
             0b0011110
-        },
-        new[]
-        {
+        ],
+        [
             0b0001000,
             0b0011100,
             0b0001000
-        },
-        new[]
-        {
+        ],
+        [
             0b0000100,
             0b0000100,
             0b0011100
-        },
-        new[]
-        {
+        ],
+        [
             0b0010000,
             0b0010000,
             0b0010000,
             0b0010000
-        },
-        new[]
-        {
+        ],
+        [
             0b0011000,
             0b0011000
-        }
-    };
+        ]
+    ];
 
     private readonly int[] _masks =
-    {
+    [
         0b0011110,
         0b0011100,
         0b0011100,
         0b0010000,
         0b0011000
-    };
+    ];
 
     private readonly int[] _map = new int[MapHeight];
 

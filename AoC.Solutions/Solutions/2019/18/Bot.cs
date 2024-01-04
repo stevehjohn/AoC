@@ -24,7 +24,7 @@ public class Bot
 
     private readonly List<Point> _positionsSinceLastItem;
 
-    private static readonly HashSet<int> AllHistory = new();
+    private static readonly HashSet<int> AllHistory = [];
 
     public Bot(char name, Point position, char[,] map, Dictionary<string, int> distances, Dictionary<string, List<Point>> paths, Dictionary<string, HashSet<char>> doors)
     {
@@ -42,17 +42,11 @@ public class Bot
 
         _doors = doors;
 
-        _itemHistory = new List<(char Item, int Steps)>
-                       {
-                           (Item: _map[Position.X, Position.Y], Steps: 0)
-                       };
+        _itemHistory = [(Item: _map[Position.X, Position.Y], Steps: 0)];
 
         AllHistory.Add(HashCode.Combine(Name, Position));
 
-        _positionsSinceLastItem = new List<Point>
-                                  {
-                                      new(Position)
-                                  };
+        _positionsSinceLastItem = [new(Position)];
 
         Steps = 0;
     }
@@ -210,7 +204,7 @@ public class Bot
                 }
                 else
                 {
-                    doors = new HashSet<char>();
+                    doors = [];
 
                     _doors.Add(pair, doors);
                 }

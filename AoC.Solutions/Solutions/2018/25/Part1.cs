@@ -24,7 +24,7 @@ public class Part1 : Base
 
             if (! constellations.Any(c => c.Contains(outer)))
             {
-                constellation = new HashSet<(int X, int Y, int Z, int T)> { outer };
+                constellation = [outer];
                 
                 constellations.Add(constellation);
             }

@@ -23,12 +23,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private Texture2D _spark;
 
-    private readonly List<Spark> _sparks = new();
+    private readonly List<Spark> _sparks = [];
 
     private readonly Random _rng = new();
 
-    private readonly Color[] _colors = 
-    {
+    private readonly Color[] _colors =
+    [
         Color.Blue,
         Color.Red,
         Color.Magenta,
@@ -36,7 +36,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         Color.Cyan,
         Color.Yellow,
         Color.White
-    };
+    ];
 
     private long _frame;
 

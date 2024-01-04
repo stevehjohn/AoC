@@ -88,15 +88,14 @@ public class Visualisation : VisualisationBase<PuzzleState>
             var rng = new Random();
 
             var palette = PaletteGenerator.GetPalette(26,
-                new[]
-                {
-                    new Color(46, 27, 134),
+            [
+                new Color(46, 27, 134),
                     new Color(119, 35, 172),
                     new Color(176, 83, 203),
                     new Color(255, 168, 76),
                     new Color(254, 211, 56),
                     new Color(254, 253, 0)
-                });
+            ]);
 
             var i = 0;
             

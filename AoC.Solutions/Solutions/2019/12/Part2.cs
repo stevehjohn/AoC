@@ -45,7 +45,7 @@ public class Part2 : Base
             }
         }
 
-        var lowestCommonMultiple = Maths.LowestCommonMultiple(new List<long> { xCycle, yCycle, zCycle }) * 2;
+        var lowestCommonMultiple = Maths.LowestCommonMultiple([xCycle, yCycle, zCycle]) * 2;
 
         return lowestCommonMultiple.ToString();
     }

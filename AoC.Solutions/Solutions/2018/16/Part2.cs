@@ -16,7 +16,7 @@ public class Part2 : Base
     {
         foreach (var opCode in OpCodes)
         {
-            _opCodes.Add(opCode, new HashSet<int>());
+            _opCodes.Add(opCode, []);
         }
 
         var lastSampleLine = RunSamples();
@@ -30,7 +30,7 @@ public class Part2 : Base
 
     private void ExecuteTestProgram(int startLine)
     {
-        _cpu.SetRegisters(new[] { 0, 0, 0, 0 });
+        _cpu.SetRegisters([0, 0, 0, 0]);
 
         for (var i = startLine; i < Input.Length; i++)
         {

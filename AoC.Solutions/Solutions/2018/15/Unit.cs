@@ -99,7 +99,7 @@ public class Unit
     {
         var queue = new Queue<List<Point>>();
 
-        queue.Enqueue(new List<Point> { Position });
+        queue.Enqueue([Position]);
 
         var visited = new HashSet<Point> { Position };
 
@@ -122,7 +122,7 @@ public class Unit
             {
                 visited.Add(newPoint);
 
-                queue.Enqueue(new List<Point>(current) { newPoint });
+                queue.Enqueue([..current, newPoint]);
             }
 
             newPoint = new Point(point.X - 1, point.Y);
@@ -131,7 +131,7 @@ public class Unit
             {
                 visited.Add(newPoint);
 
-                queue.Enqueue(new List<Point>(current) { newPoint });
+                queue.Enqueue([..current, newPoint]);
             }
 
             newPoint = new Point(point.X + 1, point.Y);
@@ -140,7 +140,7 @@ public class Unit
             {
                 visited.Add(newPoint);
 
-                queue.Enqueue(new List<Point>(current) { newPoint });
+                queue.Enqueue([..current, newPoint]);
             }
 
             newPoint = new Point(point.X, point.Y + 1);
@@ -149,7 +149,7 @@ public class Unit
             {
                 visited.Add(newPoint);
 
-                queue.Enqueue(new List<Point>(current) { newPoint });
+                queue.Enqueue([..current, newPoint]);
             }
         }
 

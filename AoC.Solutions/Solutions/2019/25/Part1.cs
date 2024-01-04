@@ -10,42 +10,42 @@ public class Part1 : Base
     private readonly Cpu _cpu = new();
 
     // TODO: Make the program play this part also (look at day 15's exploration algorithm?).
-    private readonly List<string> _commands = new()
-                                              {
-                                                  "east",
-                                                  "take spool of cat6",
-                                                  "north",
-                                                  "north",
-                                                  "take hypercube",
-                                                  "south",
-                                                  "south",
-                                                  "west",
-                                                  "south",
-                                                  "south",
-                                                  "south",
-                                                  "east",
-                                                  "east",
-                                                  "take planetoid",
-                                                  "west",
-                                                  "west",
-                                                  "north",
-                                                  "north",
-                                                  "east",
-                                                  "take space heater",
-                                                  "west",
-                                                  "north",
-                                                  "north",
-                                                  "take festive hat",
-                                                  "west",
-                                                  "take dark matter",
-                                                  "north",
-                                                  "east",
-                                                  "take semiconductor",
-                                                  "east",
-                                                  "take sand",
-                                                  "north",
-                                                  "inv"
-                                              };
+    private readonly List<string> _commands =
+    [
+        "east",
+        "take spool of cat6",
+        "north",
+        "north",
+        "take hypercube",
+        "south",
+        "south",
+        "west",
+        "south",
+        "south",
+        "south",
+        "east",
+        "east",
+        "take planetoid",
+        "west",
+        "west",
+        "north",
+        "north",
+        "east",
+        "take space heater",
+        "west",
+        "north",
+        "north",
+        "take festive hat",
+        "west",
+        "take dark matter",
+        "north",
+        "east",
+        "take semiconductor",
+        "east",
+        "take sand",
+        "north",
+        "inv"
+    ];
 
     public override string GetAnswer()
     {

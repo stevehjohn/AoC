@@ -69,13 +69,13 @@ public abstract class Base : Solution
 
     protected void InitialiseStore()
     {
-        _weapons = new[] { (8, 4), (10, 5), (25, 6), (40, 7), (74, 8) };
+        _weapons = [(8, 4), (10, 5), (25, 6), (40, 7), (74, 8)];
 
-        _armours = new[] { (0, 0), (13, 1), (31, 2), (53, 3), (75, 4), (102, 5) };
+        _armours = [(0, 0), (13, 1), (31, 2), (53, 3), (75, 4), (102, 5)];
 
-        _damageRings = new[] { (0, 0), (25, 1), (50, 2), (100, 3) };
+        _damageRings = [(0, 0), (25, 1), (50, 2), (100, 3)];
 
-        _defenceRings = new[] { (0, 0), (20, 1), (40, 2), (80, 3) };
+        _defenceRings = [(0, 0), (20, 1), (40, 2), (80, 3)];
     }
 
     protected int ExecuteFight()

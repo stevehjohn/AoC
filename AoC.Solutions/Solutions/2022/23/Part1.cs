@@ -10,7 +10,7 @@ public class Part1 : Base
 
     private readonly Func<Point, Point>[] _evaluations = new Func<Point, Point>[4];
 
-    private readonly Point[] _directions = { new(0, -1), new(1, 0), new(0, 1), new(-1, 0) };
+    private readonly Point[] _directions = [new(0, -1), new(1, 0), new(0, 1), new(-1, 0)];
 
     public override string GetAnswer()
     {

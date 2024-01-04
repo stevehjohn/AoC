@@ -5,7 +5,7 @@ namespace AoC.Solutions.Solutions._2021._21;
 [UsedImplicitly]
 public class Part2 : Base
 {
-    private readonly (int Roll, int Probability)[] _rollProbabilities = { (3, 1), (4, 3), (5, 6), (6, 7), (7, 6), (8, 3), (9, 1) };
+    private readonly (int Roll, int Probability)[] _rollProbabilities = [(3, 1), (4, 3), (5, 6), (6, 7), (7, 6), (8, 3), (9, 1)];
 
     public override string GetAnswer()
     {

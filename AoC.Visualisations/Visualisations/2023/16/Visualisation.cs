@@ -21,13 +21,13 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private readonly Dictionary<int, List<(int X, int Y, char Direction, char Tile, int SourceId)>> _allBeams = new();
 
-    private List<Segment> _segments = new();
+    private List<Segment> _segments = [];
 
-    private readonly List<Segment> _bestSegments = new();
+    private readonly List<Segment> _bestSegments = [];
     
     private readonly Dictionary<int, int> _beams = new();
 
-    private readonly List<BeamEnd> _beamEnds = new();
+    private readonly List<BeamEnd> _beamEnds = [];
 
     private char[,] _map;
     
@@ -39,7 +39,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     
     private Texture2D _dish;
 
-    private readonly List<Spark> _sparks = new();
+    private readonly List<Spark> _sparks = [];
 
     private readonly Random _rng = new();
 
@@ -90,15 +90,14 @@ public class Visualisation : VisualisationBase<PuzzleState>
         IsMouseVisible = true;
 
         _palette = PaletteGenerator.GetPalette(26,
-            new[]
-            {
-                new Color(46, 27, 134),
+        [
+            new Color(46, 27, 134),
                 new Color(119, 35, 172),
                 new Color(176, 83, 203),
                 new Color(255, 168, 76),
                 new Color(254, 211, 56),
                 new Color(254, 253, 0)
-            });
+        ]);
 
         base.Initialize();
     }
@@ -478,7 +477,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                     firstBeamId = beam.Id;
                 }
 
-                _allBeams.Add(beam.Id, new List<(int X, int Y, char Direction, char Tile, int SourceId)>());
+                _allBeams.Add(beam.Id, []);
             }
 
             var currentBeam = _allBeams[beam.Id];

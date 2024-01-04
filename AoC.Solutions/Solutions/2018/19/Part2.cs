@@ -12,7 +12,7 @@ public class Part2 : Base
 
         cpu.LoadProgram(Input);
 
-        cpu.SetRegisters(new[] { 1, 0, 0, 0, 0, 0 });
+        cpu.SetRegisters([1, 0, 0, 0, 0, 0]);
 
         cpu.Run(32);
 

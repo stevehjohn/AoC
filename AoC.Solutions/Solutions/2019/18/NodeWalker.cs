@@ -46,15 +46,9 @@ public class NodeWalker : INodeWalker
 
         _graph = graph;
 
-        Visited = new HashSet<char>
-                   {
-                       node.Name
-                   };
+        Visited = [node.Name];
 
-        AllVisited = new List<char>
-                     {
-                         node.Name
-                     };
+        AllVisited = [node.Name];
     }
 
     private NodeWalker(NodeWalker previous, Node node, int distance)
@@ -63,15 +57,9 @@ public class NodeWalker : INodeWalker
 
         _graph = previous._graph;
 
-        Visited = new HashSet<char>(previous.Visited)
-                   {
-                       node.Name
-                   };
+        Visited = [..previous.Visited, node.Name];
 
-        AllVisited = new List<char>(previous.AllVisited)
-                     {
-                         node.Name
-                     };
+        AllVisited = [..previous.AllVisited, node.Name];
 
         Steps = previous.Steps + distance;
     }

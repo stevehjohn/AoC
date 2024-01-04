@@ -24,7 +24,7 @@ public class Part1 : Base
 
         graph.Build(Distances, Doors);
 
-        var solver = new GraphSolver(new[] { graph });
+        var solver = new GraphSolver([graph]);
 
         var result = solver.Solve();
 

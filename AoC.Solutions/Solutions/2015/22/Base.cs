@@ -128,6 +128,6 @@ public abstract class Base : Solution
 
     protected void InitialiseSpells()
     {
-        _spells = new[] { (53, "MagicMissile", 1), (73, "Drain", 1), (113, "Shield", 6), (173, "Poison", 6), (229, "Recharge", 5) };
+        _spells = [(53, "MagicMissile", 1), (73, "Drain", 1), (113, "Shield", 6), (173, "Poison", 6), (229, "Recharge", 5)];
     }
 }
