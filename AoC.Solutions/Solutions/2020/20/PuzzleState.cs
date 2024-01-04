@@ -2,5 +2,5 @@
 
 public class PuzzleState
 {
-    public int TileId { get; set; }
+    public int TileId { get; init; }
 }

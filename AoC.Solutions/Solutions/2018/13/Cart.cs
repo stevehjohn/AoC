@@ -8,7 +8,7 @@ public class Cart
 
     public int Id { get; }
 
-    public Point Position { get; set; }
+    public Point Position { get; }
 
     public Point Direction { get; set; }
 

@@ -2,11 +2,11 @@
 
 public class Reindeer
 {
-    public int Speed { get; set; }
+    public int Speed { get; }
 
-    public int FlyTime { get; set; }
+    public int FlyTime { get; }
     
-    public int RestTime { get; set; }
+    public int RestTime { get; }
     
     public bool IsResting { get; set; }
     

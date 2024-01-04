@@ -2,13 +2,13 @@
 
 public class Spark
 {
-    public PointFloat Position { get; set; }
+    public PointFloat Position { get; init; }
 
-    public PointFloat Vector { get; set; }
+    public PointFloat Vector { get; init; }
 
     public int Ticks { get; set; }
     
-    public int StartTicks { get; set; }
+    public int StartTicks { get; init; }
     
-    public float YGravity { get; set; } = 0.1f;
+    public float YGravity { get; } = 0.1f;
 }

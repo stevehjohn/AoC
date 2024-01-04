@@ -4,9 +4,9 @@ namespace AoC.Solutions.Solutions._2019._03;
 
 public class Line
 {
-    public Point Start { get; set; }
+    public Point Start { get; init; }
 
-    public Point End { get; set; }
+    public Point End { get; init; }
 
     private int XMin => Math.Min(Start.X, End.X);
 

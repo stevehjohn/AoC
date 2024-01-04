@@ -2,11 +2,11 @@
 
 public class Collision
 {
-    public Solutions.Common.Point Position { get; set; }
+    public Solutions.Common.Point Position { get; init; }
 
     public int Ticks { get; set; }
 
-    public int SpriteOffset { get; set; }
+    public int SpriteOffset { get; init; }
 
-    public bool IsFinal { get; set; }
+    public bool IsFinal { get; init; }
 }

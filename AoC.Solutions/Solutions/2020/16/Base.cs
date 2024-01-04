@@ -6,11 +6,11 @@ public abstract class Base : Solution
 {
     public override string Description => "Ticket deciphering";
 
-    protected List<Rule> Rules = new();
+    protected readonly List<Rule> Rules = new();
 
     protected List<int> YourTicket;
 
-    protected List<List<int>> OtherTickets = new();
+    protected readonly List<List<int>> OtherTickets = new();
 
     protected void ParseInput()
     {

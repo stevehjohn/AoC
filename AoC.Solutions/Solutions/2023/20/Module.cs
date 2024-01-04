@@ -2,7 +2,7 @@ namespace AoC.Solutions.Solutions._2023._20;
 
 public class Module
 {
-    public Type Type { get; set; }
+    public Type Type { get; init; }
 
     public bool State { get; set; }
 

@@ -2,13 +2,13 @@
 
 public class Monkey
 {
-    public string Name { get; set; }
+    public string Name { get; }
 
-    public string Left { get; set; }
+    public string Left { get; }
 
-    public string Right { get; set; }
+    public string Right { get; }
 
-    public string Operator { get; set; }
+    public string Operator { get; }
 
     public long? Value { get; set; }
 

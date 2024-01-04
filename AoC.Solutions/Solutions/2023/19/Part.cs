@@ -2,11 +2,11 @@ namespace AoC.Solutions.Solutions._2023._19;
 
 public class Part
 {
-    public int X { get; set; }
+    public int X { get; init; }
     
-    public int M { get; set; }
+    public int M { get; init; }
     
-    public int A { get; set; }
+    public int A { get; init; }
 
-    public int S { get; set; }
+    public int S { get; init; }
 }

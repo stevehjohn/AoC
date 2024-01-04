@@ -2,13 +2,13 @@
 
 public class Point4D
 {
-    public int X { get; set; }
+    public int X { get; }
 
-    public int Y { get; set; }
+    public int Y { get; }
 
-    public int Z { get; set; }
+    public int Z { get; }
 
-    public int W { get; set; }
+    public int W { get; }
 
     public Point4D(int x, int y, int z = 0, int w = 0)
     {

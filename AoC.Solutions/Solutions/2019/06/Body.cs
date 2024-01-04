@@ -2,9 +2,9 @@
 
 public class Body
 {
-    public string Name { get; set; }
+    public string Name { get; }
 
-    public Body Orbits { get; set; }
+    public Body Orbits { get; init; }
 
     public List<Body> Orbiters { get; }
 

@@ -4,7 +4,7 @@ public class Player
 {
     public int HitPoints { get; set; }
 
-    public int Damage { get; set; }
+    public int Damage { get; init; }
 
     public int Armour { get; set; }
 

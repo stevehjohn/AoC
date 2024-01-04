@@ -2,9 +2,9 @@ namespace AoC.Solutions.Solutions._2023._19;
 
 public class Rule
 {
-    public char Property { get; set; }
+    public char Property { get; init; }
     
-    public char Condition { get; set; }
+    public char Condition { get; init; }
 
     public int Value { get; set; }
 

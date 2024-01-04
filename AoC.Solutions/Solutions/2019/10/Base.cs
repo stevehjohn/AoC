@@ -7,7 +7,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Asteroids";
 
-    protected List<Point> Asteroids;
+    protected readonly List<Point> Asteroids;
 
     protected Base()
     {

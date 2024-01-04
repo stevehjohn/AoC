@@ -2,7 +2,7 @@
 
 public class Instruction
 {
-    public int Length { get; set; }
+    public int Length { get; init; }
 
-    public Func<OperationState> Execute { get; set; }
+    public Func<OperationState> Execute { get; init; }
 }
