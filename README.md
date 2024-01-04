@@ -59,3 +59,4 @@ There are visualisations for:
 - 2016.24
 - 2017.19
 - 2018.22
+- 2019.25
