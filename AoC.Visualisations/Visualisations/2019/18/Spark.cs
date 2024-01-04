@@ -10,7 +10,5 @@ public class Spark
     
     public int StartTicks { get; set; }
 
-    public int SpriteOffset { get; set; }
-
-    public float YGravity { get; set; } = 0.1f;
+    public float YGravity { get; } = 0.1f;
 }
