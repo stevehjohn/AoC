@@ -14,7 +14,7 @@ public abstract class Base : Solution
 
     private int _height;
 
-    private readonly List<(int Id, Point Position)> _portals = new();
+    private readonly List<(int Id, Point Position)> _portals = [];
 
     private Point _start;
 
@@ -22,7 +22,7 @@ public abstract class Base : Solution
 
     protected string TravelMaze(bool recursive = false)
     {
-        Bot.DeadEnds = new();
+        Bot.DeadEnds = [];
 
         ParseInput();
 

@@ -8,9 +8,9 @@ public abstract class Base : Solution
 {
     public override string Description => "A long walk";
 
-    protected readonly List<(int X, int Y)> Intersections = new();
+    protected readonly List<(int X, int Y)> Intersections = [];
 
-    protected readonly List<int> Counts = new();
+    protected readonly List<int> Counts = [];
 
     private char[,] _map;
 
@@ -22,7 +22,7 @@ public abstract class Base : Solution
 
     private readonly ConcurrentDictionary<(int, int, int, int), int> _reachCache = new();
 
-    private readonly HashSet<(int, int)> _history = new();
+    private readonly HashSet<(int, int)> _history = [];
 
     private int _lastSteps;
     

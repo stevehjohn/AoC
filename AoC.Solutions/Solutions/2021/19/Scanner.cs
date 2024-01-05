@@ -12,7 +12,7 @@ public class Scanner
 
     public Scanner Origin { get; private set; }
 
-    private List<Point> Beacons { get; } = new();
+    private List<Point> Beacons { get; } = [];
 
     private List<Distance> Distances
     {
@@ -154,7 +154,7 @@ public class Scanner
 
     private void CalculateDistances()
     {
-        _distances = new List<Distance>();
+        _distances = [];
 
         for (var ob = 0; ob < Beacons.Count; ob++)
         {

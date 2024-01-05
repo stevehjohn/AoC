@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Orbital transfers";
 
-    protected readonly List<Body> Nodes = new();
+    protected readonly List<Body> Nodes = [];
 
     protected Base()
     {

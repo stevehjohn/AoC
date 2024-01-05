@@ -17,7 +17,7 @@ public abstract class Base : Solution
 
     private bool[,] _image;
 
-    private readonly HashSet<Point> _pixelsToFlip = new();
+    private readonly HashSet<Point> _pixelsToFlip = [];
 
     private bool _infinityLit;
 

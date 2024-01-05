@@ -14,7 +14,7 @@ public class Part2 : Base
 
         for (var i = 0; i < 256; i++)
         {
-            boxes[i] = new List<(string Label, int Lense)>();
+            boxes[i] = [];
         }
 
         foreach (var step in steps)

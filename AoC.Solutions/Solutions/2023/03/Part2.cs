@@ -11,7 +11,7 @@ public class Part2 : Base
     
     public override string GetAnswer()
     {
-        _neighbours = new List<int>();
+        _neighbours = [];
 
         _numbers = new Dictionary<int, List<(int X, int Number, int Length)>>();
         

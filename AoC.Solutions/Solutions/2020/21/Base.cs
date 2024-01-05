@@ -32,7 +32,7 @@ public abstract class Base : Solution
             {
                 if (! Allergens.TryGetValue(allergen, out var allergenIngredients))
                 {
-                    allergenIngredients = new List<string>();
+                    allergenIngredients = [];
 
                     Allergens.Add(allergen, allergenIngredients);
 

@@ -12,7 +12,7 @@ public abstract class Base : Solution
 
     protected void ParseData()
     {
-        Data = new List<long>();
+        Data = [];
 
         foreach (var line in Input)
         {

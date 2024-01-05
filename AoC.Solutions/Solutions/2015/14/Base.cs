@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Reindeer olympics";
 
-    protected readonly List<Reindeer> Reindeer = new();
+    protected readonly List<Reindeer> Reindeer = [];
 
     protected void ExecuteSecond()
     {

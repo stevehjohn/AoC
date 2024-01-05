@@ -22,7 +22,7 @@ public abstract class Base : Solution
 
             if (! Steps.TryGetValue(step, out var requirements))
             {
-                requirements = new List<char>();
+                requirements = [];
 
                 Steps.Add(step, requirements);
             }

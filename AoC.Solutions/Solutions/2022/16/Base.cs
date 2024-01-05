@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Proboscidea volcanium";
 
-    private readonly List<Valve> _valves = new();
+    private readonly List<Valve> _valves = [];
 
     private Valve _start;
 

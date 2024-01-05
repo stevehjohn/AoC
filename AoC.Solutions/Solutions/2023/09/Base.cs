@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Mirage maintenance";
     
-    protected readonly List<long[]> Sequences = new();
+    protected readonly List<long[]> Sequences = [];
 
     protected void ParseInput()
     {

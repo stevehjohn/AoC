@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Electromagnetic moat";
 
-    private readonly List<(int EdgeA, int EdgeB)> _components = new();
+    private readonly List<(int EdgeA, int EdgeB)> _components = [];
 
     private int _maxStrength;
 

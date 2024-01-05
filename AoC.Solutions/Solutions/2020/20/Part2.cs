@@ -13,7 +13,7 @@ public class Part2 : Base
 
     private int _height;
 
-    private readonly List<Point> _monster = new();
+    private readonly List<Point> _monster = [];
 
     public override string GetAnswer()
     {

@@ -8,7 +8,7 @@ public class Part1 : Base
 {
     private readonly Dictionary<Point, int> _counts = new();
 
-    private readonly HashSet<Point> _infinitePoints = new();
+    private readonly HashSet<Point> _infinitePoints = [];
 
     public override string GetAnswer()
     {

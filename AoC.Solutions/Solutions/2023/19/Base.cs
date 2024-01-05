@@ -8,7 +8,7 @@ public abstract class Base : Solution
     
     protected readonly Dictionary<string, List<Rule>> Workflows = new();
 
-    protected readonly List<Part> Parts = new();
+    protected readonly List<Part> Parts = [];
 
     protected void ParseInput(bool getParts = true)
     {

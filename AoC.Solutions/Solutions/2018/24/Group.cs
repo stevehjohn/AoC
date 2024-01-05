@@ -8,9 +8,9 @@ public class Group
 
     public int HitPoints { get; }
 
-    public List<string> WeakTo { get; } = new();
+    public List<string> WeakTo { get; } = [];
 
-    public List<string> ImmuneTo { get; } = new();
+    public List<string> ImmuneTo { get; } = [];
 
     public int DamagePoints { get; set; }
 

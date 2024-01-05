@@ -6,7 +6,7 @@ namespace AoC.Solutions.Solutions._2020._24;
 [UsedImplicitly]
 public class Part2 : Base
 {
-    private readonly List<Point> _neighbors = new();
+    private readonly List<Point> _neighbors = [];
 
     public override string GetAnswer()
     {

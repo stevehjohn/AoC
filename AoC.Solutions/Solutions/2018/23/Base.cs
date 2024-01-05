@@ -7,7 +7,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Nanobot teleportation";
 
-    protected readonly List<(Point Position, int Range)> Nanobots = new();
+    protected readonly List<(Point Position, int Range)> Nanobots = [];
 
     protected void ParseInput()
     {

@@ -15,7 +15,7 @@ public abstract class Base : Solution
 
     private int _height;
 
-    private readonly HashSet<Point> _visited = new();
+    private readonly HashSet<Point> _visited = [];
 
     private readonly IVisualiser<PuzzleState> _visualiser;
 

@@ -9,7 +9,7 @@ public class Part2 : Base
     {
         LoadMap();
 
-        var pathCount = Visit(Start, new List<int>());
+        var pathCount = Visit(Start, []);
 
         return pathCount.ToString();
     }

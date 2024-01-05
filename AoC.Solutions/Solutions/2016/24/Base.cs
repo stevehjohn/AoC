@@ -15,7 +15,7 @@ public abstract class Base : Solution
 
     private int _height;
 
-    private readonly List<(char Id, Point Position)> _pointsOfInterest = new();
+    private readonly List<(char Id, Point Position)> _pointsOfInterest = [];
 
     private readonly Dictionary<string, int> _distancePairs = new();
 

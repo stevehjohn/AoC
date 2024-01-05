@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Science for hungry people";
 
-    private readonly List<(int Capacity, int Durability, int Flavour, int Texture, int Calories)> _ingredients = new();
+    private readonly List<(int Capacity, int Durability, int Flavour, int Texture, int Calories)> _ingredients = [];
 
     protected int Solve(int calorieTarget = -1)
     {

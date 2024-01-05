@@ -8,7 +8,7 @@ public abstract class Base : Solution
 
     protected readonly Dictionary<int, Rule> Rules = new();
 
-    protected readonly List<string> Messages = new();
+    protected readonly List<string> Messages = [];
 
     protected Rule RootRule;
 

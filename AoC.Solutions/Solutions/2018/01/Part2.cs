@@ -5,7 +5,7 @@ namespace AoC.Solutions.Solutions._2018._01;
 [UsedImplicitly]
 public class Part2 : Base
 {
-    private readonly HashSet<int> _found = new();
+    private readonly HashSet<int> _found = [];
 
     private int _frequency;
 

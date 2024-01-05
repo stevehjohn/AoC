@@ -106,7 +106,7 @@ public abstract class Base : Solution
 
     protected void ParseInput()
     {
-        _groups = new List<Group>();
+        _groups = [];
 
         var i = 1;
 

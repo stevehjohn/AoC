@@ -12,11 +12,11 @@ public abstract class Base : Solution
 
     private int _height;
     
-    private readonly List<Point> _stars = new();
+    private readonly List<Point> _stars = [];
 
-    private readonly HashSet<int> _columns = new();
+    private readonly HashSet<int> _columns = [];
 
-    private readonly HashSet<int> _rows = new();
+    private readonly HashSet<int> _rows = [];
     
     protected long SumShortestPaths()
     {

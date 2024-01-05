@@ -11,9 +11,9 @@ public class Part2 : Base
     
     public override string GetAnswer()
     {
-        _mappings = new List<List<(Range Range, long Adjustment)>>();
+        _mappings = [];
 
-        _seeds = new List<Range>();
+        _seeds = [];
         
         ParseInput();
 
@@ -108,7 +108,7 @@ public class Part2 : Base
             {
                 _mappings.Add(mapping);
 
-                mapping = new List<(Range Range, long Adjustment)>();
+                mapping = [];
 
                 continue;
             }

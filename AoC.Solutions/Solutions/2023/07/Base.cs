@@ -10,7 +10,7 @@ public abstract class Base : Solution
 
     protected long GetResult(bool jokersWild = false)
     {
-        _hands = new();
+        _hands = [];
         
         ParseInput();
         

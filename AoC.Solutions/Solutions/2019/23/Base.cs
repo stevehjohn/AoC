@@ -68,7 +68,7 @@ public abstract class Base : Solution
                     }
                     else
                     {
-                        packets = new List<(long X, long Y)>();
+                        packets = [];
 
                         allPackets.Add(address, packets);
                     }

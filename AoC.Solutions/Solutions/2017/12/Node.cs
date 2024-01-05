@@ -4,7 +4,7 @@ public class Node
 {
     public int Id { get; }
 
-    public HashSet<Node> Connections { get; } = new();
+    public HashSet<Node> Connections { get; } = [];
 
     public Node(int id)
     {

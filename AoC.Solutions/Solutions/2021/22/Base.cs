@@ -7,9 +7,9 @@ public abstract class Base : Solution
 {
     public override string Description => "Reactor reboot";
 
-    private readonly List<(Cuboid Cuboid, bool State)> _cuboids = new();
+    private readonly List<(Cuboid Cuboid, bool State)> _cuboids = [];
 
-    private readonly List<Instruction> _instructions = new ();
+    private readonly List<Instruction> _instructions = [];
 
     protected void ParseInput()
     {

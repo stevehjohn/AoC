@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Orbital simulation";
 
-    protected readonly List<Moon> Moons = new();
+    protected readonly List<Moon> Moons = [];
 
     protected void ParseInput()
     {

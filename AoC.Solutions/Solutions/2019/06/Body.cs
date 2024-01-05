@@ -10,7 +10,7 @@ public class Body
 
     public Body(string name)
     {
-        Orbiters = new List<Body>();
+        Orbiters = [];
 
         Name = name;
     }

@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Conway cubes";
 
-    protected readonly HashSet<Point4D> ActiveCubes = new();
+    protected readonly HashSet<Point4D> ActiveCubes = [];
 
     private int _xMin;
 

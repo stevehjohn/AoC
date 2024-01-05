@@ -7,7 +7,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Sporifica virus";
 
-    protected readonly HashSet<Point> Infected = new();
+    protected readonly HashSet<Point> Infected = [];
 
     protected Point Position;
 

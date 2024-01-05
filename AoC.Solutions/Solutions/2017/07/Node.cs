@@ -10,7 +10,7 @@ public class Node
 
     public Node Parent { get; set; }
 
-    public List<Node> Children { get; } = new();
+    public List<Node> Children { get; } = [];
 
     public Node(string name, int weight)
     {

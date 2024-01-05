@@ -11,7 +11,7 @@ public class Jigsaw
 {
     public bool CanTakeTile => _currentTile == null && _puzzleOrigin.Equals(_targetOrigin);
 
-    private readonly List<Tile> _jigsaw = new();
+    private readonly List<Tile> _jigsaw = [];
 
     private readonly Texture2D _image;
 

@@ -11,7 +11,7 @@ public abstract class Base : Solution
 
     protected void ParseData()
     {
-        _data = new List<long>();
+        _data = [];
 
         foreach (var line in Input)
         {

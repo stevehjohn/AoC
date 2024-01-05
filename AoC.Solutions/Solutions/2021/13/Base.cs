@@ -7,9 +7,9 @@ public abstract class Base : Solution
 {
     public override string Description => "ZX Spectrum copy protection";
 
-    protected readonly List<Point> Dots = new();
+    protected readonly List<Point> Dots = [];
 
-    private readonly List<(string Axis, int Location)> _folds = new();
+    private readonly List<(string Axis, int Location)> _folds = [];
 
     protected void ParseInput()
     {

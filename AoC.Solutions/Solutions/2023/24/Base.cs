@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Never tell me the odds";
     
-    protected readonly List<(LongPoint Position, LongPoint Velocity)> Hail = new();
+    protected readonly List<(LongPoint Position, LongPoint Velocity)> Hail = [];
 
     protected static (long X, long Y, double Time)? CollidesInFutureXy((LongPoint Position, LongPoint Velocity) left, (LongPoint Position, LongPoint Velocity) right)
     {

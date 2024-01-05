@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Recursive bag packing";
 
-    protected readonly List<(string Container, string Contains, int Count)> BagData = new();
+    protected readonly List<(string Container, string Contains, int Count)> BagData = [];
 
     protected void ParseInput()
     {

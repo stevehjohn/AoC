@@ -11,7 +11,7 @@ public abstract class Base : Solution
 
     protected Base()
     {
-        Asteroids = new List<Point>();
+        Asteroids = [];
 
         for (var y = 0; y < Input.Length; y++)
         {

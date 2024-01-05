@@ -11,7 +11,7 @@ public abstract class Base : Solution
     
     private readonly ConcurrentDictionary<string, (string Left, string Right)> _map = new();
 
-    protected readonly List<string> Starts = new();
+    protected readonly List<string> Starts = [];
     
     protected void ParseInput()
     {

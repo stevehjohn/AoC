@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Calorie counting";
 
-    protected readonly List<int> Calories = new();
+    protected readonly List<int> Calories = [];
 
     protected void ParseInput()
     {

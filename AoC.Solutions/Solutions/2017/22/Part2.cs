@@ -6,9 +6,9 @@ namespace AoC.Solutions.Solutions._2017._22;
 [UsedImplicitly]
 public class Part2 : Base
 {
-    private readonly HashSet<Point> _weakened = new();
+    private readonly HashSet<Point> _weakened = [];
 
-    private readonly HashSet<Point> _flagged = new();
+    private readonly HashSet<Point> _flagged = [];
 
     public override string GetAnswer()
     {

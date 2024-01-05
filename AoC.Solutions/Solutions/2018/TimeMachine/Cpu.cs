@@ -4,7 +4,7 @@ public class Cpu
 {
     private readonly int[] _registers;
 
-    private readonly List<(string OpCode, int A, int B, int C)> _program = new();
+    private readonly List<(string OpCode, int A, int B, int C)> _program = [];
 
     private int _instructionPointer;
 

@@ -13,7 +13,7 @@ public abstract class Base : Solution
 
     private char[,] _map;
 
-    protected readonly List<Cart> Carts = new();
+    protected readonly List<Cart> Carts = [];
 
     private readonly IVisualiser<PuzzleState> _visualiser;
 

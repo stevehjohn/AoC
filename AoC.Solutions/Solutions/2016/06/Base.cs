@@ -13,7 +13,7 @@ public abstract class Base : Solution
 
         for (var i = 0; i < Input[0].Length; i++)
         {
-            columns.Add(new List<char>());
+            columns.Add([]);
         }
 
         foreach (var line in Input)

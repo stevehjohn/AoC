@@ -19,7 +19,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private Texture2D _spark;
 
-    private readonly List<Spark> _sparks = new();
+    private readonly List<Spark> _sparks = [];
 
     private readonly Random _rng = new();
 
@@ -29,7 +29,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private Dictionary<int, Point> _nextCarts;
 
-    private readonly List<Collision> _collisions = new();
+    private readonly List<Collision> _collisions = [];
 
     private bool _fast;
 

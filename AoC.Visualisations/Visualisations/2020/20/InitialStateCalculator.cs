@@ -8,7 +8,7 @@ public class TileCoordinatesCalculator
 {
     private readonly Part1 _puzzle;
 
-    public List<Tile> ImageSegments { get; } = new();
+    public List<Tile> ImageSegments { get; } = [];
 
     public TileCoordinatesCalculator(Part1 puzzle)
     {

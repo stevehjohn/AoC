@@ -6,7 +6,7 @@ namespace AoC.Solutions.Solutions._2018._02;
 [UsedImplicitly]
 public class Part2 : Base
 {
-    private readonly HashSet<string> _boxHashes = new();
+    private readonly HashSet<string> _boxHashes = [];
 
     public override string GetAnswer()
     {

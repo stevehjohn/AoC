@@ -7,7 +7,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Regex maze";
 
-    protected readonly List<(Point Position, int Distance)> Maze = new();
+    protected readonly List<(Point Position, int Distance)> Maze = [];
 
     private (Point Position, int Distance) _position;
 

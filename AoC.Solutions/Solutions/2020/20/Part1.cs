@@ -12,9 +12,9 @@ public class Part1 : Base
 
     public Dictionary<int, string> Transforms { get; } = new();
 
-    public List<int> InitialTileOrder { get; private set; } = new();
+    public List<int> InitialTileOrder { get; private set; } = [];
 
-    private readonly List<Tile> _tiles = new();
+    private readonly List<Tile> _tiles = [];
 
     private readonly IVisualiser<PuzzleState> _visualiser;
 

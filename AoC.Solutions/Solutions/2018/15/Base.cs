@@ -13,7 +13,7 @@ public abstract class Base : Solution
 
     private bool[,] _map;
 
-    private readonly List<Unit> _units = new();
+    private readonly List<Unit> _units = [];
 
     protected void Reset()
     {

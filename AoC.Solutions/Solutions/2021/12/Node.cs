@@ -20,7 +20,7 @@ public class Node
     {
         Name = name;
 
-        Connections = new List<Node>();
+        Connections = [];
 
         Id = _id;
 

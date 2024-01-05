@@ -16,6 +16,6 @@ public class Node
 
         Value = value;
 
-        Neighbors = new List<Node>();
+        Neighbors = [];
     }
 }

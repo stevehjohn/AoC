@@ -8,7 +8,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Personal plate (CPU used unmodified)";
 
-    protected readonly List<Panel> Panels = new();
+    protected readonly List<Panel> Panels = [];
 
     private Cpu _cpu;
 

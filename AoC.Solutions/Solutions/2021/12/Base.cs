@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Caving";
 
-    private readonly List<Node> _nodes = new();
+    private readonly List<Node> _nodes = [];
 
     protected Node Start;
 

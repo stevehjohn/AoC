@@ -81,7 +81,7 @@ public abstract class Base : Solution
     {
         if (! _bots.ContainsKey(bot))
         {
-            _bots.Add(bot, new List<int>());
+            _bots.Add(bot, []);
         }
 
         _bots[bot].Add(chip);

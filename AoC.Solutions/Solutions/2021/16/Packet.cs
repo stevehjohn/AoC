@@ -16,7 +16,7 @@ public class Packet
 
     private Packet()
     {
-        SubPackets = new List<Packet>();
+        SubPackets = [];
     }
 
     public static List<Packet> GetPackets(string input, int maximum = 1)

@@ -11,7 +11,7 @@ public class Part1 : Base
     
     public override string GetAnswer()
     {
-        _mappings = new List<List<(long Start, long End, long Adjustment)>>();
+        _mappings = [];
         
         ParseInput();
 

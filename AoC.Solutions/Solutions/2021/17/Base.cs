@@ -7,7 +7,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Probe launch trick shot";
 
-    protected readonly List<Point> Velocities = new();
+    protected readonly List<Point> Velocities = [];
 
     protected int HighestY { get; private set; }
 

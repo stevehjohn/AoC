@@ -13,7 +13,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 {
     private const int Transformers = 3;
 
-    private readonly List<Transformer> _transformers = new();
+    private readonly List<Transformer> _transformers = [];
 
     private SpriteBatch _spriteBatch;
 

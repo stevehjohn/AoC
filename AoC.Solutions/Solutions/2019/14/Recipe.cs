@@ -14,6 +14,6 @@ public class Recipe
 
         AmountProduced = amountProduced;
 
-        Ingredients = new List<Ingredient>();
+        Ingredients = [];
     }
 }

@@ -8,9 +8,9 @@ public abstract class Base : Solution
 {
     public override string Description => "Tile flipping";
 
-    private readonly List<List<string>> _instructions = new();
+    private readonly List<List<string>> _instructions = [];
 
-    protected readonly HashSet<Point> BlackTiles = new();
+    protected readonly HashSet<Point> BlackTiles = [];
 
     protected void FlipTiles()
     {

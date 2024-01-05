@@ -4,7 +4,7 @@ public class PuzzleState
 {
     public char[,] Map { get; init; }
 
-    public List<(int X, int Y, char Direction, int Id, int SourceId)> Beams { get; } = new();
+    public List<(int X, int Y, char Direction, int Id, int SourceId)> Beams { get; } = [];
 
     public char StartDirection { get; set; }
 

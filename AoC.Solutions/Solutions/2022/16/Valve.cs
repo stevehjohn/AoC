@@ -18,8 +18,8 @@ public class Valve
 
         FlowRate = flowRate;
 
-        DirectConnections = new();
+        DirectConnections = [];
 
-        WorkingValves = new();
+        WorkingValves = [];
     }
 }

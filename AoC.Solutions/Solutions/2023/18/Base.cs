@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Lavaduct lagoon";
 
-    protected readonly List<(long X, long Y)> Points = new ();
+    protected readonly List<(long X, long Y)> Points = [];
 
     protected long Length = 1;
     

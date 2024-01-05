@@ -7,7 +7,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Not enough minerals";
 
-    private readonly List<Blueprint> _blueprints = new();
+    private readonly List<Blueprint> _blueprints = [];
 
     protected void ParseInput()
     {

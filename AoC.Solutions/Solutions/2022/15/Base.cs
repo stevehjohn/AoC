@@ -9,7 +9,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Beacon exclusion zone";
 
-    private List<Sensor> _sensors = new();
+    private List<Sensor> _sensors = [];
 
     private int _minX = int.MaxValue;
 

@@ -7,7 +7,7 @@ public class Part1 : Base
 {
     private readonly Dictionary<char, State> _states = new();
 
-    private readonly HashSet<int> _ones = new();
+    private readonly HashSet<int> _ones = [];
 
     private int _position;
 

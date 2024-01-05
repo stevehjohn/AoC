@@ -14,7 +14,7 @@ public abstract class Base : Solution
 
     private Point[] _knots;
 
-    protected readonly HashSet<int> TailVisited = new();
+    protected readonly HashSet<int> TailVisited = [];
 
     protected void ProcessInput(int knots = 2)
     {

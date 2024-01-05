@@ -9,7 +9,7 @@ public abstract class Base : Solution
 
     private const int GridSize = 100;
 
-    protected HashSet<Point> Lights = new();
+    protected HashSet<Point> Lights = [];
 
     protected void RunStep(bool isPart2 = false)
     {

@@ -6,9 +6,9 @@ public abstract class Base : Solution
 {
     public override string Description => "Plant potty";
 
-    protected List<int> PotsWithPlants = new();
+    protected List<int> PotsWithPlants = [];
 
-    private readonly List<(bool[] Pattern, bool Spawn)> _rules = new();
+    private readonly List<(bool[] Pattern, bool Spawn)> _rules = [];
 
     protected void RunGeneration()
     {
