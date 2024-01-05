@@ -459,7 +459,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 15.2: 513μs         
  2023 16.1: 138μs         The floor will be lava
  2023 16.2: 5,963μs       
- 2023 17.1: 49,718μs      Clumsy crucible
+ 2023 17.1: 45,127μs      Clumsy crucible
  2023 17.2: 48,211μs      
  2023 18.1: 87μs          Lavaduct lagoon
  2023 18.2: 98μs          
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,631μs       
  2023 25.1: 14,208μs      Snowverload
             -------------
-            430.765ms    
+            426.174ms    
 
- 442 puzzles solved in 58.327ms.
+ 442 puzzles solved in 58.323ms.
 ```
