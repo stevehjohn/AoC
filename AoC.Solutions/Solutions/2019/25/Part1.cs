@@ -9,12 +9,40 @@ public class Part1 : Base
     private Room _start;
 
     private readonly Dictionary<string, Room> _rooms = [];
+
+    private readonly List<string> _items = [];
     
     public override string GetAnswer()
     {
         Explore();
 
+        var path = GetPath("Hull Breach", "Security Checkpoint");
+        
+        path.ForEach(Console.WriteLine);
+        
         return "Unknown";
+    }
+
+    private List<string> GetPath(string start, string end)
+    {
+        var queue = new Queue<(Room Room, List<string> Path)>();
+        
+        queue.Enqueue((_rooms[start], []));
+
+        while (queue.TryDequeue(out var item))
+        {
+            if (item.Room.Name == end)
+            {
+                return item.Path;
+            }
+
+            foreach (var direction in item.Room.Directions)
+            {
+                queue.Enqueue((direction.Value, [..item.Path, direction.Key]));
+            }
+        }
+
+        return null;
     }
 
     private void Explore()
@@ -31,12 +59,17 @@ public class Part1 : Base
 
         var room  = new Room
         {
-            Name = response.Name,
+            Name = response.Name[3..^3],
             Item = response.Item,
             InitialDirections = response.Directions.Select(d => (d, 0)).ToList(),
             Directions = response.Directions.Select(d => new KeyValuePair<string, Room>(d, null)).ToDictionary()
         };
-        
+
+        if (response.Item != null)
+        {
+            _items.Add(response.Item);
+        }
+
         _rooms.Add(room.Name, room);
 
         _start = room;
@@ -63,15 +96,20 @@ public class Part1 : Base
 
             response = ParseOutput(cpu.ReadString());
 
-            if (! _rooms.TryGetValue(response.Name, out var nextRoom))
+            if (! _rooms.TryGetValue(response.Name[3..^3], out var nextRoom))
             {
                 nextRoom  = new Room
                 {
-                    Name = response.Name,
+                    Name = response.Name[3..^3],
                     Item = response.Item,
                     InitialDirections = response.Directions.Select(d => (d, 0)).ToList(),
                     Directions = response.Directions.Select(d => new KeyValuePair<string, Room>(d, null)).ToDictionary()
                 };
+
+                if (response.Item != null)
+                {
+                    _items.Add(response.Item);
+                }
 
                 _rooms[nextRoom.Name] = nextRoom;
             }
@@ -80,8 +118,6 @@ public class Part1 : Base
 
             room = nextRoom;
         }
-        
-        Console.WriteLine(_rooms.Count);
     }
 
     // private string PassCheckpoint(List<string> items)
