@@ -6,116 +6,79 @@ namespace AoC.Solutions.Solutions._2019._25;
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private readonly Cpu _cpu = new();
+    private Room _start;
 
-    // TODO: Make the program play this part also (look at day 15's exploration algorithm?).
-    private readonly List<string> _commands =
-    [
-        "east",
-        "take spool of cat6",
-        "north",
-        "north",
-        "take hypercube",
-        "south",
-        "south",
-        "west",
-        "south",
-        "south",
-        "south",
-        "east",
-        "east",
-        "take planetoid",
-        "west",
-        "west",
-        "north",
-        "north",
-        "east",
-        "take space heater",
-        "west",
-        "north",
-        "north",
-        "take festive hat",
-        "west",
-        "take dark matter",
-        "north",
-        "east",
-        "take semiconductor",
-        "east",
-        "take sand",
-        "north",
-        "inv"
-    ];
-
+    private List<Room> _rooms = [];
+    
     public override string GetAnswer()
     {
-        _cpu.Initialise(65536);
+        Explore();
 
-        _cpu.LoadProgram(Input);
-
-        _cpu.Run();
-
-        var output = ParseOutput(_cpu.ReadString());
-
-        foreach (var command in _commands)
-        {
-            _cpu.WriteString(command);
-            
-            _cpu.Run();
-
-            var response = _cpu.ReadString();
-
-            output = ParseOutput(response);
-        }
-
-        return PassCheckpoint(output.Items);
+        return "Unknown";
     }
 
-    private string PassCheckpoint(List<string> items)
+    private void Explore()
     {
-        var i = 1;
+        var cpu = new Cpu();
+        
+        cpu.Initialise(65536);
 
-        var previousCode = 0;
+        cpu.Run();
 
-        string result;
+        var data = ParseOutput(cpu.ReadString());
 
-        while (true)
+        _start = new Room
         {
-            var greyCode = i ^ (i >> 1);
-
-            var change = GetChangedBit(previousCode, greyCode);
-
-            previousCode = greyCode;
-
-            i++;
-
-            var command = change.Value
-                              ? $"drop {items[change.Index]}"
-                              : $"take {items[change.Index]}";
-
-            _cpu.WriteString(command);
-
-            _cpu.Run();
-
-            _cpu.WriteString("west");
-
-            _cpu.Run();
-
-            result = _cpu.ReadString();
-
-            if (result.Contains("Analysis complete! You may proceed."))
-            {
-                break;
-            }
-        }
-
-        var index = result.IndexOf("typing", StringComparison.InvariantCultureIgnoreCase);
-
-        result = result[(index + 7)..];
-
-        result = result[..result.IndexOf(' ')];
-
-        return result;
+            Name = data.Name
+        };
     }
+
+    // private string PassCheckpoint(List<string> items)
+    // {
+    //     var i = 1;
+    //
+    //     var previousCode = 0;
+    //
+    //     string result;
+    //
+    //     while (true)
+    //     {
+    //         var greyCode = i ^ (i >> 1);
+    //
+    //         var change = GetChangedBit(previousCode, greyCode);
+    //
+    //         previousCode = greyCode;
+    //
+    //         i++;
+    //
+    //         var command = change.Value
+    //                           ? $"drop {items[change.Index]}"
+    //                           : $"take {items[change.Index]}";
+    //
+    //         _cpu.WriteString(command);
+    //
+    //         _cpu.Run();
+    //
+    //         _cpu.WriteString("west");
+    //
+    //         _cpu.Run();
+    //
+    //         result = _cpu.ReadString();
+    //
+    //         if (result.Contains("Analysis complete! You may proceed."))
+    //         {
+    //             break;
+    //         }
+    //     }
+    //
+    //     var index = result.IndexOf("typing", StringComparison.InvariantCultureIgnoreCase);
+    //
+    //     result = result[(index + 7)..];
+    //
+    //     result = result[..result.IndexOf(' ')];
+    //
+    //     return result;
+    // }
 
     private static (int Index, bool Value) GetChangedBit(int code1, int code2)
     {
@@ -133,7 +96,7 @@ public class Part1 : Base
         return (index, (code2 & mask) > 0);
     }
 
-    private static (string Room, List<string> Directions, List<string> Items) ParseOutput(string output)
+    private static (string Name, List<string> Directions, string Item) ParseOutput(string output)
     {
         var lines = output.Split('\n');
 
@@ -141,7 +104,7 @@ public class Part1 : Base
 
         var directions = new List<string>();
 
-        var items = new List<string>();
+        string item = null;
 
         var mode = 0;
 
@@ -178,11 +141,11 @@ public class Part1 : Base
 
                     continue;
                 case 2:
-                    items.Add(line.Substring(2));
+                    item = line.Substring(2);
                     break;
             }
         }
 
-        return (room, directions, items);
+        return (room, directions, item);
     }
 }
