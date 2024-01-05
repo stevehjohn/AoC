@@ -16,11 +16,51 @@ public class Part1 : Base
     {
         Explore();
 
-        var path = GetPath("Hull Breach", "Security Checkpoint");
-        
-        path.ForEach(Console.WriteLine);
+        TestItems();
         
         return "Unknown";
+    }
+
+    private void TestItems()
+    {
+        var danger = new List<string>();
+        
+        foreach (var item in _items)
+        {
+            var end = _rooms.Single(r => r.Value.Item == item).Value;
+
+            var path = GetPath(_start.Name, end.Name);
+            
+            var cpu = new Cpu();
+        
+            cpu.Initialise(65536);
+
+            cpu.LoadProgram(Input);
+        
+            cpu.Run();
+
+            cpu.ReadString();
+
+            foreach (var step in path)
+            {
+                cpu.WriteString(step);
+
+                cpu.Run();
+
+                cpu.ReadString();
+            }
+            
+            cpu.WriteString($"take {item}");
+            
+            var response = cpu.Run(10_000);
+
+            if (response != CpuState.AwaitingInput)
+            {
+                danger.Add(item);
+            }
+        }
+        
+        danger.ForEach(d => _items.Remove(d));
     }
 
     private List<string> GetPath(string start, string end)
