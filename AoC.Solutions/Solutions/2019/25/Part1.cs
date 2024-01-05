@@ -59,8 +59,7 @@ public class Part1 : Base
             room = end.Name;
         }
 
-        // TODO: This could come from the explore phase
-        path = GetPath(room, "Security Checkpoint");
+        path = GetPath(room, _rooms.Single(r => r.Value.Directions.Any(d => d.Value.Name == r.Value.Name)).Value.Name);
 
         foreach (var step in path)
         {
@@ -233,7 +232,11 @@ public class Part1 : Base
         var previousCode = 0;
     
         string result;
-    
+
+        var checkpoint = _rooms.Single(r => r.Value.Directions.Any(d => d.Value.Name == r.Value.Name));
+
+        var direction = checkpoint.Value.Directions.Single(d => d.Value.Name == checkpoint.Value.Name).Key;
+        
         while (true)
         {
             var greyCode = i ^ (i >> 1);
@@ -252,8 +255,7 @@ public class Part1 : Base
     
             cpu.Run();
     
-            //TODO: This could come from the explore phase
-            cpu.WriteString("west");
+            cpu.WriteString(direction);
     
             cpu.Run();
     
