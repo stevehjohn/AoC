@@ -17,8 +17,61 @@ public class Part1 : Base
         Explore();
 
         TestItems();
+
+        return Solve();
+    }
+
+    private string Solve()
+    {
+        var cpu = new Cpu();
         
-        return "Unknown";
+        cpu.Initialise(65536);
+
+        cpu.LoadProgram(Input);
+        
+        cpu.Run();
+
+        cpu.ReadString();
+
+        var room = _start.Name;
+
+        List<string> path;
+        
+        foreach (var item in _items)
+        {
+            var end = _rooms.Single(r => r.Value.Item == item).Value;
+
+            path = GetPath(room, end.Name);
+
+            foreach (var step in path)
+            {
+                cpu.WriteString(step);
+
+                cpu.Run();
+
+                cpu.ReadString();
+            }
+
+            cpu.WriteString($"take {item}");
+
+            cpu.Run();
+
+            room = end.Name;
+        }
+
+        // TODO: This could come from the explore phase
+        path = GetPath(room, "Security Checkpoint");
+
+        foreach (var step in path)
+        {
+            cpu.WriteString(step);
+
+            cpu.Run();
+
+            cpu.ReadString();
+        }
+
+        return PassCheckpoint(cpu, _items);
     }
 
     private void TestItems()
@@ -160,52 +213,53 @@ public class Part1 : Base
         }
     }
 
-    // private string PassCheckpoint(List<string> items)
-    // {
-    //     var i = 1;
-    //
-    //     var previousCode = 0;
-    //
-    //     string result;
-    //
-    //     while (true)
-    //     {
-    //         var greyCode = i ^ (i >> 1);
-    //
-    //         var change = GetChangedBit(previousCode, greyCode);
-    //
-    //         previousCode = greyCode;
-    //
-    //         i++;
-    //
-    //         var command = change.Value
-    //                           ? $"drop {items[change.Index]}"
-    //                           : $"take {items[change.Index]}";
-    //
-    //         _cpu.WriteString(command);
-    //
-    //         _cpu.Run();
-    //
-    //         _cpu.WriteString("west");
-    //
-    //         _cpu.Run();
-    //
-    //         result = _cpu.ReadString();
-    //
-    //         if (result.Contains("Analysis complete! You may proceed."))
-    //         {
-    //             break;
-    //         }
-    //     }
-    //
-    //     var index = result.IndexOf("typing", StringComparison.InvariantCultureIgnoreCase);
-    //
-    //     result = result[(index + 7)..];
-    //
-    //     result = result[..result.IndexOf(' ')];
-    //
-    //     return result;
-    // }
+    private string PassCheckpoint(Cpu cpu, List<string> items)
+    {
+        var i = 1;
+    
+        var previousCode = 0;
+    
+        string result;
+    
+        while (true)
+        {
+            var greyCode = i ^ (i >> 1);
+    
+            var change = GetChangedBit(previousCode, greyCode);
+    
+            previousCode = greyCode;
+    
+            i++;
+    
+            var command = change.Value
+                              ? $"drop {items[change.Index]}"
+                              : $"take {items[change.Index]}";
+    
+            cpu.WriteString(command);
+    
+            cpu.Run();
+    
+            //TODO: This could come from the explore phase
+            cpu.WriteString("west");
+    
+            cpu.Run();
+    
+            result = cpu.ReadString();
+    
+            if (result.Contains("Analysis complete! You may proceed."))
+            {
+                break;
+            }
+        }
+    
+        var index = result.IndexOf("typing", StringComparison.InvariantCultureIgnoreCase);
+    
+        result = result[(index + 7)..];
+    
+        result = result[..result.IndexOf(' ')];
+    
+        return result;
+    }
 
     private static (int Index, bool Value) GetChangedBit(int code1, int code2)
     {
