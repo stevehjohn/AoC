@@ -45,9 +45,9 @@ public class Cpu
         _relativeBase = 0;
     }
 
-    public CpuState Run()
+    public CpuState Run(int maxCycles = int.MaxValue)
     {
-        while (true)
+        while (maxCycles > 0)
         {
             var opCodeWithFlags = Memory[_programCounter].ToString().PadLeft(5, '0');
 
@@ -74,7 +74,11 @@ public class Cpu
                 case OperationState.AwaitingInput:
                     return CpuState.AwaitingInput;
             }
+
+            maxCycles--;
         }
+
+        return CpuState.MaxCyclesExceeded;
     }
 
     public void WriteString(string input)

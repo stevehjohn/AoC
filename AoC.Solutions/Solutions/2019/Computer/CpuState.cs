@@ -3,5 +3,6 @@
 public enum CpuState
 {
     Halted,
-    AwaitingInput
+    AwaitingInput,
+    MaxCyclesExceeded
 }
