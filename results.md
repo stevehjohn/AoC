@@ -295,7 +295,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 12.1: 22μs          Evergreen ship sailing
  2020 12.2: 27μs          
  2020 13.1: 9μs           Bus timetables
- 2020 13.2: 15μs          
+ 2020 13.2: 14μs          
  2020 14.1: 94μs          Memory bit twiddling
  2020 14.2: 3,890μs       
  2020 15.1: 18μs          Number memory game
@@ -349,7 +349,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 12.2: 57,133μs      
  2021 13.1: 2,439μs       ZX Spectrum copy protection
  2021 13.2: 7,952μs       
- 2021 14.1: 193μs         Ablative armour
+ 2021 14.1: 192μs         Ablative armour
  2021 14.2: 1,021μs       
  2021 15.1: 1,330μs       Risky business
  2021 15.2: 69,117μs      
@@ -376,7 +376,7 @@ Tests performed on a 2023 MacBook Pro.
             4.076s       
 
  2022  1.1: 24μs          Calorie counting
- 2022  1.2: 45μs          
+ 2022  1.2: 41μs          
  2022  2.1: 37μs          Rock paper scissors
  2022  2.2: 32μs          
  2022  3.1: 73μs          Rucksack reorganization
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 60,123μs      
  2022 25.1: 10μs          Full of hot air
             -------------
-            307.822ms    
+            307.818ms    
 
  2023  1.1: 120μs         Trebuchet
  2023  1.2: 338μs         
@@ -439,13 +439,13 @@ Tests performed on a 2023 MacBook Pro.
  2023  5.2: 132μs         
  2023  6.1: 2μs           Wait for it
  2023  6.2: 51μs          
- 2023  7.1: 621μs         Camel cards
+ 2023  7.1: 620μs         Camel cards
  2023  7.2: 648μs         
  2023  8.1: 424μs         Haunted wasteland
  2023  8.2: 747μs         
  2023  9.1: 355μs         Mirage maintenance
  2023  9.2: 316μs         
- 2023 10.1: 98μs          Pipe maze
+ 2023 10.1: 96μs          Pipe maze
  2023 10.2: 917μs         
  2023 11.1: 332μs         Cosmic expansion
  2023 11.2: 332μs         
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,631μs       
  2023 25.1: 14,208μs      Snowverload
             -------------
-            426.174ms    
+            426.171ms    
 
  442 puzzles solved in 58.323ms.
 ```
