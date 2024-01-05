@@ -1,6 +1,5 @@
 ﻿using AoC.Solutions.Solutions._2019.Computer;
 using JetBrains.Annotations;
-using System.Text;
 
 namespace AoC.Solutions.Solutions._2019._25;
 
@@ -55,15 +54,15 @@ public class Part1 : Base
 
         _cpu.Run();
 
-        var output = ParseOutput(ReadString(_cpu));
+        var output = ParseOutput(_cpu.ReadString());
 
         foreach (var command in _commands)
         {
-            WriteString(_cpu, command);
-
+            _cpu.WriteString(command);
+            
             _cpu.Run();
 
-            var response = ReadString(_cpu);
+            var response = _cpu.ReadString();
 
             output = ParseOutput(response);
         }
@@ -93,15 +92,15 @@ public class Part1 : Base
                               ? $"drop {items[change.Index]}"
                               : $"take {items[change.Index]}";
 
-            WriteString(_cpu, command);
+            _cpu.WriteString(command);
 
             _cpu.Run();
 
-            WriteString(_cpu, "west");
+            _cpu.WriteString("west");
 
             _cpu.Run();
 
-            result = ReadString(_cpu);
+            result = _cpu.ReadString();
 
             if (result.Contains("Analysis complete! You may proceed."))
             {
@@ -190,27 +189,5 @@ public class Part1 : Base
         }
 
         return (room, directions, items);
-    }
-
-    private static string ReadString(Cpu cpu)
-    {
-        var result = new StringBuilder();
-
-        while (cpu.UserOutput.Count > 0)
-        {
-            result.Append((char) cpu.UserOutput.Dequeue());
-        }
-
-        return result.ToString();
-    }
-
-    private static void WriteString(Cpu cpu, string input)
-    {
-        foreach (var c in input)
-        {
-            cpu.UserInput.Enqueue(c);
-        }
-
-        cpu.UserInput.Enqueue('\n');
     }
 }

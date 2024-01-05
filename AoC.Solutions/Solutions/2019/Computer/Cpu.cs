@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using System.Reflection;
+using System.Text;
 using AoC.Solutions.Exceptions;
 
 namespace AoC.Solutions.Solutions._2019.Computer;
@@ -74,6 +75,28 @@ public class Cpu
                     return CpuState.AwaitingInput;
             }
         }
+    }
+
+    public void WriteString(string input)
+    {
+        foreach (var c in input)
+        {
+            UserInput.Enqueue(c);
+        }
+        
+        UserInput.Enqueue('\n');
+    }
+
+    public string ReadString()
+    {
+        var builder = new StringBuilder();
+        
+        while (UserOutput.TryDequeue(out var c))
+        {
+            builder.Append((char) c);
+        }
+
+        return builder.ToString();
     }
 
     private void AddAllOpCodes()
