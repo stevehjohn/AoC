@@ -106,10 +106,23 @@ public class Part1 : Base
             cpu.WriteString($"take {item}");
             
             var response = cpu.Run(10_000);
-
+            
             if (response != CpuState.AwaitingInput)
             {
                 danger.Add(item);
+            }
+            else
+            {
+                cpu.WriteString("north");
+
+                cpu.Run();
+            
+                var result = cpu.ReadString();
+
+                if (result.Contains("You can't move!!"))
+                {
+                    danger.Add(item);
+                }
             }
         }
         
