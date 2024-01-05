@@ -29,7 +29,8 @@ public class Part1 : Base
 
         _start = new Room
         {
-            Name = data.Name
+            Name = data.Name,
+            Item = data.Item
         };
     }
 

@@ -4,7 +4,7 @@ public class Room
 {
     public string Name { get; set; }
     
-    public List<string> Item { get; set; }
+    public string Item { get; set; }
     
     public Room North { get; set; }
     
