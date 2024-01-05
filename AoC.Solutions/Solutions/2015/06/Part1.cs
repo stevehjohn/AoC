@@ -42,17 +42,17 @@ public class Part1 : Base
             {
                 for (var x = startX; x <= endX; x++)
                 {
-                    if (parts[1] == "on")
+                    switch (parts[1])
                     {
-                        lights[x, y] = true;
-                    }
-                    else if (parts[1] == "off")
-                    {
-                        lights[x, y] = false;
-                    }
-                    else
-                    {
-                        lights[x, y] = ! lights[x, y];
+                        case "on":
+                            lights[x, y] = true;
+                            break;
+                        case "off":
+                            lights[x, y] = false;
+                            break;
+                        default:
+                            lights[x, y] = ! lights[x, y];
+                            break;
                     }
                 }
             }

@@ -104,53 +104,59 @@ public abstract class Base : Solution
                 {
                 }
 
-                if (wind == '<' && (mask & 0b1000000) == 0)
+                switch (wind)
                 {
-                    var ok = true;
-
-                    for (var rY = 0; rY < rock.Length; rY++)
+                    case '<' when (mask & 0b1000000) == 0:
                     {
-                        if ((rock[rY] << 1 & _map[y + rY]) > 0)
-                        {
-                            ok = false;
-
-                            break;
-                        }
-                    }
-
-                    if (ok)
-                    {
-                        mask <<= 1;
+                        var ok = true;
 
                         for (var rY = 0; rY < rock.Length; rY++)
                         {
-                            rock[rY] <<= 1;
+                            if ((rock[rY] << 1 & _map[y + rY]) > 0)
+                            {
+                                ok = false;
+
+                                break;
+                            }
                         }
-                    }
-                }
 
-                if (wind == '>' && (mask & 0b0000001) == 0)
-                {
-                    var ok = true;
-
-                    for (var rY = 0; rY < rock.Length; rY++)
-                    {
-                        if ((rock[rY] >> 1 & _map[y + rY]) > 0)
+                        if (ok)
                         {
-                            ok = false;
+                            mask <<= 1;
 
-                            break;
+                            for (var rY = 0; rY < rock.Length; rY++)
+                            {
+                                rock[rY] <<= 1;
+                            }
                         }
-                    }
 
-                    if (ok)
+                        break;
+                    }
+                    case '>' when (mask & 0b0000001) == 0:
                     {
-                        mask >>= 1;
+                        var ok = true;
 
                         for (var rY = 0; rY < rock.Length; rY++)
                         {
-                            rock[rY] >>= 1;
+                            if ((rock[rY] >> 1 & _map[y + rY]) > 0)
+                            {
+                                ok = false;
+
+                                break;
+                            }
                         }
+
+                        if (ok)
+                        {
+                            mask >>= 1;
+
+                            for (var rY = 0; rY < rock.Length; rY++)
+                            {
+                                rock[rY] >>= 1;
+                            }
+                        }
+
+                        break;
                     }
                 }
 

@@ -29,21 +29,20 @@ public abstract class Base : Solution
                 continue;
             }
 
-            if (phase == 0)
+            switch (phase)
             {
-                Rules.Add(ParseRule(line));
+                case 0:
+                    Rules.Add(ParseRule(line));
 
-                continue;
+                    continue;
+                case 1:
+                    YourTicket = ParseTicket(line);
+
+                    continue;
+                default:
+                    OtherTickets.Add(ParseTicket(line));
+                    break;
             }
-
-            if (phase == 1)
-            {
-                YourTicket = ParseTicket(line);
-
-                continue;
-            }
-
-            OtherTickets.Add(ParseTicket(line));
         }
     }
 

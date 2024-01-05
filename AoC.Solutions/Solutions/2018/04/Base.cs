@@ -18,20 +18,22 @@ public abstract class Base : Solution
 
         foreach (var @event in events)
         {
-            if (@event.Event == Event.FallAsleep)
+            switch (@event.Event)
             {
-                previousTime = @event.Time;
+                case Event.FallAsleep:
+                    previousTime = @event.Time;
 
-                continue;
-            }
-
-            if (@event.Event == Event.WakeUp)
-            {
-                while (previousTime < @event.Time)
+                    continue;
+                case Event.WakeUp:
                 {
-                    minutes[previousTime.Minute]++;
+                    while (previousTime < @event.Time)
+                    {
+                        minutes[previousTime.Minute]++;
 
-                    previousTime = previousTime.AddMinutes(1);
+                        previousTime = previousTime.AddMinutes(1);
+                    }
+
+                    break;
                 }
             }
         }
@@ -49,23 +51,18 @@ public abstract class Base : Solution
 
         foreach (var item in Data)
         {
-            if (item.Event == Event.FallAsleep)
+            switch (item.Event)
             {
-                sleepTime = item.Time;
+                case Event.FallAsleep:
+                    sleepTime = item.Time;
 
-                continue;
-            }
-
-            if (item.Event == Event.WakeUp)
-            {
-                if (sleepTimes.ContainsKey(item.GuardId))
-                {
+                    continue;
+                case Event.WakeUp when sleepTimes.ContainsKey(item.GuardId):
                     sleepTimes[item.GuardId] += item.Time - sleepTime;
-                }
-                else
-                {
+                    break;
+                case Event.WakeUp:
                     sleepTimes.Add(item.GuardId, item.Time - sleepTime);
-                }
+                    break;
             }
         }
 

@@ -148,21 +148,20 @@ public abstract class Base : Solution
 
             var tile = _map[position.X, position.Y];
 
-            if (tile == '.')
+            switch (tile)
             {
-                _position = position;
+                case '.':
+                    _position = position;
 
-                length--;
+                    length--;
 
-                continue;
+                    continue;
+                case '#':
+                    return;
+                default:
+                    length = TeleportFlat(position, xD, yD, length);
+                    break;
             }
-
-            if (tile == '#')
-            {
-                return;
-            }
-
-            length = TeleportFlat(position, xD, yD, length);
         }
     }
 

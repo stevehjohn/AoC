@@ -27,16 +27,15 @@ public class Part1 : Base
         {
             for (var x = 0; x < Width; x++)
             {
-                if (Map[x, y] == '|')
+                switch (Map[x, y])
                 {
-                    wood++;
+                    case '|':
+                        wood++;
 
-                    continue;
-                }
-
-                if (Map[x, y] == '#')
-                {
-                    yard++;
+                        continue;
+                    case '#':
+                        yard++;
+                        break;
                 }
             }
         }

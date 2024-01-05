@@ -22,14 +22,12 @@ public class Part2 : Base
 
     private long CheckRule(string name, Dictionary<char, (int Start, int End)> ranges)
     {
-        if (name == "R")
+        switch (name)
         {
-            return 0;
-        }
-
-        if (name == "A")
-        {
-            return ranges.Values.Aggregate<(int Start, int End), long>(1, (total, range) => total * (range.End - range.Start + 1));
+            case "R":
+                return 0;
+            case "A":
+                return ranges.Values.Aggregate<(int Start, int End), long>(1, (total, range) => total * (range.End - range.Start + 1));
         }
 
         var workflow = Workflows[name];

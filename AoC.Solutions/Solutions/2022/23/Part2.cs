@@ -109,22 +109,14 @@ public class Part2 : Base
 
     private static int Evaluate(bool top, bool bottom, bool right, bool left, int index)
     {
-        switch (index)
+        return index switch
         {
-            case 0:
-                return ! top ? -YOffset : ! bottom ? YOffset : ! left ? -1 : ! right ? 1 : 0;
-
-            case 1:
-                return ! bottom ? YOffset : ! left ? -1 : ! right ? 1 : ! top ? -YOffset : 0;
-
-            case 2:
-                return ! left ? -1 : ! right ? 1 : ! top ? -YOffset : ! bottom ? YOffset : 0;
-
-            case 3:
-                return ! right ? 1 : ! top ? -YOffset : ! bottom ? YOffset : ! left ? -1 : 0;
-        }
-
-        throw new PuzzleException("Evaluation index is not valid.");
+            0 => ! top ? -YOffset : ! bottom ? YOffset : ! left ? -1 : ! right ? 1 : 0,
+            1 => ! bottom ? YOffset : ! left ? -1 : ! right ? 1 : ! top ? -YOffset : 0,
+            2 => ! left ? -1 : ! right ? 1 : ! top ? -YOffset : ! bottom ? YOffset : 0,
+            3 => ! right ? 1 : ! top ? -YOffset : ! bottom ? YOffset : ! left ? -1 : 0,
+            _ => throw new PuzzleException("Evaluation index is not valid.")
+        };
     }
 
     private int GetProposedMove(int position)

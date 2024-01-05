@@ -242,17 +242,13 @@ public class Cpu
 
     private long GetOperand(int index)
     {
-        switch (_modes[index])
+        return _modes[index] switch
         {
-            case 0:
-                return Memory[_operands[index]];
-            case 1:
-                return _operands[index];
-            case 2:
-                return Memory[_relativeBase + _operands[index]];
-        }
-
-        throw new PuzzleException($"Unknown read operand mode {_modes[index]}.");
+            0 => Memory[_operands[index]],
+            1 => _operands[index],
+            2 => Memory[_relativeBase + _operands[index]],
+            _ => throw new PuzzleException($"Unknown read operand mode {_modes[index]}.")
+        };
     }
 
     private void SetMemory(int addressOperandIndex, long value)

@@ -27,31 +27,21 @@ public abstract class Base : Solution
 
                     break;
                 case "rotate":
-                    if (parts[1] == "left")
+                    switch (parts[1])
                     {
-                        if (reverse)
-                        {
+                        case "left" when reverse:
                             state = RotateRight(state, int.Parse(parts[2]));
-                        }
-                        else
-                        {
+                            break;
+                        case "left":
+                        case "right" when reverse:
                             state = RotateLeft(state, int.Parse(parts[2]));
-                        }
-                    }
-                    else if (parts[1] == "right")
-                    {
-                        if (reverse)
-                        {
-                            state = RotateLeft(state, int.Parse(parts[2]));
-                        }
-                        else
-                        {
+                            break;
+                        case "right":
                             state = RotateRight(state, int.Parse(parts[2]));
-                        }
-                    }
-                    else
-                    {
-                        state = RotateByIndexOf(state, parts[6][0], reverse);
+                            break;
+                        default:
+                            state = RotateByIndexOf(state, parts[6][0], reverse);
+                            break;
                     }
 
                     break;

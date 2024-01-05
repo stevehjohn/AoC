@@ -24,15 +24,12 @@ public abstract class Base : Solution
 
             if (replaceRules)
             {
-                if (ruleId == 8)
+                split[1] = ruleId switch
                 {
-                    split[1] = "42 | 42 8";
-                }
-
-                if (ruleId == 11)
-                {
-                    split[1] = "42 31 | 42 11 31";
-                }
+                    8 => "42 | 42 8",
+                    11 => "42 31 | 42 11 31",
+                    _ => split[1]
+                };
             }
 
             var isLeaf = split[1][0] == '"';

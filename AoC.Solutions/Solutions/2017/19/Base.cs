@@ -28,24 +28,26 @@ public abstract class Base : Solution
 
             position.Y += direction.Y;
 
-            if (_map[position.X, position.Y] is >= 'A' and <= 'Z')
+            switch (_map[position.X, position.Y])
             {
-                result.Append(_map[position.X, position.Y]);
+                case >= 'A' and <= 'Z':
+                    result.Append(_map[position.X, position.Y]);
 
-                continue;
-            }
-
-            if (_map[position.X, position.Y] == '+')
-            {
-                var newDirection = new Point(-direction.Y, direction.X);
-
-                if (_map[position.X + newDirection.X, position.Y + newDirection.Y] != ' ')
+                    continue;
+                case '+':
                 {
-                    direction = newDirection;
-                }
-                else
-                {
-                    direction = new Point(direction.Y, -direction.X);
+                    var newDirection = new Point(-direction.Y, direction.X);
+
+                    if (_map[position.X + newDirection.X, position.Y + newDirection.Y] != ' ')
+                    {
+                        direction = newDirection;
+                    }
+                    else
+                    {
+                        direction = new Point(direction.Y, -direction.X);
+                    }
+
+                    break;
                 }
             }
         }

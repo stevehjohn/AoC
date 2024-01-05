@@ -46,25 +46,24 @@ public abstract class Base : Solution
             {
                 var character = Input[y][x];
 
-                if (character == 'S')
+                switch (character)
                 {
-                    _start = new Point(x, y);
+                    case 'S':
+                        _start = new Point(x, y);
 
-                    _map[x, y] = 0;
+                        _map[x, y] = 0;
 
-                    continue;
+                        continue;
+                    case 'E':
+                        _end = new Point(x, y);
+
+                        _map[x, y] = 'z' - 'a';
+
+                        continue;
+                    default:
+                        _map[x, y] = (byte) (character - 'a');
+                        break;
                 }
-
-                if (character == 'E')
-                {
-                    _end = new Point(x, y);
-
-                    _map[x, y] = 'z' - 'a';
-
-                    continue;
-                }
-
-                _map[x, y] = (byte) (character - 'a');
             }
         }
     }

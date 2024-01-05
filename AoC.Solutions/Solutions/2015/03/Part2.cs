@@ -29,25 +29,14 @@ public class Part2 : Base
                 position = roboSanta;
             }
 
-            switch (c)
+            position = c switch
             {
-                case '^':
-                    position = new Point(position.X, position.Y - 1);
-
-                    break;
-                case 'v':
-                    position = new Point(position.X, position.Y + 1);
-
-                    break;
-                case '<':
-                    position = new Point(position.X - 1, position.Y);
-
-                    break;
-                case '>':
-                    position = new Point(position.X + 1, position.Y);
-
-                    break;
-            }
+                '^' => new Point(position.X, position.Y - 1),
+                'v' => new Point(position.X, position.Y + 1),
+                '<' => new Point(position.X - 1, position.Y),
+                '>' => new Point(position.X + 1, position.Y),
+                _ => position
+            };
 
             if (santaTurn)
             {

@@ -115,24 +115,20 @@ public abstract class Base : Solution
 
         if (child > 0)
         {
-            if (bit == 128)
+            switch (bit)
             {
-                count += (child & 31).CountBits();
-            }
-
-            if (bit == 2_048)
-            {
-                count += (child & 1_082_401).CountBits();
-            }
-
-            if (bit == 8_192)
-            {
-                count += (child & 17_318_416).CountBits();
-            }
-
-            if (bit == 131_072)
-            {
-                count += (child & 32_505_856).CountBits();
+                case 128:
+                    count += (child & 31).CountBits();
+                    break;
+                case 2_048:
+                    count += (child & 1_082_401).CountBits();
+                    break;
+                case 8_192:
+                    count += (child & 17_318_416).CountBits();
+                    break;
+                case 131_072:
+                    count += (child & 32_505_856).CountBits();
+                    break;
             }
         }
 

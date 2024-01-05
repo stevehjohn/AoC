@@ -32,32 +32,25 @@ public abstract class Base : Solution
                 garbageCount++;
             }
 
-            if (c == '<')
+            switch (c)
             {
-                isGarbage = true;
+                case '<':
+                    isGarbage = true;
 
-                continue;
-            }
+                    continue;
+                case '>':
+                    isGarbage = false;
 
-            if (c == '>')
-            {
-                isGarbage = false;
+                    continue;
+                case '{' when ! isGarbage:
+                    depth++;
 
-                continue;
-            }
+                    count += depth;
 
-            if (c == '{' && ! isGarbage)
-            {
-                depth++;
-
-                count += depth;
-
-                continue;
-            }
-
-            if (c == '}' && ! isGarbage)
-            {
-                depth--;
+                    continue;
+                case '}' when ! isGarbage:
+                    depth--;
+                    break;
             }
         }
 

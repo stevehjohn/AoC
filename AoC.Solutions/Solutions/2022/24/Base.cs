@@ -89,35 +89,26 @@ public abstract class Base : Solution
                     _end = x + y * _width;
                 }
 
-                if (c == '#' || c == '.')
+                switch (c)
                 {
-                    continue;
-                }
+                    case '#':
+                    case '.':
+                        continue;
+                    case '<':
+                        _leftStorms[y, x] = true;
 
-                if (c == '<')
-                {
-                    _leftStorms[y, x] = true;
+                        continue;
+                    case '>':
+                        _rightStorms[y, x] = true;
 
-                    continue;
-                }
+                        continue;
+                    case 'v':
+                        _downStorms[x, y] = true;
 
-                if (c == '>')
-                {
-                    _rightStorms[y, x] = true;
-
-                    continue;
-                }
-
-                if (c == 'v')
-                {
-                    _downStorms[x, y] = true;
-
-                    continue;
-                }
-
-                if (c == '^')
-                {
-                    _upStorms[x, y] = true;
+                        continue;
+                    case '^':
+                        _upStorms[x, y] = true;
+                        break;
                 }
             }
         }
@@ -214,16 +205,15 @@ public abstract class Base : Solution
         // In and out of start/end.
         if (origin.Equals(_start))
         {
-            if (y == 0 && x == origin % _width)
+            switch (y)
             {
-                moves.Add(x + _width);
+                case 0 when x == origin % _width:
+                    moves.Add(x + _width);
 
-                return moves;
-            }
-
-            if (y == 1 && x == origin % _width)
-            {
-                moves.Add(position - _width);
+                    return moves;
+                case 1 when x == origin % _width:
+                    moves.Add(position - _width);
+                    break;
             }
         }
         else

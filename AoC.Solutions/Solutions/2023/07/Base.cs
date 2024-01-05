@@ -107,14 +107,14 @@ public abstract class Base : Solution
                 count++;
             }
 
-            if (item == 1)
+            switch (item)
             {
-                containsOne = true;
-            }
-
-            if (item == 3)
-            {
-                containsThree = true;
+                case 1:
+                    containsOne = true;
+                    break;
+                case 3:
+                    containsThree = true;
+                    break;
             }
         }
 

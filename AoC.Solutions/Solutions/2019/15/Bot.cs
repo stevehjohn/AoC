@@ -54,24 +54,22 @@ public class Bot
 
         var bots = new List<Bot>();
 
-        if (moves.Count == 0)
+        switch (moves.Count)
         {
-            return bots;
-        }
+            case 0:
+                return bots;
+            case 1:
+                _direction = moves.First();
 
-        if (moves.Count == 1)
-        {
-            _direction = moves.First();
+                Position.X += _direction.X;
 
-            Position.X += _direction.X;
+                Position.Y += _direction.Y;
 
-            Position.Y += _direction.Y;
+                Steps++;
 
-            Steps++;
+                bots.Add(this);
 
-            bots.Add(this);
-
-            return bots;
+                return bots;
         }
 
         foreach (var move in moves)

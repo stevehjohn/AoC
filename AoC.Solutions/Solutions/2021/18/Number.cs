@@ -25,36 +25,33 @@ public class Number
 
         for (var i = 0; i < input.Length; i++)
         {
-            if (input[i] == '[')
+            switch (input[i])
             {
-                openings++;
+                case '[':
+                    openings++;
 
-                continue;
-            }
+                    continue;
+                case ']':
+                    openings--;
 
-            if (input[i] == ']')
-            {
-                openings--;
+                    continue;
+                case ',' when openings == 1:
+                {
+                    var left = input[1..i];
 
-                continue;
-            }
+                    var right = input[(i + 1)..^1];
 
-            if (input[i] == ',' && openings == 1)
-            {
-                var left = input[1..i];
+                    var number = new Number
+                    {
+                        Parent = parent
+                    };
 
-                var right = input[(i + 1)..^1];
-
-                var number = new Number
-                             {
-                                 Parent = parent
-                             };
-
-                number.Left = Parse(left, number);
+                    number.Left = Parse(left, number);
                 
-                number.Right = Parse(right, number);
+                    number.Right = Parse(right, number);
 
-                return number;
+                    return number;
+                }
             }
         }
 

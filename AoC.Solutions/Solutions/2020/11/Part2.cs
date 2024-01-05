@@ -39,24 +39,15 @@ public class Part2 : Base
             x += dx;
             y += dy;
 
-            if (Map[x, y] == '.')
+            switch (Map[x, y])
             {
-                continue;
-            }
-
-            if (Map[x, y] == '#')
-            {
-                return true;
-            }
-
-            if (Map[x, y] == 'L')
-            {
-                return false;
-            }
-
-            if (Map[x, y] == '\0')
-            {
-                return false;
+                case '.':
+                    continue;
+                case '#':
+                    return true;
+                case 'L':
+                case '\0':
+                    return false;
             }
         }
     }

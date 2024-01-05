@@ -106,89 +106,89 @@ public class Bot
             return bots;
         }
 
-        if (moves.Count == 0 && _splitAt != null)
+        switch (moves.Count)
         {
-            DeadEnds.Add(Position.GetHashCode());
+            case 0 when _splitAt != null:
+                DeadEnds.Add(Position.GetHashCode());
 
-            return bots;
-        }
-
-        if (moves.Count == 1)
-        {
-            _direction = moves.First();
-
-            Position.X += _direction.X;
-
-            Position.Y += _direction.Y;
-
-            Steps++;
-
-            if (_maze[Position.X, Position.Y] > 0)
+                return bots;
+            case 1:
             {
-                var portal = _portals.Single(p => p.Position.X == Position.X && p.Position.Y == Position.Y);
+                _direction = moves.First();
 
+                Position.X += _direction.X;
 
-                if (portal.Position.X == 0 || portal.Position.Y == 0 || portal.Position.X == _maze.GetLength(0) - 1 || portal.Position.Y == _maze.GetLength(1) - 1)
+                Position.Y += _direction.Y;
+
+                Steps++;
+
+                if (_maze[Position.X, Position.Y] > 0)
                 {
-                    Level--;
+                    var portal = _portals.Single(p => p.Position.X == Position.X && p.Position.Y == Position.Y);
 
-                    if (Level < 0)
+
+                    if (portal.Position.X == 0 || portal.Position.Y == 0 || portal.Position.X == _maze.GetLength(0) - 1 || portal.Position.Y == _maze.GetLength(1) - 1)
                     {
-                        return bots;
-                    }
-                }
-                else
-                {
-                    if (! _visitedPortals.TryAdd(portal.Id, 0))
-                    {
-                        if (_visitedPortals[portal.Id] > 1)
+                        Level--;
+
+                        if (Level < 0)
                         {
                             return bots;
                         }
-
-                        _visitedPortals[portal.Id]++;
                     }
-
-                    Level++;
-
-                    if (Level > _portals.Count / 2)
+                    else
                     {
-                        return bots;
+                        if (! _visitedPortals.TryAdd(portal.Id, 0))
+                        {
+                            if (_visitedPortals[portal.Id] > 1)
+                            {
+                                return bots;
+                            }
+
+                            _visitedPortals[portal.Id]++;
+                        }
+
+                        Level++;
+
+                        if (Level > _portals.Count / 2)
+                        {
+                            return bots;
+                        }
                     }
-                }
 
-                var destination = _portals.Single(p => p.Id == portal.Id && (p.Position.X != Position.X || p.Position.Y != Position.Y));
+                    var destination = _portals.Single(p => p.Id == portal.Id && (p.Position.X != Position.X || p.Position.Y != Position.Y));
 
-                Position.X = destination.Position.X;
+                    Position.X = destination.Position.X;
 
-                Position.Y = destination.Position.Y;
+                    Position.Y = destination.Position.Y;
 
-                _direction = new Point(0, 0);
+                    _direction = new Point(0, 0);
 
-                var move = (_recursive
-                                ? GetPossibleMovesWhenRecursive()
-                                : GetPossibleMoves()).Single();
+                    var move = (_recursive
+                        ? GetPossibleMovesWhenRecursive()
+                        : GetPossibleMoves()).Single();
 
-                Position.X += move.X;
+                    Position.X += move.X;
 
-                Position.Y += move.Y;
+                    Position.Y += move.Y;
 
 #if DEBUG && DUMP
                 History.Add(new Point(Position.X, Position.Y));
 #endif
 
-                _direction = move;
-            }
-            else
-            {
+                    _direction = move;
+                }
+                else
+                {
 #if DEBUG && DUMP
                 History.Add(new Point(Position));
 #endif
+                }
+
+                bots.Add(this);
+
+                return bots;
             }
-
-            bots.Add(this);
-
-            return bots;
         }
 
         foreach (var move in moves)

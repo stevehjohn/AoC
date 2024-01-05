@@ -105,23 +105,18 @@ public abstract class Base : Solution
             {
                 var c = Input[y + 1][x + 1];
 
-                if (c == ' ')
+                switch (c)
                 {
-                    _maze[x, y] = -2;
+                    case ' ':
+                        _maze[x, y] = -2;
 
-                    continue;
-                }
+                        continue;
+                    case '#':
+                        _maze[x, y] = -1;
 
-                if (c == '#')
-                {
-                    _maze[x, y] = -1;
-
-                    continue;
-                }
-
-                if (c == '.')
-                {
-                    continue;
+                        continue;
+                    case '.':
+                        continue;
                 }
 
                 var portal = EncodePortal(x + 1, y + 1);

@@ -78,19 +78,18 @@ public abstract class Base : Solution
             {
                 var c = Input[y][x];
 
-                if (c == '.')
+                switch (c)
                 {
-                    continue;
+                    case '.':
+                        continue;
+                    case '#':
+                        _map[x, y] = true;
+
+                        continue;
+                    default:
+                        _units.Add(new Unit(c == 'E' ? Type.Elf : Type.Goblin, new Point(x, y), _map, _units));
+                        break;
                 }
-
-                if (c == '#')
-                {
-                    _map[x, y] = true;
-
-                    continue;
-                }
-
-                _units.Add(new Unit(c == 'E' ? Type.Elf : Type.Goblin, new Point(x, y), _map, _units));
             }
         }
     }

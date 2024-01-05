@@ -42,20 +42,23 @@ public class Part2 : Base
             {
                 for (var x = startX; x <= endX; x++)
                 {
-                    if (parts[1] == "on")
+                    switch (parts[1])
                     {
-                        lights[x, y]++;
-                    }
-                    else if (parts[1] == "off")
-                    {
-                        if (lights[x, y] > 0)
+                        case "on":
+                            lights[x, y]++;
+                            break;
+                        case "off":
                         {
-                            lights[x, y]--;
+                            if (lights[x, y] > 0)
+                            {
+                                lights[x, y]--;
+                            }
+
+                            break;
                         }
-                    }
-                    else
-                    {
-                        lights[x, y] += 2;
+                        default:
+                            lights[x, y] += 2;
+                            break;
                     }
                 }
             }

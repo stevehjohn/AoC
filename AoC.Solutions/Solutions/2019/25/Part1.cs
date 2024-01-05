@@ -154,37 +154,32 @@ public class Part1 : Base
                 continue;
             }
 
-            if (line == "Doors here lead:")
+            switch (line)
             {
-                mode = 1;
+                case "Doors here lead:":
+                    mode = 1;
 
-                continue;
+                    continue;
+                case "Items here:":
+                case "Items in your inventory:":
+                    mode = 2;
+
+                    continue;
             }
 
-            if (line == "Items here:" || line == "Items in your inventory:")
+            switch (mode)
             {
-                mode = 2;
+                case > 0 when ! line.StartsWith("- "):
+                    mode = 0;
 
-                continue;
-            }
+                    continue;
+                case 1:
+                    directions.Add(line.Substring(2));
 
-            if (mode > 0 && ! line.StartsWith("- "))
-            {
-                mode = 0;
-
-                continue;
-            }
-
-            if (mode == 1)
-            {
-                directions.Add(line.Substring(2));
-
-                continue;
-            }
-
-            if (mode == 2)
-            {
-                items.Add(line.Substring(2));
+                    continue;
+                case 2:
+                    items.Add(line.Substring(2));
+                    break;
             }
         }
 

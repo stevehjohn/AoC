@@ -49,16 +49,15 @@ public class Part2 : Base
 
         for (var i = 0; i < state.Length; i++)
         {
-            if (state[i] == '|')
+            switch (state[i])
             {
-                wood++;
+                case '|':
+                    wood++;
 
-                continue;
-            }
-
-            if (state[i] == '#')
-            {
-                yard++;
+                    continue;
+                case '#':
+                    yard++;
+                    break;
             }
         }
 

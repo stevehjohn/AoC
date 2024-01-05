@@ -19,20 +19,19 @@ public abstract class Base : Solution
 
             deer.Ticks++;
 
-            if (deer.IsResting && deer.Ticks >= deer.RestTime)
+            switch (deer.IsResting)
             {
-                deer.IsResting = false;
+                case true when deer.Ticks >= deer.RestTime:
+                    deer.IsResting = false;
 
-                deer.Ticks = 0;
+                    deer.Ticks = 0;
                 
-                continue;
-            }
+                    continue;
+                case false when deer.Ticks >= deer.FlyTime:
+                    deer.IsResting = true;
 
-            if (! deer.IsResting && deer.Ticks >= deer.FlyTime)
-            {
-                deer.IsResting = true;
-
-                deer.Ticks = 0;
+                    deer.Ticks = 0;
+                    break;
             }
         }
 

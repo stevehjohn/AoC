@@ -43,13 +43,14 @@ public class Part1 : Base
                 {
                     for (var x = 0; x < _width; x++)
                     {
-                        if (state == CellState.East)
+                        switch (state)
                         {
-                            moved |= CanMoveCell(x, y, 1, 0, CellState.East);
-                        }
-                        else if (state == CellState.South)
-                        {
-                            moved |= CanMoveCell(x, y, 0, 1, CellState.South);
+                            case CellState.East:
+                                moved |= CanMoveCell(x, y, 1, 0, CellState.East);
+                                break;
+                            case CellState.South:
+                                moved |= CanMoveCell(x, y, 0, 1, CellState.South);
+                                break;
                         }
                     }
                 }

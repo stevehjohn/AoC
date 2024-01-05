@@ -46,15 +46,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     public override void SetPart(int part)
     {
-        switch (part)
+        Puzzle = part switch
         {
-            case 2:
-                Puzzle = new Part2(this);
-
-                break;
-            default:
-                throw new VisualisationParameterException();
-        }
+            2 => new Part2(this),
+            _ => throw new VisualisationParameterException()
+        };
     }
 
     protected override void Initialize()

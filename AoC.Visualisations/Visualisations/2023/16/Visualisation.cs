@@ -582,24 +582,20 @@ public class Visualisation : VisualisationBase<PuzzleState>
             laser = (_state.LaserX, _state.LaserY, _state.StartDirection);
         }
 
-        if (laser.Direction == 'S')
+        switch (laser.Direction)
         {
-            _spriteBatch.Draw(_dish, new Vector2(15 + laser.X * 7, 0), new Rectangle(0, 0, 22, 22), Color.DarkMagenta, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
-        }
-
-        if (laser.Direction == 'N')
-        {
-            _spriteBatch.Draw(_dish, new Vector2(15 + laser.X * 7, 790), new Rectangle(0, 0, 22, 22), Color.DarkMagenta, 0, Vector2.Zero, Vector2.One, SpriteEffects.FlipVertically, 0);
-        }
-
-        if (laser.Direction == 'E')
-        {
-            _spriteBatch.Draw(_dish, new Vector2(0, 15 + laser.Y * 7), new Rectangle(22, 0, 22, 22), Color.DarkMagenta, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
-        }
-
-        if (laser.Direction == 'W')
-        {
-            _spriteBatch.Draw(_dish, new Vector2(790, 15 + laser.Y * 7), new Rectangle(22, 0, 22, 22), Color.DarkMagenta, 0, Vector2.Zero, Vector2.One, SpriteEffects.FlipHorizontally, 0);
+            case 'S':
+                _spriteBatch.Draw(_dish, new Vector2(15 + laser.X * 7, 0), new Rectangle(0, 0, 22, 22), Color.DarkMagenta, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                break;
+            case 'N':
+                _spriteBatch.Draw(_dish, new Vector2(15 + laser.X * 7, 790), new Rectangle(0, 0, 22, 22), Color.DarkMagenta, 0, Vector2.Zero, Vector2.One, SpriteEffects.FlipVertically, 0);
+                break;
+            case 'E':
+                _spriteBatch.Draw(_dish, new Vector2(0, 15 + laser.Y * 7), new Rectangle(22, 0, 22, 22), Color.DarkMagenta, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                break;
+            case 'W':
+                _spriteBatch.Draw(_dish, new Vector2(790, 15 + laser.Y * 7), new Rectangle(22, 0, 22, 22), Color.DarkMagenta, 0, Vector2.Zero, Vector2.One, SpriteEffects.FlipHorizontally, 0);
+                break;
         }
     }
 

@@ -120,30 +120,28 @@ public abstract class Base : Solution
             return false;
         }
 
-        if (number.Value == null)
+        switch (number.Value)
         {
-            return Split(number.Left) || Split(number.Right);
+            case null:
+                return Split(number.Left) || Split(number.Right);
+            case > 9:
+                number.Left = new Number
+                {
+                    Value = (int)Math.Floor((decimal)number.Value / 2),
+                    Parent = number
+                };
+
+                number.Right = new Number
+                {
+                    Value = (int)Math.Ceiling((decimal)number.Value / 2),
+                    Parent = number
+                };
+
+                number.Value = null;
+
+                return true;
+            default:
+                return false;
         }
-
-        if (number.Value > 9)
-        {
-            number.Left = new Number
-            {
-                Value = (int)Math.Floor((decimal)number.Value / 2),
-                Parent = number
-            };
-
-            number.Right = new Number
-            {
-                Value = (int)Math.Ceiling((decimal)number.Value / 2),
-                Parent = number
-            };
-
-            number.Value = null;
-
-            return true;
-        }
-
-        return false;
     }
 }

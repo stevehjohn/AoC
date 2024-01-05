@@ -55,30 +55,32 @@ public abstract class Base : Solution
     {
         while (x != 0 || y != 0)
         {
-            if (x > 0)
+            switch (x)
             {
-                _knots[0].X++;
+                case > 0:
+                    _knots[0].X++;
 
-                x--;
+                    x--;
+                    break;
+                case < 0:
+                    _knots[0].X--;
+
+                    x++;
+                    break;
             }
-            else if (x < 0)
+
+            switch (y)
             {
-                _knots[0].X--;
+                case > 0:
+                    _knots[0].Y++;
 
-                x++;
-            }
+                    y--;
+                    break;
+                case < 0:
+                    _knots[0].Y--;
 
-            if (y > 0)
-            {
-                _knots[0].Y++;
-
-                y--;
-            }
-            else if (y < 0)
-            {
-                _knots[0].Y--;
-
-                y++;
+                    y++;
+                    break;
             }
 
             MoveNextKnot();

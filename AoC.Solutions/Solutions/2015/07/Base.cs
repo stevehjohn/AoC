@@ -122,24 +122,16 @@ public abstract class Base : Solution
 
         var outputWire = parts[^1];
 
-        if (parts.Length == 3)
+        switch (parts.Length)
         {
-            if (ushort.TryParse(parts[0], out var value))
-            {
+            case 3 when ushort.TryParse(parts[0], out var value):
                 return (null, value, null, null, 0, outputWire);
-            }
-
-            return (parts[0], 0, null, null, 0, outputWire);
-        }
-
-        if (parts.Length == 4)
-        {
-            if (ushort.TryParse(parts[1], out var value))
-            {
+            case 3:
+                return (parts[0], 0, null, null, 0, outputWire);
+            case 4 when ushort.TryParse(parts[1], out var value):
                 return (null, 0, parts[0], null, value, outputWire);
-            }
-
-            return (null, 0, parts[0], parts[1], 0, outputWire);
+            case 4:
+                return (null, 0, parts[0], parts[1], 0, outputWire);
         }
 
         var operation = parts[1];

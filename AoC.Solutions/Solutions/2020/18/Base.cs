@@ -53,34 +53,36 @@ public abstract class Base : Solution
                 continue;
             }
 
-            if (c == '+' || c == '*')
+            switch (c)
             {
-                while (operatorStack.Count > 0 && (operatorStack.Peek() == '+' || operatorStack.Peek() == '*' && ! additionPrecedent))
+                case '+':
+                case '*':
                 {
-                    output.Add(operatorStack.Pop());
+                    while (operatorStack.Count > 0 && (operatorStack.Peek() == '+' || operatorStack.Peek() == '*' && ! additionPrecedent))
+                    {
+                        output.Add(operatorStack.Pop());
+                    }
+
+                    operatorStack.Push(c);
+
+                    continue;
                 }
+                case '(':
+                    operatorStack.Push(c);
 
-                operatorStack.Push(c);
-
-                continue;
-            }
-
-            if (c == '(')
-            {
-                operatorStack.Push(c);
-
-                continue;
-            }
-
-            if (c == ')')
-            {
-                var p = operatorStack.Pop();
-
-                while (p != '(')
+                    continue;
+                case ')':
                 {
-                    output.Add(p);
+                    var p = operatorStack.Pop();
 
-                    p = operatorStack.Pop();
+                    while (p != '(')
+                    {
+                        output.Add(p);
+
+                        p = operatorStack.Pop();
+                    }
+
+                    break;
                 }
             }
         }

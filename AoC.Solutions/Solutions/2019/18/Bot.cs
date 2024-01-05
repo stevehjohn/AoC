@@ -92,35 +92,35 @@ public class Bot
 
         var bots = new List<Bot>();
 
-        if (moves.Count == 0)
+        switch (moves.Count)
         {
-            AddBlockerData();
+            case 0:
+                AddBlockerData();
 
-            return bots;
-        }
-
-        if (moves.Count == 1)
-        {
-            if (moves.Count == 1)
+                return bots;
+            case 1:
             {
-                _direction = moves.First();
+                if (moves.Count == 1)
+                {
+                    _direction = moves.First();
+                }
+
+                Position.X += _direction.X;
+
+                Position.Y += _direction.Y;
+
+                AllHistory.Add(HashCode.Combine(Name, Position));
+
+                _positionsSinceLastItem.Add(new Point(Position));
+
+                Steps++;
+
+                AddItemHistory();
+
+                bots.Add(this);
+
+                return bots;
             }
-
-            Position.X += _direction.X;
-
-            Position.Y += _direction.Y;
-
-            AllHistory.Add(HashCode.Combine(Name, Position));
-
-            _positionsSinceLastItem.Add(new Point(Position));
-
-            Steps++;
-
-            AddItemHistory();
-
-            bots.Add(this);
-
-            return bots;
         }
 
         foreach (var move in moves)

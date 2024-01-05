@@ -99,73 +99,26 @@ public class Cpu
     public void Execute(string opCode, int a, int b, int c)
     {
         // ReSharper disable StringLiteralTypo
-        switch (opCode)
+        _registers[c] = opCode switch
         {
-            case "addr":
-                _registers[c] = _registers[a] + _registers[b];
-
-                break;
-            case "addi":
-                _registers[c] = _registers[a] + b;
-
-                break;
-            case "mulr":
-                _registers[c] = _registers[a] * _registers[b];
-
-                break;
-            case "muli":
-                _registers[c] = _registers[a] * b;
-
-                break;
-            case "banr":
-                _registers[c] = _registers[a] & _registers[b];
-
-                break;
-            case "bani":
-                _registers[c] = _registers[a] & b;
-
-                break;
-            case "borr":
-                _registers[c] = _registers[a] | _registers[b];
-
-                break;
-            case "bori":
-                _registers[c] = _registers[a] | b;
-
-                break;
-            case "setr":
-                _registers[c] = _registers[a];
-
-                break;
-            case "seti":
-                _registers[c] = a;
-
-                break;
-            case "gtir":
-                _registers[c] = a > _registers[b] ? 1 : 0;
-
-                break;
-            case "gtri":
-                _registers[c] = _registers[a] > b ? 1 : 0;
-
-                break;
-            case "gtrr":
-                _registers[c] = _registers[a] > _registers[b] ? 1 : 0;
-
-                break;
-            case "eqir":
-                _registers[c] = a == _registers[b] ? 1 : 0;
-
-                break;
-            case "eqri":
-                _registers[c] = _registers[a] == b ? 1 : 0;
-
-                break;
-            case "eqrr":
-                _registers[c] = _registers[a] == _registers[b] ? 1 : 0;
-
-                break;
-        }
+            "addr" => _registers[a] + _registers[b],
+            "addi" => _registers[a] + b,
+            "mulr" => _registers[a] * _registers[b],
+            "muli" => _registers[a] * b,
+            "banr" => _registers[a] & _registers[b],
+            "bani" => _registers[a] & b,
+            "borr" => _registers[a] | _registers[b],
+            "bori" => _registers[a] | b,
+            "setr" => _registers[a],
+            "seti" => a,
+            "gtir" => a > _registers[b] ? 1 : 0,
+            "gtri" => _registers[a] > b ? 1 : 0,
+            "gtrr" => _registers[a] > _registers[b] ? 1 : 0,
+            "eqir" => a == _registers[b] ? 1 : 0,
+            "eqri" => _registers[a] == b ? 1 : 0,
+            "eqrr" => _registers[a] == _registers[b] ? 1 : 0,
+            _ => _registers[c]
+        };
         // ReSharper restore StringLiteralTypo
     }
 

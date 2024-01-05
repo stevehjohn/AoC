@@ -32,7 +32,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private readonly Queue<int> _destroyQueue = new();
 
-    private readonly List<Spark> _sparks = new();
+    private readonly List<Spark> _sparks = [];
 
     private readonly Random _rng = new();
 
@@ -53,21 +53,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     public override void SetPart(int part)
     {
-        switch (part)
+        Puzzle = part switch
         {
-            case 1:
-                Puzzle = new Part1(this);
-
-                break;
-
-            case 2:
-                Puzzle = new Part2(this);
-
-                break;
-
-            default:
-                throw new VisualisationParameterException();
-        }
+            1 => new Part1(this),
+            2 => new Part2(this),
+            _ => throw new VisualisationParameterException()
+        };
     }
 
     protected override void LoadContent()

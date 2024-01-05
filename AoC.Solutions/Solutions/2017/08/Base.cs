@@ -18,35 +18,16 @@ public abstract class Base : Solution
 
             registers.TryGetValue(operation.ConditionRegister, out var value);
 
-            var conditionMet = false;
-
-            switch (operation.Operator)
+            var conditionMet = operation.Operator switch
             {
-                case "<":
-                    conditionMet = value < operation.Condition;
-
-                    break;
-                case ">":
-                    conditionMet = value > operation.Condition;
-
-                    break;
-                case "<=":
-                    conditionMet = value <= operation.Condition;
-
-                    break;
-                case ">=":
-                    conditionMet = value >= operation.Condition;
-
-                    break;
-                case "==":
-                    conditionMet = value == operation.Condition;
-
-                    break;
-                case "!=":
-                    conditionMet = value != operation.Condition;
-
-                    break;
-            }
+                "<" => value < operation.Condition,
+                ">" => value > operation.Condition,
+                "<=" => value <= operation.Condition,
+                ">=" => value >= operation.Condition,
+                "==" => value == operation.Condition,
+                "!=" => value != operation.Condition,
+                _ => false
+            };
 
             if (conditionMet)
             {

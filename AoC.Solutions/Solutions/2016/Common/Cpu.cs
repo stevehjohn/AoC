@@ -134,19 +134,13 @@ public static class Cpu
 
                     output.Append(value);
 
-                    if (output.Length == 1 && output[0] == '1')
+                    switch (output.Length)
                     {
-                        return -1;
-                    }
-
-                    if (output.Length > 1 && output[^1] == output[^2])
-                    {
-                        return -1;
-                    }
-
-                    if (output.Length > 100)
-                    {
-                        return 1;
+                        case 1 when output[0] == '1':
+                        case > 1 when output[^1] == output[^2]:
+                            return -1;
+                        case > 100:
+                            return 1;
                     }
 
                     break;

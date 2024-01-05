@@ -89,36 +89,35 @@ public abstract class Base : Solution
     {
         var track = _map[cart.Position.X, cart.Position.Y];
 
-        if (track == '┼')
+        switch (track)
         {
-            cart.LastMove = (Move) (((int) cart.LastMove + 1) % 3);
-
-            if (cart.LastMove == Move.Left)
+            case '┼':
             {
-                cart.Direction = new Point(cart.Direction.Y, -cart.Direction.X);
+                cart.LastMove = (Move) (((int) cart.LastMove + 1) % 3);
+
+                switch (cart.LastMove)
+                {
+                    case Move.Left:
+                        cart.Direction = new Point(cart.Direction.Y, -cart.Direction.X);
+                        break;
+                    case Move.Right:
+                        cart.Direction = new Point(-cart.Direction.Y, cart.Direction.X);
+                        break;
+                }
+
+                return;
             }
-            else if (cart.LastMove == Move.Right)
-            {
-                cart.Direction = new Point(-cart.Direction.Y, cart.Direction.X);
-            }
+            case '┐' or '└':
+                cart.Direction = cart.Direction.Y != 0
+                    ? new Point(cart.Direction.Y, -cart.Direction.X)
+                    : new Point(-cart.Direction.Y, cart.Direction.X);
 
-            return;
-        }
-
-        if (track is '┐' or '└')
-        {
-            cart.Direction = cart.Direction.Y != 0
-                                 ? new Point(cart.Direction.Y, -cart.Direction.X)
-                                 : new Point(-cart.Direction.Y, cart.Direction.X);
-
-            return;
-        }
-
-        if (track is '┘' or '┌')
-        {
-            cart.Direction = cart.Direction.Y != 0
-                                 ? new Point(-cart.Direction.Y, cart.Direction.X)
-                                 : new Point(cart.Direction.Y, -cart.Direction.X);
+                return;
+            case '┘' or '┌':
+                cart.Direction = cart.Direction.Y != 0
+                    ? new Point(-cart.Direction.Y, cart.Direction.X)
+                    : new Point(cart.Direction.Y, -cart.Direction.X);
+                break;
         }
     }
 
