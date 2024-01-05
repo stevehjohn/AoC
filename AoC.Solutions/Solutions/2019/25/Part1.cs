@@ -8,7 +8,7 @@ public class Part1 : Base
 {
     private Room _start;
 
-    private List<Room> _rooms = [];
+    private readonly Dictionary<string, Room> _rooms = [];
     
     public override string GetAnswer()
     {
@@ -23,15 +23,65 @@ public class Part1 : Base
         
         cpu.Initialise(65536);
 
+        cpu.LoadProgram(Input);
+        
         cpu.Run();
 
-        var data = ParseOutput(cpu.ReadString());
+        var response = ParseOutput(cpu.ReadString());
 
-        _start = new Room
+        var room  = new Room
         {
-            Name = data.Name,
-            Item = data.Item
+            Name = response.Name,
+            Item = response.Item,
+            InitialDirections = response.Directions.Select(d => (d, 0)).ToList(),
+            Directions = response.Directions.Select(d => new KeyValuePair<string, Room>(d, null)).ToDictionary()
         };
+        
+        _rooms.Add(room.Name, room);
+
+        _start = room;
+
+        while (true)
+        {
+            var directionInfo = room.InitialDirections.OrderBy(d => d.Count).ToList()[0];
+
+            room.InitialDirections.Remove(directionInfo);
+
+            room.InitialDirections.Add((directionInfo.Name, directionInfo.Count + 1));
+
+            // TODO: This works, but sucks.
+            if (room.InitialDirections.All(d => d.Count > 4))
+            {
+                break;
+            }
+
+            var direction = directionInfo.Name;
+            
+            cpu.WriteString(direction);
+
+            cpu.Run();
+
+            response = ParseOutput(cpu.ReadString());
+
+            if (! _rooms.TryGetValue(response.Name, out var nextRoom))
+            {
+                nextRoom  = new Room
+                {
+                    Name = response.Name,
+                    Item = response.Item,
+                    InitialDirections = response.Directions.Select(d => (d, 0)).ToList(),
+                    Directions = response.Directions.Select(d => new KeyValuePair<string, Room>(d, null)).ToDictionary()
+                };
+
+                _rooms[nextRoom.Name] = nextRoom;
+            }
+
+            room.Directions[direction] = nextRoom;
+
+            room = nextRoom;
+        }
+        
+        Console.WriteLine(_rooms.Count);
     }
 
     // private string PassCheckpoint(List<string> items)
