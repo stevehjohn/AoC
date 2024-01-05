@@ -6,114 +6,273 @@ namespace AoC.Solutions.Solutions._2019._25;
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private readonly Cpu _cpu = new();
+    private Room _start;
 
-    // TODO: Make the program play this part also (look at day 15's exploration algorithm?).
-    private readonly List<string> _commands =
-    [
-        "east",
-        "take spool of cat6",
-        "north",
-        "north",
-        "take hypercube",
-        "south",
-        "south",
-        "west",
-        "south",
-        "south",
-        "south",
-        "east",
-        "east",
-        "take planetoid",
-        "west",
-        "west",
-        "north",
-        "north",
-        "east",
-        "take space heater",
-        "west",
-        "north",
-        "north",
-        "take festive hat",
-        "west",
-        "take dark matter",
-        "north",
-        "east",
-        "take semiconductor",
-        "east",
-        "take sand",
-        "north",
-        "inv"
-    ];
+    private readonly Dictionary<string, Room> _rooms = [];
 
+    private readonly List<string> _items = [];
+    
     public override string GetAnswer()
     {
-        _cpu.Initialise(65536);
+        Explore();
 
-        _cpu.LoadProgram(Input);
+        TestItems();
 
-        _cpu.Run();
-
-        var output = ParseOutput(_cpu.ReadString());
-
-        foreach (var command in _commands)
-        {
-            _cpu.WriteString(command);
-            
-            _cpu.Run();
-
-            var response = _cpu.ReadString();
-
-            output = ParseOutput(response);
-        }
-
-        return PassCheckpoint(output.Items);
+        return Solve();
     }
 
-    private string PassCheckpoint(List<string> items)
+    private string Solve()
     {
-        var i = 1;
+        var cpu = new Cpu();
+        
+        cpu.Initialise(65536);
 
-        var previousCode = 0;
+        cpu.LoadProgram(Input);
+        
+        cpu.Run();
 
-        string result;
+        cpu.ReadString();
+
+        var room = _start.Name;
+
+        List<string> path;
+        
+        foreach (var item in _items)
+        {
+            var end = _rooms.Single(r => r.Value.Item == item).Value;
+
+            path = GetPath(room, end.Name);
+
+            foreach (var step in path)
+            {
+                cpu.WriteString(step);
+
+                cpu.Run();
+
+                cpu.ReadString();
+            }
+
+            cpu.WriteString($"take {item}");
+
+            cpu.Run();
+
+            room = end.Name;
+        }
+
+        path = GetPath(room, _rooms.Single(r => r.Value.Directions.Any(d => d.Value.Name == r.Value.Name)).Value.Name);
+
+        foreach (var step in path)
+        {
+            cpu.WriteString(step);
+
+            cpu.Run();
+
+            cpu.ReadString();
+        }
+
+        return PassCheckpoint(cpu, _items);
+    }
+
+    private void TestItems()
+    {
+        var danger = new List<string>();
+        
+        foreach (var item in _items)
+        {
+            var end = _rooms.Single(r => r.Value.Item == item).Value;
+
+            var path = GetPath(_start.Name, end.Name);
+            
+            var cpu = new Cpu();
+        
+            cpu.Initialise(65536);
+
+            cpu.LoadProgram(Input);
+        
+            cpu.Run();
+
+            cpu.ReadString();
+
+            foreach (var step in path)
+            {
+                cpu.WriteString(step);
+
+                cpu.Run();
+
+                cpu.ReadString();
+            }
+            
+            cpu.WriteString($"take {item}");
+            
+            var response = cpu.Run(10_000);
+            
+            if (response != CpuState.AwaitingInput)
+            {
+                danger.Add(item);
+            }
+            else
+            {
+                cpu.WriteString("north");
+
+                cpu.Run();
+            
+                var result = cpu.ReadString();
+
+                if (result.Contains("You can't move!!"))
+                {
+                    danger.Add(item);
+                }
+            }
+        }
+        
+        danger.ForEach(d => _items.Remove(d));
+    }
+
+    private List<string> GetPath(string start, string end)
+    {
+        var queue = new Queue<(Room Room, List<string> Path)>();
+        
+        queue.Enqueue((_rooms[start], []));
+
+        while (queue.TryDequeue(out var item))
+        {
+            if (item.Room.Name == end)
+            {
+                return item.Path;
+            }
+
+            foreach (var direction in item.Room.Directions)
+            {
+                queue.Enqueue((direction.Value, [..item.Path, direction.Key]));
+            }
+        }
+
+        return null;
+    }
+
+    private void Explore()
+    {
+        var cpu = new Cpu();
+        
+        cpu.Initialise(65536);
+
+        cpu.LoadProgram(Input);
+        
+        cpu.Run();
+
+        var response = ParseOutput(cpu.ReadString());
+
+        var room  = new Room
+        {
+            Name = response.Name[3..^3],
+            Item = response.Item,
+            InitialDirections = response.Directions.Select(d => (d, 0)).ToList(),
+            Directions = response.Directions.Select(d => new KeyValuePair<string, Room>(d, null)).ToDictionary()
+        };
+
+        if (response.Item != null)
+        {
+            _items.Add(response.Item);
+        }
+
+        _rooms.Add(room.Name, room);
+
+        _start = room;
 
         while (true)
         {
+            var directionInfo = room.InitialDirections.OrderBy(d => d.Count).ToList()[0];
+
+            room.InitialDirections.Remove(directionInfo);
+
+            room.InitialDirections.Add((directionInfo.Name, directionInfo.Count + 1));
+
+            // TODO: This works, but sucks.
+            if (room.InitialDirections.All(d => d.Count > 4))
+            {
+                break;
+            }
+
+            var direction = directionInfo.Name;
+            
+            cpu.WriteString(direction);
+
+            cpu.Run();
+
+            response = ParseOutput(cpu.ReadString());
+
+            if (! _rooms.TryGetValue(response.Name[3..^3], out var nextRoom))
+            {
+                nextRoom  = new Room
+                {
+                    Name = response.Name[3..^3],
+                    Item = response.Item,
+                    InitialDirections = response.Directions.Select(d => (d, 0)).ToList(),
+                    Directions = response.Directions.Select(d => new KeyValuePair<string, Room>(d, null)).ToDictionary()
+                };
+
+                if (response.Item != null)
+                {
+                    _items.Add(response.Item);
+                }
+
+                _rooms[nextRoom.Name] = nextRoom;
+            }
+
+            room.Directions[direction] = nextRoom;
+
+            room = nextRoom;
+        }
+    }
+
+    private string PassCheckpoint(Cpu cpu, List<string> items)
+    {
+        var i = 1;
+    
+        var previousCode = 0;
+    
+        string result;
+
+        var checkpoint = _rooms.Single(r => r.Value.Directions.Any(d => d.Value.Name == r.Value.Name));
+
+        var direction = checkpoint.Value.Directions.Single(d => d.Value.Name == checkpoint.Value.Name).Key;
+        
+        while (true)
+        {
             var greyCode = i ^ (i >> 1);
-
+    
             var change = GetChangedBit(previousCode, greyCode);
-
+    
             previousCode = greyCode;
-
+    
             i++;
-
+    
             var command = change.Value
                               ? $"drop {items[change.Index]}"
                               : $"take {items[change.Index]}";
-
-            _cpu.WriteString(command);
-
-            _cpu.Run();
-
-            _cpu.WriteString("west");
-
-            _cpu.Run();
-
-            result = _cpu.ReadString();
-
+    
+            cpu.WriteString(command);
+    
+            cpu.Run();
+    
+            cpu.WriteString(direction);
+    
+            cpu.Run();
+    
+            result = cpu.ReadString();
+    
             if (result.Contains("Analysis complete! You may proceed."))
             {
                 break;
             }
         }
-
+    
         var index = result.IndexOf("typing", StringComparison.InvariantCultureIgnoreCase);
-
+    
         result = result[(index + 7)..];
-
+    
         result = result[..result.IndexOf(' ')];
-
+    
         return result;
     }
 
@@ -133,7 +292,7 @@ public class Part1 : Base
         return (index, (code2 & mask) > 0);
     }
 
-    private static (string Room, List<string> Directions, List<string> Items) ParseOutput(string output)
+    private static (string Name, List<string> Directions, string Item) ParseOutput(string output)
     {
         var lines = output.Split('\n');
 
@@ -141,7 +300,7 @@ public class Part1 : Base
 
         var directions = new List<string>();
 
-        var items = new List<string>();
+        string item = null;
 
         var mode = 0;
 
@@ -178,11 +337,11 @@ public class Part1 : Base
 
                     continue;
                 case 2:
-                    items.Add(line.Substring(2));
+                    item = line.Substring(2);
                     break;
             }
         }
 
-        return (room, directions, items);
+        return (room, directions, item);
     }
 }
