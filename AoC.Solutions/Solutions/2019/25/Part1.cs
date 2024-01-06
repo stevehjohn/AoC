@@ -8,6 +8,8 @@ public class Part1 : Base
 {
     private Room _start;
 
+    private Room _end;
+
     private readonly Dictionary<string, Room> _rooms = [];
 
     private readonly List<string> _items = [];
@@ -15,7 +17,7 @@ public class Part1 : Base
     public override string GetAnswer()
     {
         Explore();
-
+        
         TestItems();
 
         return Solve();
@@ -59,7 +61,7 @@ public class Part1 : Base
             room = end.Name;
         }
 
-        path = GetPath(room, _rooms.Single(r => r.Value.Directions.Any(d => d.Value.Name == r.Value.Name)).Value.Name);
+        path = GetPath(room, _end.Name);
 
         foreach (var step in path)
         {
@@ -240,6 +242,11 @@ public class Part1 : Base
 
             room.Directions[direction] = nextRoom;
 
+            if (room.Name == nextRoom.Name)
+            {
+                _end = room;
+            }
+
             room = nextRoom;
         }
     }
@@ -251,10 +258,8 @@ public class Part1 : Base
         var previousCode = 0;
     
         string result;
-
-        var checkpoint = _rooms.Single(r => r.Value.Directions.Any(d => d.Value.Name == r.Value.Name));
-
-        var direction = checkpoint.Value.Directions.Single(d => d.Value.Name == checkpoint.Value.Name).Key;
+        
+        var direction = _end.Directions.Single(d => d.Value.Name == _end.Name).Key;
         
         while (true)
         {
