@@ -166,9 +166,15 @@ public class Part1 : Base
         {
             Name = response.Name[3..^3],
             Item = response.Item,
-            InitialDirections = response.Directions.Select(d => (d, 0)).ToList(),
-            Directions = response.Directions.Select(d => new KeyValuePair<string, Room>(d, null)).ToDictionary()
+            VisitCount = [],
+            Directions = []
         };
+
+        response.Directions.ForEach(d =>
+        {
+            room.VisitCount.Add(d, 0);
+            room.Directions.Add(d, null);
+        });
 
         if (response.Item != null)
         {
@@ -181,18 +187,26 @@ public class Part1 : Base
 
         while (true)
         {
-            var directionInfo = room.InitialDirections.OrderBy(d => d.Count).ToList()[0];
-
-            room.InitialDirections.Remove(directionInfo);
-
-            room.InitialDirections.Add((directionInfo.Name, directionInfo.Count + 1));
-
             if (_rooms.All(r => r.Value.Directions.All(d => d.Value != null)))
             {
                 break;
             }
 
-            var direction = directionInfo.Name;
+            var low = int.MaxValue;
+
+            var direction = string.Empty;
+
+            foreach (var d in room.VisitCount)
+            {
+                if (d.Value < low)
+                {
+                    low = d.Value;
+
+                    direction = d.Key;
+                }
+            }
+
+            room.VisitCount[direction]++;
             
             cpu.WriteString(direction);
 
@@ -206,13 +220,13 @@ public class Part1 : Base
                 {
                     Name = response.Name[3..^3],
                     Item = response.Item,
-                    InitialDirections = [],
+                    VisitCount = [],
                     Directions = []
                 };
                 
                 response.Directions.ForEach(d =>
                 {
-                    nextRoom.InitialDirections.Add((d, 0));
+                    nextRoom.VisitCount.Add(d, 0);
                     nextRoom.Directions.Add(d, null);
                 });
 

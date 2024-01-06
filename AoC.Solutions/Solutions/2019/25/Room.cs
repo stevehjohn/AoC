@@ -8,7 +8,7 @@ public class Room
     
     public string Item { get; set; }
     
-    public List<(string Name, int Count)> InitialDirections { get; init; }
+    public Dictionary<string, int> VisitCount { get; init; }
     
     public Dictionary<string, Room> Directions { get; init; }
 
