@@ -238,37 +238,37 @@ Tests performed on a 2023 MacBook Pro.
  2019  9.2: 31,573μs      
  2019 10.1: 18,082μs      Asteroids
  2019 10.2: 1,720μs       
- 2019 11.1: 180,680μs     Personal plate (CPU used unmodified)
- 2019 11.2: 1,246μs       
+ 2019 11.1: 149,320μs     Personal plate (CPU used unmodified)
+ 2019 11.2: 1,116μs       
  2019 12.1: 503μs         Orbital simulation
  2019 12.2: 66,543μs      
- 2019 13.1: 1,531μs       Arkanoid (CPU used unmodified)
- 2019 13.2: 70,371μs      
+ 2019 13.1: 1,508μs       Arkanoid (CPU used unmodified)
+ 2019 13.2: 66,493μs      
  2019 14.1: 105μs         Replicator
  2019 14.2: 4,358μs       
  2019 15.1: 17,751μs      Oxygen repair droid (CPU used unmodified)
  2019 15.2: 156μs         
- 2019 16.1: 13,914μs      FFT
+ 2019 16.1: 13,422μs      FFT
  2019 16.2: 104,080μs     
- 2019 17.1: 5,274μs       Scaffolding vacuum robot (CPU used unmodified)
- 2019 17.2: 16,687μs      
+ 2019 17.1: 5,048μs       Scaffolding vacuum robot (CPU used unmodified)
+ 2019 17.2: 16,211μs      
  2019 18.1: 134,331μs     Maze and keys
  2019 18.2: 67,018μs      
  2019 19.1: 112,897μs     Tractorrr (CPU used unmodified)
- 2019 19.2: 181,926μs     
+ 2019 19.2: 121,421μs     
  2019 20.1: 283μs         Doughnut maze
  2019 20.2: 7,064μs       
- 2019 21.1: 2,474μs       Jumping droids (CPU used unmodified)
- 2019 21.2: 44,200μs      
- 2019 22.1: 840μs         Space shuffle
+ 2019 21.1: 2,370μs       Jumping droids (CPU used unmodified)
+ 2019 21.2: 43,135μs      
+ 2019 22.1: 819μs         Space shuffle
  2019 22.2: 26μs          
- 2019 23.1: 2,750μs       IntCode network (CPU used unmodified)
- 2019 23.2: 17,326μs      
+ 2019 23.1: 2,715μs       IntCode network (CPU used unmodified)
+ 2019 23.2: 16,700μs      
  2019 24.1: 8μs           Wastl's game of life
- 2019 24.2: 7,688μs       
- 2019 25.1: 331,038μs     Airlock password (CPU used unmodified)
+ 2019 24.2: 7,433μs       
+ 2019 25.1: 292,588μs     Airlock password (CPU used unmodified)
             -------------
-            1.631s       
+            1.494s       
 
  2020  1.1: 25μs          Expenses
  2020  1.2: 106μs         
@@ -479,5 +479,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             426.128ms    
 
- 442 puzzles solved in 58.410ms.
+ 442 puzzles solved in 58.272ms.
 ```
