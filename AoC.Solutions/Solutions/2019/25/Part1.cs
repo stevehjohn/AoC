@@ -13,6 +13,8 @@ public class Part1 : Base
     private readonly Dictionary<string, Room> _rooms = [];
 
     private readonly List<string> _items = [];
+
+    private readonly Dictionary<(string Start, string End), List<string>> _paths = [];
     
     public override string GetAnswer()
     {
@@ -132,6 +134,11 @@ public class Part1 : Base
 
     private List<string> GetPath(string start, string end)
     {
+        if (_paths.TryGetValue((start, end), out var path))
+        {
+            return path;
+        }
+
         var queue = new Queue<(Room Room, List<string> Path)>();
         
         queue.Enqueue((_rooms[start], []));
@@ -140,6 +147,8 @@ public class Part1 : Base
         {
             if (item.Room.Name == end)
             {
+                _paths.Add((start, end), item.Path);
+                
                 return item.Path;
             }
 
