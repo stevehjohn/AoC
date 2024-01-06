@@ -54,8 +54,8 @@ Tests performed on a 2023 MacBook Pro.
  2015 21.2: 541μs         
  2015 22.1: 1,400,318μs   Wizard simulator 2015
  2015 22.2: 58,336μs      
- 2015 23.1: 78μs          Opening the Turing lock
- 2015 23.2: 94μs          
+ 2015 23.1: 76μs          Opening the Turing lock
+ 2015 23.2: 92μs          
  2015 24.1: 96,233μs      It hangs in the balance
  2015 24.2: 145μs         
  2015 25.1: 57,359μs      Let it snow
@@ -72,7 +72,7 @@ Tests performed on a 2023 MacBook Pro.
  2016  4.2: 4,418μs       
  2016  5.1: 2,440,630μs   Password hash
  2016  5.2: 7,067,501μs   
- 2016  6.1: 1,016μs       Signals and noise
+ 2016  6.1: 1,015μs       Signals and noise
  2016  6.2: 280μs         
  2016  7.1: 755μs         ABBA internet protocol
  2016  7.2: 1,113μs       
@@ -86,8 +86,8 @@ Tests performed on a 2023 MacBook Pro.
  2016 11.2: 108μs         
  2016 12.1: 49,910μs      Monorail
  2016 12.2: 1,057,907μs   
- 2016 13.1: 98μs          Cubicle maze
- 2016 13.2: 88μs          
+ 2016 13.1: 97μs          Cubicle maze
+ 2016 13.2: 86μs          
  2016 14.1: 11,488μs      One time pad
  2016 14.2: 10,937,230μs  
  2016 15.1: 718μs         Disc timing
@@ -127,7 +127,7 @@ Tests performed on a 2023 MacBook Pro.
  2017  6.1: 6,525μs       Garbage collection
  2017  6.2: 8,729μs       
  2017  7.1: 244μs         Balancing act
- 2017  7.2: 263μs         
+ 2017  7.2: 259μs         
  2017  8.1: 187μs         I heard you like registers
  2017  8.2: 874μs         
  2017  9.1: 74μs          Stream garbage collection
@@ -144,7 +144,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 14.2: 23,077μs      
  2017 15.1: 129,663μs     Dueling generators
  2017 15.2: 271,545μs     
- 2017 16.1: 700μs         Permutation promenade
+ 2017 16.1: 698μs         Permutation promenade
  2017 16.2: 74,077μs      
  2017 17.1: 770μs         Spinlock
  2017 17.2: 151,559μs     
@@ -200,7 +200,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 16.2: 1,106μs       
  2018 17.1: 20,437μs      Don't go chasing waterfalls
  2018 17.2: 20,199μs      
- 2018 18.1: 414μs         I'm a lumberjack...
+ 2018 18.1: 405μs         I'm a lumberjack...
  2018 18.2: 18,093μs      
  2018 19.1: 63,539μs      Tardis halting problem
  2018 19.2: 34,365μs      
@@ -221,7 +221,7 @@ Tests performed on a 2023 MacBook Pro.
  2019  1.1: 2μs           Calculate launch fuel
  2019  1.2: 5μs           
  2019  2.1: 31μs          Gravity assist (CPU start)
- 2019  2.2: 59,320μs      
+ 2019  2.2: 57,203μs      
  2019  3.1: 2,094μs       Path intersections
  2019  3.2: 2,172μs       
  2019  4.1: 53,883μs      Forgotten password
@@ -268,7 +268,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 24.2: 7,433μs       
  2019 25.1: 292,588μs     Airlock password (CPU used unmodified)
             -------------
-            1.494s       
+            1.492s       
 
  2020  1.1: 25μs          Expenses
  2020  1.2: 106μs         
@@ -284,7 +284,7 @@ Tests performed on a 2023 MacBook Pro.
  2020  6.2: 1,706μs       
  2020  7.1: 11,915μs      Recursive bag packing
  2020  7.2: 1,029μs       
- 2020  8.1: 11μs          Console assembly debugging
+ 2020  8.1: 10μs          Console assembly debugging
  2020  8.2: 2,601μs       
  2020  9.1: 517μs         Cypher cracking
  2020  9.2: 31μs          
@@ -472,12 +472,12 @@ Tests performed on a 2023 MacBook Pro.
  2023 22.1: 38,164μs      Sand slabs
  2023 22.2: 76,927μs      
  2023 23.1: 22,267μs      A long walk
- 2023 23.2: 76,820μs      
+ 2023 23.2: 72,484μs      
  2023 24.1: 1,608μs       Never tell me the odds
  2023 24.2: 5,631μs       
  2023 25.1: 14,208μs      Snowverload
             -------------
-            426.122ms    
+            421.786ms    
 
- 442 puzzles solved in 58.257ms.
+ 442 puzzles solved in 58.250ms.
 ```
