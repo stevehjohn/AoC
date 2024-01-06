@@ -206,9 +206,15 @@ public class Part1 : Base
                 {
                     Name = response.Name[3..^3],
                     Item = response.Item,
-                    InitialDirections = response.Directions.Select(d => (d, 0)).ToList(),
-                    Directions = response.Directions.Select(d => new KeyValuePair<string, Room>(d, null)).ToDictionary()
+                    InitialDirections = [],
+                    Directions = []
                 };
+                
+                response.Directions.ForEach(d =>
+                {
+                    nextRoom.InitialDirections.Add((d, 0));
+                    nextRoom.Directions.Add(d, null);
+                });
 
                 if (response.Item != null)
                 {
