@@ -187,8 +187,7 @@ public class Part1 : Base
 
             room.InitialDirections.Add((directionInfo.Name, directionInfo.Count + 1));
 
-            // TODO: This works, but sucks.
-            if (room.InitialDirections.All(d => d.Count > 4))
+            if (_rooms.All(r => r.Value.Directions.All(d => d.Value != null)))
             {
                 break;
             }
