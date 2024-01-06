@@ -15,9 +15,15 @@ public class Part1 : Base
     private readonly List<string> _items = [];
 
     private readonly Dictionary<(string Start, string End), List<string>> _paths = [];
+
+    private readonly Cpu _cpu = new();
     
     public override string GetAnswer()
     {
+        _cpu.Initialise(65536);
+        
+        _cpu.LoadProgram(Input);
+        
         Explore();
         
         TestItems();
@@ -27,15 +33,11 @@ public class Part1 : Base
 
     private string Solve()
     {
-        var cpu = new Cpu();
+        _cpu.Reset();
         
-        cpu.Initialise(65536);
+        _cpu.Run();
 
-        cpu.LoadProgram(Input);
-        
-        cpu.Run();
-
-        cpu.ReadString();
+        _cpu.ReadString();
 
         var room = _start.Name;
 
@@ -49,16 +51,16 @@ public class Part1 : Base
 
             foreach (var step in path)
             {
-                cpu.WriteString(step);
+                _cpu.WriteString(step);
 
-                cpu.Run();
+                _cpu.Run();
 
-                cpu.ReadString();
+                _cpu.ReadString();
             }
 
-            cpu.WriteString($"take {item}");
+            _cpu.WriteString($"take {item}");
 
-            cpu.Run();
+            _cpu.Run();
 
             room = end.Name;
         }
@@ -67,14 +69,14 @@ public class Part1 : Base
 
         foreach (var step in path)
         {
-            cpu.WriteString(step);
+            _cpu.WriteString(step);
 
-            cpu.Run();
+            _cpu.Run();
 
-            cpu.ReadString();
+            _cpu.ReadString();
         }
 
-        return PassCheckpoint(cpu, _items);
+        return PassCheckpoint(_items);
     }
 
     private void TestItems()
@@ -86,29 +88,25 @@ public class Part1 : Base
             var end = _rooms.Single(r => r.Value.Item == item).Value;
 
             var path = GetPath(_start.Name, end.Name);
-            
-            var cpu = new Cpu();
-        
-            cpu.Initialise(65536);
 
-            cpu.LoadProgram(Input);
+            _cpu.Reset();
         
-            cpu.Run();
+            _cpu.Run();
 
-            cpu.ReadString();
+            _cpu.ReadString();
 
             foreach (var step in path)
             {
-                cpu.WriteString(step);
+                _cpu.WriteString(step);
 
-                cpu.Run();
+                _cpu.Run();
 
-                cpu.ReadString();
+                _cpu.ReadString();
             }
             
-            cpu.WriteString($"take {item}");
+            _cpu.WriteString($"take {item}");
             
-            var response = cpu.Run(10_000);
+            var response = _cpu.Run(10_000);
             
             if (response != CpuState.AwaitingInput)
             {
@@ -116,11 +114,11 @@ public class Part1 : Base
             }
             else
             {
-                cpu.WriteString("north");
+                _cpu.WriteString("north");
 
-                cpu.Run();
+                _cpu.Run();
             
-                var result = cpu.ReadString();
+                var result = _cpu.ReadString();
 
                 if (result.Contains("You can't move!!"))
                 {
@@ -163,15 +161,11 @@ public class Part1 : Base
 
     private void Explore()
     {
-        var cpu = new Cpu();
+        _cpu.Reset();
         
-        cpu.Initialise(65536);
+        _cpu.Run();
 
-        cpu.LoadProgram(Input);
-        
-        cpu.Run();
-
-        var response = ParseOutput(cpu.ReadString());
+        var response = ParseOutput(_cpu.ReadString());
 
         var room  = new Room
         {
@@ -219,11 +213,11 @@ public class Part1 : Base
 
             room.VisitCount[direction]++;
             
-            cpu.WriteString(direction);
+            _cpu.WriteString(direction);
 
-            cpu.Run();
+            _cpu.Run();
 
-            response = ParseOutput(cpu.ReadString());
+            response = ParseOutput(_cpu.ReadString());
 
             if (! _rooms.TryGetValue(response.Name[3..^3], out var nextRoom))
             {
@@ -260,7 +254,7 @@ public class Part1 : Base
         }
     }
 
-    private string PassCheckpoint(Cpu cpu, List<string> items)
+    private string PassCheckpoint(List<string> items)
     {
         var i = 1;
     
@@ -284,15 +278,15 @@ public class Part1 : Base
                               ? $"drop {items[change.Index]}"
                               : $"take {items[change.Index]}";
     
-            cpu.WriteString(command);
+            _cpu.WriteString(command);
     
-            cpu.Run();
+            _cpu.Run();
     
-            cpu.WriteString(direction);
+            _cpu.WriteString(direction);
     
-            cpu.Run();
+            _cpu.Run();
     
-            result = cpu.ReadString();
+            result = _cpu.ReadString();
     
             if (result.Contains("Analysis complete! You may proceed."))
             {

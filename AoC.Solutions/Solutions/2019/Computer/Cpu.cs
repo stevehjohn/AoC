@@ -25,6 +25,8 @@ public class Cpu
 
     private int _additionalMemory;
 
+    private long[] _originalMemory;
+
     public void Initialise(int additionalMemory = 0)
     {
         AddAllOpCodes();
@@ -37,8 +39,21 @@ public class Cpu
         var program = input[0].Split(',').Select(long.Parse).ToArray();
 
         Memory = new long[program.Length + _additionalMemory];
+        
+        _originalMemory = new long[program.Length + _additionalMemory];
 
         Array.Copy(program, Memory, program.Length);
+
+        Array.Copy(program, _originalMemory, program.Length);
+
+        _programCounter = 0;
+
+        _relativeBase = 0;
+    }
+
+    public void Reset()
+    {
+        Array.Copy(_originalMemory, Memory, _originalMemory.Length);
 
         _programCounter = 0;
 
