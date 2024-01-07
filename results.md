@@ -69,7 +69,7 @@ Tests performed on a 2023 MacBook Pro.
  2016  3.1: 530μs         Triangle validation
  2016  3.2: 615μs         
  2016  4.1: 4,509μs       Security through obscurity
- 2016  4.2: 4,418μs       
+ 2016  4.2: 4,409μs       
  2016  5.1: 2,440,630μs   Password hash
  2016  5.2: 7,067,501μs   
  2016  6.1: 1,015μs       Signals and noise
@@ -162,9 +162,9 @@ Tests performed on a 2023 MacBook Pro.
  2017 23.2: 2,663μs       
  2017 24.1: 142,551μs     Electromagnetic moat
  2017 24.2: 142,688μs     
- 2017 25.1: 142,839μs     Turing tape
+ 2017 25.1: 142,159μs     Turing tape
             -------------
-            2.503s       
+            2.502s       
 
  2018  1.1: 19μs          Tardis calibration
  2018  1.2: 3,880μs       
@@ -277,7 +277,7 @@ Tests performed on a 2023 MacBook Pro.
  2020  3.1: 141μs         Tobogganing through the trees
  2020  3.2: 26μs          
  2020  4.1: 277μs         Passport validation
- 2020  4.2: 646μs         
+ 2020  4.2: 643μs         
  2020  5.1: 121μs         Boarding parse
  2020  5.2: 280μs         
  2020  6.1: 207μs         Customs questions
@@ -389,7 +389,7 @@ Tests performed on a 2023 MacBook Pro.
  2022  6.2: 218μs         
  2022  7.1: 267μs         No space left on device
  2022  7.2: 263μs         
- 2022  8.1: 811μs         Treetop tree house
+ 2022  8.1: 809μs         Treetop tree house
  2022  8.2: 804μs         
  2022  9.1: 505μs         Rope bridge
  2022  9.2: 1,191μs       
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 60,123μs      
  2022 25.1: 10μs          Full of hot air
             -------------
-            307.744ms    
+            307.742ms    
 
  2023  1.1: 120μs         Trebuchet
  2023  1.2: 338μs         
@@ -479,5 +479,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             421.117ms    
 
- 442 puzzles solved in 58.248ms.
+ 442 puzzles solved in 58.247ms.
 ```
