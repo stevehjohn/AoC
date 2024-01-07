@@ -102,7 +102,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 19.2: 0μs           
  2016 20.1: 265μs         Firewall rules
  2016 20.2: 9,506μs       
- 2016 21.1: 22μs          Scrambled letters and hash
+ 2016 21.1: 21μs          Scrambled letters and hash
  2016 21.2: 25μs          
  2016 22.1: 302,054μs     Grid computing
  2016 22.2: 304,690μs     
@@ -114,12 +114,12 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             23.170s      
 
- 2017  1.1: 10μs          Captcha
+ 2017  1.1: 9μs           Captcha
  2017  1.2: 11μs          
  2017  2.1: 13μs          Spreadsheet checksum
  2017  2.2: 25μs          
  2017  3.1: 0μs           Spiral memory
- 2017  3.2: 21μs          
+ 2017  3.2: 20μs          
  2017  4.1: 137μs         Passphrase validation
  2017  4.2: 407,059μs     
  2017  5.1: 570μs         Memory trampoline
@@ -132,7 +132,7 @@ Tests performed on a 2023 MacBook Pro.
  2017  8.2: 874μs         
  2017  9.1: 74μs          Stream garbage collection
  2017  9.2: 52μs          
- 2017 10.1: 7μs           Knot hash
+ 2017 10.1: 6μs           Knot hash
  2017 10.2: 425μs         
  2017 11.1: 540μs         Hex ed
  2017 11.2: 248μs         
@@ -185,7 +185,7 @@ Tests performed on a 2023 MacBook Pro.
  2018  9.1: 939μs         Marble madness
  2018  9.2: 516,470μs     
  2018 10.1: 19,819μs      Writing in the stars
- 2018 10.2: 14,362μs      
+ 2018 10.2: 14,278μs      
  2018 11.1: 350μs         Max power... cell
  2018 11.2: 151,320μs     
  2018 12.1: 2,116μs       Plant potty
@@ -227,7 +227,7 @@ Tests performed on a 2023 MacBook Pro.
  2019  4.1: 53,883μs      Forgotten password
  2019  4.2: 53,624μs      
  2019  5.1: 31μs          Air conditioning (CPU extension 1)
- 2019  5.2: 26μs          
+ 2019  5.2: 25μs          
  2019  6.1: 241μs         Orbital transfers
  2019  6.2: 47μs          
  2019  7.1: 5,274μs       Amplifiers (CPU used unmodified)
@@ -296,7 +296,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 12.2: 27μs          
  2020 13.1: 9μs           Bus timetables
  2020 13.2: 14μs          
- 2020 14.1: 94μs          Memory bit twiddling
+ 2020 14.1: 92μs          Memory bit twiddling
  2020 14.2: 3,890μs       
  2020 15.1: 18μs          Number memory game
  2020 15.2: 233,170μs     
@@ -324,8 +324,8 @@ Tests performed on a 2023 MacBook Pro.
 
  2021  1.1: 52μs          Depth scan
  2021  1.2: 159μs         
- 2021  2.1: 48μs          Navigate forward
- 2021  2.2: 47μs          
+ 2021  2.1: 45μs          Navigate forward
+ 2021  2.2: 45μs          
  2021  3.1: 52μs          Power consumption
  2021  3.2: 131μs         
  2021  4.1: 930μs         Squid bingo
@@ -394,8 +394,8 @@ Tests performed on a 2023 MacBook Pro.
  2022  9.1: 505μs         Rope bridge
  2022  9.2: 1,191μs       
  2022 10.1: 4μs           Cathode-Ray tube
- 2022 10.2: 6μs           
- 2022 11.1: 10μs          Monkey in the middle
+ 2022 10.2: 5μs           
+ 2022 11.1: 9μs           Monkey in the middle
  2022 11.2: 2,786μs       
  2022 12.1: 1,748μs       Hill climbing algorithm
  2022 12.2: 1,662μs       
@@ -409,7 +409,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 16.2: 15,849μs      
  2022 17.1: 149μs         Pyroclastic flow
  2022 17.2: 1,400μs       
- 2022 18.1: 351μs         Boiling boulders
+ 2022 18.1: 342μs         Boiling boulders
  2022 18.2: 1,457μs       
  2022 19.1: 22,050μs      Not enough minerals
  2022 19.2: 4,284μs       
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 60,123μs      
  2022 25.1: 10μs          Full of hot air
             -------------
-            307.755ms    
+            307.744ms    
 
  2023  1.1: 120μs         Trebuchet
  2023  1.2: 338μs         
@@ -433,7 +433,7 @@ Tests performed on a 2023 MacBook Pro.
  2023  2.2: 92μs          
  2023  3.1: 53μs          Gear ratios
  2023  3.2: 186μs         
- 2023  4.1: 172μs         Scratchcards
+ 2023  4.1: 170μs         Scratchcards
  2023  4.2: 161μs         
  2023  5.1: 36μs          If you give a seed a fertilizer
  2023  5.2: 132μs         
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,631μs       
  2023 25.1: 14,208μs      Snowverload
             -------------
-            421.786ms    
+            421.784ms    
 
  442 puzzles solved in 58.250ms.
 ```
