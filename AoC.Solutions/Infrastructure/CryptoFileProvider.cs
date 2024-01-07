@@ -13,15 +13,15 @@ public static class CryptoFileProvider
             Environment.Exit(0);
         }
         
-        var clearPath = $"{path}{filename}.clear";
+        var clearPath = $"{path}{filename}";
 
-        var encryptedPath = $"{path}{filename}.encrypted";
+        var encryptedPath = $"{path}{Path.GetFileNameWithoutExtension(filename)}.encrypted";
 
         if (File.Exists(clearPath))
         {
             if (! File.Exists(encryptedPath))
             {
-                var tempPath = $"{path}{filename}.backup";
+                var tempPath = $"{path}{Path.GetFileNameWithoutExtension(filename)}.backup";
 
                 File.Copy(clearPath, tempPath);
 

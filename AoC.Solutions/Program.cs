@@ -38,13 +38,13 @@ public static class Program
         {
             path = "./Aoc.Solutions/Solutions/";
             
-            answers = CryptoFileProvider.LoadFile(path, "AllAnswers");
+            answers = CryptoFileProvider.LoadFile(path, "AllAnswers.clear");
         }
         else
         {
             path = "./Solutions/";
             
-            answers = CryptoFileProvider.LoadFile(path, "AllAnswers");
+            answers = CryptoFileProvider.LoadFile(path, "AllAnswers.clear");
         }
 
         var previousDesc = string.Empty;

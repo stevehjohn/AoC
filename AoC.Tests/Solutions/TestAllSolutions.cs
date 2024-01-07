@@ -23,13 +23,13 @@ public class TestAllSolutions
         {
             path = "./Aoc.Solutions/Solutions/";
             
-            _answers = CryptoFileProvider.LoadFile(path, "AllAnswers");
+            _answers = CryptoFileProvider.LoadFile(path, "AllAnswers.clear");
         }
         else
         {
             path = "./Solutions/";
             
-            _answers = CryptoFileProvider.LoadFile(path, "AllAnswers");
+            _answers = CryptoFileProvider.LoadFile(path, "AllAnswers.clear");
         }
     }
 

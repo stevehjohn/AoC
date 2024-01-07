@@ -1,8 +1,8 @@
 namespace AoC.Solutions.Infrastructure;
 
-public static class InputProvider
+public static class StatementProvider
 {
-    public static string[] GetInput(string nameSpace)
+    public static string[] GetStatement(string nameSpace)
     {
         var parts = nameSpace.Split('.');
 
@@ -16,33 +16,33 @@ public static class InputProvider
         {
             path = $"./Aoc.Solutions/{string.Join(Path.DirectorySeparatorChar, pathParts)}{Path.DirectorySeparatorChar}";
             
-            if (! File.Exists($"{path}input.clear") && ! File.Exists($"{path}input.encrypted"))
+            if (! File.Exists($"{path}statement.md") && ! File.Exists($"{path}statement.encrypted"))
             {
-                DownloadInput(path);
+                DownloadStatement(path);
             }
             
-            input = CryptoFileProvider.LoadFile(path, "input.clear");
+            input = CryptoFileProvider.LoadFile(path, "statement.md");
         }
         else
         {
             path = $"./{string.Join(Path.DirectorySeparatorChar, pathParts)}{Path.DirectorySeparatorChar}";
             
-            if (! File.Exists($"{path}input.clear") && ! File.Exists($"{path}input.encrypted"))
+            if (! File.Exists($"{path}statement.md") && ! File.Exists($"{path}statement.encrypted"))
             {
-                DownloadInput(path);
+                DownloadStatement(path);
             }
             
-            input = CryptoFileProvider.LoadFile(path, "input.clear");
+            input = CryptoFileProvider.LoadFile(path, "statement.md");
         }
 
         return input;
     }
-
-    private static void DownloadInput(string path)
+    
+    private static void DownloadStatement(string path)
     {
         var parts = path.Split(Path.DirectorySeparatorChar, StringSplitOptions.RemoveEmptyEntries);
         
-        using var request = new HttpRequestMessage(HttpMethod.Get, $"https://adventofcode.com/{parts[^2]}/day/{parts[^1]}/input");
+        using var request = new HttpRequestMessage(HttpMethod.Get, $"https://adventofcode.com/{parts[^2]}/day/{parts[^1]}");
         
         var keyData = File.ReadLines(GetKeyPath()).Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1]).ToArray();
 
@@ -54,7 +54,7 @@ public static class InputProvider
 
         var input = response.Content.ReadAsStringAsync().Result;
         
-        File.WriteAllText($"{path}input.clear", input);
+        File.WriteAllText($"{path}statement.md", input);
     }
 
     private static string GetKeyPath()
