@@ -12,7 +12,7 @@ public class Part1 : Base
 
     private readonly Dictionary<string, Room> _rooms = [];
 
-    private readonly List<string> _items = [];
+    private readonly List<(string Name, string Room)> _items = [];
 
     private readonly Dictionary<(string Start, string End), List<string>> _paths = [];
 
@@ -45,9 +45,9 @@ public class Part1 : Base
         
         foreach (var item in _items)
         {
-            var end = _rooms.Single(r => r.Value.Item == item).Value;
+            var end = item.Room;
 
-            path = GetPath(room, end.Name);
+            path = GetPath(room, end);
 
             foreach (var step in path)
             {
@@ -58,11 +58,11 @@ public class Part1 : Base
                 _cpu.ReadString();
             }
 
-            _cpu.WriteString($"take {item}");
+            _cpu.WriteString($"take {item.Name}");
 
             _cpu.Run();
 
-            room = end.Name;
+            room = end;
         }
 
         path = GetPath(room, _end.Name);
@@ -76,18 +76,18 @@ public class Part1 : Base
             _cpu.ReadString();
         }
 
-        return PassCheckpoint(_items);
+        return PassCheckpoint();
     }
 
     private void TestItems()
     {
-        var danger = new List<string>();
+        var danger = new List<(string Name, string Room)>();
         
         foreach (var item in _items)
         {
-            var end = _rooms.Single(r => r.Value.Item == item).Value;
+            var end = item.Room;
 
-            var path = GetPath(_start.Name, end.Name);
+            var path = GetPath(_start.Name, end);
 
             _cpu.Reset();
         
@@ -104,7 +104,7 @@ public class Part1 : Base
                 _cpu.ReadString();
             }
             
-            _cpu.WriteString($"take {item}");
+            _cpu.WriteString($"take {item.Name}");
             
             var response = _cpu.Run(10_000);
             
@@ -183,7 +183,7 @@ public class Part1 : Base
 
         if (response.Item != null)
         {
-            _items.Add(response.Item);
+            _items.Add((response.Item, room.Name));
         }
 
         _rooms.Add(room.Name, room);
@@ -237,7 +237,7 @@ public class Part1 : Base
 
                 if (response.Item != null)
                 {
-                    _items.Add(response.Item);
+                    _items.Add((response.Item, nextRoom.Name));
                 }
 
                 _rooms[nextRoom.Name] = nextRoom;
@@ -254,7 +254,7 @@ public class Part1 : Base
         }
     }
 
-    private string PassCheckpoint(List<string> items)
+    private string PassCheckpoint()
     {
         var i = 1;
     
@@ -275,8 +275,8 @@ public class Part1 : Base
             i++;
     
             var command = change.Value
-                              ? $"drop {items[change.Index]}"
-                              : $"take {items[change.Index]}";
+                              ? $"drop {_items[change.Index].Name}"
+                              : $"take {_items[change.Index].Name}";
     
             _cpu.WriteString(command);
     
