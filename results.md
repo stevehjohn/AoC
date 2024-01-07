@@ -62,7 +62,7 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             6.648s       
 
- 2016  1.1: 12μs          Manhattan distance
+ 2016  1.1: 10μs          Manhattan distance
  2016  1.2: 16μs          
  2016  2.1: 16μs          Bathroom security
  2016  2.2: 17μs          
@@ -90,13 +90,13 @@ Tests performed on a 2023 MacBook Pro.
  2016 13.2: 86μs          
  2016 14.1: 11,488μs      One time pad
  2016 14.2: 10,937,230μs  
- 2016 15.1: 718μs         Disc timing
+ 2016 15.1: 715μs         Disc timing
  2016 15.2: 5,324μs       
  2016 16.1: 6μs           Dragon checksum
  2016 16.2: 239,856μs     
  2016 17.1: 24μs          Two steps forward
  2016 17.2: 28,878μs      
- 2016 18.1: 80μs          Like a rogue
+ 2016 18.1: 77μs          Like a rogue
  2016 18.2: 463,680μs     
  2016 19.1: 5μs           The Josephus problem
  2016 19.2: 0μs           
@@ -116,7 +116,7 @@ Tests performed on a 2023 MacBook Pro.
 
  2017  1.1: 9μs           Captcha
  2017  1.2: 11μs          
- 2017  2.1: 13μs          Spreadsheet checksum
+ 2017  2.1: 12μs          Spreadsheet checksum
  2017  2.2: 25μs          
  2017  3.1: 0μs           Spiral memory
  2017  3.2: 20μs          
@@ -221,7 +221,7 @@ Tests performed on a 2023 MacBook Pro.
  2019  1.1: 2μs           Calculate launch fuel
  2019  1.2: 5μs           
  2019  2.1: 31μs          Gravity assist (CPU start)
- 2019  2.2: 57,203μs      
+ 2019  2.2: 55,078μs      
  2019  3.1: 2,094μs       Path intersections
  2019  3.2: 2,172μs       
  2019  4.1: 53,883μs      Forgotten password
@@ -268,7 +268,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 24.2: 7,433μs       
  2019 25.1: 292,588μs     Airlock password (CPU used unmodified)
             -------------
-            1.492s       
+            1.489s       
 
  2020  1.1: 25μs          Expenses
  2020  1.2: 106μs         
@@ -472,12 +472,12 @@ Tests performed on a 2023 MacBook Pro.
  2023 22.1: 38,164μs      Sand slabs
  2023 22.2: 76,927μs      
  2023 23.1: 22,267μs      A long walk
- 2023 23.2: 72,484μs      
+ 2023 23.2: 71,817μs      
  2023 24.1: 1,608μs       Never tell me the odds
  2023 24.2: 5,631μs       
  2023 25.1: 14,208μs      Snowverload
             -------------
-            421.784ms    
+            421.117ms    
 
- 442 puzzles solved in 58.250ms.
+ 442 puzzles solved in 58.248ms.
 ```
