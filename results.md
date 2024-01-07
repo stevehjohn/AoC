@@ -15,7 +15,7 @@ Tests performed on a 2023 MacBook Pro.
  2015  2.1: 409μs         Wrapping paper
  2015  2.2: 441μs         
  2015  3.1: 1,256μs       Perfectly spherical houses in a vacuum
- 2015  3.2: 1,142μs       
+ 2015  3.2: 1,137μs       
  2015  4.1: 138,785μs     Crypto stocking stuffer
  2015  4.2: 3,307,687μs   
  2015  5.1: 180μs         Naughty or nice
@@ -36,8 +36,8 @@ Tests performed on a 2023 MacBook Pro.
  2015 12.2: 2,737μs       
  2015 13.1: 19,480μs      Knights of the dinner table
  2015 13.2: 135,006μs     
- 2015 14.1: 1,414μs       Reindeer olympics
- 2015 14.2: 1,458μs       
+ 2015 14.1: 1,344μs       Reindeer olympics
+ 2015 14.2: 1,397μs       
  2015 15.1: 727μs         Science for hungry people
  2015 15.2: 724μs         
  2015 16.1: 30μs          Aunt Sue
@@ -276,8 +276,8 @@ Tests performed on a 2023 MacBook Pro.
  2020  2.2: 114μs         
  2020  3.1: 141μs         Tobogganing through the trees
  2020  3.2: 26μs          
- 2020  4.1: 277μs         Passport validation
- 2020  4.2: 643μs         
+ 2020  4.1: 276μs         Passport validation
+ 2020  4.2: 640μs         
  2020  5.1: 121μs         Boarding parse
  2020  5.2: 280μs         
  2020  6.1: 207μs         Customs questions
@@ -287,7 +287,7 @@ Tests performed on a 2023 MacBook Pro.
  2020  8.1: 10μs          Console assembly debugging
  2020  8.2: 2,601μs       
  2020  9.1: 517μs         Cypher cracking
- 2020  9.2: 31μs          
+ 2020  9.2: 30μs          
  2020 10.1: 24μs          Joltage meter
  2020 10.2: 31μs          
  2020 11.1: 3,244μs       Conway's game of seating
@@ -357,7 +357,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 16.2: 126μs         
  2021 17.1: 12,482μs      Probe launch trick shot
  2021 17.2: 12,318μs      
- 2021 18.1: 3,873μs       Snailfish homework
+ 2021 18.1: 3,784μs       Snailfish homework
  2021 18.2: 52,017μs      
  2021 19.1: 117,145μs     3D scanners and beacons
  2021 19.2: 212,184μs     
@@ -475,9 +475,9 @@ Tests performed on a 2023 MacBook Pro.
  2023 23.2: 71,817μs      
  2023 24.1: 1,608μs       Never tell me the odds
  2023 24.2: 5,631μs       
- 2023 25.1: 14,208μs      Snowverload
+ 2023 25.1: 13,675μs      Snowverload
             -------------
-            421.117ms    
+            420.584ms    
 
- 442 puzzles solved in 58.247ms.
+ 442 puzzles solved in 58.246ms.
 ```
