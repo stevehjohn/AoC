@@ -30,6 +30,9 @@
     <ItemGroup>
         <DesignData Include="_Content\Deflectors\Content.mgcb" />
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="ScreenShots\" />
+    </ItemGroup>
     <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
         <Message Text="Restoring dotnet tools" Importance="High"/>
         <Exec Command="dotnet tool restore"/>
