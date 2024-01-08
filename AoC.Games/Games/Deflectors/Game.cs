@@ -40,6 +40,8 @@ public class Game : Microsoft.Xna.Framework.Game
     private char _mirror;
 
     private (int X, int Y) _mirrorPosition;
+
+    private bool _leftButtonPrevious;
     
     public Game()
     {
@@ -90,13 +92,15 @@ public class Game : Microsoft.Xna.Framework.Game
 
     protected override void Update(GameTime gameTime)
     {
-        var mouse = (Mouse.GetState().X, Mouse.GetState().Y);
+        var mouseState = Mouse.GetState();
+        
+        var position = (mouseState.X, mouseState.Y);
 
-        if (mouse.X >= 0 && mouse.X < MapSize * TileSize && mouse.Y >= 0 && mouse.Y < MapSize * TileSize)
+        if (position.X >= 0 && position.X < MapSize * TileSize && position.Y >= 0 && position.Y < MapSize * TileSize)
         {
             IsMouseVisible = false;
             
-            _mirrorPosition = (mouse.X / TileSize, mouse.Y / TileSize);
+            _mirrorPosition = (position.X / TileSize, position.Y / TileSize);
         }
         else
         {
@@ -105,7 +109,25 @@ public class Game : Microsoft.Xna.Framework.Game
             _mirrorPosition = (-1, -1);
         }
 
+        if (mouseState.LeftButton == ButtonState.Released && _leftButtonPrevious)
+        {
+            PlaceMirror();
+        }
+
+        _leftButtonPrevious = mouseState.LeftButton == ButtonState.Pressed;
+
         base.Update(gameTime);
+    }
+
+    private void PlaceMirror()
+    {
+        _level.Mirrors.Add(new Mirror
+        {
+            Piece = _mirror,
+            Placed = true,
+            X = _mirrorPosition.X,
+            Y = _mirrorPosition.Y
+        });
     }
 
     protected override void Draw(GameTime gameTime)
@@ -178,11 +200,19 @@ public class Game : Microsoft.Xna.Framework.Game
         {
             if ((x - BeamFactor / 2) % BeamFactor == 0 && (y - BeamFactor / 2) % BeamFactor == 0)
             {
-                var mirror = _level.Mirrors.SingleOrDefault(m => m.X == x / BeamFactor && m.Y == y / BeamFactor);
-                
-                if (mirror != null)
+                var mirror = _level.Mirrors.SingleOrDefault(m => m.X == x / BeamFactor && m.Y == y / BeamFactor)?.Piece ?? '\0';
+
+                if (mirror == '\0')
                 {
-                    switch (mirror.Piece)
+                    if (_mirrorPosition.X == x / BeamFactor && _mirrorPosition.Y == y / BeamFactor)
+                    {
+                        mirror = _mirror;
+                    }
+                }
+
+                if (mirror != '\0')
+                {
+                    switch (mirror)
                     {
                         case '\\':
                             (dX, dY) = (dY, dX);
@@ -296,7 +326,7 @@ public class Game : Microsoft.Xna.Framework.Game
             _spriteBatch.Draw(_mirrors,
                 new Vector2(mirror.X * TileSize, mirror.Y * TileSize),
                 new Rectangle(offset * TileSize, 0, TileSize, TileSize),
-                Color.DarkCyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
+                mirror.Placed ? Color.Green : Color.DarkCyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
         }
 
         if (_mirrorPosition != (-1, -1))
@@ -373,7 +403,7 @@ public class Game : Microsoft.Xna.Framework.Game
                     _spriteBatch.Draw(_other,
                         new Vector2(x * TileSize, y * TileSize),
                         new Rectangle(TileSize * 3, 0, TileSize, TileSize),
-                        Color.FromNonPremultiplied(255, 255, 255, 50), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
+                        Color.FromNonPremultiplied(255, 255, 255, 25), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
                 }
             }
 
@@ -382,7 +412,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 _spriteBatch.Draw(_other,
                     new Vector2((MapSize + 1) * TileSize, y * TileSize),
                     new Rectangle(TileSize * 3, 0, TileSize, TileSize),
-                    Color.FromNonPremultiplied(255, 255, 255, 50), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);            
+                    Color.FromNonPremultiplied(255, 255, 255, 25), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);            
             }
         }
     }
