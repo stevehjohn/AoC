@@ -55,6 +55,8 @@ Lastly, `Pieces` is and array of mirrors in the order the player will be present
 "Pieces": [ "/", "-", "|", "\\", "/" ]
 ```
 
+The level is complete when a beam is hitting all the `Ends`.
+
 <a id="screenshot"></a>
 ## Screen Shot
 
