@@ -2,6 +2,7 @@
 using AoC.Games.Infrastructure;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace AoC.Games.Games.Deflectors;
 
@@ -34,7 +35,11 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private int _paletteStart;
 
+    private int _paletteDirection = -1;
+
     private char _mirror;
+
+    private (int X, int Y) _mirrorPosition;
     
     public Game()
     {
@@ -85,6 +90,21 @@ public class Game : Microsoft.Xna.Framework.Game
 
     protected override void Update(GameTime gameTime)
     {
+        var mouse = (Mouse.GetState().X, Mouse.GetState().Y);
+
+        if (mouse.X >= 0 && mouse.X < MapSize * TileSize && mouse.Y >= 0 && mouse.Y < MapSize * TileSize)
+        {
+            IsMouseVisible = false;
+            
+            _mirrorPosition = (mouse.X / TileSize, mouse.Y / TileSize);
+        }
+        else
+        {
+            IsMouseVisible = true;
+            
+            _mirrorPosition = (-1, -1);
+        }
+
         base.Update(gameTime);
     }
 
@@ -118,11 +138,13 @@ public class Game : Microsoft.Xna.Framework.Game
             DrawBeam(start);
         }
 
-        _paletteStart--;
+        _paletteStart += _paletteDirection;
 
-        if (_paletteStart == -1)
+        if (_paletteStart == -1 || _paletteStart == _palette.Length)
         {
-            _paletteStart = _palette.Length - 1;
+            _paletteDirection = -_paletteDirection;
+            
+            _paletteStart += _paletteDirection;
         }
     }
 
@@ -147,6 +169,7 @@ public class Game : Microsoft.Xna.Framework.Game
         };
         
         var colorIndex = _paletteStart;
+        var colorDirection = -_paletteDirection;
 
         var oldDx = dX;
         var oldDy = dY;
@@ -214,13 +237,15 @@ public class Game : Microsoft.Xna.Framework.Game
             _spriteBatch.Draw(_beams, 
                 new Vector2(x * BeamSize, y * BeamSize), 
                 new Rectangle(beam * BeamSize, 0, 7, 7), _palette[colorIndex], 
-                0, Vector2.Zero, Vector2.One, SpriteEffects.None, .2f);
+                0, Vector2.Zero, Vector2.One, SpriteEffects.None, .3f);
 
-            colorIndex++;
+            colorIndex += colorDirection;
 
-            if (colorIndex == _palette.Length)
+            if (colorIndex == -1 || colorIndex == _palette.Length)
             {
-                colorIndex = 0;
+                colorDirection = -colorDirection;
+                
+                colorIndex += colorDirection;
             }
 
             x += dX;
@@ -272,6 +297,32 @@ public class Game : Microsoft.Xna.Framework.Game
                 new Vector2(mirror.X * TileSize, mirror.Y * TileSize),
                 new Rectangle(offset * TileSize, 0, TileSize, TileSize),
                 Color.DarkCyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
+        }
+
+        if (_mirrorPosition != (-1, -1))
+        {
+            var offset = _mirror switch
+            {
+                '|' => 1,
+                '\\' => 2,
+                '/' => 3,
+                _ => 0
+            };
+
+            var color = Color.FromNonPremultiplied(0, 255, 0, 255);
+
+            if (_level.Mirrors.Any(m => m.X == _mirrorPosition.X && m.Y == _mirrorPosition.Y)
+                || _level.Blocked.Any(b => b.X == _mirrorPosition.X && b.Y == _mirrorPosition.Y)
+                || _level.Starts.Any(s => s.X == _mirrorPosition.X && s.Y == _mirrorPosition.Y)
+                || _level.Ends.Any(e => e.X == _mirrorPosition.X && e.Y == _mirrorPosition.Y))
+            {
+                color = Color.Red;
+            }
+
+            _spriteBatch.Draw(_mirrors,
+                new Vector2(_mirrorPosition.X * TileSize, _mirrorPosition.Y * TileSize),
+                new Rectangle(offset * TileSize, 0, TileSize, TileSize),
+                color, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .2f);
         }
     }
 
