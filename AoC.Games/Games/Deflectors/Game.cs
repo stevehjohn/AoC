@@ -187,8 +187,23 @@ public class Game : Microsoft.Xna.Framework.Game
                     case 1:
                         beam = dY == 1 ? 3 : 5;
                         break;
+                    
                     case -1:
                         beam = dY == 1 ? 4 : 2;
+                        break;
+                    
+                    default:
+                        switch (oldDy)
+                        {
+                            case 1:
+                                beam = dX == 1 ? 2 : 5;
+                                break;
+                            
+                            case -1:
+                                beam = dX == 1 ? 4 : 3;
+                                break;
+                        }
+                        
                         break;
                 }
             }
