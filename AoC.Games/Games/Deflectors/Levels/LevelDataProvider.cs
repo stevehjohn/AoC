@@ -6,8 +6,12 @@ public class LevelDataProvider
 {
     private readonly Dictionary<int, Level> _levels = [];
 
+    public int LevelCount => _levels.Count;
+    
     public void LoadLevels()
     {
+        _levels.Clear();
+        
         var data = File.ReadAllText("./Games/Deflectors/Levels/levels.json");
 
         var levels = JsonSerializer.Deserialize<Level[]>(data);

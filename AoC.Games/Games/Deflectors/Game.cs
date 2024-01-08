@@ -31,6 +31,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private readonly LevelDataProvider _levels = new();
 
+    private int _levelNumber = 1;
+    
     private Level _level;
     
     private Color[] _palette;
@@ -54,6 +56,8 @@ public class Game : Microsoft.Xna.Framework.Game
     private int _endsHit;
 
     private State _state;
+
+    private int _frame;
     
     public Game()
     {
@@ -70,9 +74,16 @@ public class Game : Microsoft.Xna.Framework.Game
 
     protected override void Initialize()
     {
+        LoadLevel();
+        
+        base.Initialize();
+    }
+
+    private void LoadLevel()
+    {
         _levels.LoadLevels();
 
-        _level = _levels.GetLevel(1);
+        _level = _levels.GetLevel(_levelNumber);
         
         _palette = PaletteGenerator.GetPalette(26,
         [
@@ -87,8 +98,6 @@ public class Game : Microsoft.Xna.Framework.Game
         _mirror = _level.Pieces[0];
         
         _level.Pieces.RemoveAt(0);
-        
-        base.Initialize();
     }
 
     protected override void LoadContent()
@@ -132,6 +141,20 @@ public class Game : Microsoft.Xna.Framework.Game
         }
 
         _leftButtonPrevious = mouseState.LeftButton == ButtonState.Pressed;
+
+        if (_state == State.LevelComplete)
+        {
+            _frame++;
+
+            if (_frame > 200 && _levelNumber < _levels.LevelCount)
+            {
+                _levelNumber++;
+                
+                LoadLevel();
+
+                _state = State.Playing;
+            }
+        }
 
         UpdateSparks();
         
