@@ -74,10 +74,31 @@ public class Game : Microsoft.Xna.Framework.Game
         DrawStarts();
 
         DrawEnds();
+
+        DrawMirrors();
         
         _spriteBatch.End();
         
         base.Draw(gameTime);
+    }
+
+    private void DrawMirrors()
+    {
+        foreach (var mirror in _level.Mirrors)
+        {
+            var offset = mirror.Piece switch
+            {
+                '|' => 1,
+                '\\' => 2,
+                '/' => 3,
+                _ => 0
+            };
+            
+            _spriteBatch.Draw(_mirrors,
+                new Vector2(mirror.X * TileSize, mirror.Y * TileSize),
+                new Rectangle(offset * TileSize, 0, TileSize, TileSize),
+                Color.DarkCyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
+        }
     }
 
     private void DrawStarts()
