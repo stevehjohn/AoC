@@ -31,6 +31,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private Texture2D _spark;
 
+    private SpriteFont _font;
+
     private readonly LevelDataProvider _levels = new();
 
     private int _levelNumber = 1;
@@ -113,6 +115,8 @@ public class Game : Microsoft.Xna.Framework.Game
         _other = Content.Load<Texture2D>("other");
 
         _spark = Content.Load<Texture2D>("spark");
+
+        _font = Content.Load<SpriteFont>("font");
     }
 
     protected override void Update(GameTime gameTime)
@@ -238,10 +242,17 @@ public class Game : Microsoft.Xna.Framework.Game
         DrawBeams();
         
         DrawSparks();
+
+        DrawInfo();
         
         _spriteBatch.End();
         
         base.Draw(gameTime);
+    }
+
+    private void DrawInfo()
+    {
+        _spriteBatch.DrawString(_font, "Level", new Vector2(0, 0), Color.FromNonPremultiplied(0, 255, 0, 255));
     }
 
     private void DrawBeams()
