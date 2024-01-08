@@ -14,4 +14,6 @@ public class Level
     public Point[] Blocked { get; set; }
 
     public char[] Pieces { get; set; }
+
+    public Mirror[] Mirrors { get; set; }
 }

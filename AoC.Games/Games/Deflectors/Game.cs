@@ -21,7 +21,9 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private Texture2D _other;
 
-    private LevelDataProvider _levels = new();
+    private readonly LevelDataProvider _levels = new();
+
+    private Level _level;
     
     public Game()
     {
@@ -39,6 +41,8 @@ public class Game : Microsoft.Xna.Framework.Game
     protected override void Initialize()
     {
         _levels.LoadLevels();
+
+        _level = _levels.GetLevel(1);
         
         base.Initialize();
     }
