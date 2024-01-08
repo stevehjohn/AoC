@@ -5,6 +5,8 @@ namespace AoC.Games.Games.Deflectors;
 
 public class Game : Microsoft.Xna.Framework.Game
 {
+    private const int MapSize = 30;
+    
     private GraphicsDeviceManager _graphics;
     
     private SpriteBatch _spriteBatch;
@@ -15,9 +17,13 @@ public class Game : Microsoft.Xna.Framework.Game
     
     public Game()
     {
-        _graphics = new GraphicsDeviceManager(this);
+        _graphics = new GraphicsDeviceManager(this)
+        {
+            PreferredBackBufferWidth = 672,
+            PreferredBackBufferHeight = 630
+        };
         
-        Content.RootDirectory = "_Content/Deflectors";
+        Content.RootDirectory = "./Deflectors";
         
         IsMouseVisible = true;
     }
