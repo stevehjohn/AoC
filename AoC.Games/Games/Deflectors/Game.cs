@@ -147,26 +147,12 @@ public class Game : Microsoft.Xna.Framework.Game
         };
         
         var colorIndex = _paletteStart;
+
+        var oldDx = dX;
+        var oldDy = dY;
         
         while (x >= 0 && x < MapSize * BeamFactor && y >= 0 && y < MapSize * BeamFactor)
         {
-            var beam = dX == 0 ? 1 : 0;
-            
-            _spriteBatch.Draw(_beams, 
-                new Vector2(x * BeamSize, y * BeamSize), 
-                new Rectangle(beam * BeamSize, 0, 7, 7), _palette[colorIndex], 
-                0, Vector2.Zero, Vector2.One, SpriteEffects.None, .2f);
-
-            colorIndex++;
-
-            if (colorIndex == _palette.Length)
-            {
-                colorIndex = 0;
-            }
-
-            x += dX;
-            y += dY;
-
             if ((x - BeamFactor / 2) % BeamFactor == 0 && (y - BeamFactor / 2) % BeamFactor == 0)
             {
                 var mirror = _level.Mirrors.SingleOrDefault(m => m.X == x / BeamFactor && m.Y == y / BeamFactor);
@@ -187,6 +173,31 @@ public class Game : Microsoft.Xna.Framework.Game
                     }
                 }
             }
+
+            int beam = 0;
+            
+            if (oldDx == dX && oldDy == dY)
+            {
+                beam = dX == 0 ? 1 : 0;
+            }
+            
+            oldDx = dX;
+            oldDy = dY;
+
+            _spriteBatch.Draw(_beams, 
+                new Vector2(x * BeamSize, y * BeamSize), 
+                new Rectangle(beam * BeamSize, 0, 7, 7), _palette[colorIndex], 
+                0, Vector2.Zero, Vector2.One, SpriteEffects.None, .2f);
+
+            colorIndex++;
+
+            if (colorIndex == _palette.Length)
+            {
+                colorIndex = 0;
+            }
+
+            x += dX;
+            y += dY;
         }
     }
 
