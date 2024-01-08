@@ -15,6 +15,8 @@ public class Game : Microsoft.Xna.Framework.Game
     private const int BeamSize = 7;
 
     private const int BeamFactor = TileSize / BeamSize;
+
+    private const int TopOffset = 32;
     
     // ReSharper disable once NotAccessedField.Local
     private GraphicsDeviceManager _graphics;
@@ -64,7 +66,7 @@ public class Game : Microsoft.Xna.Framework.Game
         _graphics = new GraphicsDeviceManager(this)
         {
             PreferredBackBufferWidth = 693,
-            PreferredBackBufferHeight = 631
+            PreferredBackBufferHeight = 663
         };
         
         Content.RootDirectory = "./Deflectors";
@@ -396,7 +398,7 @@ public class Game : Microsoft.Xna.Framework.Game
                         _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.South, colorIndex.Value, colorDirection.Value));
 
                         _spriteBatch.Draw(_beams, 
-                            new Vector2(x * BeamSize, y * BeamSize), 
+                            new Vector2(x * BeamSize, TopOffset + y * BeamSize), 
                             new Rectangle(dX == 1 ? 3 * BeamSize : 2 * BeamSize, 0, 7, 7), _palette[colorIndex.Value], 
                             0, Vector2.Zero, Vector2.One, SpriteEffects.None, .2f);
                         
@@ -409,7 +411,7 @@ public class Game : Microsoft.Xna.Framework.Game
                         _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.West, colorIndex.Value, colorDirection.Value));
 
                         _spriteBatch.Draw(_beams, 
-                            new Vector2(x * BeamSize, y * BeamSize), 
+                            new Vector2(x * BeamSize, TopOffset + y * BeamSize), 
                             new Rectangle(dY == 1 ? 2 * BeamSize : 3 * BeamSize, 0, 7, 7), _palette[colorIndex.Value], 
                             0, Vector2.Zero, Vector2.One, SpriteEffects.None, .2f);
                         
@@ -472,7 +474,7 @@ public class Game : Microsoft.Xna.Framework.Game
             oldDy = dY;
 
             _spriteBatch.Draw(_beams, 
-                new Vector2(x * BeamSize, y * BeamSize), 
+                new Vector2(x * BeamSize, TopOffset + y * BeamSize), 
                 new Rectangle(beam * BeamSize, 0, 7, 7), _palette[colorIndex.Value], 
                 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .2f);
 
@@ -510,7 +512,7 @@ public class Game : Microsoft.Xna.Framework.Game
             };
 
             _spriteBatch.Draw(_mirrors,
-                new Vector2(31 * TileSize, y * TileSize),
+                new Vector2(31 * TileSize, TopOffset + y * TileSize),
                 new Rectangle(offset * TileSize, 0, TileSize, TileSize),
                 Color.Cyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
 
@@ -531,7 +533,7 @@ public class Game : Microsoft.Xna.Framework.Game
             };
             
             _spriteBatch.Draw(_mirrors,
-                new Vector2(mirror.X * TileSize, mirror.Y * TileSize),
+                new Vector2(mirror.X * TileSize, TopOffset + mirror.Y * TileSize),
                 new Rectangle(offset * TileSize, 0, TileSize, TileSize),
                 mirror.Placed ? Color.Green : Color.DarkCyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
         }
@@ -557,7 +559,7 @@ public class Game : Microsoft.Xna.Framework.Game
             }
 
             _spriteBatch.Draw(_mirrors,
-                new Vector2(_mirrorPosition.X * TileSize, _mirrorPosition.Y * TileSize),
+                new Vector2(_mirrorPosition.X * TileSize, TopOffset + _mirrorPosition.Y * TileSize),
                 new Rectangle(offset * TileSize, 0, TileSize, TileSize),
                 color, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .3f);
         }
@@ -568,7 +570,7 @@ public class Game : Microsoft.Xna.Framework.Game
         foreach (var start in _level.Starts)
         {
             _spriteBatch.Draw(_other,
-                new Vector2(start.X * TileSize, start.Y * TileSize),
+                new Vector2(start.X * TileSize, TopOffset + start.Y * TileSize),
                 new Rectangle(0, 0, TileSize, TileSize),
                 Color.FromNonPremultiplied(255, 255, 255, 255), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
         }
@@ -593,7 +595,7 @@ public class Game : Microsoft.Xna.Framework.Game
             };
             
             _spriteBatch.Draw(_other,
-                new Vector2(end.X * TileSize, end.Y * TileSize),
+                new Vector2(end.X * TileSize, TopOffset + end.Y * TileSize),
                 new Rectangle(spriteX * TileSize, 0, TileSize, TileSize),
                 Color.FromNonPremultiplied(255, 255, 255, 255), 0, Vector2.Zero, Vector2.One, effect, .1f);
         }
@@ -608,14 +610,14 @@ public class Game : Microsoft.Xna.Framework.Game
                 if (! _level.Blocked.Any(b => b.X == x && b.Y == y))
                 {
                     _spriteBatch.Draw(_other,
-                        new Vector2(x * TileSize, y * TileSize),
+                        new Vector2(x * TileSize, TopOffset + y * TileSize),
                         new Rectangle(TileSize * 3, 0, TileSize, TileSize),
                         Color.FromNonPremultiplied(255, 255, 255, 25), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
                 }
                 else
                 {
                     _spriteBatch.Draw(_other,
-                        new Vector2(x * TileSize, y * TileSize),
+                        new Vector2(x * TileSize, TopOffset + y * TileSize),
                         new Rectangle(TileSize * 3, 0, TileSize, TileSize),
                         Color.FromNonPremultiplied(255, 255, 255, 200), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
                 }
@@ -624,7 +626,7 @@ public class Game : Microsoft.Xna.Framework.Game
             if (y > 0 && y <= 10)
             {
                 _spriteBatch.Draw(_other,
-                    new Vector2((MapSize + 1) * TileSize, y * TileSize),
+                    new Vector2((MapSize + 1) * TileSize, TopOffset + y * TileSize),
                     new Rectangle(TileSize * 3, 0, TileSize, TileSize),
                     Color.FromNonPremultiplied(255, 255, 255, 25), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);            
             }
@@ -635,7 +637,7 @@ public class Game : Microsoft.Xna.Framework.Game
     {
         foreach (var spark in _sparks)
         {
-            _spriteBatch.Draw(_spark, new Vector2(spark.Position.X, spark.Position.Y),
+            _spriteBatch.Draw(_spark, new Vector2(spark.Position.X, TopOffset + spark.Position.Y),
                 new Rectangle(spark.SpriteOffset, 0, 5, 5), spark.Color * ((float) spark.Ticks / spark.StartTicks), 0,
                 Vector2.Zero, Vector2.One, SpriteEffects.None, 0.3f);
         }
