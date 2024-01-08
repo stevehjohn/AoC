@@ -21,7 +21,7 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Change folder
-      run: cd AoC.Games
+      run: cd ./AoC.Games/
     - name: Check folder
       run: pwd
     - name: Build
