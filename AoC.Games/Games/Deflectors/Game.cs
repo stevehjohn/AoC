@@ -33,6 +33,8 @@ public class Game : Microsoft.Xna.Framework.Game
     private Color[] _palette;
 
     private int _paletteStart;
+
+    private char _mirror;
     
     public Game()
     {
@@ -62,6 +64,10 @@ public class Game : Microsoft.Xna.Framework.Game
             new Color(254, 211, 56),
             new Color(254, 253, 0)
         ]);
+
+        _mirror = _level.Pieces[0];
+        
+        _level.Pieces.RemoveAt(0);
         
         base.Initialize();
     }
@@ -89,6 +95,8 @@ public class Game : Microsoft.Xna.Framework.Game
         _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
 
         DrawBackground();
+        
+        DrawPieces();
 
         DrawStarts();
 
@@ -141,6 +149,34 @@ public class Game : Microsoft.Xna.Framework.Game
             }
 
             x++;
+        }
+    }
+
+    private void DrawPieces()
+    {
+        var index = 0;
+        
+        for (var y = 28; y >= 0; y++)
+        {
+            if (index >= _level.Pieces.Count)
+            {
+                break;
+            }
+
+            var offset = _level.Pieces[index] switch
+            {
+                '|' => 1,
+                '\\' => 2,
+                '/' => 3,
+                _ => 0
+            };
+
+            _spriteBatch.Draw(_mirrors,
+                new Vector2(31 * TileSize, y * TileSize),
+                new Rectangle(offset * TileSize, 0, TileSize, TileSize),
+                Color.DarkCyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
+
+            index++;
         }
     }
 
