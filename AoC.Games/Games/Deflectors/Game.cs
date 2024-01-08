@@ -344,7 +344,7 @@ public class Game : Microsoft.Xna.Framework.Game
                                 Ticks = 100,
                                 StartTicks = 100,
                                 SpriteOffset = 0,
-                                YGravity = -0.1f,
+                                YGravity = -0.01f,
                                 Color = Color.FromNonPremultiplied(0, 255, 255, 255)
                             });
                         }
