@@ -261,22 +261,34 @@ public class Game : Microsoft.Xna.Framework.Game
 
                 if (end != null)
                 {
-                    _sparks.Add(new Spark
+                    var valid = end.Direction switch
                     {
-                        Position = new PointFloat
-                        {
-                            X = x * BeamSize,
-                            Y = y * BeamSize
-                        },
-                        Vector = new PointFloat
-                            { X = (-10f + _rng.Next(21)) / 10, Y = -_rng.Next(41) / 10f },
-                        Ticks = 100,
-                        StartTicks = 100,
-                        SpriteOffset = 0,
-                        Color = _rng.Next(2) == 1 ? Color.FromNonPremultiplied(255, 0, 0, 255) : Color.FromNonPremultiplied(255, 255, 0, 255)
-                    });
+                        Direction.North => dY == 1,
+                        Direction.South => dY == -1,
+                        Direction.East => dX == 1,
+                        Direction.West => dX == -1,
+                        _ => false
+                    };
                     
-                    break;
+                    if (valid)
+                    {
+                        _sparks.Add(new Spark
+                        {
+                            Position = new PointFloat
+                            {
+                                X = x * BeamSize,
+                                Y = y * BeamSize
+                            },
+                            Vector = new PointFloat
+                                { X = (-10f + _rng.Next(21)) / 10, Y = -_rng.Next(41) / 10f },
+                            Ticks = 100,
+                            StartTicks = 100,
+                            SpriteOffset = 0,
+                            Color = _rng.Next(2) == 1 ? Color.FromNonPremultiplied(255, 0, 0, 255) : Color.FromNonPremultiplied(255, 255, 0, 255)
+                        });
+
+                        break;
+                    }
                 }
 
                 var mirror = _level.Mirrors.SingleOrDefault(m => m.X == x / BeamFactor && m.Y == y / BeamFactor)?.Piece ?? '\0';
@@ -366,7 +378,7 @@ public class Game : Microsoft.Xna.Framework.Game
     {
         var index = 0;
         
-        for (var y = 28; y >= 0; y++)
+        for (var y = 10; y >= 0; y++)
         {
             if (index >= _level.Pieces.Count)
             {
@@ -384,7 +396,7 @@ public class Game : Microsoft.Xna.Framework.Game
             _spriteBatch.Draw(_mirrors,
                 new Vector2(31 * TileSize, y * TileSize),
                 new Rectangle(offset * TileSize, 0, TileSize, TileSize),
-                Color.DarkCyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
+                Color.Cyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
 
             index++;
         }
@@ -486,7 +498,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 }
             }
 
-            if (y > 0 && y < MapSize - 1)
+            if (y > 0 && y <= 10)
             {
                 _spriteBatch.Draw(_other,
                     new Vector2((MapSize + 1) * TileSize, y * TileSize),
