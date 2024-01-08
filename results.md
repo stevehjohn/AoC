@@ -96,7 +96,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 16.2: 239,856μs     
  2016 17.1: 24μs          Two steps forward
  2016 17.2: 28,878μs      
- 2016 18.1: 77μs          Like a rogue
+ 2016 18.1: 76μs          Like a rogue
  2016 18.2: 463,680μs     
  2016 19.1: 5μs           The Josephus problem
  2016 19.2: 0μs           
@@ -115,7 +115,7 @@ Tests performed on a 2023 MacBook Pro.
             23.170s      
 
  2017  1.1: 9μs           Captcha
- 2017  1.2: 11μs          
+ 2017  1.2: 10μs          
  2017  2.1: 12μs          Spreadsheet checksum
  2017  2.2: 25μs          
  2017  3.1: 0μs           Spiral memory
@@ -131,14 +131,14 @@ Tests performed on a 2023 MacBook Pro.
  2017  8.1: 187μs         I heard you like registers
  2017  8.2: 874μs         
  2017  9.1: 74μs          Stream garbage collection
- 2017  9.2: 52μs          
+ 2017  9.2: 50μs          
  2017 10.1: 6μs           Knot hash
  2017 10.2: 425μs         
  2017 11.1: 540μs         Hex ed
  2017 11.2: 248μs         
  2017 12.1: 560μs         Path through the pipes
  2017 12.2: 8,551μs       
- 2017 13.1: 53μs          Firewall run
+ 2017 13.1: 48μs          Firewall run
  2017 13.2: 15,550μs      
  2017 14.1: 22,730μs      Defragger
  2017 14.2: 23,077μs      
@@ -206,7 +206,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 19.2: 34,365μs      
  2018 20.1: 3,075μs       Regex maze
  2018 20.2: 3,791μs       
- 2018 21.1: 51μs          Time machine halting problem
+ 2018 21.1: 46μs          Time machine halting problem
  2018 21.2: 15,097,788μs  
  2018 22.1: 211μs         Caving capers
  2018 22.2: 69,320μs      
@@ -433,7 +433,7 @@ Tests performed on a 2023 MacBook Pro.
  2023  2.2: 92μs          
  2023  3.1: 53μs          Gear ratios
  2023  3.2: 186μs         
- 2023  4.1: 170μs         Scratchcards
+ 2023  4.1: 160μs         Scratchcards
  2023  4.2: 161μs         
  2023  5.1: 36μs          If you give a seed a fertilizer
  2023  5.2: 132μs         
@@ -455,7 +455,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 13.2: 556μs         
  2023 14.1: 99μs          Parabolic reflector dish
  2023 14.2: 14,020μs      
- 2023 15.1: 183μs         Lens library
+ 2023 15.1: 181μs         Lens library
  2023 15.2: 493μs         
  2023 16.1: 138μs         The floor will be lava
  2023 16.2: 5,963μs       
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,631μs       
  2023 25.1: 13,675μs      Snowverload
             -------------
-            420.584ms    
+            420.572ms    
 
  442 puzzles solved in 58.246ms.
 ```
