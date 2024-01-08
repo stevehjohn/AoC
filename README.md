@@ -56,6 +56,7 @@ There are visualisations for:
 
 ## Visualisation Candidates
 
+- 2015.3
 - 2015.6
 - 2016.24
 - 2017.19
