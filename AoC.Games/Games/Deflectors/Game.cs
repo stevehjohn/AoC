@@ -49,7 +49,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private readonly Random _rng = new();
 
-    private readonly List<(int X, int Y, Direction Direction, int Color, int ColorDirection)> _splitters = [];
+    private readonly Queue<(int X, int Y, Direction Direction, int Color, int ColorDirection)> _splitters = [];
 
     public Game()
     {
@@ -222,7 +222,7 @@ public class Game : Microsoft.Xna.Framework.Game
             DrawBeam(start);
         }
 
-        foreach (var splitter in _splitters)
+        while (_splitters.TryDequeue(out var splitter))
         {
             DrawBeam(new Start { X = splitter.X, Y = splitter.Y, Direction = splitter.Direction }, splitter.Color, splitter.ColorDirection);
         }
@@ -269,6 +269,28 @@ public class Game : Microsoft.Xna.Framework.Game
         {
             if ((x - BeamFactor / 2) % BeamFactor == 0 && (y - BeamFactor / 2) % BeamFactor == 0)
             {
+                var blocker = _level.Blocked.SingleOrDefault(e => e.X == x / BeamFactor && e.Y == y / BeamFactor);
+
+                if (blocker != null)
+                {
+                    _sparks.Add(new Spark
+                    {
+                        Position = new PointFloat
+                        {
+                            X = x * BeamSize,
+                            Y = y * BeamSize
+                        },
+                        Vector = new PointFloat
+                            { X = (-10f + _rng.Next(21)) / 10, Y = -_rng.Next(21) / 10f },
+                        Ticks = 30,
+                        StartTicks = 30,
+                        SpriteOffset = 0,
+                        Color = Color.FromNonPremultiplied(0, 128, 255, 255)
+                    });
+                    
+                    break;
+                }
+
                 var end = _level.Ends.SingleOrDefault(e => e.X == x / BeamFactor && e.Y == y / BeamFactor);
 
                 if (end != null)
@@ -317,14 +339,27 @@ public class Game : Microsoft.Xna.Framework.Game
                 {
                     if (mirror == '|' && dX != 0)
                     {
-                        _splitters.Add((x / BeamFactor, y / BeamFactor, Direction.North, colorIndex.Value, colorDirection.Value));
-                        _splitters.Add((x / BeamFactor, y / BeamFactor, Direction.South, colorIndex.Value, colorDirection.Value));
+                        _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.North, colorIndex.Value, colorDirection.Value));
+                        _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.South, colorIndex.Value, colorDirection.Value));
+
+                        _spriteBatch.Draw(_beams, 
+                            new Vector2(x * BeamSize, y * BeamSize), 
+                            new Rectangle(dX == 1 ? 3 * BeamSize : 2 * BeamSize, 0, 7, 7), _palette[colorIndex.Value], 
+                            0, Vector2.Zero, Vector2.One, SpriteEffects.None, .2f);
+                        
                         break;
                     }
 
                     if (mirror == '-' && dY != 0)
                     {
-                        // Split
+                        _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.East, colorIndex.Value, colorDirection.Value));
+                        _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.West, colorIndex.Value, colorDirection.Value));
+
+                        _spriteBatch.Draw(_beams, 
+                            new Vector2(x * BeamSize, y * BeamSize), 
+                            new Rectangle(dY == 1 ? 2 * BeamSize : 3 * BeamSize, 0, 7, 7), _palette[colorIndex.Value], 
+                            0, Vector2.Zero, Vector2.One, SpriteEffects.None, .2f);
+                        
                         break;
                     }
                 }
@@ -523,6 +558,13 @@ public class Game : Microsoft.Xna.Framework.Game
                         new Vector2(x * TileSize, y * TileSize),
                         new Rectangle(TileSize * 3, 0, TileSize, TileSize),
                         Color.FromNonPremultiplied(255, 255, 255, 25), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
+                }
+                else
+                {
+                    _spriteBatch.Draw(_other,
+                        new Vector2(x * TileSize, y * TileSize),
+                        new Rectangle(TileSize * 3, 0, TileSize, TileSize),
+                        Color.FromNonPremultiplied(255, 255, 255, 200), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
                 }
             }
 
