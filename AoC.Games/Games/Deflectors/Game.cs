@@ -62,6 +62,10 @@ public class Game : Microsoft.Xna.Framework.Game
     private State _state;
 
     private int _frame;
+
+    private int _beam;
+
+    private int _score;
     
     public Game()
     {
@@ -252,12 +256,34 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private void DrawInfo()
     {
-        _spriteBatch.DrawString(_font, "Level", new Vector2(0, 0), Color.FromNonPremultiplied(0, 255, 0, 255));
+        _spriteBatch.DrawString(_font, "Level:", new Vector2(10, 0), Color.FromNonPremultiplied(0, 128, 0, 255));
+
+        var x = _font.MeasureString("Level: ").X;
+        
+        _spriteBatch.DrawString(_font, $"{_levelNumber,2}", new Vector2(x, 0), Color.FromNonPremultiplied(192, 192, 192, 255));
+
+        x = _font.MeasureString("Level: xx ").X;
+        
+        _spriteBatch.DrawString(_font, "Beam:", new Vector2(x, 0), Color.FromNonPremultiplied(0, 128, 0, 255));
+
+        x = _font.MeasureString("Level: xx Beam: ").X;
+        
+        _spriteBatch.DrawString(_font, $"{_beam / 3,3}", new Vector2(x, 0), Color.FromNonPremultiplied(192, 192, 192, 255));
+
+        x = _font.MeasureString("Level: xx  Beam: xxx ").X;
+        
+        _spriteBatch.DrawString(_font, "Score:", new Vector2(x, 0), Color.FromNonPremultiplied(0, 128, 0, 255));
+
+        x = _font.MeasureString("Level: xx  Beam: xxx Score: ").X;
+        
+        _spriteBatch.DrawString(_font, _score.ToString(), new Vector2(x, 0), Color.FromNonPremultiplied(192, 192, 192, 255));
     }
 
     private void DrawBeams()
     {
         _endsHit = 0;
+
+        _beam = 0;
         
         foreach (var start in _level.Starts)
         {
@@ -272,6 +298,8 @@ public class Game : Microsoft.Xna.Framework.Game
         if (_endsHit == _level.Ends.Length && _state == State.Playing && _mirror == '\0')
         {
             _state = State.LevelComplete;
+
+            _score += _beam / 3;
         }
 
         _paletteStart += _paletteDirection;
@@ -312,6 +340,8 @@ public class Game : Microsoft.Xna.Framework.Game
         
         while (x >= 0 && x < MapSize * BeamFactor && y >= 0 && y < MapSize * BeamFactor)
         {
+            _beam++;
+        
             if ((x - BeamFactor / 2) % BeamFactor == 0 && (y - BeamFactor / 2) % BeamFactor == 0)
             {
                 var blocker = _level.Blocked.SingleOrDefault(e => e.X == x / BeamFactor && e.Y == y / BeamFactor);
