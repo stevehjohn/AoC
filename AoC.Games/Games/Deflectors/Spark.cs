@@ -15,6 +15,6 @@ public class Spark
     public int SpriteOffset { get; init; }
     
     public Color Color { get; init; }
-    
-    public float YGravity => 0.1f;
+
+    public float YGravity { get; set; } = 0.1f;
 }

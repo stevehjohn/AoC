@@ -51,6 +51,10 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private readonly Queue<(int X, int Y, Direction Direction, int Color, int ColorDirection)> _splitters = [];
 
+    private int _endsHit;
+
+    private State _state;
+    
     public Game()
     {
         _graphics = new GraphicsDeviceManager(this)
@@ -217,6 +221,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private void DrawBeams()
     {
+        _endsHit = 0;
+        
         foreach (var start in _level.Starts)
         {
             DrawBeam(start);
@@ -225,6 +231,11 @@ public class Game : Microsoft.Xna.Framework.Game
         while (_splitters.TryDequeue(out var splitter))
         {
             DrawBeam(new Start { X = splitter.X, Y = splitter.Y, Direction = splitter.Direction }, splitter.Color, splitter.ColorDirection);
+        }
+
+        if (_endsHit == _level.Ends.Length && _state == State.Playing && _mirror == '\0')
+        {
+            _state = State.LevelComplete;
         }
 
         _paletteStart += _paletteDirection;
@@ -304,23 +315,44 @@ public class Game : Microsoft.Xna.Framework.Game
                     
                     if (valid)
                     {
-                        _sparks.Add(new Spark
+                        if (_state == State.Playing)
                         {
-                            Position = new PointFloat
+                            _sparks.Add(new Spark
                             {
-                                X = x * BeamSize,
-                                Y = y * BeamSize
-                            },
-                            Vector = new PointFloat
-                                { X = (-10f + _rng.Next(21)) / 10, Y = -_rng.Next(41) / 10f },
-                            Ticks = 100,
-                            StartTicks = 100,
-                            SpriteOffset = 0,
-                            Color = _rng.Next(2) == 1 ? Color.FromNonPremultiplied(255, 0, 0, 255) : Color.FromNonPremultiplied(255, 255, 0, 255)
-                        });
+                                Position = new PointFloat
+                                {
+                                    X = x * BeamSize,
+                                    Y = y * BeamSize
+                                },
+                                Vector = new PointFloat { X = (-10f + _rng.Next(21)) / 10, Y = -_rng.Next(41) / 10f },
+                                Ticks = 100,
+                                StartTicks = 100,
+                                SpriteOffset = 0,
+                                Color = _rng.Next(2) == 1 ? Color.FromNonPremultiplied(255, 0, 0, 255) : Color.FromNonPremultiplied(255, 255, 0, 255)
+                            });
+                        }
+                        else
+                        {
+                            _sparks.Add(new Spark
+                            {
+                                Position = new PointFloat
+                                {
+                                    X = x * BeamSize,
+                                    Y = y * BeamSize
+                                },
+                                Vector = new PointFloat { X = (-5f + _rng.Next(11)) / 10, Y = -_rng.Next(41) / 10f },
+                                Ticks = 100,
+                                StartTicks = 100,
+                                SpriteOffset = 0,
+                                YGravity = -0.1f,
+                                Color = Color.FromNonPremultiplied(0, 255, 255, 255)
+                            });
+                        }
 
-                        break;
+                        _endsHit++;
                     }
+                        
+                    break;
                 }
 
                 var mirror = _level.Mirrors.SingleOrDefault(m => m.X == x / BeamFactor && m.Y == y / BeamFactor)?.Piece ?? '\0';
