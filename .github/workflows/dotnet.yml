@@ -20,9 +20,7 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 8.0.x
-    - name: Change folder
-      run: cd ./AoC.Games/
-    - name: Check folder
-      run: pwd
+    - name: Restore
+      run: dotnet restore
     - name: Build
-      run: dotnet build -c Release
+      run: dotnet --no-restore build -c Release
