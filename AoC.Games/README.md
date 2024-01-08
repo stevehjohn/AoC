@@ -27,6 +27,8 @@ It is an array of levels. `Id` must start at `1` and increment by `1`.
 ]
 ```
 
+The playing arena is `30 x 30`, so `X` and `Y` coordinates are in the range `0 .. 29`.
+
 `Starts` and `Ends` take the same format. An `X` and `Y` coordination of the position, and a `Direction`. For a `Start`, this is the direction the laser will emit from.
 For an `End`, this is the direction the laser must hit the from. You can specify more than one of either.
 
@@ -38,6 +40,13 @@ For an `End`, this is the direction the laser must hit the from. You can specify
 
 ```json
 "Blocked": [ { "X": 27, "Y": 2 } ]
+```
+
+`Mirrors` is an array of mirrors already on the board when the level starts. It takes `X`, `Y` and `Piece` properties.
+Where Piece is `|`, `-`, `/` or `\\` (double backslash because of JSON escaping convention).
+
+```json
+"Mirrors": [ { "X": 15, "Y": 15, "Piece": "/" }, { "X": 20, "Y": 15, "Piece": "\\" } ]
 ```
 
 <a id="screenshot"></a>
