@@ -25,6 +25,13 @@
 /processorParam:TextureFormat=Color
 /build:beams.png
 
+#begin font.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:font.spritefont
+
 #begin mirrors.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -60,3 +67,4 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:spark.png
+
