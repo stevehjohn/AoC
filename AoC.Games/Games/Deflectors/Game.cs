@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using AoC.Games.Games.Deflectors.Levels;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace AoC.Games.Games.Deflectors;
@@ -19,6 +20,8 @@ public class Game : Microsoft.Xna.Framework.Game
     private Texture2D _mirrors;
 
     private Texture2D _other;
+
+    private LevelDataProvider _levels = new();
     
     public Game()
     {
@@ -35,6 +38,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
     protected override void Initialize()
     {
+        _levels.LoadLevels();
+        
         base.Initialize();
     }
 
