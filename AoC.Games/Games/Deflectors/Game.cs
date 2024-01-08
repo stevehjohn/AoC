@@ -132,6 +132,20 @@ public class Game : Microsoft.Xna.Framework.Game
 
         var y = start.Y * BeamFactor + BeamFactor / 2;
 
+        var dX = start.Direction switch
+        {
+            Direction.West => -1,
+            Direction.East => 1,
+            _ => 0
+        };
+
+        var dY = start.Direction switch
+        {
+            Direction.North => -1,
+            Direction.South => 1,
+            _ => 0
+        };
+        
         var colorIndex = _paletteStart;
         
         while (x >= 0 && x < MapSize * BeamFactor && y >= 0 && y < MapSize * BeamFactor)
@@ -148,7 +162,29 @@ public class Game : Microsoft.Xna.Framework.Game
                 colorIndex = 0;
             }
 
-            x++;
+            x += dX;
+            y += dY;
+
+            if ((x - BeamFactor / 2) % BeamFactor == 0 && (y - BeamFactor / 2) % BeamFactor == 0)
+            {
+                var mirror = _level.Mirrors.SingleOrDefault(m => m.X == x / BeamFactor && m.Y == y / BeamFactor);
+                
+                if (mirror != null)
+                {
+                    switch (mirror.Piece)
+                    {
+                        case '\\':
+                            (dX, dY) = (dY, dX);
+                            
+                            break;
+                        
+                        case '/':
+                            (dX, dY) = (-dY, -dX);
+
+                            break;
+                    }
+                }
+            }
         }
     }
 
