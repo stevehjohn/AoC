@@ -150,9 +150,11 @@ public class Game : Microsoft.Xna.Framework.Game
         
         while (x >= 0 && x < MapSize * BeamFactor && y >= 0 && y < MapSize * BeamFactor)
         {
+            var beam = dX == 0 ? 1 : 0;
+            
             _spriteBatch.Draw(_beams, 
                 new Vector2(x * BeamSize, y * BeamSize), 
-                new Rectangle(0, 0, 7, 7), _palette[colorIndex], 
+                new Rectangle(beam * BeamSize, 0, 7, 7), _palette[colorIndex], 
                 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .2f);
 
             colorIndex++;
