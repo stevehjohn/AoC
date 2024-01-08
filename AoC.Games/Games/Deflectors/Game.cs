@@ -96,7 +96,7 @@ public class Game : Microsoft.Xna.Framework.Game
         
         var position = (mouseState.X, mouseState.Y);
 
-        if (position.X >= 0 && position.X < MapSize * TileSize && position.Y >= 0 && position.Y < MapSize * TileSize)
+        if (position.X >= 0 && position.X < MapSize * TileSize && position.Y >= 0 && position.Y < MapSize * TileSize && _mirror != '\0')
         {
             IsMouseVisible = false;
             
@@ -128,6 +128,15 @@ public class Game : Microsoft.Xna.Framework.Game
             X = _mirrorPosition.X,
             Y = _mirrorPosition.Y
         });
+
+        _mirror = '\0';
+
+        if (_level.Pieces.Count > 0)
+        {
+            _mirror = _level.Pieces[0];
+        
+            _level.Pieces.RemoveAt(0);
+        }
     }
 
     protected override void Draw(GameTime gameTime)
