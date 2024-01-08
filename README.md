@@ -4,6 +4,10 @@ Stevo's Advent of Code Repo.
 
 See timings [here](results.md).
 
+## Games
+
+Only one so far, but maybe more to come. See the [AoC.Games README](AoC.Games/README.md).
+
 ## Solutions
 
 To run the solutions, navigate to the root of the repository in a terminal, command prompt or shell. Then execute the relevant command.
