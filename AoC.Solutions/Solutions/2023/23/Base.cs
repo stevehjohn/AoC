@@ -104,12 +104,7 @@ public abstract class Base : Solution
 
     private int CanReach((int X, int Y) start, (int X, int Y) end, bool isPart2)
     {
-        if (_reachCache.TryGetValue((start.X, start.Y, end.X, end.Y), out var distance))
-        {
-            return distance;
-        }
-
-        if (isPart2 && _reachCache.TryGetValue((end.X, end.Y, start.X, start.Y), out distance))
+        if (isPart2 && _reachCache.TryGetValue((end.X, end.Y, start.X, start.Y), out var distance))
         {
             return distance;
         }
