@@ -6,6 +6,8 @@ namespace AoC.Games.Games.Deflectors;
 public class Game : Microsoft.Xna.Framework.Game
 {
     private const int MapSize = 30;
+
+    private const int TileSize = 21;
     
     private GraphicsDeviceManager _graphics;
     
@@ -21,8 +23,8 @@ public class Game : Microsoft.Xna.Framework.Game
     {
         _graphics = new GraphicsDeviceManager(this)
         {
-            PreferredBackBufferWidth = 672,
-            PreferredBackBufferHeight = 630
+            PreferredBackBufferWidth = 693,
+            PreferredBackBufferHeight = 631
         };
         
         Content.RootDirectory = "./Deflectors";
@@ -55,6 +57,34 @@ public class Game : Microsoft.Xna.Framework.Game
     {
         GraphicsDevice.Clear(Color.Black);
 
+        _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
+
+        DrawBackground();
+
+        _spriteBatch.End();
+        
         base.Draw(gameTime);
+    }
+
+    private void DrawBackground()
+    {
+        for (var y = 0; y < MapSize; y++)
+        {
+            for (var x = 0; x < MapSize; x++)
+            {
+                _spriteBatch.Draw(_other,
+                    new Vector2(x * TileSize, y * TileSize),
+                    new Rectangle(TileSize * 3 + 1, 0, TileSize, TileSize),
+                    Color.FromNonPremultiplied(255, 255, 255, 50), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);            
+            }
+
+            if (y > 0 && y < MapSize - 1)
+            {
+                _spriteBatch.Draw(_other,
+                    new Vector2((MapSize + 1) * TileSize, y * TileSize),
+                    new Rectangle(TileSize * 3 + 1, 0, TileSize, TileSize),
+                    Color.FromNonPremultiplied(255, 255, 255, 50), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);            
+            }
+        }
     }
 }
