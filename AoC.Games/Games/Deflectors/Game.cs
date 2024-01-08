@@ -9,6 +9,10 @@ public class Game : Microsoft.Xna.Framework.Game
     
     private SpriteBatch _spriteBatch;
 
+    private Texture2D _beams;
+
+    private Texture2D _mirrors;
+    
     public Game()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -26,6 +30,10 @@ public class Game : Microsoft.Xna.Framework.Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+        _beams = Content.Load<Texture2D>("beams");
+
+        _mirrors = Content.Load<Texture2D>("mirrors");
     }
 
     protected override void Update(GameTime gameTime)
