@@ -297,8 +297,8 @@ public class Game : Microsoft.Xna.Framework.Game
                     {
                         Direction.North => dY == 1,
                         Direction.South => dY == -1,
-                        Direction.East => dX == 1,
-                        Direction.West => dX == -1,
+                        Direction.East => dX == -1,
+                        Direction.West => dX == 1,
                         _ => false
                     };
                     

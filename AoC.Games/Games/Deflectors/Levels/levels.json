@@ -13,6 +13,16 @@
         "X": 27,
         "Y": 27,
         "Direction": "North"
+      },
+      {
+        "X": 20,
+        "Y": 27,
+        "Direction": "North"
+      },
+      {
+        "X": 2,
+        "Y": 10,
+        "Direction": "East"
       }
     ],
     "Blocked": [
@@ -22,10 +32,10 @@
       }
     ],
     "Pieces": [
-      "-",
-      "|",
       "\\",
-      "\\"
+      "-",
+      "\\",
+      "|"
     ],
     "Mirrors":[
       {
