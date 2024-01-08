@@ -49,6 +49,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private readonly Random _rng = new();
 
+    private readonly List<(int X, int Y, Direction Direction, int Color, int ColorDirection)> _splitters = [];
+
     public Game()
     {
         _graphics = new GraphicsDeviceManager(this)
@@ -220,6 +222,13 @@ public class Game : Microsoft.Xna.Framework.Game
             DrawBeam(start);
         }
 
+        foreach (var splitter in _splitters)
+        {
+            DrawBeam(new Start { X = splitter.X, Y = splitter.Y, Direction = splitter.Direction }, splitter.Color, splitter.ColorDirection);
+        }
+        
+        _splitters.Clear();
+
         _paletteStart += _paletteDirection;
 
         if (_paletteStart == -1 || _paletteStart == _palette.Length)
@@ -230,7 +239,7 @@ public class Game : Microsoft.Xna.Framework.Game
         }
     }
 
-    private void DrawBeam(Start start)
+    private void DrawBeam(Start start, int? colorIndex = null, int? colorDirection = null)
     {
         var x = start.X * BeamFactor + BeamFactor / 2;
 
@@ -249,9 +258,9 @@ public class Game : Microsoft.Xna.Framework.Game
             Direction.South => 1,
             _ => 0
         };
-        
-        var colorIndex = _paletteStart;
-        var colorDirection = -_paletteDirection;
+
+        colorIndex ??= _paletteStart;
+        colorDirection ??= -_paletteDirection;
 
         var oldDx = dX;
         var oldDy = dY;
@@ -308,7 +317,8 @@ public class Game : Microsoft.Xna.Framework.Game
                 {
                     if (mirror == '|' && dX != 0)
                     {
-                        // Split
+                        _splitters.Add((x / BeamFactor, y / BeamFactor, Direction.North, colorIndex.Value, colorDirection.Value));
+                        _splitters.Add((x / BeamFactor, y / BeamFactor, Direction.South, colorIndex.Value, colorDirection.Value));
                         break;
                     }
 
@@ -375,7 +385,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
             _spriteBatch.Draw(_beams, 
                 new Vector2(x * BeamSize, y * BeamSize), 
-                new Rectangle(beam * BeamSize, 0, 7, 7), _palette[colorIndex], 
+                new Rectangle(beam * BeamSize, 0, 7, 7), _palette[colorIndex.Value], 
                 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .2f);
 
             colorIndex += colorDirection;
