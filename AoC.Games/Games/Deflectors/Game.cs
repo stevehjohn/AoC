@@ -9,6 +9,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private const int TileSize = 21;
     
+    // ReSharper disable once NotAccessedField.Local
     private GraphicsDeviceManager _graphics;
     
     private SpriteBatch _spriteBatch;
