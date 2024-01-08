@@ -180,7 +180,19 @@ public class Game : Microsoft.Xna.Framework.Game
             {
                 beam = dX == 0 ? 1 : 0;
             }
-            
+            else
+            {
+                switch (oldDx)
+                {
+                    case 1:
+                        beam = dY == 1 ? 3 : 5;
+                        break;
+                    case -1:
+                        beam = dY == 1 ? 4 : 2;
+                        break;
+                }
+            }
+
             oldDx = dX;
             oldDy = dY;
 
