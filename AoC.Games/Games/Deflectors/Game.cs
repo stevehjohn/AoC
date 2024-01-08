@@ -71,9 +71,49 @@ public class Game : Microsoft.Xna.Framework.Game
 
         DrawBackground();
 
+        DrawStarts();
+
+        DrawEnds();
+        
         _spriteBatch.End();
         
         base.Draw(gameTime);
+    }
+
+    private void DrawStarts()
+    {
+        foreach (var start in _level.Starts)
+        {
+            _spriteBatch.Draw(_other,
+                new Vector2(start.X * TileSize, start.Y * TileSize),
+                new Rectangle(0, 0, TileSize, TileSize),
+                Color.FromNonPremultiplied(255, 255, 255, 255), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
+        }
+    }
+
+    private void DrawEnds()
+    {
+        foreach (var end in _level.Ends)
+        {
+            var spriteX = end.Direction switch
+            {
+                Direction.North => 1,
+                Direction.South => 1,
+                _ => 2
+            };
+
+            var effect = end.Direction switch
+            {
+                Direction.South => SpriteEffects.FlipVertically,
+                Direction.West => SpriteEffects.FlipHorizontally,
+                _ => SpriteEffects.None
+            };
+            
+            _spriteBatch.Draw(_other,
+                new Vector2(end.X * TileSize, end.Y * TileSize),
+                new Rectangle(spriteX * TileSize, 0, TileSize, TileSize),
+                Color.FromNonPremultiplied(255, 255, 255, 255), 0, Vector2.Zero, Vector2.One, effect, 0f);
+        }
     }
 
     private void DrawBackground()
@@ -82,17 +122,20 @@ public class Game : Microsoft.Xna.Framework.Game
         {
             for (var x = 0; x < MapSize; x++)
             {
-                _spriteBatch.Draw(_other,
-                    new Vector2(x * TileSize, y * TileSize),
-                    new Rectangle(TileSize * 3 + 1, 0, TileSize, TileSize),
-                    Color.FromNonPremultiplied(255, 255, 255, 50), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);            
+                if (! _level.Blocked.Any(b => b.X == x && b.Y == y))
+                {
+                    _spriteBatch.Draw(_other,
+                        new Vector2(x * TileSize, y * TileSize),
+                        new Rectangle(TileSize * 3, 0, TileSize, TileSize),
+                        Color.FromNonPremultiplied(255, 255, 255, 50), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
+                }
             }
 
             if (y > 0 && y < MapSize - 1)
             {
                 _spriteBatch.Draw(_other,
                     new Vector2((MapSize + 1) * TileSize, y * TileSize),
-                    new Rectangle(TileSize * 3 + 1, 0, TileSize, TileSize),
+                    new Rectangle(TileSize * 3, 0, TileSize, TileSize),
                     Color.FromNonPremultiplied(255, 255, 255, 50), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);            
             }
         }
