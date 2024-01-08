@@ -19,8 +19,8 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 6.0.x
-    - name: Restore dependencies
-      run: dotnet restore
+        dotnet-version: 8.0.x
+    - name: Change folder
+      run: cd AoC.Games
     - name: Build
-      run: dotnet build --no-restore -c Release
+      run: dotnet build -c Release
