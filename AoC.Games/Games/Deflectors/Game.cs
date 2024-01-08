@@ -217,6 +217,12 @@ public class Game : Microsoft.Xna.Framework.Game
         {
             if ((x - BeamFactor / 2) % BeamFactor == 0 && (y - BeamFactor / 2) % BeamFactor == 0)
             {
+                var end = _level.Ends.SingleOrDefault(e => e.X == x / BeamFactor && e.Y == y / BeamFactor);
+
+                if (end != null)
+                {
+                }
+
                 var mirror = _level.Mirrors.SingleOrDefault(m => m.X == x / BeamFactor && m.Y == y / BeamFactor)?.Piece ?? '\0';
 
                 if (mirror == '\0')
