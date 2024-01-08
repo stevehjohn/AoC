@@ -1,4 +1,5 @@
 ﻿using AoC.Games.Games.Deflectors.Levels;
+using AoC.Games.Infrastructure;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -9,6 +10,10 @@ public class Game : Microsoft.Xna.Framework.Game
     private const int MapSize = 30;
 
     private const int TileSize = 21;
+
+    private const int BeamSize = 7;
+
+    private const int BeamFactor = TileSize / BeamSize;
     
     // ReSharper disable once NotAccessedField.Local
     private GraphicsDeviceManager _graphics;
@@ -24,6 +29,10 @@ public class Game : Microsoft.Xna.Framework.Game
     private readonly LevelDataProvider _levels = new();
 
     private Level _level;
+    
+    private Color[] _palette;
+
+    private int _paletteStart;
     
     public Game()
     {
@@ -43,6 +52,16 @@ public class Game : Microsoft.Xna.Framework.Game
         _levels.LoadLevels();
 
         _level = _levels.GetLevel(1);
+        
+        _palette = PaletteGenerator.GetPalette(26,
+        [
+            new Color(46, 27, 134),
+            new Color(119, 35, 172),
+            new Color(176, 83, 203),
+            new Color(255, 168, 76),
+            new Color(254, 211, 56),
+            new Color(254, 253, 0)
+        ]);
         
         base.Initialize();
     }
@@ -76,10 +95,53 @@ public class Game : Microsoft.Xna.Framework.Game
         DrawEnds();
 
         DrawMirrors();
+
+        DrawBeams();
         
         _spriteBatch.End();
         
         base.Draw(gameTime);
+    }
+
+    private void DrawBeams()
+    {
+        foreach (var start in _level.Starts)
+        {
+            DrawBeam(start);
+        }
+
+        _paletteStart--;
+
+        if (_paletteStart == -1)
+        {
+            _paletteStart = _palette.Length - 1;
+        }
+    }
+
+    private void DrawBeam(Start start)
+    {
+        var x = start.X * BeamFactor + BeamFactor / 2;
+
+        var y = start.Y * BeamFactor + BeamFactor / 2;
+
+        var colorIndex = _paletteStart;
+        
+        while (x >= 0 && x < MapSize * BeamFactor && y >= 0 && y < MapSize * BeamFactor)
+        {
+            _spriteBatch.Draw(_beams, 
+                new Vector2(x * BeamSize, y * BeamSize), 
+                new Rectangle(0, 0, 7, 7), _palette[colorIndex], 
+                0, Vector2.Zero, Vector2.One, SpriteEffects.None, .2f);
+
+            colorIndex++;
+
+            if (colorIndex == _palette.Length)
+            {
+                colorIndex = 0;
+            }
+
+            x++;
+        }
     }
 
     private void DrawMirrors()
@@ -97,7 +159,7 @@ public class Game : Microsoft.Xna.Framework.Game
             _spriteBatch.Draw(_mirrors,
                 new Vector2(mirror.X * TileSize, mirror.Y * TileSize),
                 new Rectangle(offset * TileSize, 0, TileSize, TileSize),
-                Color.DarkCyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
+                Color.DarkCyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
         }
     }
 
@@ -108,7 +170,7 @@ public class Game : Microsoft.Xna.Framework.Game
             _spriteBatch.Draw(_other,
                 new Vector2(start.X * TileSize, start.Y * TileSize),
                 new Rectangle(0, 0, TileSize, TileSize),
-                Color.FromNonPremultiplied(255, 255, 255, 255), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
+                Color.FromNonPremultiplied(255, 255, 255, 255), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
         }
     }
 
@@ -133,7 +195,7 @@ public class Game : Microsoft.Xna.Framework.Game
             _spriteBatch.Draw(_other,
                 new Vector2(end.X * TileSize, end.Y * TileSize),
                 new Rectangle(spriteX * TileSize, 0, TileSize, TileSize),
-                Color.FromNonPremultiplied(255, 255, 255, 255), 0, Vector2.Zero, Vector2.One, effect, 0f);
+                Color.FromNonPremultiplied(255, 255, 255, 255), 0, Vector2.Zero, Vector2.One, effect, .1f);
         }
     }
 
