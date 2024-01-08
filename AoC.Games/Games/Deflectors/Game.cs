@@ -226,8 +226,6 @@ public class Game : Microsoft.Xna.Framework.Game
         {
             DrawBeam(new Start { X = splitter.X, Y = splitter.Y, Direction = splitter.Direction }, splitter.Color, splitter.ColorDirection);
         }
-        
-        _splitters.Clear();
 
         _paletteStart += _paletteDirection;
 
