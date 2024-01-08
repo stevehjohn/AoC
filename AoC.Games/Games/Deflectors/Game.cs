@@ -121,6 +121,14 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private void PlaceMirror()
     {
+        if (_level.Mirrors.Any(m => m.X == _mirrorPosition.X && m.Y == _mirrorPosition.Y)
+            || _level.Blocked.Any(b => b.X == _mirrorPosition.X && b.Y == _mirrorPosition.Y)
+            || _level.Starts.Any(s => s.X == _mirrorPosition.X && s.Y == _mirrorPosition.Y)
+            || _level.Ends.Any(e => e.X == _mirrorPosition.X && e.Y == _mirrorPosition.Y))
+        {
+            return;
+        }
+
         _level.Mirrors.Add(new Mirror
         {
             Piece = _mirror,
