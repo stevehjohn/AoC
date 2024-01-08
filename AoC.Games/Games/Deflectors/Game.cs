@@ -119,7 +119,10 @@ public class Game : Microsoft.Xna.Framework.Game
 
         if (mouseState.LeftButton == ButtonState.Released && _leftButtonPrevious)
         {
-            PlaceMirror();
+            if (position.X >= 0 && position.X < MapSize * TileSize && position.Y >= 0 && position.Y < MapSize * TileSize && _mirror != '\0')
+            {
+                PlaceMirror();
+            }
         }
 
         _leftButtonPrevious = mouseState.LeftButton == ButtonState.Pressed;
@@ -301,6 +304,21 @@ public class Game : Microsoft.Xna.Framework.Game
                     }
                 }
 
+                if (mirror == '|' || mirror == '-')
+                {
+                    if (mirror == '|' && dX != 0)
+                    {
+                        // Split
+                        break;
+                    }
+
+                    if (mirror == '-' && dY != 0)
+                    {
+                        // Split
+                        break;
+                    }
+                }
+
                 if (mirror != '\0')
                 {
                     switch (mirror)
@@ -378,7 +396,7 @@ public class Game : Microsoft.Xna.Framework.Game
     {
         var index = 0;
         
-        for (var y = 10; y >= 0; y++)
+        for (var y = 10; y > 0; y--)
         {
             if (index >= _level.Pieces.Count)
             {
@@ -443,7 +461,7 @@ public class Game : Microsoft.Xna.Framework.Game
             _spriteBatch.Draw(_mirrors,
                 new Vector2(_mirrorPosition.X * TileSize, _mirrorPosition.Y * TileSize),
                 new Rectangle(offset * TileSize, 0, TileSize, TileSize),
-                color, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .2f);
+                color, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .3f);
         }
     }
 
