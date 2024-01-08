@@ -14,6 +14,8 @@ public class Game : Microsoft.Xna.Framework.Game
     private Texture2D _beams;
 
     private Texture2D _mirrors;
+
+    private Texture2D _other;
     
     public Game()
     {
@@ -40,6 +42,8 @@ public class Game : Microsoft.Xna.Framework.Game
         _beams = Content.Load<Texture2D>("beams");
 
         _mirrors = Content.Load<Texture2D>("mirrors");
+
+        _other = Content.Load<Texture2D>("other");
     }
 
     protected override void Update(GameTime gameTime)
