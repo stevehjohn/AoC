@@ -46,7 +46,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private readonly LevelDataProvider _levels = new();
 
-    private int _levelNumber = 1;
+    private int _levelNumber = 6;
 
     private Level _level;
 
@@ -70,8 +70,6 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private readonly Queue<(int X, int Y, Direction Direction, int BeamSteps, int Color, int ColorDirection)> _splitters = [];
 
-    private int _endsHit;
-
     private State _state;
 
     private int _frame;
@@ -90,7 +88,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private bool _hitUnplaced;
 
-    private readonly HashSet<(int, int)> _hitMirrors = [];
+    private readonly HashSet<(int, int)> _hitEnds = [];
 
     public Game()
     {
@@ -232,7 +230,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
         if (_level.Pieces.Count == 0 && _mirror == '\0' && _state == State.Playing)
         {
-            if (_endsHit < _level.Ends.Length)
+            if (_hitEnds.Count < _level.Ends.Length)
             {
                 _message = "OH DEAR,\nLOOKS LIKE YOU CAN'T\nCOMPLETE THIS LEVEL.\nCLICK TO RESTART.";
 
@@ -469,9 +467,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private void DrawBeams()
     {
-        _endsHit = 0;
-
-        _hitMirrors.Clear();
+        _hitEnds.Clear();
         
         _beam = 0;
 
@@ -491,7 +487,7 @@ public class Game : Microsoft.Xna.Framework.Game
             DrawBeam(new Start { X = splitter.X, Y = splitter.Y, Direction = splitter.Direction }, splitter.BeamSteps, splitter.Color, splitter.ColorDirection);
         }
 
-        if (_endsHit == _level.Ends.Length && _state == State.Playing && ! _hitUnplaced)
+        if (_hitEnds.Count == _level.Ends.Length && _state == State.Playing && ! _hitUnplaced)
         {
             _state = State.LevelComplete;
 
@@ -618,7 +614,7 @@ public class Game : Microsoft.Xna.Framework.Game
                             });
                         }
 
-                        _endsHit++;
+                        _hitEnds.Add((end.X, end.Y));
                     }
 
                     break;
@@ -686,11 +682,6 @@ public class Game : Microsoft.Xna.Framework.Game
 
                             break;
                     }
-                }
-
-                if (mirror != '\0')
-                {
-                    _hitMirrors.Add((x / BeamFactor, y / BeamFactor));
                 }
             }
 
