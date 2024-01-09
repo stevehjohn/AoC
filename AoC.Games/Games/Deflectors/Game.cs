@@ -295,7 +295,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
         _beamSteps = 0;
         
-        _beamMaxSteps++;
+        _beamMaxSteps += 2;
         
         foreach (var start in _level.Starts)
         {
