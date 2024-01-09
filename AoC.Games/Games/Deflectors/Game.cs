@@ -18,6 +18,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private const int TopOffset = 32;
 
+    private const string HighScoreFile = "high-score.txt";
+
     // ReSharper disable once NotAccessedField.Local
     private GraphicsDeviceManager _graphics;
 
@@ -93,6 +95,13 @@ public class Game : Microsoft.Xna.Framework.Game
     protected override void Initialize()
     {
         LoadLevel();
+
+        if (File.Exists(HighScoreFile))
+        {
+            var text = File.ReadAllText(HighScoreFile);
+
+            _highScore = int.Parse(text);
+        }
 
         base.Initialize();
     }
@@ -207,6 +216,8 @@ public class Game : Microsoft.Xna.Framework.Game
                 if (_score > _highScore)
                 {
                     _highScore = _score;
+                    
+                    File.WriteAllText(HighScoreFile, _highScore.ToString());
                 }
 
                 if (_levelNumber < _levels.LevelCount)
