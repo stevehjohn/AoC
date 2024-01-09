@@ -70,8 +70,6 @@ public class Game : Microsoft.Xna.Framework.Game
     private int _score;
 
     private int _beamMaxSteps;
-
-    private int _beamSteps;
     
     public Game()
     {
@@ -293,18 +291,18 @@ public class Game : Microsoft.Xna.Framework.Game
 
         _beam = 0;
 
-        _beamSteps = 0;
+        var beamSteps = 0;
         
         _beamMaxSteps += 2;
         
         foreach (var start in _level.Starts)
         {
-            DrawBeam(start);
+            beamSteps += DrawBeam(start, beamSteps);
         }
 
         while (_splitters.TryDequeue(out var splitter))
         {
-            DrawBeam(new Start { X = splitter.X, Y = splitter.Y, Direction = splitter.Direction }, splitter.Color, splitter.ColorDirection);
+            DrawBeam(new Start { X = splitter.X, Y = splitter.Y, Direction = splitter.Direction }, beamSteps, splitter.Color, splitter.ColorDirection);
         }
 
         if (_endsHit == _level.Ends.Length && _state == State.Playing && _mirror == '\0')
@@ -324,7 +322,7 @@ public class Game : Microsoft.Xna.Framework.Game
         }
     }
 
-    private void DrawBeam(Start start, int? colorIndex = null, int? colorDirection = null)
+    private int DrawBeam(Start start, int beamSteps, int? colorIndex = null, int? colorDirection = null)
     {
         var x = start.X * BeamFactor + BeamFactor / 2;
 
@@ -354,9 +352,9 @@ public class Game : Microsoft.Xna.Framework.Game
         {
             _beam++;
 
-            _beamSteps++;
+            beamSteps++;
 
-            if (_beamSteps > _beamMaxSteps)
+            if (beamSteps > _beamMaxSteps)
             {
                 break;
             }
@@ -450,7 +448,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
                         if (_lastMirrorPosition != _mirrorPosition)
                         {
-                            _beamMaxSteps = _beamSteps;
+                            _beamMaxSteps = beamSteps;
 
                             _lastMirrorPosition = _mirrorPosition;
                         }
@@ -557,6 +555,8 @@ public class Game : Microsoft.Xna.Framework.Game
             x += dX;
             y += dY;
         }
+
+        return beamSteps;
     }
 
     private void DrawPieces()
@@ -602,7 +602,7 @@ public class Game : Microsoft.Xna.Framework.Game
             _spriteBatch.Draw(_mirrors,
                 new Vector2(mirror.X * TileSize, TopOffset + mirror.Y * TileSize),
                 new Rectangle(offset * TileSize, 0, TileSize, TileSize),
-                mirror.Placed ? Color.Green : Color.DarkCyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
+                mirror.Placed ? Color.Green : Color.DarkCyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .4f);
         }
 
         if (_mirrorPosition != (-1, -1))
