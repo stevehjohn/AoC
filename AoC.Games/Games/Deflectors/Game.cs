@@ -162,13 +162,27 @@ public class Game : Microsoft.Xna.Framework.Game
         {
             _frame++;
 
+            if (_frame > 200)
+            {
+                _state = State.PreparingNextLevel;
+
+                _frame = 0;
+            }
+        }
+
+        if (_state == State.PreparingNextLevel)
+        {
+            _frame++;
+
             if (_frame > 200 && _levelNumber < _levels.LevelCount)
             {
                 _levelNumber++;
-                
+
                 LoadLevel();
 
                 _state = State.Playing;
+
+                _frame = 0;
             }
         }
 
@@ -410,7 +424,7 @@ public class Game : Microsoft.Xna.Framework.Game
                                 Color = _rng.Next(2) == 1 ? Color.FromNonPremultiplied(255, 0, 0, 255) : Color.FromNonPremultiplied(255, 255, 0, 255)
                             });
                         }
-                        else
+                        else if (_state == State.LevelComplete)
                         {
                             _sparks.Add(new Spark
                             {
