@@ -187,6 +187,34 @@ public class Game : Microsoft.Xna.Framework.Game
             }
         }
 
+        if (_state == State.Failed)
+        {
+            if (mouseState.LeftButton == ButtonState.Released && _leftButtonPrevious)
+            {
+                _levelNumber = 1;
+
+                _score = 0;
+
+                _displayScore = 0;
+                
+                LoadLevel();
+
+                _message = null;
+
+                _state = State.Playing;
+            }
+        }
+
+        if (_level.Pieces.Count == 0 && _mirror == '\0' && _state == State.Playing)
+        {
+            if (_endsHit < _level.Ends.Length)
+            {
+                _message = "OH DEAR,\nLOOKS LIKE YOU CAN'T\nCOMPLETE THIS LEVEL.\nCLICK TO RESTART.";
+
+                _state = State.Failed;
+            }
+        }
+
         if (_state == State.LevelComplete)
         {
             _frame++;
@@ -420,11 +448,14 @@ public class Game : Microsoft.Xna.Framework.Game
             DrawBeam(new Start { X = splitter.X, Y = splitter.Y, Direction = splitter.Direction }, splitter.BeamSteps, splitter.Color, splitter.ColorDirection);
         }
 
-        if (_endsHit == _level.Ends.Length && _state == State.Playing && _mirror == '\0')
+        if (_endsHit == _level.Ends.Length && _state == State.Playing)
         {
-            _state = State.LevelComplete;
+            if (_mirror == '\0')
+            {
+                _state = State.LevelComplete;
 
-            _score += _beam / 3;
+                _score += _beam / 3;
+            }
         }
 
         _paletteStart += _paletteDirection;

@@ -5,5 +5,6 @@ public enum State
     AwaitingStart,
     Playing,
     LevelComplete,
-    PreparingNextLevel
+    PreparingNextLevel,
+    Failed
 }
