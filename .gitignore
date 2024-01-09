@@ -298,3 +298,4 @@ lambdas/.serverless/
 *.key
 *.clear
 *.orig
+AoC.Games.*.zip
