@@ -57,7 +57,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private readonly Random _rng = new();
 
-    private readonly Queue<(int X, int Y, Direction Direction, int Color, int ColorDirection)> _splitters = [];
+    private readonly Queue<(int X, int Y, Direction Direction, int BeamSteps, int Color, int ColorDirection)> _splitters = [];
 
     private int _endsHit;
 
@@ -302,7 +302,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
         while (_splitters.TryDequeue(out var splitter))
         {
-            DrawBeam(new Start { X = splitter.X, Y = splitter.Y, Direction = splitter.Direction }, beamSteps, splitter.Color, splitter.ColorDirection);
+            DrawBeam(new Start { X = splitter.X, Y = splitter.Y, Direction = splitter.Direction }, splitter.BeamSteps, splitter.Color, splitter.ColorDirection);
         }
 
         if (_endsHit == _level.Ends.Length && _state == State.Playing && _mirror == '\0')
@@ -459,8 +459,8 @@ public class Game : Microsoft.Xna.Framework.Game
                 {
                     if (mirror == '|' && dX != 0)
                     {
-                        _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.North, colorIndex.Value, colorDirection.Value));
-                        _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.South, colorIndex.Value, colorDirection.Value));
+                        _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.North, beamSteps, colorIndex.Value, colorDirection.Value));
+                        _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.South, beamSteps, colorIndex.Value, colorDirection.Value));
 
                         _spriteBatch.Draw(_beams, 
                             new Vector2(x * BeamSize, TopOffset + y * BeamSize), 
@@ -472,8 +472,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
                     if (mirror == '-' && dY != 0)
                     {
-                        _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.East, colorIndex.Value, colorDirection.Value));
-                        _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.West, colorIndex.Value, colorDirection.Value));
+                        _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.East, beamSteps, colorIndex.Value, colorDirection.Value));
+                        _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.West, beamSteps, colorIndex.Value, colorDirection.Value));
 
                         _spriteBatch.Draw(_beams, 
                             new Vector2(x * BeamSize, TopOffset + y * BeamSize), 
