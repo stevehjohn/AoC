@@ -181,7 +181,14 @@ public class Game : Microsoft.Xna.Framework.Game
                 }
                 else
                 {
-                    _message = "ALL LEVELS COMPLETE.\nCLICK TO PLAY AGAIN...";
+                    if (_score > _highScore)
+                    {
+                        _message = "ALL LEVELS COMPLETE.\nCONGRATULATIONS!\nNEW HIGH SCORE!\nCLICK TO PLAY AGAIN...";
+                    }
+                    else
+                    {
+                        _message = "ALL LEVELS COMPLETE.\nCLICK TO PLAY AGAIN...";
+                    }
                 }
 
                 _frame = 0;
@@ -190,8 +197,18 @@ public class Game : Microsoft.Xna.Framework.Game
 
         if (_state == State.PreparingNextLevel)
         {
+            if (_score > _highScore)
+            {
+                _highScore++;
+            }
+
             if (mouseState.LeftButton == ButtonState.Released && _leftButtonPrevious)
             {
+                if (_score > _highScore)
+                {
+                    _highScore = _score;
+                }
+
                 if (_levelNumber < _levels.LevelCount)
                 {
                     _levelNumber++;
