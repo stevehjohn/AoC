@@ -213,7 +213,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
             if (mouseState.LeftButton == ButtonState.Released && _leftButtonPrevious)
             {
-                if (_score > _highScore)
+                if (_score >= _highScore)
                 {
                     _highScore = _score;
                     
