@@ -69,6 +69,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private int _score;
 
+    private int _displayScore;
+
     private int _beamMaxSteps;
     
     public Game()
@@ -162,7 +164,12 @@ public class Game : Microsoft.Xna.Framework.Game
         {
             _frame++;
 
-            if (_frame > 200)
+            if (_displayScore < _score)
+            {
+                _displayScore++;
+            }
+
+            if (_frame > 200 && _displayScore == _score)
             {
                 _state = State.PreparingNextLevel;
 
@@ -251,7 +258,7 @@ public class Game : Microsoft.Xna.Framework.Game
     {
         GraphicsDevice.Clear(Color.Black);
 
-        _spriteBatch.Begin(SpriteSortMode.FrontToBack);//, samplerState: SamplerState.PointClamp);
+        _spriteBatch.Begin(SpriteSortMode.FrontToBack);
 
         DrawBackground();
         
@@ -292,7 +299,7 @@ public class Game : Microsoft.Xna.Framework.Game
         
         x = _font.MeasureString("Score: ").X + 390;
         
-        _spriteBatch.DrawString(_font, _score.ToString(), new Vector2(x, -2), Color.FromNonPremultiplied(192, 192, 192, 255));
+        _spriteBatch.DrawString(_font, _displayScore.ToString(), new Vector2(x, -2), Color.FromNonPremultiplied(192, 192, 192, 255));
     }
 
     private void DrawBeams()
