@@ -5,9 +5,8 @@ name: Build Artifacts and Release
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    paths:
+    - ./AoC.Games/**
 
 jobs:
   build:
