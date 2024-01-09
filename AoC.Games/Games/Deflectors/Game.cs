@@ -9,7 +9,7 @@ namespace AoC.Games.Games.Deflectors;
 
 public class Game : Microsoft.Xna.Framework.Game
 {
-    private int _scaleFactor = 1;
+    private readonly int _scaleFactor = 1;
     
     private const int MapSize = 30;
 
@@ -92,20 +92,20 @@ public class Game : Microsoft.Xna.Framework.Game
 
     public Game()
     {
-        _graphics = new GraphicsDeviceManager(this)
-        {
-            PreferredBackBufferWidth = BufferWidth * _scaleFactor,
-            PreferredBackBufferHeight = BufferHeight * _scaleFactor
-        };
-
-        Content.RootDirectory = "./Deflectors";
-
-        IsMouseVisible = true;
-
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
             _scaleFactor = 2;
         }
+
+        _graphics = new GraphicsDeviceManager(this)
+                    {
+                        PreferredBackBufferWidth = BufferWidth * _scaleFactor,
+                        PreferredBackBufferHeight = BufferHeight * _scaleFactor
+                    };
+
+        Content.RootDirectory = "./Deflectors";
+
+        IsMouseVisible = true;
     }
 
     protected override void Initialize()
