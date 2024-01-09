@@ -25,5 +25,9 @@ jobs:
       run: dotnet publish ./AoC.Games/AoC.Games.csproj -c Release -r osx-arm64 /p:PublishReadyToRun=true /p:TieredCompilation=false --self-contained
     - name: Publish Windows Intel
       run: dotnet publish ./AoC.Games/AoC.Games.csproj -c Release -r win-x64 /p:PublishReadyToRun=true /p:TieredCompilation=false --self-contained
+    - name: Zip macOS Intel Package
+      run: zip -r AoC.Games.zip AoC.Games/bin/Release/net8.0/osx-x64/publish
+    - name: Zip macOS Apple Package
+      run: zip -r AoC.Games.zip AoC.Games/bin/Release/net8.0/osx-arm64/publish
     - name: Zip Windows Intel Package
-      run: zip -r AoC.Games.zip AoC.Games/bin/Release/net8.0/win-x64
+      run: zip -r AoC.Games.zip AoC.Games/bin/Release/net8.0/win-x64/publish
