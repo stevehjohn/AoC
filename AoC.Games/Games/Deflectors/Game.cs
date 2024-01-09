@@ -20,10 +20,16 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private const string HighScoreFile = "high-score.txt";
 
+    private const int BufferWidth = 693;
+
+    private const int BufferHeight = 663;
+
     // ReSharper disable once NotAccessedField.Local
     private GraphicsDeviceManager _graphics;
 
     private SpriteBatch _spriteBatch;
+
+    private RenderTarget2D _renderTarget;
 
     private Texture2D _beams;
 
@@ -85,8 +91,8 @@ public class Game : Microsoft.Xna.Framework.Game
     {
         _graphics = new GraphicsDeviceManager(this)
         {
-            PreferredBackBufferWidth = 693,
-            PreferredBackBufferHeight = 663
+            PreferredBackBufferWidth = BufferWidth,
+            PreferredBackBufferHeight = BufferHeight
         };
 
         Content.RootDirectory = "./Deflectors";
@@ -136,6 +142,8 @@ public class Game : Microsoft.Xna.Framework.Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+        _renderTarget = new RenderTarget2D(GraphicsDevice, BufferWidth, BufferHeight);
 
         _beams = Content.Load<Texture2D>("beams");
 
@@ -383,6 +391,14 @@ public class Game : Microsoft.Xna.Framework.Game
 
         DrawMessage();
 
+        _spriteBatch.End();
+        
+        GraphicsDevice.SetRenderTarget(null);
+        
+        _spriteBatch.Begin();
+        
+        _spriteBatch.Draw(_renderTarget, new Rectangle(0, 0, BufferWidth, BufferHeight), Color.White);
+        
         _spriteBatch.End();
 
         base.Draw(gameTime);
