@@ -72,6 +72,8 @@ public class Game : Microsoft.Xna.Framework.Game
     private int _displayScore;
 
     private int _beamMaxSteps;
+
+    private string _message;
     
     public Game()
     {
@@ -173,6 +175,8 @@ public class Game : Microsoft.Xna.Framework.Game
             {
                 _state = State.PreparingNextLevel;
 
+                _message = "LEVEL COMPLETE.\nPREPARING NEXT LEVEL...";
+
                 _frame = 0;
             }
         }
@@ -181,11 +185,13 @@ public class Game : Microsoft.Xna.Framework.Game
         {
             _frame++;
 
-            if (_frame > 200 && _levelNumber < _levels.LevelCount)
+            if (_frame > 600 && _levelNumber < _levels.LevelCount)
             {
                 _levelNumber++;
 
                 LoadLevel();
+
+                _message = null;
 
                 _state = State.Playing;
 
@@ -276,28 +282,53 @@ public class Game : Microsoft.Xna.Framework.Game
 
         DrawInfo();
         
+        DrawMessage();
+        
         _spriteBatch.End();
         
         base.Draw(gameTime);
     }
 
+    private void DrawMessage()
+    {
+        if (_message == null)
+        {
+            return;
+        }
+
+        var w = _font.MeasureString(_message).X;
+
+        // ReSharper disable once PossibleLossOfFraction
+        var start = TileSize * MapSize / 2 - w / 2;
+
+        for (var y = -2; y < 3; y++)
+        {
+            for (var x = -2; x < 3; x++)
+            {
+                _spriteBatch.DrawString(_font, _message, new Vector2(start + x, 250 + y), Color.Black, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .5f);
+            }
+        }
+
+        _spriteBatch.DrawString(_font, _message, new Vector2(start, 250), Color.FromNonPremultiplied(255, 255, 255, 255), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .6f);
+    }
+
     private void DrawInfo()
     {
-        _spriteBatch.DrawString(_font, "Level:", new Vector2(40, -2), Color.FromNonPremultiplied(0, 128, 0, 255));
+        _spriteBatch.DrawString(_font, "LEVEL:", new Vector2(40, -2), Color.FromNonPremultiplied(0, 128, 0, 255));
 
-        var x = _font.MeasureString("Level: ").X + 40;
+        var x = _font.MeasureString("LEVEL: ").X + 40;
         
         _spriteBatch.DrawString(_font, $"{_levelNumber,2}", new Vector2(x, -2), Color.FromNonPremultiplied(192, 192, 192, 255));
 
-        _spriteBatch.DrawString(_font, "Beam:", new Vector2(200, -2), Color.FromNonPremultiplied(0, 128, 0, 255));
+        _spriteBatch.DrawString(_font, "BEAM:", new Vector2(200, -2), Color.FromNonPremultiplied(0, 128, 0, 255));
 
-        x = _font.MeasureString("Beam: ").X + 200;
+        x = _font.MeasureString("BEAM: ").X + 200;
         
         _spriteBatch.DrawString(_font, $"{_beam / 3,3}", new Vector2(x, -2), Color.FromNonPremultiplied(192, 192, 192, 255));
 
-        _spriteBatch.DrawString(_font, "Score:", new Vector2(390, -2), Color.FromNonPremultiplied(0, 128, 0, 255));
+        _spriteBatch.DrawString(_font, "SCORE:", new Vector2(390, -2), Color.FromNonPremultiplied(0, 128, 0, 255));
         
-        x = _font.MeasureString("Score: ").X + 390;
+        x = _font.MeasureString("SCORE: ").X + 390;
         
         _spriteBatch.DrawString(_font, _displayScore.ToString(), new Vector2(x, -2), Color.FromNonPremultiplied(192, 192, 192, 255));
     }
