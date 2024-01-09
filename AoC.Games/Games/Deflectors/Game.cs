@@ -259,7 +259,7 @@ public class Game : Microsoft.Xna.Framework.Game
             {
                 _state = State.PreparingNextLevel;
 
-                var mirrors = _hitMirrors.Count < _level.Mirrors.Count
+                var mirrors = _hitMirrors.Count < _level.Mirrors.Count || _mirror != '\0'
                     ? "YOU COULD HAVE OBTAINED\nA HIGHER SCORE IF YOU\nHIT ALL YOUR MIRRORS.\n"
                     : string.Empty;
                 
