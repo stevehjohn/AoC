@@ -49,13 +49,15 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private (int X, int Y) _mirrorPosition;
 
+    private (int X, int Y) _lastMirrorPosition;
+
     private bool _leftButtonPrevious;
     
     private readonly List<Spark> _sparks = [];
 
     private readonly Random _rng = new();
 
-    private readonly Queue<(int X, int Y, Direction Direction, int Color, int ColorDirection)> _splitters = [];
+    private readonly Queue<(int X, int Y, Direction Direction, int BeamSteps, int Color, int ColorDirection)> _splitters = [];
 
     private int _endsHit;
 
@@ -68,8 +70,6 @@ public class Game : Microsoft.Xna.Framework.Game
     private int _score;
 
     private int _beamMaxSteps;
-
-    private int _beamSteps;
     
     public Game()
     {
@@ -291,18 +291,18 @@ public class Game : Microsoft.Xna.Framework.Game
 
         _beam = 0;
 
-        _beamSteps = 0;
+        var beamSteps = 0;
         
-        _beamMaxSteps++;
+        _beamMaxSteps += 2;
         
         foreach (var start in _level.Starts)
         {
-            DrawBeam(start);
+            beamSteps += DrawBeam(start, beamSteps);
         }
 
         while (_splitters.TryDequeue(out var splitter))
         {
-            DrawBeam(new Start { X = splitter.X, Y = splitter.Y, Direction = splitter.Direction }, splitter.Color, splitter.ColorDirection);
+            DrawBeam(new Start { X = splitter.X, Y = splitter.Y, Direction = splitter.Direction }, splitter.BeamSteps, splitter.Color, splitter.ColorDirection);
         }
 
         if (_endsHit == _level.Ends.Length && _state == State.Playing && _mirror == '\0')
@@ -322,7 +322,7 @@ public class Game : Microsoft.Xna.Framework.Game
         }
     }
 
-    private void DrawBeam(Start start, int? colorIndex = null, int? colorDirection = null)
+    private int DrawBeam(Start start, int beamSteps, int? colorIndex = null, int? colorDirection = null)
     {
         var x = start.X * BeamFactor + BeamFactor / 2;
 
@@ -352,9 +352,9 @@ public class Game : Microsoft.Xna.Framework.Game
         {
             _beam++;
 
-            _beamSteps++;
+            beamSteps++;
 
-            if (_beamSteps > _beamMaxSteps)
+            if (beamSteps > _beamMaxSteps)
             {
                 break;
             }
@@ -445,6 +445,13 @@ public class Game : Microsoft.Xna.Framework.Game
                     if (_mirrorPosition.X == x / BeamFactor && _mirrorPosition.Y == y / BeamFactor)
                     {
                         mirror = _mirror;
+
+                        if (_lastMirrorPosition != _mirrorPosition)
+                        {
+                            _beamMaxSteps = beamSteps;
+
+                            _lastMirrorPosition = _mirrorPosition;
+                        }
                     }
                 }
 
@@ -452,8 +459,8 @@ public class Game : Microsoft.Xna.Framework.Game
                 {
                     if (mirror == '|' && dX != 0)
                     {
-                        _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.North, colorIndex.Value, colorDirection.Value));
-                        _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.South, colorIndex.Value, colorDirection.Value));
+                        _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.North, beamSteps, colorIndex.Value, colorDirection.Value));
+                        _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.South, beamSteps, colorIndex.Value, colorDirection.Value));
 
                         _spriteBatch.Draw(_beams, 
                             new Vector2(x * BeamSize, TopOffset + y * BeamSize), 
@@ -465,8 +472,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
                     if (mirror == '-' && dY != 0)
                     {
-                        _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.East, colorIndex.Value, colorDirection.Value));
-                        _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.West, colorIndex.Value, colorDirection.Value));
+                        _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.East, beamSteps, colorIndex.Value, colorDirection.Value));
+                        _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.West, beamSteps, colorIndex.Value, colorDirection.Value));
 
                         _spriteBatch.Draw(_beams, 
                             new Vector2(x * BeamSize, TopOffset + y * BeamSize), 
@@ -548,6 +555,8 @@ public class Game : Microsoft.Xna.Framework.Game
             x += dX;
             y += dY;
         }
+
+        return beamSteps;
     }
 
     private void DrawPieces()
@@ -593,7 +602,7 @@ public class Game : Microsoft.Xna.Framework.Game
             _spriteBatch.Draw(_mirrors,
                 new Vector2(mirror.X * TileSize, TopOffset + mirror.Y * TileSize),
                 new Rectangle(offset * TileSize, 0, TileSize, TileSize),
-                mirror.Placed ? Color.Green : Color.DarkCyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
+                mirror.Placed ? Color.Green : Color.DarkCyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .4f);
         }
 
         if (_mirrorPosition != (-1, -1))
