@@ -75,6 +75,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private string _message;
 
+    private int _highScore;
+
     public Game()
     {
         _graphics = new GraphicsDeviceManager(this)
@@ -329,23 +331,29 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private void DrawInfo()
     {
-        _spriteBatch.DrawString(_font, "LEVEL:", new Vector2(40, -2), Color.FromNonPremultiplied(0, 128, 0, 255));
+        _spriteBatch.DrawString(_font, "LEVEL:", new Vector2(10, -2), Color.FromNonPremultiplied(0, 128, 0, 255));
 
-        var x = _font.MeasureString("LEVEL: ").X + 40;
+        var x = _font.MeasureString("LEVEL: ").X + 10;
 
         _spriteBatch.DrawString(_font, $"{_levelNumber,2}", new Vector2(x, -2), Color.FromNonPremultiplied(192, 192, 192, 255));
 
-        _spriteBatch.DrawString(_font, "BEAM:", new Vector2(200, -2), Color.FromNonPremultiplied(0, 128, 0, 255));
+        _spriteBatch.DrawString(_font, "BEAM:", new Vector2(170, -2), Color.FromNonPremultiplied(0, 128, 0, 255));
 
-        x = _font.MeasureString("BEAM: ").X + 200;
+        x = _font.MeasureString("BEAM: ").X + 170;
 
         _spriteBatch.DrawString(_font, $"{_beam / 3,3}", new Vector2(x, -2), Color.FromNonPremultiplied(192, 192, 192, 255));
 
-        _spriteBatch.DrawString(_font, "SCORE:", new Vector2(390, -2), Color.FromNonPremultiplied(0, 128, 0, 255));
+        _spriteBatch.DrawString(_font, "SCORE:", new Vector2(340, -2), Color.FromNonPremultiplied(0, 128, 0, 255));
 
-        x = _font.MeasureString("SCORE: ").X + 390;
+        x = _font.MeasureString("SCORE: ").X + 340;
 
         _spriteBatch.DrawString(_font, _displayScore.ToString(), new Vector2(x, -2), Color.FromNonPremultiplied(192, 192, 192, 255));
+
+        _spriteBatch.DrawString(_font, "HI:", new Vector2(530, -2), Color.FromNonPremultiplied(0, 128, 0, 255));
+
+        x = _font.MeasureString("HI: ").X + 530;
+
+        _spriteBatch.DrawString(_font, _highScore.ToString(), new Vector2(x, -2), Color.FromNonPremultiplied(192, 192, 192, 255));
     }
 
     private void DrawBeams()
