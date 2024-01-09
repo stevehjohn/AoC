@@ -6,7 +6,7 @@ name: Build Artifacts and Release
 on:
   push:
     paths:
-    - ./AoC.Games/**
+      - AoC.Games/**
 
 jobs:
   build:
