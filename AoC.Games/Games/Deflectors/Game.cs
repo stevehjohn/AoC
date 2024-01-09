@@ -397,7 +397,7 @@ public class Game : Microsoft.Xna.Framework.Game
         
         GraphicsDevice.SetRenderTarget(null);
         
-        _spriteBatch.Begin();
+        _spriteBatch.Begin(SpriteSortMode.FrontToBack, blendState: BlendState.NonPremultiplied, samplerState: SamplerState.PointClamp);
         
         _spriteBatch.Draw(_renderTarget, new Rectangle(0, 0, BufferWidth * 2, BufferHeight * 2), Color.White);
         
@@ -422,12 +422,12 @@ public class Game : Microsoft.Xna.Framework.Game
         {
             for (var x = -2; x < 3; x++)
             {
-                _spriteBatch.DrawString(_font, _message, new Vector2(start + x, 200 + y), Color.Black, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .5f);
+                _spriteBatch.DrawString(_font, _message, new Vector2(start + x, 200 + y), Color.Black, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .6f);
             }
         }
 
         _spriteBatch.DrawString(_font, _message, new Vector2(start, 200), Color.FromNonPremultiplied(255, 255, 255, 255), 0, Vector2.Zero, Vector2.One,
-            SpriteEffects.None, .6f);
+            SpriteEffects.None, .7f);
     }
 
     private void DrawInfo()
@@ -810,7 +810,7 @@ public class Game : Microsoft.Xna.Framework.Game
             _spriteBatch.Draw(_mirrors,
                 new Vector2(_mirrorPosition.X * TileSize, TopOffset + _mirrorPosition.Y * TileSize),
                 new Rectangle(offset * TileSize, 0, TileSize, TileSize),
-                color, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .3f);
+                color, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .5f);
         }
     }
 
