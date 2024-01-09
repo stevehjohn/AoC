@@ -66,6 +66,10 @@ public class Game : Microsoft.Xna.Framework.Game
     private int _beam;
 
     private int _score;
+
+    private int _beamMaxSteps;
+
+    private int _beamSteps;
     
     public Game()
     {
@@ -106,6 +110,8 @@ public class Game : Microsoft.Xna.Framework.Game
         _mirror = _level.Pieces[0];
         
         _level.Pieces.RemoveAt(0);
+
+        _paletteStart = _palette.Length - 1;
     }
 
     protected override void LoadContent()
@@ -284,6 +290,10 @@ public class Game : Microsoft.Xna.Framework.Game
         _endsHit = 0;
 
         _beam = 0;
+
+        _beamSteps = 0;
+        
+        _beamMaxSteps++;
         
         foreach (var start in _level.Starts)
         {
@@ -341,7 +351,14 @@ public class Game : Microsoft.Xna.Framework.Game
         while (x >= 0 && x < MapSize * BeamFactor && y >= 0 && y < MapSize * BeamFactor)
         {
             _beam++;
-        
+
+            _beamSteps++;
+
+            if (_beamSteps > _beamMaxSteps)
+            {
+                break;
+            }
+
             if ((x - BeamFactor / 2) % BeamFactor == 0 && (y - BeamFactor / 2) % BeamFactor == 0)
             {
                 var blocker = _level.Blocked.SingleOrDefault(e => e.X == x / BeamFactor && e.Y == y / BeamFactor);
