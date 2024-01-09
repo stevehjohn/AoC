@@ -1,4 +1,5 @@
-﻿using AoC.Games.Games.Deflectors.Levels;
+﻿using System.Runtime.InteropServices;
+using AoC.Games.Games.Deflectors.Levels;
 using AoC.Games.Infrastructure;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,6 +9,8 @@ namespace AoC.Games.Games.Deflectors;
 
 public class Game : Microsoft.Xna.Framework.Game
 {
+    private readonly int _scaleFactor = 1;
+    
     private const int MapSize = 30;
 
     private const int TileSize = 21;
@@ -20,10 +23,16 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private const string HighScoreFile = "high-score.txt";
 
+    private const int BufferWidth = 693;
+
+    private const int BufferHeight = 663;
+
     // ReSharper disable once NotAccessedField.Local
     private GraphicsDeviceManager _graphics;
 
     private SpriteBatch _spriteBatch;
+
+    private RenderTarget2D _renderTarget;
 
     private Texture2D _beams;
 
@@ -83,11 +92,16 @@ public class Game : Microsoft.Xna.Framework.Game
 
     public Game()
     {
-        _graphics = new GraphicsDeviceManager(this)
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
-            PreferredBackBufferWidth = 693,
-            PreferredBackBufferHeight = 663
-        };
+            _scaleFactor = 2;
+        }
+
+        _graphics = new GraphicsDeviceManager(this)
+                    {
+                        PreferredBackBufferWidth = BufferWidth * _scaleFactor,
+                        PreferredBackBufferHeight = BufferHeight * _scaleFactor
+                    };
 
         Content.RootDirectory = "./Deflectors";
 
@@ -136,6 +150,8 @@ public class Game : Microsoft.Xna.Framework.Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+        _renderTarget = new RenderTarget2D(GraphicsDevice, BufferWidth, BufferHeight);
 
         _beams = Content.Load<Texture2D>("beams");
 
@@ -361,6 +377,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
     protected override void Draw(GameTime gameTime)
     {
+        GraphicsDevice.SetRenderTarget(_renderTarget);
+
         GraphicsDevice.Clear(Color.Black);
 
         _spriteBatch.Begin(SpriteSortMode.FrontToBack);
@@ -384,6 +402,14 @@ public class Game : Microsoft.Xna.Framework.Game
         DrawMessage();
 
         _spriteBatch.End();
+        
+        GraphicsDevice.SetRenderTarget(null);
+        
+        _spriteBatch.Begin(SpriteSortMode.FrontToBack, blendState: BlendState.NonPremultiplied, samplerState: SamplerState.PointClamp);
+        
+        _spriteBatch.Draw(_renderTarget, new Rectangle(0, 0, BufferWidth * _scaleFactor, BufferHeight * _scaleFactor), Color.White);
+        
+        _spriteBatch.End();
 
         base.Draw(gameTime);
     }
@@ -404,12 +430,12 @@ public class Game : Microsoft.Xna.Framework.Game
         {
             for (var x = -2; x < 3; x++)
             {
-                _spriteBatch.DrawString(_font, _message, new Vector2(start + x, 200 + y), Color.Black, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .5f);
+                _spriteBatch.DrawString(_font, _message, new Vector2(start + x, 200 + y), Color.Black, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .6f);
             }
         }
 
         _spriteBatch.DrawString(_font, _message, new Vector2(start, 200), Color.FromNonPremultiplied(255, 255, 255, 255), 0, Vector2.Zero, Vector2.One,
-            SpriteEffects.None, .6f);
+            SpriteEffects.None, .7f);
     }
 
     private void DrawInfo()
@@ -792,7 +818,7 @@ public class Game : Microsoft.Xna.Framework.Game
             _spriteBatch.Draw(_mirrors,
                 new Vector2(_mirrorPosition.X * TileSize, TopOffset + _mirrorPosition.Y * TileSize),
                 new Rectangle(offset * TileSize, 0, TileSize, TileSize),
-                color, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .3f);
+                color, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .5f);
         }
     }
 
