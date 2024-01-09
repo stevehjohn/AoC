@@ -403,7 +403,7 @@ public class Game : Microsoft.Xna.Framework.Game
             }
         }
 
-        _spriteBatch.DrawString(_font, _message, new Vector2(start, 250), Color.FromNonPremultiplied(255, 255, 255, 255), 0, Vector2.Zero, Vector2.One,
+        _spriteBatch.DrawString(_font, _message, new Vector2(start, 200), Color.FromNonPremultiplied(255, 255, 255, 255), 0, Vector2.Zero, Vector2.One,
             SpriteEffects.None, .6f);
     }
 
