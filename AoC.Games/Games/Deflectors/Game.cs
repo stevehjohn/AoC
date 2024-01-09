@@ -46,7 +46,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private readonly LevelDataProvider _levels = new();
 
-    private int _levelNumber = 6;
+    private int _levelNumber = 1;
 
     private Level _level;
 
@@ -230,12 +230,16 @@ public class Game : Microsoft.Xna.Framework.Game
 
         if (_level.Pieces.Count == 0 && _mirror == '\0' && _state == State.Playing)
         {
-            if (_hitEnds.Count < _level.Ends.Length)
+            Console.WriteLine($"{_beamMaxSteps}");
+            
+            if (_hitEnds.Count < _level.Ends.Length && _beamMaxSteps >= 10_000_000)
             {
                 _message = "OH DEAR,\nLOOKS LIKE YOU CAN'T\nCOMPLETE THIS LEVEL.\nCLICK TO RESTART.";
 
                 _state = State.Failed;
             }
+
+            _beamMaxSteps = 10_000_000;
         }
 
         if (_state == State.LevelComplete)
