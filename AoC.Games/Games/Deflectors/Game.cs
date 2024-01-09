@@ -8,6 +8,8 @@ namespace AoC.Games.Games.Deflectors;
 
 public class Game : Microsoft.Xna.Framework.Game
 {
+    private int _scaleFactor = 1;
+    
     private const int MapSize = 30;
 
     private const int TileSize = 21;
@@ -91,8 +93,8 @@ public class Game : Microsoft.Xna.Framework.Game
     {
         _graphics = new GraphicsDeviceManager(this)
         {
-            PreferredBackBufferWidth = BufferWidth,
-            PreferredBackBufferHeight = BufferHeight
+            PreferredBackBufferWidth = BufferWidth * _scaleFactor,
+            PreferredBackBufferHeight = BufferHeight * _scaleFactor
         };
 
         Content.RootDirectory = "./Deflectors";
@@ -399,7 +401,7 @@ public class Game : Microsoft.Xna.Framework.Game
         
         _spriteBatch.Begin(SpriteSortMode.FrontToBack, blendState: BlendState.NonPremultiplied, samplerState: SamplerState.PointClamp);
         
-        _spriteBatch.Draw(_renderTarget, new Rectangle(0, 0, BufferWidth * 2, BufferHeight * 2), Color.White);
+        _spriteBatch.Draw(_renderTarget, new Rectangle(0, 0, BufferWidth * _scaleFactor, BufferHeight * _scaleFactor), Color.White);
         
         _spriteBatch.End();
 
