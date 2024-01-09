@@ -79,6 +79,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private int _highScore;
 
+    private HashSet<(int, int)> _hitMirrors = [];
+
     public Game()
     {
         _graphics = new GraphicsDeviceManager(this)
@@ -228,19 +230,23 @@ public class Game : Microsoft.Xna.Framework.Game
             {
                 _state = State.PreparingNextLevel;
 
+                var mirrors = _hitMirrors.Count < _level.Mirrors.Count
+                    ? "YOU COULD HAVE OBTAINED\nA HIGHER SCORE IF YOU\nHIT ALL YOUR MIRRORS.\n"
+                    : string.Empty;
+                
                 if (_levelNumber < _levels.LevelCount)
                 {
-                    _message = "LEVEL COMPLETE.\nCLICK FOR NEXT LEVEL...";
+                    _message = $"LEVEL COMPLETE.\n{mirrors}CLICK FOR NEXT LEVEL...";
                 }
                 else
                 {
                     if (_score > _highScore)
                     {
-                        _message = "ALL LEVELS COMPLETE.\nCONGRATULATIONS!\nNEW HIGH SCORE!\nCLICK TO PLAY AGAIN...";
+                        _message = $"ALL LEVELS COMPLETE.\nCONGRATULATIONS!\nNEW HIGH SCORE!\n{mirrors}CLICK TO PLAY AGAIN...";
                     }
                     else
                     {
-                        _message = "ALL LEVELS COMPLETE.\nCLICK TO PLAY AGAIN...";
+                        _message = $"ALL LEVELS COMPLETE.\n{mirrors}CLICK TO PLAY AGAIN...";
                     }
                 }
 
@@ -432,6 +438,8 @@ public class Game : Microsoft.Xna.Framework.Game
     {
         _endsHit = 0;
 
+        _hitMirrors.Clear();
+        
         _beam = 0;
 
         var beamSteps = 0;
@@ -644,6 +652,11 @@ public class Game : Microsoft.Xna.Framework.Game
 
                             break;
                     }
+                }
+
+                if (mirror != '\0')
+                {
+                    _hitMirrors.Add((x / BeamFactor, y / BeamFactor));
                 }
             }
 
