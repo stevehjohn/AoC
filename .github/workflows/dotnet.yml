@@ -21,3 +21,10 @@ jobs:
         dotnet-version: 8.0.x
     - name: Publish and Zip all.
       run: ./publish-games.sh
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          AoC.Games.Windows.Intel.zip
+          AoC.Games.macOS.Apple.zip
+          AoC.Games.macOS.Intel.zip
