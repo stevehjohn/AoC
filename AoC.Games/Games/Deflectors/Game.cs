@@ -79,7 +79,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private int _highScore;
 
-    private HashSet<(int, int)> _hitMirrors = [];
+    private readonly HashSet<(int, int)> _hitMirrors = [];
 
     public Game()
     {
