@@ -237,7 +237,7 @@ public class Game : Microsoft.Xna.Framework.Game
     {
         GraphicsDevice.Clear(Color.Black);
 
-        _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
+        _spriteBatch.Begin(SpriteSortMode.FrontToBack);//, samplerState: SamplerState.PointClamp);
 
         DrawBackground();
         
@@ -262,27 +262,23 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private void DrawInfo()
     {
-        _spriteBatch.DrawString(_font, "Level:", new Vector2(10, 0), Color.FromNonPremultiplied(0, 128, 0, 255));
+        _spriteBatch.DrawString(_font, "Level:", new Vector2(40, -2), Color.FromNonPremultiplied(0, 128, 0, 255));
 
-        var x = _font.MeasureString("Level: ").X;
+        var x = _font.MeasureString("Level: ").X + 40;
         
-        _spriteBatch.DrawString(_font, $"{_levelNumber,2}", new Vector2(x, 0), Color.FromNonPremultiplied(192, 192, 192, 255));
+        _spriteBatch.DrawString(_font, $"{_levelNumber,2}", new Vector2(x, -2), Color.FromNonPremultiplied(192, 192, 192, 255));
 
-        x = _font.MeasureString("Level: xx ").X;
-        
-        _spriteBatch.DrawString(_font, "Beam:", new Vector2(x, 0), Color.FromNonPremultiplied(0, 128, 0, 255));
+        _spriteBatch.DrawString(_font, "Beam:", new Vector2(200, -2), Color.FromNonPremultiplied(0, 128, 0, 255));
 
-        x = _font.MeasureString("Level: xx Beam: ").X;
+        x = _font.MeasureString("Beam: ").X + 200;
         
-        _spriteBatch.DrawString(_font, $"{_beam / 3,3}", new Vector2(x, 0), Color.FromNonPremultiplied(192, 192, 192, 255));
+        _spriteBatch.DrawString(_font, $"{_beam / 3,3}", new Vector2(x, -2), Color.FromNonPremultiplied(192, 192, 192, 255));
 
-        x = _font.MeasureString("Level: xx  Beam: xxx ").X;
+        _spriteBatch.DrawString(_font, "Score:", new Vector2(390, -2), Color.FromNonPremultiplied(0, 128, 0, 255));
         
-        _spriteBatch.DrawString(_font, "Score:", new Vector2(x, 0), Color.FromNonPremultiplied(0, 128, 0, 255));
-
-        x = _font.MeasureString("Level: xx  Beam: xxx Score: ").X;
+        x = _font.MeasureString("Score: ").X + 390;
         
-        _spriteBatch.DrawString(_font, _score.ToString(), new Vector2(x, 0), Color.FromNonPremultiplied(192, 192, 192, 255));
+        _spriteBatch.DrawString(_font, _score.ToString(), new Vector2(x, -2), Color.FromNonPremultiplied(192, 192, 192, 255));
     }
 
     private void DrawBeams()
