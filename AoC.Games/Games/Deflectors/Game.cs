@@ -1,4 +1,5 @@
-﻿using AoC.Games.Games.Deflectors.Levels;
+﻿using System.Runtime.InteropServices;
+using AoC.Games.Games.Deflectors.Levels;
 using AoC.Games.Infrastructure;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -100,6 +101,11 @@ public class Game : Microsoft.Xna.Framework.Game
         Content.RootDirectory = "./Deflectors";
 
         IsMouseVisible = true;
+
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            _scaleFactor = 2;
+        }
     }
 
     protected override void Initialize()
