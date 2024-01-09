@@ -181,6 +181,11 @@ public class Game : Microsoft.Xna.Framework.Game
             _mirrorPosition = (-1, -1);
         }
 
+        if (_message != null)
+        {
+            IsMouseVisible = false;
+        }
+
         if (_state == State.Playing && mouseState.LeftButton == ButtonState.Released && _leftButtonPrevious)
         {
             if (position.X >= 0 && position.X < MapSize * TileSize && position.Y >= 0 && position.Y < MapSize * TileSize && _mirror != '\0')
