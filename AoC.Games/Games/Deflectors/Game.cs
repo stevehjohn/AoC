@@ -399,7 +399,7 @@ public class Game : Microsoft.Xna.Framework.Game
         {
             for (var x = -2; x < 3; x++)
             {
-                _spriteBatch.DrawString(_font, _message, new Vector2(start + x, 250 + y), Color.Black, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .5f);
+                _spriteBatch.DrawString(_font, _message, new Vector2(start + x, 200 + y), Color.Black, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .5f);
             }
         }
 
