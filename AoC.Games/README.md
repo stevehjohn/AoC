@@ -61,4 +61,3 @@ The level is complete when a beam is hitting all the `Ends`.
 ## Screen Shot
 
 ![ScreenShot](ScreenShots/Deflectors.png)
-
