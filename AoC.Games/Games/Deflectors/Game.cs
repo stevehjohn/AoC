@@ -96,6 +96,8 @@ public class Game : Microsoft.Xna.Framework.Game
     {
         LoadLevel();
 
+        _message = "WELCOME TO THE FLOOR WILL BE LAVA.\nINSPIRED BY ERIC WASTL'S\nADVENT OF CODE.\nCLICK TO PLAY.";
+        
         if (File.Exists(HighScoreFile))
         {
             var text = File.ReadAllText(HighScoreFile);
@@ -148,6 +150,20 @@ public class Game : Microsoft.Xna.Framework.Game
     {
         var mouseState = Mouse.GetState();
 
+        if (_state == State.AwaitingStart)
+        {
+            if (mouseState.LeftButton == ButtonState.Released && _leftButtonPrevious)
+            {
+                _state = State.Playing;
+
+                _message = null;
+
+                _leftButtonPrevious = false;
+                
+                return;
+            }
+        }
+
         var position = (mouseState.X, mouseState.Y);
 
         if (position.X >= 0 && position.X < MapSize * TileSize && position.Y >= 0 && position.Y < MapSize * TileSize && _mirror != '\0')
@@ -163,7 +179,7 @@ public class Game : Microsoft.Xna.Framework.Game
             _mirrorPosition = (-1, -1);
         }
 
-        if (mouseState.LeftButton == ButtonState.Released && _leftButtonPrevious)
+        if (_state == State.Playing && mouseState.LeftButton == ButtonState.Released && _leftButtonPrevious)
         {
             if (position.X >= 0 && position.X < MapSize * TileSize && position.Y >= 0 && position.Y < MapSize * TileSize && _mirror != '\0')
             {
