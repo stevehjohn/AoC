@@ -49,6 +49,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private (int X, int Y) _mirrorPosition;
 
+    private (int X, int Y) _lastMirrorPosition;
+
     private bool _leftButtonPrevious;
     
     private readonly List<Spark> _sparks = [];
@@ -445,6 +447,13 @@ public class Game : Microsoft.Xna.Framework.Game
                     if (_mirrorPosition.X == x / BeamFactor && _mirrorPosition.Y == y / BeamFactor)
                     {
                         mirror = _mirror;
+
+                        if (_lastMirrorPosition != _mirrorPosition)
+                        {
+                            _beamMaxSteps = _beamSteps;
+
+                            _lastMirrorPosition = _mirrorPosition;
+                        }
                     }
                 }
 
