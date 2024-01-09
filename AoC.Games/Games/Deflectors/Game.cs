@@ -369,6 +369,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
     protected override void Draw(GameTime gameTime)
     {
+        GraphicsDevice.SetRenderTarget(_renderTarget);
+
         GraphicsDevice.Clear(Color.Black);
 
         _spriteBatch.Begin(SpriteSortMode.FrontToBack);
@@ -397,7 +399,7 @@ public class Game : Microsoft.Xna.Framework.Game
         
         _spriteBatch.Begin();
         
-        _spriteBatch.Draw(_renderTarget, new Rectangle(0, 0, BufferWidth, BufferHeight), Color.White);
+        _spriteBatch.Draw(_renderTarget, new Rectangle(0, 0, BufferWidth * 2, BufferHeight * 2), Color.White);
         
         _spriteBatch.End();
 
