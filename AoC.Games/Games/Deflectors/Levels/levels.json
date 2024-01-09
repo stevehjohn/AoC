@@ -373,5 +373,127 @@
     ],
     "Mirrors": [
     ]
+  },
+  {
+    "Id": 8,
+    "Starts": [
+      {
+        "X": 14,
+        "Y": 27,
+        "Direction": "North"
+      }
+    ],
+    "Ends": [
+      {
+        "X": 2,
+        "Y": 13,
+        "Direction": "East"
+      },
+      {
+        "X": 2,
+        "Y": 16,
+        "Direction": "East"
+      },
+      {
+        "X": 27,
+        "Y": 13,
+        "Direction": "West"
+      },
+      {
+        "X": 27,
+        "Y": 16,
+        "Direction": "West"
+      }
+    ],
+    "Blocked": [
+    ],
+    "Pieces": [
+      "/",
+      "-",
+      "\\",
+      "-",
+      "/",
+      "\\",
+      "/",
+      "\\",
+      "-"
+    ],
+    "Mirrors": [
+    ]
+  },
+  {
+    "Id": 9,
+    "Starts": [
+      {
+        "X": 2,
+        "Y": 2,
+        "Direction": "East"
+      }
+    ],
+    "Ends": [
+      {
+        "X": 27,
+        "Y": 27,
+        "Direction": "North"
+      },
+      {
+        "X": 20,
+        "Y": 27,
+        "Direction": "North"
+      },
+      {
+        "X": 2,
+        "Y": 5,
+        "Direction": "East"
+      },
+      {
+        "X": 2,
+        "Y": 11,
+        "Direction": "East"
+      }
+    ],
+    "Blocked": [
+      {
+        "X": 27,
+        "Y": 2
+      }
+    ],
+    "Pieces": [
+      "\\",
+      "-",
+      "\\",
+      "|",
+      "|",
+      "\\",
+      "/",
+      "\\"
+    ],
+    "Mirrors": [
+      {
+        "X": 15,
+        "Y": 15,
+        "Piece": "\\"
+      },
+      {
+        "X": 8,
+        "Y": 2,
+        "Piece": "\\"
+      },
+      {
+        "X": 8,
+        "Y": 5,
+        "Piece": "\\"
+      },
+      {
+        "X": 11,
+        "Y": 5,
+        "Piece": "/"
+      },
+      {
+        "X": 11,
+        "Y": 2,
+        "Piece": "/"
+      }
+    ]
   }
 ]

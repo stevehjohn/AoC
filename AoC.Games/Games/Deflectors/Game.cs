@@ -27,7 +27,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private const int BufferHeight = 663;
 
-    private int _levelNumber = 1;
+    private int _levelNumber = 9;
 
     // ReSharper disable once NotAccessedField.Local
     private GraphicsDeviceManager _graphics;
