@@ -88,6 +88,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private int _highScore;
 
+    private bool _hitUnplaced;
+
     private readonly HashSet<(int, int)> _hitMirrors = [];
 
     public Game()
@@ -473,6 +475,8 @@ public class Game : Microsoft.Xna.Framework.Game
         
         _beam = 0;
 
+        _hitUnplaced = false;
+
         var beamSteps = 0;
 
         _beamMaxSteps += 2;
@@ -487,14 +491,11 @@ public class Game : Microsoft.Xna.Framework.Game
             DrawBeam(new Start { X = splitter.X, Y = splitter.Y, Direction = splitter.Direction }, splitter.BeamSteps, splitter.Color, splitter.ColorDirection);
         }
 
-        if (_endsHit == _level.Ends.Length && _state == State.Playing)
+        if (_endsHit == _level.Ends.Length && _state == State.Playing && ! _hitUnplaced)
         {
-            if (_mirror == '\0')
-            {
-                _state = State.LevelComplete;
+            _state = State.LevelComplete;
 
-                _score += _beam / 3;
-            }
+            _score += _beam / 3;
         }
 
         _paletteStart += _paletteDirection;
@@ -629,6 +630,8 @@ public class Game : Microsoft.Xna.Framework.Game
                 {
                     if (_mirrorPosition.X == x / BeamFactor && _mirrorPosition.Y == y / BeamFactor)
                     {
+                        _hitUnplaced = true;
+                        
                         mirror = _mirror;
 
                         if (_lastMirrorPosition != _mirrorPosition)
