@@ -5,8 +5,8 @@ name: Build Artifacts and Release
 
 on:
   push:
-    paths:
-      - AoC.Games/**
+    tags:
+      - "v*.*.*"
 
 jobs:
   build:
