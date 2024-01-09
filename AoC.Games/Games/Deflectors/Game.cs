@@ -27,7 +27,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private const int BufferHeight = 663;
 
-    private int _levelNumber = 1;
+    private int _levelNumber = 8;
 
     // ReSharper disable once NotAccessedField.Local
     private GraphicsDeviceManager _graphics;
@@ -89,6 +89,8 @@ public class Game : Microsoft.Xna.Framework.Game
     private bool _hitUnplaced;
 
     private readonly HashSet<(int, int)> _hitEnds = [];
+
+    private readonly HashSet<(int, int)> _hitMirrors = [];
 
     public Game()
     {
@@ -257,7 +259,7 @@ public class Game : Microsoft.Xna.Framework.Game
             {
                 _state = State.PreparingNextLevel;
 
-                var mirrors = _mirror != '\0' || _level.Pieces.Count > 0
+                var mirrors = _hitMirrors.Count < _level.Mirrors.Count
                     ? "YOU COULD HAVE OBTAINED\nA HIGHER SCORE IF YOU\nHIT ALL YOUR MIRRORS.\n"
                     : string.Empty;
                 
@@ -475,6 +477,8 @@ public class Game : Microsoft.Xna.Framework.Game
     {
         _hitEnds.Clear();
         
+        _hitMirrors.Clear();
+        
         _beam = 0;
 
         _hitUnplaced = false;
@@ -627,6 +631,11 @@ public class Game : Microsoft.Xna.Framework.Game
                 }
 
                 var mirror = _level.Mirrors.SingleOrDefault(m => m.X == x / BeamFactor && m.Y == y / BeamFactor)?.Piece ?? '\0';
+
+                if (mirror != '\0')
+                {
+                    _hitMirrors.Add((x, y));
+                }
 
                 if (mirror == '\0')
                 {
