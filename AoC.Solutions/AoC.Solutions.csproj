@@ -35,8 +35,8 @@
   
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2023.3.0" />
-    <PackageReference Include="Microsoft.Diagnostics.Tracing.TraceEvent" Version="3.0.6" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <PackageReference Include="Microsoft.Diagnostics.Tracing.TraceEvent" Version="3.1.7" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Ocp.Security" Version="1.0.0" />
   </ItemGroup>
 
