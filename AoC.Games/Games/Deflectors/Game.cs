@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿#define TEST_MODE
+using System.Runtime.InteropServices;
 using AoC.Games.Games.Deflectors.Levels;
 using AoC.Games.Infrastructure;
 using Microsoft.Xna.Framework;
@@ -10,7 +11,7 @@ namespace AoC.Games.Games.Deflectors;
 public class Game : Microsoft.Xna.Framework.Game
 {
     private readonly int _scaleFactor = 1;
-    
+
     private const int MapSize = 30;
 
     private const int TileSize = 21;
@@ -92,6 +93,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private readonly HashSet<(int, int)> _hitMirrors = [];
 
+    private Keys[] _previousPressed = [];
+    
     public Game()
     {
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
@@ -100,10 +103,10 @@ public class Game : Microsoft.Xna.Framework.Game
         }
 
         _graphics = new GraphicsDeviceManager(this)
-                    {
-                        PreferredBackBufferWidth = BufferWidth * _scaleFactor,
-                        PreferredBackBufferHeight = BufferHeight * _scaleFactor
-                    };
+        {
+            PreferredBackBufferWidth = BufferWidth * _scaleFactor,
+            PreferredBackBufferHeight = BufferHeight * _scaleFactor
+        };
 
         Content.RootDirectory = "./Deflectors";
 
@@ -115,7 +118,7 @@ public class Game : Microsoft.Xna.Framework.Game
         LoadLevel();
 
         _message = "WELCOME TO THE FLOOR WILL BE LAVA.\nINSPIRED BY ERIC WASTL'S\nADVENT OF CODE.\nCLICK TO PLAY.";
-        
+
         if (File.Exists(HighScoreFile))
         {
             var text = File.ReadAllText(HighScoreFile);
@@ -124,7 +127,7 @@ public class Game : Microsoft.Xna.Framework.Game
         }
 
         Window.Title = "The Floor Will be Lava";
-        
+
         base.Initialize();
     }
 
@@ -170,6 +173,36 @@ public class Game : Microsoft.Xna.Framework.Game
 
     protected override void Update(GameTime gameTime)
     {
+#if TEST_MODE
+        var keysState = Keyboard.GetState();
+
+        if (_previousPressed.Contains(Keys.R) && keysState.IsKeyUp(Keys.R))
+        {
+            LoadLevel();
+
+            _state = State.Playing;
+
+            _message = null;
+        }
+
+        if (_previousPressed.Contains(Keys.N) && keysState.IsKeyUp(Keys.N))
+        {
+            _levelNumber++;
+
+            if (_levelNumber > _levels.LevelCount)
+            {
+                _levelNumber = 1;
+            }
+
+            LoadLevel();
+
+            _state = State.Playing;
+
+            _message = null;
+        }
+
+        _previousPressed = keysState.GetPressedKeys();
+#endif
         var mouseState = Mouse.GetState();
 
         if (_state == State.AwaitingStart)
@@ -181,7 +214,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 _message = null;
 
                 _leftButtonPrevious = false;
-                
+
                 return;
             }
         }
@@ -193,7 +226,7 @@ public class Game : Microsoft.Xna.Framework.Game
             IsMouseVisible = false;
 
             _lastMirrorPosition = _mirrorPosition;
-            
+
             _mirrorPosition = (position.X / TileSize, position.Y / TileSize);
         }
         else
@@ -225,7 +258,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 _score = 0;
 
                 _displayScore = 0;
-                
+
                 LoadLevel();
 
                 _message = null;
@@ -262,7 +295,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 var mirrors = _hitMirrors.Count < _level.Mirrors.Count || _mirror != '\0'
                     ? "YOU COULD HAVE OBTAINED\nA HIGHER SCORE IF YOU\nHIT ALL YOUR MIRRORS.\n"
                     : string.Empty;
-                
+
                 if (_levelNumber < _levels.LevelCount)
                 {
                     _message = $"LEVEL COMPLETE.\n{mirrors}CLICK FOR NEXT LEVEL...";
@@ -295,7 +328,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 if (_score >= _highScore)
                 {
                     _highScore = _score;
-                    
+
                     File.WriteAllText(HighScoreFile, _highScore.ToString());
                 }
 
@@ -410,13 +443,13 @@ public class Game : Microsoft.Xna.Framework.Game
         DrawMessage();
 
         _spriteBatch.End();
-        
+
         GraphicsDevice.SetRenderTarget(null);
-        
+
         _spriteBatch.Begin(SpriteSortMode.FrontToBack, blendState: BlendState.NonPremultiplied, samplerState: SamplerState.PointClamp);
-        
+
         _spriteBatch.Draw(_renderTarget, new Rectangle(0, 0, BufferWidth * _scaleFactor, BufferHeight * _scaleFactor), Color.White);
-        
+
         _spriteBatch.End();
 
         base.Draw(gameTime);
@@ -476,9 +509,9 @@ public class Game : Microsoft.Xna.Framework.Game
     private void DrawBeams()
     {
         _hitEnds.Clear();
-        
+
         _hitMirrors.Clear();
-        
+
         _beam = 0;
 
         _hitUnplaced = false;
@@ -642,7 +675,7 @@ public class Game : Microsoft.Xna.Framework.Game
                     if (_mirrorPosition.X == x / BeamFactor && _mirrorPosition.Y == y / BeamFactor)
                     {
                         _hitUnplaced = true;
-                        
+
                         mirror = _mirror;
 
                         if (_lastMirrorPosition != _mirrorPosition)
