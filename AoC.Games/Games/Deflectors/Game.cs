@@ -192,6 +192,8 @@ public class Game : Microsoft.Xna.Framework.Game
         {
             IsMouseVisible = false;
 
+            _lastMirrorPosition = _mirrorPosition;
+            
             _mirrorPosition = (position.X / TileSize, position.Y / TileSize);
         }
         else
