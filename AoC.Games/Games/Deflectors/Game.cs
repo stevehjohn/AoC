@@ -234,8 +234,6 @@ public class Game : Microsoft.Xna.Framework.Game
 
         if (_level.Pieces.Count == 0 && _mirror == '\0' && _state == State.Playing)
         {
-            Console.WriteLine($"{_beamMaxSteps}");
-            
             if (_hitEnds.Count < _level.Ends.Length && _beamMaxSteps >= 10_000_000)
             {
                 _message = "OH DEAR,\nLOOKS LIKE YOU CAN'T\nCOMPLETE THIS LEVEL.\nCLICK TO RESTART.";
