@@ -203,6 +203,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
         _previousPressed = keysState.GetPressedKeys();
 #endif
+        
         var mouseState = Mouse.GetState();
 
         if (_state == State.AwaitingStart)
