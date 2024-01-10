@@ -220,7 +220,7 @@ public class Game : Microsoft.Xna.Framework.Game
             }
         }
 
-        var position = (mouseState.X, mouseState.Y);
+        var position = (X: mouseState.X / _scaleFactor, Y: mouseState.Y / _scaleFactor);
 
         if (position.X >= 0 && position.X < MapSize * TileSize && position.Y >= 0 && position.Y < MapSize * TileSize && _mirror != '\0')
         {
