@@ -60,7 +60,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private (int X, int Y) _mirrorPosition;
 
-    private (int X, int Y) _lastMirrorPosition;
+    private (int X, int Y) _lastMirrorPosition = (-1, -1);
 
     private bool _leftButtonPrevious;
 
