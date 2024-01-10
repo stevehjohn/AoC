@@ -170,7 +170,6 @@ public class Part1 : Base
         var room  = new Room
         {
             Name = response.Name[3..^3],
-            Item = response.Item,
             VisitCount = [],
             Directions = []
         };
@@ -224,7 +223,6 @@ public class Part1 : Base
                 nextRoom  = new Room
                 {
                     Name = response.Name[3..^3],
-                    Item = response.Item,
                     VisitCount = [],
                     Directions = []
                 };

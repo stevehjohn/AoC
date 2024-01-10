@@ -6,8 +6,6 @@ public class Room
 {
     public string Name { get; init; }
     
-    public string Item { get; set; }
-    
     public Dictionary<string, int> VisitCount { get; init; }
     
     public Dictionary<string, Room> Directions { get; init; }
