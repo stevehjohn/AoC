@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace AoC.Games.Games.Deflectors;
+namespace AoC.Games.Games.Deflectors.Actors;
 
 public interface IActor
 {
