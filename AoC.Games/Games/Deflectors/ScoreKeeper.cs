@@ -10,9 +10,16 @@ public static class ScoreKeeper
     {
         if (_highScore == -1)
         {
-            var text = File.ReadAllText(HighScoreFile);
+            if (File.Exists(HighScoreFile))
+            {
+                var text = File.ReadAllText(HighScoreFile);
 
-            _highScore = int.Parse(text);
+                _highScore = int.Parse(text);
+            }
+            else
+            {
+                _highScore = 0;
+            }
         }
 
         return _highScore;

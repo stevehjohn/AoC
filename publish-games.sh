@@ -1,7 +1,7 @@
 rm *.zip
-dotnet publish ./AoC.Games/AoC.Games.csproj -c Release -r osx-x64 /p:PublishReadyToRun=true /p:TieredCompilation=false --self-contained
-dotnet publish ./AoC.Games/AoC.Games.csproj -c Release -r osx-arm64 /p:PublishReadyToRun=true /p:TieredCompilation=false --self-contained
-dotnet publish ./AoC.Games/AoC.Games.csproj -c Release -r win-x64 /p:PublishReadyToRun=true /p:TieredCompilation=false --self-contained
+dotnet publish ./AoC.Games/AoC.Games.csproj -c Release -r osx-x64 /p:PublishReadyToRun=true /p:TieredCompilation=false --self-contained /p:PublishReadyToRunShowWarnings=true
+dotnet publish ./AoC.Games/AoC.Games.csproj -c Release -r osx-arm64 /p:PublishReadyToRun=true /p:TieredCompilation=false --self-contained /p:PublishReadyToRunShowWarnings=true
+dotnet publish ./AoC.Games/AoC.Games.csproj -c Release -r win-x64 /p:PublishReadyToRun=true /p:TieredCompilation=false --self-contained /p:PublishReadyToRunShowWarnings=true
 cd ./AoC.Games/bin/Release/net8.0/osx-x64/publish
 pwd
 chmod +xx AoC.Games
