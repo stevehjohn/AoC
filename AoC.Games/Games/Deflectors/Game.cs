@@ -123,104 +123,106 @@ public class Game : Microsoft.Xna.Framework.Game
             }
         }
 
-        if (_state == State.Starting)
+        switch (_state)
         {
-            _state = State.Playing;
-        }
+            case State.AwaitingStart:
+                if (_input.LeftButtonClicked())
+                {
+                    _textManager.Message = null;
 
-        if (_state == State.AwaitingStart)
-        {
-            if (_input.LeftButtonClicked())
-            {
-                _state = State.Starting;
+                    _state = State.Playing;
+                }
 
-                _textManager.Message = null;
-            }
+                break;
+            
+            case State.Playing:
+                if (_input.LeftButtonClicked())
+                {
+                    _arenaManager.PlaceMirror();
+                }
+
+                if (_arenaManager.Level.Pieces.Count == 0 && _arenaManager.Mirror == '\0')
+                {
+                    // TODO: _beamSimulator.AllComplete
+                    if (! _beamSimulator.HitAllEnds && _beamSimulator.BeamMaxSteps >= 10_000_000)
+                    {
+                        _textManager.Message = "OH DEAR,\nLOOKS LIKE YOU CAN'T\nCOMPLETE THIS LEVEL.\nCLICK TO RESTART.";
+
+                        _state = State.Failed;
+                    }
+
+                    _beamSimulator.BeamMaxSteps = 10_000_000;
+                }
+
+                if (_beamSimulator.IsComplete)
+                {
+                    _frame++;
+
+                    if (_frame > 200)
+                    {
+                        _state = State.PreparingNextLevel;
+                
+                        _score += _beamSimulator.BeamStrength / 3;
+
+                        var complete = _arenaManager.LevelNumber < _arenaManager.LevelCount
+                            ? "LEVEL COMPLETE.\n"
+                            : "ALL LEVELS COMPLETE\n";
+                
+                        var mirrors = ! _beamSimulator.HitAllMirrors || _arenaManager.Mirror != '\0'
+                            ? "YOU COULD HAVE OBTAINED\nA HIGHER SCORE IF YOU\nHIT ALL YOUR MIRRORS.\n"
+                            : string.Empty;
+
+                        var highScore = _score > _highScore && _arenaManager.LevelNumber == _arenaManager.LevelCount
+                            ? "CONGRATULATIONS!\nNEW HIGH SCORE!\n"
+                            : string.Empty;
+                
+                        var next = _arenaManager.LevelNumber < _arenaManager.LevelCount
+                            ? "CLICK TO CONTINUE..."
+                            : "CLICK TO PLAY AGAIN...";
+
+                        _textManager.Message = $"{complete}{highScore}{mirrors}{next}";
+
+                        if (highScore != string.Empty)
+                        {
+                            _highScore = _score;
+
+                            File.WriteAllText(HighScoreFile, _highScore.ToString());
+                        }
+
+                        _frame = 0;
+                    }
+                }
+
+                break;
+            
+            case State.Failed:
+                if (_input.LeftButtonClicked())
+                {
+                    _score = 0;
+                
+                    _arenaManager.SetLevel(1);
+
+                    _textManager.Message = null;
+
+                    _state = State.Playing;
+                }
+                
+                break;
+                
+            case State.PreparingNextLevel:
+                if (_input.LeftButtonClicked())
+                {
+                    _arenaManager.NextLevel();
+
+                    _textManager.Message = null;
+
+                    _state = State.Playing;
+                }
+                
+                break;
         }
 
         IsMouseVisible = _textManager.Message == null && _arenaManager.MirrorPosition == (-1, -1);
-        
-        if (_state == State.Playing && _input.LeftButtonClicked())
-        {
-            _arenaManager.PlaceMirror();
-        }
-
-        if (_state == State.Failed)
-        {
-            if (_input.LeftButtonClicked())
-            {
-                _score = 0;
-                
-                _arenaManager.SetLevel(1);
-
-                _textManager.Message = null;
-
-                _state = State.Playing;
-            }
-        }
-
-        if (_arenaManager.Level.Pieces.Count == 0 && _arenaManager.Mirror == '\0' && _state == State.Playing)
-        {
-            if (! _beamSimulator.HitAllEnds && _beamSimulator.BeamMaxSteps >= 10_000_000)
-            {
-                _textManager.Message = "OH DEAR,\nLOOKS LIKE YOU CAN'T\nCOMPLETE THIS LEVEL.\nCLICK TO RESTART.";
-
-                _state = State.Failed;
-            }
-
-            _beamSimulator.BeamMaxSteps = 10_000_000;
-        }
-
-        if (_beamSimulator.IsComplete && _state != State.PreparingNextLevel)
-        {
-            _frame++;
-
-            if (_frame > 200)
-            {
-                _state = State.PreparingNextLevel;
-                
-                _score += _beamSimulator.BeamStrength / 3;
-
-                var complete = _arenaManager.LevelNumber < _arenaManager.LevelCount
-                    ? "LEVEL COMPLETE.\n"
-                    : "ALL LEVELS COMPLETE\n";
-                
-                var mirrors = ! _beamSimulator.HitAllMirrors || _arenaManager.Mirror != '\0'
-                    ? "YOU COULD HAVE OBTAINED\nA HIGHER SCORE IF YOU\nHIT ALL YOUR MIRRORS.\n"
-                    : string.Empty;
-
-                var highScore = _score > _highScore && _arenaManager.LevelNumber == _arenaManager.LevelCount
-                    ? "CONGRATULATIONS!\nNEW HIGH SCORE!\n"
-                    : string.Empty;
-                
-                var next = _arenaManager.LevelNumber < _arenaManager.LevelCount
-                    ? "CLICK TO CONTINUE..."
-                    : "CLICK TO PLAY AGAIN...";
-
-                _textManager.Message = $"{complete}{highScore}{mirrors}{next}";
-
-                if (highScore != string.Empty)
-                {
-                    _highScore = _score;
-
-                    File.WriteAllText(HighScoreFile, _highScore.ToString());
-                }
-
-                _frame = 0;
-            }
-        }
-
-        if (_state == State.PreparingNextLevel)
-        {
-            if (_input.LeftButtonClicked())
-            {
-                _arenaManager.NextLevel();
-
-                _textManager.Message = null;
-
-                _state = State.Playing;
-            }
-        }
 
         _beamSimulator.State = _state;
 
