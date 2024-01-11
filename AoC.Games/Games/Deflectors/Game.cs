@@ -98,6 +98,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
                     _score = 0;
 
+                    _arenaManager.SetLevel(1);
+                    
                     _state = State.Playing;
                 }
 
@@ -238,10 +240,10 @@ public class Game : Microsoft.Xna.Framework.Game
 
             if (_frame > 200)
             {
-                _state = State.PreparingNextLevel;
-                
                 _score += _beamSimulator.BeamStrength / 3;
 
+                _state = _arenaManager.LevelNumber < _arenaManager.LevelCount ? State.PreparingNextLevel : State.AwaitingStart;
+                
                 var complete = _arenaManager.LevelNumber < _arenaManager.LevelCount
                     ? "LEVEL COMPLETE.\n"
                     : "ALL LEVELS COMPLETE\n";
