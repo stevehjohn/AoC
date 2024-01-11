@@ -300,8 +300,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
         base.Draw(gameTime);
     }
-
-
+    
     private void DrawBeams()
     {
         _hitEnds.Clear();
