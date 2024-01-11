@@ -75,7 +75,12 @@ public class BeamSimulator : IActor
     {
         SimulateBeams(spriteBatch);
     }
-    
+
+    public void NewLevelStarted()
+    {
+        _beamMaxSteps = 0;
+    }
+
     private void SimulateBeams(SpriteBatch spriteBatch)
     {
         _hitEnds.Clear();

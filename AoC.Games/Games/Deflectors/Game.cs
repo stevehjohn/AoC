@@ -27,7 +27,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private readonly BeamSimulator _beamSimulator;
     
-    private State _state;
+    private State _state = State.WelcomeMessage;
 
     private int _frame;
 
@@ -66,8 +66,6 @@ public class Game : Microsoft.Xna.Framework.Game
 
     protected override void Initialize()
     {        
-        _textManager.Message = "WELCOME TO THE FLOOR WILL BE LAVA.\nINSPIRED BY ERIC WASTL'S\nADVENT OF CODE.\n\nCODE AND GRAPHICS BY STEVO JOHN\n\nCLICK TO PLAY.";
-
         Window.Title = "The Floor Will be Lava";
 
         base.Initialize();
@@ -89,17 +87,26 @@ public class Game : Microsoft.Xna.Framework.Game
     {
         switch (_state)
         {
+            case State.WelcomeMessage:
+                _textManager.Message = "WELCOME TO THE FLOOR WILL BE LAVA.\nINSPIRED BY ERIC WASTL'S\nADVENT OF CODE.\n\nCODE AND GRAPHICS BY STEVO JOHN\n\nCLICK TO PLAY.";
+                
+                _frame = 0;
+                
+                _score = 0;
+                
+                _arenaManager.SetLevel(1);
+                                    
+                _beamSimulator.NewLevelStarted();
+
+                _state = State.AwaitingStart;
+
+                break;
+
             case State.AwaitingStart:
                 if (_input.LeftButtonClicked())
                 {
                     _textManager.Message = null;
 
-                    _frame = 0;
-
-                    _score = 0;
-
-                    _arenaManager.SetLevel(1);
-                    
                     _state = State.Playing;
                 }
 
@@ -120,15 +127,10 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
             
             case State.Failed:
+            case State.Complete:
                 if (_input.LeftButtonClicked())
                 {
-                    _score = 0;
-                
-                    _arenaManager.SetLevel(1);
-
-                    _textManager.Message = null;
-
-                    _state = State.Playing;
+                    _state = State.WelcomeMessage;
                 }
                 
                 break;
@@ -137,6 +139,8 @@ public class Game : Microsoft.Xna.Framework.Game
                 if (_input.LeftButtonClicked())
                 {
                     _arenaManager.NextLevel();
+                    
+                    _beamSimulator.NewLevelStarted();
 
                     _textManager.Message = null;
 
@@ -242,7 +246,7 @@ public class Game : Microsoft.Xna.Framework.Game
             {
                 _score += _beamSimulator.BeamStrength / 3;
 
-                _state = _arenaManager.LevelNumber < _arenaManager.LevelCount ? State.PreparingNextLevel : State.AwaitingStart;
+                _state = _arenaManager.LevelNumber < _arenaManager.LevelCount ? State.PreparingNextLevel : State.Complete;
                 
                 var complete = _arenaManager.LevelNumber < _arenaManager.LevelCount
                     ? "LEVEL COMPLETE.\n"
