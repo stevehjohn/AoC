@@ -6,6 +6,23 @@ This is a simple puzzle game based on "The Floor Will be Lava".
 
 Screen shot <a href="#screenshot">below</a>.
 
+## Running the Game
+
+You can either clone the repository and build it yourself (using Rider, Visual Studio or the command line tools),
+or download a pre-built version from the [releases page](https://github.com/stevehjohn/AoC/releases).
+
+You'll need the [dotnet 8 runtime](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) for your platform (Windows/macOS, X64/ARM64).
+
+On macOS, you will probably need to install these dependencies. Make sure you have [homebrew](https://brew.sh/) installed. Then:
+
+- `brew install freeimage`
+- `mkdir /usr/local/lib` (this folder may already exist, in which case this step is not needed).
+- `sudo ln -s /opt/homebrew/Cellar/freeimage/3.18.0/lib/libfreeimage.dylib /usr/local/lib/libfreeimage`
+- `brew install freetype`
+- `sudo ln -s /opt/homebrew/lib/libfreetype.6.dylib /usr/local/lib/libfreetype6`
+
+## Level Definitions
+
 Levels are defined in this [JSON file](Games/Deflectors/Levels/levels.json).
 
 It is an array of levels. `Id` must start at `1` and increment by `1`.
