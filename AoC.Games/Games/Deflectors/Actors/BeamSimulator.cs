@@ -278,7 +278,7 @@ public class BeamSimulator : IActor
                 {
                     _sparkManager.Add(x * BeamSize, y * BeamSize, 10, 41, 100, 0.1f, Color.FromNonPremultiplied(255, 0, 0, 255), Color.FromNonPremultiplied(255, 255, 0, 255));
                 }
-                else if (IsComplete)
+                else
                 {
                     _sparkManager.Add(x * BeamSize, y * BeamSize, 5, 21, 100, -0.01f, Color.FromNonPremultiplied(0, 255, 255, 255));
                 }
