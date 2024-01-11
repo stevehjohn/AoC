@@ -25,6 +25,8 @@ public static class ScoreKeeper
             _highScore = score;
             
             File.WriteAllText(HighScoreFile, _highScore.ToString());
+
+            return true;
         }
 
         return false;
