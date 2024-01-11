@@ -19,19 +19,25 @@ public class ArenaManager : IActor
 
     private Texture2D _other;
 
-    private Level _level;
+    private int _levelNumber = 1;
+
+    public Level Level { get; private set; }
 
     public (int X, int Y) MirrorPosition { get; set; }
 
     public char Mirror { get; set; }
+
+    public int LevelCount => _levelDataProvider.LevelCount;
     
-    public ArenaManager(int topOffset, LevelDataProvider levelDataProvider)
+    public ArenaManager(int topOffset)
     {
         _topOffset = topOffset;
 
-        _levelDataProvider = levelDataProvider;
+        _levelDataProvider = new LevelDataProvider();
 
-        _level = _levelDataProvider.GetLevel(1);
+        _levelNumber = 1;
+        
+        Level = _levelDataProvider.GetLevel(1);
     }
     
     public void LoadContent(ContentManager contentManager)
@@ -43,7 +49,21 @@ public class ArenaManager : IActor
 
     public void SetLevel(int levelNumber)
     {
-        _level = _levelDataProvider.GetLevel(levelNumber);
+        _levelNumber = levelNumber;
+        
+        Level = _levelDataProvider.GetLevel(levelNumber);
+    }
+
+    public void NextLevel()
+    {
+        _levelNumber++;
+
+        if (_levelNumber > _levelDataProvider.LevelCount)
+        {
+            _levelNumber = 1;
+        }
+
+        Level = _levelDataProvider.GetLevel(_levelNumber);
     }
 
     public void Update()
@@ -65,7 +85,7 @@ public class ArenaManager : IActor
 
     private void DrawMirrors(SpriteBatch spriteBatch)
     {
-        foreach (var mirror in _level.Mirrors)
+        foreach (var mirror in Level.Mirrors)
         {
             var offset = mirror.Piece switch
             {
@@ -93,10 +113,10 @@ public class ArenaManager : IActor
 
             var color = Color.FromNonPremultiplied(0, 255, 0, 255);
 
-            if (_level.Mirrors.Any(m => m.X == MirrorPosition.X && m.Y == MirrorPosition.Y)
-                || _level.Blocked.Any(b => b.X == MirrorPosition.X && b.Y == MirrorPosition.Y)
-                || _level.Starts.Any(s => s.X == MirrorPosition.X && s.Y == MirrorPosition.Y)
-                || _level.Ends.Any(e => e.X == MirrorPosition.X && e.Y == MirrorPosition.Y))
+            if (Level.Mirrors.Any(m => m.X == MirrorPosition.X && m.Y == MirrorPosition.Y)
+                || Level.Blocked.Any(b => b.X == MirrorPosition.X && b.Y == MirrorPosition.Y)
+                || Level.Starts.Any(s => s.X == MirrorPosition.X && s.Y == MirrorPosition.Y)
+                || Level.Ends.Any(e => e.X == MirrorPosition.X && e.Y == MirrorPosition.Y))
             {
                 color = Color.Red;
             }
@@ -110,7 +130,7 @@ public class ArenaManager : IActor
 
     private void DrawStarts(SpriteBatch spriteBatch)
     {
-        foreach (var start in _level.Starts)
+        foreach (var start in Level.Starts)
         {
             spriteBatch.Draw(_other,
                 new Vector2(start.X * TileSize, _topOffset + start.Y * TileSize),
@@ -121,7 +141,7 @@ public class ArenaManager : IActor
 
     private void DrawEnds(SpriteBatch spriteBatch)
     {
-        foreach (var end in _level.Ends)
+        foreach (var end in Level.Ends)
         {
             var spriteX = end.Direction switch
             {
@@ -150,7 +170,7 @@ public class ArenaManager : IActor
         {
             for (var x = 0; x < MapSize; x++)
             {
-                if (! _level.Blocked.Any(b => b.X == x && b.Y == y))
+                if (! Level.Blocked.Any(b => b.X == x && b.Y == y))
                 {
                     spriteBatch.Draw(_other,
                         new Vector2(x * TileSize, _topOffset + y * TileSize),
@@ -182,12 +202,12 @@ public class ArenaManager : IActor
 
         for (var y = 10; y > 0; y--)
         {
-            if (index >= _level.Pieces.Count)
+            if (index >= Level.Pieces.Count)
             {
                 break;
             }
 
-            var offset = _level.Pieces[index] switch
+            var offset = Level.Pieces[index] switch
             {
                 '|' => 1,
                 '\\' => 2,

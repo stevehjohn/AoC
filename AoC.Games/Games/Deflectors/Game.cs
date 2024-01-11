@@ -45,10 +45,6 @@ public class Game : Microsoft.Xna.Framework.Game
     
     private SpriteFont _font;
 
-    private readonly LevelDataProvider _levelDataProvider = new();
-
-    private Level _level;
-
     private Color[] _palette;
 
     private int _paletteStart;
@@ -104,17 +100,25 @@ public class Game : Microsoft.Xna.Framework.Game
         _sparkManager = new SparkManager(TopOffset);
         
         _actors.Add(_sparkManager);
-        
-        _levelDataProvider.LoadLevels();
 
-        _arenaManager = new ArenaManager(TopOffset, _levelDataProvider);
+        _arenaManager = new ArenaManager(TopOffset);
         
         _actors.Add(_arenaManager);
     }
 
     protected override void Initialize()
-    {
-        LoadLevel();
+    {        
+        _palette = PaletteGenerator.GetPalette(26,
+        [
+            new Color(46, 27, 134),
+            new Color(119, 35, 172),
+            new Color(176, 83, 203),
+            new Color(255, 168, 76),
+            new Color(254, 211, 56),
+            new Color(254, 253, 0)
+        ]);
+
+        StartLevel();
 
         _message = "WELCOME TO THE FLOOR WILL BE LAVA.\nINSPIRED BY ERIC WASTL'S\nADVENT OF CODE.\nCLICK TO PLAY.";
 
@@ -130,25 +134,11 @@ public class Game : Microsoft.Xna.Framework.Game
         base.Initialize();
     }
 
-    private void LoadLevel()
+    private void StartLevel()
     {
-        _levelDataProvider.LoadLevels();
+        _mirror = _arenaManager.Level.Pieces[0];
 
-        _level = _levelDataProvider.GetLevel(_levelNumber);
-
-        _palette = PaletteGenerator.GetPalette(26,
-        [
-            new Color(46, 27, 134),
-            new Color(119, 35, 172),
-            new Color(176, 83, 203),
-            new Color(255, 168, 76),
-            new Color(254, 211, 56),
-            new Color(254, 253, 0)
-        ]);
-
-        _mirror = _level.Pieces[0];
-
-        _level.Pieces.RemoveAt(0);
+        _arenaManager.Level.Pieces.RemoveAt(0);
 
         _paletteStart = _palette.Length - 1;
     }
@@ -175,7 +165,7 @@ public class Game : Microsoft.Xna.Framework.Game
         {
             if (_input.KeyPressed(Keys.R))
             {
-                LoadLevel();
+                StartLevel();
 
                 _arenaManager.SetLevel(_levelNumber);
                 
@@ -188,14 +178,9 @@ public class Game : Microsoft.Xna.Framework.Game
             {
                 _levelNumber++;
 
-                if (_levelNumber > _levelDataProvider.LevelCount)
-                {
-                    _levelNumber = 1;
-                }
+                _arenaManager.NextLevel();
 
-                _arenaManager.SetLevel(_levelNumber);
-
-                LoadLevel();
+                StartLevel();
 
                 _state = State.Playing;
 
@@ -258,7 +243,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
                 _displayScore = 0;
 
-                LoadLevel();
+                StartLevel();
                 
                 _arenaManager.SetLevel(_levelNumber);
 
@@ -268,9 +253,9 @@ public class Game : Microsoft.Xna.Framework.Game
             }
         }
 
-        if (_level.Pieces.Count == 0 && _mirror == '\0' && _state == State.Playing)
+        if (_arenaManager.Level.Pieces.Count == 0 && _mirror == '\0' && _state == State.Playing)
         {
-            if (_hitEnds.Count < _level.Ends.Length && _beamMaxSteps >= 10_000_000)
+            if (_hitEnds.Count < _arenaManager.Level.Ends.Length && _beamMaxSteps >= 10_000_000)
             {
                 _message = "OH DEAR,\nLOOKS LIKE YOU CAN'T\nCOMPLETE THIS LEVEL.\nCLICK TO RESTART.";
 
@@ -293,11 +278,11 @@ public class Game : Microsoft.Xna.Framework.Game
             {
                 _state = State.PreparingNextLevel;
 
-                var mirrors = _hitMirrors.Count < _level.Mirrors.Count || _mirror != '\0'
+                var mirrors = _hitMirrors.Count < _arenaManager.Level.Mirrors.Count || _mirror != '\0'
                     ? "YOU COULD HAVE OBTAINED\nA HIGHER SCORE IF YOU\nHIT ALL YOUR MIRRORS.\n"
                     : string.Empty;
 
-                if (_levelNumber < _levelDataProvider.LevelCount)
+                if (_levelNumber < _arenaManager.LevelCount)
                 {
                     _message = $"LEVEL COMPLETE.\n{mirrors}CLICK FOR NEXT LEVEL...";
                 }
@@ -333,7 +318,7 @@ public class Game : Microsoft.Xna.Framework.Game
                     File.WriteAllText(HighScoreFile, _highScore.ToString());
                 }
 
-                if (_levelNumber < _levelDataProvider.LevelCount)
+                if (_levelNumber < _arenaManager.LevelCount)
                 {
                     _levelNumber++;
                 }
@@ -346,7 +331,7 @@ public class Game : Microsoft.Xna.Framework.Game
                     _displayScore = 0;
                 }
 
-                LoadLevel();
+                StartLevel();
                 
                 _arenaManager.SetLevel(_levelNumber);
 
@@ -372,15 +357,15 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private void PlaceMirror()
     {
-        if (_level.Mirrors.Any(m => m.X == _mirrorPosition.X && m.Y == _mirrorPosition.Y)
-            || _level.Blocked.Any(b => b.X == _mirrorPosition.X && b.Y == _mirrorPosition.Y)
-            || _level.Starts.Any(s => s.X == _mirrorPosition.X && s.Y == _mirrorPosition.Y)
-            || _level.Ends.Any(e => e.X == _mirrorPosition.X && e.Y == _mirrorPosition.Y))
+        if (_arenaManager.Level.Mirrors.Any(m => m.X == _mirrorPosition.X && m.Y == _mirrorPosition.Y)
+            || _arenaManager.Level.Blocked.Any(b => b.X == _mirrorPosition.X && b.Y == _mirrorPosition.Y)
+            || _arenaManager.Level.Starts.Any(s => s.X == _mirrorPosition.X && s.Y == _mirrorPosition.Y)
+            || _arenaManager.Level.Ends.Any(e => e.X == _mirrorPosition.X && e.Y == _mirrorPosition.Y))
         {
             return;
         }
 
-        _level.Mirrors.Add(new Mirror
+        _arenaManager.Level.Mirrors.Add(new Mirror
         {
             Piece = _mirror,
             Placed = true,
@@ -390,11 +375,11 @@ public class Game : Microsoft.Xna.Framework.Game
 
         _mirror = '\0';
 
-        if (_level.Pieces.Count > 0)
+        if (_arenaManager.Level.Pieces.Count > 0)
         {
-            _mirror = _level.Pieces[0];
+            _mirror = _arenaManager.Level.Pieces[0];
 
-            _level.Pieces.RemoveAt(0);
+            _arenaManager.Level.Pieces.RemoveAt(0);
         }
     }
     
@@ -495,7 +480,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
         _beamMaxSteps += 2;
 
-        foreach (var start in _level.Starts)
+        foreach (var start in _arenaManager.Level.Starts)
         {
             beamSteps += DrawBeam(start, beamSteps);
         }
@@ -505,7 +490,7 @@ public class Game : Microsoft.Xna.Framework.Game
             DrawBeam(new Start { X = splitter.X, Y = splitter.Y, Direction = splitter.Direction }, splitter.BeamSteps, splitter.Color, splitter.ColorDirection);
         }
 
-        if (_hitEnds.Count == _level.Ends.Length && _state == State.Playing && ! _hitUnplaced)
+        if (_hitEnds.Count == _arenaManager.Level.Ends.Length && _state == State.Playing && ! _hitUnplaced)
         {
             _state = State.LevelComplete;
 
@@ -561,7 +546,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
             if ((x - BeamFactor / 2) % BeamFactor == 0 && (y - BeamFactor / 2) % BeamFactor == 0)
             {
-                var blocker = _level.Blocked.SingleOrDefault(e => e.X == x / BeamFactor && e.Y == y / BeamFactor);
+                var blocker = _arenaManager.Level.Blocked.SingleOrDefault(e => e.X == x / BeamFactor && e.Y == y / BeamFactor);
 
                 if (blocker != null)
                 {
@@ -570,7 +555,7 @@ public class Game : Microsoft.Xna.Framework.Game
                     break;
                 }
 
-                var end = _level.Ends.SingleOrDefault(e => e.X == x / BeamFactor && e.Y == y / BeamFactor);
+                var end = _arenaManager.Level.Ends.SingleOrDefault(e => e.X == x / BeamFactor && e.Y == y / BeamFactor);
 
                 if (end != null)
                 {
@@ -600,7 +585,7 @@ public class Game : Microsoft.Xna.Framework.Game
                     break;
                 }
 
-                var mirror = _level.Mirrors.SingleOrDefault(m => m.X == x / BeamFactor && m.Y == y / BeamFactor)?.Piece ?? '\0';
+                var mirror = _arenaManager.Level.Mirrors.SingleOrDefault(m => m.X == x / BeamFactor && m.Y == y / BeamFactor)?.Piece ?? '\0';
 
                 if (mirror != '\0')
                 {
