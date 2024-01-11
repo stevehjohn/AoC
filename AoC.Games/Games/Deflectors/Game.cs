@@ -1,5 +1,4 @@
 ﻿#define TEST_MODE
-using System.Runtime.InteropServices;
 using AoC.Games.Games.Deflectors.Levels;
 using AoC.Games.Infrastructure;
 using Microsoft.Xna.Framework;
@@ -10,7 +9,7 @@ namespace AoC.Games.Games.Deflectors;
 
 public class Game : Microsoft.Xna.Framework.Game
 {
-    private readonly int _scaleFactor = 1;
+    private readonly int _scaleFactor;
 
     private const int MapSize = 30;
 
@@ -97,10 +96,7 @@ public class Game : Microsoft.Xna.Framework.Game
     
     public Game()
     {
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-        {
-            _scaleFactor = 2;
-        }
+        _scaleFactor = AppSettings.Instance.ScaleFactor;
 
         _graphics = new GraphicsDeviceManager(this)
         {
