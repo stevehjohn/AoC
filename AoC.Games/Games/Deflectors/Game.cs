@@ -10,11 +10,9 @@ public class Game : Microsoft.Xna.Framework.Game
 {
     private readonly float _scaleFactor;
 
-    private const int TileSize = 21;
-
     private const int BeamSize = 7;
 
-    private const int BeamFactor = TileSize / BeamSize;
+    private const int BeamFactor = ArenaManager.TileSize / BeamSize;
 
     private const int TopOffset = 32;
 
@@ -38,6 +36,8 @@ public class Game : Microsoft.Xna.Framework.Game
     private readonly SparkManager _sparkManager;
 
     private readonly ArenaManager _arenaManager;
+
+    private readonly TextManager _textManager;
     
     private SpriteFont _font;
 
@@ -62,8 +62,6 @@ public class Game : Microsoft.Xna.Framework.Game
     private int _displayScore;
 
     private int _beamMaxSteps;
-
-    private string _message;
 
     private int _highScore;
 
@@ -94,6 +92,10 @@ public class Game : Microsoft.Xna.Framework.Game
         _arenaManager = new ArenaManager(TopOffset, _input);
         
         _actors.Add(_arenaManager);
+
+        _textManager = new TextManager();
+        
+        _actors.Add(_textManager);
     }
 
     protected override void Initialize()
@@ -108,7 +110,7 @@ public class Game : Microsoft.Xna.Framework.Game
             new Color(254, 253, 0)
         ]);
 
-        _message = "WELCOME TO THE FLOOR WILL BE LAVA.\nINSPIRED BY ERIC WASTL'S\nADVENT OF CODE.\nCLICK TO PLAY.";
+        _textManager.Message = "WELCOME TO THE FLOOR WILL BE LAVA.\nINSPIRED BY ERIC WASTL'S\nADVENT OF CODE.\nCLICK TO PLAY.";
 
         if (File.Exists(HighScoreFile))
         {
@@ -134,7 +136,7 @@ public class Game : Microsoft.Xna.Framework.Game
         }
         
         _beams = Content.Load<Texture2D>("beams");
-        
+
         _font = Content.Load<SpriteFont>("font");
     }
 
@@ -148,7 +150,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 
                 _state = State.Playing;
 
-                _message = null;
+                _textManager.Message = null;
             }
 
             if (_input.KeyPressed(Keys.N))
@@ -157,7 +159,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
                 _state = State.Playing;
 
-                _message = null;
+                _textManager.Message = null;
             }
         }
 
@@ -172,11 +174,11 @@ public class Game : Microsoft.Xna.Framework.Game
             {
                 _state = State.Starting;
 
-                _message = null;
+                _textManager.Message = null;
             }
         }
 
-        IsMouseVisible = _message == null && _arenaManager.MirrorPosition == (-1, -1);
+        IsMouseVisible = _textManager.Message == null && _arenaManager.MirrorPosition == (-1, -1);
         
         if (_state == State.Playing && _input.LeftButtonClicked())
         {
@@ -193,7 +195,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 
                 _arenaManager.SetLevel(1);
 
-                _message = null;
+                _textManager.Message = null;
 
                 _state = State.Playing;
             }
@@ -203,7 +205,7 @@ public class Game : Microsoft.Xna.Framework.Game
         {
             if (_hitEnds.Count < _arenaManager.Level.Ends.Length && _beamMaxSteps >= 10_000_000)
             {
-                _message = "OH DEAR,\nLOOKS LIKE YOU CAN'T\nCOMPLETE THIS LEVEL.\nCLICK TO RESTART.";
+                _textManager.Message = "OH DEAR,\nLOOKS LIKE YOU CAN'T\nCOMPLETE THIS LEVEL.\nCLICK TO RESTART.";
 
                 _state = State.Failed;
             }
@@ -230,17 +232,17 @@ public class Game : Microsoft.Xna.Framework.Game
 
                 if (_arenaManager.LevelNumber < _arenaManager.LevelCount)
                 {
-                    _message = $"LEVEL COMPLETE.\n{mirrors}CLICK FOR NEXT LEVEL...";
+                    _textManager.Message = $"LEVEL COMPLETE.\n{mirrors}CLICK FOR NEXT LEVEL...";
                 }
                 else
                 {
                     if (_score > _highScore)
                     {
-                        _message = $"ALL LEVELS COMPLETE.\nCONGRATULATIONS!\nNEW HIGH SCORE!\n{mirrors}CLICK TO PLAY AGAIN...";
+                        _textManager.Message = $"ALL LEVELS COMPLETE.\nCONGRATULATIONS!\nNEW HIGH SCORE!\n{mirrors}CLICK TO PLAY AGAIN...";
                     }
                     else
                     {
-                        _message = $"ALL LEVELS COMPLETE.\n{mirrors}CLICK TO PLAY AGAIN...";
+                        _textManager.Message = $"ALL LEVELS COMPLETE.\n{mirrors}CLICK TO PLAY AGAIN...";
                     }
                 }
 
@@ -266,7 +268,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 
                 _arenaManager.NextLevel();
 
-                _message = null;
+                _textManager.Message = null;
 
                 _state = State.Playing;
             }
@@ -299,8 +301,6 @@ public class Game : Microsoft.Xna.Framework.Game
         
         DrawInfo();
 
-        DrawMessage();
-
         _spriteBatch.End();
 
         GraphicsDevice.SetRenderTarget(null);
@@ -312,30 +312,6 @@ public class Game : Microsoft.Xna.Framework.Game
         _spriteBatch.End();
 
         base.Draw(gameTime);
-    }
-
-    private void DrawMessage()
-    {
-        if (_message == null)
-        {
-            return;
-        }
-
-        var w = _font.MeasureString(_message).X;
-
-        // ReSharper disable once PossibleLossOfFraction
-        var start = TileSize * ArenaManager.MapSize / 2 - w / 2;
-
-        for (var y = -2; y < 3; y++)
-        {
-            for (var x = -2; x < 3; x++)
-            {
-                _spriteBatch.DrawString(_font, _message, new Vector2(start + x, 200 + y), Color.Black, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .6f);
-            }
-        }
-
-        _spriteBatch.DrawString(_font, _message, new Vector2(start, 200), Color.FromNonPremultiplied(255, 255, 255, 255), 0, Vector2.Zero, Vector2.One,
-            SpriteEffects.None, .7f);
     }
 
     private void DrawInfo()

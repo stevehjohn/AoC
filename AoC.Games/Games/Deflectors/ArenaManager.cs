@@ -8,8 +8,8 @@ namespace AoC.Games.Games.Deflectors;
 public class ArenaManager : IActor
 {
     public const int MapSize = 30;
-
-    private const int TileSize = 21;
+    
+    public const int TileSize = 21;
 
     private readonly int _topOffset;
 
