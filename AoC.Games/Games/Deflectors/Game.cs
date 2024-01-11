@@ -131,6 +131,8 @@ public class Game : Microsoft.Xna.Framework.Game
                     _textManager.Message = null;
 
                     _state = State.Playing;
+
+                    _frame = 0;
                 }
 
                 break;
@@ -141,57 +143,9 @@ public class Game : Microsoft.Xna.Framework.Game
                     _arenaManager.PlaceMirror();
                 }
 
-                if (_arenaManager.Level.Pieces.Count == 0 && _arenaManager.Mirror == '\0')
-                {
-                    // TODO: _beamSimulator.AllComplete
-                    if (! _beamSimulator.HitAllEnds && _beamSimulator.BeamMaxSteps >= 10_000_000)
-                    {
-                        _textManager.Message = "OH DEAR,\nLOOKS LIKE YOU CAN'T\nCOMPLETE THIS LEVEL.\nCLICK TO RESTART.";
+                CheckForFailure();
 
-                        _state = State.Failed;
-                    }
-
-                    _beamSimulator.BeamMaxSteps = 10_000_000;
-                }
-
-                if (_beamSimulator.IsComplete)
-                {
-                    _frame++;
-
-                    if (_frame > 200)
-                    {
-                        _state = State.PreparingNextLevel;
-                
-                        _score += _beamSimulator.BeamStrength / 3;
-
-                        var complete = _arenaManager.LevelNumber < _arenaManager.LevelCount
-                            ? "LEVEL COMPLETE.\n"
-                            : "ALL LEVELS COMPLETE\n";
-                
-                        var mirrors = ! _beamSimulator.HitAllMirrors || _arenaManager.Mirror != '\0'
-                            ? "YOU COULD HAVE OBTAINED\nA HIGHER SCORE IF YOU\nHIT ALL YOUR MIRRORS.\n"
-                            : string.Empty;
-
-                        var highScore = _score > _highScore && _arenaManager.LevelNumber == _arenaManager.LevelCount
-                            ? "CONGRATULATIONS!\nNEW HIGH SCORE!\n"
-                            : string.Empty;
-                
-                        var next = _arenaManager.LevelNumber < _arenaManager.LevelCount
-                            ? "CLICK TO CONTINUE..."
-                            : "CLICK TO PLAY AGAIN...";
-
-                        _textManager.Message = $"{complete}{highScore}{mirrors}{next}";
-
-                        if (highScore != string.Empty)
-                        {
-                            _highScore = _score;
-
-                            File.WriteAllText(HighScoreFile, _highScore.ToString());
-                        }
-
-                        _frame = 0;
-                    }
-                }
+                CheckComplete();
 
                 break;
             
@@ -237,7 +191,69 @@ public class Game : Microsoft.Xna.Framework.Game
         
         base.Update(gameTime);
     }
-    
+
+    private void CheckForFailure()
+    {
+        if (_arenaManager.Level.Pieces.Count == 0 && _arenaManager.Mirror == '\0')
+        {
+            if (! _beamSimulator.HitAllEnds)
+            {
+                _frame++;
+
+                if (_frame > 200)
+                {
+                    _textManager.Message = "OH DEAR,\nLOOKS LIKE YOU CAN'T\nCOMPLETE THIS LEVEL.\nCLICK TO RESTART.";
+
+                    _state = State.Failed;
+
+                    _frame = 0;
+                }
+            }
+        }
+    }
+
+    private void CheckComplete()
+    {
+        if (_beamSimulator.IsComplete)
+        {
+            _frame++;
+
+            if (_frame > 200)
+            {
+                _state = State.PreparingNextLevel;
+                
+                _score += _beamSimulator.BeamStrength / 3;
+
+                var complete = _arenaManager.LevelNumber < _arenaManager.LevelCount
+                    ? "LEVEL COMPLETE.\n"
+                    : "ALL LEVELS COMPLETE\n";
+                
+                var mirrors = ! _beamSimulator.HitAllMirrors || _arenaManager.Mirror != '\0'
+                    ? "YOU COULD HAVE OBTAINED\nA HIGHER SCORE IF YOU\nHIT ALL YOUR MIRRORS.\n"
+                    : string.Empty;
+
+                var highScore = _score > _highScore && _arenaManager.LevelNumber == _arenaManager.LevelCount
+                    ? "CONGRATULATIONS!\nNEW HIGH SCORE!\n"
+                    : string.Empty;
+                
+                var next = _arenaManager.LevelNumber < _arenaManager.LevelCount
+                    ? "CLICK TO CONTINUE..."
+                    : "CLICK TO PLAY AGAIN...";
+
+                _textManager.Message = $"{complete}{highScore}{mirrors}{next}";
+
+                if (highScore != string.Empty)
+                {
+                    _highScore = _score;
+
+                    File.WriteAllText(HighScoreFile, _highScore.ToString());
+                }
+
+                _frame = 0;
+            }
+        }
+    }
+
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.SetRenderTarget(_renderTarget);
