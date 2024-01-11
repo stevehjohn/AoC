@@ -70,7 +70,7 @@ public class SparkManager
         foreach (var spark in _sparks)
         {
             spriteBatch.Draw(_spark, new Vector2(spark.Position.X, _topOffset + spark.Position.Y),
-                new Rectangle(spark.SpriteOffset, 0, 5, 5), spark.Color * ((float) spark.Ticks / spark.StartTicks), 0,
+                new Rectangle(0, 0, 5, 5), spark.Color * ((float) spark.Ticks / spark.StartTicks), 0,
                 Vector2.Zero, Vector2.One, SpriteEffects.None, 0.3f);
         }
     }

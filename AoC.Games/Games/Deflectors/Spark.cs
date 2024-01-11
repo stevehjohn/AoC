@@ -11,8 +11,6 @@ public class Spark
     public int Ticks { get; set; }
     
     public int StartTicks { get; init; }
-
-    public int SpriteOffset { get; init; }
     
     public Color Color { get; init; }
 
