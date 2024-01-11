@@ -1,4 +1,5 @@
-﻿using AoC.Games.Infrastructure;
+﻿using AoC.Games.Games.Deflectors.Actors;
+using AoC.Games.Infrastructure;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
