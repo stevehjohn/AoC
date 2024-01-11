@@ -191,8 +191,12 @@ public class Game : Microsoft.Xna.Framework.Game
                 var highScore = _score > _highScore && _arenaManager.LevelNumber == _arenaManager.LevelCount
                     ? "CONGRATULATIONS!\nNEW HIGH SCORE!\n"
                     : string.Empty;
+                
+                var next = _arenaManager.LevelNumber < _arenaManager.LevelCount
+                    ? "CLICK TO CONTINUE..."
+                    : "CLICK TO PLAY AGAIN...";
 
-                _textManager.Message = $"{complete}{highScore}{mirrors}CLICK TO PLAY AGAIN...";
+                _textManager.Message = $"{complete}{highScore}{mirrors}{next}";
 
                 if (highScore != string.Empty)
                 {
