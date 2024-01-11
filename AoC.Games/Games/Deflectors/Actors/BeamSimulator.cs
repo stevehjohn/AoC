@@ -1,5 +1,4 @@
 using AoC.Games.Games.Deflectors.Levels;
-using AoC.Games.Infrastructure;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -34,7 +33,7 @@ public class BeamSimulator : IActor
 
     private int _beam;
 
-    public int BeamMaxSteps { get; set; }
+    private int _beamMaxSteps;
 
     public int BeamStrength => _beam;
     
@@ -89,7 +88,7 @@ public class BeamSimulator : IActor
 
         var beamSteps = 0;
 
-        BeamMaxSteps += 2;
+        _beamMaxSteps += 2;
 
         foreach (var start in _arenaManager.Level.Starts)
         {
@@ -145,7 +144,7 @@ public class BeamSimulator : IActor
 
             beamSteps++;
 
-            if (beamSteps > BeamMaxSteps)
+            if (beamSteps > _beamMaxSteps)
             {
                 break;
             }
@@ -208,7 +207,7 @@ public class BeamSimulator : IActor
 
                         if (_arenaManager.LastMirrorPosition != _arenaManager.MirrorPosition)
                         {
-                            BeamMaxSteps = beamSteps;
+                            _beamMaxSteps = beamSteps;
                         }
                     }
                 }

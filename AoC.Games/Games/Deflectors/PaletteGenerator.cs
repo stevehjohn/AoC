@@ -1,6 +1,6 @@
 ﻿using Color = Microsoft.Xna.Framework.Color;
 
-namespace AoC.Games.Infrastructure;
+namespace AoC.Games.Games.Deflectors;
 
 public static class PaletteGenerator
 {
