@@ -7,10 +7,6 @@ namespace AoC.Games.Games.Deflectors;
 
 public class ArenaManager : IActor
 {
-    public const int MapSize = 30;
-    
-    public const int TileSize = 21;
-
     private readonly Input _input;
 
     private readonly LevelDataProvider _levelDataProvider;
@@ -118,9 +114,9 @@ public class ArenaManager : IActor
 
         var position = (X: _input.MouseX, Y: _input.MouseY);
 
-        if (position.X >= 0 && position.X < MapSize * TileSize && position.Y >= Constants.TopOffset && position.Y < MapSize * TileSize + Constants.TopOffset && Mirror != '\0')
+        if (position.X >= 0 && position.X < Constants.MapSize * Constants.TileSize && position.Y >= Constants.TopOffset && position.Y < Constants.MapSize * Constants.TileSize + Constants.TopOffset && Mirror != '\0')
         {
-            _mirrorPosition = (position.X / TileSize, (position.Y - Constants.TopOffset) / TileSize);
+            _mirrorPosition = (position.X / Constants.TileSize, (position.Y - Constants.TopOffset) / Constants.TileSize);
         }
         else
         {
@@ -154,8 +150,8 @@ public class ArenaManager : IActor
             };
 
             spriteBatch.Draw(_mirrors,
-                new Vector2(mirror.X * TileSize, Constants.TopOffset + mirror.Y * TileSize),
-                new Rectangle(offset * TileSize, 0, TileSize, TileSize),
+                new Vector2(mirror.X * Constants.TileSize, Constants.TopOffset + mirror.Y * Constants.TileSize),
+                new Rectangle(offset * Constants.TileSize, 0, Constants.TileSize, Constants.TileSize),
                 mirror.Placed ? Color.Green : Color.DarkCyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .4f);
         }
 
@@ -180,8 +176,8 @@ public class ArenaManager : IActor
             }
 
             spriteBatch.Draw(_mirrors,
-                new Vector2(MirrorPosition.X * TileSize, Constants.TopOffset + MirrorPosition.Y * TileSize),
-                new Rectangle(offset * TileSize, 0, TileSize, TileSize),
+                new Vector2(MirrorPosition.X * Constants.TileSize, Constants.TopOffset + MirrorPosition.Y * Constants.TileSize),
+                new Rectangle(offset * Constants.TileSize, 0, Constants.TileSize, Constants.TileSize),
                 color, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .5f);
         }
     }
@@ -191,8 +187,8 @@ public class ArenaManager : IActor
         foreach (var start in Level.Starts)
         {
             spriteBatch.Draw(_other,
-                new Vector2(start.X * TileSize, Constants.TopOffset + start.Y * TileSize),
-                new Rectangle(0, 0, TileSize, TileSize),
+                new Vector2(start.X * Constants.TileSize, Constants.TopOffset + start.Y * Constants.TileSize),
+                new Rectangle(0, 0, Constants.TileSize, Constants.TileSize),
                 Color.FromNonPremultiplied(255, 255, 255, 255), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
         }
     }
@@ -216,30 +212,30 @@ public class ArenaManager : IActor
             };
 
             spriteBatch.Draw(_other,
-                new Vector2(end.X * TileSize, Constants.TopOffset + end.Y * TileSize),
-                new Rectangle(spriteX * TileSize, 0, TileSize, TileSize),
+                new Vector2(end.X * Constants.TileSize, Constants.TopOffset + end.Y * Constants.TileSize),
+                new Rectangle(spriteX * Constants.TileSize, 0, Constants.TileSize, Constants.TileSize),
                 Color.FromNonPremultiplied(255, 255, 255, 255), 0, Vector2.Zero, Vector2.One, effect, .1f);
         }
     }
 
     private void DrawBackground(SpriteBatch spriteBatch)
     {
-        for (var y = 0; y < MapSize; y++)
+        for (var y = 0; y <Constants. MapSize; y++)
         {
-            for (var x = 0; x < MapSize; x++)
+            for (var x = 0; x < Constants.MapSize; x++)
             {
                 if (! Level.Blocked.Any(b => b.X == x && b.Y == y))
                 {
                     spriteBatch.Draw(_other,
-                        new Vector2(x * TileSize, Constants.TopOffset + y * TileSize),
-                        new Rectangle(TileSize * 3, 0, TileSize, TileSize),
+                        new Vector2(x * Constants.TileSize, Constants.TopOffset + y * Constants.TileSize),
+                        new Rectangle(Constants.TileSize * 3, 0, Constants.TileSize, Constants.TileSize),
                         Color.FromNonPremultiplied(255, 255, 255, 25), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
                 }
                 else
                 {
                     spriteBatch.Draw(_other,
-                        new Vector2(x * TileSize, Constants.TopOffset + y * TileSize),
-                        new Rectangle(TileSize * 3, 0, TileSize, TileSize),
+                        new Vector2(x * Constants.TileSize, Constants.TopOffset + y * Constants.TileSize),
+                        new Rectangle(Constants.TileSize * 3, 0, Constants.TileSize, Constants.TileSize),
                         Color.FromNonPremultiplied(255, 255, 255, 200), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
                 }
             }
@@ -247,8 +243,8 @@ public class ArenaManager : IActor
             if (y > 0 && y <= 10)
             {
                 spriteBatch.Draw(_other,
-                    new Vector2((MapSize + 1) * TileSize, Constants.TopOffset + y * TileSize),
-                    new Rectangle(TileSize * 3, 0, TileSize, TileSize),
+                    new Vector2((Constants.MapSize + 1) * Constants.TileSize, Constants.TopOffset + y * Constants.TileSize),
+                    new Rectangle(Constants.TileSize * 3, 0, Constants.TileSize, Constants.TileSize),
                     Color.FromNonPremultiplied(255, 255, 255, 25), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
             }
         }
@@ -274,8 +270,8 @@ public class ArenaManager : IActor
             };
 
             spriteBatch.Draw(_mirrors,
-                new Vector2(31 * TileSize, Constants.TopOffset + y * TileSize),
-                new Rectangle(offset * TileSize, 0, TileSize, TileSize),
+                new Vector2(31 * Constants.TileSize, Constants.TopOffset + y * Constants.TileSize),
+                new Rectangle(offset * Constants.TileSize, 0, Constants.TileSize, Constants.TileSize),
                 Color.Cyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
 
             index++;

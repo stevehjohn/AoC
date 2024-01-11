@@ -10,7 +10,7 @@ public class BeamSimulator : IActor
 {
     private const int BeamSize = 7;
 
-    private const int BeamFactor = ArenaManager.TileSize / BeamSize;
+    private const int BeamFactor = Constants.TileSize / BeamSize;
     
     private readonly SparkManager _sparkManager;
     
@@ -139,7 +139,7 @@ public class BeamSimulator : IActor
         var oldDx = dX;
         var oldDy = dY;
 
-        while (x >= 0 && x < ArenaManager.MapSize * BeamFactor && y >= 0 && y < ArenaManager.MapSize * BeamFactor)
+        while (x >= 0 && x < Constants.MapSize * BeamFactor && y >= 0 && y < Constants.MapSize * BeamFactor)
         {
             _beam++;
 

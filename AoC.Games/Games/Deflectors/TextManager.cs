@@ -66,7 +66,7 @@ public class TextManager : IActor
         var w = _font.MeasureString(Message).X;
 
         // ReSharper disable once PossibleLossOfFraction
-        var start = ArenaManager.TileSize * ArenaManager.MapSize / 2 - w / 2;
+        var start = Constants.TileSize * Constants.MapSize / 2 - w / 2;
 
         for (var y = -2; y < 3; y++)
         {
