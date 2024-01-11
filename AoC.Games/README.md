@@ -26,6 +26,8 @@ On macOS, you will probably need to install these dependencies. Make sure you ha
 If you find the window is not a good size for you, you can change the size by altering `ScaleFactor` in [app-settings.json](app-settings.json).
 This need not bee an integer, if you want the window to be smaller, you can specify `0.5` or for larger `2`.
 
+There is also a setting allowing you to skip levels by pressing <kbd>N</kbd> or reset a level with <kbd>R</kbd>.
+
 ## Level Definitions
 
 Levels are defined in this [JSON file](Games/Deflectors/Levels/levels.json).

@@ -1,5 +1,4 @@
-﻿#define TEST_MODE
-using AoC.Games.Games.Deflectors.Levels;
+﻿using AoC.Games.Games.Deflectors.Levels;
 using AoC.Games.Infrastructure;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -169,36 +168,37 @@ public class Game : Microsoft.Xna.Framework.Game
 
     protected override void Update(GameTime gameTime)
     {
-#if TEST_MODE
-        var keysState = Keyboard.GetState();
-
-        if (_previousPressed.Contains(Keys.R) && keysState.IsKeyUp(Keys.R))
+        if (AppSettings.Instance.AllowCheat)
         {
-            LoadLevel();
+            var keysState = Keyboard.GetState();
 
-            _state = State.Playing;
-
-            _message = null;
-        }
-
-        if (_previousPressed.Contains(Keys.N) && keysState.IsKeyUp(Keys.N))
-        {
-            _levelNumber++;
-
-            if (_levelNumber > _levels.LevelCount)
+            if (_previousPressed.Contains(Keys.R) && keysState.IsKeyUp(Keys.R))
             {
-                _levelNumber = 1;
+                LoadLevel();
+
+                _state = State.Playing;
+
+                _message = null;
             }
 
-            LoadLevel();
+            if (_previousPressed.Contains(Keys.N) && keysState.IsKeyUp(Keys.N))
+            {
+                _levelNumber++;
 
-            _state = State.Playing;
+                if (_levelNumber > _levels.LevelCount)
+                {
+                    _levelNumber = 1;
+                }
 
-            _message = null;
+                LoadLevel();
+
+                _state = State.Playing;
+
+                _message = null;
+            }
+
+            _previousPressed = keysState.GetPressedKeys();
         }
-
-        _previousPressed = keysState.GetPressedKeys();
-#endif
         
         var mouseState = Mouse.GetState();
 

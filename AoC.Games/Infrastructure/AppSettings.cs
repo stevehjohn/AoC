@@ -6,6 +6,8 @@ public class AppSettings
 {
     public float ScaleFactor { get; init; }
     
+    public bool AllowCheat { get; init; }
+    
     private static readonly Lazy<AppSettings> Lazy = new(GetAppSettings);
 
     public static AppSettings Instance => Lazy.Value;
