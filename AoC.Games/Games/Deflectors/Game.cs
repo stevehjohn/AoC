@@ -26,8 +26,6 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private const int BufferHeight = 663;
 
-    private int _levelNumber = 1;
-
     // ReSharper disable once NotAccessedField.Local
     private GraphicsDeviceManager _graphics;
 
@@ -165,9 +163,9 @@ public class Game : Microsoft.Xna.Framework.Game
         {
             if (_input.KeyPressed(Keys.R))
             {
-                StartLevel();
+                _arenaManager.ResetLevel();
 
-                _arenaManager.SetLevel(_levelNumber);
+                StartLevel();
                 
                 _state = State.Playing;
 
@@ -176,8 +174,6 @@ public class Game : Microsoft.Xna.Framework.Game
 
             if (_input.KeyPressed(Keys.N))
             {
-                _levelNumber++;
-
                 _arenaManager.NextLevel();
 
                 StartLevel();
@@ -237,15 +233,13 @@ public class Game : Microsoft.Xna.Framework.Game
         {
             if (_input.LeftButtonClicked())
             {
-                _levelNumber = 1;
-
                 _score = 0;
 
                 _displayScore = 0;
+                
+                _arenaManager.SetLevel(1);
 
                 StartLevel();
-                
-                _arenaManager.SetLevel(_levelNumber);
 
                 _message = null;
 
@@ -282,7 +276,7 @@ public class Game : Microsoft.Xna.Framework.Game
                     ? "YOU COULD HAVE OBTAINED\nA HIGHER SCORE IF YOU\nHIT ALL YOUR MIRRORS.\n"
                     : string.Empty;
 
-                if (_levelNumber < _arenaManager.LevelCount)
+                if (_arenaManager.LevelNumber < _arenaManager.LevelCount)
                 {
                     _message = $"LEVEL COMPLETE.\n{mirrors}CLICK FOR NEXT LEVEL...";
                 }
@@ -317,23 +311,10 @@ public class Game : Microsoft.Xna.Framework.Game
 
                     File.WriteAllText(HighScoreFile, _highScore.ToString());
                 }
-
-                if (_levelNumber < _arenaManager.LevelCount)
-                {
-                    _levelNumber++;
-                }
-                else
-                {
-                    _levelNumber = 1;
-
-                    _score = 0;
-
-                    _displayScore = 0;
-                }
+                
+                _arenaManager.NextLevel();
 
                 StartLevel();
-                
-                _arenaManager.SetLevel(_levelNumber);
 
                 _message = null;
 
@@ -445,7 +426,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
         var x = _font.MeasureString("LEVEL: ").X + 10;
 
-        _spriteBatch.DrawString(_font, $"{_levelNumber,2}", new Vector2(x, -2), Color.FromNonPremultiplied(192, 192, 192, 255));
+        _spriteBatch.DrawString(_font, $"{_arenaManager.LevelNumber,2}", new Vector2(x, -2), Color.FromNonPremultiplied(192, 192, 192, 255));
 
         _spriteBatch.DrawString(_font, "BEAM:", new Vector2(170, -2), Color.FromNonPremultiplied(0, 128, 0, 255));
 

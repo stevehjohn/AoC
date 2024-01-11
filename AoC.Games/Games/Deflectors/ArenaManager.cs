@@ -28,14 +28,14 @@ public class ArenaManager : IActor
     public char Mirror { get; set; }
 
     public int LevelCount => _levelDataProvider.LevelCount;
+
+    public int LevelNumber => _levelNumber;
     
     public ArenaManager(int topOffset)
     {
         _topOffset = topOffset;
 
         _levelDataProvider = new LevelDataProvider();
-
-        _levelNumber = 1;
         
         Level = _levelDataProvider.GetLevel(1);
     }
@@ -52,6 +52,11 @@ public class ArenaManager : IActor
         _levelNumber = levelNumber;
         
         Level = _levelDataProvider.GetLevel(levelNumber);
+    }
+
+    public void ResetLevel()
+    {
+        Level = _levelDataProvider.GetLevel(_levelNumber);
     }
 
     public void NextLevel()
