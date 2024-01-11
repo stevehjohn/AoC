@@ -61,8 +61,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private (int X, int Y) _lastMirrorPosition = (-1, -1);
 
-    private bool _leftButtonPrevious;
-
+    private Input _input = new();
+    
     private readonly List<Spark> _sparks = [];
 
     private readonly Random _rng = new();
@@ -90,8 +90,6 @@ public class Game : Microsoft.Xna.Framework.Game
     private readonly HashSet<(int, int)> _hitEnds = [];
 
     private readonly HashSet<(int, int)> _hitMirrors = [];
-
-    private Keys[] _previousPressed = [];
     
     public Game()
     {
@@ -168,11 +166,9 @@ public class Game : Microsoft.Xna.Framework.Game
 
     protected override void Update(GameTime gameTime)
     {
-        if (AppSettings.Instance.AllowCheat)
+        if (true) //AppSettings.Instance.AllowCheat)
         {
-            var keysState = Keyboard.GetState();
-
-            if (_previousPressed.Contains(Keys.R) && keysState.IsKeyUp(Keys.R))
+            if (_input.KeyPressed(Keys.R))
             {
                 LoadLevel();
 
@@ -181,7 +177,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 _message = null;
             }
 
-            if (_previousPressed.Contains(Keys.N) && keysState.IsKeyUp(Keys.N))
+            if (_input.KeyPressed(Keys.N))
             {
                 _levelNumber++;
 
@@ -196,27 +192,21 @@ public class Game : Microsoft.Xna.Framework.Game
 
                 _message = null;
             }
-
-            _previousPressed = keysState.GetPressedKeys();
         }
-        
-        var mouseState = Mouse.GetState();
 
         if (_state == State.AwaitingStart)
         {
-            if (mouseState.LeftButton == ButtonState.Released && _leftButtonPrevious)
+            if (_input.LeftButtonClicked())
             {
                 _state = State.Playing;
 
                 _message = null;
 
-                _leftButtonPrevious = false;
-
                 return;
             }
         }
 
-        var position = (X: mouseState.X / _scaleFactor, Y: mouseState.Y / _scaleFactor);
+        var position = (X: _input.MouseX / _scaleFactor, Y: _input.MouseY / _scaleFactor);
 
         if (position.X >= 0 && position.X < MapSize * TileSize && position.Y >= 0 && position.Y < MapSize * TileSize && _mirror != '\0')
         {
@@ -238,7 +228,7 @@ public class Game : Microsoft.Xna.Framework.Game
             IsMouseVisible = false;
         }
 
-        if (_state == State.Playing && mouseState.LeftButton == ButtonState.Released && _leftButtonPrevious)
+        if (_state == State.Playing && _input.LeftButtonClicked())
         {
             if (position.X >= 0 && position.X < MapSize * TileSize && position.Y >= 0 && position.Y < MapSize * TileSize && _mirror != '\0')
             {
@@ -248,7 +238,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
         if (_state == State.Failed)
         {
-            if (mouseState.LeftButton == ButtonState.Released && _leftButtonPrevious)
+            if (_input.LeftButtonClicked())
             {
                 _levelNumber = 1;
 
@@ -320,7 +310,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 _highScore++;
             }
 
-            if (mouseState.LeftButton == ButtonState.Released && _leftButtonPrevious)
+            if (_input.LeftButtonClicked())
             {
                 if (_score >= _highScore)
                 {
@@ -350,10 +340,10 @@ public class Game : Microsoft.Xna.Framework.Game
             }
         }
 
-        _leftButtonPrevious = mouseState.LeftButton == ButtonState.Pressed;
-
         UpdateSparks();
-
+        
+        _input.UpdateState();
+        
         base.Update(gameTime);
     }
 
