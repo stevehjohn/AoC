@@ -166,7 +166,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
     protected override void Update(GameTime gameTime)
     {
-        if (true) //AppSettings.Instance.AllowCheat)
+        if (AppSettings.Instance.AllowCheat)
         {
             if (_input.KeyPressed(Keys.R))
             {
