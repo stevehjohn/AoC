@@ -73,7 +73,7 @@ Where Piece is `|`, `-`, `/` or `\\` (double backslash because of JSON escaping 
 "Mirrors": [ { "X": 15, "Y": 15, "Piece": "/" }, { "X": 20, "Y": 15, "Piece": "\\" } ]
 ```
 
-Lastly, `Pieces` is and array of mirrors in the order the player will be presented with them. The same values are allowed as with `Mirrors`.
+Lastly, `Pieces` is an array of mirrors in the order the player will be presented with them. The same values are allowed as with `Mirrors`.
 
 ```json
 "Pieces": [ "/", "-", "|", "\\", "/" ]
