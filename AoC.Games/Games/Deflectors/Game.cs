@@ -10,8 +10,6 @@ public class Game : Microsoft.Xna.Framework.Game
 {
     private readonly float _scaleFactor;
 
-    // private const int MapSize = 30;
-
     private const int TileSize = 21;
 
     private const int BeamSize = 7;
