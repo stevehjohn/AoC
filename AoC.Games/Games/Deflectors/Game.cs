@@ -9,7 +9,7 @@ namespace AoC.Games.Games.Deflectors;
 
 public class Game : Microsoft.Xna.Framework.Game
 {
-    private readonly int _scaleFactor;
+    private readonly float _scaleFactor;
 
     private const int MapSize = 30;
 
@@ -100,8 +100,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
         _graphics = new GraphicsDeviceManager(this)
         {
-            PreferredBackBufferWidth = BufferWidth * _scaleFactor,
-            PreferredBackBufferHeight = BufferHeight * _scaleFactor
+            PreferredBackBufferWidth = (int) (BufferWidth * _scaleFactor),
+            PreferredBackBufferHeight = (int) (BufferHeight * _scaleFactor)
         };
 
         Content.RootDirectory = "./Deflectors";
@@ -224,7 +224,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
             _lastMirrorPosition = _mirrorPosition;
 
-            _mirrorPosition = (position.X / TileSize, position.Y / TileSize);
+            _mirrorPosition = ((int) (position.X / TileSize), (int) (position.Y / TileSize));
         }
         else
         {
@@ -445,7 +445,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
         _spriteBatch.Begin(SpriteSortMode.FrontToBack, blendState: BlendState.NonPremultiplied, samplerState: SamplerState.PointClamp);
 
-        _spriteBatch.Draw(_renderTarget, new Rectangle(0, 0, BufferWidth * _scaleFactor, BufferHeight * _scaleFactor), Color.White);
+        _spriteBatch.Draw(_renderTarget, new Rectangle(0, 0, (int) (BufferWidth * _scaleFactor), (int) (BufferHeight * _scaleFactor)), Color.White);
 
         _spriteBatch.End();
 
