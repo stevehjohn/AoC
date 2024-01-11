@@ -7,8 +7,15 @@ public class LevelDataProvider
     private readonly Dictionary<int, Level> _levels = [];
 
     public int LevelCount => _levels.Count;
+
+    public Level GetLevel(int number)
+    {
+        LoadLevels();
+        
+        return _levels[number];
+    }
     
-    public void LoadLevels()
+    private void LoadLevels()
     {
         _levels.Clear();
         
@@ -20,10 +27,5 @@ public class LevelDataProvider
         {
             _levels.Add(level.Id, level);
         }
-    }
-
-    public Level GetLevel(int number)
-    {
-        return _levels[number];
     }
 }
