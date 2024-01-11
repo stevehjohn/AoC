@@ -49,12 +49,6 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private int _paletteDirection = -1;
 
-    private char _mirror;
-
-    private (int X, int Y) _mirrorPosition;
-
-    private (int X, int Y) _lastMirrorPosition = (-1, -1);
-
     private readonly Input _input = new();
     
     private readonly Queue<(int X, int Y, Direction Direction, int BeamSteps, int Color, int ColorDirection)> _splitters = [];
@@ -116,8 +110,6 @@ public class Game : Microsoft.Xna.Framework.Game
             new Color(254, 253, 0)
         ]);
 
-        StartLevel();
-
         _message = "WELCOME TO THE FLOOR WILL BE LAVA.\nINSPIRED BY ERIC WASTL'S\nADVENT OF CODE.\nCLICK TO PLAY.";
 
         if (File.Exists(HighScoreFile))
@@ -130,15 +122,6 @@ public class Game : Microsoft.Xna.Framework.Game
         Window.Title = "The Floor Will be Lava";
 
         base.Initialize();
-    }
-
-    private void StartLevel()
-    {
-        _mirror = _arenaManager.Level.Pieces[0];
-
-        _arenaManager.Level.Pieces.RemoveAt(0);
-
-        _paletteStart = _palette.Length - 1;
     }
 
     protected override void LoadContent()
@@ -164,8 +147,6 @@ public class Game : Microsoft.Xna.Framework.Game
             if (_input.KeyPressed(Keys.R))
             {
                 _arenaManager.ResetLevel();
-
-                StartLevel();
                 
                 _state = State.Playing;
 
@@ -175,8 +156,6 @@ public class Game : Microsoft.Xna.Framework.Game
             if (_input.KeyPressed(Keys.N))
             {
                 _arenaManager.NextLevel();
-
-                StartLevel();
 
                 _state = State.Playing;
 
@@ -201,19 +180,17 @@ public class Game : Microsoft.Xna.Framework.Game
 
         var position = (X: _input.MouseX / _scaleFactor, Y: _input.MouseY / _scaleFactor);
 
-        if (position.X >= 0 && position.X < MapSize * TileSize && position.Y >= 0 && position.Y < MapSize * TileSize && _mirror != '\0')
+        if (position.X >= 0 && position.X < MapSize * TileSize && position.Y >= 0 && position.Y < MapSize * TileSize && _arenaManager.Mirror != '\0')
         {
             IsMouseVisible = false;
 
-            _lastMirrorPosition = _mirrorPosition;
-
-            _mirrorPosition = ((int) (position.X / TileSize), (int) (position.Y / TileSize));
+            _arenaManager.MirrorPosition = ((int) (position.X / TileSize), (int) (position.Y / TileSize));
         }
         else
         {
             IsMouseVisible = true;
 
-            _mirrorPosition = (-1, -1);
+            _arenaManager.MirrorPosition = (-1, -1);
         }
 
         if (_message != null)
@@ -223,9 +200,9 @@ public class Game : Microsoft.Xna.Framework.Game
 
         if (_state == State.Playing && _input.LeftButtonClicked())
         {
-            if (position.X >= 0 && position.X < MapSize * TileSize && position.Y >= 0 && position.Y < MapSize * TileSize && _mirror != '\0')
+            if (position.X >= 0 && position.X < MapSize * TileSize && position.Y >= 0 && position.Y < MapSize * TileSize && _arenaManager.Mirror != '\0')
             {
-                PlaceMirror();
+                _arenaManager.PlaceMirror();
             }
         }
 
@@ -239,15 +216,13 @@ public class Game : Microsoft.Xna.Framework.Game
                 
                 _arenaManager.SetLevel(1);
 
-                StartLevel();
-
                 _message = null;
 
                 _state = State.Playing;
             }
         }
 
-        if (_arenaManager.Level.Pieces.Count == 0 && _mirror == '\0' && _state == State.Playing)
+        if (_arenaManager.Level.Pieces.Count == 0 && _arenaManager.Mirror == '\0' && _state == State.Playing)
         {
             if (_hitEnds.Count < _arenaManager.Level.Ends.Length && _beamMaxSteps >= 10_000_000)
             {
@@ -272,7 +247,7 @@ public class Game : Microsoft.Xna.Framework.Game
             {
                 _state = State.PreparingNextLevel;
 
-                var mirrors = _hitMirrors.Count < _arenaManager.Level.Mirrors.Count || _mirror != '\0'
+                var mirrors = _hitMirrors.Count < _arenaManager.Level.Mirrors.Count || _arenaManager.Mirror != '\0'
                     ? "YOU COULD HAVE OBTAINED\nA HIGHER SCORE IF YOU\nHIT ALL YOUR MIRRORS.\n"
                     : string.Empty;
 
@@ -314,8 +289,6 @@ public class Game : Microsoft.Xna.Framework.Game
                 
                 _arenaManager.NextLevel();
 
-                StartLevel();
-
                 _message = null;
 
                 _state = State.Playing;
@@ -326,42 +299,10 @@ public class Game : Microsoft.Xna.Framework.Game
         {
             actor.Update();
         }
-
-        _arenaManager.MirrorPosition = _mirrorPosition;
-
-        _arenaManager.Mirror = _mirror;
         
         _input.UpdateState();
         
         base.Update(gameTime);
-    }
-
-    private void PlaceMirror()
-    {
-        if (_arenaManager.Level.Mirrors.Any(m => m.X == _mirrorPosition.X && m.Y == _mirrorPosition.Y)
-            || _arenaManager.Level.Blocked.Any(b => b.X == _mirrorPosition.X && b.Y == _mirrorPosition.Y)
-            || _arenaManager.Level.Starts.Any(s => s.X == _mirrorPosition.X && s.Y == _mirrorPosition.Y)
-            || _arenaManager.Level.Ends.Any(e => e.X == _mirrorPosition.X && e.Y == _mirrorPosition.Y))
-        {
-            return;
-        }
-
-        _arenaManager.Level.Mirrors.Add(new Mirror
-        {
-            Piece = _mirror,
-            Placed = true,
-            X = _mirrorPosition.X,
-            Y = _mirrorPosition.Y
-        });
-
-        _mirror = '\0';
-
-        if (_arenaManager.Level.Pieces.Count > 0)
-        {
-            _mirror = _arenaManager.Level.Pieces[0];
-
-            _arenaManager.Level.Pieces.RemoveAt(0);
-        }
     }
     
     protected override void Draw(GameTime gameTime)
@@ -575,17 +516,15 @@ public class Game : Microsoft.Xna.Framework.Game
 
                 if (mirror == '\0')
                 {
-                    if (_mirrorPosition.X == x / BeamFactor && _mirrorPosition.Y == y / BeamFactor)
+                    if (_arenaManager.MirrorPosition.X == x / BeamFactor && _arenaManager.MirrorPosition.Y == y / BeamFactor)
                     {
                         _hitUnplaced = true;
 
-                        mirror = _mirror;
+                        mirror = _arenaManager.Mirror;
 
-                        if (_lastMirrorPosition != _mirrorPosition)
+                        if (_arenaManager.LastMirrorPosition != _arenaManager.MirrorPosition)
                         {
                             _beamMaxSteps = beamSteps;
-
-                            _lastMirrorPosition = _mirrorPosition;
                         }
                     }
                 }

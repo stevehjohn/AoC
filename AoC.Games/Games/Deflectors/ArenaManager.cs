@@ -19,13 +19,25 @@ public class ArenaManager : IActor
 
     private Texture2D _other;
 
-    private int _levelNumber = 1;
+    private int _levelNumber;
 
+    private (int X, int Y) _mirrorPosition;
+    
     public Level Level { get; private set; }
 
-    public (int X, int Y) MirrorPosition { get; set; }
+    public (int X, int Y) LastMirrorPosition { get; private set; } = (-1, -1);
+    
+    public (int X, int Y) MirrorPosition {
+        get => _mirrorPosition;
+        set
+        {
+            LastMirrorPosition = _mirrorPosition;
 
-    public char Mirror { get; set; }
+            _mirrorPosition = value;
+        }
+    }
+
+    public char Mirror { get; private set; }
 
     public int LevelCount => _levelDataProvider.LevelCount;
 
@@ -37,7 +49,7 @@ public class ArenaManager : IActor
 
         _levelDataProvider = new LevelDataProvider();
         
-        Level = _levelDataProvider.GetLevel(1);
+        SetLevel(1);
     }
     
     public void LoadContent(ContentManager contentManager)
@@ -52,11 +64,15 @@ public class ArenaManager : IActor
         _levelNumber = levelNumber;
         
         Level = _levelDataProvider.GetLevel(levelNumber);
+
+        Mirror = Level.Pieces[0];
+        
+        Level.Pieces.RemoveAt(0);
     }
 
     public void ResetLevel()
     {
-        Level = _levelDataProvider.GetLevel(_levelNumber);
+        SetLevel(_levelNumber);
     }
 
     public void NextLevel()
@@ -68,9 +84,37 @@ public class ArenaManager : IActor
             _levelNumber = 1;
         }
 
-        Level = _levelDataProvider.GetLevel(_levelNumber);
+        SetLevel(_levelNumber);
     }
 
+    public void PlaceMirror()
+    {
+        if (Level.Mirrors.Any(m => m.X == MirrorPosition.X && m.Y == MirrorPosition.Y)
+            || Level.Blocked.Any(b => b.X == MirrorPosition.X && b.Y == MirrorPosition.Y)
+            || Level.Starts.Any(s => s.X == MirrorPosition.X && s.Y == MirrorPosition.Y)
+            || Level.Ends.Any(e => e.X == MirrorPosition.X && e.Y == MirrorPosition.Y))
+        {
+            return;
+        }
+
+        Level.Mirrors.Add(new Mirror
+        {
+            Piece = Mirror,
+            Placed = true,
+            X = MirrorPosition.X,
+            Y = MirrorPosition.Y
+        });
+
+        Mirror = '\0';
+
+        if (Level.Pieces.Count > 0)
+        {
+            Mirror = Level.Pieces[0];
+
+            Level.Pieces.RemoveAt(0);
+        }
+    }
+    
     public void Update()
     {
     }
