@@ -10,10 +10,6 @@ public class Game : Microsoft.Xna.Framework.Game
 {
     private readonly float _scaleFactor;
 
-    private const int BufferWidth = 693;
-
-    private const int BufferHeight = 663;
-
     // ReSharper disable once NotAccessedField.Local
     private GraphicsDeviceManager _graphics;
 
@@ -43,8 +39,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
         _graphics = new GraphicsDeviceManager(this)
         {
-            PreferredBackBufferWidth = (int) (BufferWidth * _scaleFactor),
-            PreferredBackBufferHeight = (int) (BufferHeight * _scaleFactor)
+            PreferredBackBufferWidth = (int) (Constants.BufferWidth * _scaleFactor),
+            PreferredBackBufferHeight = (int) (Constants.BufferHeight * _scaleFactor)
         };
 
         Content.RootDirectory = "./Deflectors";
@@ -81,7 +77,7 @@ public class Game : Microsoft.Xna.Framework.Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        _renderTarget = new RenderTarget2D(GraphicsDevice, BufferWidth, BufferHeight);
+        _renderTarget = new RenderTarget2D(GraphicsDevice, Constants.BufferWidth, Constants.BufferHeight);
 
         foreach (var actor in _actors)
         {
@@ -183,7 +179,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
         _spriteBatch.Begin(SpriteSortMode.FrontToBack, blendState: BlendState.NonPremultiplied, samplerState: SamplerState.PointClamp);
 
-        _spriteBatch.Draw(_renderTarget, new Rectangle(0, 0, (int) (BufferWidth * _scaleFactor), (int) (BufferHeight * _scaleFactor)), Color.White);
+        _spriteBatch.Draw(_renderTarget, new Rectangle(0, 0, (int) (Constants.BufferWidth * _scaleFactor), (int) (Constants.BufferHeight * _scaleFactor)), Color.White);
 
         _spriteBatch.End();
 
