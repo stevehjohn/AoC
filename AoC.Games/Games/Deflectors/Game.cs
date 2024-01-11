@@ -178,27 +178,28 @@ public class Game : Microsoft.Xna.Framework.Game
             {
                 _state = State.PreparingNextLevel;
 
+                var complete = _arenaManager.LevelNumber < _arenaManager.LevelCount
+                    ? "LEVEL COMPLETE.\n"
+                    : "ALL LEVELS COMPLETE\n";
+                
                 var mirrors = ! _beamSimulator.HitAllMirrors || _arenaManager.Mirror != '\0'
                     ? "YOU COULD HAVE OBTAINED\nA HIGHER SCORE IF YOU\nHIT ALL YOUR MIRRORS.\n"
                     : string.Empty;
 
-                if (_arenaManager.LevelNumber < _arenaManager.LevelCount)
-                {
-                    _textManager.Message = $"LEVEL COMPLETE.\n{mirrors}CLICK FOR NEXT LEVEL...";
-                }
-                else
-                {
-                    if (_score > _highScore)
-                    {
-                        _textManager.Message = $"ALL LEVELS COMPLETE.\nCONGRATULATIONS!\nNEW HIGH SCORE!\n{mirrors}CLICK TO PLAY AGAIN...";
-                    }
-                    else
-                    {
-                        _textManager.Message = $"ALL LEVELS COMPLETE.\n{mirrors}CLICK TO PLAY AGAIN...";
-                    }
-                }
+                var highScore = _score > _highScore && _arenaManager.LevelNumber == _arenaManager.LevelCount
+                    ? "CONGRATULATIONS!\nNEW HIGH SCORE!\n"
+                    : string.Empty;
 
+                _textManager.Message = $"{complete}{highScore}{mirrors}CLICK TO PLAY AGAIN...";
+                
                 _score += _beamSimulator.BeamStrength;
+
+                if (highScore != string.Empty)
+                {
+                    _highScore = _score;
+
+                    File.WriteAllText(HighScoreFile, _highScore.ToString());
+                }
 
                 _frame = 0;
             }
@@ -206,20 +207,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
         if (_state == State.PreparingNextLevel)
         {
-            if (_score > _highScore)
-            {
-                _highScore++;
-            }
-
             if (_input.LeftButtonClicked())
             {
-                if (_score >= _highScore)
-                {
-                    _highScore = _score;
-
-                    File.WriteAllText(HighScoreFile, _highScore.ToString());
-                }
-                
                 _arenaManager.NextLevel();
 
                 _textManager.Message = null;
