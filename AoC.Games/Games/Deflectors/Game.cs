@@ -190,17 +190,18 @@ public class Game : Microsoft.Xna.Framework.Game
             }
         }
 
+        if (_state == State.Starting)
+        {
+            _state = State.Playing;
+        }
+
         if (_state == State.AwaitingStart)
         {
             if (_input.LeftButtonClicked())
             {
-                _state = State.Playing;
+                _state = State.Starting;
 
                 _message = null;
-
-                _input.UpdateState();
-                
-                return;
             }
         }
 
