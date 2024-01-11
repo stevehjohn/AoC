@@ -115,6 +115,6 @@ public class TextManager : IActor
 
         x = _font.MeasureString("HI: ").X + 530;
 
-        spriteBatch.DrawString(_font, _highScore.ToString(), new Vector2(x, -2), Color.FromNonPremultiplied(192, 192, 192, 255));
+        spriteBatch.DrawString(_font, _displayHighScore.ToString(), new Vector2(x, -2), Color.FromNonPremultiplied(192, 192, 192, 255));
     }
 }
