@@ -37,17 +37,15 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private Texture2D _beams;
 
-    private Texture2D _mirrors;
-
-    private Texture2D _other;
-
-    private readonly List<IActor> _actors = new();
+    private readonly List<IActor> _actors = [];
     
-    private readonly SparkManager _sparkManager = new(TopOffset);
+    private readonly SparkManager _sparkManager;
+
+    private readonly ArenaManager _arenaManager;
     
     private SpriteFont _font;
 
-    private readonly LevelDataProvider _levels = new();
+    private readonly LevelDataProvider _levelDataProvider = new();
 
     private Level _level;
 
@@ -102,8 +100,16 @@ public class Game : Microsoft.Xna.Framework.Game
         Content.RootDirectory = "./Deflectors";
 
         IsMouseVisible = true;
+
+        _sparkManager = new SparkManager(TopOffset);
         
         _actors.Add(_sparkManager);
+        
+        _levelDataProvider.LoadLevels();
+
+        _arenaManager = new ArenaManager(TopOffset, _levelDataProvider);
+        
+        _actors.Add(_arenaManager);
     }
 
     protected override void Initialize()
@@ -126,9 +132,9 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private void LoadLevel()
     {
-        _levels.LoadLevels();
+        _levelDataProvider.LoadLevels();
 
-        _level = _levels.GetLevel(_levelNumber);
+        _level = _levelDataProvider.GetLevel(_levelNumber);
 
         _palette = PaletteGenerator.GetPalette(26,
         [
@@ -159,11 +165,7 @@ public class Game : Microsoft.Xna.Framework.Game
         }
         
         _beams = Content.Load<Texture2D>("beams");
-
-        _mirrors = Content.Load<Texture2D>("mirrors");
-
-        _other = Content.Load<Texture2D>("other");
-
+        
         _font = Content.Load<SpriteFont>("font");
     }
 
@@ -175,6 +177,8 @@ public class Game : Microsoft.Xna.Framework.Game
             {
                 LoadLevel();
 
+                _arenaManager.SetLevel(_levelNumber);
+                
                 _state = State.Playing;
 
                 _message = null;
@@ -184,10 +188,12 @@ public class Game : Microsoft.Xna.Framework.Game
             {
                 _levelNumber++;
 
-                if (_levelNumber > _levels.LevelCount)
+                if (_levelNumber > _levelDataProvider.LevelCount)
                 {
                     _levelNumber = 1;
                 }
+
+                _arenaManager.SetLevel(_levelNumber);
 
                 LoadLevel();
 
@@ -253,6 +259,8 @@ public class Game : Microsoft.Xna.Framework.Game
                 _displayScore = 0;
 
                 LoadLevel();
+                
+                _arenaManager.SetLevel(_levelNumber);
 
                 _message = null;
 
@@ -289,7 +297,7 @@ public class Game : Microsoft.Xna.Framework.Game
                     ? "YOU COULD HAVE OBTAINED\nA HIGHER SCORE IF YOU\nHIT ALL YOUR MIRRORS.\n"
                     : string.Empty;
 
-                if (_levelNumber < _levels.LevelCount)
+                if (_levelNumber < _levelDataProvider.LevelCount)
                 {
                     _message = $"LEVEL COMPLETE.\n{mirrors}CLICK FOR NEXT LEVEL...";
                 }
@@ -325,7 +333,7 @@ public class Game : Microsoft.Xna.Framework.Game
                     File.WriteAllText(HighScoreFile, _highScore.ToString());
                 }
 
-                if (_levelNumber < _levels.LevelCount)
+                if (_levelNumber < _levelDataProvider.LevelCount)
                 {
                     _levelNumber++;
                 }
@@ -339,6 +347,8 @@ public class Game : Microsoft.Xna.Framework.Game
                 }
 
                 LoadLevel();
+                
+                _arenaManager.SetLevel(_levelNumber);
 
                 _message = null;
 
@@ -350,6 +360,10 @@ public class Game : Microsoft.Xna.Framework.Game
         {
             actor.Update();
         }
+
+        _arenaManager.MirrorPosition = _mirrorPosition;
+
+        _arenaManager.Mirror = _mirror;
         
         _input.UpdateState();
         
@@ -392,16 +406,6 @@ public class Game : Microsoft.Xna.Framework.Game
         GraphicsDevice.Clear(Color.Black);
 
         _spriteBatch.Begin(SpriteSortMode.FrontToBack);
-
-        DrawBackground();
-
-        DrawPieces();
-
-        DrawStarts();
-
-        DrawEnds();
-
-        DrawMirrors();
 
         DrawBeams();
 
@@ -723,146 +727,5 @@ public class Game : Microsoft.Xna.Framework.Game
         }
 
         return beamSteps;
-    }
-
-    private void DrawPieces()
-    {
-        var index = 0;
-
-        for (var y = 10; y > 0; y--)
-        {
-            if (index >= _level.Pieces.Count)
-            {
-                break;
-            }
-
-            var offset = _level.Pieces[index] switch
-            {
-                '|' => 1,
-                '\\' => 2,
-                '/' => 3,
-                _ => 0
-            };
-
-            _spriteBatch.Draw(_mirrors,
-                new Vector2(31 * TileSize, TopOffset + y * TileSize),
-                new Rectangle(offset * TileSize, 0, TileSize, TileSize),
-                Color.Cyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
-
-            index++;
-        }
-    }
-
-    private void DrawMirrors()
-    {
-        foreach (var mirror in _level.Mirrors)
-        {
-            var offset = mirror.Piece switch
-            {
-                '|' => 1,
-                '\\' => 2,
-                '/' => 3,
-                _ => 0
-            };
-
-            _spriteBatch.Draw(_mirrors,
-                new Vector2(mirror.X * TileSize, TopOffset + mirror.Y * TileSize),
-                new Rectangle(offset * TileSize, 0, TileSize, TileSize),
-                mirror.Placed ? Color.Green : Color.DarkCyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .4f);
-        }
-
-        if (_mirrorPosition != (-1, -1))
-        {
-            var offset = _mirror switch
-            {
-                '|' => 1,
-                '\\' => 2,
-                '/' => 3,
-                _ => 0
-            };
-
-            var color = Color.FromNonPremultiplied(0, 255, 0, 255);
-
-            if (_level.Mirrors.Any(m => m.X == _mirrorPosition.X && m.Y == _mirrorPosition.Y)
-                || _level.Blocked.Any(b => b.X == _mirrorPosition.X && b.Y == _mirrorPosition.Y)
-                || _level.Starts.Any(s => s.X == _mirrorPosition.X && s.Y == _mirrorPosition.Y)
-                || _level.Ends.Any(e => e.X == _mirrorPosition.X && e.Y == _mirrorPosition.Y))
-            {
-                color = Color.Red;
-            }
-
-            _spriteBatch.Draw(_mirrors,
-                new Vector2(_mirrorPosition.X * TileSize, TopOffset + _mirrorPosition.Y * TileSize),
-                new Rectangle(offset * TileSize, 0, TileSize, TileSize),
-                color, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .5f);
-        }
-    }
-
-    private void DrawStarts()
-    {
-        foreach (var start in _level.Starts)
-        {
-            _spriteBatch.Draw(_other,
-                new Vector2(start.X * TileSize, TopOffset + start.Y * TileSize),
-                new Rectangle(0, 0, TileSize, TileSize),
-                Color.FromNonPremultiplied(255, 255, 255, 255), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
-        }
-    }
-
-    private void DrawEnds()
-    {
-        foreach (var end in _level.Ends)
-        {
-            var spriteX = end.Direction switch
-            {
-                Direction.North => 1,
-                Direction.South => 1,
-                _ => 2
-            };
-
-            var effect = end.Direction switch
-            {
-                Direction.South => SpriteEffects.FlipVertically,
-                Direction.West => SpriteEffects.FlipHorizontally,
-                _ => SpriteEffects.None
-            };
-
-            _spriteBatch.Draw(_other,
-                new Vector2(end.X * TileSize, TopOffset + end.Y * TileSize),
-                new Rectangle(spriteX * TileSize, 0, TileSize, TileSize),
-                Color.FromNonPremultiplied(255, 255, 255, 255), 0, Vector2.Zero, Vector2.One, effect, .1f);
-        }
-    }
-
-    private void DrawBackground()
-    {
-        for (var y = 0; y < MapSize; y++)
-        {
-            for (var x = 0; x < MapSize; x++)
-            {
-                if (! _level.Blocked.Any(b => b.X == x && b.Y == y))
-                {
-                    _spriteBatch.Draw(_other,
-                        new Vector2(x * TileSize, TopOffset + y * TileSize),
-                        new Rectangle(TileSize * 3, 0, TileSize, TileSize),
-                        Color.FromNonPremultiplied(255, 255, 255, 25), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
-                }
-                else
-                {
-                    _spriteBatch.Draw(_other,
-                        new Vector2(x * TileSize, TopOffset + y * TileSize),
-                        new Rectangle(TileSize * 3, 0, TileSize, TileSize),
-                        Color.FromNonPremultiplied(255, 255, 255, 200), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
-                }
-            }
-
-            if (y > 0 && y <= 10)
-            {
-                _spriteBatch.Draw(_other,
-                    new Vector2((MapSize + 1) * TileSize, TopOffset + y * TileSize),
-                    new Rectangle(TileSize * 3, 0, TileSize, TileSize),
-                    Color.FromNonPremultiplied(255, 255, 255, 25), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
-            }
-        }
     }
 }
