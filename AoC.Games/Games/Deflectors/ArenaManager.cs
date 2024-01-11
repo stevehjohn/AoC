@@ -11,8 +11,6 @@ public class ArenaManager : IActor
     
     public const int TileSize = 21;
 
-    private readonly int _topOffset;
-
     private readonly Input _input;
 
     private readonly LevelDataProvider _levelDataProvider;
@@ -37,10 +35,8 @@ public class ArenaManager : IActor
 
     public int LevelNumber => _levelNumber;
     
-    public ArenaManager(int topOffset, Input input)
+    public ArenaManager(Input input)
     {
-        _topOffset = topOffset;
-
         _levelDataProvider = new LevelDataProvider();
 
         _input = input;
@@ -122,9 +118,9 @@ public class ArenaManager : IActor
 
         var position = (X: _input.MouseX, Y: _input.MouseY);
 
-        if (position.X >= 0 && position.X < MapSize * TileSize && position.Y >= _topOffset && position.Y < MapSize * TileSize + _topOffset && Mirror != '\0')
+        if (position.X >= 0 && position.X < MapSize * TileSize && position.Y >= Constants.TopOffset && position.Y < MapSize * TileSize + Constants.TopOffset && Mirror != '\0')
         {
-            _mirrorPosition = (position.X / TileSize, (position.Y - _topOffset) / TileSize);
+            _mirrorPosition = (position.X / TileSize, (position.Y - Constants.TopOffset) / TileSize);
         }
         else
         {
@@ -158,7 +154,7 @@ public class ArenaManager : IActor
             };
 
             spriteBatch.Draw(_mirrors,
-                new Vector2(mirror.X * TileSize, _topOffset + mirror.Y * TileSize),
+                new Vector2(mirror.X * TileSize, Constants.TopOffset + mirror.Y * TileSize),
                 new Rectangle(offset * TileSize, 0, TileSize, TileSize),
                 mirror.Placed ? Color.Green : Color.DarkCyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .4f);
         }
@@ -184,7 +180,7 @@ public class ArenaManager : IActor
             }
 
             spriteBatch.Draw(_mirrors,
-                new Vector2(MirrorPosition.X * TileSize, _topOffset + MirrorPosition.Y * TileSize),
+                new Vector2(MirrorPosition.X * TileSize, Constants.TopOffset + MirrorPosition.Y * TileSize),
                 new Rectangle(offset * TileSize, 0, TileSize, TileSize),
                 color, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .5f);
         }
@@ -195,7 +191,7 @@ public class ArenaManager : IActor
         foreach (var start in Level.Starts)
         {
             spriteBatch.Draw(_other,
-                new Vector2(start.X * TileSize, _topOffset + start.Y * TileSize),
+                new Vector2(start.X * TileSize, Constants.TopOffset + start.Y * TileSize),
                 new Rectangle(0, 0, TileSize, TileSize),
                 Color.FromNonPremultiplied(255, 255, 255, 255), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
         }
@@ -220,7 +216,7 @@ public class ArenaManager : IActor
             };
 
             spriteBatch.Draw(_other,
-                new Vector2(end.X * TileSize, _topOffset + end.Y * TileSize),
+                new Vector2(end.X * TileSize, Constants.TopOffset + end.Y * TileSize),
                 new Rectangle(spriteX * TileSize, 0, TileSize, TileSize),
                 Color.FromNonPremultiplied(255, 255, 255, 255), 0, Vector2.Zero, Vector2.One, effect, .1f);
         }
@@ -235,14 +231,14 @@ public class ArenaManager : IActor
                 if (! Level.Blocked.Any(b => b.X == x && b.Y == y))
                 {
                     spriteBatch.Draw(_other,
-                        new Vector2(x * TileSize, _topOffset + y * TileSize),
+                        new Vector2(x * TileSize, Constants.TopOffset + y * TileSize),
                         new Rectangle(TileSize * 3, 0, TileSize, TileSize),
                         Color.FromNonPremultiplied(255, 255, 255, 25), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
                 }
                 else
                 {
                     spriteBatch.Draw(_other,
-                        new Vector2(x * TileSize, _topOffset + y * TileSize),
+                        new Vector2(x * TileSize, Constants.TopOffset + y * TileSize),
                         new Rectangle(TileSize * 3, 0, TileSize, TileSize),
                         Color.FromNonPremultiplied(255, 255, 255, 200), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
                 }
@@ -251,7 +247,7 @@ public class ArenaManager : IActor
             if (y > 0 && y <= 10)
             {
                 spriteBatch.Draw(_other,
-                    new Vector2((MapSize + 1) * TileSize, _topOffset + y * TileSize),
+                    new Vector2((MapSize + 1) * TileSize, Constants.TopOffset + y * TileSize),
                     new Rectangle(TileSize * 3, 0, TileSize, TileSize),
                     Color.FromNonPremultiplied(255, 255, 255, 25), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
             }
@@ -278,7 +274,7 @@ public class ArenaManager : IActor
             };
 
             spriteBatch.Draw(_mirrors,
-                new Vector2(31 * TileSize, _topOffset + y * TileSize),
+                new Vector2(31 * TileSize, Constants.TopOffset + y * TileSize),
                 new Rectangle(offset * TileSize, 0, TileSize, TileSize),
                 Color.Cyan, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, .1f);
 

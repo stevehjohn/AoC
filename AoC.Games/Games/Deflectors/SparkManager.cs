@@ -6,18 +6,11 @@ namespace AoC.Games.Games.Deflectors;
 
 public class SparkManager : IActor
 {
-    private readonly int _topOffset;
-    
     private readonly List<Spark> _sparks = [];
 
     private readonly Random _random = new();
 
     private Texture2D _spark;
-
-    public SparkManager(int topOffset)
-    {
-        _topOffset = topOffset;
-    }
     
     public void LoadContent(ContentManager contentManager)
     {
@@ -69,7 +62,7 @@ public class SparkManager : IActor
     {
         foreach (var spark in _sparks)
         {
-            spriteBatch.Draw(_spark, new Vector2(spark.Position.X, _topOffset + spark.Position.Y),
+            spriteBatch.Draw(_spark, new Vector2(spark.Position.X, Constants.TopOffset + spark.Position.Y),
                 new Rectangle(0, 0, 5, 5), spark.Color * ((float) spark.Ticks / spark.StartTicks), 0,
                 Vector2.Zero, Vector2.One, SpriteEffects.None, 0.3f);
         }
