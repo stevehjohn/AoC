@@ -41,7 +41,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private Texture2D _other;
 
-    private SparkManager _sparkManager = new(TopOffset);
+    private readonly SparkManager _sparkManager = new(TopOffset);
     
     private SpriteFont _font;
 
