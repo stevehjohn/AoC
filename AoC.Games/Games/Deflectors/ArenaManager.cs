@@ -13,6 +13,8 @@ public class ArenaManager : IActor
 
     private readonly int _topOffset;
 
+    private readonly Input _input;
+
     private readonly LevelDataProvider _levelDataProvider;
     
     private Texture2D _mirrors;
@@ -26,16 +28,8 @@ public class ArenaManager : IActor
     public Level Level { get; private set; }
 
     public (int X, int Y) LastMirrorPosition { get; private set; } = (-1, -1);
-    
-    public (int X, int Y) MirrorPosition {
-        get => _mirrorPosition;
-        set
-        {
-            LastMirrorPosition = _mirrorPosition;
 
-            _mirrorPosition = value;
-        }
-    }
+    public (int X, int Y) MirrorPosition => _mirrorPosition;
 
     public char Mirror { get; private set; }
 
@@ -43,11 +37,13 @@ public class ArenaManager : IActor
 
     public int LevelNumber => _levelNumber;
     
-    public ArenaManager(int topOffset)
+    public ArenaManager(int topOffset, Input input)
     {
         _topOffset = topOffset;
 
         _levelDataProvider = new LevelDataProvider();
+
+        _input = input;
         
         SetLevel(1);
     }
@@ -117,6 +113,18 @@ public class ArenaManager : IActor
     
     public void Update()
     {
+        LastMirrorPosition = _mirrorPosition;
+
+        var position = (X: _input.MouseX, Y: _input.MouseY);
+
+        if (position.X >= 0 && position.X < MapSize * TileSize && position.Y >= 0 && position.Y < MapSize * TileSize && Mirror != '\0')
+        {
+            _mirrorPosition = (position.X / TileSize, position.Y / TileSize);
+        }
+        else
+        {
+            _mirrorPosition = (-1, -1);
+        }
     }
 
     public void Draw(SpriteBatch spriteBatch)

@@ -93,7 +93,7 @@ public class Game : Microsoft.Xna.Framework.Game
         
         _actors.Add(_sparkManager);
 
-        _arenaManager = new ArenaManager(TopOffset);
+        _arenaManager = new ArenaManager(TopOffset, _input);
         
         _actors.Add(_arenaManager);
     }
@@ -179,19 +179,6 @@ public class Game : Microsoft.Xna.Framework.Game
         }
 
         var position = (X: _input.MouseX / _scaleFactor, Y: _input.MouseY / _scaleFactor);
-
-        if (position.X >= 0 && position.X < MapSize * TileSize && position.Y >= 0 && position.Y < MapSize * TileSize && _arenaManager.Mirror != '\0')
-        {
-            IsMouseVisible = false;
-
-            _arenaManager.MirrorPosition = ((int) (position.X / TileSize), (int) (position.Y / TileSize));
-        }
-        else
-        {
-            IsMouseVisible = true;
-
-            _arenaManager.MirrorPosition = (-1, -1);
-        }
 
         if (_message != null)
         {
