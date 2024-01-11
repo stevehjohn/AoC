@@ -13,8 +13,14 @@ or download a pre-built version from the [releases page](https://github.com/stev
 
 You'll need the [dotnet 8 runtime](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) for your platform (Windows/macOS, X64/ARM64).
 
-On macOS, you will probably need to install these dependencies. Make sure you have [homebrew](https://brew.sh/) installed. Then:
+### Other Dependencies For macOS
 
+Other than the dotnet runtime, MonoGame requires some other dependencies.
+I have a script to install these  [here](../fix-dependencies.sh).
+
+If that script doesn't work, try the following (which is what the script is attempting to automate).
+
+- Make sure you have [homebrew](https://brew.sh/) installed.
 - `brew install freeimage`
 - `mkdir /usr/local/lib` (this folder may already exist, in which case this step is not needed).
 - `sudo ln -s /opt/homebrew/Cellar/freeimage/3.18.0/lib/libfreeimage.dylib /usr/local/lib/libfreeimage`
