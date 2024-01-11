@@ -39,8 +39,6 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private readonly TextManager _textManager;
     
-    private SpriteFont _font;
-
     private Color[] _palette;
 
     private int _paletteStart;
@@ -58,8 +56,6 @@ public class Game : Microsoft.Xna.Framework.Game
     private int _beam;
 
     private int _score;
-
-    private int _displayScore;
 
     private int _beamMaxSteps;
 
@@ -136,8 +132,6 @@ public class Game : Microsoft.Xna.Framework.Game
         }
         
         _beams = Content.Load<Texture2D>("beams");
-
-        _font = Content.Load<SpriteFont>("font");
     }
 
     protected override void Update(GameTime gameTime)
@@ -190,8 +184,6 @@ public class Game : Microsoft.Xna.Framework.Game
             if (_input.LeftButtonClicked())
             {
                 _score = 0;
-
-                _displayScore = 0;
                 
                 _arenaManager.SetLevel(1);
 
@@ -217,12 +209,7 @@ public class Game : Microsoft.Xna.Framework.Game
         {
             _frame++;
 
-            if (_displayScore < _score)
-            {
-                _displayScore++;
-            }
-
-            if (_frame > 200 && _displayScore == _score)
+            if (_frame > 200)
             {
                 _state = State.PreparingNextLevel;
 
@@ -274,6 +261,8 @@ public class Game : Microsoft.Xna.Framework.Game
             }
         }
 
+        _textManager.SetInformation(_arenaManager.LevelNumber, _beam, _score, _highScore);
+        
         foreach (var actor in _actors)
         {
             actor.Update();
@@ -299,8 +288,6 @@ public class Game : Microsoft.Xna.Framework.Game
             actor.Draw(_spriteBatch);
         }
         
-        DrawInfo();
-
         _spriteBatch.End();
 
         GraphicsDevice.SetRenderTarget(null);
@@ -314,32 +301,6 @@ public class Game : Microsoft.Xna.Framework.Game
         base.Draw(gameTime);
     }
 
-    private void DrawInfo()
-    {
-        _spriteBatch.DrawString(_font, "LEVEL:", new Vector2(10, -2), Color.FromNonPremultiplied(0, 128, 0, 255));
-
-        var x = _font.MeasureString("LEVEL: ").X + 10;
-
-        _spriteBatch.DrawString(_font, $"{_arenaManager.LevelNumber,2}", new Vector2(x, -2), Color.FromNonPremultiplied(192, 192, 192, 255));
-
-        _spriteBatch.DrawString(_font, "BEAM:", new Vector2(170, -2), Color.FromNonPremultiplied(0, 128, 0, 255));
-
-        x = _font.MeasureString("BEAM: ").X + 170;
-
-        _spriteBatch.DrawString(_font, $"{_beam / 3,3}", new Vector2(x, -2), Color.FromNonPremultiplied(192, 192, 192, 255));
-
-        _spriteBatch.DrawString(_font, "SCORE:", new Vector2(340, -2), Color.FromNonPremultiplied(0, 128, 0, 255));
-
-        x = _font.MeasureString("SCORE: ").X + 340;
-
-        _spriteBatch.DrawString(_font, _displayScore.ToString(), new Vector2(x, -2), Color.FromNonPremultiplied(192, 192, 192, 255));
-
-        _spriteBatch.DrawString(_font, "HI:", new Vector2(530, -2), Color.FromNonPremultiplied(0, 128, 0, 255));
-
-        x = _font.MeasureString("HI: ").X + 530;
-
-        _spriteBatch.DrawString(_font, _highScore.ToString(), new Vector2(x, -2), Color.FromNonPremultiplied(192, 192, 192, 255));
-    }
 
     private void DrawBeams()
     {
