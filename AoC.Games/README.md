@@ -21,6 +21,10 @@ On macOS, you will probably need to install these dependencies. Make sure you ha
 - `brew install freetype`
 - `sudo ln -s /opt/homebrew/lib/libfreetype.6.dylib /usr/local/lib/libfreetype6`
 
+## Configuration
+
+If you find the window is too small, you can increase the size by changing `ScaleFactor` in [app-settings.json](app-settings.json).
+
 ## Level Definitions
 
 Levels are defined in this [JSON file](Games/Deflectors/Levels/levels.json).
