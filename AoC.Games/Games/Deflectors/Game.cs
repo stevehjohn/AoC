@@ -220,7 +220,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
                 if (_frame > 200)
                 {
-                    _textManager.Message = "OH DEAR,\nLOOKS LIKE YOU CAN'T\nCOMPLETE THIS LEVEL.\nCLICK TO RESTART.";
+                    _textManager.Message = $"OH DEAR,\nLOOKS LIKE YOU CAN'T\nCOMPLETE THIS LEVEL.\nCLICK TO RESTART.";
 
                     _state = State.Failed;
 
@@ -250,7 +250,7 @@ public class Game : Microsoft.Xna.Framework.Game
                     ? "YOU COULD HAVE OBTAINED\nA HIGHER SCORE IF YOU\nHIT ALL YOUR MIRRORS.\n"
                     : string.Empty;
 
-                var highScore = ScoreKeeper.CheckHighScore(_score) && _arenaManager.LevelNumber == _arenaManager.LevelCount
+                var highScore = ScoreKeeper.CheckHighScore(_score)
                     ? "CONGRATULATIONS!\nNEW HIGH SCORE!\n"
                     : string.Empty;
                 

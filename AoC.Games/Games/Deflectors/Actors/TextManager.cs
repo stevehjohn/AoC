@@ -20,7 +20,7 @@ public class TextManager : IActor
 
     private int _highScore;
 
-    private int _displayHighScore;
+    private int _displayHighScore = -1;
     
     public void SetInformation(int levelNumber, int beam, int score, int highScore)
     {
@@ -31,6 +31,11 @@ public class TextManager : IActor
         _score = score;
 
         _highScore = highScore;
+
+        if (_displayHighScore == -1)
+        {
+            _displayHighScore = highScore;
+        }
     }
 
     public void LoadContent(ContentManager contentManager)
