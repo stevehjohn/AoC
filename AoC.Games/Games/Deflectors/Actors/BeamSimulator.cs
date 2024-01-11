@@ -151,42 +151,8 @@ public class BeamSimulator : IActor
 
             if ((x - BeamFactor / 2) % BeamFactor == 0 && (y - BeamFactor / 2) % BeamFactor == 0)
             {
-                var blocker = _arenaManager.Level.Blocked.SingleOrDefault(e => e.X == x / BeamFactor && e.Y == y / BeamFactor);
-
-                if (blocker != null)
+                if (IsBlocked(x, y) || IsEnd(x, y, dX, dY))
                 {
-                    _sparkManager.Add(x * BeamSize, y * BeamSize, 10, 21, 30, 0.1f, Color.FromNonPremultiplied(0, 128, 255, 255));
-
-                    break;
-                }
-
-                var end = _arenaManager.Level.Ends.SingleOrDefault(e => e.X == x / BeamFactor && e.Y == y / BeamFactor);
-
-                if (end != null)
-                {
-                    var valid = end.Direction switch
-                    {
-                        Direction.North => dY == 1,
-                        Direction.South => dY == -1,
-                        Direction.East => dX == -1,
-                        Direction.West => dX == 1,
-                        _ => false
-                    };
-
-                    if (valid)
-                    {
-                        if (! IsComplete)
-                        {
-                            _sparkManager.Add(x * BeamSize, y * BeamSize, 10, 41, 100, 0.1f, Color.FromNonPremultiplied(255, 0, 0, 255), Color.FromNonPremultiplied(255, 255, 0, 255));
-                        }
-                        else if (IsComplete)
-                        {
-                            _sparkManager.Add(x * BeamSize, y * BeamSize, 5, 21, 100, -0.01f, Color.FromNonPremultiplied(0, 255, 255, 255));
-                        }
-
-                        _hitEnds.Add((end.X, end.Y));
-                    }
-
                     break;
                 }
 
@@ -314,5 +280,54 @@ public class BeamSimulator : IActor
         }
 
         return beamSteps;
+    }
+
+    private bool IsEnd(int x, int y, int dX, int dY)
+    {
+        var end = _arenaManager.Level.Ends.SingleOrDefault(e => e.X == x / BeamFactor && e.Y == y / BeamFactor);
+
+        if (end != null)
+        {
+            var valid = end.Direction switch
+            {
+                Direction.North => dY == 1,
+                Direction.South => dY == -1,
+                Direction.East => dX == -1,
+                Direction.West => dX == 1,
+                _ => false
+            };
+
+            if (valid)
+            {
+                if (! IsComplete)
+                {
+                    _sparkManager.Add(x * BeamSize, y * BeamSize, 10, 41, 100, 0.1f, Color.FromNonPremultiplied(255, 0, 0, 255), Color.FromNonPremultiplied(255, 255, 0, 255));
+                }
+                else if (IsComplete)
+                {
+                    _sparkManager.Add(x * BeamSize, y * BeamSize, 5, 21, 100, -0.01f, Color.FromNonPremultiplied(0, 255, 255, 255));
+                }
+
+                _hitEnds.Add((end.X, end.Y));
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool IsBlocked(int x, int y)
+    {
+        var blocker = _arenaManager.Level.Blocked.SingleOrDefault(e => e.X == x / BeamFactor && e.Y == y / BeamFactor);
+
+        if (blocker != null)
+        {
+            _sparkManager.Add(x * BeamSize, y * BeamSize, 10, 21, 30, 0.1f, Color.FromNonPremultiplied(0, 128, 255, 255));
+
+            return true;
+        }
+
+        return false;
     }
 }
