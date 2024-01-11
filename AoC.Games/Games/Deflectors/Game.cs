@@ -66,7 +66,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
     protected override void Initialize()
     {        
-        _textManager.Message = "WELCOME TO THE FLOOR WILL BE LAVA.\nINSPIRED BY ERIC WASTL'S\nADVENT OF CODE.\nCLICK TO PLAY.";
+        _textManager.Message = "WELCOME TO THE FLOOR WILL BE LAVA.\nINSPIRED BY ERIC WASTL'S\nADVENT OF CODE.\n\nCODE AND GRAPHICS BY STEVO JOHN\n\nCLICK TO PLAY.";
 
         Window.Title = "The Floor Will be Lava";
 
