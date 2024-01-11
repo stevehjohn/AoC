@@ -19,6 +19,8 @@ public class TextManager : IActor
     private int _displayScore;
 
     private int _highScore;
+
+    private int _displayHighScore;
     
     public void SetInformation(int levelNumber, int beam, int score, int highScore)
     {
@@ -46,6 +48,16 @@ public class TextManager : IActor
         if (_displayScore > _score)
         {
             _displayScore = _score;
+        }
+
+        if (_displayHighScore < _highScore)
+        {
+            _displayHighScore++;
+        }
+
+        if (_displayHighScore > _highScore)
+        {
+            _displayHighScore = _highScore;
         }
     }
 
