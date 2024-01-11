@@ -109,9 +109,11 @@ public class Game : Microsoft.Xna.Framework.Game
                 {
                     _textManager.Message = null;
 
-                    _state = State.Playing;
-
                     _frame = 0;
+
+                    _score = 0;
+
+                    _state = State.Playing;
                 }
 
                 break;

@@ -156,60 +156,16 @@ public class BeamSimulator : IActor
                     break;
                 }
 
-                var mirror = _arenaManager.Level.Mirrors.SingleOrDefault(m => m.X == x / BeamFactor && m.Y == y / BeamFactor)?.Piece ?? '\0';
+                var result = HitsMirror(spriteBatch, x, y, dX, dY, beamSteps, colorIndex.Value, colorDirection.Value);
 
-                if (mirror != '\0')
+                if (result.ShouldBreak)
                 {
-                    _hitMirrors.Add((x, y));
+                    break;
                 }
 
-                if (mirror == '\0')
+                if (result.Mirror != '\0')
                 {
-                    if (_arenaManager.MirrorPosition.X == x / BeamFactor && _arenaManager.MirrorPosition.Y == y / BeamFactor)
-                    {
-                        _hitUnplaced = true;
-
-                        mirror = _arenaManager.Mirror;
-
-                        if (_arenaManager.LastMirrorPosition != _arenaManager.MirrorPosition)
-                        {
-                            _beamMaxSteps = beamSteps;
-                        }
-                    }
-                }
-
-                if (mirror == '|' || mirror == '-')
-                {
-                    if (mirror == '|' && dX != 0)
-                    {
-                        _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.North, beamSteps, colorIndex.Value, colorDirection.Value));
-                        _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.South, beamSteps, colorIndex.Value, colorDirection.Value));
-
-                        spriteBatch.Draw(_beams,
-                            new Vector2(x * BeamSize, Constants.TopOffset + y * BeamSize),
-                            new Rectangle(dX == 1 ? 3 * BeamSize : 2 * BeamSize, 0, 7, 7), _palette[colorIndex.Value],
-                            0, Vector2.Zero, Vector2.One, SpriteEffects.None, .2f);
-
-                        break;
-                    }
-
-                    if (mirror == '-' && dY != 0)
-                    {
-                        _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.East, beamSteps, colorIndex.Value, colorDirection.Value));
-                        _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.West, beamSteps, colorIndex.Value, colorDirection.Value));
-
-                        spriteBatch.Draw(_beams,
-                            new Vector2(x * BeamSize, Constants.TopOffset + y * BeamSize),
-                            new Rectangle(dY == 1 ? 2 * BeamSize : 3 * BeamSize, 0, 7, 7), _palette[colorIndex.Value],
-                            0, Vector2.Zero, Vector2.One, SpriteEffects.None, .2f);
-
-                        break;
-                    }
-                }
-
-                if (mirror != '\0')
-                {
-                    switch (mirror)
+                    switch (result.Mirror)
                     {
                         case '\\':
                             (dX, dY) = (dY, dX);
@@ -243,6 +199,62 @@ public class BeamSimulator : IActor
         }
 
         return beamSteps;
+    }
+
+    private (char Mirror, bool ShouldBreak) HitsMirror(SpriteBatch spriteBatch, int x, int y, int dX, int dY, int beamSteps, int colorIndex, int colorDirection)
+    {
+        var mirror = _arenaManager.Level.Mirrors.SingleOrDefault(m => m.X == x / BeamFactor && m.Y == y / BeamFactor)?.Piece ?? '\0';
+
+        if (mirror != '\0')
+        {
+            _hitMirrors.Add((x, y));
+        }
+
+        if (mirror == '\0')
+        {
+            if (_arenaManager.MirrorPosition.X == x / BeamFactor && _arenaManager.MirrorPosition.Y == y / BeamFactor)
+            {
+                _hitUnplaced = true;
+
+                mirror = _arenaManager.Mirror;
+
+                if (_arenaManager.LastMirrorPosition != _arenaManager.MirrorPosition)
+                {
+                    _beamMaxSteps = beamSteps;
+                }
+            }
+        }
+
+        if (mirror == '|' || mirror == '-')
+        {
+            if (mirror == '|' && dX != 0)
+            {
+                _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.North, beamSteps, colorIndex, colorDirection));
+                _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.South, beamSteps, colorIndex, colorDirection));
+
+                spriteBatch.Draw(_beams,
+                    new Vector2(x * BeamSize, Constants.TopOffset + y * BeamSize),
+                    new Rectangle(dX == 1 ? 3 * BeamSize : 2 * BeamSize, 0, 7, 7), _palette[colorIndex],
+                    0, Vector2.Zero, Vector2.One, SpriteEffects.None, .2f);
+
+                return (mirror, true);
+            }
+
+            if (mirror == '-' && dY != 0)
+            {
+                _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.East, beamSteps, colorIndex, colorDirection));
+                _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.West, beamSteps, colorIndex, colorDirection));
+
+                spriteBatch.Draw(_beams,
+                    new Vector2(x * BeamSize, Constants.TopOffset + y * BeamSize),
+                    new Rectangle(dY == 1 ? 2 * BeamSize : 3 * BeamSize, 0, 7, 7), _palette[colorIndex],
+                    0, Vector2.Zero, Vector2.One, SpriteEffects.None, .2f);
+
+                return (mirror, true);
+            }
+        }
+
+        return (mirror, false);
     }
 
     private bool IsEnd(int x, int y, int dX, int dY)
