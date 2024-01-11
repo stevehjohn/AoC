@@ -41,6 +41,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private Texture2D _other;
 
+    private readonly List<IActor> _actors = new();
+    
     private readonly SparkManager _sparkManager = new(TopOffset);
     
     private SpriteFont _font;
@@ -100,6 +102,8 @@ public class Game : Microsoft.Xna.Framework.Game
         Content.RootDirectory = "./Deflectors";
 
         IsMouseVisible = true;
+        
+        _actors.Add(_sparkManager);
     }
 
     protected override void Initialize()
@@ -149,7 +153,10 @@ public class Game : Microsoft.Xna.Framework.Game
 
         _renderTarget = new RenderTarget2D(GraphicsDevice, BufferWidth, BufferHeight);
 
-        _sparkManager.LoadContent(Content);
+        foreach (var actor in _actors)
+        {
+            actor.LoadContent(Content);
+        }
         
         _beams = Content.Load<Texture2D>("beams");
 
@@ -339,7 +346,10 @@ public class Game : Microsoft.Xna.Framework.Game
             }
         }
 
-        _sparkManager.Update();
+        foreach (var actor in _actors)
+        {
+            actor.Update();
+        }
         
         _input.UpdateState();
         
@@ -395,7 +405,10 @@ public class Game : Microsoft.Xna.Framework.Game
 
         DrawBeams();
 
-        _sparkManager.Draw(_spriteBatch);
+        foreach (var actor in _actors)
+        {
+            actor.Draw(_spriteBatch);
+        }
         
         DrawInfo();
 

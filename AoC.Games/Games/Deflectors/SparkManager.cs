@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace AoC.Games.Games.Deflectors;
 
-public class SparkManager
+public class SparkManager : IActor
 {
     private readonly int _topOffset;
     
