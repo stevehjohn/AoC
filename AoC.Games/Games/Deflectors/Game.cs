@@ -397,8 +397,7 @@ public class Game : Microsoft.Xna.Framework.Game
             _level.Pieces.RemoveAt(0);
         }
     }
-
-
+    
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.SetRenderTarget(_renderTarget);
