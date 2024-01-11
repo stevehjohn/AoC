@@ -41,8 +41,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private Texture2D _other;
 
-    private Texture2D _spark;
-
+    private SparkManager _sparkManager = new(TopOffset);
+    
     private SpriteFont _font;
 
     private readonly LevelDataProvider _levels = new();
@@ -61,12 +61,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private (int X, int Y) _lastMirrorPosition = (-1, -1);
 
-    private Input _input = new();
+    private readonly Input _input = new();
     
-    private readonly List<Spark> _sparks = [];
-
-    private readonly Random _rng = new();
-
     private readonly Queue<(int X, int Y, Direction Direction, int BeamSteps, int Color, int ColorDirection)> _splitters = [];
 
     private State _state;
@@ -153,13 +149,13 @@ public class Game : Microsoft.Xna.Framework.Game
 
         _renderTarget = new RenderTarget2D(GraphicsDevice, BufferWidth, BufferHeight);
 
+        _sparkManager.LoadContent(Content);
+        
         _beams = Content.Load<Texture2D>("beams");
 
         _mirrors = Content.Load<Texture2D>("mirrors");
 
         _other = Content.Load<Texture2D>("other");
-
-        _spark = Content.Load<Texture2D>("spark");
 
         _font = Content.Load<SpriteFont>("font");
     }
@@ -202,6 +198,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
                 _message = null;
 
+                _input.UpdateState();
+                
                 return;
             }
         }
@@ -340,7 +338,7 @@ public class Game : Microsoft.Xna.Framework.Game
             }
         }
 
-        UpdateSparks();
+        _sparkManager.Update();
         
         _input.UpdateState();
         
@@ -375,33 +373,6 @@ public class Game : Microsoft.Xna.Framework.Game
         }
     }
 
-    private void UpdateSparks()
-    {
-        var toRemove = new List<Spark>();
-
-        foreach (var spark in _sparks)
-        {
-            spark.Ticks--;
-
-            if (spark.Ticks < 0)
-            {
-                toRemove.Add(spark);
-
-                continue;
-            }
-
-            spark.Position.X += spark.Vector.X;
-
-            spark.Position.Y += spark.Vector.Y;
-
-            spark.Vector.Y += spark.YGravity;
-        }
-
-        foreach (var spark in toRemove)
-        {
-            _sparks.Remove(spark);
-        }
-    }
 
     protected override void Draw(GameTime gameTime)
     {
@@ -423,8 +394,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
         DrawBeams();
 
-        DrawSparks();
-
+        _sparkManager.Draw(_spriteBatch);
+        
         DrawInfo();
 
         DrawMessage();
@@ -577,20 +548,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
                 if (blocker != null)
                 {
-                    _sparks.Add(new Spark
-                    {
-                        Position = new PointFloat
-                        {
-                            X = x * BeamSize,
-                            Y = y * BeamSize
-                        },
-                        Vector = new PointFloat
-                            { X = (-10f + _rng.Next(21)) / 10, Y = -_rng.Next(21) / 10f },
-                        Ticks = 30,
-                        StartTicks = 30,
-                        SpriteOffset = 0,
-                        Color = Color.FromNonPremultiplied(0, 128, 255, 255)
-                    });
+                    _sparkManager.Add(x * BeamSize, y * BeamSize, 10, 21, 30, 0.1f, Color.FromNonPremultiplied(0, 128, 255, 255));
 
                     break;
                 }
@@ -612,36 +570,11 @@ public class Game : Microsoft.Xna.Framework.Game
                     {
                         if (_state == State.Playing)
                         {
-                            _sparks.Add(new Spark
-                            {
-                                Position = new PointFloat
-                                {
-                                    X = x * BeamSize,
-                                    Y = y * BeamSize
-                                },
-                                Vector = new PointFloat { X = (-10f + _rng.Next(21)) / 10, Y = -_rng.Next(41) / 10f },
-                                Ticks = 100,
-                                StartTicks = 100,
-                                SpriteOffset = 0,
-                                Color = _rng.Next(2) == 1 ? Color.FromNonPremultiplied(255, 0, 0, 255) : Color.FromNonPremultiplied(255, 255, 0, 255)
-                            });
+                            _sparkManager.Add(x * BeamSize, y * BeamSize, 10, 41, 100, 0.1f, Color.FromNonPremultiplied(255, 0, 0, 255), Color.FromNonPremultiplied(255, 255, 0, 255));
                         }
                         else if (_state == State.LevelComplete)
                         {
-                            _sparks.Add(new Spark
-                            {
-                                Position = new PointFloat
-                                {
-                                    X = x * BeamSize,
-                                    Y = y * BeamSize
-                                },
-                                Vector = new PointFloat { X = (-5f + _rng.Next(11)) / 10, Y = -_rng.Next(41) / 10f },
-                                Ticks = 100,
-                                StartTicks = 100,
-                                SpriteOffset = 0,
-                                YGravity = -0.01f,
-                                Color = Color.FromNonPremultiplied(0, 255, 255, 255)
-                            });
+                            _sparkManager.Add(x * BeamSize, y * BeamSize, 5, 21, 100, -0.01f, Color.FromNonPremultiplied(0, 255, 255, 255));
                         }
 
                         _hitEnds.Add((end.X, end.Y));
@@ -916,16 +849,6 @@ public class Game : Microsoft.Xna.Framework.Game
                     new Rectangle(TileSize * 3, 0, TileSize, TileSize),
                     Color.FromNonPremultiplied(255, 255, 255, 25), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
             }
-        }
-    }
-
-    private void DrawSparks()
-    {
-        foreach (var spark in _sparks)
-        {
-            _spriteBatch.Draw(_spark, new Vector2(spark.Position.X, TopOffset + spark.Position.Y),
-                new Rectangle(spark.SpriteOffset, 0, 5, 5), spark.Color * ((float) spark.Ticks / spark.StartTicks), 0,
-                Vector2.Zero, Vector2.One, SpriteEffects.None, 0.3f);
         }
     }
 }

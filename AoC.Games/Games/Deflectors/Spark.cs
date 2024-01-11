@@ -16,5 +16,5 @@ public class Spark
     
     public Color Color { get; init; }
 
-    public float YGravity { get; set; } = 0.1f;
+    public float YGravity { get; init; } = 0.1f;
 }
