@@ -10,8 +10,6 @@ public class Game : Microsoft.Xna.Framework.Game
 {
     private readonly float _scaleFactor;
 
-    private const string HighScoreFile = "high-score.txt";
-
     private const int BufferWidth = 693;
 
     private const int BufferHeight = 663;
@@ -38,8 +36,6 @@ public class Game : Microsoft.Xna.Framework.Game
     private int _frame;
 
     private int _score;
-
-    private int _highScore;
     
     public Game()
     {
@@ -75,13 +71,6 @@ public class Game : Microsoft.Xna.Framework.Game
     protected override void Initialize()
     {        
         _textManager.Message = "WELCOME TO THE FLOOR WILL BE LAVA.\nINSPIRED BY ERIC WASTL'S\nADVENT OF CODE.\nCLICK TO PLAY.";
-
-        if (File.Exists(HighScoreFile))
-        {
-            var text = File.ReadAllText(HighScoreFile);
-
-            _highScore = int.Parse(text);
-        }
 
         Window.Title = "The Floor Will be Lava";
 
@@ -163,7 +152,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
         _beamSimulator.State = _state;
 
-        _textManager.SetInformation(_arenaManager.LevelNumber, _beamSimulator.BeamStrength, _score, _highScore);
+        _textManager.SetInformation(_arenaManager.LevelNumber, _beamSimulator.BeamStrength, _score, ScoreKeeper.GetHighScore());
         
         foreach (var actor in _actors)
         {
@@ -265,7 +254,7 @@ public class Game : Microsoft.Xna.Framework.Game
                     ? "YOU COULD HAVE OBTAINED\nA HIGHER SCORE IF YOU\nHIT ALL YOUR MIRRORS.\n"
                     : string.Empty;
 
-                var highScore = _score > _highScore && _arenaManager.LevelNumber == _arenaManager.LevelCount
+                var highScore = ScoreKeeper.CheckHighScore(_score) && _arenaManager.LevelNumber == _arenaManager.LevelCount
                     ? "CONGRATULATIONS!\nNEW HIGH SCORE!\n"
                     : string.Empty;
                 
@@ -274,13 +263,6 @@ public class Game : Microsoft.Xna.Framework.Game
                     : "CLICK TO PLAY AGAIN...";
 
                 _textManager.Message = $"{complete}{highScore}{mirrors}{next}";
-
-                if (highScore != string.Empty)
-                {
-                    _highScore = _score;
-
-                    File.WriteAllText(HighScoreFile, _highScore.ToString());
-                }
 
                 _frame = 0;
             }
