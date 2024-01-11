@@ -299,3 +299,4 @@ lambdas/.serverless/
 *.clear
 *.orig
 AoC.Games.*.zip
+Thumbs.db
