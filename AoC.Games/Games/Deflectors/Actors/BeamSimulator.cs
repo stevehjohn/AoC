@@ -31,11 +31,11 @@ public class BeamSimulator : IActor
 
     private bool _hitUnplaced;
 
-    private int _beam;
+    private int _beamStrength;
 
     private int _beamMaxSteps;
 
-    public int BeamStrength => _beam;
+    public int BeamStrength => _beamStrength;
     
     public State State { private get; set; }
     
@@ -82,7 +82,7 @@ public class BeamSimulator : IActor
 
         _hitMirrors.Clear();
 
-        _beam = 0;
+        _beamStrength = 0;
 
         _hitUnplaced = false;
 
@@ -140,7 +140,7 @@ public class BeamSimulator : IActor
 
         while (x >= 0 && x < Constants.MapSize * BeamFactor && y >= 0 && y < Constants.MapSize * BeamFactor)
         {
-            _beam++;
+            _beamStrength++;
 
             beamSteps++;
 
