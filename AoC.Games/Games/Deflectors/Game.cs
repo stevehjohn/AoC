@@ -10,7 +10,7 @@ public class Game : Microsoft.Xna.Framework.Game
 {
     private readonly float _scaleFactor;
 
-    private const int MapSize = 30;
+    // private const int MapSize = 30;
 
     private const int TileSize = 21;
 
@@ -187,10 +187,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
         if (_state == State.Playing && _input.LeftButtonClicked())
         {
-            if (position.X >= 0 && position.X < MapSize * TileSize && position.Y >= 0 && position.Y < MapSize * TileSize && _arenaManager.Mirror != '\0')
-            {
-                _arenaManager.PlaceMirror();
-            }
+            _arenaManager.PlaceMirror();
         }
 
         if (_state == State.Failed)
@@ -334,7 +331,7 @@ public class Game : Microsoft.Xna.Framework.Game
         var w = _font.MeasureString(_message).X;
 
         // ReSharper disable once PossibleLossOfFraction
-        var start = TileSize * MapSize / 2 - w / 2;
+        var start = TileSize * ArenaManager.MapSize / 2 - w / 2;
 
         for (var y = -2; y < 3; y++)
         {
@@ -442,7 +439,7 @@ public class Game : Microsoft.Xna.Framework.Game
         var oldDx = dX;
         var oldDy = dY;
 
-        while (x >= 0 && x < MapSize * BeamFactor && y >= 0 && y < MapSize * BeamFactor)
+        while (x >= 0 && x < ArenaManager.MapSize * BeamFactor && y >= 0 && y < ArenaManager.MapSize * BeamFactor)
         {
             _beam++;
 

@@ -7,7 +7,7 @@ namespace AoC.Games.Games.Deflectors;
 
 public class ArenaManager : IActor
 {
-    private const int MapSize = 30;
+    public const int MapSize = 30;
 
     private const int TileSize = 21;
 
@@ -85,6 +85,11 @@ public class ArenaManager : IActor
 
     public void PlaceMirror()
     {
+        if (MirrorPosition == (-1, -1))
+        {
+            return;
+        }
+
         if (Level.Mirrors.Any(m => m.X == MirrorPosition.X && m.Y == MirrorPosition.Y)
             || Level.Blocked.Any(b => b.X == MirrorPosition.X && b.Y == MirrorPosition.Y)
             || Level.Starts.Any(s => s.X == MirrorPosition.X && s.Y == MirrorPosition.Y)
