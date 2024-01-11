@@ -73,10 +73,10 @@ public class BeamSimulator : IActor
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        DrawBeams(spriteBatch);
+        SimulateBeams(spriteBatch);
     }
     
-    private void DrawBeams(SpriteBatch spriteBatch)
+    private void SimulateBeams(SpriteBatch spriteBatch)
     {
         _hitEnds.Clear();
 
@@ -92,12 +92,12 @@ public class BeamSimulator : IActor
 
         foreach (var start in _arenaManager.Level.Starts)
         {
-            beamSteps += DrawBeam(spriteBatch, start, beamSteps);
+            beamSteps += SimulateBeam(spriteBatch, start, beamSteps);
         }
 
         while (_splitters.TryDequeue(out var splitter))
         {
-            DrawBeam(spriteBatch, new Start { X = splitter.X, Y = splitter.Y, Direction = splitter.Direction }, splitter.BeamSteps, splitter.Color, splitter.ColorDirection);
+            SimulateBeam(spriteBatch, new Start { X = splitter.X, Y = splitter.Y, Direction = splitter.Direction }, splitter.BeamSteps, splitter.Color, splitter.ColorDirection);
         }
 
         IsComplete = _hitEnds.Count == _arenaManager.Level.Ends.Length && State == State.Playing && ! _hitUnplaced;
@@ -112,7 +112,7 @@ public class BeamSimulator : IActor
         }
     }
 
-    private int DrawBeam(SpriteBatch spriteBatch, Start start, int beamSteps, int? colorIndex = null, int? colorDirection = null)
+    private int SimulateBeam(SpriteBatch spriteBatch, Start start, int beamSteps, int? colorIndex = null, int? colorDirection = null)
     {
         var x = start.X * BeamFactor + BeamFactor / 2;
 
@@ -224,47 +224,10 @@ public class BeamSimulator : IActor
                 }
             }
 
-            int beam = 0;
-
-            if (oldDx == dX && oldDy == dY)
-            {
-                beam = dX == 0 ? 1 : 0;
-            }
-            else
-            {
-                switch (oldDx)
-                {
-                    case 1:
-                        beam = dY == 1 ? 3 : 5;
-                        break;
-
-                    case -1:
-                        beam = dY == 1 ? 4 : 2;
-                        break;
-
-                    default:
-                        switch (oldDy)
-                        {
-                            case 1:
-                                beam = dX == 1 ? 2 : 5;
-                                break;
-
-                            case -1:
-                                beam = dX == 1 ? 4 : 3;
-                                break;
-                        }
-
-                        break;
-                }
-            }
+            DrawBeam(spriteBatch, x, y, dX, dY, oldDx, oldDy, colorIndex.Value);
 
             oldDx = dX;
             oldDy = dY;
-
-            spriteBatch.Draw(_beams,
-                new Vector2(x * BeamSize, Constants.TopOffset + y * BeamSize),
-                new Rectangle(beam * BeamSize, 0, 7, 7), _palette[colorIndex.Value],
-                0, Vector2.Zero, Vector2.One, SpriteEffects.None, .2f);
 
             colorIndex += colorDirection;
 
@@ -329,5 +292,47 @@ public class BeamSimulator : IActor
         }
 
         return false;
+    }
+
+    private void DrawBeam(SpriteBatch spriteBatch, int x, int y, int dX, int dY, int oldDx, int oldDy, int colorIndex)
+    {
+        int beam = 0;
+
+        if (oldDx == dX && oldDy == dY)
+        {
+            beam = dX == 0 ? 1 : 0;
+        }
+        else
+        {
+            switch (oldDx)
+            {
+                case 1:
+                    beam = dY == 1 ? 3 : 5;
+                    break;
+
+                case -1:
+                    beam = dY == 1 ? 4 : 2;
+                    break;
+
+                default:
+                    switch (oldDy)
+                    {
+                        case 1:
+                            beam = dX == 1 ? 2 : 5;
+                            break;
+
+                        case -1:
+                            beam = dX == 1 ? 4 : 3;
+                            break;
+                    }
+
+                    break;
+            }
+        }
+
+        spriteBatch.Draw(_beams,
+            new Vector2(x * BeamSize, Constants.TopOffset + y * BeamSize),
+            new Rectangle(beam * BeamSize, 0, 7, 7), _palette[colorIndex],
+            0, Vector2.Zero, Vector2.One, SpriteEffects.None, .2f);
     }
 }
