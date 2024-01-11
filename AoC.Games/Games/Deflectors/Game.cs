@@ -23,6 +23,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private RenderTarget2D _renderTarget;
 
+    private readonly Input _input = new();
+
     private readonly List<IActor> _actors = [];
 
     private readonly ArenaManager _arenaManager;
@@ -31,8 +33,6 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private readonly BeamSimulator _beamSimulator;
     
-    private readonly Input _input = new();
-
     private State _state;
 
     private int _frame;
@@ -102,27 +102,6 @@ public class Game : Microsoft.Xna.Framework.Game
 
     protected override void Update(GameTime gameTime)
     {
-        if (AppSettings.Instance.AllowCheat)
-        {
-            if (_input.KeyPressed(Keys.R))
-            {
-                _arenaManager.ResetLevel();
-                
-                _state = State.Playing;
-
-                _textManager.Message = null;
-            }
-
-            if (_input.KeyPressed(Keys.N))
-            {
-                _arenaManager.NextLevel();
-
-                _state = State.Playing;
-
-                _textManager.Message = null;
-            }
-        }
-
         switch (_state)
         {
             case State.AwaitingStart:
@@ -138,6 +117,8 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
             
             case State.Playing:
+                CheckForCheat();
+                
                 if (_input.LeftButtonClicked())
                 {
                     _arenaManager.PlaceMirror();
@@ -190,6 +171,56 @@ public class Game : Microsoft.Xna.Framework.Game
         _input.UpdateState();
         
         base.Update(gameTime);
+    }
+
+    protected override void Draw(GameTime gameTime)
+    {
+        GraphicsDevice.SetRenderTarget(_renderTarget);
+
+        GraphicsDevice.Clear(Color.Black);
+
+        _spriteBatch.Begin(SpriteSortMode.FrontToBack);
+
+        foreach (var actor in _actors)
+        {
+            actor.Draw(_spriteBatch);
+        }
+        
+        _spriteBatch.End();
+
+        GraphicsDevice.SetRenderTarget(null);
+
+        _spriteBatch.Begin(SpriteSortMode.FrontToBack, blendState: BlendState.NonPremultiplied, samplerState: SamplerState.PointClamp);
+
+        _spriteBatch.Draw(_renderTarget, new Rectangle(0, 0, (int) (BufferWidth * _scaleFactor), (int) (BufferHeight * _scaleFactor)), Color.White);
+
+        _spriteBatch.End();
+
+        base.Draw(gameTime);
+    }
+    
+    private void CheckForCheat()
+    {
+        if (AppSettings.Instance.AllowCheat)
+        {
+            if (_input.KeyPressed(Keys.R))
+            {
+                _arenaManager.ResetLevel();
+                
+                _state = State.Playing;
+
+                _textManager.Message = null;
+            }
+
+            if (_input.KeyPressed(Keys.N))
+            {
+                _arenaManager.NextLevel();
+
+                _state = State.Playing;
+
+                _textManager.Message = null;
+            }
+        }
     }
 
     private void CheckForFailure()
@@ -252,31 +283,5 @@ public class Game : Microsoft.Xna.Framework.Game
                 _frame = 0;
             }
         }
-    }
-
-    protected override void Draw(GameTime gameTime)
-    {
-        GraphicsDevice.SetRenderTarget(_renderTarget);
-
-        GraphicsDevice.Clear(Color.Black);
-
-        _spriteBatch.Begin(SpriteSortMode.FrontToBack);
-
-        foreach (var actor in _actors)
-        {
-            actor.Draw(_spriteBatch);
-        }
-        
-        _spriteBatch.End();
-
-        GraphicsDevice.SetRenderTarget(null);
-
-        _spriteBatch.Begin(SpriteSortMode.FrontToBack, blendState: BlendState.NonPremultiplied, samplerState: SamplerState.PointClamp);
-
-        _spriteBatch.Draw(_renderTarget, new Rectangle(0, 0, (int) (BufferWidth * _scaleFactor), (int) (BufferHeight * _scaleFactor)), Color.White);
-
-        _spriteBatch.End();
-
-        base.Draw(gameTime);
     }
 }
