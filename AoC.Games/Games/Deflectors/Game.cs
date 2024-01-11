@@ -178,13 +178,8 @@ public class Game : Microsoft.Xna.Framework.Game
             }
         }
 
-        var position = (X: _input.MouseX / _scaleFactor, Y: _input.MouseY / _scaleFactor);
-
-        if (_message != null)
-        {
-            IsMouseVisible = false;
-        }
-
+        IsMouseVisible = _message == null && _arenaManager.MirrorPosition == (-1, -1);
+        
         if (_state == State.Playing && _input.LeftButtonClicked())
         {
             _arenaManager.PlaceMirror();

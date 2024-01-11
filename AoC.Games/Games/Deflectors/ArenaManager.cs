@@ -122,9 +122,9 @@ public class ArenaManager : IActor
 
         var position = (X: _input.MouseX, Y: _input.MouseY);
 
-        if (position.X >= 0 && position.X < MapSize * TileSize && position.Y >= 0 && position.Y < MapSize * TileSize && Mirror != '\0')
+        if (position.X >= 0 && position.X < MapSize * TileSize && position.Y >= _topOffset && position.Y < MapSize * TileSize + _topOffset && Mirror != '\0')
         {
-            _mirrorPosition = (position.X / TileSize, position.Y / TileSize);
+            _mirrorPosition = (position.X / TileSize, (position.Y - _topOffset) / TileSize);
         }
         else
         {
