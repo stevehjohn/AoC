@@ -170,13 +170,15 @@ public class Game : Microsoft.Xna.Framework.Game
             _beamSimulator.BeamMaxSteps = 10_000_000;
         }
 
-        if (_beamSimulator.IsComplete)
+        if (_beamSimulator.IsComplete && _state != State.PreparingNextLevel)
         {
             _frame++;
 
             if (_frame > 200)
             {
                 _state = State.PreparingNextLevel;
+                
+                _score += _beamSimulator.BeamStrength / 3;
 
                 var complete = _arenaManager.LevelNumber < _arenaManager.LevelCount
                     ? "LEVEL COMPLETE.\n"
@@ -191,8 +193,6 @@ public class Game : Microsoft.Xna.Framework.Game
                     : string.Empty;
 
                 _textManager.Message = $"{complete}{highScore}{mirrors}CLICK TO PLAY AGAIN...";
-                
-                _score += _beamSimulator.BeamStrength;
 
                 if (highScore != string.Empty)
                 {
