@@ -313,7 +313,7 @@ public class BeamSimulator : IActor
 
     private void DrawBeam(SpriteBatch spriteBatch, int x, int y, int dX, int dY, int oldDx, int oldDy, int colorIndex)
     {
-        int beam = 0;
+        var beam = 0;
 
         if (oldDx == dX && oldDy == dY)
         {
