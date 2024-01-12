@@ -206,11 +206,6 @@ public class BeamSimulator : IActor
                 _hitUnplaced = true;
 
                 mirror = _arenaManager.Mirror;
-
-                if (_arenaManager.LastMirrorPosition != _arenaManager.MirrorPosition)
-                {
-                    //_beamMaxSteps = beamSteps;
-                }
             }
         }
 
