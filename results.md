@@ -13,7 +13,7 @@ Tests performed on a 2023 MacBook Pro.
  2015  1.1: 100μs         Not quite lisp
  2015  1.2: 11μs          
  2015  2.1: 409μs         Wrapping paper
- 2015  2.2: 441μs         
+ 2015  2.2: 439μs         
  2015  3.1: 1,256μs       Perfectly spherical houses in a vacuum
  2015  3.2: 1,137μs       
  2015  4.1: 138,785μs     Crypto stocking stuffer
@@ -21,7 +21,7 @@ Tests performed on a 2023 MacBook Pro.
  2015  5.1: 180μs         Naughty or nice
  2015  5.2: 858μs         
  2015  6.1: 23,877μs      Bournville estate lights
- 2015  6.2: 26,772μs      
+ 2015  6.2: 26,663μs      
  2015  7.1: 95μs          Logic gates
  2015  7.2: 93μs          
  2015  8.1: 28μs          Matchsticks
@@ -71,14 +71,14 @@ Tests performed on a 2023 MacBook Pro.
  2016  4.1: 4,509μs       Security through obscurity
  2016  4.2: 4,409μs       
  2016  5.1: 2,440,630μs   Password hash
- 2016  5.2: 7,067,501μs   
+ 2016  5.2: 7,029,506μs   
  2016  6.1: 1,015μs       Signals and noise
  2016  6.2: 280μs         
  2016  7.1: 755μs         ABBA internet protocol
  2016  7.2: 1,113μs       
  2016  8.1: 150μs         MFA
  2016  8.2: 136μs         
- 2016  9.1: 50μs          Cyberspace explosives
+ 2016  9.1: 49μs          Cyberspace explosives
  2016  9.2: 130μs         
  2016 10.1: 940μs         Balance bots
  2016 10.2: 1,859μs       
@@ -112,7 +112,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 24.2: 19,739μs      
  2016 25.1: 190,041μs     Clock signal
             -------------
-            23.170s      
+            23.132s      
 
  2017  1.1: 9μs           Captcha
  2017  1.2: 10μs          
@@ -175,7 +175,7 @@ Tests performed on a 2023 MacBook Pro.
  2018  4.1: 898μs         Sleepy guards
  2018  4.2: 1,381μs       
  2018  5.1: 950μs         Polymer reactions
- 2018  5.2: 38,168μs      
+ 2018  5.2: 37,385μs      
  2018  6.1: 9,471μs       Safe coordinates
  2018  6.2: 6,345μs       
  2018  7.1: 53μs          Ikea sleigh
@@ -193,9 +193,9 @@ Tests performed on a 2023 MacBook Pro.
  2018 13.1: 17,664μs      Crashing carts
  2018 13.2: 31,589μs      
  2018 14.1: 21,207μs      Elf recipes
- 2018 14.2: 1,168,080μs   
+ 2018 14.2: 1,156,404μs   
  2018 15.1: 96,698μs      Elves vs Goblins
- 2018 15.2: 469,734μs     
+ 2018 15.2: 463,360μs     
  2018 16.1: 943μs         Opcode reverse-engineering
  2018 16.2: 1,106μs       
  2018 17.1: 20,437μs      Don't go chasing waterfalls
@@ -216,7 +216,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 331,654μs     
  2018 25.1: 35,723μs      4D chocolate teleportation
             -------------
-            18.386s      
+            18.367s      
 
  2019  1.1: 2μs           Calculate launch fuel
  2019  1.2: 5μs           
@@ -353,11 +353,11 @@ Tests performed on a 2023 MacBook Pro.
  2021 14.2: 1,021μs       
  2021 15.1: 1,330μs       Risky business
  2021 15.2: 69,117μs      
- 2021 16.1: 133μs         Packet processing
+ 2021 16.1: 132μs         Packet processing
  2021 16.2: 126μs         
  2021 17.1: 12,482μs      Probe launch trick shot
  2021 17.2: 12,318μs      
- 2021 18.1: 3,784μs       Snailfish homework
+ 2021 18.1: 3,780μs       Snailfish homework
  2021 18.2: 52,017μs      
  2021 19.1: 117,145μs     3D scanners and beacons
  2021 19.2: 212,184μs     
@@ -473,11 +473,11 @@ Tests performed on a 2023 MacBook Pro.
  2023 22.2: 76,927μs      
  2023 23.1: 22,267μs      A long walk
  2023 23.2: 71,817μs      
- 2023 24.1: 1,608μs       Never tell me the odds
+ 2023 24.1: 1,601μs       Never tell me the odds
  2023 24.2: 5,631μs       
  2023 25.1: 13,675μs      Snowverload
             -------------
-            420.572ms    
+            420.565ms    
 
- 442 puzzles solved in 58.246ms.
+ 442 puzzles solved in 58.189ms.
 ```
