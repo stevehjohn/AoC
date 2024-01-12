@@ -27,11 +27,13 @@ public class BeamSimulator : IActor
 
     private readonly HashSet<(int, int)> _hitMirrors = [];
     
-    private readonly Queue<(int X, int Y, Direction Direction, int Color, int ColorDirection)> _splitters = [];
+    private readonly Queue<(int X, int Y, Direction Direction, int BeamSteps, int Color, int ColorDirection)> _splitters = [];
 
     private bool _hitUnplaced;
 
     private int _beamStrength;
+
+    private long _frame;
 
     public int BeamStrength => _beamStrength;
     
@@ -76,6 +78,7 @@ public class BeamSimulator : IActor
 
     public void NewLevelStarted()
     {
+        _frame = 0;
     }
 
     private void SimulateBeams(SpriteBatch spriteBatch)
@@ -88,14 +91,16 @@ public class BeamSimulator : IActor
 
         _hitUnplaced = false;
 
+        _frame += 2;
+
         foreach (var start in _arenaManager.Level.Starts)
         {
-            SimulateBeam(spriteBatch, start);
+            SimulateBeam(spriteBatch, start, 0);
         }
 
         while (_splitters.TryDequeue(out var splitter))
         {
-            SimulateBeam(spriteBatch, new Start { X = splitter.X, Y = splitter.Y, Direction = splitter.Direction }, splitter.Color, splitter.ColorDirection);
+            SimulateBeam(spriteBatch, new Start { X = splitter.X, Y = splitter.Y, Direction = splitter.Direction }, splitter.BeamSteps, splitter.Color, splitter.ColorDirection);
         }
 
         IsComplete = _hitEnds.Count == _arenaManager.Level.Ends.Length && State == State.Playing && ! _hitUnplaced;
@@ -110,14 +115,8 @@ public class BeamSimulator : IActor
         }
     }
 
-    private void SimulateBeam(SpriteBatch spriteBatch, Start start, int? colorIndex = null, int? colorDirection = null)
+    private void SimulateBeam(SpriteBatch spriteBatch, Start start, int beamSteps, int? colorIndex = null, int? colorDirection = null)
     {
-        // TODO: This is a nasty hack
-        if (_beamStrength > 1_000)
-        {
-            return;
-        }
-
         var x = start.X * BeamFactor + BeamFactor / 2;
 
         var y = start.Y * BeamFactor + BeamFactor / 2;
@@ -146,6 +145,13 @@ public class BeamSimulator : IActor
         {
             _beamStrength++;
 
+            beamSteps++;
+
+            if (beamSteps > _frame)
+            {
+                break;
+            }
+
             if ((x - BeamFactor / 2) % BeamFactor == 0 && (y - BeamFactor / 2) % BeamFactor == 0)
             {
                 if (IsBlocked(x, y) || IsEnd(x, y, dX, dY))
@@ -153,7 +159,7 @@ public class BeamSimulator : IActor
                     break;
                 }
 
-                var result = HitsMirror(spriteBatch, x, y, dX, dY, colorIndex.Value, colorDirection.Value);
+                var result = HitsMirror(spriteBatch, x, y, dX, dY, beamSteps, colorIndex.Value, colorDirection.Value);
 
                 if (result.ShouldBreak)
                 {
@@ -196,7 +202,7 @@ public class BeamSimulator : IActor
         }
     }
 
-    private (char Mirror, bool ShouldBreak) HitsMirror(SpriteBatch spriteBatch, int x, int y, int dX, int dY, int colorIndex, int colorDirection)
+    private (char Mirror, bool ShouldBreak) HitsMirror(SpriteBatch spriteBatch, int x, int y, int dX, int dY, int beamSteps, int colorIndex, int colorDirection)
     {
         var mirror = _arenaManager.Level.Mirrors.SingleOrDefault(m => m.X == x / BeamFactor && m.Y == y / BeamFactor)?.Piece ?? '\0';
 
@@ -212,6 +218,11 @@ public class BeamSimulator : IActor
                 _hitUnplaced = true;
 
                 mirror = _arenaManager.Mirror;
+
+                if (_arenaManager.LastMirrorPosition != _arenaManager.MirrorPosition)
+                {
+                    _frame = beamSteps;
+                }
             }
         }
 
@@ -219,8 +230,8 @@ public class BeamSimulator : IActor
         {
             if (mirror == '|' && dX != 0)
             {
-                _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.North, colorIndex, colorDirection));
-                _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.South, colorIndex, colorDirection));
+                _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.North, beamSteps, colorIndex, colorDirection));
+                _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.South, beamSteps, colorIndex, colorDirection));
 
                 spriteBatch.Draw(_beams,
                     new Vector2(x * BeamSize, Constants.TopOffset + y * BeamSize),
@@ -232,8 +243,8 @@ public class BeamSimulator : IActor
 
             if (mirror == '-' && dY != 0)
             {
-                _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.East, colorIndex, colorDirection));
-                _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.West, colorIndex, colorDirection));
+                _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.East, beamSteps, colorIndex, colorDirection));
+                _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.West, beamSteps, colorIndex, colorDirection));
 
                 spriteBatch.Draw(_beams,
                     new Vector2(x * BeamSize, Constants.TopOffset + y * BeamSize),
