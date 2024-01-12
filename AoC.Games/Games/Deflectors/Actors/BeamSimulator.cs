@@ -112,6 +112,12 @@ public class BeamSimulator : IActor
 
     private void SimulateBeam(SpriteBatch spriteBatch, Start start, int? colorIndex = null, int? colorDirection = null)
     {
+        // TODO: This is a nasty hack
+        if (_beamStrength > 1_000)
+        {
+            return;
+        }
+
         var x = start.X * BeamFactor + BeamFactor / 2;
 
         var y = start.Y * BeamFactor + BeamFactor / 2;
