@@ -1,3 +1,4 @@
+using AoC.Solutions.Extensions;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2023._25;
@@ -89,12 +90,12 @@ public class Part1 : Base
 
             if (node.Name == end)
             {
-                foreach (var item in node.History)
+                node.History.ForAll((_, n) =>
                 {
-                    _nodes.Remove(item);
+                    _nodes.Remove(n);
 
-                    _links[item.L].Remove(item.R);
-                }
+                    _links[n.L].Remove(n.R);
+                });
 
                 break;
             }
