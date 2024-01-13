@@ -16,7 +16,7 @@ You'll need the [dotnet 8 runtime](https://dotnet.microsoft.com/en-us/download/d
 ### Other Dependencies For macOS
 
 Other than the dotnet runtime, MonoGame requires some other dependencies.
-I have a script to install these  [here](../fix-dependencies.sh).
+I have a script to install these [here](../fix-dependencies.sh).
 
 If that script doesn't work, try the following (which is what the script is attempting to automate).
 

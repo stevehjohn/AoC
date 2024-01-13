@@ -1,7 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
 using Security.Crypto;
 
 namespace AoC.Solutions.Infrastructure;
 
+[ExcludeFromCodeCoverage]
 public static class CryptoFileProvider
 {
     public static string[] LoadFile(string path, string filename)

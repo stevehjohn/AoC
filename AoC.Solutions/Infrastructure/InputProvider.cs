@@ -1,5 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace AoC.Solutions.Infrastructure;
 
+[ExcludeFromCodeCoverage]
 public static class InputProvider
 {
     public static string[] GetInput(string nameSpace)
