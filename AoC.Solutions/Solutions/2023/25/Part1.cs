@@ -13,7 +13,7 @@ public class Part1 : Base
 
     public override string GetAnswer()
     {
-        int left = 0;
+        var left = 0;
 
         int right;
         
