@@ -226,7 +226,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
                 if (_frame > 200)
                 {
-                    _textManager.Message = $"OH DEAR,\nLOOKS LIKE YOU CAN'T\nCOMPLETE THIS LEVEL.\nCLICK TO RESTART.";
+                    _textManager.Message = "OH DEAR,\nLOOKS LIKE YOU CAN'T\nCOMPLETE THIS LEVEL.\nCLICK TO RESTART.";
 
                     _state = State.Failed;
 
