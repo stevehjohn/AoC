@@ -1,4 +1,5 @@
 using AoC.Games.Games.Deflectors.Levels;
+using AoC.Games.Infrastructure;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -112,7 +113,9 @@ public class ArenaManager : IActor
     {
         LastMirrorPosition = _mirrorPosition;
 
-        var position = (X: _input.MouseX, Y: _input.MouseY);
+        var scaleFactor = AppSettings.Instance.ScaleFactor;
+        
+        var position = (X: (int) (_input.MouseX / scaleFactor), Y: (int) (_input.MouseY / scaleFactor));
 
         if (position.X >= 0 && position.X < Constants.MapSize * Constants.TileSize && position.Y >= Constants.TopOffset && position.Y < Constants.MapSize * Constants.TileSize + Constants.TopOffset && Mirror != '\0')
         {
