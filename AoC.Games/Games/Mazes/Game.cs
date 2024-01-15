@@ -159,22 +159,22 @@ public class Game : Microsoft.Xna.Framework.Game
     {
         var directions = new List<(int Dx, int Dy)>();
         
-        if (_position.X > 2 && ! _visited.Contains((_position.X - 1, _position.Y)))
+        if (_position.X > 2 && ! _visited.Contains((_position.X - 2, _position.Y)))
         {
             directions.Add((-1, 0));
         }
 
-        if (_position.X < Width - 3 && ! _visited.Contains((_position.X + 1, _position.Y)))
+        if (_position.X < Width - 3 && ! _visited.Contains((_position.X + 2, _position.Y)))
         {
             directions.Add((1, 0));
         }
 
-        if (_position.Y > 2 && ! _visited.Contains((_position.X, _position.Y - 1)))
+        if (_position.Y > 2 && ! _visited.Contains((_position.X, _position.Y - 2)))
         {
             directions.Add((0, -1));
         }
 
-        if (_position.Y < Height - 3 && ! _visited.Contains((_position.X, _position.Y + 1)))
+        if (_position.Y < Height - 3 && ! _visited.Contains((_position.X, _position.Y + 2)))
         {
             directions.Add((0, 1));
         }
