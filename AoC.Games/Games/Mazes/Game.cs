@@ -1,5 +1,4 @@
 using AoC.Games.Infrastructure;
-using AoC.Solutions.Extensions;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
