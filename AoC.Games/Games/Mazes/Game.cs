@@ -107,8 +107,6 @@ public class Game : Microsoft.Xna.Framework.Game
         _position.X += _direction.Dx;
         _position.Y += _direction.Dy;
 
-        _move++;
-
         base.Update(gameTime);
     }
 
