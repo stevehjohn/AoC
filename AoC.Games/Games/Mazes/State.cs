@@ -5,5 +5,6 @@ public enum State
     Creating,
     Created,
     Solving,
-    Solved
+    Solved,
+    Finished
 }

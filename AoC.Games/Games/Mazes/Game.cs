@@ -28,6 +28,8 @@ public class Game : Microsoft.Xna.Framework.Game
     private MazeSolver _mazeSolver;
 
     private List<(int X, int Y)> _solution;
+
+    private int _step;
     
     public Game()
     {
@@ -94,6 +96,15 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
             
             case State.Solved:
+                if (_step < _solution.Count - 1)
+                {
+                    _step++;
+                }
+                else
+                {
+                    _state = State.Finished;
+                }
+
                 break;
         }
         
@@ -106,6 +117,8 @@ public class Game : Microsoft.Xna.Framework.Game
     {
         DrawIntoData();
         
+        DrawSolution();
+        
         GraphicsDevice.Clear(Color.Black);
 
         _spriteBatch.Begin(SpriteSortMode.FrontToBack);
@@ -117,6 +130,22 @@ public class Game : Microsoft.Xna.Framework.Game
         _spriteBatch.End();
         
         base.Draw(gameTime);
+    }
+
+    private void DrawSolution()
+    {
+        for (var i = 0; i < _step; i++)
+        {
+            var step = _solution[i];
+            
+            for (var x = 0; x < Constants.TileSize; x++)
+            {
+                for (var y = 0; y < Constants.TileSize; y++)
+                {
+                    _data[step.X * Constants.TileSize + x + step.Y * Constants.TileSize * Constants.Width + y] = Color.White;
+                }
+            }
+        }
     }
 
     private void DrawIntoData()
