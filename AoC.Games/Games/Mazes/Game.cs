@@ -1,4 +1,5 @@
 using AoC.Games.Infrastructure;
+using AoC.Solutions.Extensions;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -71,7 +72,11 @@ public class Game : Microsoft.Xna.Framework.Game
         if (_input.LeftButtonClicked())
         {
             _state = State.Creating;
+
+            _solution = null;
             
+            _mazeSolution.ForAll((x, y, _) => _maze[x, y] = false);
+
             _mazeCreator.Reset();
         }
         
@@ -98,6 +103,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
             
             case State.Solved:
+                // ReSharper disable once PossibleNullReferenceException
                 var step = _solution[_step];
 
                 _mazeSolution[step.X, step.Y] = true;
@@ -144,7 +150,7 @@ public class Game : Microsoft.Xna.Framework.Game
             {
                 if (_mazeSolution[x / Constants.TileSize, y / Constants.TileSize])
                 {
-                    _data[x + y * Constants.Width * Constants.TileSize] = Color.FromNonPremultiplied(0, 128, 0, 255);
+                    _data[x + y * Constants.Width * Constants.TileSize] = Color.FromNonPremultiplied(0, 96, 0, 255);
                     
                     continue;
                 }
