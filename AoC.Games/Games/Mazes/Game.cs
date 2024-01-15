@@ -29,7 +29,7 @@ public class Game : Microsoft.Xna.Framework.Game
     
     private int _move;
 
-    private Random _rng = new();
+    private readonly Random _rng = new();
     
     public Game()
     {
@@ -63,7 +63,6 @@ public class Game : Microsoft.Xna.Framework.Game
 
         if (_move > 0 && _move % 2 == 0)
         {
-            // Change direction
             var directions = GetDirections();
 
             _direction = directions[_rng.Next(directions.Count)];
@@ -83,22 +82,22 @@ public class Game : Microsoft.Xna.Framework.Game
     {
         var directions = new List<(int Dx, int Dy)>();
         
-        if (_position.X > 2)
+        if (_position.X > 2 && _visited.Contains((_position.X - 1, _position.Y)))
         {
             directions.Add((-1, 0));
         }
 
-        if (_position.X < Width - 3)
+        if (_position.X < Width - 3 && _visited.Contains((_position.X + 1, _position.Y)))
         {
             directions.Add((1, 0));
         }
 
-        if (_position.Y > 2)
+        if (_position.Y > 2 && _visited.Contains((_position.X, _position.Y - 1)))
         {
             directions.Add((0, -1));
         }
 
-        if (_position.Y < Height - 3)
+        if (_position.Y < Height - 3 && _visited.Contains((_position.X, _position.Y + 1)))
         {
             directions.Add((0, 1));
         }
