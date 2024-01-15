@@ -43,8 +43,6 @@ public class Game : Microsoft.Xna.Framework.Game
             PreferredBackBufferWidth = (int) (Constants.Width * Constants.TileSize * scaleFactor),
             PreferredBackBufferHeight = (int) (Constants.Height * Constants.TileSize * scaleFactor)
         };
-
-        Content.RootDirectory = "./Deflectors";
     }
 
     protected override void Initialize()
@@ -161,7 +159,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 }
                 else
                 {
-                    _data[x + y *Constants.Width * Constants.TileSize] = Color.Black;
+                    _data[x + y * Constants.Width * Constants.TileSize] = Color.Black;
                 }
             }
         }
