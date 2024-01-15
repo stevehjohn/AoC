@@ -37,6 +37,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private SpriteBatch _spriteBatch;
 
+    private int _move;
+
     public Game()
     {
         var scaleFactor = AppSettings.Instance.ScaleFactor;
@@ -52,7 +54,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
     protected override void Initialize()
     {
-        _position = (1, 0);
+        _position = (1, -1);
 
         _direction = (0, 1);
         
@@ -79,25 +81,31 @@ public class Game : Microsoft.Xna.Framework.Game
 
         _visited.Add(_position);
 
-        _maze[_position.X, _position.Y] = true;
-
-        var directions = GetDirections();
-
-        while (directions.Count == 0)
+        if (_position.Y >= 0)
         {
-            if (! _stack.TryPop(out var position))
+            _maze[_position.X, _position.Y] = true;
+        }
+
+        if (_move > 0)
+        {
+            var directions = GetDirections();
+
+            while (directions.Count == 0)
             {
-                _complete = true;
-            }
-            else
-            {
-                _position = position;
+                if (! _stack.TryPop(out var position))
+                {
+                    _complete = true;
+                }
+                else
+                {
+                    _position = position;
+                }
+
+                directions = GetDirections();
             }
 
-            directions = GetDirections();
+            _direction = directions[_rng.Next(directions.Count)];
         }
-        
-        _direction = directions[_rng.Next(directions.Count)];
 
         _position.X += _direction.Dx;
         _position.Y += _direction.Dy;
@@ -107,6 +115,8 @@ public class Game : Microsoft.Xna.Framework.Game
         _position.X += _direction.Dx;
         _position.Y += _direction.Dy;
 
+        _move++;
+        
         base.Update(gameTime);
     }
 
@@ -149,22 +159,22 @@ public class Game : Microsoft.Xna.Framework.Game
     {
         var directions = new List<(int Dx, int Dy)>();
         
-        if (_position.X > 3 && ! _visited.Contains((_position.X - 1, _position.Y)))
+        if (_position.X > 2 && ! _visited.Contains((_position.X - 1, _position.Y)))
         {
             directions.Add((-1, 0));
         }
 
-        if (_position.X < Width - 4 && ! _visited.Contains((_position.X + 1, _position.Y)))
+        if (_position.X < Width - 3 && ! _visited.Contains((_position.X + 1, _position.Y)))
         {
             directions.Add((1, 0));
         }
 
-        if (_position.Y > 3 && ! _visited.Contains((_position.X, _position.Y - 1)))
+        if (_position.Y > 2 && ! _visited.Contains((_position.X, _position.Y - 1)))
         {
             directions.Add((0, -1));
         }
 
-        if (_position.Y < Height - 4 && ! _visited.Contains((_position.X, _position.Y + 1)))
+        if (_position.Y < Height - 3 && ! _visited.Contains((_position.X, _position.Y + 1)))
         {
             directions.Add((0, 1));
         }
