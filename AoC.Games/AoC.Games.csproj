@@ -36,6 +36,9 @@
     <ItemGroup>
       <Folder Include="ScreenShots\" />
     </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\AoC.Solutions\AoC.Solutions.csproj" />
+    </ItemGroup>
     <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
         <Message Text="Restoring dotnet tools" Importance="High"/>
         <Exec Command="dotnet tool restore"/>

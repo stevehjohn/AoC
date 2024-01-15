@@ -8,7 +8,7 @@ namespace AoC.Games.Games.Mazes;
 [UsedImplicitly]
 public class Game : Microsoft.Xna.Framework.Game
 {
-    private bool[,] _maze = new bool[Constants.Width, Constants.Height];
+    private readonly bool[,] _maze = new bool[Constants.Width, Constants.Height];
     
     // ReSharper disable once NotAccessedField.Local
     private GraphicsDeviceManager _graphics;

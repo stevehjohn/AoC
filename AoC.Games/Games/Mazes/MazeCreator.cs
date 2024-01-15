@@ -1,3 +1,5 @@
+using AoC.Solutions.Extensions;
+
 namespace AoC.Games.Games.Mazes;
 
 public class MazeCreator
@@ -14,7 +16,7 @@ public class MazeCreator
 
     private int _move;
 
-    private bool[,] _maze;
+    private readonly bool[,] _maze;
 
     public MazeCreator(bool[,] maze)
     {
@@ -29,7 +31,7 @@ public class MazeCreator
 
         _move = 0;
 
-        _maze = new bool[Constants.Width, Constants.Height];
+        _maze.ForAll((x, y, _) => _maze[x, y] = false);
         
         _visited.Clear();
         
