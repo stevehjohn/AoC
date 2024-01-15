@@ -78,6 +78,8 @@ public class MazeCreator
         _position.X += _direction.Dx;
         _position.Y += _direction.Dy;
 
+        _move++;
+
         return false;
     }
 
