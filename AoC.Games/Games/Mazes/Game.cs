@@ -8,11 +8,11 @@ namespace AoC.Games.Games.Mazes;
 [UsedImplicitly]
 public class Game : Microsoft.Xna.Framework.Game
 {
-    private const int Width = 101;
+    private const int Width = 201;
 
-    private const int Height = 71;
+    private const int Height = 141;
 
-    private const int TileSize = 10;
+    private const int TileSize = 5;
 
     private bool[,] _maze = new bool[Width, Height];
     
