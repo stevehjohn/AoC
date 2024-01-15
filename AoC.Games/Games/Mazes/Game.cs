@@ -77,12 +77,12 @@ public class Game : Microsoft.Xna.Framework.Game
             return;
         }
         
-        _stack.Push(_position);
-
-        _visited.Add(_position);
-
         if (_position.Y >= 0)
         {
+            _stack.Push(_position);
+
+            _visited.Add(_position);
+
             _maze[_position.X, _position.Y] = true;
         }
 
@@ -95,6 +95,8 @@ public class Game : Microsoft.Xna.Framework.Game
                 if (! _stack.TryPop(out var position))
                 {
                     _complete = true;
+                    
+                    return;
                 }
                 else
                 {
