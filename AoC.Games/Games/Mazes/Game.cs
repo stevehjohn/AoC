@@ -1,4 +1,5 @@
 using AoC.Games.Infrastructure;
+using AoC.Solutions.Extensions;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -122,13 +123,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
         _solution = null;
 
-        for (var x = 0; x < Constants.Width; x++)
-        {
-            for (var y = 0; y < Constants.Height; y++)
-            {
-                _mazeSolution[x, y] = false;
-            }
-        }
+        _maze.ForAll((x, y, _) => _mazeSolution[x, y] = false);
 
         _step = 0;
 
