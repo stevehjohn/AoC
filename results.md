@@ -117,7 +117,7 @@ Tests performed on a 2023 MacBook Pro.
  2017  1.1: 9μs           Captcha
  2017  1.2: 10μs          
  2017  2.1: 12μs          Spreadsheet checksum
- 2017  2.2: 25μs          
+ 2017  2.2: 24μs          
  2017  3.1: 0μs           Spiral memory
  2017  3.2: 20μs          
  2017  4.1: 137μs         Passphrase validation
@@ -284,7 +284,7 @@ Tests performed on a 2023 MacBook Pro.
  2020  6.2: 1,706μs       
  2020  7.1: 11,915μs      Recursive bag packing
  2020  7.2: 1,029μs       
- 2020  8.1: 10μs          Console assembly debugging
+ 2020  8.1: 9μs           Console assembly debugging
  2020  8.2: 2,601μs       
  2020  9.1: 517μs         Cypher cracking
  2020  9.2: 30μs          
@@ -472,12 +472,12 @@ Tests performed on a 2023 MacBook Pro.
  2023 22.1: 38,164μs      Sand slabs
  2023 22.2: 76,927μs      
  2023 23.1: 22,267μs      A long walk
- 2023 23.2: 71,817μs      
+ 2023 23.2: 71,409μs      
  2023 24.1: 1,601μs       Never tell me the odds
  2023 24.2: 5,631μs       
  2023 25.1: 13,675μs      Snowverload
             -------------
-            420.565ms    
+            420.157ms    
 
  442 puzzles solved in 58.189ms.
 ```
