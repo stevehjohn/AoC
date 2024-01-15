@@ -27,8 +27,6 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private (int Dx, int Dy) _direction;
     
-    private int _move;
-
     private readonly Random _rng = new();
 
     private bool _complete;
