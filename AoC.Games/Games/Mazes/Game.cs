@@ -8,7 +8,7 @@ namespace AoC.Games.Games.Mazes;
 [UsedImplicitly]
 public class Game : Microsoft.Xna.Framework.Game
 {
-    private const int Width = 51;
+    private const int Width = 81;
 
     private const int Height = 51;
 
@@ -77,6 +77,16 @@ public class Game : Microsoft.Xna.Framework.Game
             return;
         }
         
+        CreateMaze();
+     
+        _move++;
+        
+        base.Update(gameTime);
+    }
+
+    private void CreateMaze()
+    {
+   
         if (_position.Y >= 0)
         {
             _stack.Push(_position);
@@ -94,14 +104,14 @@ public class Game : Microsoft.Xna.Framework.Game
             {
                 if (! _stack.TryPop(out var position))
                 {
+                    _maze[Width - 2, Height - 1] = true;
+                    
                     _complete = true;
                     
                     return;
                 }
-                else
-                {
-                    _position = position;
-                }
+                
+                _position = position;
 
                 directions = GetDirections();
             }
@@ -116,10 +126,6 @@ public class Game : Microsoft.Xna.Framework.Game
 
         _position.X += _direction.Dx;
         _position.Y += _direction.Dy;
-
-        _move++;
-        
-        base.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
