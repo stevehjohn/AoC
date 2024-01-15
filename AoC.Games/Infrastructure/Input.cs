@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework.Input;
 
-namespace AoC.Games.Games.Deflectors;
+namespace AoC.Games.Infrastructure;
 
 public class Input
 {

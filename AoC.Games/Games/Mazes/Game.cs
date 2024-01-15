@@ -14,7 +14,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private const int TileSize = 10;
 
-    private readonly bool[,] _maze = new bool[Width, Height];
+    private bool[,] _maze = new bool[Width, Height];
     
     // ReSharper disable once NotAccessedField.Local
     private GraphicsDeviceManager _graphics;
@@ -39,6 +39,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private int _move;
 
+    private readonly Input _input = new();
+    
     public Game()
     {
         var scaleFactor = AppSettings.Instance.ScaleFactor;
@@ -54,9 +56,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
     protected override void Initialize()
     {
-        _position = (1, -1);
-
-        _direction = (0, 1);
+        Reset();
         
         base.Initialize();
     }
@@ -72,6 +72,11 @@ public class Game : Microsoft.Xna.Framework.Game
 
     protected override void Update(GameTime gameTime)
     {
+        if (_input.LeftButtonClicked())
+        {
+            Reset();
+        }
+        
         switch (_state)
         {
             case State.Creating:
@@ -96,6 +101,21 @@ public class Game : Microsoft.Xna.Framework.Game
         _move++;
         
         base.Update(gameTime);
+    }
+
+    private void Reset()
+    {
+        _position = (1, -1);
+
+        _direction = (0, 1);
+
+        _maze = new bool[Width, Height];
+        
+        _visited.Clear();
+        
+        _stack.Clear();
+
+        _state = State.Creating;
     }
 
     private void SolveMaze()
