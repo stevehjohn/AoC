@@ -9,6 +9,8 @@ namespace AoC.Games.Games.Mazes;
 public class Game : Microsoft.Xna.Framework.Game
 {
     private readonly bool[,] _maze = new bool[Constants.Width, Constants.Height];
+
+    private readonly bool[,] _mazeSolution = new bool[Constants.Width, Constants.Height];
     
     // ReSharper disable once NotAccessedField.Local
     private GraphicsDeviceManager _graphics;
@@ -96,6 +98,10 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
             
             case State.Solved:
+                var step = _solution[_step];
+
+                _mazeSolution[step.X, step.Y] = true;
+
                 if (_step < _solution.Count - 1)
                 {
                     _step++;
@@ -117,8 +123,6 @@ public class Game : Microsoft.Xna.Framework.Game
     {
         DrawIntoData();
         
-        DrawSolution();
-        
         GraphicsDevice.Clear(Color.Black);
 
         _spriteBatch.Begin(SpriteSortMode.FrontToBack);
@@ -132,28 +136,19 @@ public class Game : Microsoft.Xna.Framework.Game
         base.Draw(gameTime);
     }
 
-    private void DrawSolution()
-    {
-        for (var i = 0; i < _step; i++)
-        {
-            var step = _solution[i];
-            
-            for (var x = 0; x < Constants.TileSize; x++)
-            {
-                for (var y = 0; y < Constants.TileSize; y++)
-                {
-                    _data[step.X * Constants.TileSize + x + step.Y * Constants.TileSize * Constants.Width + y] = Color.White;
-                }
-            }
-        }
-    }
-
     private void DrawIntoData()
     {
         for (var x = 0; x < Constants.Width * Constants.TileSize; x++)
         {
             for (var y = 0; y < Constants.Height * Constants.TileSize; y++)
             {
+                if (_mazeSolution[x / Constants.TileSize, y / Constants.TileSize])
+                {
+                    _data[x + y * Constants.Width * Constants.TileSize] = Color.FromNonPremultiplied(0, 128, 0, 255);
+                    
+                    continue;
+                }
+
                 if (! _maze[x / Constants.TileSize, y / Constants.TileSize])
                 {
                     _data[x + y * Constants.Width * Constants.TileSize] = Color.FromNonPremultiplied(64, 64, 64, 255);
