@@ -69,13 +69,7 @@ public class Game : Microsoft.Xna.Framework.Game
     {
         if (_input.LeftButtonClicked())
         {
-            _state = State.Creating;
-
-            _solution = null;
-            
-            _mazeSolution.ForAll((x, y, _) => _maze[x, y] = false);
-
-            _mazeCreator.Reset();
+            Reset();
         }
         
         switch (_state)
@@ -121,6 +115,25 @@ public class Game : Microsoft.Xna.Framework.Game
         _input.UpdateState();
         
         base.Update(gameTime);
+    }
+
+    private void Reset()
+    {
+        _state = State.Creating;
+
+        _solution = null;
+
+        for (var x = 0; x < Constants.Width; x++)
+        {
+            for (var y = 0; y < Constants.Height; y++)
+            {
+                _mazeSolution[x, y] = false;
+            }
+        }
+
+        _step = 0;
+
+        _mazeCreator.Reset();
     }
 
     protected override void Draw(GameTime gameTime)
