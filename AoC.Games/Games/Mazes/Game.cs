@@ -26,6 +26,8 @@ public class Game : Microsoft.Xna.Framework.Game
     private MazeCreator _mazeCreator;
 
     private MazeSolver _mazeSolver;
+
+    private List<(int X, int Y)> _solution;
     
     public Game()
     {
@@ -85,7 +87,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
             
             case State.Solving:
-                _mazeSolver.SolveMaze();
+                _solution = _mazeSolver.SolveMaze();
 
                 _state = State.Solved;
                 
