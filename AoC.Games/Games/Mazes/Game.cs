@@ -24,6 +24,8 @@ public class Game : Microsoft.Xna.Framework.Game
     private readonly Input _input = new();
 
     private MazeCreator _mazeCreator;
+
+    private MazeSolver _mazeSolver;
     
     public Game()
     {
@@ -41,6 +43,8 @@ public class Game : Microsoft.Xna.Framework.Game
     protected override void Initialize()
     {
         _mazeCreator = new MazeCreator(_maze);
+
+        _mazeSolver = new MazeSolver(_maze);
         
         _mazeCreator.Reset();
         
@@ -81,7 +85,9 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
             
             case State.Solving:
-                SolveMaze();
+                _mazeSolver.SolveMaze();
+
+                _state = State.Solved;
                 
                 break;
             
@@ -92,12 +98,6 @@ public class Game : Microsoft.Xna.Framework.Game
         _input.UpdateState();
         
         base.Update(gameTime);
-    }
-    
-    private void SolveMaze()
-    {
-
-        _state = State.Solved;
     }
 
     protected override void Draw(GameTime gameTime)
