@@ -29,7 +29,7 @@ public class Game : Microsoft.Xna.Framework.Game
     
     private readonly Random _rng = new();
 
-    private bool _complete;
+    private State _state;
 
     private Texture2D _texture;
     
@@ -72,21 +72,40 @@ public class Game : Microsoft.Xna.Framework.Game
 
     protected override void Update(GameTime gameTime)
     {
-        if (_complete)
+        switch (_state)
         {
-            return;
+            case State.Creating:
+                CreateMaze();
+
+                break;
+            
+            case State.Created:
+                _state = State.Solving;
+                
+                break;
+            
+            case State.Solving:
+                SolveMaze();
+                
+                break;
+            
+            case State.Solved:
+                break;
         }
-        
-        CreateMaze();
      
         _move++;
         
         base.Update(gameTime);
     }
 
+    private void SolveMaze()
+    {
+
+        _state = State.Solved;
+    }
+
     private void CreateMaze()
     {
-   
         if (_position.Y >= 0)
         {
             _stack.Push(_position);
@@ -106,7 +125,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 {
                     _maze[Width - 2, Height - 1] = true;
                     
-                    _complete = true;
+                    _state = State.Created;
                     
                     return;
                 }
