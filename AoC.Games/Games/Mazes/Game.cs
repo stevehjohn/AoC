@@ -12,14 +12,14 @@ public class Game : Microsoft.Xna.Framework.Game
     private readonly bool[,] _maze = new bool[Constants.Width, Constants.Height];
 
     private readonly bool[,] _mazeSolution = new bool[Constants.Width, Constants.Height];
-    
+
     // ReSharper disable once NotAccessedField.Local
     private GraphicsDeviceManager _graphics;
-    
+
     private State _state;
 
     private Texture2D _texture;
-    
+
     private readonly Color[] _data = new Color[Constants.Width * Constants.TileSize * Constants.Height * Constants.TileSize];
 
     private SpriteBatch _spriteBatch;
@@ -33,7 +33,7 @@ public class Game : Microsoft.Xna.Framework.Game
     private List<(int X, int Y)> _solution;
 
     private int _step;
-    
+
     public Game()
     {
         var scaleFactor = AppSettings.Instance.ScaleFactor;
@@ -50,9 +50,9 @@ public class Game : Microsoft.Xna.Framework.Game
         _mazeCreator = new MazeCreator(_maze);
 
         _mazeSolver = new MazeSolver(_maze);
-        
+
         _mazeCreator.Reset();
-        
+
         base.Initialize();
     }
 
@@ -61,7 +61,7 @@ public class Game : Microsoft.Xna.Framework.Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         _texture = new Texture2D(GraphicsDevice, Constants.Width * Constants.TileSize, Constants.Height * Constants.TileSize);
-        
+
         base.LoadContent();
     }
 
@@ -71,7 +71,7 @@ public class Game : Microsoft.Xna.Framework.Game
         {
             Reset();
         }
-        
+
         switch (_state)
         {
             case State.Creating:
@@ -81,19 +81,19 @@ public class Game : Microsoft.Xna.Framework.Game
                 }
 
                 break;
-            
+
             case State.Created:
                 _state = State.Solving;
-                
+
                 break;
-            
+
             case State.Solving:
                 _solution = _mazeSolver.SolveMaze();
 
                 _state = State.Solved;
-                
+
                 break;
-            
+
             case State.Solved:
                 // ReSharper disable once PossibleNullReferenceException
                 var step = _solution[_step];
@@ -111,9 +111,9 @@ public class Game : Microsoft.Xna.Framework.Game
 
                 break;
         }
-        
+
         _input.UpdateState();
-        
+
         base.Update(gameTime);
     }
 
@@ -133,17 +133,18 @@ public class Game : Microsoft.Xna.Framework.Game
     protected override void Draw(GameTime gameTime)
     {
         DrawIntoData();
-        
+
         GraphicsDevice.Clear(Color.Black);
 
         _spriteBatch.Begin(SpriteSortMode.FrontToBack);
 
         _texture.SetData(_data);
-        
-        _spriteBatch.Draw(_texture, new Vector2(0, 0), new Rectangle(0, 0, Constants.Width * Constants.TileSize, Constants.Height * Constants.TileSize), Color.White);
-        
+
+        _spriteBatch.Draw(_texture, new Vector2(0, 0), new Rectangle(0, 0, Constants.Width * Constants.TileSize, Constants.Height * Constants.TileSize),
+            Color.White);
+
         _spriteBatch.End();
-        
+
         base.Draw(gameTime);
     }
 
@@ -159,6 +160,14 @@ public class Game : Microsoft.Xna.Framework.Game
                         && y % Constants.TileSize > 2 && y % Constants.TileSize < Constants.TileSize - 3)
                     {
                         _data[x + y * Constants.Width * Constants.TileSize] = Color.FromNonPremultiplied(0, 192, 0, 255);
+
+                        continue;
+                    }
+                    
+                    if (x % Constants.TileSize > 1 && x % Constants.TileSize < Constants.TileSize - 2 
+                                                   && y % Constants.TileSize > 1 && y % Constants.TileSize < Constants.TileSize - 2)
+                    {
+                        _data[x + y * Constants.Width * Constants.TileSize] = Color.FromNonPremultiplied(0, 96, 0, 255);
 
                         continue;
                     }
