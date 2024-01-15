@@ -153,7 +153,7 @@ public class Game : Microsoft.Xna.Framework.Game
             {
                 if (! _maze[x / TileSize, y / TileSize])
                 {
-                    _data[x + y * Width * TileSize] = Color.DarkMagenta;
+                    _data[x + y * Width * TileSize] = Color.FromNonPremultiplied(64, 64, 64, 255);
                 }
                 else
                 {
