@@ -100,6 +100,8 @@ public class Game : Microsoft.Xna.Framework.Game
      
         _move++;
         
+        _input.UpdateState();
+        
         base.Update(gameTime);
     }
 
@@ -108,6 +110,8 @@ public class Game : Microsoft.Xna.Framework.Game
         _position = (1, -1);
 
         _direction = (0, 1);
+
+        _move = 0;
 
         _maze = new bool[Width, Height];
         
