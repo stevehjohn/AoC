@@ -8,9 +8,9 @@ namespace AoC.Games.Games.Mazes;
 [UsedImplicitly]
 public class Game : Microsoft.Xna.Framework.Game
 {
-    private const int Width = 81;
+    private const int Width = 101;
 
-    private const int Height = 51;
+    private const int Height = 71;
 
     private const int TileSize = 10;
 
