@@ -83,31 +83,31 @@ public class Game : Microsoft.Xna.Framework.Game
 
         _maze[_position.X, _position.Y] = true;
 
-        if (_move > 0 && _move % 2 == 0)
-        {
-            var directions = GetDirections();
+        var directions = GetDirections();
 
-            if (directions.Count == 0)
+        while (directions.Count == 0)
+        {
+            if (! _stack.TryPop(out var position))
             {
-                if (! _stack.TryPop(out var position))
-                {
-                    _complete = true;
-                }
-                else
-                {
-                    _position = position;
-                }
+                _complete = true;
             }
             else
             {
-                _direction = directions[_rng.Next(directions.Count)];
+                _position = position;
             }
+
+            directions = GetDirections();
         }
-        else
-        {
-            _position.X += _direction.Dx;
-            _position.Y += _direction.Dy;
-        }
+        
+        _direction = directions[_rng.Next(directions.Count)];
+
+        _position.X += _direction.Dx;
+        _position.Y += _direction.Dy;
+
+        _maze[_position.X, _position.Y] = true;
+
+        _position.X += _direction.Dx;
+        _position.Y += _direction.Dy;
 
         _move++;
 
