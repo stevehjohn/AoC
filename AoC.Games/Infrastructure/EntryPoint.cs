@@ -1,4 +1,4 @@
-using AoC.Games.Games.Deflectors;
+using AoC.Games.Games.Mazes;
 
 namespace AoC.Games.Infrastructure;
 

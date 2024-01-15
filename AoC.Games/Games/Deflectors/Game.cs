@@ -1,11 +1,13 @@
 ﻿using AoC.Games.Games.Deflectors.Actors;
 using AoC.Games.Infrastructure;
+using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace AoC.Games.Games.Deflectors;
 
+[UsedImplicitly]
 public class Game : Microsoft.Xna.Framework.Game
 {
     private readonly float _scaleFactor;
