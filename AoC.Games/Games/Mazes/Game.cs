@@ -165,7 +165,7 @@ public class Game : Microsoft.Xna.Framework.Game
                     }
                     
                     if (x % Constants.TileSize > 1 && x % Constants.TileSize < Constants.TileSize - 2 
-                                                   && y % Constants.TileSize > 1 && y % Constants.TileSize < Constants.TileSize - 2)
+                        && y % Constants.TileSize > 1 && y % Constants.TileSize < Constants.TileSize - 2)
                     {
                         _data[x + y * Constants.Width * Constants.TileSize] = Color.FromNonPremultiplied(0, 96, 0, 255);
 
