@@ -8,6 +8,11 @@ See timings [here](results.md).
 
 Only one so far, but maybe more to come. See the [AoC.Games README](AoC.Games/README.md).
 
+To run the games, navigate to the root of the repository in a terminal, then:
+
+- `run.sh mirrors` or
+- `run.sh mazes`
+
 ## Solutions
 
 To run the solutions, navigate to the root of the repository in a terminal, command prompt or shell. Then execute the relevant command.
