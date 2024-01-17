@@ -1,0 +1,1 @@
+dotnet run --project AoC.Games -c Release %*
