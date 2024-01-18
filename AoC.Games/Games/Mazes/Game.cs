@@ -13,6 +13,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private readonly bool[,] _mazeSolution = new bool[Constants.Width, Constants.Height];
 
+    private readonly bool[,] _mazeVisited = new bool[Constants.Width, Constants.Height];
+
     // ReSharper disable once NotAccessedField.Local
     private GraphicsDeviceManager _graphics;
 
@@ -31,6 +33,8 @@ public class Game : Microsoft.Xna.Framework.Game
     private MazeSolver _mazeSolver;
 
     private List<(int X, int Y)> _solution;
+
+    private List<(int X, int Y)> _visited;
 
     private int _step;
 
@@ -72,6 +76,8 @@ public class Game : Microsoft.Xna.Framework.Game
             Reset();
         }
 
+        (int X, int Y) step;
+        
         switch (_state)
         {
             case State.Creating:
@@ -88,15 +94,32 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
 
             case State.Solving:
-                _solution = _mazeSolver.SolveMaze();
+                (_solution, _visited) = _mazeSolver.SolveMaze();
 
-                _state = State.Solved;
+                _state = State.Visiting;
+
+                break;
+            
+            case State.Visiting:
+                step = _visited[_step];
+
+                _mazeVisited[step.X, step.Y] = true;
+
+                if (_step < _visited.Count - 1)
+                {
+                    _step++;
+                }
+                else
+                {
+                    _step = 0;
+
+                    _state = State.Solved;
+                }
 
                 break;
 
             case State.Solved:
-                // ReSharper disable once PossibleNullReferenceException
-                var step = _solution[_step];
+                step = _solution[_step];
 
                 _mazeSolution[step.X, step.Y] = true;
 
@@ -157,7 +180,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 if (_mazeSolution[x / Constants.TileSize, y / Constants.TileSize])
                 {
                     if (x % Constants.TileSize > 2 && x % Constants.TileSize < Constants.TileSize - 3
-                        && y % Constants.TileSize > 2 && y % Constants.TileSize < Constants.TileSize - 3)
+                                                   && y % Constants.TileSize > 2 && y % Constants.TileSize < Constants.TileSize - 3)
                     {
                         _data[x + y * Constants.Width * Constants.TileSize] = Color.FromNonPremultiplied(0, 192, 0, 255);
 
@@ -165,9 +188,28 @@ public class Game : Microsoft.Xna.Framework.Game
                     }
                     
                     if (x % Constants.TileSize > 1 && x % Constants.TileSize < Constants.TileSize - 2 
-                        && y % Constants.TileSize > 1 && y % Constants.TileSize < Constants.TileSize - 2)
+                                                   && y % Constants.TileSize > 1 && y % Constants.TileSize < Constants.TileSize - 2)
                     {
                         _data[x + y * Constants.Width * Constants.TileSize] = Color.FromNonPremultiplied(0, 96, 0, 255);
+
+                        continue;
+                    }
+                }
+
+                if (_mazeVisited[x / Constants.TileSize, y / Constants.TileSize])
+                {
+                    if (x % Constants.TileSize > 2 && x % Constants.TileSize < Constants.TileSize - 3
+                                                   && y % Constants.TileSize > 2 && y % Constants.TileSize < Constants.TileSize - 3)
+                    {
+                        _data[x + y * Constants.Width * Constants.TileSize] = Color.FromNonPremultiplied(192, 0, 0, 255);
+
+                        continue;
+                    }
+                    
+                    if (x % Constants.TileSize > 1 && x % Constants.TileSize < Constants.TileSize - 2 
+                                                   && y % Constants.TileSize > 1 && y % Constants.TileSize < Constants.TileSize - 2)
+                    {
+                        _data[x + y * Constants.Width * Constants.TileSize] = Color.FromNonPremultiplied(192, 0, 0, 255);
 
                         continue;
                     }

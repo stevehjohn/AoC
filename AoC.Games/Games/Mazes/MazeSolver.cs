@@ -11,19 +11,26 @@ public class MazeSolver
         _maze = maze;
     }
 
-    public List<(int X, int Y)> SolveMaze()
+    public (List<(int X, int Y)> Path, List<(int X, int Y)> Visited) SolveMaze()
     {
         var queue = new Queue<(int X, int Y, List<(int X, int Y)> History)>();
         
-        queue.Enqueue((1, 0, new List<(int X, int Y)>()));
+        queue.Enqueue((1, 0, []));
+        
+        var visited = new List<(int X, int Y)>();
         
         while (queue.TryDequeue(out var node))
         {
             node.History.Add((node.X, node.Y));
-            
+
+            if (! visited.Contains((node.X, node.Y)))
+            {
+                visited.Add((node.X, node.Y));
+            }
+
             if (node.X == Constants.Width - 2 && node.Y == Constants.Height - 1)
             {
-                return node.History;
+                return (node.History, visited);
             }
 
             var moves = GetMoves(node.X, node.Y);
@@ -37,7 +44,7 @@ public class MazeSolver
             });
         }
 
-        return [];
+        return ([], visited);
     }
 
     private List<(int X, int Y)> GetMoves(int x, int y)
