@@ -201,7 +201,7 @@ public class Game : Microsoft.Xna.Framework.Game
                     if (x % Constants.TileSize > 2 && x % Constants.TileSize < Constants.TileSize - 3
                                                    && y % Constants.TileSize > 2 && y % Constants.TileSize < Constants.TileSize - 3)
                     {
-                        _data[x + y * Constants.Width * Constants.TileSize] = Color.FromNonPremultiplied(192, 0, 0, 255);
+                        _data[x + y * Constants.Width * Constants.TileSize] = Color.FromNonPremultiplied(255, 191, 0, 255);
 
                         continue;
                     }
@@ -209,7 +209,7 @@ public class Game : Microsoft.Xna.Framework.Game
                     if (x % Constants.TileSize > 1 && x % Constants.TileSize < Constants.TileSize - 2 
                                                    && y % Constants.TileSize > 1 && y % Constants.TileSize < Constants.TileSize - 2)
                     {
-                        _data[x + y * Constants.Width * Constants.TileSize] = Color.FromNonPremultiplied(192, 0, 0, 255);
+                        _data[x + y * Constants.Width * Constants.TileSize] = Color.FromNonPremultiplied(191, 159, 0, 255);
 
                         continue;
                     }
