@@ -39,12 +39,26 @@ public static class Program
             path = "./Aoc.Solutions/Solutions/";
             
             answers = CryptoFileProvider.LoadFile(path, "AllAnswers.clear");
+
+            if (answers == null)
+            {
+                answers = ["2015.1.1: ????", "2015.1.2: ????", "2015.2.1: ????", "etc..."];
+                
+                File.WriteAllLines("./Aoc.Solutions/Solutions/AllAnswers.clear", answers);
+            }
         }
         else
         {
             path = "./Solutions/";
             
             answers = CryptoFileProvider.LoadFile(path, "AllAnswers.clear");
+
+            if (answers == null)
+            {
+                answers = ["2015.1.1: ????", "2015.1.2: ????", "2015.2.1: ????", "etc..."];
+                
+                File.WriteAllLines("./Solutions/AllAnswers.clear", answers);
+            }
         }
 
         var previousDesc = string.Empty;
