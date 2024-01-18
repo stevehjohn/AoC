@@ -44,8 +44,10 @@ public static class InputProvider
     private static void DownloadInput(string path)
     {
         var parts = path.Split(Path.DirectorySeparatorChar, StringSplitOptions.RemoveEmptyEntries);
+
+        var url = $"https://adventofcode.com/{parts[^2]}/day/{int.Parse(parts[^1])}/input";
         
-        using var request = new HttpRequestMessage(HttpMethod.Get, $"https://adventofcode.com/{parts[^2]}/day/{parts[^1]}/input");
+        using var request = new HttpRequestMessage(HttpMethod.Get, url);
         
         var keyData = File.ReadLines(GetKeyPath()).Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1]).ToArray();
 
@@ -57,9 +59,11 @@ public static class InputProvider
 
         if (! response.IsSuccessStatusCode)
         {
-            Console.WriteLine($"Status code {response.StatusCode} received calling https://adventofcode.com/{parts[^2]}/day/{parts[^1]}/input to retrieve puzzle input.");
+            Console.WriteLine($"Status code {response.StatusCode} received calling {url} to retrieve puzzle input.");
             
             Console.WriteLine($"Session cookie {keyData[3]} used.");
+            
+            return;
         }
 
         var input = response.Content.ReadAsStringAsync().Result;
