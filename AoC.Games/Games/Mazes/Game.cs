@@ -198,18 +198,18 @@ public class Game : Microsoft.Xna.Framework.Game
 
                 if (_mazeVisited[x / Constants.TileSize, y / Constants.TileSize])
                 {
-                    if (x % Constants.TileSize > 2 && x % Constants.TileSize < Constants.TileSize - 3
+                    if (x % Constants.TileSize > 3 && x % Constants.TileSize < Constants.TileSize - 4
                                                    && y % Constants.TileSize > 2 && y % Constants.TileSize < Constants.TileSize - 3)
                     {
-                        _data[x + y * Constants.Width * Constants.TileSize] = Color.FromNonPremultiplied(255, 191, 0, 255);
+                        _data[x + y * Constants.Width * Constants.TileSize] = Color.FromNonPremultiplied(191, 127, 0, 255);
 
                         continue;
                     }
                     
-                    if (x % Constants.TileSize > 1 && x % Constants.TileSize < Constants.TileSize - 2 
+                    if (x % Constants.TileSize > 2 && x % Constants.TileSize < Constants.TileSize - 3 
                                                    && y % Constants.TileSize > 1 && y % Constants.TileSize < Constants.TileSize - 2)
                     {
-                        _data[x + y * Constants.Width * Constants.TileSize] = Color.FromNonPremultiplied(191, 159, 0, 255);
+                        _data[x + y * Constants.Width * Constants.TileSize] = Color.FromNonPremultiplied(127, 63, 0, 255);
 
                         continue;
                     }
