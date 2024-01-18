@@ -146,7 +146,13 @@ public class Game : Microsoft.Xna.Framework.Game
 
         _solution = null;
 
-        _maze.ForAll((x, y, _) => _mazeSolution[x, y] = false);
+        _visited = null;
+        
+        _maze.ForAll((x, y, _) =>
+        {
+            _mazeSolution[x, y] = false;
+            _mazeVisited[x, y] = false;
+        });
 
         _step = 0;
 
