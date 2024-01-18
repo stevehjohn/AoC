@@ -26,14 +26,7 @@ public static class Cpu
             switch (parts[0])
             {
                 case "cpy":
-                    if (char.IsLetter(parts[1][0]))
-                    {
-                        value = GetRegisterValue(registers, parts[1][0]);
-                    }
-                    else
-                    {
-                        value = int.Parse(parts[1]);
-                    }
+                    value = char.IsLetter(parts[1][0]) ? GetRegisterValue(registers, parts[1][0]) : int.Parse(parts[1]);
 
                     SetRegisterValue(registers, parts[2][0], value);
 
@@ -51,14 +44,7 @@ public static class Cpu
 
                     break;
                 case "jnz":
-                    if (char.IsLetter(parts[1][0]))
-                    {
-                        value = GetRegisterValue(registers, parts[1][0]);
-                    }
-                    else
-                    {
-                        value = int.Parse(parts[1]);
-                    }
+                    value = char.IsLetter(parts[1][0]) ? GetRegisterValue(registers, parts[1][0]) : int.Parse(parts[1]);
 
                     if (value != 0)
                     {
@@ -76,14 +62,7 @@ public static class Cpu
 
                     break;
                 case "tgl":
-                    if (char.IsLetter(parts[1][0]))
-                    {
-                        value = GetRegisterValue(registers, parts[1][0]);
-                    }
-                    else
-                    {
-                        value = int.Parse(parts[1]);
-                    }
+                    value = char.IsLetter(parts[1][0]) ? GetRegisterValue(registers, parts[1][0]) : int.Parse(parts[1]);
 
                     if (programCounter + value >= input.Length)
                     {
@@ -123,14 +102,7 @@ public static class Cpu
 
                     break;
                 case "out": 
-                    if (char.IsLetter(parts[1][0]))
-                    {
-                        value = GetRegisterValue(registers, parts[1][0]);
-                    }
-                    else
-                    {
-                        value = int.Parse(parts[1]);
-                    }
+                    value = char.IsLetter(parts[1][0]) ? GetRegisterValue(registers, parts[1][0]) : int.Parse(parts[1]);
 
                     output.Append(value);
 

@@ -18,16 +18,7 @@ public class Part2 : Base
 
         foreach (var c in Input[0])
         {
-            Point position;
-
-            if (santaTurn)
-            {
-                position = santa;
-            }
-            else
-            {
-                position = roboSanta;
-            }
+            var position = santaTurn ? santa : roboSanta;
 
             position = c switch
             {

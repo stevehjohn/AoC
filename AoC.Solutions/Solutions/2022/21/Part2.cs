@@ -22,14 +22,7 @@ public class Part2 : Base
         double answer;
 
         // ReSharper disable PossibleInvalidOperationException
-        if (rootLeft == null)
-        {
-            answer = SolveForHuman(rootMonkey.Left, rootRight.Value);
-        }
-        else
-        {
-            answer = SolveForHuman(rootMonkey.Right, rootLeft.Value);
-        }
+        answer = rootLeft == null ? SolveForHuman(rootMonkey.Left, rootRight.Value) : SolveForHuman(rootMonkey.Right, rootLeft.Value);
         // ReSharper restore PossibleInvalidOperationException
 
         return answer.ToString();

@@ -16,14 +16,7 @@ public abstract class Base : Solution
             switch (parts[0])
             {
                 case "swap":
-                    if (parts[1] == "position")
-                    {
-                        state = SwapPosition(state, int.Parse(parts[2]), int.Parse(parts[5]));
-                    }
-                    else
-                    {
-                        state = SwapLetter(state, parts[2][0], parts[5][0]);
-                    }
+                    state = parts[1] == "position" ? SwapPosition(state, int.Parse(parts[2]), int.Parse(parts[5])) : SwapLetter(state, parts[2][0], parts[5][0]);
 
                     break;
                 case "rotate":
@@ -50,14 +43,7 @@ public abstract class Base : Solution
 
                     break;
                 case "move":
-                    if (reverse)
-                    {
-                        state = Move(state, int.Parse(parts[5]), int.Parse(parts[2]));
-                    }
-                    else
-                    {
-                        state = Move(state, int.Parse(parts[2]), int.Parse(parts[5]));
-                    }
+                    state = reverse ? Move(state, int.Parse(parts[5]), int.Parse(parts[2])) : Move(state, int.Parse(parts[2]), int.Parse(parts[5]));
 
                     break;
             }

@@ -38,14 +38,7 @@ public abstract class Base : Solution
                 {
                     var newDirection = new Point(-direction.Y, direction.X);
 
-                    if (_map[position.X + newDirection.X, position.Y + newDirection.Y] != ' ')
-                    {
-                        direction = newDirection;
-                    }
-                    else
-                    {
-                        direction = new Point(direction.Y, -direction.X);
-                    }
+                    direction = _map[position.X + newDirection.X, position.Y + newDirection.Y] != ' ' ? newDirection : new Point(direction.Y, -direction.X);
 
                     break;
                 }
