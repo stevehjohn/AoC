@@ -28,14 +28,7 @@ public abstract class Base : Solution
 
         for (var i = 0; i < columns.Count; i++)
         {
-            if (isPart2)
-            {
-                builder.Append(columns[i].GroupBy(c => c).MinBy(c => c.Count())!.Key);
-            }
-            else
-            {
-                builder.Append(columns[i].GroupBy(c => c).MaxBy(c => c.Count())!.Key);
-            }
+            builder.Append(isPart2 ? columns[i].GroupBy(c => c).MinBy(c => c.Count())!.Key : columns[i].GroupBy(c => c).MaxBy(c => c.Count())!.Key);
         }
 
         return builder.ToString();

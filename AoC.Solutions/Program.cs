@@ -379,14 +379,9 @@ public static class Program
         {
             Console.WriteLine($"{new string(' ', 12)}-------------");
 
-            if (yearMs < 1_000_000)
-            {
-                Console.WriteLine($"{new string(' ', 12)}{$"{yearMs / 1_000d:N3}ms",-13}");
-            }
-            else
-            {
-                Console.WriteLine($"{new string(' ', 12)}{$"{yearMs / 1_000_000d:N3}s",-13}");
-            }
+            Console.WriteLine(yearMs < 1_000_000
+                ? $"{new string(' ', 12)}{$"{yearMs / 1_000d:N3}ms",-13}"
+                : $"{new string(' ', 12)}{$"{yearMs / 1_000_000d:N3}s",-13}");
 
             Console.WriteLine();
         }

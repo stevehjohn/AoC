@@ -227,20 +227,12 @@ public class ArenaManager : IActor
         {
             for (var x = 0; x < Constants.MapSize; x++)
             {
-                if (! Level.Blocked.Any(b => b.X == x && b.Y == y))
-                {
-                    spriteBatch.Draw(_other,
-                        new Vector2(x * Constants.TileSize, Constants.TopOffset + y * Constants.TileSize),
-                        new Rectangle(Constants.TileSize * 3, 0, Constants.TileSize, Constants.TileSize),
-                        Color.FromNonPremultiplied(255, 255, 255, 25), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
-                }
-                else
-                {
-                    spriteBatch.Draw(_other,
-                        new Vector2(x * Constants.TileSize, Constants.TopOffset + y * Constants.TileSize),
-                        new Rectangle(Constants.TileSize * 3, 0, Constants.TileSize, Constants.TileSize),
-                        Color.FromNonPremultiplied(255, 255, 255, 200), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
-                }
+                spriteBatch.Draw(_other,
+                    new Vector2(x * Constants.TileSize, Constants.TopOffset + y * Constants.TileSize),
+                    new Rectangle(Constants.TileSize * 3, 0, Constants.TileSize, Constants.TileSize),
+                    Level.Blocked.Any(b => b.X == x && b.Y == y)
+                        ? Color.FromNonPremultiplied(255, 255, 255, 200)
+                        : Color.FromNonPremultiplied(255, 255, 255, 25), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
             }
 
             if (y > 0 && y <= 10)
