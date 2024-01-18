@@ -8,5 +8,5 @@ public static class Constants
 
     public const int TileSize = 8;
 
-    public const int StraightLength = 1;
+    public const int StraightLength = 8;
 }
