@@ -55,6 +55,13 @@ public static class InputProvider
 
         using var response = client.Send(request);
 
+        if (! response.IsSuccessStatusCode)
+        {
+            Console.WriteLine($"Status code {response.StatusCode} received calling https://adventofcode.com/{parts[^2]}/day/{parts[^1]}/input to retrieve puzzle input.");
+            
+            Console.WriteLine($"Session cookie {keyData[3]} used.");
+        }
+
         var input = response.Content.ReadAsStringAsync().Result;
         
         File.WriteAllText($"{path}input.clear", input);
