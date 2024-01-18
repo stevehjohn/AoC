@@ -7,5 +7,5 @@ namespace AoC.Games.Games.Deflectors.Levels;
 public class Start : Point
 {
     [JsonConverter(typeof(JsonStringEnumConverter))]
-    public Direction Direction { get; set; }
+    public Direction Direction { get; init; }
 }

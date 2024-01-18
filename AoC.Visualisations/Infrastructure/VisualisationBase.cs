@@ -37,6 +37,7 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
 
     protected virtual bool VisualisationFinished => true;
 
+    // ReSharper disable once NotAccessedField.Global
     protected GraphicsDeviceManager GraphicsDeviceManager;
 
     private readonly Queue<T> _stateQueue = new();
