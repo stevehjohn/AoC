@@ -19,12 +19,10 @@ public class Part2 : Base
 
         var rootRight = Solve(rootMonkey.Right);
 
-        double answer;
-
         // ReSharper disable PossibleInvalidOperationException
-        answer = rootLeft == null ? SolveForHuman(rootMonkey.Left, rootRight.Value) : SolveForHuman(rootMonkey.Right, rootLeft.Value);
-        // ReSharper restore PossibleInvalidOperationException
+        double answer = rootLeft == null ? SolveForHuman(rootMonkey.Left, rootRight.Value) : SolveForHuman(rootMonkey.Right, rootLeft.Value);
 
+        // ReSharper restore PossibleInvalidOperationException
         return answer.ToString();
     }
 
