@@ -169,8 +169,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
         _texture.SetData(_data);
 
-        _spriteBatch.Draw(_texture, new Vector2(0, 0), new Rectangle(0, 0, Constants.Width * Constants.TileSize, Constants.Height * Constants.TileSize),
-            Color.White);
+        _spriteBatch.Draw(_texture, new Vector2(0, 0), new Rectangle(0, 0, Constants.Width * Constants.TileSize, Constants.Height * Constants.TileSize), Color.White);
 
         _spriteBatch.End();
 
