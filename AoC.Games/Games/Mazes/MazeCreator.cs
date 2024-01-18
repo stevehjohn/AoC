@@ -14,6 +14,8 @@ public class MazeCreator
     
     private readonly Random _rng = new();
 
+    private int _nextRandom = -1;
+    
     private int _move;
 
     private readonly bool[,] _maze;
@@ -67,7 +69,12 @@ public class MazeCreator
                 directions = GetDirections();
             }
 
-            _direction = directions[_rng.Next(directions.Count)];
+            if (_nextRandom == -1 || _move % Constants.StraightLength == 0 || _nextRandom >= directions.Count)
+            {
+                _nextRandom = _rng.Next(directions.Count);
+            }
+
+            _direction = directions[_nextRandom];
         }
 
         _position.X += _direction.Dx;

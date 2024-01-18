@@ -7,4 +7,6 @@ public static class Constants
     public const int Height = 81;
 
     public const int TileSize = 8;
+
+    public const int StraightLength = 1;
 }
