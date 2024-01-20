@@ -10,8 +10,8 @@ Only one so far, but maybe more to come. See the [AoC.Games README](AoC.Games/RE
 
 To run the games, navigate to the root of the repository in a terminal, then for macOS:
 
-- `run.sh mirrors` or
-- `run.sh mazes`
+- `./run.sh mirrors` or
+- `./run.sh mazes`
 
 For Windows:
 
