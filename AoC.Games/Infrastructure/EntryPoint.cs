@@ -14,10 +14,14 @@ public static class EntryPoint
         switch (gameName)
         {
             case "mirrors":
+                Console.WriteLine("Running mirrors game.");
+
                 game = new Games.Deflectors.Game();
                 break;
             
             default:
+                Console.WriteLine("Running mazes game.");
+
                 game = new Games.Mazes.Game();
                 
                 break;
