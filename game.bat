@@ -1,3 +1,3 @@
 cd AoC.Games
-dotnet run --project AoC.Games -c Release %*
+dotnet run -c Release %*
 cd ..
