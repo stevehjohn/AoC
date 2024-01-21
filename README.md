@@ -6,7 +6,7 @@ See timings [here](results.md).
 
 ## Games
 
-Only one so far, but maybe more to come. See the [AoC.Games README](AoC.Games/README.md).
+Only two so far, but maybe more to come. See the [AoC.Games README](AoC.Games/README.md).
 
 To run the games, navigate to the root of the repository in a terminal, then for macOS:
 
