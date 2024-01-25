@@ -98,6 +98,11 @@ public class MazeCreator
         {
             directions.Add((-1, 0));
         }
+        
+        if (_position.Y < Constants.Height - 3 && ! _visited.Contains((_position.X, _position.Y + 2)))
+        {
+            directions.Add((0, 1));
+        }
 
         if (_position.X < Constants.Width - 3 && ! _visited.Contains((_position.X + 2, _position.Y)))
         {
@@ -107,11 +112,6 @@ public class MazeCreator
         if (_position.Y > 2 && ! _visited.Contains((_position.X, _position.Y - 2)))
         {
             directions.Add((0, -1));
-        }
-
-        if (_position.Y < Constants.Height - 3 && ! _visited.Contains((_position.X, _position.Y + 2)))
-        {
-            directions.Add((0, 1));
         }
 
         return directions;
