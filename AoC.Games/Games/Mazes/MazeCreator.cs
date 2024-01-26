@@ -7,7 +7,7 @@ public class MazeCreator
     private readonly Stack<(int X, int Y)> _stack = [];
 
     private readonly HashSet<(int X, int Y)> _visited = [];
-    
+
     private (int X, int Y) _position;
 
     private (int Dx, int Dy) _direction;
@@ -15,7 +15,7 @@ public class MazeCreator
     private readonly Random _rng = new();
 
     private int _nextRandom = -1;
-    
+
     private int _move;
 
     private readonly bool[,] _maze;
@@ -24,7 +24,7 @@ public class MazeCreator
     {
         _maze = maze;
     }
-    
+
     public void Reset()
     {
         _position = (1, -1);
