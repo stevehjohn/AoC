@@ -11,7 +11,7 @@ public class MazeCreator
     private (int X, int Y) _position;
 
     private (int Dx, int Dy) _direction;
-    
+
     private readonly Random _rng = new();
 
     private int _nextRandom = -1;
