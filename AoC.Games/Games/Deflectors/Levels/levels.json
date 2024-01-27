@@ -559,5 +559,49 @@
     ],
     "Mirrors": [
     ]
+  },
+  {
+    "Id": 11,
+    "Starts": [
+      {
+        "X": 2,
+        "Y": 2,
+        "Direction": "East"
+      }
+    ],
+    "Ends": [
+      {
+        "X": 0,
+        "Y": 29,
+        "Direction": "North"
+      },
+      {
+        "X": 27,
+        "Y": 0,
+        "Direction": "South"
+      },
+      {
+        "X": 29,
+        "Y": 27,
+        "Direction": "West"
+      },
+      {
+        "X": 4,
+        "Y": 29,
+        "Direction": "North"
+      }
+    ],
+    "Blocked": [
+    ],
+    "Pieces": [
+      "|",
+      "-",
+      "|",
+      "-",
+      "|",
+      "/"
+    ],
+    "Mirrors": [
+    ]
   }
 ]
