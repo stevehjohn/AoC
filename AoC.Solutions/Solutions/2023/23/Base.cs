@@ -191,7 +191,7 @@ public abstract class Base : Solution
         
         Intersections.Add((_width - 2, _height - 1));
     }
-    
+
     protected void ParseInput()
     {
         _map = Input.To2DArray();
