@@ -25,7 +25,7 @@ public abstract class Base : Solution
     private readonly HashSet<(int, int)> _history = [];
 
     private int _lastSteps;
-    
+
     protected bool FindLongestPath((int X, int Y) position, int steps, bool isPart2 = false)
     {
         if (position == Intersections[^2])
