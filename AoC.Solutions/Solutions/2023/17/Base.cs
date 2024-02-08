@@ -13,11 +13,11 @@ public abstract class Base : Solution
     private int _height;
 
     private static readonly (int, int) North = (0, -1);
-    
+
     private static readonly (int, int) East = (1, 0);
-    
+
     private static readonly (int, int) South = (0, 1);
-    
+
     private static readonly (int, int) West = (-1, 0);
 
     private readonly IVisualiser<PuzzleState> _visualiser;
