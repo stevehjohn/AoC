@@ -30,7 +30,7 @@ public static class Program
 
         string[] answers;
 
-        var results = new Dictionary<(int Yeat, int Day, int Part), (double Microseconds, string Summary)>();
+        var results = new Dictionary<(int Year, int Day, int Part), (double Microseconds, string Summary)>();
 
         string path;
         
