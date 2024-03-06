@@ -3,10 +3,7 @@
 
 name: Build Artifacts and Release
 
-on:
-  push:
-    tags:
-      - "v*.*.*"
+on: push
 
 jobs:
   build:
