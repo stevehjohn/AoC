@@ -17,6 +17,20 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AoC.Visualisations", "AoC.V
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AoC.Games", "AoC.Games\AoC.Games.csproj", "{9BBE933A-6E2B-40E7-905F-AE748E607DE4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{D459B1CB-24A6-4B5F-8577-DA43A199D52D}"
+	ProjectSection(SolutionItems) = preProject
+		debug.sh = debug.sh
+		fix-dependencies.sh = fix-dependencies.sh
+		game.bat = game.bat
+		game.sh = game.sh
+		publish-games.sh = publish-games.sh
+		repeat.sh = repeat.sh
+		run.bat = run.bat
+		run.sh = run.sh
+		visualise.bat = visualise.bat
+		visualise.sh = visualise.sh
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
