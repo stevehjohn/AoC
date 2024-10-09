@@ -71,7 +71,7 @@ public static class Program
 
             if (new DateTime(year, 12, day) > DateTime.UtcNow)
             {
-                continue;
+                //continue;
             }
 
             if (arguments.Length > 0 && arguments[0].ToLower() != "true")
