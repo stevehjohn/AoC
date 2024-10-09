@@ -69,11 +69,6 @@ public static class Program
 
             var day = int.Parse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0");
 
-            if (new DateTime(year, 12, day) > DateTime.UtcNow)
-            {
-                //continue;
-            }
-
             if (arguments.Length > 0 && arguments[0].ToLower() != "true")
             {
                 var solutionKey =
