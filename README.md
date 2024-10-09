@@ -82,3 +82,7 @@ There are visualisations for:
 - 2021.17
 - 2021.20
 - 2023.23
+
+## Mental Notes to Self
+
+The `.encrypted` files, safe to push to GitHub, have to be deleted to be recreated from the `.clear` versions.
