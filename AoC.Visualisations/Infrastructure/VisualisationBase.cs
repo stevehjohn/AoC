@@ -132,7 +132,7 @@ public abstract class VisualisationBase<T> : Game, IVisualiser<T>, IMultiPartVis
         _quitWhenQueueEmpty = true;
     }
 
-    protected override void OnExiting(object sender, EventArgs args)
+    protected override void OnExiting(object sender, ExitingEventArgs args)
     {
         _cancellationTokenSource.Cancel();
 
