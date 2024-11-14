@@ -20,10 +20,6 @@ public class Bot
 
     private readonly List<(int Id, Point Position)> _portals;
 
-#if DEBUG && DUMP
-    public List<Point> History { get; }
-#endif
-
     private int Level { get; set; }
 
     private readonly bool _recursive;
@@ -45,13 +41,6 @@ public class Bot
         _portals = portals;
 
         _recursive = recursive;
-
-#if DEBUG && DUMP
-        History = new List<Point>
-                  {
-                      new(Position)
-                  };
-#endif
 
         _visitedPortals = new Dictionary<int, int>();
 
@@ -79,12 +68,6 @@ public class Bot
         _splitAt = new Point(Position);
 
         _recursive = bot._recursive;
-
-#if DEBUG && DUMP
-        History = bot.History.ToList();
-
-        History.Add(new Point(Position.X, Position.Y));
-#endif
 
         Level = bot.Level;
 
@@ -172,17 +155,7 @@ public class Bot
 
                     Position.Y += move.Y;
 
-#if DEBUG && DUMP
-                History.Add(new Point(Position.X, Position.Y));
-#endif
-
                     _direction = move;
-                }
-                else
-                {
-#if DEBUG && DUMP
-                History.Add(new Point(Position));
-#endif
                 }
 
                 bots.Add(this);
@@ -199,7 +172,6 @@ public class Bot
         return bots;
     }
 
-    // TODO: Could these be combined without losing too much efficiency?
     private List<Point> GetPossibleMoves()
     {
         var moves = new List<Point>();
@@ -236,10 +208,8 @@ public class Bot
     {
         var moves = new List<Point>();
 
-        // TODO: There must be a more elegant way to do this.
         if (Level == 0)
         {
-            // TODO: Disable outer layer teleports.
             if (Position.X > 0 && _maze[Position.X - 1, Position.Y] is > -1 and not 27)
             {
                 moves.Add(new Point(-1, 0));

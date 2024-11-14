@@ -10,21 +10,7 @@ public class Part2 : Base
     {
         LoadMap();
 
-#if DEBUG && DUMP
-        Console.ForegroundColor = ConsoleColor.DarkGreen;
-
-        Dump();
-#endif
-
         var result = SpreadGas();
-
-#if DEBUG && DUMP
-        Console.ForegroundColor = ConsoleColor.Green;
-
-        Console.CursorLeft = 0;
-
-        Console.CursorTop = Height + 4;
-#endif
 
         return result.ToString();
     }
@@ -91,73 +77,6 @@ public class Part2 : Base
             }
 
             bots = newBots;
-
-#if DEBUG && DUMP
-            DrawBots(bots);
-
-            Thread.Sleep(25);
-#endif
         }
     }
-
-#if DEBUG && DUMP
-    private static void DrawBots(List<Bot> bots)
-    {
-        foreach (var bot in bots)
-        {
-            Console.CursorLeft = 1 + bot.Position.X;
-
-            Console.CursorTop = 1 + bot.Position.Y;
-
-            Console.ForegroundColor = ConsoleColor.Red;
-
-            Console.Write('█');
-
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
-        }
-    }
-
-    private void Dump()
-    {
-        Console.CursorTop = 1;
-
-        Console.CursorLeft = 0;
-
-        for (var y = 0; y < Height; y++)
-        {
-            Console.Write(' ');
-
-            for (var x = 0; x < Width; x++)
-            {
-                if (x == Origin.X && y == Origin.Y)
-                {
-                    Console.ForegroundColor = ConsoleColor.White;
-
-                    Console.Write('S');
-
-                    Console.ForegroundColor = ConsoleColor.DarkGreen;
-
-                    continue;
-                }
-
-                if (x == Destination.X && y == Destination.Y)
-                {
-                    Console.ForegroundColor = ConsoleColor.White;
-
-                    Console.Write('O');
-
-                    Console.ForegroundColor = ConsoleColor.DarkGreen;
-
-                    continue;
-                }
-
-                Console.Write(Map[x, y] ? ' ' : '█');
-            }
-
-            Console.WriteLine();
-        }
-
-        Console.WriteLine();
-    }
-#endif
 }
