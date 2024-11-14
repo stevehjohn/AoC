@@ -1,5 +1,4 @@
-﻿#define NOT_TEST
-using AoC.Solutions.Common;
+﻿using AoC.Solutions.Common;
 using AoC.Solutions.Exceptions;
 using AoC.Solutions.Infrastructure;
 
@@ -11,11 +10,7 @@ public abstract class Base : Solution
 
     protected bool IsCube { get; set; }
 
-#if TEST
-    private const int FaceSize = 4;
-#else
     private const int FaceSize = 50;
-#endif
 
     private char[,] _map;
 
@@ -209,19 +204,6 @@ public abstract class Base : Solution
         return length - 1;
     }
 
-    // TODO: This is the bit I'd like to programatically calculate. It hurts my brain.
-#if TEST
-    private (Point Position, char NewDirection) Wrap3D(Point newSegment, Point segmentPosition)
-    {
-        return (newSegment.X, newSegment.Y, _direction) switch
-        {
-            (3, 1, 'R') => (GetPositionInNewSegment(3, 2, 'U', segmentPosition.Y), 'D'),
-            (2, 3, 'D') => (GetPositionInNewSegment(0, 1, 'D', segmentPosition.X), 'U'),
-            (1, 0, 'U') => (GetPositionInNewSegment(2, 0, 'L', segmentPosition.X, false), 'R'),
-            _ => throw new PuzzleException("Cannot 3D teleport.")
-        };
-    }
-#else
     private (Point Position, char NewDirection) Wrap3D(Point newSegment, Point segmentPosition)
     {
         return (newSegment.X, newSegment.Y, _direction) switch
@@ -243,7 +225,6 @@ public abstract class Base : Solution
             _ => throw new PuzzleException("Cannot 3D teleport.")
         };
     }
-#endif
 
     private static Point GetPositionInNewSegment(int x, int y, char edge, int delta, bool reverse = true)
     {
