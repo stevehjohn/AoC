@@ -21,22 +21,12 @@ public class Part2 : Base
 
         ParseInput(input);
 
-#if DEBUG && DUMP
-        Console.Clear();
-
-        Console.CursorVisible = false;
-#endif
-
         ParseMonster();
 
         List<Point> monsters = null;
 
         for (var r = 0; r < 4; r++)
         {
-#if DEBUG && DUMP
-            Visualiser.DumpImage(_image);
-#endif
-
             monsters = FindMonsters();
 
             if (monsters.Count > 0)
@@ -45,10 +35,6 @@ public class Part2 : Base
             }
 
             FlipHorizontal();
-
-#if DEBUG && DUMP
-            Visualiser.DumpImage(_image);
-#endif
 
             monsters = FindMonsters();
 
@@ -60,10 +46,6 @@ public class Part2 : Base
             FlipHorizontal();
 
             FlipVertical();
-
-#if DEBUG && DUMP
-            Visualiser.DumpImage(_image);
-#endif
 
             monsters = FindMonsters();
 
@@ -75,10 +57,6 @@ public class Part2 : Base
             FlipVertical();
 
             Rotate();
-
-#if DEBUG && DUMP
-            Visualiser.DumpImage(_image);
-#endif
 
             monsters = FindMonsters();
 
@@ -92,12 +70,6 @@ public class Part2 : Base
         {
             throw new PuzzleException("Solution not found.");
         }
-
-#if DEBUG && DUMP
-        Console.SetCursorPosition(0, _height + 2);
-
-        Console.ForegroundColor = ConsoleColor.Green;
-#endif
 
         return GetWaterRoughness().ToString();
     }
@@ -122,20 +94,12 @@ public class Part2 : Base
 
     private List<Point> FindMonsters()
     {
-#if DUMP && DEBUG
-        Visualiser.PreviousMonster = null;
-#endif
-
         var result = new List<Point>();
 
         for (var y = 0; y < _height - 2; y++)
         {
             for (var x = 0; x < _width - 19; x++)
             {
-#if DUMP && DEBUG
-                Visualiser.ShowMonster(_monster, _image, x, y);
-#endif
-
                 if (IsMonsterAt(x, y))
                 {
                     result.Add(new Point(x, y));
@@ -144,16 +108,9 @@ public class Part2 : Base
                     {
                         _image[x + point.X, y + point.Y] = 'O';
                     }
-#if DUMP && DEBUG
-                    Visualiser.FoundMonster(_monster, _image, x, y);
-#endif
                 }
             }
         }
-
-#if DUMP && DEBUG
-        Visualiser.ShowMonster(_monster, _image, _width - 20, _height - 2, true);
-#endif
 
         return result;
     }
