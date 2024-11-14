@@ -60,14 +60,6 @@ public abstract class Base : Solution
         }
 
         _initialAmphipodState = state.ToArray();
-
-#if DEBUG && DUMP
-        Console.Clear();
-
-        Console.CursorVisible = false;
-
-        Dump(_initialAmphipodState);
-#endif
     }
 
     protected int Solve()
@@ -80,7 +72,6 @@ public abstract class Base : Solution
 
         for (var i = 0; i < _initialAmphipodState.Length; i++)
         {
-            // Only enqueue top pods here.
             if (DecodeY(_initialAmphipodState[i]) != 1)
             {
                 continue;
@@ -113,13 +104,11 @@ public abstract class Base : Solution
                     continue;
                 }
 
-                // Check against hash set.
                 if (! IsNewState(move.State, index))
                 {
                     continue;
                 }
 
-                // Check all home, if so, update cost and continue.
                 if (AllHome(move.State))
                 {
                     if (moveCost < _lowestCost)
@@ -130,15 +119,8 @@ public abstract class Base : Solution
                     continue;
                 }
 
-#if DEBUG && DUMP
-                Console.CursorTop = 9;
-
-                Console.WriteLine($" {_queue.Count}      ");
-#endif
-
                 for (var i = 0; i < state.Length; i++)
                 {
-                    // Same pod can't move twice in a row...?
                     if (i == index)
                     {
                         continue;
@@ -203,7 +185,6 @@ public abstract class Base : Solution
 
         int y;
 
-        // Is home?
         if (pod.X == pod.Home && pod.Y > 0)
         {
             if (pod.Y == _burrowDepth)
@@ -213,7 +194,6 @@ public abstract class Base : Solution
 
             var same = true;
 
-            // Check not blocking a different type.
             for (y = pod.Y + 1; y <= _burrowDepth; y++)
             {
                 if (TypeInPosition(state, pod.X, y) != pod.Home)
@@ -230,7 +210,6 @@ public abstract class Base : Solution
             }
         }
 
-        // Can get home from current position?
         int cost;
 
         for (y = _burrowDepth; y > 0; y--)
@@ -248,7 +227,6 @@ public abstract class Base : Solution
                     return result;
                 }
 
-                // Spot is empty, but can't get there.
                 break;
             }
 
@@ -258,7 +236,6 @@ public abstract class Base : Solution
             }
         }
 
-        // Can get to hall? If so, add all possible positions.
         if (pod.Y > 0)
         {
             foreach (var x in Hallway)
@@ -298,7 +275,6 @@ public abstract class Base : Solution
     {
         var cost = 0;
 
-        // Emerge from burrow
         while (startX != endX && startY > 0)
         {
             startY--;
@@ -311,7 +287,6 @@ public abstract class Base : Solution
             cost++;
         }
 
-        // Travel hall
         while (startX != endX)
         {
             startX += startX > endX ? -1 : 1;
@@ -324,7 +299,6 @@ public abstract class Base : Solution
             cost++;
         }
 
-        // Enter burrow
         while (startY < endY)
         {
             startY++;
@@ -398,75 +372,4 @@ public abstract class Base : Solution
     {
         return state & 255;
     }
-
-#if DEBUG && DUMP
-    private static void Dump(int[] state)
-    {
-        Console.CursorTop = 1;
-
-        Console.CursorLeft = 0;
-
-        Console.WriteLine(" #############");
-
-        Console.Write(" #");
-
-        var previousColour = Console.ForegroundColor;
-
-        for (var x = 0; x < 11; x++)
-        {
-            var pod = state.SingleOrDefault(s => DecodeX(s) == x && DecodeY(s) == 0);
-
-            if (pod == 0)
-            {
-                Console.Write('.');
-
-                continue;
-            }
-
-            Console.ForegroundColor = ConsoleColor.Blue;
-
-            Console.Write(GetType(pod));
-
-            Console.ForegroundColor = previousColour;
-        }
-
-        Console.WriteLine('#');
-
-        for (var y = 1; y < _burrowDepth + 1; y++)
-        {
-            Console.Write(y == 1 ? " ###" : "   #");
-
-            for (var x = 2; x < 10; x += 2)
-            {
-                var pod = state.SingleOrDefault(s => DecodeX(s) == x && DecodeY(s) == y);
-
-                if (pod == 0)
-                {
-                    Console.Write(".#");
-
-                    continue;
-                }
-
-                Console.ForegroundColor = ConsoleColor.Blue;
-
-                Console.Write(GetType(pod));
-
-                Console.ForegroundColor = previousColour;
-
-                Console.Write('#');
-            }
-
-            Console.WriteLine(y == 1 ? "##" : string.Empty);
-        }
-
-        Console.WriteLine("   #########");
-
-        Console.WriteLine();
-    }
-
-    private static char GetType(int home)
-    {
-        return (char) ('@' + (char) (DecodeHome(home) / 2));
-    }
-#endif
 }
