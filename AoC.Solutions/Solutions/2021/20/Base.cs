@@ -59,10 +59,6 @@ public abstract class Base : Solution
 
             y++;
         }
-
-#if DEBUG && DUMP
-        Dump();
-#endif
     }
 
     private void Enhance()
@@ -83,10 +79,6 @@ public abstract class Base : Solution
         {
             _infinityLit = ! _infinityLit;
         }
-
-#if DEBUG && DUMP
-        Dump();
-#endif
     }
 
     private int CountLitPixels()
@@ -142,21 +134,4 @@ public abstract class Base : Solution
             _pixelsToFlip.Add(pixel);
         }
     }
-
-#if DEBUG && DUMP
-    private void Dump()
-    {
-        for (var y = 0; y < _height; y++)
-        {
-            for (var x = 0; x < _width; x++)
-            {
-                Console.Write(_image[x, y] ? '#' : '.');
-            }
-
-            Console.WriteLine();
-        }
-
-        Console.WriteLine();
-    }
-#endif
 }
