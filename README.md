@@ -50,22 +50,23 @@ If using Windows you can automatically save a recording of the visualisation (sa
 
 There are visualisations for:
 
-- 2018.13.1
+- 2018.13.1 - Mine Cart Madness
 - 2018.13.2
-- 2018.17.1
-- 2019.18.2
-- 2020.20.1
-- 2022.12.1
+- 2018.17.1 - Reservoir Research
+- 2019.18.2 - Many Worlds Interpretation
+- 2020.20.1 - Jurassic Jigsaw
+- 2022.12.1 - Hill Climbing Algorithm
 - 2022.12.2
-- 2022.14.1
+- 2022.14.1 - Regolith Reservoir
 - 2022.14.2
-- 2023.10.2
-- 2023.14.2
-- 2023.16.1
+- 2022.24.1 - Blizzard Basin
+- 2023.10.2 - Pipe Maze
+- 2023.14.2 - Parabolic Reflector Dish
+- 2023.16.1 - The Floor Will be Lava
 - 2023.16.2
-- 2023.17.1
+- 2023.17.1 - Clumsy Crucible
 - 2023.17.2
-- 2023.22.1
+- 2023.22.1 - Sand Slabs
 - 2023.22.2
 
 ## Visualisation Candidates
