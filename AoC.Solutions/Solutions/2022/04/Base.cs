@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Camp cleanup";
 
-    protected (Range elf1, Range elf2) ParseLine(string line)
+    protected static (Range elf1, Range elf2) ParseLine(string line)
     {
         var pair = line.Split(',');
 

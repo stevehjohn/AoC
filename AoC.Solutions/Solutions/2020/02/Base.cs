@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Password policy";
 
-    protected (int A, int B, char Character, string Password) ParseLine(string line)
+    protected static (int A, int B, char Character, string Password) ParseLine(string line)
     {
         var split = line.Split(':', StringSplitOptions.TrimEntries);
 

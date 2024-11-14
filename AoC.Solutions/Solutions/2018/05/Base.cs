@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Polymer reactions";
 
-    protected int ReactPolymer(string polymerString)
+    protected static int ReactPolymer(string polymerString)
     {
         var polymer = new LinkedList<char>(polymerString.ToCharArray());
 

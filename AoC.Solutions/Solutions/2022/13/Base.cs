@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Distress signal";
 
-    protected int Compare(string left, string right)
+    protected static int Compare(string left, string right)
     {
         if (! string.IsNullOrWhiteSpace(left) && ! string.IsNullOrWhiteSpace(right))
         {
