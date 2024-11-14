@@ -203,7 +203,7 @@ public abstract class Base : Solution
 
                 long code;
 
-                if (! itemCodes.ContainsKey(key))
+                if (! itemCodes.TryGetValue(key, out var itemCode))
                 {
                     code = bit;
 
@@ -213,7 +213,7 @@ public abstract class Base : Solution
                 }
                 else
                 {
-                    code = itemCodes[key];
+                    code = itemCode;
                 }
 
                 if (item.Length > 1)

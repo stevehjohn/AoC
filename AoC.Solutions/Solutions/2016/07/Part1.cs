@@ -19,7 +19,7 @@ public class Part1 : Base
 
     private static bool SupportsTls(string input)
     {
-        var parts = input.Split(new[] { '[', ']' }, StringSplitOptions.TrimEntries);
+        var parts = input.Split(['[', ']'], StringSplitOptions.TrimEntries);
 
         var containsPalindrome = false;
 

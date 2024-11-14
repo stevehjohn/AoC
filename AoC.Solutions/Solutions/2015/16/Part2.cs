@@ -26,7 +26,7 @@ public class Part2 : Base
 
         foreach (var sue in Input)
         {
-            var parts = sue.Split(new[] { ' ', ',', ':' }, StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+            var parts = sue.Split([' ', ',', ':'], StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
             if (imprint[parts[2]](int.Parse(parts[3])) && imprint[parts[4]](int.Parse(parts[5])) && imprint[parts[6]](int.Parse(parts[7])))
             {

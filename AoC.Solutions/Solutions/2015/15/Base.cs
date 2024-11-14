@@ -58,7 +58,7 @@ public abstract class Base : Solution
 
     private static (int Capacity, int Durability, int Flavour, int Texture, int Calories) ParseLine(string line)
     {
-        var parts = line.Split(new[] { ' ', ',' }, StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+        var parts = line.Split([' ', ','], StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
         return (int.Parse(parts[2]), int.Parse(parts[4]), int.Parse(parts[6]), int.Parse(parts[8]), int.Parse(parts[10]));
     }

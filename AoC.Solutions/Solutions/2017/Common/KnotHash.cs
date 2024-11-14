@@ -9,7 +9,7 @@ public static class KnotHash
     {
         var lengthsList = input.Select(c => (int) c).ToList();
 
-        lengthsList.AddRange(new[] { 17, 31, 73, 47, 23 });
+        lengthsList.AddRange([17, 31, 73, 47, 23]);
 
         var lengths = lengthsList.ToArray();
 

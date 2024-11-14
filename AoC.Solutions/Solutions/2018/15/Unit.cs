@@ -65,7 +65,7 @@ public class Unit
 
         if (targets.Count == 0)
         {
-            return Enumerable.Empty<Unit>();
+            return [];
         }
 
         var adjacent = targets.Where(t => t.Position.X == Position.X && Math.Abs(t.Position.Y - Position.Y) == 1
@@ -82,7 +82,7 @@ public class Unit
 
         if (paths.Count == 0)
         {
-            return Enumerable.Empty<Unit>();
+            return [];
         }
 
         var movesOrdered = paths.OrderBy(p => p.Count).ThenBy(p => p.Last().Y).ThenBy(p => p.Last().X).ThenBy(p => p.Skip(1).First().Y).ThenBy(p => p.Skip(1).First().X);
@@ -178,7 +178,7 @@ public class Unit
     {
         if (_map[position.X, position.Y] || targets.Any(t => t.Position.Equals(position)))
         {
-            return Enumerable.Empty<Point>();
+            return [];
         }
 
         return new List<Point> { position };

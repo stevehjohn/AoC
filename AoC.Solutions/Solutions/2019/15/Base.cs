@@ -174,12 +174,12 @@ public abstract class Base : Solution
 
     private CellType GetCellType(int x, int y)
     {
-        if (! _map.ContainsKey(x))
+        if (! _map.TryGetValue(x, out var value))
         {
             return CellType.Unknown;
         }
 
-        if (! _map[x].ContainsKey(y))
+        if (! value.ContainsKey(y))
         {
             return CellType.Unknown;
         }

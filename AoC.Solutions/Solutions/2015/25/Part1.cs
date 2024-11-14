@@ -7,7 +7,7 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var parts = Input[0].Split(new[] { ' ', ',', '.' }, StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+        var parts = Input[0].Split([' ', ',', '.'], StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
         var targetRow = int.Parse(parts[15]);
 

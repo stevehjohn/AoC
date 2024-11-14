@@ -213,12 +213,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         foreach (var cart in _carts)
         {
-            if (! _nextCarts.ContainsKey(cart.Key))
+            if (! _nextCarts.TryGetValue(cart.Key, out var target))
             {
                 continue;
             }
-
-            var target = _nextCarts[cart.Key];
 
             if (_fast)
             {

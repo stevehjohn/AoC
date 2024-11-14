@@ -47,7 +47,7 @@ public class Part2 : Base
 
     private static (List<string> SupernetAddresses, List<string> HypernetAddresses) ParseLine(string line)
     {
-        var parts = line.Split(new[] { '[', ']' }, StringSplitOptions.TrimEntries);
+        var parts = line.Split(['[', ']'], StringSplitOptions.TrimEntries);
 
         var supernetAddresses = new List<string>();
 

@@ -19,7 +19,7 @@ public abstract class Base : Solution
 
             var line = Input[programCounter];
 
-            var parts = line.Split(new[] { ' ', ',' }, StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+            var parts = line.Split([' ', ','], StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
             switch (parts[0])
             {
