@@ -4,16 +4,9 @@ using AoC.Solutions.Solutions._2019.Computer;
 
 namespace AoC.Solutions.Solutions._2019._15;
 
-// TODO: A good old refactor... Move visualisations to another class (or partial class)?
 public abstract class Base : Solution
 {
     protected const string Part1ResultFile = "2019.15.1.result";
-
-#if DEBUG && DUMP
-    private const int XOffset = 21;
-
-    private const int YOffset = 21;
-#endif
 
     public override string Description => "Oxygen repair droid (CPU used unmodified)";
 
@@ -35,12 +28,6 @@ public abstract class Base : Solution
 
     protected void GetMap()
     {
-#if DEBUG && DUMP
-        Console.Clear();
-
-        Console.CursorVisible = false;
-#endif
-
         var cpu = new Cpu();
 
         cpu.Initialise();
@@ -52,13 +39,6 @@ public abstract class Base : Solution
         var y = 0;
 
         SetCellType(x, y, (CellType) 1);
-
-#if DEBUG && DUMP
-        if (XOffset > int.MinValue)
-        {
-            Dump(x, y);
-        }
-#endif
 
         while (true)
         {
@@ -107,23 +87,7 @@ public abstract class Base : Solution
                     }
                 }
             }
-
-#if DEBUG && DUMP
-            if (XOffset > int.MinValue)
-            {
-                Dump(x, y);
-
-                Thread.Sleep(10);
-            }
-#endif
         }
-
-#if DEBUG && DUMP
-        if (XOffset > int.MinValue)
-        {
-            Dump(x, y);
-        }
-#endif
 
         ConvertToArray();
     }
@@ -239,94 +203,4 @@ public abstract class Base : Solution
 
         _map[x][y] = cellType;
     }
-
-#if DEBUG && DUMP
-    private int _previousX = int.MinValue;
-
-    private int _previousY = int.MinValue;
-
-    private void Dump(int x = int.MinValue, int y = int.MinValue)
-    {
-        Console.ForegroundColor = ConsoleColor.White;
-
-        Console.CursorLeft = XOffset + 1;
-
-        Console.CursorTop = YOffset + 1;
-
-        Console.Write('S');
-
-        if (_oxygenX > int.MinValue)
-        {
-            Console.CursorLeft = _oxygenX + XOffset + 1;
-
-            Console.CursorTop = _oxygenY + YOffset + 1;
-
-            Console.Write('O');
-        }
-
-        if (x == int.MinValue)
-        {
-            return;
-        }
-
-        Console.CursorLeft = x + XOffset + 1;
-
-        Console.CursorTop = y + YOffset + 1;
-
-        Console.ForegroundColor = ConsoleColor.Red;
-
-        Console.Write('█');
-
-        if (_previousX != int.MinValue)
-        {
-            Console.CursorLeft = _previousX + XOffset + 1;
-
-            Console.CursorTop = _previousY + YOffset + 1;
-
-            Console.Write(' ');
-        }
-
-        Console.ForegroundColor = ConsoleColor.DarkGreen;
-
-        if (GetCellType(x - 1, y) == CellType.Wall)
-        {
-            Console.CursorLeft = x + XOffset;
-
-            Console.CursorTop = y + YOffset + 1;
-
-            Console.Write('█');
-        }
-
-        if (GetCellType(x + 1, y) == CellType.Wall)
-        {
-            Console.CursorLeft = x + XOffset + 2;
-
-            Console.CursorTop = y + YOffset + 1;
-
-            Console.Write('█');
-        }
-
-        if (GetCellType(x, y - 1) == CellType.Wall)
-        {
-            Console.CursorLeft = x + XOffset + 1;
-
-            Console.CursorTop = y + YOffset;
-
-            Console.Write('█');
-        }
-
-        if (GetCellType(x, y + 1) == CellType.Wall)
-        {
-            Console.CursorLeft = x + XOffset + 1;
-
-            Console.CursorTop = y + YOffset + 2;
-
-            Console.Write('█');
-        }
-
-        _previousX = x;
-
-        _previousY = y;
-    }
-#endif
 }
