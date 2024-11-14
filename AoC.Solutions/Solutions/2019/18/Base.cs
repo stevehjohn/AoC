@@ -23,9 +23,6 @@ public abstract class Base : Solution
 
     protected void InterrogateMap()
     {
-#if DUMP && DEBUG
-        Visualiser.DumpMap(Map);
-#endif
         var bots = new List<Bot>();
 
         // TODO: Don't really like this. Should probably pass around a pointer to AllHistory.
@@ -43,9 +40,6 @@ public abstract class Base : Solution
 
         while (bots.Count > 0)
         {
-#if DUMP && DEBUG
-            Visualiser.DumpBots(bots);
-#endif
             var newBots = new List<Bot>();
 
             foreach (var bot in bots)
@@ -55,10 +49,6 @@ public abstract class Base : Solution
 
             bots = newBots;
         }
-
-#if DUMP && DEBUG
-        Visualiser.DumpBots(bots);
-#endif
     }
 
     protected void ParseInput()
