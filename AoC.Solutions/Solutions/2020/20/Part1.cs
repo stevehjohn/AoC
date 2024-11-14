@@ -45,12 +45,6 @@ public class Part1 : Base
 
     public override string GetAnswer()
     {
-#if DEBUG && DUMP
-        Console.Clear();
-
-        Console.CursorVisible = false;
-#endif
-
         ParseInput();
 
         InitialTileOrder = _tiles.Select(t => t.Id).ToList();
@@ -129,10 +123,6 @@ public class Part1 : Base
 
         _tiles.RemoveAt(0);
 
-#if DUMP && DEBUG
-        Visualiser.Dump(Jigsaw, _tiles);
-#endif
-
         while (Jigsaw.Count < tileCount)
         {
             foreach (var tile in Jigsaw)
@@ -169,10 +159,6 @@ public class Part1 : Base
                     }
                 }
             }
-
-#if DUMP && DEBUG
-            Visualiser.Dump(Jigsaw, _tiles);
-#endif
         }
     }
 
@@ -184,10 +170,6 @@ public class Part1 : Base
         {
             return false;
         }
-
-#if DUMP && DEBUG
-        Visualiser.HighlightMatch(tile, match, _tiles, Jigsaw);
-#endif
 
         Jigsaw.Add(new Point(x, y), match);
 

@@ -28,13 +28,6 @@ public class Part2 : Base
                     }
 
                     Scanners[s2].LocateRelativeTo(originScanner);
-
-#if DEBUG && DUMP
-                    if (Scanners[s2].Position != null)
-                    {
-                        Console.WriteLine($"{s1} => {s2}");
-                    }
-#endif
                 }
             }
         }
@@ -60,12 +53,6 @@ public class Part2 : Base
                 }
             }
         }
-#if DEBUG && DUMP
-                for (var s = 0; s < Scanners.Count; s++)
-        {
-            Console.WriteLine(Scanners[s].Position);
-        }
-#endif
 
         return highestDistance.ToString();
     }

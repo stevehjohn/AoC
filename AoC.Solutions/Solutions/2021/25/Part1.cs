@@ -57,35 +57,10 @@ public class Part1 : Base
 
                 MoveCells();
             }
-
-#if DEBUG && DUMP
-            Dump();
-#endif
         }
 
         return steps;
     }
-
-#if DEBUG && DUMP
-    private void Dump()
-    {
-        for (var y = 0; y < _height; y++)
-        {
-            for (var x = 0; x < _width; x++)
-            {
-                Console.Write(_cells[x, y] == CellState.East
-                                  ? '>'
-                                  : _cells[x, y] == CellState.South
-                                      ? 'v'
-                                      : '.');
-            }
-
-            Console.WriteLine();
-        }
-
-        Console.WriteLine();
-    }
-#endif
 
     private void MoveCells()
     {
