@@ -69,21 +69,6 @@ There are visualisations for:
 - 2023.22.1 - Sand Slabs
 - 2023.22.2
 
-## Visualisation Candidates
-
-- 2015.3
-- 2015.6
-- 2016.24
-- 2017.19
-- 2018.22
-- 2019.25
-- 2020.17
-- 2021.9
-- 2021.13
-- 2021.17
-- 2021.20
-- 2023.23
-
 ## Mental Notes to Self
 
 The `.encrypted` files, safe to push to GitHub, have to be deleted to be recreated from the `.clear` versions.
