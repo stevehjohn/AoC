@@ -8,7 +8,11 @@ public class Part1 : Base
     public override string GetAnswer()
     {
         ParseInput();
+                
+        Left.Sort();
         
+        Right.Sort();
+
         var difference = 0;
         
         for (var i = 0; i < Left.Count; i++)

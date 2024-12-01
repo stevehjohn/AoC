@@ -29,9 +29,5 @@ public abstract class Base : Solution
                 RightCounts[right]++;
             }
         }
-        
-        Left.Sort();
-        
-        Right.Sort();
     }
 }
