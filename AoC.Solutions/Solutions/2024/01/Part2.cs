@@ -13,7 +13,12 @@ public class Part2 : Base
         
         for (var i = 0; i < _left.Count; i++)
         {
-            similarity += _left[i] * _right.Count(n => n == _left[i]);
+            var left = _left[i];
+
+            if (_rightCounts.TryGetValue(left, out var count))
+            {
+                similarity += left * count;
+            }
         }
 
         return similarity.ToString();

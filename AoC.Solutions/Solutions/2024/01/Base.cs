@@ -9,6 +9,8 @@ public abstract class Base : Solution
     protected List<int> _left = [];
 
     protected List<int> _right = [];
+
+    protected Dictionary<int, int> _rightCounts = [];
     
     protected void ParseInput()
     {
@@ -17,8 +19,15 @@ public abstract class Base : Solution
             var parts = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             
             _left.Add(int.Parse(parts[0]));
+
+            var right = int.Parse(parts[1]);
             
-            _right.Add(int.Parse(parts[1]));
+            _right.Add(right);
+
+            if (! _rightCounts.TryAdd(right, 1))
+            {
+                _rightCounts[right]++;
+            }
         }
         
         _left.Sort();
