@@ -11,9 +11,9 @@ public class Part1 : Base
         
         var difference = 0;
         
-        for (var i = 0; i < _left.Count; i++)
+        for (var i = 0; i < Left.Count; i++)
         {
-            difference += Math.Abs(_left[i] - _right[i]);
+            difference += Math.Abs(Left[i] - Right[i]);
         }
 
         return difference.ToString();

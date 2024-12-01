@@ -111,11 +111,9 @@ public abstract class Base : Solution
                 }
             }
 
-            var i = 0;
-
-            while (i < _positions.Count)
+            while (_positions.Count > 0)
             {
-                var position = _positions[i];
+                var position = _positions[0];
 
                 if (position.Y == _maxY && !_hasFloor)
                 {
@@ -162,7 +160,7 @@ public abstract class Base : Solution
 
                 if (_visualiser != null)
                 {
-                    _positions.RemoveAt(i);
+                    _positions.RemoveAt(0);
                 }
                 else
                 {

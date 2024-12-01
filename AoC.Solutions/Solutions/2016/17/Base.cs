@@ -31,10 +31,8 @@ public abstract class Base : Solution
 
                     continue;
                 }
-                else
-                {
-                    return item.Directions;
-                }
+
+                return item.Directions;
             }
 
             var hash = Convert.ToHexString(MD5.HashData(Encoding.ASCII.GetBytes($"{item.Passcode}{item.Directions}")));

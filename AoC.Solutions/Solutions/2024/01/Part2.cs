@@ -11,11 +11,11 @@ public class Part2 : Base
         
         var similarity = 0;
         
-        for (var i = 0; i < _left.Count; i++)
+        for (var i = 0; i < Left.Count; i++)
         {
-            var left = _left[i];
+            var left = Left[i];
 
-            if (_rightCounts.TryGetValue(left, out var count))
+            if (RightCounts.TryGetValue(left, out var count))
             {
                 similarity += left * count;
             }

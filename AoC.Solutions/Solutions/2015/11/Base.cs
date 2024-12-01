@@ -9,7 +9,7 @@ public abstract class Base : Solution
     protected static string GetNextPassword(string input)
     {
         // ReSharper disable once StringLiteralTypo
-        var characters = "abcdefghjkmnpqrstuvwxyz!";
+        const string characters = "abcdefghjkmnpqrstuvwxyz!";
 
         var password = input.ToCharArray();
 

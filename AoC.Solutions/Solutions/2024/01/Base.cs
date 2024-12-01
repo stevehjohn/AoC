@@ -4,13 +4,13 @@ namespace AoC.Solutions.Solutions._2024._01;
 
 public abstract class Base : Solution
 {
-    public override string Description => "Puzzle01";
+    public override string Description => "Historian Hysteria";
 
-    protected List<int> _left = [];
+    protected readonly List<int> Left = [];
 
-    protected List<int> _right = [];
+    protected readonly List<int> Right = [];
 
-    protected Dictionary<int, int> _rightCounts = [];
+    protected readonly Dictionary<int, int> RightCounts = [];
     
     protected void ParseInput()
     {
@@ -18,20 +18,20 @@ public abstract class Base : Solution
         {
             var parts = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             
-            _left.Add(int.Parse(parts[0]));
+            Left.Add(int.Parse(parts[0]));
 
             var right = int.Parse(parts[1]);
             
-            _right.Add(right);
+            Right.Add(right);
 
-            if (! _rightCounts.TryAdd(right, 1))
+            if (! RightCounts.TryAdd(right, 1))
             {
-                _rightCounts[right]++;
+                RightCounts[right]++;
             }
         }
         
-        _left.Sort();
+        Left.Sort();
         
-        _right.Sort();
+        Right.Sort();
     }
 }

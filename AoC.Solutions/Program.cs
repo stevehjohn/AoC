@@ -223,14 +223,13 @@ public static class Program
                         file.Insert(insert, string.Empty);
                         file.Insert(insert, $"{new string(' ', 12)}{"0ms",-13}");
                         file.Insert(insert, $"{new string(' ', 12)}-------------");
-                        file.Insert(insert, result.Value.Summary);
                     }
                     else
                     {
                         insert -= 4;
-                        
-                        file.Insert(insert, result.Value.Summary);
                     }
+
+                    file.Insert(insert, result.Value.Summary);
 
                     updated++;
                 }
