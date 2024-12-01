@@ -167,7 +167,7 @@ public class TileQueue
     {
         var i = 0;
 
-        var offset = Constants.TileSize / 2f;
+        const float offset = Constants.TileSize / 2f;
 
         var origin = new Vector2(offset, offset);
 

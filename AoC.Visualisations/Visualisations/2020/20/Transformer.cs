@@ -284,7 +284,7 @@ public class Transformer
             return;
         }
 
-        var offset = Constants.TileSize / 2f;
+        const float offset = Constants.TileSize / 2f;
 
         var cellOrigin = new Vector2(offset + Constants.TilePadding, offset + Constants.TilePadding);
 
