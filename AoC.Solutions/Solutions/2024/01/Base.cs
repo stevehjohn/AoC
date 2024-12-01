@@ -4,7 +4,7 @@ namespace AoC.Solutions.Solutions._2024._01;
 
 public abstract class Base : Solution
 {
-    public override string Description => "Historian Hysteria";
+    public override string Description => "Historian hysteria";
 
     protected readonly List<int> Left = [];
 
