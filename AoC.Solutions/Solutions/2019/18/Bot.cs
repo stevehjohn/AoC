@@ -45,8 +45,8 @@ public class Bot
         _itemHistory = [(Item: _map[Position.X, Position.Y], Steps: 0)];
 
         AllHistory.Add(HashCode.Combine(Name, Position));
-
-        _positionsSinceLastItem = [new(Position)];
+        
+        _positionsSinceLastItem = [new Point(Position)];
 
         Steps = 0;
     }

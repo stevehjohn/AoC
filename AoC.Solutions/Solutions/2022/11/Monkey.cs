@@ -16,7 +16,7 @@ public struct Monkey
 
     public Monkey(ulong divisorTest, int passTestMonkey, int failTestMonkey, char @operator, ulong operand)
     {
-        Items = new(32);
+        Items = new FastList<ulong>(32);
 
         DivisorTest = divisorTest;
 

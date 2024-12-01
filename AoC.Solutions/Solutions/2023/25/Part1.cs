@@ -140,7 +140,7 @@ public class Part1 : Base
 
         foreach (var node in _nodes)
         {
-            if (_links.TryGetValue(node.L, out List<string> value))
+            if (_links.TryGetValue(node.L, out var value))
             {
                 value.Add(node.R);
             }

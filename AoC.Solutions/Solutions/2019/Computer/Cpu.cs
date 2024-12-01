@@ -87,6 +87,7 @@ public class Cpu
                     _programCounter += instruction.Length;
                     break;
                 case OperationState.AwaitingInput:
+                    default:
                     return CpuState.AwaitingInput;
             }
 

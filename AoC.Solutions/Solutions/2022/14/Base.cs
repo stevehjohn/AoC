@@ -93,7 +93,7 @@ public abstract class Base : Solution
     {
         var units = _hasFloor ? 1 : 0;
 
-        _positions = [new(500, 0)];
+        _positions = [new Point(500, 0)];
 
         var counter = _hasFloor ? 3 : 11;
 

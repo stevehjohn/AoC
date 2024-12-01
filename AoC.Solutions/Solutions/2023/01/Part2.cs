@@ -15,7 +15,7 @@ public class Part2 : Base
         { "six", "s6x" },
         { "seven", "s7n" },
         { "eight", "e8t" },
-        { "nine", "n9e" },
+        { "nine", "n9e" }
     };
     
     public override string GetAnswer()

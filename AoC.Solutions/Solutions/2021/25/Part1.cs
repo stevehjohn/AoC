@@ -43,6 +43,7 @@ public class Part1 : Base
                 {
                     for (var x = 0; x < _width; x++)
                     {
+                        // ReSharper disable once SwitchStatementMissingSomeEnumCasesNoDefault
                         switch (state)
                         {
                             case CellState.East:

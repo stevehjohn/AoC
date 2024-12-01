@@ -50,6 +50,7 @@ public class Machine
                     break;
 
                 case Type.Conjunction:
+                default:
                     module.ReceivedPulses[pulse.Source] = pulse.Pulse;
                     break;
             }
@@ -77,6 +78,7 @@ public class Machine
                         break;
 
                     case Type.Conjunction:
+                    default:
                         output = ! module.ReceivedPulses.All(r => r.Value);
                         break;
                 }

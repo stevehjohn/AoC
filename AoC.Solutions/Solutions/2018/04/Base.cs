@@ -18,12 +18,14 @@ public abstract class Base : Solution
 
         foreach (var @event in events)
         {
+            // ReSharper disable once SwitchStatementMissingSomeEnumCasesNoDefault
             switch (@event.Event)
             {
                 case Event.FallAsleep:
                     previousTime = @event.Time;
 
                     continue;
+                
                 case Event.WakeUp:
                 {
                     while (previousTime < @event.Time)
@@ -51,6 +53,7 @@ public abstract class Base : Solution
 
         foreach (var item in Data)
         {
+            // ReSharper disable once SwitchStatementMissingSomeEnumCasesNoDefault
             switch (item.Event)
             {
                 case Event.FallAsleep:
@@ -60,6 +63,7 @@ public abstract class Base : Solution
                 case Event.WakeUp when sleepTimes.ContainsKey(item.GuardId):
                     sleepTimes[item.GuardId] += item.Time - sleepTime;
                     break;
+                
                 case Event.WakeUp:
                     sleepTimes.Add(item.GuardId, item.Time - sleepTime);
                     break;

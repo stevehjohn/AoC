@@ -8,7 +8,7 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var houses = new Dictionary<Point, int> { { new(0, 0), 1 } };
+        var houses = new Dictionary<Point, int> { { new Point(0, 0), 1 } };
 
         var position = new Point(0, 0);
 
