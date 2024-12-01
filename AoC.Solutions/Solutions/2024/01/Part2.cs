@@ -7,6 +7,15 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        return "Unknown";
+        ParseInput();
+        
+        var similarity = 0;
+        
+        for (var i = 0; i < _left.Count; i++)
+        {
+            similarity += _left[i] * _right.Count(n => n == _left[i]);
+        }
+
+        return similarity.ToString();
     }
 }
