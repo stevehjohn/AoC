@@ -52,7 +52,7 @@ public abstract class Base : Solution
                 dies ^= bit;
             }
 
-            if ((grid & bit) == 0 && (adjacent == 1 || adjacent == 2))
+            if ((grid & bit) == 0 && adjacent is 1 or 2)
             {
                 infests |= bit;
             }

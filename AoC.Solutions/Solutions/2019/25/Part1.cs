@@ -43,10 +43,8 @@ public class Part1 : Base
 
         List<string> path;
         
-        foreach (var item in _items)
+        foreach (var (name, end) in _items)
         {
-            var end = item.Room;
-
             path = GetPath(room, end);
 
             foreach (var step in path)
@@ -58,7 +56,7 @@ public class Part1 : Base
                 _cpu.ReadString();
             }
 
-            _cpu.WriteString($"take {item.Name}");
+            _cpu.WriteString($"take {name}");
 
             _cpu.Run();
 
@@ -358,11 +356,11 @@ public class Part1 : Base
 
                     continue;
                 case 1:
-                    directions.Add(line.Substring(2));
+                    directions.Add(line[2..]);
 
                     continue;
                 case 2:
-                    item = line.Substring(2);
+                    item = line[2..];
                     break;
             }
         }

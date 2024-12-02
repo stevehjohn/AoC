@@ -100,7 +100,7 @@ public abstract class Base : Solution
 
             var idle = cpus.All(c => c.Value.UserInput.Peek() == -1);
 
-            if (idle && natBuffer.X > 0 && natBuffer.Y > 0)
+            if (idle && natBuffer is { X: > 0, Y: > 0 })
             {
                 if (natBuffer.Y == lastNatYSent)
                 {

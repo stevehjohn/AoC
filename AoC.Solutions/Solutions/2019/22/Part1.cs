@@ -37,12 +37,12 @@ public class Part1 : Base
 
             if (line.StartsWith("cut"))
             {
-                Cut(int.Parse(line.Substring(4)));
+                Cut(int.Parse(line[4..]));
 
                 continue;
             }
 
-            DealWithIncrement(int.Parse(line.Substring(20)));
+            DealWithIncrement(int.Parse(line[20..]));
         }
 
         var decks = GetDecks();

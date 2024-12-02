@@ -35,14 +35,14 @@ public class Part2 : Base
 
             if (line.StartsWith("cut"))
             {
-                arg = int.Parse(line.Substring(4));
+                arg = int.Parse(line[4..]);
 
                 b = (b - arg) % _numberOfCards;
 
                 continue;
             }
 
-            arg = int.Parse(line.Substring(20));
+            arg = int.Parse(line[20..]);
 
             a = a * arg % _numberOfCards;
 
