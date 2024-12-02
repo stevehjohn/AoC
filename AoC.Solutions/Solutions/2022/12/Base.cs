@@ -94,24 +94,22 @@ public abstract class Base : Solution
 
         while (_queue.Count > 0)
         {
-            var node = _queue.Dequeue();
+            var (position, steps, history) = _queue.Dequeue();
 
-            var position = node.Position;
-
-            Visualise(node.History);
+            Visualise(history);
 
             if (startFromEnd)
             {
                 if (_map[position.X, position.Y] == 0)
                 {
-                    return node.Steps;
+                    return steps;
                 }
             }
             else
             {
                 if (position.Equals(_end))
                 {
-                    return node.Steps;
+                    return steps;
                 }
             }
 
@@ -124,7 +122,7 @@ public abstract class Base : Solution
                 manhattan = Math.Abs(position.X - _end.X) + Math.Abs(position.Y - _end.Y);
             }
 
-            AddPossibleMoves(position, comparer, height, node.Steps, manhattan, node.History);
+            AddPossibleMoves(position, comparer, height, steps, manhattan, history);
         }
 
         return int.MaxValue;
@@ -185,9 +183,6 @@ public abstract class Base : Solution
 
     private void Visualise(List<Point> history = null)
     {
-        if (_visualiser != null)
-        {
-            _visualiser.PuzzleStateChanged(new PuzzleState(_map, history));
-        }
+        _visualiser?.PuzzleStateChanged(new PuzzleState(_map, history));
     }
 }

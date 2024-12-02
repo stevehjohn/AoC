@@ -11,7 +11,7 @@ public class Part1 : Base
 
         foreach (var line in Input)
         {
-            var compartments = new[] { line.Substring(0, line.Length / 2), line.Substring(line.Length / 2) };
+            var compartments = new[] { line[..(line.Length / 2)], line[(line.Length / 2)..] };
 
             var common = compartments[0].First(i => compartments[1].Contains(i));
 

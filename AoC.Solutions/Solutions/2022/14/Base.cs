@@ -32,18 +32,12 @@ public abstract class Base : Solution
 
     private void Visualise()
     {
-        if (_visualiser != null)
-        {
-            _visualiser.PuzzleStateChanged(new PuzzleState(_map, _positions));
-        }
+        _visualiser?.PuzzleStateChanged(new PuzzleState(_map, _positions));
     }
 
     private void EndVisualisation()
     {
-        if (_visualiser != null)
-        {
-            _visualiser.PuzzleComplete();
-        }
+        _visualiser?.PuzzleComplete();
     }
 
     protected void CreateCave()

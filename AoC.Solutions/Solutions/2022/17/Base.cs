@@ -225,9 +225,9 @@ public abstract class Base : Solution
 
         var hashCode = hash.ToHashCode();
 
-        if (_hashes.ContainsKey(hashCode))
+        if (_hashes.TryGetValue(hashCode, out var value))
         {
-            var period = _hashes[hashCode].Y - _highPoint;
+            var period = value.Y - _highPoint;
 
             if (_startHeight == 0)
             {
