@@ -29,10 +29,7 @@ public abstract class Base : Solution
 
     protected void Visualise(bool settling, int brickId = 0)
     {
-        if (Visualiser != null)
-        {
-            Visualiser.PuzzleStateChanged(new PuzzleState(Map, MaxHeight) { Settling = settling, DestroyBrickId = brickId });
-        }
+        Visualiser?.PuzzleStateChanged(new PuzzleState(Map, MaxHeight) { Settling = settling, DestroyBrickId = brickId });
     }
 
     protected int SettleBricks(int[,,] map, bool move = true, bool suppressVisualise = false)

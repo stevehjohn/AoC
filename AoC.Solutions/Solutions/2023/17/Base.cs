@@ -33,10 +33,7 @@ public abstract class Base : Solution
 
     private void Visualise(List<(int X, int Y)> history = null)
     {
-        if (_visualiser != null)
-        {
-            _visualiser.PuzzleStateChanged(new PuzzleState { Map = _map, History = history?.ToList() });
-        }
+        _visualiser?.PuzzleStateChanged(new PuzzleState { Map = _map, History = history?.ToList() });
     }
 
     protected int Solve(int minSteps, int maxSteps)

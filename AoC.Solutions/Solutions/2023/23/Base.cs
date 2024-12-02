@@ -77,7 +77,7 @@ public abstract class Base : Solution
 
                 if (distance > 0)
                 {
-                    if (! _edges.ContainsKey(intersection))
+                    if (! _edges.TryGetValue(intersection, out var value))
                     {
                         _edges[intersection] = [(intersection, other, distance)];
                     }
@@ -85,7 +85,7 @@ public abstract class Base : Solution
                     {
                         var insertAt = 0;
 
-                        foreach (var edge in _edges[intersection])
+                        foreach (var edge in value)
                         {
                             if (edge.Steps < distance)
                             {
@@ -94,8 +94,8 @@ public abstract class Base : Solution
                         
                             insertAt++;
                         }
-                        
-                        _edges[intersection].Insert(insertAt, (intersection, other, distance));
+
+                        value.Insert(insertAt, (intersection, other, distance));
                     }
                 }
             }

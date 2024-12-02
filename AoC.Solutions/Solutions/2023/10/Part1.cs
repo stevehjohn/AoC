@@ -14,24 +14,26 @@ public class Part1 : Base
         return result.ToString();
     }
 
+    private static readonly char[] SourceArray = ['-', 'L', 'J', '.'];
+
     private int GetSteps(int x, int y)
     {
-        if (! new[] { '-', 'L', 'J', '.' }.Contains(Map[y - 1][x]))
+        if (! SourceArray.Contains(Map[y - 1][x]))
         {
             return WalkPipes(x, y - 1, 0, -1);
         }
 
-        if (! new[] { '-', 'L', 'J', '.' }.Contains(Map[y + 1][x]))
+        if (! SourceArray.Contains(Map[y + 1][x]))
         {
             return WalkPipes(x, y + 1, 0, 1);
         }
 
-        if (! new[] { '-', 'L', 'J', '.' }.Contains(Map[y][x - 1]))
+        if (! SourceArray.Contains(Map[y][x - 1]))
         {
             return WalkPipes(x - 1, y, -1, 0);
         }
         
-        if (! new[] { '-', 'L', 'J', '.' }.Contains(Map[y][x + 1]))
+        if (! SourceArray.Contains(Map[y][x + 1]))
         {
             return WalkPipes(x + 1, y, 1, 0);
         }

@@ -63,10 +63,7 @@ public class Part2 : Base
 
     private void Visualise()
     {
-        if (_visualiser != null)
-        {
-            _visualiser.PuzzleStateChanged(new PuzzleState { Map = Input.To2DArray() });
-        }
+        _visualiser?.PuzzleStateChanged(new PuzzleState { Map = Input.To2DArray() });
     }
 
     private int CheckHashState(int hash, int load)
