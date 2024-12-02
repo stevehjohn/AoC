@@ -28,7 +28,7 @@ public class Part2 : Base
 
             var hex = Convert.ToHexString(hash);
 
-            var position = hex[5] - '0';
+            var position = (hash[2] & 0b1111_0000) >> 4;
 
             if (position > 7 || password[position] != '\0')
             {
