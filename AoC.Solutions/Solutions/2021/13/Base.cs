@@ -24,7 +24,7 @@ public abstract class Base : Solution
             {
                 var fold = line.Split('=');
 
-                _folds.Add((fold[0].Substring(fold[0].Length - 1), int.Parse(fold[1])));
+                _folds.Add((fold[0][^1..], int.Parse(fold[1])));
 
                 continue;
             }

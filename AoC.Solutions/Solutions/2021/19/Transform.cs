@@ -40,7 +40,7 @@ public class Transform
 
         var node = origin;
 
-        while (node != null && node.Transform != null)
+        while (node is { Transform: not null })
         {
             delta = RotatePoint(delta, node.Transform.Parameters);
 

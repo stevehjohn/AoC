@@ -17,9 +17,9 @@ public abstract class Base : Solution
 
     protected void Simulate()
     {
-        var input = Input[0].Substring(Input[0].IndexOf(':') + 2);
+        var input = Input[0][(Input[0].IndexOf(':') + 2)..];
 
-        var components = input.Split(',', StringSplitOptions.TrimEntries).Select(c => c.Substring(2)).ToArray();
+        var components = input.Split(',', StringSplitOptions.TrimEntries).Select(c => c[2..]).ToArray();
 
         var xRange = components[0].Split("..").Select(int.Parse).ToArray();
 

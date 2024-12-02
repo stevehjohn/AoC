@@ -50,7 +50,7 @@ public class Part2 : Base
 
         foreach (var c in input)
         {
-            if (Pairs.Keys.Contains(c))
+            if (Pairs.ContainsKey(c))
             {
                 stack.Push(c);
 
@@ -62,7 +62,7 @@ public class Part2 : Base
 
         var completion = new StringBuilder();
 
-        while (stack.Any())
+        while (stack.Count != 0)
         {
             completion.Append(Pairs[stack.Pop()]);
         }

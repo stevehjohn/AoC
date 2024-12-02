@@ -50,7 +50,7 @@ public abstract class Base : Solution
 
                 var c = Input[y][x];
 
-                if (c == '#' || c == '.' || c == ' ')
+                if (c is '#' or '.' or ' ')
                 {
                     continue;
                 }

@@ -27,7 +27,7 @@ public class Packet
 
         while (position < input.Length && packets.Count < maximum)
         {
-            var packet = Parse(input.Substring(position));
+            var packet = Parse(input[position..]);
 
             position += packet.Length;
 
@@ -85,12 +85,12 @@ public class Packet
 
                 while (input[position] == '1')
                 {
-                    binaryValue.Append(input.Substring(position + 1, 4));
+                    binaryValue.Append(input.AsSpan(position + 1, 4));
 
                     position += 5;
                 }
 
-                binaryValue.Append(input.Substring(position + 1, 4));
+                binaryValue.Append(input.AsSpan(position + 1, 4));
 
                 position += 5;
 
@@ -118,7 +118,7 @@ public class Packet
 
                     position += 11;
 
-                    packet.SubPackets.AddRange(GetPackets(input.Substring(position), subPackets));
+                    packet.SubPackets.AddRange(GetPackets(input[position..], subPackets));
 
                     position += packet.SubPackets.Sum(p => p.Length);
                 }

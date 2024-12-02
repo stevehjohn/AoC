@@ -20,7 +20,7 @@ public abstract class Base : Solution
 
         foreach (var c in input)
         {
-            if (Pairs.Keys.Contains(c))
+            if (Pairs.ContainsKey(c))
             {
                 stack.Push(c);
 

@@ -25,7 +25,7 @@ public abstract class Base : Solution
             {
                 var rule = Input[r].Split("->", StringSplitOptions.TrimEntries);
 
-                if (! pairs.ContainsKey(rule[0]) || pairs[rule[0]] == 0)
+                if (! pairs.TryGetValue(rule[0], out var value) || value == 0)
                 {
                     continue;
                 }

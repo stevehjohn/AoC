@@ -35,7 +35,7 @@ public abstract class Base : Solution
 
     private static (int Left, int Right) ProcessPair(string pair)
     {
-        var split = pair.Substring(2).Split("..", StringSplitOptions.TrimEntries);
+        var split = pair[2..].Split("..", StringSplitOptions.TrimEntries);
 
         return (int.Parse(split[0]), int.Parse(split[1]));
     }

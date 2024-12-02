@@ -12,8 +12,8 @@ public abstract class Base : Solution
 
     protected void ParseInput()
     {
-        Player1Position = int.Parse(Input[0].Substring(Input[0].IndexOf(':') + 1));
+        Player1Position = int.Parse(Input[0][(Input[0].IndexOf(':') + 1)..]);
 
-        Player2Position = int.Parse(Input[1].Substring(Input[1].IndexOf(':') + 1));
+        Player2Position = int.Parse(Input[1][(Input[1].IndexOf(':') + 1)..]);
     }
 }
