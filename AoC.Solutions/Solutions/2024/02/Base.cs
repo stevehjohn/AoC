@@ -6,7 +6,9 @@ public abstract class Base : Solution
 {
     public override string Description => "Red-Nosed Reports";
 
-    protected static bool IsSafe(int[] levels, int exclude = -1)
+    private readonly int[] _levels = new int[8];
+
+    protected bool IsSafe(int levelCount, int exclude = -1)
     {
         var sign = 0;
 
@@ -16,7 +18,7 @@ public abstract class Base : Solution
 
         var r = 1;
         
-        while (r < levels.Length)
+        while (r < levelCount)
         {
             if (r == exclude)
             {
@@ -39,7 +41,7 @@ public abstract class Base : Solution
                 continue;
             }
 
-            var difference = levels[l] - levels[r];
+            var difference = _levels[l] - _levels[r];
 
             if (Math.Abs(difference) is < 1 or > 3)
             {
@@ -70,17 +72,15 @@ public abstract class Base : Solution
         return safe;
     }
 
-    protected int[] GetLevels(string input)
+    protected int GetLevels(string input)
     {
         var parts = input.Split(' ');
 
-        var levels = new int[parts.Length];
-
         for (var i = 0; i < parts.Length; i++)
         {
-            levels[i] = int.Parse(parts[i]);
+            _levels[i] = int.Parse(parts[i]);
         }
 
-        return levels;
+        return parts.Length;
     }
 }

@@ -11,22 +11,22 @@ public class Part2 : Base
     
         for (var i = 0; i < Input.Length; i++)
         {
-            var levels = GetLevels(Input[i]);
+            var levelCount = GetLevels(Input[i]);
             
-            if (IsSafe(levels))
+            if (IsSafe(levelCount))
             {
                 result++;
+                
+                continue;
             }
-            else
+            
+            for (var j = 0; j < levelCount; j++)
             {
-                for (var j = 0; j < levels.Length; j++)
+                if (IsSafe(levelCount, j))
                 {
-                    if (IsSafe(levels, j))
-                    {
-                        result++;
-                        
-                        break;
-                    }
+                    result++;
+                    
+                    break;
                 }
             }
         }

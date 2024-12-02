@@ -11,9 +11,9 @@ public class Part1 : Base
     
         for (var i = 0; i < Input.Length; i++)
         {
-            var levels = GetLevels(Input[i]);
+            var levelCount = GetLevels(Input[i]);
             
-            if (IsSafe(levels))
+            if (IsSafe(levelCount))
             {
                 result++;
             }
