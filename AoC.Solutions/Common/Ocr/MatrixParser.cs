@@ -5,7 +5,7 @@ namespace AoC.Solutions.Common.Ocr;
 
 public class MatrixParser
 {
-    private readonly List<CharacterTemplate> _templates = new();
+    private readonly List<CharacterTemplate> _templates = [];
 
     private readonly int _width;
 

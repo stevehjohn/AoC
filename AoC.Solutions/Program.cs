@@ -69,20 +69,18 @@ public static class Program
 
             var day = int.Parse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0");
 
-            if (arguments.Length > 0 && arguments[0].ToLower() != "true")
+            if (arguments.Length > 0 && !arguments[0].Equals("true", StringComparison.InvariantCultureIgnoreCase))
             {
                 var solutionKey =
                     $"{int.Parse(solution.Namespace?.Split('.')[3].Replace("_", string.Empty) ?? "0")}.{int.Parse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0"):D2}.{solution.Name[4]}";
 
-                if (solutionKey.Substring(0, arguments[0].Length) != arguments[0])
+                if (solutionKey[..arguments[0].Length] != arguments[0])
                 {
                     continue;
                 }
             }
 
-            var instance = Activator.CreateInstance(solution) as Solution;
-
-            if (instance == null)
+            if (Activator.CreateInstance(solution) is not Solution instance)
             {
                 continue;
             }
@@ -185,7 +183,7 @@ public static class Program
 
         if (arguments.Length > 0)
         {
-            if (arguments[0].ToLower() == "true" || (arguments.Length > 1 && arguments[1].ToLower() == "true"))
+            if (arguments[0].Equals("true", StringComparison.InvariantCultureIgnoreCase) || (arguments.Length > 1 && arguments[1].Equals("true", StringComparison.InvariantCultureIgnoreCase)))
             {
                 UpdateResults();
             }
