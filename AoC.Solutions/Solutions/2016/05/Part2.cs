@@ -1,6 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 using JetBrains.Annotations;
+using Org.BouncyCastle.Crypto.Digests;
 
 namespace AoC.Solutions.Solutions._2016._05;
 
@@ -18,10 +19,12 @@ public class Part2 : Base
         var bytes = new byte[prefix.Length + 10];
 
         Buffer.BlockCopy(Encoding.ASCII.GetBytes(prefix), 0, bytes, 0, prefix.Length);
-        
-        var span = new Span<byte>(bytes);
 
         var length = prefix.Length;
+        
+        var md5Digest = new MD5Digest();
+
+        var hash = new byte[md5Digest.GetDigestSize()];
 
         while (true)
         {
@@ -34,14 +37,17 @@ public class Part2 : Base
                 
             while (workingSuffix > 0)
             {
-                span[length + index] = (byte) ('0' + (byte) (workingSuffix % 10));
+                bytes[length + index] = (byte) ('0' + (byte) (workingSuffix % 10));
 
                 workingSuffix /= 10;
 
                 index--;
             }
                 
-            var hash = MD5.HashData(span[..(length + suffixLength)]);
+            md5Digest.BlockUpdate(bytes, 0, length + suffixLength);
+
+            md5Digest.DoFinal(hash, 0);
+
             suffix++;
 
             if (hash[0] != 0 || hash[1] != 0 || (hash[2] & 0b1111_0000) != 0)
