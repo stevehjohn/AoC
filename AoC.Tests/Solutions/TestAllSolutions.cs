@@ -70,20 +70,21 @@ public class TestAllSolutions
         _testOutputHelper.WriteLine($"Test of '{instance.Description}' passed.");
     }
 
-    public static IEnumerable<object[]> Solutions
+    public static TheoryData<Type> Solutions
     {
         get
         {
-            var solutions = typeof(Part1).Assembly
-                                         .GetTypes()
-                                         .Where(t => t.IsSubclassOf(typeof(Solution)) && ! t.IsAbstract)
-                                         .OrderBy(t => t.Namespace)
-                                         .ThenBy(t => t.Name);
+            var theoryData = new TheoryData<Type>();
 
-            foreach (var solution in solutions)
-            {
-                yield return [solution];
-            }
+            typeof(Part1).Assembly
+                .GetTypes()
+                .Where(t => t.IsSubclassOf(typeof(Solution)) && ! t.IsAbstract)
+                .OrderBy(t => t.Namespace)
+                .ThenBy(t => t.Name)
+                .ToList()
+                .ForEach(t => theoryData.Add(t));
+
+            return theoryData;
         }
     }
 }
