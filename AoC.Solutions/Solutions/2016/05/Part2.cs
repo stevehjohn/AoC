@@ -19,25 +19,27 @@ public class Part2 : Base
         {
             var hash = MD5.HashData(Encoding.ASCII.GetBytes($"{prefix}{suffix}"));
 
-            var hex = Convert.ToHexString(hash);
-
             suffix++;
 
-            if (hex.StartsWith("00000"))
+            if (hash[0] != 0 || hash[1] != 0 || (hash[2] & 0b1111_0000) != 0)
             {
-                var position = hex[5] - '0';
+                continue;
+            }
 
-                if (position > 7 || password[position] != '\0')
-                {
-                    continue;
-                }
+            var hex = Convert.ToHexString(hash);
 
-                password[position] = hex[6];
+            var position = hex[5] - '0';
 
-                if (password.All(c => c != '\0'))
-                {
-                    break;
-                }
+            if (position > 7 || password[position] != '\0')
+            {
+                continue;
+            }
+
+            password[position] = hex[6];
+
+            if (password.All(c => c != '\0'))
+            {
+                break;
             }
         }
 
