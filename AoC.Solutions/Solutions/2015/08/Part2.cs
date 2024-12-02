@@ -15,7 +15,7 @@ public class Part2 : Base
         {
             originalLength += line.Length;
 
-            newLength += line.Length + 2 + line.Count(c => c == '\\' || c == '\"');
+            newLength += line.Length + 2 + line.Count(c => c is '\\' or '\"');
         }
 
         return (newLength - originalLength).ToString();

@@ -5,6 +5,8 @@ namespace AoC.Solutions.Solutions._2015._05;
 [UsedImplicitly]
 public class Part1 : Base
 {
+    private static readonly string[] SourceArray = ["ab", "cd", "pq", "xy"];
+
     public override string GetAnswer()
     {
         var nice = 0;
@@ -19,7 +21,7 @@ public class Part1 : Base
 
     private static bool IsNice(string line)
     {
-        if (new[] { "ab", "cd", "pq", "xy" }.Any(line.Contains))
+        if (SourceArray.Any(line.Contains))
         {
             return false;
         }
