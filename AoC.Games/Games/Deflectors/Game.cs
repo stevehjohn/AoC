@@ -87,6 +87,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
     protected override void Update(GameTime gameTime)
     {
+        // ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault
         switch (_state)
         {
             case State.WelcomeMessage:

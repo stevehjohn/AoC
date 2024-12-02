@@ -28,7 +28,7 @@ public class MazeSolver
                 visited.Add((node.X, node.Y));
             }
 
-            if (node.X == Constants.Width - 2 && node.Y == Constants.Height - 1)
+            if (node is { X: Constants.Width - 2, Y: Constants.Height - 1 })
             {
                 return (node.History, visited);
             }

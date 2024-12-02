@@ -78,6 +78,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
         (int X, int Y) step;
         
+        // ReSharper disable once SwitchStatementMissingSomeEnumCasesNoDefault
         switch (_state)
         {
             case State.Creating:
