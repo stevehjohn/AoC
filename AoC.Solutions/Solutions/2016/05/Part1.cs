@@ -21,16 +21,18 @@ public class Part1 : Base
             {
                 var hash = MD5.HashData(Encoding.ASCII.GetBytes($"{prefix}{suffix}"));
 
-                var hex = Convert.ToHexString(hash);
-
                 suffix++;
 
-                if (hex.StartsWith("00000"))
+                if (hash[0] != 0 || hash[1] != 0 || (hash[2] & 0b1111_0000) != 0)
                 {
-                    password.Append(hex[5]);
-
-                    break;
+                    continue;
                 }
+
+                var hex = Convert.ToHexString(hash);
+
+                password.Append(hex[5]);
+
+                break;
             }
         }
 
