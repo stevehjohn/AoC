@@ -15,10 +15,18 @@ public class Part2 : Base
 
         var suffix = 0;
 
+        var builder = new StringBuilder();
+
+        builder.Append(prefix);
+
         while (true)
         {
             retry:
-            var hash = MD5.HashData(Encoding.ASCII.GetBytes($"{prefix}{suffix}"));
+            builder.Append(suffix);
+                
+            var hash = MD5.HashData(Encoding.ASCII.GetBytes(builder.ToString()));
+
+            builder.Length = prefix.Length;
 
             suffix++;
 

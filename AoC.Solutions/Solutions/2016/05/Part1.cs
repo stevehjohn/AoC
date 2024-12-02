@@ -15,12 +15,20 @@ public class Part1 : Base
 
         var suffix = 0;
 
+        var builder = new StringBuilder();
+
+        builder.Append(prefix);
+
         for (var i = 0; i < 8; i++)
         {
             while (true)
             {
-                var hash = MD5.HashData(Encoding.ASCII.GetBytes($"{prefix}{suffix}"));
+                builder.Append(suffix);
+                
+                var hash = MD5.HashData(Encoding.ASCII.GetBytes(builder.ToString()));
 
+                builder.Length = prefix.Length;
+                
                 suffix++;
 
                 if (hash[0] != 0 || hash[1] != 0 || (hash[2] & 0b1111_0000) != 0)
