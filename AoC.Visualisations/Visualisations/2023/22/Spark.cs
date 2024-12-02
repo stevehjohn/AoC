@@ -18,5 +18,5 @@ public class Spark
     
     public float Z { get; init; }
 
-    public float YGravity { get; } = 0.1f;
+    public static float YGravity => 0.1f;
 }

@@ -159,7 +159,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         _map.ForAll((x, y, c) =>
         {
-            if (c == '#' || c == '.')
+            if (c is '#' or '.')
             {
                 return;
             }

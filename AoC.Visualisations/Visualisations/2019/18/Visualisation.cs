@@ -135,20 +135,17 @@ public class Visualisation : VisualisationBase<PuzzleState>
             _state = GetNextState();
         }
 
-        if (_state != null)
+        if (_state is { Path: not null })
         {
-            if (_state.Path != null)
+            if (_pathIndex == -1)
             {
-                if (_pathIndex == -1)
-                {
-                    _pathIndex = 0;
+                _pathIndex = 0;
 
-                    StartMove();
-                }
-                else
-                {
-                    Move();
-                }
+                StartMove();
+            }
+            else
+            {
+                Move();
             }
         }
         
@@ -203,7 +200,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
             spark.Position.Y += spark.Vector.Y;
 
-            spark.Vector.Y += spark.YGravity;
+            spark.Vector.Y += Spark.YGravity;
         }
 
         foreach (var spark in toRemove)
@@ -353,7 +350,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 {
                     willy.Frame += willy.FrameDirection;
 
-                    if (willy.Frame == 0 || willy.Frame == 2)
+                    if (willy.Frame is 0 or 2)
                     {
                         willy.FrameDirection = -willy.FrameDirection;
                     }

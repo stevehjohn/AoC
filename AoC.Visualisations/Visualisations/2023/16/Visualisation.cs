@@ -470,25 +470,25 @@ public class Visualisation : VisualisationBase<PuzzleState>
         
         foreach (var beam in _state.Beams[1..])
         {
-            if (! _allBeams.ContainsKey(beam.Id))
+            if (! _allBeams.TryGetValue(beam.Id, out var currentBeam))
             {
                 if (firstBeamId == -1)
                 {
                     firstBeamId = beam.Id;
                 }
 
-                _allBeams.Add(beam.Id, []);
+                currentBeam = [];
+                
+                _allBeams.Add(beam.Id, currentBeam);
             }
-
-            var currentBeam = _allBeams[beam.Id];
 
             var previous = _state.StartDirection;
 
             if (currentBeam.Count == 0)
             {
-                if (_allBeams.ContainsKey(beam.SourceId) && _allBeams[beam.SourceId].Count > 0)
+                if (_allBeams.TryGetValue(beam.SourceId, out var value) && value.Count > 0)
                 {
-                    previous = _allBeams[beam.SourceId].Last().Direction;
+                    previous = value.Last().Direction;
                         
                     currentBeam.Add((beam.X, beam.Y, beam.Direction, GetTile(previous, beam.Direction), beam.SourceId));
                         
@@ -545,7 +545,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
             spark.Position.Y += spark.Vector.Y;
 
-            spark.Vector.Y += spark.YGravity;
+            spark.Vector.Y += Spark.YGravity;
         }
 
         foreach (var spark in toRemove)
@@ -577,7 +577,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         var laser = _lastLaser;
 
-        if (_done || (_state != null && _state.StartDirection == '\0'))
+        if (_done || _state is { StartDirection: '\0' })
         {
             laser = (_state.LaserX, _state.LaserY, _state.StartDirection);
         }

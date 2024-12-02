@@ -259,7 +259,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
             spark.Position.Y += spark.Vector.Y;
 
-            spark.Vector.Y += spark.YGravity;
+            spark.Vector.Y += Spark.YGravity;
         }
 
         foreach (var spark in toRemove)

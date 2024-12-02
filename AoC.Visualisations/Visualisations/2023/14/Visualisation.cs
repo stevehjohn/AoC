@@ -244,7 +244,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             {
                 var rock = _map[x, y];
 
-                if (rock == null || ! rock.Round)
+                if (rock is not { Round: true })
                 {
                     continue;
                 }

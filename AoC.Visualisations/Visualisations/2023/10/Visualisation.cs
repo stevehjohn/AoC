@@ -159,7 +159,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 
                 tile += $"{_map[y + 2][x]}{_map[y + 2][x + 1]}{_map[y + 2][x + 2]}";
 
-                var colour = tile.Contains("X") ? Color.Red : Color.Cyan;
+                var colour = tile.Contains('X') ? Color.Red : Color.Cyan;
 
                 var mX = (x - 1) / 3;
 
@@ -261,7 +261,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     
             spark.Position.Y += spark.Vector.Y;
     
-            spark.Vector.Y += spark.YGravity;
+            spark.Vector.Y += Spark.YGravity;
         }
     
         foreach (var spark in toRemove)
