@@ -28,18 +28,12 @@ public abstract class Base : Solution
 
     protected void Visualise(Point collisionPoint = null, bool isFinalState = false)
     {
-        if (_visualiser != null)
-        {
-            _visualiser.PuzzleStateChanged(new PuzzleState { Map = _map, Carts = Carts.Select(c => new Cart(c)).ToList(), CollisionPoint = collisionPoint, IsFinalState = isFinalState });
-        }
+        _visualiser?.PuzzleStateChanged(new PuzzleState { Map = _map, Carts = Carts.Select(c => new Cart(c)).ToList(), CollisionPoint = collisionPoint, IsFinalState = isFinalState });
     }
 
     protected void EndVisualisation()
     {
-        if (_visualiser != null)
-        {
-            _visualiser.PuzzleComplete();
-        }
+        _visualiser?.PuzzleComplete();
     }
 
     protected Point MoveCarts()
@@ -95,15 +89,12 @@ public abstract class Base : Solution
             {
                 cart.LastMove = (Move) (((int) cart.LastMove + 1) % 3);
 
-                switch (cart.LastMove)
+                cart.Direction = cart.LastMove switch
                 {
-                    case Move.Left:
-                        cart.Direction = new Point(cart.Direction.Y, -cart.Direction.X);
-                        break;
-                    case Move.Right:
-                        cart.Direction = new Point(-cart.Direction.Y, cart.Direction.X);
-                        break;
-                }
+                    Move.Left => new Point(cart.Direction.Y, -cart.Direction.X),
+                    Move.Right => new Point(-cart.Direction.Y, cart.Direction.X),
+                    _ => cart.Direction
+                };
 
                 return;
             }

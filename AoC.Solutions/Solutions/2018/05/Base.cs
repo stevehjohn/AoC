@@ -12,7 +12,7 @@ public abstract class Base : Solution
 
         var node = polymer.First;
 
-        while (node != null && node.Next != null)
+        while (node is { Next: not null })
         {
             if (char.ToLower(node.Value) == char.ToLower(node.Next.Value) && node.Value != node.Next.Value)
             {

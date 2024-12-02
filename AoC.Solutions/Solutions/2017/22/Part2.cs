@@ -44,9 +44,9 @@ public class Part2 : Base
         }
         else if (_weakened.Contains(Position))
         {
-            _weakened.Remove(Position);
-
             Infected.Add(Position);
+
+            _weakened.Remove(Position);
 
             infects = true;
         }

@@ -30,18 +30,12 @@ public abstract class Base : Solution
 
     private void Visualise()
     {
-        if (_visualiser != null)
-        {
-            _visualiser.PuzzleStateChanged(new PuzzleState(_map));
-        }
+        _visualiser?.PuzzleStateChanged(new PuzzleState(_map));
     }
 
     private void EndVisualisation()
     {
-        if (_visualiser != null)
-        {
-            _visualiser.PuzzleComplete();
-        }
+        _visualiser?.PuzzleComplete();
     }
 
     protected int GetAnswer(bool isPart2)

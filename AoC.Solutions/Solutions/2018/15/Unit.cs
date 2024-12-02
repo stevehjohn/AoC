@@ -33,7 +33,7 @@ public class Unit
     {
         var targets = Move().ToList();
 
-        if (targets.Any())
+        if (targets.Count != 0)
         {
             return Attack(targets);
         }
@@ -57,7 +57,7 @@ public class Unit
         return null;
     }
 
-    private IEnumerable<Unit> Move()
+    private List<Unit> Move()
     {
         _unitPositions = _units.Select(u => u.Position).ToHashSet();
 
@@ -156,7 +156,7 @@ public class Unit
         return paths;
     }
 
-    private IEnumerable<Point> GetTargetCells(List<Unit> targets)
+    private List<Point> GetTargetCells(List<Unit> targets)
     {
         var targetCells = new List<Point>();
 
@@ -174,13 +174,13 @@ public class Unit
         return targetCells;
     }
 
-    private IEnumerable<Point> CheckNeighborCell(Point position, IEnumerable<Unit> targets)
+    private List<Point> CheckNeighborCell(Point position, IEnumerable<Unit> targets)
     {
         if (_map[position.X, position.Y] || targets.Any(t => t.Position.Equals(position)))
         {
             return [];
         }
 
-        return new List<Point> { position };
+        return [position];
     }
 }

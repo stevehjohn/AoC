@@ -35,7 +35,7 @@ public class Group
 
         if (input.IndexOf('(') > -1)
         {
-            input = input[(input.IndexOf("(") + 1)..];
+            input = input[(input.IndexOf('(') + 1)..];
 
             var specialProperties = input[..input.IndexOf(')')];
 
@@ -58,11 +58,11 @@ public class Group
 
         DamagePoints = int.Parse(input[..input.IndexOf(' ')]);
 
-        input = input[(input.IndexOf(" ") + 1)..];
+        input = input[(input.IndexOf(' ') + 1)..];
 
-        DamageType = input[..input.IndexOf(" ")];
+        DamageType = input[..input.IndexOf(' ')];
 
-        input = input[(input.LastIndexOf(" ") + 1)..];
+        input = input[(input.LastIndexOf(' ') + 1)..];
 
         Initiative = int.Parse(input);
 

@@ -90,7 +90,7 @@ public class Cpu
                     }
                     else
                     {
-                        if (InputQueue.Count > 0)
+                        if (! InputQueue.IsEmpty)
                         {
                             if (InputQueue.TryDequeue(out var input))
                             {

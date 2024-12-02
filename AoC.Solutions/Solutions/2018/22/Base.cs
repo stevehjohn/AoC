@@ -62,7 +62,12 @@ public abstract class Base : Solution
 
                 var type = erosion % 3;
 
-                Map[x, y] = type == 0 ? '.' : type == 1 ? '=' : '|';
+                Map[x, y] = type switch
+                {
+                    0 => '.',
+                    1 => '=',
+                    _ => '|'
+                };
             }
         }
     }
