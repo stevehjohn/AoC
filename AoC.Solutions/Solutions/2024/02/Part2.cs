@@ -17,6 +17,18 @@ public class Part2 : Base
             {
                 result++;
             }
+            else
+            {
+                for (var j = 0; j < levels.Length; j++)
+                {
+                    if (IsSafe(levels, j))
+                    {
+                        result++;
+                        
+                        break;
+                    }
+                }
+            }
         }
 
         return result.ToString();

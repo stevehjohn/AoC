@@ -6,15 +6,40 @@ public abstract class Base : Solution
 {
     public override string Description => "Red-Nosed Reports";
 
-    protected static bool IsSafe(string[] levels)
+    protected static bool IsSafe(string[] levels, int exclude = -1)
     {
         var sign = 0;
 
         var safe = true;
+
+        var l = 0;
+
+        var r = 1;
         
-        for (var j = 1; j < levels.Length; j++)
+        while (r < levels.Length)
         {
-            var difference = int.Parse(levels[j - 1]) - int.Parse(levels[j]);
+            if (r == exclude)
+            {
+                r++;
+                
+                continue;
+            }
+
+            if (l == exclude)
+            {
+                l++;
+                
+                continue;
+            }
+
+            if (l == r)
+            {
+                r++;
+                
+                continue;
+            }
+
+            var difference = int.Parse(levels[l]) - int.Parse(levels[r]);
 
             if (Math.Abs(difference) is < 1 or > 3)
             {
@@ -36,6 +61,10 @@ public abstract class Base : Solution
                     break;
                 }
             }
+
+            l++;
+
+            r++;
         }
 
         return safe;
