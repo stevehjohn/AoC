@@ -13,21 +13,35 @@ public class Part2 : Base
 
         var password = new char[8];
 
-        var suffix = 0;
+        var suffix = 1;
 
-        var builder = new StringBuilder();
+        var bytes = new byte[prefix.Length + 10];
 
-        builder.Append(prefix);
+        Buffer.BlockCopy(Encoding.ASCII.GetBytes(prefix), 0, bytes, 0, prefix.Length);
+        
+        var span = new Span<byte>(bytes);
+
+        var length = prefix.Length;
 
         while (true)
         {
             retry:
-            builder.Append(suffix);
+            var suffixLength = 1 + (int) Math.Log10(suffix);
+
+            var workingSuffix = suffix;
+
+            var index = suffixLength - 1;
                 
-            var hash = MD5.HashData(Encoding.ASCII.GetBytes(builder.ToString()));
+            while (workingSuffix > 0)
+            {
+                span[length + index] = (byte) ('0' + (byte) (workingSuffix % 10));
 
-            builder.Length = prefix.Length;
+                workingSuffix /= 10;
 
+                index--;
+            }
+                
+            var hash = MD5.HashData(span[..(length + suffixLength)]);
             suffix++;
 
             if (hash[0] != 0 || hash[1] != 0 || (hash[2] & 0b1111_0000) != 0)
