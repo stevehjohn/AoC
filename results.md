@@ -70,8 +70,8 @@ Tests performed on a 2023 MacBook Pro.
  2016  3.2: 615μs         
  2016  4.1: 4,509μs       Security through obscurity
  2016  4.2: 4,409μs       
- 2016  5.1: 2,043,532μs   Password hash
- 2016  5.2: 5,912,113μs   
+ 2016  5.1: 1,314,495μs   Password hash
+ 2016  5.2: 3,847,930μs   
  2016  6.1: 1,015μs       Signals and noise
  2016  6.2: 280μs         
  2016  7.1: 755μs         ABBA internet protocol
@@ -90,10 +90,10 @@ Tests performed on a 2023 MacBook Pro.
  2016 13.2: 86μs          
  2016 14.1: 11,243μs      One time pad
  2016 14.2: 10,216,742μs  
- 2016 15.1: 515μs         Disc timing
+ 2016 15.1: 511μs         Disc timing
  2016 15.2: 3,743μs       
  2016 16.1: 6μs           Dragon checksum
- 2016 16.2: 239,856μs     
+ 2016 16.2: 235,813μs     
  2016 17.1: 24μs          Two steps forward
  2016 17.2: 28,278μs      
  2016 18.1: 76μs          Like a rogue
@@ -112,7 +112,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 24.2: 19,739μs      
  2016 25.1: 190,041μs     Clock signal
             -------------
-            20.890s      
+            18.092s      
 
  2017  1.1: 9μs           Captcha
  2017  1.2: 10μs          
@@ -160,11 +160,11 @@ Tests performed on a 2023 MacBook Pro.
  2017 22.2: 721,356μs     
  2017 23.1: 5,156μs       Coprocessor conflagration
  2017 23.2: 2,663μs       
- 2017 24.1: 122,692μs     Electromagnetic moat
- 2017 24.2: 122,706μs     
+ 2017 24.1: 122,556μs     Electromagnetic moat
+ 2017 24.2: 122,370μs     
  2017 25.1: 131,228μs     Turing tape
             -------------
-            2.451s       
+            2.450s       
 
  2018  1.1: 19μs          Tardis calibration
  2018  1.2: 3,880μs       
@@ -232,21 +232,21 @@ Tests performed on a 2023 MacBook Pro.
  2019  6.2: 38μs          
  2019  7.1: 5,274μs       Amplifiers (CPU used unmodified)
  2019  7.2: 6,832μs       
- 2019  8.1: 1,462μs       Space GIF
+ 2019  8.1: 1,161μs       Space GIF
  2019  8.2: 1,511μs       
  2019  9.1: 45μs          Sensor booster (CPU extension 2)
- 2019  9.2: 30,382μs      
+ 2019  9.2: 29,958μs      
  2019 10.1: 18,082μs      Asteroids
  2019 10.2: 1,720μs       
- 2019 11.1: 98,649μs      Personal plate (CPU used unmodified)
- 2019 11.2: 883μs         
+ 2019 11.1: 97,064μs      Personal plate (CPU used unmodified)
+ 2019 11.2: 879μs         
  2019 12.1: 503μs         Orbital simulation
  2019 12.2: 66,543μs      
  2019 13.1: 1,508μs       Arkanoid (CPU used unmodified)
- 2019 13.2: 66,493μs      
+ 2019 13.2: 65,610μs      
  2019 14.1: 105μs         Replicator
  2019 14.2: 4,358μs       
- 2019 15.1: 17,357μs      Oxygen repair droid (CPU used unmodified)
+ 2019 15.1: 17,154μs      Oxygen repair droid (CPU used unmodified)
  2019 15.2: 156μs         
  2019 16.1: 13,422μs      FFT
  2019 16.2: 104,080μs     
@@ -259,16 +259,16 @@ Tests performed on a 2023 MacBook Pro.
  2019 20.1: 283μs         Doughnut maze
  2019 20.2: 7,064μs       
  2019 21.1: 2,370μs       Jumping droids (CPU used unmodified)
- 2019 21.2: 42,307μs      
+ 2019 21.2: 41,918μs      
  2019 22.1: 469μs         Space shuffle
  2019 22.2: 26μs          
  2019 23.1: 2,715μs       IntCode network (CPU used unmodified)
  2019 23.2: 16,700μs      
  2019 24.1: 8μs           Wastl's game of life
  2019 24.2: 7,433μs       
- 2019 25.1: 285,538μs     Airlock password (CPU used unmodified)
+ 2019 25.1: 283,457μs     Airlock password (CPU used unmodified)
             -------------
-            1.428s       
+            1.422s       
 
  2020  1.1: 25μs          Expenses
  2020  1.2: 106μs         
@@ -312,7 +312,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 20.2: 1,150μs       
  2020 21.1: 214μs         Allergen detective
  2020 21.2: 193μs         
- 2020 22.1: 19μs          Crab cards
+ 2020 22.1: 16μs          Crab cards
  2020 22.2: 104,740μs     
  2020 23.1: 3μs           Crab cups
  2020 23.2: 140,627μs     
@@ -397,7 +397,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 10.2: 5μs           
  2022 11.1: 9μs           Monkey in the middle
  2022 11.2: 2,786μs       
- 2022 12.1: 1,372μs       Hill climbing algorithm
+ 2022 12.1: 1,369μs       Hill climbing algorithm
  2022 12.2: 1,566μs       
  2022 13.1: 50μs          Distress signal
  2022 13.2: 512μs         
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 60,123μs      
  2022 25.1: 10μs          Full of hot air
             -------------
-            307.153ms    
+            307.150ms    
 
  2023  1.1: 120μs         Trebuchet
  2023  1.2: 338μs         
@@ -488,5 +488,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             0.798ms      
 
- 448 puzzles solved in 55.765ms.
+ 448 puzzles solved in 52.961ms.
 ```
