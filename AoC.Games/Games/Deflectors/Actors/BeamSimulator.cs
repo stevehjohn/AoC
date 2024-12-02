@@ -31,12 +31,10 @@ public class BeamSimulator : IActor
 
     private bool _hitUnplaced;
 
-    private int _beamStrength;
-
     private long _frame;
 
-    public int BeamStrength => _beamStrength;
-    
+    public int BeamStrength { get; private set; }
+
     public State State { private get; set; }
     
     public bool IsComplete { get; private set; }
@@ -87,7 +85,7 @@ public class BeamSimulator : IActor
 
         _hitMirrors.Clear();
 
-        _beamStrength = 0;
+        BeamStrength = 0;
 
         _hitUnplaced = false;
 
@@ -141,9 +139,9 @@ public class BeamSimulator : IActor
         var oldDx = dX;
         var oldDy = dY;
 
-        while (x >= 0 && x < Constants.MapSize * BeamFactor && y >= 0 && y < Constants.MapSize * BeamFactor)
+        while (x is >= 0 and < Constants.MapSize * BeamFactor && y is >= 0 and < Constants.MapSize * BeamFactor)
         {
-            _beamStrength++;
+            BeamStrength++;
 
             beamSteps++;
 
@@ -168,18 +166,12 @@ public class BeamSimulator : IActor
 
                 if (result.Mirror != '\0')
                 {
-                    switch (result.Mirror)
+                    (dX, dY) = result.Mirror switch
                     {
-                        case '\\':
-                            (dX, dY) = (dY, dX);
-
-                            break;
-
-                        case '/':
-                            (dX, dY) = (-dY, -dX);
-
-                            break;
-                    }
+                        '\\' => (dY, dX),
+                        '/' => (-dY, -dX),
+                        _ => (dX, dY)
+                    };
                 }
             }
 
@@ -226,32 +218,30 @@ public class BeamSimulator : IActor
             }
         }
 
-        if (mirror == '|' || mirror == '-')
+        if (mirror is '|' or '-')
         {
-            if (mirror == '|' && dX != 0)
+            switch (mirror)
             {
-                _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.North, beamSteps, colorIndex, colorDirection));
-                _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.South, beamSteps, colorIndex, colorDirection));
+                case '|' when dX != 0:
+                    _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.North, beamSteps, colorIndex, colorDirection));
+                    _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.South, beamSteps, colorIndex, colorDirection));
 
-                spriteBatch.Draw(_beams,
-                    new Vector2(x * BeamSize, Constants.TopOffset + y * BeamSize),
-                    new Rectangle(dX == 1 ? 3 * BeamSize : 2 * BeamSize, 0, 7, 7), _palette[colorIndex],
-                    0, Vector2.Zero, Vector2.One, SpriteEffects.None, .2f);
+                    spriteBatch.Draw(_beams,
+                        new Vector2(x * BeamSize, Constants.TopOffset + y * BeamSize),
+                        new Rectangle(dX == 1 ? 3 * BeamSize : 2 * BeamSize, 0, 7, 7), _palette[colorIndex],
+                        0, Vector2.Zero, Vector2.One, SpriteEffects.None, .2f);
 
-                return (mirror, true);
-            }
+                    return (mirror, true);
+                case '-' when dY != 0:
+                    _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.East, beamSteps, colorIndex, colorDirection));
+                    _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.West, beamSteps, colorIndex, colorDirection));
 
-            if (mirror == '-' && dY != 0)
-            {
-                _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.East, beamSteps, colorIndex, colorDirection));
-                _splitters.Enqueue((x / BeamFactor, y / BeamFactor, Direction.West, beamSteps, colorIndex, colorDirection));
+                    spriteBatch.Draw(_beams,
+                        new Vector2(x * BeamSize, Constants.TopOffset + y * BeamSize),
+                        new Rectangle(dY == 1 ? 2 * BeamSize : 3 * BeamSize, 0, 7, 7), _palette[colorIndex],
+                        0, Vector2.Zero, Vector2.One, SpriteEffects.None, .2f);
 
-                spriteBatch.Draw(_beams,
-                    new Vector2(x * BeamSize, Constants.TopOffset + y * BeamSize),
-                    new Rectangle(dY == 1 ? 2 * BeamSize : 3 * BeamSize, 0, 7, 7), _palette[colorIndex],
-                    0, Vector2.Zero, Vector2.One, SpriteEffects.None, .2f);
-
-                return (mirror, true);
+                    return (mirror, true);
             }
         }
 
@@ -317,30 +307,17 @@ public class BeamSimulator : IActor
         }
         else
         {
-            switch (oldDx)
+            beam = oldDx switch
             {
-                case 1:
-                    beam = dY == 1 ? 3 : 5;
-                    break;
-
-                case -1:
-                    beam = dY == 1 ? 4 : 2;
-                    break;
-
-                default:
-                    switch (oldDy)
-                    {
-                        case 1:
-                            beam = dX == 1 ? 2 : 5;
-                            break;
-
-                        case -1:
-                            beam = dX == 1 ? 4 : 3;
-                            break;
-                    }
-
-                    break;
-            }
+                1 => dY == 1 ? 3 : 5,
+                -1 => dY == 1 ? 4 : 2,
+                _ => oldDy switch
+                {
+                    1 => dX == 1 ? 2 : 5,
+                    -1 => dX == 1 ? 4 : 3,
+                    _ => beam
+                }
+            };
         }
 
         spriteBatch.Draw(_beams,

@@ -16,22 +16,18 @@ public class ArenaManager : IActor
 
     private Texture2D _other;
 
-    private int _levelNumber;
-
-    private (int X, int Y) _mirrorPosition;
-    
     public Level Level { get; private set; }
 
     public (int X, int Y) LastMirrorPosition { get; private set; } = (-1, -1);
 
-    public (int X, int Y) MirrorPosition => _mirrorPosition;
+    public (int X, int Y) MirrorPosition { get; private set; }
 
     public char Mirror { get; private set; }
 
     public int LevelCount => _levelDataProvider.LevelCount;
 
-    public int LevelNumber => _levelNumber;
-    
+    public int LevelNumber { get; private set; }
+
     public ArenaManager(Input input)
     {
         _levelDataProvider = new LevelDataProvider();
@@ -50,7 +46,7 @@ public class ArenaManager : IActor
 
     public void SetLevel(int levelNumber)
     {
-        _levelNumber = levelNumber;
+        LevelNumber = levelNumber;
         
         Level = _levelDataProvider.GetLevel(levelNumber);
 
@@ -61,19 +57,19 @@ public class ArenaManager : IActor
 
     public void ResetLevel()
     {
-        SetLevel(_levelNumber);
+        SetLevel(LevelNumber);
     }
 
     public void NextLevel()
     {
-        _levelNumber++;
+        LevelNumber++;
 
-        if (_levelNumber > _levelDataProvider.LevelCount)
+        if (LevelNumber > _levelDataProvider.LevelCount)
         {
-            _levelNumber = 1;
+            LevelNumber = 1;
         }
 
-        SetLevel(_levelNumber);
+        SetLevel(LevelNumber);
     }
 
     public void PlaceMirror()
@@ -111,19 +107,19 @@ public class ArenaManager : IActor
     
     public void Update()
     {
-        LastMirrorPosition = _mirrorPosition;
+        LastMirrorPosition = MirrorPosition;
 
         var scaleFactor = AppSettings.Instance.ScaleFactor;
         
         var position = (X: (int) (_input.MouseX / scaleFactor), Y: (int) (_input.MouseY / scaleFactor));
 
-        if (position.X >= 0 && position.X < Constants.MapSize * Constants.TileSize && position.Y >= Constants.TopOffset && position.Y < Constants.MapSize * Constants.TileSize + Constants.TopOffset && Mirror != '\0')
+        if (position.X is >= 0 and < Constants.MapSize * Constants.TileSize && position.Y is >= Constants.TopOffset and < Constants.MapSize * Constants.TileSize + Constants.TopOffset && Mirror != '\0')
         {
-            _mirrorPosition = (position.X / Constants.TileSize, (position.Y - Constants.TopOffset) / Constants.TileSize);
+            MirrorPosition = (position.X / Constants.TileSize, (position.Y - Constants.TopOffset) / Constants.TileSize);
         }
         else
         {
-            _mirrorPosition = (-1, -1);
+            MirrorPosition = (-1, -1);
         }
     }
 
@@ -235,7 +231,7 @@ public class ArenaManager : IActor
                         : Color.FromNonPremultiplied(255, 255, 255, 25), 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
             }
 
-            if (y > 0 && y <= 10)
+            if (y is > 0 and <= 10)
             {
                 spriteBatch.Draw(_other,
                     new Vector2((Constants.MapSize + 1) * Constants.TileSize, Constants.TopOffset + y * Constants.TileSize),
