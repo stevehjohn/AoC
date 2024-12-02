@@ -4,7 +4,7 @@ namespace AoC.Solutions.Solutions._2024._02;
 
 public abstract class Base : Solution
 {
-    public override string Description => "Red-Nosed Reports";
+    public override string Description => "Red-nosed reports";
 
     private readonly int[] _levels = new int[8];
 
