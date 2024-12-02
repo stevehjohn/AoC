@@ -46,9 +46,7 @@ public class TestAllSolutions
             throw new TestException($"Please add the correct answer for {key} to AllAnswers.clear.");
         }
 
-        var instance = Activator.CreateInstance(solution) as Solution;
-
-        if (instance == null)
+        if (Activator.CreateInstance(solution) is not Solution instance)
         {
             throw new TestException($"Could not instantiate {solution.FullName}.");
         }
