@@ -11,7 +11,7 @@ public class Part2 : Base
     
         for (var i = 0; i < Input.Length; i++)
         {
-            var levels = Input[i].Split(' ');
+            var levels = GetLevels(Input[i]);
             
             if (IsSafe(levels))
             {
