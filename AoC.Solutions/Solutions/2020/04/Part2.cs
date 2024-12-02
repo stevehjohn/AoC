@@ -5,6 +5,8 @@ namespace AoC.Solutions.Solutions._2020._04;
 [UsedImplicitly]
 public class Part2 : Base
 {
+    private static readonly string[] SourceArray = ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"];
+
     public override string GetAnswer()
     {
         var validPassports = CountValidPassports();
@@ -104,7 +106,7 @@ public class Part2 : Base
 
     private static bool ValidateEyeColour(string value)
     {
-        return new[] { "amb", "blu", "brn", "gry", "grn", "hzl", "oth" }.Any(c => c == value);
+        return SourceArray.Any(c => c == value);
     }
 
     private static bool ValidatePassportId(string value)

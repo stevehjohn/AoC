@@ -29,18 +29,12 @@ public class Part1 : Base
 
     private void Visualise(int tileId)
     {
-        if (_visualiser != null)
-        {
-            _visualiser.PuzzleStateChanged(new PuzzleState { TileId = tileId });
-        }
+        _visualiser?.PuzzleStateChanged(new PuzzleState { TileId = tileId });
     }
 
     private void EndVisualisation()
     {
-        if (_visualiser != null)
-        {
-            _visualiser.PuzzleComplete();
-        }
+        _visualiser?.PuzzleComplete();
     }
 
     public override string GetAnswer()
