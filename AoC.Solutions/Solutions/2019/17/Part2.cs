@@ -59,19 +59,19 @@ public class Part2 : Base
     {
         var length = 2;
 
-        var last = input.Substring(0, length);
+        var last = input[..length];
 
         // ReSharper disable once StringIndexOfIsCultureSpecific.1
         while (input[1..].IndexOf(last) > -1)
         {
             length++; 
             
-            last = input.Substring(0, length);
+            last = input[..length];
         }
 
         while (! char.IsNumber(last[^1]))
         {
-            last = last.Substring(0, last.Length - 1);
+            last = last[..^1];
         }
 
         return last;

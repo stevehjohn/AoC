@@ -29,7 +29,7 @@ public class Part2 : Base
                 // ReSharper disable once CompareOfFloatsByEqualityOperator - Angles will match exactly
                 var asteroidsInLine = asteroidsWithAngle.Where(a => a.Angle == angle).ToList();
 
-                if (! asteroidsInLine.Any())
+                if (asteroidsInLine.Count == 0)
                 {
                     continue;
                 }

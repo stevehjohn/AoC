@@ -189,18 +189,18 @@ public abstract class Base : Solution
 
     private void SetCellType(int x, int y, CellType cellType)
     {
-        if (! _map.ContainsKey(x))
+        if (! _map.TryGetValue(x, out var value))
         {
-            _map.Add(x, new Dictionary<int, CellType>());
+            value = new Dictionary<int, CellType>();
+            
+            _map.Add(x, value);
         }
 
-        if (! _map[x].ContainsKey(y))
+        if (value.TryAdd(y, cellType))
         {
-            _map[x].Add(y, cellType);
-
             return;
         }
 
-        _map[x][y] = cellType;
+        value[y] = cellType;
     }
 }

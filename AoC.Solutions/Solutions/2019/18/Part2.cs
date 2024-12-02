@@ -36,10 +36,7 @@ public class Part2 : Base
 
     private void Visualise(string path = null)
     {
-        if (_visualiser != null)
-        {
-            _visualiser.PuzzleStateChanged(new PuzzleState { Map = Map, Path = path, Paths = Paths });
-        }
+        _visualiser?.PuzzleStateChanged(new PuzzleState { Map = Map, Path = path, Paths = Paths });
     }
 
     private int FindShortestPath()

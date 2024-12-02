@@ -40,15 +40,12 @@ public abstract class Base : Solution
                              ? 1
                              : -1;
 
-            switch (direction)
+            direction = direction switch
             {
-                case < 0:
-                    direction = 3;
-                    break;
-                case > 3:
-                    direction = 0;
-                    break;
-            }
+                < 0 => 3,
+                > 3 => 0,
+                _ => direction
+            };
 
             switch (direction)
             {
