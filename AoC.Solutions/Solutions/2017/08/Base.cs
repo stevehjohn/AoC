@@ -31,13 +31,9 @@ public abstract class Base : Solution
 
             if (conditionMet)
             {
-                if (registers.ContainsKey(operation.TargetRegister))
+                if (! registers.TryAdd(operation.TargetRegister, operation.Delta))
                 {
                     registers[operation.TargetRegister] += operation.Delta;
-                }
-                else
-                {
-                    registers.Add(operation.TargetRegister, operation.Delta);
                 }
             }
 

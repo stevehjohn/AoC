@@ -79,12 +79,14 @@ public abstract class Base : Solution
 
     private void GiveBotChip(int bot, int chip)
     {
-        if (! _bots.ContainsKey(bot))
+        if (! _bots.TryGetValue(bot, out var value))
         {
-            _bots.Add(bot, []);
+            value = [];
+            
+            _bots.Add(bot, value);
         }
 
-        _bots[bot].Add(chip);
+        value.Add(chip);
     }
 
     private void GiveOutputChip(int output, int chip)

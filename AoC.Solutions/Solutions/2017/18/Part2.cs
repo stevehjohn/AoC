@@ -36,7 +36,7 @@ public class Part2 : Base
 
             cpu2Output += cpu2.OutputQueue.Count;
 
-            if (cpu1.InputQueue.Count == 0 && cpu2.InputQueue.Count == 0)
+            if (cpu1.InputQueue.IsEmpty && cpu2.InputQueue.IsEmpty)
             {
                 break;
             }
