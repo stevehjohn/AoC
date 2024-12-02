@@ -17,6 +17,7 @@ public class Part2 : Base
 
         while (true)
         {
+            retry:
             var hash = MD5.HashData(Encoding.ASCII.GetBytes($"{prefix}{suffix}"));
 
             suffix++;
@@ -26,23 +27,27 @@ public class Part2 : Base
                 continue;
             }
 
-            var hex = Convert.ToHexString(hash);
-
-            var position = (hash[2] & 0b1111_0000) >> 4;
+            var position = hash[2] & 0b0000_1111;
 
             if (position > 7 || password[position] != '\0')
             {
                 continue;
             }
 
-            password[position] = hex[6];
+            var hex = Convert.ToHexString(new Span<byte>(hash).Slice(3, 1));
 
-            if (password.All(c => c != '\0'))
+            password[position] = hex[0];
+
+            for (var i = 0; i < 8; i++)
             {
-                break;
+                if (password[i] == 0)
+                {
+                    goto retry;
+                }
             }
+            
+            break;
         }
-
         return new string(password).ToLower();
     }
 }
