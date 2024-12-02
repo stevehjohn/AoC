@@ -52,48 +52,46 @@ public abstract class Base : Solution
 
         while (queue.Count > 0)
         {
-            var item = queue.Dequeue();
-
-            var position = item.Position;
+            var (position, i) = queue.Dequeue();
 
             if (destinationX > 0)
             {
                 if (position.X == destinationX && position.Y == destinationY)
                 {
-                    steps = item.Steps;
+                    steps = i;
 
                     break;
                 }
             }
-            else if (item.Steps <= 50)
+            else if (i <= 50)
             {
                 locations++;
             }
 
             if (position.Y > 0 && ! _maze[position.X, position.Y - 1] && ! visited.Contains(new Point(position.X, position.Y - 1)))
             {
-                queue.Enqueue((new Point(position.X, position.Y - 1), item.Steps + 1), item.Steps + 1);
+                queue.Enqueue((new Point(position.X, position.Y - 1), i + 1), i + 1);
 
                 visited.Add(new Point(position.X, position.Y - 1));
             }
 
             if (position.X < Width - 1 && ! _maze[position.X + 1, position.Y] && ! visited.Contains(new Point(position.X + 1, position.Y)))
             {
-                queue.Enqueue((new Point(position.X + 1, position.Y), item.Steps + 1), item.Steps + 1);
+                queue.Enqueue((new Point(position.X + 1, position.Y), i + 1), i + 1);
 
                 visited.Add(new Point(position.X + 1, position.Y));
             }
 
             if (position.Y < Height - 1 && ! _maze[position.X, position.Y + 1] && ! visited.Contains(new Point(position.X, position.Y + 1)))
             {
-                queue.Enqueue((new Point(position.X, position.Y + 1), item.Steps + 1), item.Steps + 1);
+                queue.Enqueue((new Point(position.X, position.Y + 1), i + 1), i + 1);
 
                 visited.Add(new Point(position.X, position.Y + 1));
             }
 
             if (position.X > 0 && ! _maze[position.X - 1, position.Y] && ! visited.Contains(new Point(position.X - 1, position.Y)))
             {
-                queue.Enqueue((new Point(position.X - 1, position.Y), item.Steps + 1), item.Steps + 1);
+                queue.Enqueue((new Point(position.X - 1, position.Y), i + 1), i + 1);
 
                 visited.Add(new Point(position.X - 1, position.Y));
             }

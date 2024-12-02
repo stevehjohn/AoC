@@ -71,28 +71,14 @@ public static class Cpu
 
                     var toToggle = input[programCounter + value][..3];
 
-                    var toggled = string.Empty;
-
-                    switch (toToggle)
+                    var toggled = toToggle switch
                     {
-                        case "inc":
-                            toggled = "dec";
-
-                            break;
-                        case "dec":
-                        case "tgl":
-                            toggled = "inc";
-
-                            break;
-                        case "jnz":
-                            toggled = "cpy";
-
-                            break;
-                        case "cpy":
-                            toggled = "jnz";
-
-                            break;
-                    }
+                        "inc" => "dec",
+                        "dec" or "tgl" => "inc",
+                        "jnz" => "cpy",
+                        "cpy" => "jnz",
+                        _ => string.Empty
+                    };
 
                     input[programCounter + value] = $"{toggled} {input[programCounter + value][4..]}";
 

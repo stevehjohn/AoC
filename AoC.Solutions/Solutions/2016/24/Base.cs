@@ -81,13 +81,11 @@ public abstract class Base : Solution
 
         while (queue.Count > 0)
         {
-            var item = queue.Dequeue();
-
-            var position = item.Position;
+            var (position, steps) = queue.Dequeue();
 
             if (position.Equals(b))
             {
-                return item.Steps;
+                return steps;
             }
 
             if (! _map[position.X, position.Y - 1])
@@ -96,7 +94,7 @@ public abstract class Base : Solution
 
                 if (! visited.Contains(newPosition))
                 {
-                    queue.Enqueue((newPosition, item.Steps + 1), item.Steps + 1);
+                    queue.Enqueue((newPosition, steps + 1), steps + 1);
 
                     visited.Add(newPosition);
                 }
@@ -108,7 +106,7 @@ public abstract class Base : Solution
 
                 if (! visited.Contains(newPosition))
                 {
-                    queue.Enqueue((newPosition, item.Steps + 1), item.Steps + 1);
+                    queue.Enqueue((newPosition, steps + 1), steps + 1);
 
                     visited.Add(newPosition);
                 }
@@ -120,7 +118,7 @@ public abstract class Base : Solution
 
                 if (! visited.Contains(newPosition))
                 {
-                    queue.Enqueue((newPosition, item.Steps + 1), item.Steps + 1);
+                    queue.Enqueue((newPosition, steps + 1), steps + 1);
 
                     visited.Add(newPosition);
                 }
@@ -132,7 +130,7 @@ public abstract class Base : Solution
 
                 if (! visited.Contains(newPosition))
                 {
-                    queue.Enqueue((newPosition, item.Steps + 1), item.Steps + 1);
+                    queue.Enqueue((newPosition, steps + 1), steps + 1);
 
                     visited.Add(newPosition);
                 }

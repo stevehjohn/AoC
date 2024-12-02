@@ -19,13 +19,11 @@ public abstract class Base : Solution
 
         while (queue.Count > 0)
         {
-            var item = queue.Dequeue();
-
-            var state = item.State;
+            var (state, steps) = queue.Dequeue();
 
             if ((state[0] & 0xFFFFFFFF) == 0 && (state[1] & 0xFFFFFFFF) == 0 && (state[2] & 0xFFFFFFFF) == 0)
             {
-                return item.Steps;
+                return steps;
             }
 
             var nextStates = GetPossibleNextStates(state);
@@ -36,7 +34,7 @@ public abstract class Base : Solution
 
                 if (! visited.Contains(nextHash))
                 {
-                    queue.Enqueue((next, item.Steps + 1), -(item.Steps + 1));
+                    queue.Enqueue((next, steps + 1), -(steps + 1));
 
                     visited.Add(nextHash);
                 }
