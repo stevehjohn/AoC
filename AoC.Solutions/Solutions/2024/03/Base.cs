@@ -4,5 +4,5 @@ namespace AoC.Solutions.Solutions._2024._03;
 
 public abstract class Base : Solution
 {
-    public override string Description => "Puzzle 03";
+    public override string Description => "Mull it over";
 }
