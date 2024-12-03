@@ -12,10 +12,10 @@ public class Part1 : Base
         var program = string.Join(string.Empty, Input);
         
         var index = 0;
-
+        
         while (index < program.Length)
         {
-            var result = FindNextMulInstruction(program, index);
+            var result = FindNextInstruction(program, "mul(", index);
 
             if (result.Index == -1)
             {
