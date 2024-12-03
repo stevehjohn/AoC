@@ -8,45 +8,50 @@ public class Part1 : Base
     public override string GetAnswer()
     {
         var answer = 0L;
-        
-        var index = 0;
 
-        while (index < Input[0].Length)
+        for (var i = 0; i < Input.Length; i++)
         {
-            var result = FindNextMulInstruction(index);
-            
-            if (result.Index == -1)
+            var index = 0;
+
+            while (index < Input[i].Length)
             {
-                break;
+                var result = FindNextMulInstruction(Input[i], index);
+
+                if (result.Index == -1)
+                {
+                    break;
+                }
+
+                var returnValue = ParseMulInstruction(result.Instruction);
+
+                if (returnValue == int.MinValue)
+                {
+                    index += 1;
+
+                    continue;
+                }
+
+                index = result.Index + 1;
+
+                answer += returnValue;
             }
-
-            index = result.Index + 1;
-
-            var returnValue = ParseMulInstruction(result.Instruction);
-
-            if (returnValue == int.MinValue)
-            {
-                continue;
-            }
-
-            answer += returnValue;
         }
 
         return answer.ToString();
     }
 
-    private (int Index, string Instruction) FindNextMulInstruction(int index)
+    private static (int Index, string Instruction) FindNextMulInstruction(string line, int index)
     {
-        index = Input[0].IndexOf("mul", index, StringComparison.InvariantCultureIgnoreCase);
+        index = line.IndexOf("mul(", index, StringComparison.InvariantCultureIgnoreCase);
 
         if (index == -1)
         {
             return (-1, null);
         }
 
-        var end = Input[0].IndexOf(")", index + 1, StringComparison.InvariantCultureIgnoreCase);
+        var end = line.IndexOf(")", index + 1, StringComparison.InvariantCultureIgnoreCase);
 
-        return (index, Input[0][index..(end + 1)]);
+        return (index, line[index..(end + 1)]);
     }
 
     private static int ParseMulInstruction(string instruction)
