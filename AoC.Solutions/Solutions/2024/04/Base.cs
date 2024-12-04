@@ -6,23 +6,23 @@ public abstract class Base : Solution
 {
     public override string Description => "Ceres search";
 
-    protected readonly (int Left, int Up)[] Directions = [(-1, 0), (0, -1), (1, 0), (0, 1), (-1, -1), (-1, 1), (1, -1), (1, 1)];
+    private readonly (int Left, int Up)[] _directions = [(-1, 0), (0, -1), (1, 0), (0, 1), (-1, -1), (-1, 1), (1, -1), (1, 1)];
 
-    protected int Width;
+    private int _width;
 
-    protected int Height;
+    private int _height;
     
     protected int ScanPuzzle()
     {
-        Width = Input[0].Length;
+        _width = Input[0].Length;
 
-        Height = Input.Length;
+        _height = Input.Length;
         
         var count = 0;
         
-        for (var y = 0; y < Height; y++)
+        for (var y = 0; y < _height; y++)
         {
-            for (var x = 0; x < Width; x++)
+            for (var x = 0; x < _width; x++)
             {
                 count += CheckCell(x, y);
             }
@@ -31,5 +31,57 @@ public abstract class Base : Solution
         return count;
     }
 
-    protected abstract int CheckCell(int x, int y);
+    private int CheckCell(int x, int y)
+    {
+        const string word = "XMAS";
+        
+        if (Input[y][x] != word[0])
+        {
+            return 0;
+        }
+
+        var count = 0;
+
+        for (var d = 0; d < _directions.Length; d++)
+        {
+            var direction = _directions[d];
+
+            var found = true;
+            
+            for (var i = 1; i < word.Length; i++)
+            {
+                var checkX = x + direction.Left * i;
+
+                if (checkX < 0 || checkX >= _width)
+                {
+                    found = false;
+                    
+                    break;
+                }
+
+                var checkY = y + direction.Up * i;
+
+                if (checkY < 0 || checkY >= _height)
+                {
+                    found = false;
+                    
+                    break;
+                }
+
+                if (Input[checkY][checkX] != word[i])
+                {
+                    found = false;
+                    
+                    break;
+                }
+            }
+
+            if (found)
+            {
+                count++;
+            }
+        }
+
+        return count;
+    }
 }
