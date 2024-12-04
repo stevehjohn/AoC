@@ -101,7 +101,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 19.1: 5μs           The Josephus problem
  2016 19.2: 0μs           
  2016 20.1: 262μs         Firewall rules
- 2016 20.2: 4,970μs       
+ 2016 20.2: 4,864μs       
  2016 21.1: 21μs          Scrambled letters and hash
  2016 21.2: 25μs          
  2016 22.1: 302,054μs     Grid computing
@@ -238,7 +238,7 @@ Tests performed on a 2023 MacBook Pro.
  2019  9.2: 28,505μs      
  2019 10.1: 18,082μs      Asteroids
  2019 10.2: 1,678μs       
- 2019 11.1: 94,276μs      Personal plate (CPU used unmodified)
+ 2019 11.1: 93,568μs      Personal plate (CPU used unmodified)
  2019 11.2: 789μs         
  2019 12.1: 503μs         Orbital simulation
  2019 12.2: 66,543μs      
@@ -289,7 +289,7 @@ Tests performed on a 2023 MacBook Pro.
  2020  9.1: 517μs         Cypher cracking
  2020  9.2: 30μs          
  2020 10.1: 24μs          Joltage meter
- 2020 10.2: 29μs          
+ 2020 10.2: 28μs          
  2020 11.1: 3,212μs       Conway's game of seating
  2020 11.2: 42,532μs      
  2020 12.1: 22μs          Evergreen ship sailing
@@ -475,18 +475,20 @@ Tests performed on a 2023 MacBook Pro.
  2023 23.2: 71,409μs      
  2023 24.1: 1,578μs       Never tell me the odds
  2023 24.2: 5,631μs       
- 2023 25.1: 11,659μs      Snowverload
+ 2023 25.1: 10,476μs      Snowverload
             -------------
-            407.852ms    
+            406.669ms    
 
  2024  1.1: 125μs         Historian hysteria
  2024  1.2: 97μs          
  2024  2.1: 173μs         Red-nosed reports
  2024  2.2: 341μs         
- 2024  3.1: 0μs           Mull it over
- 2024  3.2: 0μs           
+ 2024  3.1: 977μs         Mull it over
+ 2024  3.2: 957μs         
+ 2024  4.1: 316μs         Ceres search
+ 2024  4.2: 132μs         
             -------------
-            0.736ms      
+            1.184ms      
 
- 448 puzzles solved in 51.135ms.
+ 450 puzzles solved in 51.133ms.
 ```
