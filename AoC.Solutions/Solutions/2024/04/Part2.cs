@@ -57,6 +57,13 @@ public class Part2 : Base
 
     private bool CheckOpposingCells(int x, int y, int dX, int dY)
     {
-        return Input[y - dY][x - dX] == 'M' && Input[y + dY][x + dX] == 'S';
+        var found = Input[y - dY][x - dX] == 'M' && Input[y + dY][x + dX] == 'S';
+
+        if (found)
+        {
+            Console.WriteLine($"{x},{y}");
+        }
+
+        return found;
     }
 }
