@@ -7,6 +7,8 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        return "Unknown";
+        var result = ScanPuzzle();
+        
+        return result.ToString();
     }
 }
