@@ -5,7 +5,6 @@ namespace AoC.Solutions.Solutions._2024._04;
 [UsedImplicitly]
 public class Part1 : Base
 {
-
     private readonly (int Left, int Up)[] _directions = [(-1, 0), (0, -1), (1, 0), (0, 1), (-1, -1), (-1, 1), (1, -1), (1, 1)];
 
     private int _width;
