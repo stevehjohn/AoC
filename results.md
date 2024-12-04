@@ -486,7 +486,7 @@ Tests performed on a 2023 MacBook Pro.
  2024  3.1: 977μs         Mull it over
  2024  3.2: 957μs         
  2024  4.1: 316μs         Ceres search
- 2024  4.2: 132μs         
+ 2024  4.2: 103μs         
             -------------
             1.184ms      
 
