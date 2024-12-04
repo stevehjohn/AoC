@@ -53,27 +53,23 @@ public class Part1 : Base
         {
             var direction = _directions[d];
 
+            if (direction.Left == -1 && x < 3 || direction.Left == 1 && x > _width - 4)
+            {
+                continue;
+            }
+
+            if (direction.Up == -1 && y < 3 || direction.Up == 1 && y > _height - 4)
+            {
+                continue;
+            }
+
             var found = true;
             
             for (var i = 1; i < word.Length; i++)
             {
                 var checkX = x + direction.Left * i;
 
-                if (checkX < 0 || checkX >= _width)
-                {
-                    found = false;
-                    
-                    break;
-                }
-
                 var checkY = y + direction.Up * i;
-
-                if (checkY < 0 || checkY >= _height)
-                {
-                    found = false;
-                    
-                    break;
-                }
 
                 if (Input[checkY][checkX] != word[i])
                 {
