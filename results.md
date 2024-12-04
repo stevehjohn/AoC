@@ -94,7 +94,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 15.2: 3,444μs       
  2016 16.1: 6μs           Dragon checksum
  2016 16.2: 232,558μs     
- 2016 17.1: 23μs          Two steps forward
+ 2016 17.1: 22μs          Two steps forward
  2016 17.2: 25,856μs      
  2016 18.1: 76μs          Like a rogue
  2016 18.2: 463,680μs     
@@ -322,7 +322,7 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             1.247s       
 
- 2021  1.1: 52μs          Depth scan
+ 2021  1.1: 51μs          Depth scan
  2021  1.2: 159μs         
  2021  2.1: 45μs          Navigate forward
  2021  2.2: 45μs          
@@ -483,12 +483,12 @@ Tests performed on a 2023 MacBook Pro.
  2024  1.2: 97μs          
  2024  2.1: 173μs         Red-nosed reports
  2024  2.2: 341μs         
- 2024  3.1: 977μs         Mull it over
- 2024  3.2: 957μs         
- 2024  4.1: 316μs         Ceres search
- 2024  4.2: 103μs         
+ 2024  3.1: 967μs         Mull it over
+ 2024  3.2: 939μs         
+ 2024  4.1: 307μs         Ceres search
+ 2024  4.2: 99μs          
             -------------
-            1.184ms      
+            3.048ms      
 
- 450 puzzles solved in 51.133ms.
+ 450 puzzles solved in 51.135ms.
 ```
