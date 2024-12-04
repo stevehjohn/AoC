@@ -47,12 +47,8 @@ public class Part2 : Base
         count += CheckOpposingCells(x, y, -1, -1) ? 1 : 0;
 
         count += CheckOpposingCells(x, y, 1, -1) ? 1 : 0;
-
-        count += CheckOpposingCells(x, y, -1, 1) ? 1 : 0;
-
-        count += CheckOpposingCells(x, y, -1, 1) ? 1 : 0;
         
-        return count == 4;
+        return count == 2;
     }
 
     private bool CheckOpposingCells(int x, int y, int dX, int dY)
