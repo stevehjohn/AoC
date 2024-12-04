@@ -28,18 +28,18 @@ public class Part2 : Base
         {
             for (var x = 1; x < _width - 1; x++)
             {
-                count += CheckCell(x, y);
+                count += CheckCell(x, y) ? 1 : 0;
             }
         }
 
         return count;
     }
     
-    private int CheckCell(int x, int y)
+    private bool CheckCell(int x, int y)
     {
         if (Input[y][x] != 'A')
         {
-            return 0;
+            return false;
         }
 
         var count = 0;
@@ -52,17 +52,14 @@ public class Part2 : Base
 
         count += CheckOpposingCells(x, y, -1, 1) ? 1 : 0;
         
-        return count;
+        return count == 4;
     }
 
     private bool CheckOpposingCells(int x, int y, int dX, int dY)
     {
         var found = Input[y - dY][x - dX] == 'M' && Input[y + dY][x + dX] == 'S';
-
-        if (found)
-        {
-            Console.WriteLine($"{x},{y}");
-        }
+        
+        found |= Input[y - dY][x - dX] == 'S' && Input[y + dY][x + dX] == 'M';
 
         return found;
     }
