@@ -282,7 +282,7 @@ Tests performed on a 2023 MacBook Pro.
  2020  5.2: 280μs         
  2020  6.1: 207μs         Customs questions
  2020  6.2: 1,706μs       
- 2020  7.1: 11,410μs      Recursive bag packing
+ 2020  7.1: 11,370μs      Recursive bag packing
  2020  7.2: 973μs         
  2020  8.1: 9μs           Console assembly debugging
  2020  8.2: 2,601μs       
@@ -320,7 +320,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 24.2: 194,557μs     
  2020 25.1: 45,815μs      Door cryptography
             -------------
-            1.247s       
+            1.246s       
 
  2021  1.1: 51μs          Depth scan
  2021  1.2: 159μs         
@@ -460,7 +460,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 16.1: 137μs         The floor will be lava
  2023 16.2: 5,963μs       
  2023 17.1: 45,127μs      Clumsy crucible
- 2023 17.2: 48,140μs      
+ 2023 17.2: 47,906μs      
  2023 18.1: 87μs          Lavaduct lagoon
  2023 18.2: 98μs          
  2023 19.1: 224μs         Aplenty
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,631μs       
  2023 25.1: 10,476μs      Snowverload
             -------------
-            406.668ms    
+            406.434ms    
 
  2024  1.1: 125μs         Historian hysteria
  2024  1.2: 97μs          
@@ -488,9 +488,9 @@ Tests performed on a 2023 MacBook Pro.
  2024  4.1: 295μs         Ceres search
  2024  4.2: 97μs          
  2024  5.1: 125μs         Print queue
- 2024  5.2: 2,946μs       
+ 2024  5.2: 2,120μs       
             -------------
-            6.079ms      
+            5.253ms      
 
- 452 puzzles solved in 51.134ms.
+ 452 puzzles solved in 51.133ms.
 ```
