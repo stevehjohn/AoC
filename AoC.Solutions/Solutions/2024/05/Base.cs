@@ -22,13 +22,22 @@ public abstract class Base : Solution
 
             var right = int.Parse(parts[1]);
             
-            if (Rules.TryGetValue(left, out var rule))
+            if (Rules.TryGetValue(left, out var leftRule))
             {
-                rule.Add(right);
+                leftRule.Add(right);
             }
             else
             {
                 Rules.Add(left, [right]);
+            }   
+            
+            if (Rules.TryGetValue(right, out var rightRule))
+            {
+                rightRule.Add(left);
+            }
+            else
+            {
+                Rules.Add(right, [left]);
             }
 
             i++;

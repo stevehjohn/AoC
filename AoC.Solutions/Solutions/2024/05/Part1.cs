@@ -26,6 +26,13 @@ public class Part1 : Base
 
     private bool IsCorrect(List<int> update)
     {
-        return true;
+        var ordered = true;
+        
+        for (var i = 0; i < update.Count; i++)
+        {
+            
+        }
+
+        return ordered;
     }
 }
