@@ -376,7 +376,7 @@ Tests performed on a 2023 MacBook Pro.
             3.934s       
 
  2022  1.1: 24μs          Calorie counting
- 2022  1.2: 36μs          
+ 2022  1.2: 35μs          
  2022  2.1: 37μs          Rock paper scissors
  2022  2.2: 32μs          
  2022  3.1: 73μs          Rucksack reorganization
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 60,123μs      
  2022 25.1: 10μs          Full of hot air
             -------------
-            306.640ms    
+            306.639ms    
 
  2023  1.1: 120μs         Trebuchet
  2023  1.2: 338μs         
@@ -483,14 +483,14 @@ Tests performed on a 2023 MacBook Pro.
  2024  1.2: 97μs          
  2024  2.1: 173μs         Red-nosed reports
  2024  2.2: 341μs         
- 2024  3.1: 967μs         Mull it over
+ 2024  3.1: 963μs         Mull it over
  2024  3.2: 934μs         
  2024  4.1: 295μs         Ceres search
- 2024  4.2: 99μs          
- 2024  5.1: 133μs         Print queue
+ 2024  4.2: 97μs          
+ 2024  5.1: 126μs         Print queue
  2024  5.2: 53,799μs      
             -------------
-            56.963ms     
+            56.950ms     
 
  452 puzzles solved in 51.187ms.
 ```
