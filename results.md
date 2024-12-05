@@ -123,7 +123,7 @@ Tests performed on a 2023 MacBook Pro.
  2017  4.1: 137μs         Passphrase validation
  2017  4.2: 407,059μs     
  2017  5.1: 512μs         Memory trampoline
- 2017  5.2: 48,425μs      
+ 2017  5.2: 48,324μs      
  2017  6.1: 6,525μs       Garbage collection
  2017  6.2: 8,729μs       
  2017  7.1: 244μs         Balancing act
@@ -178,7 +178,7 @@ Tests performed on a 2023 MacBook Pro.
  2018  5.2: 37,012μs      
  2018  6.1: 9,471μs       Safe coordinates
  2018  6.2: 6,345μs       
- 2018  7.1: 53μs          Ikea sleigh
+ 2018  7.1: 51μs          Ikea sleigh
  2018  7.2: 225μs         
  2018  8.1: 46,974μs      Navigation licensing
  2018  8.2: 22,592μs      
@@ -281,7 +281,7 @@ Tests performed on a 2023 MacBook Pro.
  2020  5.1: 121μs         Boarding parse
  2020  5.2: 280μs         
  2020  6.1: 207μs         Customs questions
- 2020  6.2: 1,706μs       
+ 2020  6.2: 1,642μs       
  2020  7.1: 11,370μs      Recursive bag packing
  2020  7.2: 973μs         
  2020  8.1: 9μs           Console assembly debugging
@@ -460,7 +460,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 16.1: 137μs         The floor will be lava
  2023 16.2: 5,963μs       
  2023 17.1: 45,127μs      Clumsy crucible
- 2023 17.2: 47,906μs      
+ 2023 17.2: 47,300μs      
  2023 18.1: 87μs          Lavaduct lagoon
  2023 18.2: 98μs          
  2023 19.1: 224μs         Aplenty
@@ -470,27 +470,27 @@ Tests performed on a 2023 MacBook Pro.
  2023 21.1: 57μs          Step counter
  2023 21.2: 439μs         
  2023 22.1: 38,164μs      Sand slabs
- 2023 22.2: 76,927μs      
+ 2023 22.2: 76,660μs      
  2023 23.1: 12,081μs      A long walk
  2023 23.2: 71,409μs      
  2023 24.1: 1,578μs       Never tell me the odds
  2023 24.2: 5,631μs       
  2023 25.1: 10,476μs      Snowverload
             -------------
-            406.434ms    
+            405.561ms    
 
  2024  1.1: 125μs         Historian hysteria
  2024  1.2: 97μs          
  2024  2.1: 173μs         Red-nosed reports
  2024  2.2: 341μs         
- 2024  3.1: 953μs         Mull it over
- 2024  3.2: 927μs         
- 2024  4.1: 295μs         Ceres search
+ 2024  3.1: 944μs         Mull it over
+ 2024  3.2: 922μs         
+ 2024  4.1: 286μs         Ceres search
  2024  4.2: 97μs          
  2024  5.1: 125μs         Print queue
- 2024  5.2: 2,120μs       
+ 2024  5.2: 1,918μs       
             -------------
-            5.253ms      
+            5.028ms      
 
- 452 puzzles solved in 51.133ms.
+ 452 puzzles solved in 51.132ms.
 ```

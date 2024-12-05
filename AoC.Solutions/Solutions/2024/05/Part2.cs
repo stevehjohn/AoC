@@ -63,7 +63,9 @@ public class Part2 : Base
                     {
                         (update[leftIndex], update[rightIndex]) = (update[rightIndex], update[leftIndex]);
 
-                        (indices[left], indices[right]) = (indices[right], indices[left]);
+                        indices[left] = rightIndex;
+
+                        indices[right] = leftIndex;
 
                         swapped = true;
                     }
