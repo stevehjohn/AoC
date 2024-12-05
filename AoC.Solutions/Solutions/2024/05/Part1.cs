@@ -26,13 +26,11 @@ public class Part1 : Base
 
     private bool IsCorrect(List<int> update)
     {
-        var ordered = true;
-        
         for (var i = 0; i < update.Count; i++)
         {
             if (i > 0)
             {
-                if (Rules[update[i + 1]].Any(r => r == update[i]))
+                if (Rules[update[i]].Any(r => r == update[i - 1]))
                 {
                     return false;
                 }
@@ -40,13 +38,13 @@ public class Part1 : Base
 
             if (i < update.Count - 1)
             {
-                if (Rules[update[i]].Any(r => r == update[i - 1]))
+                if (Rules[update[i]].Any(r => r == update[i + 1]))
                 {
                     return false;
                 }
             }
         }
 
-        return ordered;
+        return true;
     }
 }
