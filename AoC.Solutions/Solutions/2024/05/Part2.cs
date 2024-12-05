@@ -54,7 +54,7 @@ public class Part2 : Base
                             continue;
                         }
 
-                        var leftIndex = indices[right];
+                        var leftIndex = indices[left];
 
                         if (leftIndex > rightIndex)
                         {
