@@ -43,6 +43,11 @@ public class Part2 : Base
                     
             foreach (var (left, value) in Rules)
             {
+                if (indices[left] == -1)
+                {
+                    continue;
+                }
+
                 foreach (var right in value)
                 {
                     var rightIndex = indices[right];
