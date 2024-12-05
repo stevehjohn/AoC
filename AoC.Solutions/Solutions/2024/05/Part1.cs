@@ -30,7 +30,7 @@ public class Part1 : Base
         {
             if (i > 0)
             {
-                if (Rules[update[i]].Any(r => r == update[i - 1]))
+                if (Rules[update[i - 1]].Any(r => r == update[i]))
                 {
                     return false;
                 }
