@@ -28,6 +28,15 @@ public class Part2 : Base
     {
         var swapped = true;
 
+        var indices = new int[100];
+        
+        Array.Fill(indices, -1);
+
+        for (var i = 0; i < update.Length; i++)
+        {
+            indices[update[i]] = i;
+        }
+
         while (swapped)
         {
             swapped = false;
@@ -38,18 +47,20 @@ public class Part2 : Base
                 {
                     for (var i = 0; i < update.Length - 1; i++)
                     {
-                        var rightIndex = Array.IndexOf(update, right);
+                        var rightIndex = indices[right];
 
                         if (rightIndex == -1)
                         {
                             continue;
                         }
 
-                        var leftIndex = Array.IndexOf(update, left);
+                        var leftIndex = indices[right];
 
                         if (leftIndex > rightIndex)
                         {
                             (update[leftIndex], update[rightIndex]) = (update[rightIndex], update[leftIndex]);
+
+                            (indices[left], indices[right]) = (indices[right], indices[left]);
 
                             swapped = true;
                             
