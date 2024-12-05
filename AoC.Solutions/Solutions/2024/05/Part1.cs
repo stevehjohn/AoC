@@ -26,23 +26,34 @@ public class Part1 : Base
 
     private bool IsCorrect(List<int> update)
     {
+        int left;
+
+        int right;
+        
         for (var i = 0; i < update.Count; i++)
         {
             if (i > 0)
             {
-                if (Rules[update[i - 1]].Any(r => r == update[i]))
+                left = update[i - 1];
+
+                right = update[i];
+
+                if (Rules.TryGetValue(right, out var rules))
                 {
-                    return false;
+                    if (rules.Contains(left))
+                    {
+                        return false;
+                    }
                 }
             }
 
-            if (i < update.Count - 1)
-            {
-                if (Rules[update[i]].Any(r => r == update[i + 1]))
-                {
-                    return false;
-                }
-            }
+            // if (i < update.Count - 1)
+            // {
+            //     if (Rules[update[i]].Any(r => r == update[i + 1]))
+            //     {
+            //         return false;
+            //     }
+            // }
         }
 
         return true;
