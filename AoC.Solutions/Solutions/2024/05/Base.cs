@@ -43,4 +43,27 @@ public abstract class Base : Solution
             i++;
         }
     }
+
+    protected bool IsCorrect(List<int> update)
+    {
+        for (var i = 0; i < update.Count; i++)
+        {
+            if (i > 0)
+            {
+                var left = update[i - 1];
+
+                var right = update[i];
+
+                if (Rules.TryGetValue(right, out var rules))
+                {
+                    if (rules.Contains(left))
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
 }
