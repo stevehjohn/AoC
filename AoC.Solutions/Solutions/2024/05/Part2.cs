@@ -38,14 +38,14 @@ public class Part2 : Base
                 {
                     for (var i = 0; i < update.Length - 1; i++)
                     {
-                        var leftIndex = Array.IndexOf(update, left);
-
                         var rightIndex = Array.IndexOf(update, right);
 
                         if (rightIndex == -1)
                         {
                             continue;
                         }
+
+                        var leftIndex = Array.IndexOf(update, left);
 
                         if (leftIndex > rightIndex)
                         {
