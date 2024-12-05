@@ -380,7 +380,7 @@ Tests performed on a 2023 MacBook Pro.
  2022  2.1: 37μs          Rock paper scissors
  2022  2.2: 32μs          
  2022  3.1: 73μs          Rucksack reorganization
- 2022  3.2: 56μs          
+ 2022  3.2: 54μs          
  2022  4.1: 117μs         Camp cleanup
  2022  4.2: 116μs         
  2022  5.1: 97μs          Supply stacks
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 60,123μs      
  2022 25.1: 10μs          Full of hot air
             -------------
-            306.639ms    
+            306.637ms    
 
  2023  1.1: 120μs         Trebuchet
  2023  1.2: 338μs         
@@ -438,7 +438,7 @@ Tests performed on a 2023 MacBook Pro.
  2023  5.1: 36μs          If you give a seed a fertilizer
  2023  5.2: 132μs         
  2023  6.1: 2μs           Wait for it
- 2023  6.2: 42μs          
+ 2023  6.2: 40μs          
  2023  7.1: 596μs         Camel cards
  2023  7.2: 644μs         
  2023  8.1: 424μs         Haunted wasteland
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,631μs       
  2023 25.1: 10,476μs      Snowverload
             -------------
-            405.561ms    
+            405.559ms    
 
  2024  1.1: 125μs         Historian hysteria
  2024  1.2: 97μs          
@@ -488,9 +488,9 @@ Tests performed on a 2023 MacBook Pro.
  2024  4.1: 286μs         Ceres search
  2024  4.2: 97μs          
  2024  5.1: 125μs         Print queue
- 2024  5.2: 1,918μs       
+ 2024  5.2: 1,891μs       
             -------------
-            5.028ms      
+            5.001ms      
 
  452 puzzles solved in 51.132ms.
 ```
