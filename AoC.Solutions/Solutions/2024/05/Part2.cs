@@ -26,32 +26,41 @@ public class Part2 : Base
 
     private int GetOrderedMiddle(List<int> update)
     {
-        foreach (var rule in Rules)
+        var swapped = true;
+
+        while (swapped)
         {
-            var left = rule.Key;
-
-            foreach (var right in rule.Value)
+            swapped = false;
+                    
+            foreach (var rule in Rules)
             {
-                for (var i = 0; i < update.Count - 1; i++)
+                var left = rule.Key;
+
+                foreach (var right in rule.Value)
                 {
-                    var leftIndex = update.IndexOf(left);
-
-                    var rightIndex = update.IndexOf(right);
-
-                    if (rightIndex == -1)
+                    for (var i = 0; i < update.Count - 1; i++)
                     {
-                        continue;
-                    }
+                        var leftIndex = update.IndexOf(left);
 
-                    if (leftIndex > rightIndex)
-                    {
-                        (update[leftIndex], update[rightIndex]) = (update[rightIndex], update[leftIndex]);
+                        var rightIndex = update.IndexOf(right);
+
+                        if (rightIndex == -1)
+                        {
+                            continue;
+                        }
+
+                        if (leftIndex > rightIndex)
+                        {
+                            (update[leftIndex], update[rightIndex]) = (update[rightIndex], update[leftIndex]);
+
+                            swapped = true;
+                            
+                            break;
+                        }
                     }
                 }
             }
         }
-        
-        Console.WriteLine(string.Join(", ", update));
 
         return update[update.Count / 2];
     }
