@@ -238,7 +238,7 @@ Tests performed on a 2023 MacBook Pro.
  2019  9.2: 28,505μs      
  2019 10.1: 18,082μs      Asteroids
  2019 10.2: 1,678μs       
- 2019 11.1: 91,853μs      Personal plate (CPU used unmodified)
+ 2019 11.1: 89,536μs      Personal plate (CPU used unmodified)
  2019 11.2: 789μs         
  2019 12.1: 503μs         Orbital simulation
  2019 12.2: 66,543μs      
@@ -268,7 +268,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 24.2: 7,433μs       
  2019 25.1: 272,715μs     Airlock password (CPU used unmodified)
             -------------
-            1.399s       
+            1.397s       
 
  2020  1.1: 25μs          Expenses
  2020  1.2: 106μs         
@@ -483,14 +483,14 @@ Tests performed on a 2023 MacBook Pro.
  2024  1.2: 97μs          
  2024  2.1: 173μs         Red-nosed reports
  2024  2.2: 341μs         
- 2024  3.1: 963μs         Mull it over
- 2024  3.2: 934μs         
+ 2024  3.1: 953μs         Mull it over
+ 2024  3.2: 927μs         
  2024  4.1: 295μs         Ceres search
  2024  4.2: 97μs          
  2024  5.1: 126μs         Print queue
- 2024  5.2: 53,799μs      
+ 2024  5.2: 40,266μs      
             -------------
-            56.950ms     
+            43.400ms     
 
- 452 puzzles solved in 51.187ms.
+ 452 puzzles solved in 51.171ms.
 ```
