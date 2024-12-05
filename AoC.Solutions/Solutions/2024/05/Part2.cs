@@ -62,7 +62,7 @@ public class Part2 : Base
 
                         swapped = true;
                         
-                        break;
+                        //break;
                     }
                 }
             }
