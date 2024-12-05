@@ -48,6 +48,8 @@ public class Part2 : Base
                     continue;
                 }
 
+                var leftIndex = indices[left];
+
                 foreach (var right in value)
                 {
                     var rightIndex = indices[right];
@@ -56,8 +58,6 @@ public class Part2 : Base
                     {
                         continue;
                     }
-
-                    var leftIndex = indices[left];
 
                     if (leftIndex > rightIndex)
                     {
