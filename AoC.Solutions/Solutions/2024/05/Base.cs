@@ -8,7 +8,7 @@ public abstract class Base : Solution
 
     protected readonly Dictionary<int, List<int>> Rules = [];
 
-    protected readonly List<List<int>> _updates = [];
+    protected readonly List<List<int>> Updates = [];
     
     protected void ParseInput()
     {
@@ -38,7 +38,7 @@ public abstract class Base : Solution
 
         while (i < Input.Length)
         {
-            _updates.Add(Input[i].Split(',').Select(int.Parse).ToList());
+            Updates.Add(Input[i].Split(',').Select(int.Parse).ToList());
 
             i++;
         }

@@ -8,7 +8,24 @@ public class Part1 : Base
     public override string GetAnswer()
     {
         ParseInput();
-        
-        throw new NotImplementedException();
+
+        var result = 0;
+
+        for (var i = 0; i < Updates.Count; i++)
+        {
+            var update = Updates[i];
+
+            if (IsCorrect(update))
+            {
+                result += update[update.Count / 2];
+            }
+        }
+
+        return result.ToString();
+    }
+
+    private bool IsCorrect(List<int> update)
+    {
+        return true;
     }
 }
