@@ -487,10 +487,10 @@ Tests performed on a 2023 MacBook Pro.
  2024  3.2: 927μs         
  2024  4.1: 295μs         Ceres search
  2024  4.2: 97μs          
- 2024  5.1: 126μs         Print queue
- 2024  5.2: 40,266μs      
+ 2024  5.1: 125μs         Print queue
+ 2024  5.2: 6,954μs       
             -------------
-            43.400ms     
+            10.087ms     
 
- 452 puzzles solved in 51.171ms.
+ 452 puzzles solved in 51.138ms.
 ```
