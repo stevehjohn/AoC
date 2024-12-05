@@ -68,6 +68,8 @@ public class Part2 : Base
                         indices[right] = leftIndex;
 
                         swapped = true;
+                        
+                        break;
                     }
                 }
             }
