@@ -25,7 +25,7 @@ Tests performed on a 2023 MacBook Pro.
  2015  7.1: 95μs          Logic gates
  2015  7.2: 93μs          
  2015  8.1: 28μs          Matchsticks
- 2015  8.2: 35μs          
+ 2015  8.2: 34μs          
  2015  9.1: 13,039μs      All in a single night
  2015  9.2: 12,825μs      
  2015 10.1: 3,823μs       Elves look, elves say
@@ -62,7 +62,7 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             6.381s       
 
- 2016  1.1: 9μs           Manhattan distance
+ 2016  1.1: 8μs           Manhattan distance
  2016  1.2: 16μs          
  2016  2.1: 16μs          Bathroom security
  2016  2.2: 17μs          
@@ -488,9 +488,9 @@ Tests performed on a 2023 MacBook Pro.
  2024  4.1: 295μs         Ceres search
  2024  4.2: 97μs          
  2024  5.1: 125μs         Print queue
- 2024  5.2: 6,954μs       
+ 2024  5.2: 2,946μs       
             -------------
-            10.087ms     
+            6.079ms      
 
- 452 puzzles solved in 51.138ms.
+ 452 puzzles solved in 51.134ms.
 ```

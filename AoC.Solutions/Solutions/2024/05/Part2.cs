@@ -45,27 +45,24 @@ public class Part2 : Base
             {
                 foreach (var right in value)
                 {
-                    for (var i = 0; i < update.Length - 1; i++)
+                    var rightIndex = indices[right];
+
+                    if (rightIndex == -1)
                     {
-                        var rightIndex = indices[right];
+                        continue;
+                    }
 
-                        if (rightIndex == -1)
-                        {
-                            continue;
-                        }
+                    var leftIndex = indices[left];
 
-                        var leftIndex = indices[left];
+                    if (leftIndex > rightIndex)
+                    {
+                        (update[leftIndex], update[rightIndex]) = (update[rightIndex], update[leftIndex]);
 
-                        if (leftIndex > rightIndex)
-                        {
-                            (update[leftIndex], update[rightIndex]) = (update[rightIndex], update[leftIndex]);
+                        (indices[left], indices[right]) = (indices[right], indices[left]);
 
-                            (indices[left], indices[right]) = (indices[right], indices[left]);
-
-                            swapped = true;
-                            
-                            break;
-                        }
+                        swapped = true;
+                        
+                        break;
                     }
                 }
             }
