@@ -238,7 +238,7 @@ Tests performed on a 2023 MacBook Pro.
  2019  9.2: 28,505μs      
  2019 10.1: 18,082μs      Asteroids
  2019 10.2: 1,678μs       
- 2019 11.1: 93,568μs      Personal plate (CPU used unmodified)
+ 2019 11.1: 91,853μs      Personal plate (CPU used unmodified)
  2019 11.2: 789μs         
  2019 12.1: 503μs         Orbital simulation
  2019 12.2: 66,543μs      
@@ -268,7 +268,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 24.2: 7,433μs       
  2019 25.1: 272,715μs     Airlock password (CPU used unmodified)
             -------------
-            1.401s       
+            1.399s       
 
  2020  1.1: 25μs          Expenses
  2020  1.2: 106μs         
@@ -438,7 +438,7 @@ Tests performed on a 2023 MacBook Pro.
  2023  5.1: 36μs          If you give a seed a fertilizer
  2023  5.2: 132μs         
  2023  6.1: 2μs           Wait for it
- 2023  6.2: 43μs          
+ 2023  6.2: 42μs          
  2023  7.1: 596μs         Camel cards
  2023  7.2: 644μs         
  2023  8.1: 424μs         Haunted wasteland
@@ -477,18 +477,20 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,631μs       
  2023 25.1: 10,476μs      Snowverload
             -------------
-            406.669ms    
+            406.668ms    
 
  2024  1.1: 125μs         Historian hysteria
  2024  1.2: 97μs          
  2024  2.1: 173μs         Red-nosed reports
  2024  2.2: 341μs         
  2024  3.1: 967μs         Mull it over
- 2024  3.2: 939μs         
- 2024  4.1: 307μs         Ceres search
+ 2024  3.2: 934μs         
+ 2024  4.1: 295μs         Ceres search
  2024  4.2: 99μs          
+ 2024  5.1: 133μs         Print queue
+ 2024  5.2: 53,799μs      
             -------------
-            3.048ms      
+            56.963ms     
 
- 450 puzzles solved in 51.135ms.
+ 452 puzzles solved in 51.187ms.
 ```
