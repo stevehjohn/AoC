@@ -8,7 +8,7 @@ public abstract class Base : Solution
 
     protected readonly Dictionary<int, List<int>> Rules = [];
 
-    protected readonly List<List<int>> Updates = [];
+    protected readonly List<int[]> Updates = [];
     
     protected void ParseInput()
     {
@@ -38,15 +38,15 @@ public abstract class Base : Solution
 
         while (i < Input.Length)
         {
-            Updates.Add(Input[i].Split(',').Select(int.Parse).ToList());
+            Updates.Add(Input[i].Split(',').Select(int.Parse).ToArray());
 
             i++;
         }
     }
 
-    protected bool IsCorrect(List<int> update)
+    protected bool IsCorrect(int[] update)
     {
-        for (var i = 0; i < update.Count; i++)
+        for (var i = 0; i < update.Length; i++)
         {
             if (i > 0)
             {

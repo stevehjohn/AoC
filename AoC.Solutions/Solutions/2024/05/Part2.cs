@@ -24,7 +24,7 @@ public class Part2 : Base
         return result.ToString();
     }
 
-    private int GetOrderedMiddle(List<int> update)
+    private int GetOrderedMiddle(int[] update)
     {
         var swapped = true;
 
@@ -38,11 +38,11 @@ public class Part2 : Base
 
                 foreach (var right in rule.Value)
                 {
-                    for (var i = 0; i < update.Count - 1; i++)
+                    for (var i = 0; i < update.Length - 1; i++)
                     {
-                        var leftIndex = update.IndexOf(left);
+                        var leftIndex = Array.IndexOf(update, left);
 
-                        var rightIndex = update.IndexOf(right);
+                        var rightIndex = Array.IndexOf(update, right);
 
                         if (rightIndex == -1)
                         {
@@ -62,6 +62,6 @@ public class Part2 : Base
             }
         }
 
-        return update[update.Count / 2];
+        return update[update.Length / 2];
     }
 }

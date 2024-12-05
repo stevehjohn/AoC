@@ -17,7 +17,7 @@ public class Part1 : Base
 
             if (IsCorrect(update))
             {
-                result += update[update.Count / 2];
+                result += update[update.Length / 2];
             }
         }
 
