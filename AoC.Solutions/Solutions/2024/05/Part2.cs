@@ -61,8 +61,6 @@ public class Part2 : Base
                         (indices[left], indices[right]) = (indices[right], indices[left]);
 
                         swapped = true;
-                        
-                        //break;
                     }
                 }
             }
