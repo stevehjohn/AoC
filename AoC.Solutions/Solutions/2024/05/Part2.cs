@@ -32,11 +32,9 @@ public class Part2 : Base
         {
             swapped = false;
                     
-            foreach (var rule in Rules)
+            foreach (var (left, value) in Rules)
             {
-                var left = rule.Key;
-
-                foreach (var right in rule.Value)
+                foreach (var right in value)
                 {
                     for (var i = 0; i < update.Length - 1; i++)
                     {
