@@ -19,8 +19,6 @@ public abstract class Base : Solution
 
     private readonly HashSet<(int, int, int, int)> _turns = [];
 
-    private (int X, int Y) _position;
-
     protected void ParseInput()
     {
         Map = Input.To2DArray();
@@ -35,8 +33,6 @@ public abstract class Base : Solution
             {
                 if (Map[x, y] == '^')
                 {
-                    _position = (x, y);
-
                     StartPosition = (x, y);
                     
                     break;
@@ -47,9 +43,9 @@ public abstract class Base : Solution
 
     protected int WalkMap(bool detectLoops = false)
     {
-        var x = _position.X;
+        var x = StartPosition.X;
 
-        var y = _position.Y;
+        var y = StartPosition.Y;
 
         var dX = 0;
 
