@@ -71,55 +71,55 @@ public class Part2 : Base
         var max = 0;
 
         int energised;
-        
+
         for (var x = 0; x < Width; x++)
         {
             var result = SimulateBeams(x, -1, 'S');
-        
+
             energised = CountEnergised(result);
-        
+
             if (energised > max)
             {
                 max = energised;
             }
         }
-        
+
         for (var y = 0; y < Height; y++)
         {
-            var result =SimulateBeams(Width, y, 'W');
-        
+            var result = SimulateBeams(Width, y, 'W');
+
             energised = CountEnergised(result);
-        
+
             if (energised > max)
             {
                 max = energised;
             }
         }
-        
+
         for (var x = Width - 1; x >= 0; x--)
         {
-            var result =SimulateBeams(x, Height, 'N');
-        
+            var result = SimulateBeams(x, Height, 'N');
+
             energised = CountEnergised(result);
-        
+
             if (energised > max)
             {
                 max = energised;
             }
         }
-        
+
         for (var y = Height - 1; y >= 0; y--)
         {
-            var result =SimulateBeams(-1, y, 'E');
-        
+            var result = SimulateBeams(-1, y, 'E');
+
             energised = CountEnergised(result);
-        
+
             if (energised > max)
             {
                 max = energised;
             }
         }
-        
+
         return max.ToString();
     }
 }
