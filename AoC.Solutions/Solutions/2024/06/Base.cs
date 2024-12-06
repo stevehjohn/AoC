@@ -45,7 +45,7 @@ public abstract class Base : Solution
         }
     }
 
-    protected int WalkMap()
+    protected int WalkMap(bool detectLoops = false)
     {
         var x = _position.X;
 
@@ -70,7 +70,7 @@ public abstract class Base : Solution
 
             if (Map[x, y] == '#')
             {
-                if (! _turns.Add((x, y, dX, dY)))
+                if (detectLoops && ! _turns.Add((x, y, dX, dY)))
                 {
                     return -1;
                 }
@@ -84,7 +84,10 @@ public abstract class Base : Solution
                 continue;
             }
 
-            _visited.Add(x + y * Width);
+            if (! detectLoops)
+            {
+                _visited.Add(x + y * Width);
+            }
         }
 
         return _visited.Count;

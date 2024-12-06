@@ -22,7 +22,7 @@ public class Part2 : Base
 
                 Map[x, y] = '#';
                 
-                var result = WalkMap();
+                var result = WalkMap(true);
 
                 if (result == -1)
                 {
