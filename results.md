@@ -116,7 +116,7 @@ Tests performed on a 2023 MacBook Pro.
 
  2017  1.1: 9μs           Captcha
  2017  1.2: 10μs          
- 2017  2.1: 12μs          Spreadsheet checksum
+ 2017  2.1: 11μs          Spreadsheet checksum
  2017  2.2: 24μs          
  2017  3.1: 0μs           Spiral memory
  2017  3.2: 20μs          
@@ -124,8 +124,8 @@ Tests performed on a 2023 MacBook Pro.
  2017  4.2: 407,059μs     
  2017  5.1: 512μs         Memory trampoline
  2017  5.2: 48,324μs      
- 2017  6.1: 6,525μs       Garbage collection
- 2017  6.2: 8,729μs       
+ 2017  6.1: 3,406μs       Garbage collection
+ 2017  6.2: 7,370μs       
  2017  7.1: 244μs         Balancing act
  2017  7.2: 259μs         
  2017  8.1: 187μs         I heard you like registers
@@ -164,7 +164,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 24.2: 115,858μs     
  2017 25.1: 125,512μs     Turing tape
             -------------
-            2.375s       
+            2.371s       
 
  2018  1.1: 19μs          Tardis calibration
  2018  1.2: 3,880μs       
@@ -488,11 +488,11 @@ Tests performed on a 2023 MacBook Pro.
  2024  4.1: 286μs         Ceres search
  2024  4.2: 97μs          
  2024  5.1: 125μs         Print queue
- 2024  5.2: 1,891μs       
- 2024  6.1: 494μs         Guard Gallivant
- 2024  6.2: 25,160,407μs  
+ 2024  5.2: 1,874μs       
+ 2024  6.1: 403μs         Guard gallivant
+ 2024  6.2: 312,836μs     
             -------------
-            25.165s      
+            317.419ms    
 
- 454 puzzles solved in 76.292ms.
+ 454 puzzles solved in 51.440ms.
 ```
