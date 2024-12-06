@@ -490,9 +490,11 @@ Tests performed on a 2023 MacBook Pro.
  2024  5.1: 125μs         Print queue
  2024  5.2: 1,874μs       
  2024  6.1: 403μs         Guard gallivant
- 2024  6.2: 312,836μs     
+ 2024  6.2: 98,408μs      
+ 2024  7.1: 0μs           Puzzle 07
+ 2024  7.2: 0μs           
             -------------
-            317.419ms    
+            102.991ms    
 
- 454 puzzles solved in 51.440ms.
+ 456 puzzles solved in 51.225ms.
 ```
