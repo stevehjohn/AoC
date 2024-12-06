@@ -6,7 +6,7 @@ namespace AoC.Solutions.Solutions._2024._06;
 
 public abstract class Base : Solution
 {
-    public override string Description => "Guard Gallivant";
+    public override string Description => "Guard gallivant";
 
     protected int Width;
 
@@ -17,7 +17,7 @@ public abstract class Base : Solution
     protected (int X, int Y) StartPosition;
 
     private readonly HashSet<int> _visited = [];
-    
+
     private (int X, int Y) _position;
 
     protected void ParseInput()
@@ -53,7 +53,7 @@ public abstract class Base : Solution
         var dX = 0;
 
         var dY = -1;
-
+        
         var sw = Stopwatch.StartNew();
         
         while (true)
@@ -62,7 +62,7 @@ public abstract class Base : Solution
             {
                 return -1;
             }
-
+            
             x += dX;
 
             y += dY;
