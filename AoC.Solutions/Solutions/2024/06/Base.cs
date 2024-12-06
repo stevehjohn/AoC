@@ -7,33 +7,35 @@ public abstract class Base : Solution
 {
     public override string Description => "Guard Gallivant";
 
-    private char[,] _map;
+    protected int Width;
 
-    private int _width;
+    protected int Height;
 
-    private int _height;
+    protected char[,] Map;
 
-    private (int X, int Y) _position;
+    protected (int X, int Y) StartPosition;
 
     private readonly HashSet<int> _visited = [];
     
+    private (int X, int Y) _position;
+
     protected void ParseInput()
     {
-        _map = Input.To2DArray();
+        Map = Input.To2DArray();
 
-        _width = _map.GetUpperBound(0);
+        Width = Map.GetUpperBound(0);
 
-        _height = _map.GetUpperBound(1);
+        Height = Map.GetUpperBound(1);
 
-        for (var x = 0; x < _width; x++)
+        for (var x = 0; x < Width; x++)
         {
-            for (var y = 0; y < _height; y++)
+            for (var y = 0; y < Height; y++)
             {
-                if (_map[x, y] == '^')
+                if (Map[x, y] == '^')
                 {
-                    _position.X = x;
+                    _position = (x, y);
 
-                    _position.Y = y;
+                    StartPosition = (x, y);
                     
                     break;
                 }
@@ -57,12 +59,12 @@ public abstract class Base : Solution
 
             y += dY;
 
-            if (x < 0 || x > _width || y < 0 || y > _height)
+            if (x < 0 || x > Width || y < 0 || y > Height)
             {
                 break;
             }
 
-            if (_map[x, y] == '#')
+            if (Map[x, y] == '#')
             {
                 x -= dX;
 
@@ -73,7 +75,7 @@ public abstract class Base : Solution
                 continue;
             }
 
-            _visited.Add(x + y * _width);
+            _visited.Add(x + y * Width);
         }
 
         return _visited.Count;

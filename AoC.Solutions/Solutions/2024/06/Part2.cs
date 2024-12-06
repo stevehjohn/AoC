@@ -9,8 +9,30 @@ public class Part2 : Base
     {
         ParseInput();
 
-        var result = WalkMap();
+        var count = 0;
         
-        return result.ToString();
+        for (var y = 0; y < Height; y++)
+        {
+            for (var x = 0; x < Width; x++)
+            {
+                if (Map[x, y] == '#' || (x == StartPosition.X && y == StartPosition.Y))
+                {
+                    continue;
+                }
+
+                Map[x, y] = '#';
+                
+                var result = WalkMap();
+
+                if (result == -1)
+                {
+                    count++;
+                }
+
+                Map[x, y] = '.';
+            }
+        }
+
+        return count.ToString();
     }
 }
