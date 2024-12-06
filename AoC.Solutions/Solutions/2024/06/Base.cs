@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
@@ -53,8 +54,15 @@ public abstract class Base : Solution
 
         var dY = -1;
 
+        var sw = Stopwatch.StartNew();
+        
         while (true)
         {
+            if (sw.ElapsedMilliseconds > 10)
+            {
+                return -1;
+            }
+
             x += dX;
 
             y += dY;
