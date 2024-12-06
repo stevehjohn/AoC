@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
@@ -17,6 +16,8 @@ public abstract class Base : Solution
     protected (int X, int Y) StartPosition;
 
     private readonly HashSet<int> _visited = [];
+
+    private readonly HashSet<(int, int, int, int)> _turns = [];
 
     private (int X, int Y) _position;
 
@@ -54,15 +55,10 @@ public abstract class Base : Solution
 
         var dY = -1;
         
-        var sw = Stopwatch.StartNew();
+        _turns.Clear();
         
         while (true)
         {
-            if (sw.ElapsedMilliseconds > 10)
-            {
-                return -1;
-            }
-            
             x += dX;
 
             y += dY;
@@ -74,6 +70,11 @@ public abstract class Base : Solution
 
             if (Map[x, y] == '#')
             {
+                if (! _turns.Add((x, y, dX, dY)))
+                {
+                    return -1;
+                }
+
                 x -= dX;
 
                 y -= dY;
