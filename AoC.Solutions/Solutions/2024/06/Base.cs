@@ -14,6 +14,8 @@ public abstract class Base : Solution
     private int _height;
 
     private (int X, int Y) _position;
+
+    private HashSet<int> _visited = [];
     
     protected void ParseInput()
     {
@@ -49,15 +51,13 @@ public abstract class Base : Solution
 
         var dY = -1;
 
-        var steps = 0;
-
         while (true)
         {
             x += dX;
 
             y += dY;
 
-            if (x < 0 || x == _width || y < 0 || y == _height)
+            if (x < 0 || x > _width || y < 0 || y > _height)
             {
                 break;
             }
@@ -68,14 +68,14 @@ public abstract class Base : Solution
 
                 y -= dY;
 
-                (dX, dY) = (-dY, -dX);
-                
+                (dX, dY) = (-dY, dX);
+
                 continue;
             }
 
-            steps++;
+            _visited.Add(x + y * _width);
         }
 
-        return steps;
+        return _visited.Count;
     }
 }
