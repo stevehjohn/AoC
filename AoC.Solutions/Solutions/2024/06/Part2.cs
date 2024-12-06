@@ -10,12 +10,19 @@ public class Part2 : Base
         ParseInput();
 
         var count = 0;
+
+        WalkMap();
         
         for (var y = 0; y < Height; y++)
         {
             for (var x = 0; x < Width; x++)
             {
                 if (Map[x, y] == '#' || (x == StartPosition.X && y == StartPosition.Y))
+                {
+                    continue;
+                }
+
+                if (! Visited.Contains(x + y * Width))
                 {
                     continue;
                 }

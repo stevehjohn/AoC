@@ -15,7 +15,7 @@ public abstract class Base : Solution
 
     protected (int X, int Y) StartPosition;
 
-    private readonly HashSet<int> _visited = [];
+    protected readonly HashSet<int> Visited = [];
 
     private readonly HashSet<(int, int, int, int)> _turns = [];
 
@@ -86,10 +86,10 @@ public abstract class Base : Solution
 
             if (! detectLoops)
             {
-                _visited.Add(x + y * Width);
+                Visited.Add(x + y * Width);
             }
         }
 
-        return _visited.Count;
+        return Visited.Count;
     }
 }
