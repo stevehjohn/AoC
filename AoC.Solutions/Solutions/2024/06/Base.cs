@@ -15,7 +15,7 @@ public abstract class Base : Solution
 
     private (int X, int Y) _position;
 
-    private HashSet<int> _visited = [];
+    private readonly HashSet<int> _visited = [];
     
     protected void ParseInput()
     {

@@ -7,6 +7,10 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        return "Unknown";
+        ParseInput();
+
+        var result = WalkMap();
+        
+        return result.ToString();
     }
 }
