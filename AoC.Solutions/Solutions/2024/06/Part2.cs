@@ -17,12 +17,7 @@ public class Part2 : Base
         {
             for (var x = 0; x < Width; x++)
             {
-                if (Map[x, y] == '#' || (x == StartPosition.X && y == StartPosition.Y))
-                {
-                    continue;
-                }
-
-                if (! Visited.Contains(x + y * Width))
+                if (Map[x, y] != '*')
                 {
                     continue;
                 }
@@ -36,7 +31,7 @@ public class Part2 : Base
                     count++;
                 }
 
-                Map[x, y] = '.';
+                Map[x, y] = '*';
             }
         }
 

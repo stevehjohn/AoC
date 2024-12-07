@@ -87,6 +87,8 @@ public abstract class Base : Solution
             if (! detectLoops)
             {
                 Visited.Add(x + y * Width);
+
+                Map[x, y] = '*';
             }
         }
 
