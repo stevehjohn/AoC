@@ -18,12 +18,7 @@ public abstract class Base : Solution
 
             var components = parts[1].Split(' ').Select(long.Parse).ToArray();
 
-            var total = ProcessLineSimple(expected, components);
-            
-            if (isPart2 && total == 0)
-            {
-                total = ProcessLineComplex(expected, components);
-            }
+            var total = isPart2 ? ProcessLineComplex(expected, components) : ProcessLineSimple(expected, components);
 
             if (total > 0)
             {
@@ -65,41 +60,42 @@ public abstract class Base : Solution
 
         return 0;
     }
-
+    
     private static long ProcessLineComplex(long expected, long[] components)
     {
-        for (var i = 0; i < Math.Pow(3, components.Length); i++)
+        long EvaluateRecursive(int index, long currentTotal)
         {
-            var current = i;
+            if (currentTotal > expected)
+            {
+                return 0;
+            }
 
-            var left = components[0];
+            if (index == components.Length)
+            {
+                return currentTotal == expected ? currentTotal : 0;
+            }
+
+            var result = EvaluateRecursive(index + 1, currentTotal + components[index]);
             
-            for (var j = 0; j < components.Length - 1; j++)
+            if (result > 0)
             {
-                switch (current % 3)
-                {
-                    case 0:
-                        left += components[j + 1];
-                        break;
-                
-                    case 1:
-                        left *= components[j + 1];
-                        break;
-                
-                    default:
-                        left = long.Parse($"{left}{components[j + 1]}");
-                        break;
-                }
-
-                current /= 3;
+                return result;
             }
 
-            if (left == expected)
+            result = EvaluateRecursive(index + 1, currentTotal * components[index]);
+
+            if (result > 0)
             {
-                return left;
+                return result;
             }
+
+            var concatenated = long.Parse($"{currentTotal}{components[index]}");
+
+            result = EvaluateRecursive(index + 1, concatenated);
+
+            return result;
         }
 
-        return 0;
+        return EvaluateRecursive(1, components[0]);
     }
 }
