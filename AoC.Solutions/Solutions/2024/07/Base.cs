@@ -83,7 +83,14 @@ public abstract class Base : Solution
 
         var digits = (long) Math.Floor(Math.Log10(components[index]) + 1);
 
-        result = ProcessThreeOperators(expected, components, index + 1, currentTotal * (long) Math.Pow(10, digits) + components[index]);
+        var pow = 1;
+        
+        for (var i = 0; i < digits; i++)
+        {
+            pow *= 10;
+        }
+
+        result = ProcessThreeOperators(expected, components, index + 1, currentTotal * pow + components[index]);
 
         return result;
     }
