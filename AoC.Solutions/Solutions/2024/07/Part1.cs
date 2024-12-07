@@ -30,7 +30,7 @@ public class Part1 : Base
 
         var components = parts[1].Split(' ').Select(long.Parse).ToList();
 
-        for (var i = 0; i < components.Count * components.Count; i++)
+        for (var i = 0; i < Math.Pow(2, components.Count); i++)
         {
             var test = 0L;
             
