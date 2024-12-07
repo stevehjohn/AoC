@@ -18,20 +18,20 @@ public abstract class Base : Solution
 
             var components = parts[1].Split(' ').Select(long.Parse).ToArray();
 
-            var total = isPart2 
-                ? ProcessLineComplex(expected, components, 1, components[0]) 
-                : ProcessLineSimple(expected, components, 1, components[0]);
+            var total = isPart2
+                ? ProcessThreeOperators(expected, components, 1, components[0])
+                : ProcessTwoOperators(expected, components, 1, components[0]);
 
             if (total > 0)
             {
                 result += total;
             }
         }
-        
+
         return result.ToString();
     }
-        
-    private static long ProcessLineSimple(long expected, long[] components, int index, long currentTotal)
+
+    private static long ProcessTwoOperators(long expected, long[] components, int index, long currentTotal)
     {
         if (currentTotal > expected)
         {
@@ -43,19 +43,19 @@ public abstract class Base : Solution
             return currentTotal == expected ? currentTotal : 0;
         }
 
-        var result = ProcessLineSimple(expected, components, index + 1, currentTotal + components[index]);
-            
+        var result = ProcessTwoOperators(expected, components, index + 1, currentTotal + components[index]);
+
         if (result > 0)
         {
             return result;
         }
 
-        result = ProcessLineSimple(expected, components, index + 1, currentTotal * components[index]);
+        result = ProcessTwoOperators(expected, components, index + 1, currentTotal * components[index]);
 
         return result;
     }
 
-    private static long ProcessLineComplex(long expected, long[] components, int index, long currentTotal)
+    private static long ProcessThreeOperators(long expected, long[] components, int index, long currentTotal)
     {
         if (currentTotal > expected)
         {
@@ -67,23 +67,23 @@ public abstract class Base : Solution
             return currentTotal == expected ? currentTotal : 0;
         }
 
-        var result = ProcessLineComplex(expected, components, index + 1, currentTotal + components[index]);
-            
-        if (result > 0)
-        {
-            return result;
-        }
-
-        result = ProcessLineComplex(expected, components, index + 1, currentTotal * components[index]);
+        var result = ProcessThreeOperators(expected, components, index + 1, currentTotal + components[index]);
 
         if (result > 0)
         {
             return result;
         }
-        
+
+        result = ProcessThreeOperators(expected, components, index + 1, currentTotal * components[index]);
+
+        if (result > 0)
+        {
+            return result;
+        }
+
         var digits = (long) Math.Floor(Math.Log10(components[index]) + 1);
-        
-        result = ProcessLineComplex(expected, components, index + 1, currentTotal * (long)Math.Pow(10, digits) + components[index]);
+
+        result = ProcessThreeOperators(expected, components, index + 1, currentTotal * (long) Math.Pow(10, digits) + components[index]);
 
         return result;
     }
