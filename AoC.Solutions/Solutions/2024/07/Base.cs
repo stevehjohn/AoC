@@ -68,7 +68,7 @@ public abstract class Base : Solution
 
             }
 
-            var test = Evaluate(components, operators);
+            var test = Evaluate(total, components, operators);
             
             if (test == total)
             {
@@ -79,7 +79,7 @@ public abstract class Base : Solution
         return 0;
     }
 
-    private static long Evaluate(List<long> values, List<int> operators)
+    private static long Evaluate(long expected, List<long> values, List<int> operators)
     {
         var left = values[0];
         
@@ -98,6 +98,11 @@ public abstract class Base : Solution
                 default:
                     left = long.Parse($"{left}{values[i + 1]}");
                     break;
+            }
+
+            if (left > expected)
+            {
+                return 0;
             }
         }
         
