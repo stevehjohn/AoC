@@ -12,10 +12,10 @@ public abstract class Base : Solution
     protected int Height;
 
     protected char[,] Map;
+    
+    private readonly HashSet<int> _visited = [];
 
-    protected (int X, int Y) StartPosition;
-
-    protected readonly HashSet<int> Visited = [];
+    private (int X, int Y) _startPosition;
 
     private bool[,,,] _turns;
 
@@ -33,7 +33,7 @@ public abstract class Base : Solution
             {
                 if (Map[x, y] == '^')
                 {
-                    StartPosition = (x, y);
+                    _startPosition = (x, y);
                     
                     break;
                 }
@@ -45,9 +45,9 @@ public abstract class Base : Solution
 
     protected int WalkMap(bool detectLoops = false)
     {
-        var x = StartPosition.X;
+        var x = _startPosition.X;
 
-        var y = StartPosition.Y;
+        var y = _startPosition.Y;
 
         var dX = 0;
 
@@ -86,12 +86,12 @@ public abstract class Base : Solution
 
             if (! detectLoops)
             {
-                Visited.Add(x + y * Width);
+                _visited.Add(x + y * Width);
 
                 Map[x, y] = '*';
             }
         }
 
-        return Visited.Count;
+        return _visited.Count;
     }
 }
