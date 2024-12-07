@@ -68,57 +68,43 @@ public abstract class Base : Solution
 
     private static long ProcessLineComplex(long expected, long[] components)
     {
-        var operators = new int[components.Length - 1];
-        
         for (var i = 0; i < Math.Pow(3, components.Length); i++)
         {
             var current = i;
+
+            var left = components[0];
             
             for (var j = 0; j < components.Length - 1; j++)
             {
-                operators[j] = current % 3;
+                switch (current % 3)
+                {
+                    case 0:
+                        left += components[j + 1];
+                        break;
                 
+                    case 1:
+                        left *= components[j + 1];
+                        break;
+                
+                    default:
+                        left = long.Parse($"{left}{components[j + 1]}");
+                        break;
+                }
+
+                // if (left > expected)
+                // {
+                //     return 0;
+                // }
+
                 current /= 3;
             }
-
-            var total = Evaluate(expected, components, operators);
             
-            if (total == expected)
+            if (left == expected)
             {
-                return total;
+                return left;
             }
         }
 
         return 0;
-    }
-
-    private static long Evaluate(long expected, long[] values, int[] operators)
-    {
-        var left = values[0];
-        
-        for (var i = 0; i < operators.Length; i++)
-        {
-            switch (operators[i])
-            {
-                case 0:
-                    left += values[i + 1];
-                    break;
-                
-                case 1:
-                    left *= values[i + 1];
-                    break;
-                
-                default:
-                    left = long.Parse($"{left}{values[i + 1]}");
-                    break;
-            }
-
-            if (left > expected)
-            {
-                return 0;
-            }
-        }
-        
-        return left;
     }
 }
