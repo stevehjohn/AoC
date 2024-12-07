@@ -28,6 +28,11 @@ public abstract class Base : Solution
                 {
                     test *= components[j];
                 }
+
+                if (test > total)
+                {
+                    break;
+                }
             }
 
             if (test == total)
