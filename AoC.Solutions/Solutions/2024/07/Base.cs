@@ -80,8 +80,10 @@ public abstract class Base : Solution
         {
             return result;
         }
-
-        result = ProcessLineComplex(expected, components, index + 1, long.Parse($"{currentTotal}{components[index]}"));
+        
+        var digits = (long) Math.Floor(Math.Log10(components[index]) + 1);
+        
+        result = ProcessLineComplex(expected, components, index + 1, currentTotal * (long)Math.Pow(10, digits) + components[index]);
 
         return result;
     }
