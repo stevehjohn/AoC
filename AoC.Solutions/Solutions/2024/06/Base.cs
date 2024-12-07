@@ -17,7 +17,7 @@ public abstract class Base : Solution
 
     protected readonly HashSet<int> Visited = [];
 
-    private readonly HashSet<(int, int, int, int)> _turns = [];
+    private bool[,,,] _turns;
 
     protected void ParseInput()
     {
@@ -39,6 +39,8 @@ public abstract class Base : Solution
                 }
             }
         }
+
+        _turns = new bool[Width + 1, Height + 1, 3, 3];
     }
 
     protected int WalkMap(bool detectLoops = false)
@@ -51,7 +53,7 @@ public abstract class Base : Solution
 
         var dY = -1;
         
-        _turns.Clear();
+        Array.Clear(_turns);
         
         while (true)
         {
@@ -66,10 +68,12 @@ public abstract class Base : Solution
 
             if (Map[x, y] == '#')
             {
-                if (detectLoops && ! _turns.Add((x, y, dX, dY)))
+                if (detectLoops && _turns[x, y, dX + 1, dY + 1])
                 {
                     return -1;
                 }
+
+                _turns[x, y, dX + 1, dY + 1] = true;
 
                 x -= dX;
 
