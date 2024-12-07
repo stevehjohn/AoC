@@ -40,7 +40,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 14.2: 1,385μs       
  2015 15.1: 727μs         Science for hungry people
  2015 15.2: 724μs         
- 2015 16.1: 30μs          Aunt Sue
+ 2015 16.1: 26μs          Aunt Sue
  2015 16.2: 109μs         
  2015 17.1: 126,203μs     Too much eggnog
  2015 17.2: 497,501μs     
@@ -488,13 +488,13 @@ Tests performed on a 2023 MacBook Pro.
  2024  4.1: 286μs         Ceres search
  2024  4.2: 97μs          
  2024  5.1: 125μs         Print queue
- 2024  5.2: 1,874μs       
- 2024  6.1: 403μs         Guard gallivant
- 2024  6.2: 41,285μs      
+ 2024  5.2: 1,866μs       
+ 2024  6.1: 399μs         Guard gallivant
+ 2024  6.2: 41,019μs      
  2024  7.1: 0μs           Puzzle 07
  2024  7.2: 0μs           
             -------------
-            45.868ms     
+            45.590ms     
 
  456 puzzles solved in 51.168ms.
 ```
