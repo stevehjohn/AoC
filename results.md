@@ -90,10 +90,10 @@ Tests performed on a 2023 MacBook Pro.
  2016 13.2: 86μs          
  2016 14.1: 10,381μs      One time pad
  2016 14.2: 9,365,593μs   
- 2016 15.1: 469μs         Disc timing
+ 2016 15.1: 468μs         Disc timing
  2016 15.2: 3,444μs       
  2016 16.1: 6μs           Dragon checksum
- 2016 16.2: 232,558μs     
+ 2016 16.2: 232,494μs     
  2016 17.1: 21μs          Two steps forward
  2016 17.2: 25,856μs      
  2016 18.1: 76μs          Like a rogue
@@ -492,9 +492,11 @@ Tests performed on a 2023 MacBook Pro.
  2024  6.1: 389μs         Guard gallivant
  2024  6.2: 35,035μs      
  2024  7.1: 195μs         Bridge repair
- 2024  7.2: 6,419μs       
+ 2024  7.2: 6,184μs       
+ 2024  8.1: 0μs           Puzzle 08
+ 2024  8.2: 0μs           
             -------------
-            46.177ms     
+            45.942ms     
 
- 456 puzzles solved in 51.163ms.
+ 458 puzzles solved in 51.163ms.
 ```
