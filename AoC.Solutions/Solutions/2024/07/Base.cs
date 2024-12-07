@@ -65,7 +65,6 @@ public abstract class Base : Solution
                 operators.Add(current % 3);
                 
                 current /= 3;
-
             }
 
             var test = Evaluate(total, components, operators);
