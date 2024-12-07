@@ -438,7 +438,7 @@ Tests performed on a 2023 MacBook Pro.
  2023  5.1: 36μs          If you give a seed a fertilizer
  2023  5.2: 132μs         
  2023  6.1: 2μs           Wait for it
- 2023  6.2: 40μs          
+ 2023  6.2: 39μs          
  2023  7.1: 596μs         Camel cards
  2023  7.2: 644μs         
  2023  8.1: 424μs         Haunted wasteland
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,631μs       
  2023 25.1: 10,476μs      Snowverload
             -------------
-            405.559ms    
+            405.558ms    
 
  2024  1.1: 125μs         Historian hysteria
  2024  1.2: 97μs          
@@ -488,13 +488,13 @@ Tests performed on a 2023 MacBook Pro.
  2024  4.1: 286μs         Ceres search
  2024  4.2: 97μs          
  2024  5.1: 125μs         Print queue
- 2024  5.2: 1,866μs       
- 2024  6.1: 399μs         Guard gallivant
+ 2024  5.2: 1,859μs       
+ 2024  6.1: 396μs         Guard gallivant
  2024  6.2: 40,970μs      
- 2024  7.1: 1,204μs       Bridge repair
- 2024  7.2: 49,836μs      
+ 2024  7.1: 223μs         Bridge repair
+ 2024  7.2: 7,714μs       
             -------------
-            96.555ms     
+            53.442ms     
 
- 456 puzzles solved in 51.213ms.
+ 456 puzzles solved in 51.170ms.
 ```
