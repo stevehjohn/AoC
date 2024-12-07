@@ -7,18 +7,6 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var result = 0L;
-
-        foreach (var line in Input)
-        {
-            var total = ProcessLineSimple(line);
-
-            if (total > 0)
-            {
-                result += total;
-            }
-        }
-        
-        return result.ToString();
+        return GetAnswer(false);
     }
 }

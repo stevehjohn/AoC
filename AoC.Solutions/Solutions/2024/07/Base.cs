@@ -6,36 +6,58 @@ public abstract class Base : Solution
 {
     public override string Description => "Bridge repair";
 
-    protected static long ProcessLineSimple(string line)
+    protected string GetAnswer(bool isPart2)
     {
-        var parts = line.Split(':', StringSplitOptions.TrimEntries);
+        var result = 0L;
 
-        var total = long.Parse(parts[0]);
-
-        var components = parts[1].Split(' ').Select(long.Parse).ToList();
-
-        for (var i = 0; i < Math.Pow(2, components.Count); i++)
+        foreach (var line in Input)
         {
-            var test = 0L;
+            var parts = line.Split(':', StringSplitOptions.TrimEntries);
+
+            var expected = long.Parse(parts[0]);
+
+            var components = parts[1].Split(' ').Select(long.Parse).ToArray();
+
+            var total = ProcessLineSimple(expected, components);
             
-            for (var j = 0; j < components.Count; j++)
+            if (isPart2 && total == 0)
+            {
+                total = ProcessLineComplex(expected, components);
+            }
+
+            if (total > 0)
+            {
+                result += total;
+            }
+        }
+        
+        return result.ToString();
+    }
+    
+    private static long ProcessLineSimple(long expected, long[] components)
+    {
+        for (var i = 0; i < Math.Pow(2, components.Length); i++)
+        {
+            var total = 0L;
+            
+            for (var j = 0; j < components.Length; j++)
             {
                 if (((1 << j) & i) == 0)
                 {
-                    test += components[j];
+                    total += components[j];
                 }
                 else
                 {
-                    test *= components[j];
+                    total *= components[j];
                 }
 
-                if (test > total)
+                if (total > expected)
                 {
                     break;
                 }
             }
 
-            if (test == total)
+            if (total == expected)
             {
                 return total;
             }
@@ -44,32 +66,26 @@ public abstract class Base : Solution
         return 0;
     }
 
-    protected static long ProcessLineComplex(string line)
+    private static long ProcessLineComplex(long expected, long[] components)
     {
-        var parts = line.Split(':', StringSplitOptions.TrimEntries);
-
-        var total = long.Parse(parts[0]);
-
-        var components = parts[1].Split(' ').Select(long.Parse).ToList();
-
         var operators = new List<int>();
         
-        for (var i = 0; i < Math.Pow(3, components.Count); i++)
+        for (var i = 0; i < Math.Pow(3, components.Length); i++)
         {
             operators.Clear();
             
             var current = i;
             
-            for (var j = 0; j < components.Count - 1; j++)
+            for (var j = 0; j < components.Length - 1; j++)
             {
                 operators.Add(current % 3);
                 
                 current /= 3;
             }
 
-            var test = Evaluate(total, components, operators);
+            var total = Evaluate(expected, components, operators);
             
-            if (test == total)
+            if (total == expected)
             {
                 return total;
             }
@@ -78,7 +94,7 @@ public abstract class Base : Solution
         return 0;
     }
 
-    private static long Evaluate(long expected, List<long> values, List<int> operators)
+    private static long Evaluate(long expected, long[] values, List<int> operators)
     {
         var left = values[0];
         
