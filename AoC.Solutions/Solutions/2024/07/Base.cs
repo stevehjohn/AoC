@@ -91,14 +91,9 @@ public abstract class Base : Solution
                         break;
                 }
 
-                // if (left > expected)
-                // {
-                //     return 0;
-                // }
-
                 current /= 3;
             }
-            
+
             if (left == expected)
             {
                 return left;
