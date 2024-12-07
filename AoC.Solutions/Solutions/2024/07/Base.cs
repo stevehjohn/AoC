@@ -18,7 +18,7 @@ public abstract class Base : Solution
 
             var components = parts[1].Split(' ').Select(long.Parse).ToArray();
 
-            var total = isPart2 ? ProcessLineComplex(expected, components) : ProcessLineSimple(expected, components);
+            var total = isPart2 ? ProcessLineComplex(expected, components, 1, components[0]) : ProcessLineSimple(expected, components);
 
             if (total > 0)
             {
@@ -61,41 +61,34 @@ public abstract class Base : Solution
         return 0;
     }
     
-    private static long ProcessLineComplex(long expected, long[] components)
+    private static long ProcessLineComplex(long expected, long[] components, int index, long currentTotal)
     {
-        long EvaluateRecursive(int index, long currentTotal)
+        if (currentTotal > expected)
         {
-            if (currentTotal > expected)
-            {
-                return 0;
-            }
+            return 0;
+        }
 
-            if (index == components.Length)
-            {
-                return currentTotal == expected ? currentTotal : 0;
-            }
+        if (index == components.Length)
+        {
+            return currentTotal == expected ? currentTotal : 0;
+        }
 
-            var result = EvaluateRecursive(index + 1, currentTotal + components[index]);
+        var result = ProcessLineComplex(expected, components, index + 1, currentTotal + components[index]);
             
-            if (result > 0)
-            {
-                return result;
-            }
-
-            result = EvaluateRecursive(index + 1, currentTotal * components[index]);
-
-            if (result > 0)
-            {
-                return result;
-            }
-
-            var concatenated = long.Parse($"{currentTotal}{components[index]}");
-
-            result = EvaluateRecursive(index + 1, concatenated);
-
+        if (result > 0)
+        {
             return result;
         }
 
-        return EvaluateRecursive(1, components[0]);
+        result = ProcessLineComplex(expected, components, index + 1, currentTotal * components[index]);
+
+        if (result > 0)
+        {
+            return result;
+        }
+
+        result = ProcessLineComplex(expected, components, index + 1, long.Parse($"{currentTotal}{components[index]}"));
+
+        return result;
     }
 }
