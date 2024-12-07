@@ -68,17 +68,15 @@ public abstract class Base : Solution
 
     private static long ProcessLineComplex(long expected, long[] components)
     {
-        var operators = new List<int>();
+        var operators = new int[components.Length - 1];
         
         for (var i = 0; i < Math.Pow(3, components.Length); i++)
         {
-            operators.Clear();
-            
             var current = i;
             
             for (var j = 0; j < components.Length - 1; j++)
             {
-                operators.Add(current % 3);
+                operators[j] = current % 3;
                 
                 current /= 3;
             }
@@ -94,11 +92,11 @@ public abstract class Base : Solution
         return 0;
     }
 
-    private static long Evaluate(long expected, long[] values, List<int> operators)
+    private static long Evaluate(long expected, long[] values, int[] operators)
     {
         var left = values[0];
         
-        for (var i = 0; i < operators.Count; i++)
+        for (var i = 0; i < operators.Length; i++)
         {
             switch (operators[i])
             {
