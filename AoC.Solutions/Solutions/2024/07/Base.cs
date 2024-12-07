@@ -10,7 +10,7 @@ public abstract class Base : Solution
     {
         var result = 0L;
 
-        foreach (var line in Input)
+        Parallel.ForEach(Input, line =>
         {
             var parts = line.Split(':', StringSplitOptions.TrimEntries);
 
@@ -24,9 +24,9 @@ public abstract class Base : Solution
 
             if (total > 0)
             {
-                result += total;
+                Interlocked.Add(ref result, total);
             }
-        }
+        });
 
         return result.ToString();
     }
