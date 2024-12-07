@@ -57,7 +57,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 23.1: 76μs          Opening the Turing lock
  2015 23.2: 92μs          
  2015 24.1: 96,233μs      It hangs in the balance
- 2015 24.2: 145μs         
+ 2015 24.2: 143μs         
  2015 25.1: 57,359μs      Let it snow
             -------------
             6.381s       
@@ -491,10 +491,10 @@ Tests performed on a 2023 MacBook Pro.
  2024  5.2: 1,866μs       
  2024  6.1: 399μs         Guard gallivant
  2024  6.2: 40,970μs      
- 2024  7.1: 1,217μs       Bridge repair
- 2024  7.2: 52,794μs      
+ 2024  7.1: 1,204μs       Bridge repair
+ 2024  7.2: 49,836μs      
             -------------
-            99.526ms     
+            96.555ms     
 
- 456 puzzles solved in 51.216ms.
+ 456 puzzles solved in 51.213ms.
 ```
