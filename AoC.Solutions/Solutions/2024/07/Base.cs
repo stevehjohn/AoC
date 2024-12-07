@@ -81,7 +81,7 @@ public abstract class Base : Solution
             return result;
         }
 
-        var digits = (long) Math.Floor(Math.Log10(components[index]) + 1);
+        var digits = (long) Math.Log10(components[index]) + 1;
 
         var pow = 1;
         
