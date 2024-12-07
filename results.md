@@ -491,10 +491,10 @@ Tests performed on a 2023 MacBook Pro.
  2024  5.2: 1,866μs       
  2024  6.1: 399μs         Guard gallivant
  2024  6.2: 41,019μs      
- 2024  7.1: 11,619μs      Bridge repair
+ 2024  7.1: 1,461μs       Bridge repair
  2024  7.2: 80,702μs      
             -------------
-            137.885ms    
+            127.727ms    
 
- 456 puzzles solved in 51.255ms.
+ 456 puzzles solved in 51.245ms.
 ```
