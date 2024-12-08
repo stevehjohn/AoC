@@ -4,5 +4,5 @@ namespace AoC.Solutions.Solutions._2024._08;
 
 public abstract class Base : Solution
 {
-    public override string Description => "Puzzle 08";
+    public override string Description => "Resonant collinearity";
 }
