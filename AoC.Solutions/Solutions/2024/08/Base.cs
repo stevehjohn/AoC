@@ -39,20 +39,29 @@ public abstract class Base : Solution
 
     protected void CalculateAntiNodes(bool repeat = false)
     {
-        foreach (var left in _antennas)
+        for (var left = 0; left < _antennas.Count; left++)
         {
-            foreach (var right in _antennas)
+            for (var right = 0; right < _antennas.Count; right++)
             {
-                if (left.Frequency != right.Frequency || left == right)
+                if (left == right)
                 {
                     continue;
                 }
 
-                var dX = right.X - left.X;
+                var leftAntenna = _antennas[left];
 
-                var dY = right.Y - left.Y;
+                var rightAntenna = _antennas[right];
 
-                AddAntiNode(left, dX, dY, repeat);
+                if (leftAntenna.Frequency != rightAntenna.Frequency)
+                {
+                    continue;
+                }
+
+                var dX = rightAntenna.X - leftAntenna.X;
+
+                var dY = rightAntenna.Y - leftAntenna.Y;
+
+                AddAntiNode(leftAntenna, dX, dY, repeat);
             }
         }
     }
