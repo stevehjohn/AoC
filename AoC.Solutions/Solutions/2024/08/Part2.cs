@@ -7,7 +7,7 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        LocateNodes();
+        LocateNodes(true);
 
         CalculateAntiNodes(true);
 

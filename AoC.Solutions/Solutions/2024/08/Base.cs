@@ -14,7 +14,7 @@ public abstract class Base : Solution
 
     private int _height;
     
-    protected void LocateNodes()
+    protected void LocateNodes(bool createAntiNode = false)
     {
         _width = Input[0].Length;
 
@@ -27,6 +27,11 @@ public abstract class Base : Solution
                 if (Input[y][x] != '.')
                 {
                     _antennas.Add((x, y, Input[y][x]));
+
+                    if (createAntiNode)
+                    {
+                        AntiNodes.Add((x, y));
+                    }
                 }
             }
         }

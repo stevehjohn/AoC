@@ -233,7 +233,7 @@ Tests performed on a 2023 MacBook Pro.
  2019  7.1: 5,274μs       Amplifiers (CPU used unmodified)
  2019  7.2: 6,832μs       
  2019  8.1: 1,161μs       Space GIF
- 2019  8.2: 1,480μs       
+ 2019  8.2: 1,119μs       
  2019  9.1: 45μs          Sensor booster (CPU extension 2)
  2019  9.2: 28,505μs      
  2019 10.1: 18,082μs      Asteroids
@@ -493,10 +493,10 @@ Tests performed on a 2023 MacBook Pro.
  2024  6.2: 35,035μs      
  2024  7.1: 195μs         Bridge repair
  2024  7.2: 6,184μs       
- 2024  8.1: 100,000μs     Puzzle 08
- 2024  8.2: 100,000μs    
+ 2024  8.1: 91μs          Resonant collinearity
+ 2024  8.2: 152μs         
             -------------
-            45.942ms     
+            46.185ms     
 
  458 puzzles solved in 51.163ms.
 ```
