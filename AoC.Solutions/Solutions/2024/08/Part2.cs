@@ -7,6 +7,10 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        return "Unknown";
+        LocateNodes();
+
+        CalculateAntiNodes(true);
+
+        return AntiNodes.Count.ToString();
     }
 }

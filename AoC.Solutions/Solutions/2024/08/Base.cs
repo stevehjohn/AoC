@@ -32,7 +32,7 @@ public abstract class Base : Solution
         }
     }
 
-    protected void CalculateAntiNodes()
+    protected void CalculateAntiNodes(bool repeat = false)
     {
         foreach (var left in _antennas)
         {
@@ -47,27 +47,36 @@ public abstract class Base : Solution
 
                 var dY = right.Y - left.Y;
 
-                AddAntiNode(left, dX, dY);
+                AddAntiNode(left, dX, dY, repeat);
             }
         }
     }
 
-    private void AddAntiNode((int X, int Y, char Frequency) antenna, int dX, int dY)
+    private void AddAntiNode((int X, int Y, char Frequency) antenna, int dX, int dY, bool repeat)
     {
-        var x = antenna.X - dX;
+        var x = antenna.X;
 
-        if (x < 0 || x >= _width)
-        {
-            return;
-        }
-
-        var y = antenna.Y - dY;
-
-        if (y < 0 || y >= _height)
-        {
-            return;
-        }
+        var y = antenna.Y;
         
-        AntiNodes.Add((x, y));
+        do
+        {
+            x -= dX;
+
+            if (x < 0 || x >= _width)
+            {
+                return;
+            }
+
+            y -= dY;
+
+            if (y < 0 || y >= _height)
+            {
+                return;
+            }
+
+            AntiNodes.Add((x, y));
+            
+            // ReSharper disable once LoopVariableIsNeverChangedInsideLoop - Bounds checks exit loop.
+        } while (repeat);
     }
 }
