@@ -11,11 +11,50 @@ public class Part2 : Base
 
         IdentifyFiles();
 
+        Dump();
+        
+        Defragment();
+        
         var result = CalculateChecksum();
         
         return result.ToString();
     }
-    
+
+    private void Defragment()
+    {
+        var fileId = FileSystem[Size - 1];
+
+        var fileSize = 1;
+
+        for (var i = Size - 2; i >= 0; i--)
+        {
+            if (FileSystem[i] == -1)
+            {
+                continue;
+            }
+
+            if (FileSystem[i] == fileId)
+            {
+                fileSize++;
+                
+                continue;
+            }
+            
+            TryRelocateFile(fileId, fileSize);
+
+            fileId = FileSystem[i];
+            
+            fileSize = 1;
+        }
+            
+        TryRelocateFile(fileId, fileSize);
+    }
+
+    private void TryRelocateFile(int id, int size)
+    {
+        Console.WriteLine($"Id: {id}, Size: {size}");
+    }
+
     private void Dump()
     {
         for (var i = 0; i < FileSystem.Length; i++)
