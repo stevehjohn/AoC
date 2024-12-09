@@ -90,58 +90,78 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         if (_previousState == null)
         {
-            return;
-        }
-
-        for (var y = 0; y < Height; y++)
-        {
-            for (var x = 0; x < Width; x++)
+            for (var y = 0; y < Height; y++)
             {
-                var part = y * Width + x;
-
-                if (part >= _state.Length)
+                for (var x = 0; x < Width; x++)
                 {
-                    _data[part] = Color.Black;
+                    var part = y * Width + x;
 
-                    continue;
-                }
-
-                if (_state[part] != -1)
-                {
-                    if (_initialState[part] != -1)
+                    if (part >= _state.Length)
                     {
-                        _data[part] = Color.FromNonPremultiplied(0, 0, 255, 255);
+                        _data[part] = Color.Black;
                         
                         continue;
                     }
 
-                    if (_previousState[part] == -1)
+                    if (_state[part] != -1)
+                    {
+                        _data[part] = Color.FromNonPremultiplied(0, 0, 255, 255);
+                    }
+                    else
+                    {
+                        _data[part] = Color.Black;
+                    }
+                }
+            }
+        }
+        else
+        {
+            for (var y = 0; y < Height; y++)
+            {
+                for (var x = 0; x < Width; x++)
+                {
+                    var part = y * Width + x;
+
+                    if (part >= _state.Length)
+                    {
+                        _data[part] = Color.Black;
+
+                        continue;
+                    }
+
+                    if (_state[part] == -1 && _previousState[part] != -1)
+                    {
+                        _data[part] = Color.FromNonPremultiplied(255, 0, 0, 255);
+                        
+                        continue;
+                    }
+
+                    if (_state[part] != -1 && _previousState[part] == -1)
                     {
                         _data[part] = Color.FromNonPremultiplied(255, 255, 255, 255);
                         
                         continue;
                     }
 
-                    _data[part] = Color.FromNonPremultiplied(64, 64, 255, 255);
+                    if (_data[part].G > 64)
+                    {
+                        _data[part].G -= 2;
+
+                        _data[part].R -= 2;
+                        
+                        continue;
+                    }
+
+                    if (_data[part].R > 2)
+                    {
+                        _data[part].R -= 2;
                     
-                    continue;
+                        if (_data[part].B < 128)
+                        {
+                            _data[part].B++;
+                        }
+                    }
                 }
-
-                if (_previousState[part] != -1)
-                {
-                    _data[part] = Color.FromNonPremultiplied(255, 0, 0, 255);
-                
-                    continue;
-                }
-
-                if (_initialState[part] != -1)
-                {
-                    _data[part] = Color.FromNonPremultiplied(0, 0, 128, 255);
-                
-                    continue;
-                }
-
-                _data[part] = Color.Black;
             }
         }
 
