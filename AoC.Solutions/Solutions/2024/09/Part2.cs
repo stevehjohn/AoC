@@ -27,8 +27,8 @@ public class Part2 : Base
             var position = Array.IndexOf(FileSystem, fileId);
 
             var size = 1;
-            
-            while ( position + size < Size && FileSystem[position + size] == fileId)
+
+            while (position + size < Size && FileSystem[position + size] == fileId)
             {
                 size++;
             }
