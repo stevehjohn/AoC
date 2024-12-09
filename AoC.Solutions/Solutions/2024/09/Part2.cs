@@ -10,12 +10,8 @@ public class Part2 : Base
         CalculateRequiredSize();
 
         IdentifyFiles();
-
-        Dump();
         
         Defragment();
-        
-        Dump();
         
         var result = CalculateChecksum();
         
@@ -37,7 +33,7 @@ public class Part2 : Base
                 size++;
             }
 
-            Console.WriteLine($"Id: {fileId} Pos: {position} Size: {size}");
+            // Console.WriteLine($"Id: {fileId} Pos: {position} Size: {size}");
 
             TryRelocateFile(fileId, position, size);
 
@@ -74,7 +70,7 @@ public class Part2 : Base
 
                 if (freeIndex < position)
                 {
-                    Console.WriteLine($"Can move {id} to {freeIndex}");
+                    // Console.WriteLine($"Can move {id} to {freeIndex}");
 
                     for (var j = 0; j < size; j++)
                     {
@@ -83,7 +79,7 @@ public class Part2 : Base
                         FileSystem[position + j] = -1;
                     }
 
-                    Dump();
+                    // Dump();
 
                     return;
                 }
