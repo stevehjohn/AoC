@@ -68,6 +68,7 @@ There are visualisations for:
 - 2023.17.2
 - 2023.22.1 - Sand Slabs
 - 2023.22.2
+- 2024.09.2 - Disk fragmenter
 
 ## Mental Notes to Self
 
