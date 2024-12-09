@@ -14,6 +14,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private const int Scale = 3;
 
+    private readonly Queue<PuzzleState> _stateQueue = [];
+
     private readonly Color[] _data = new Color[GridSize * GridSize];
 
     private Texture2D _texture;
@@ -21,8 +23,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private SpriteBatch _spriteBatch;
 
     private PuzzleState _state;
-
-    private PuzzleState _previousState;
     
     public Visualisation()
     {
@@ -59,23 +59,21 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     protected override void Update(GameTime gameTime)
     {
-        if (_state == null)
+        if (HasNextState)
         {
-            _state = GetNextState();
+            _stateQueue.Enqueue(GetNextState());
         }
-
-        // if (HasNextState)
-        // {
-        //     _previousState = _state;
-        //
-        //     _state = GetNextState();
-        // }
 
         base.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
     {
+        if (_stateQueue.Count > 0)
+        {
+            _state = _stateQueue.Dequeue();
+        }
+        
         for (var y = 0; y < GridSize; y++)
         {
             for (var x = 0; x < GridSize; x++)
