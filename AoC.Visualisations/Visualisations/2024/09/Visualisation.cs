@@ -89,6 +89,38 @@ public class Visualisation : VisualisationBase<PuzzleState>
             _initialState ??= _state;
         }
 
+        if (_state == null)
+        {
+            for (var y = 0; y < Height; y++)
+            {
+                for (var x = 0; x < Width; x++)
+                {
+                    var part = y * Width + x;
+
+                    if (_data[part].G > 64)
+                    {
+                        _data[part].G -= 2;
+
+                        _data[part].R -= 2;
+                        
+                        continue;
+                    }
+
+                    if (_data[part].R > 2)
+                    {
+                        _data[part].R -= 2;
+                    
+                        if (_data[part].B < 128)
+                        {
+                            _data[part].B++;
+                        }
+                    }
+                }
+            }
+
+            return;
+        }
+
         if (_previousState == null)
         {
             for (var y = 0; y < Height; y++)
