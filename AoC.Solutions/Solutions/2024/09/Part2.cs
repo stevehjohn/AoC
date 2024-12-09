@@ -5,11 +5,15 @@ namespace AoC.Solutions.Solutions._2024._09;
 [UsedImplicitly]
 public class Part2 : Base
 {
+    private readonly List<(int Position, int Size)> _freeSpace = [];
+    
     public override string GetAnswer()
     {
         CalculateRequiredSize();
 
         IdentifyFiles();
+        
+        MapFreeSpace();
         
         Defragment();
         
@@ -39,7 +43,7 @@ public class Part2 : Base
         }
     }
 
-    private void TryRelocateFile(int position, int size)
+    private void MapFreeSpace()
     {
         var freeSize = 0;
 
@@ -61,25 +65,85 @@ public class Part2 : Base
                     return;
                 }
             }
-
-            if (size <= freeSize)
-            {
-                var freeIndex = i - freeSize;
-
-                if (freeIndex < position)
-                {
-                    for (var j = 0; j < size; j++)
-                    {
-                        FileSystem[freeIndex + j] = FileSystem[position + j];
-
-                        FileSystem[position + j] = -1;
-                    }
-
-                    return;
-                }
-            }
+            
+            _freeSpace.Add((i - freeSize, freeSize));
 
             freeSize = 0;
         }
+    }
+
+    private void TryRelocateFile(int position, int size)
+    {
+        // var freeSize = 0;
+
+        for (var i = 0; i < _freeSpace.Count; i++)
+        {
+            var block = _freeSpace[i];
+
+            if (block.Position > position)
+            {
+                return;
+            }
+
+            if (block.Size >= size)
+            {
+                for (var j = 0; j < size; j++)
+                {
+                    FileSystem[block.Position + j] = FileSystem[position + j];
+
+                    FileSystem[position + j] = -1;
+                }
+
+                if (block.Size == size)
+                {
+                    _freeSpace.Remove(block);
+                }
+                else
+                {
+                    _freeSpace[i] = (block.Position + size, block.Size - size);
+                }
+
+                return;
+            }
+        }
+
+        // for (var i = 0; i < Size; i++)
+        // {
+        //     if (FileSystem[i] >= 0)
+        //     {
+        //         continue;
+        //     }
+        //
+        //     while (FileSystem[i] == -1)
+        //     {
+        //         freeSize++;
+        //
+        //         i++;
+        //
+        //         if (i == Size)
+        //         {
+        //             return;
+        //         }
+        //     }
+        //
+        //     if (size <= freeSize)
+        //     {
+        //         var freeIndex = i - freeSize;
+        //
+        //         if (freeIndex < position)
+        //         {
+        //             for (var j = 0; j < size; j++)
+        //             {
+        //                 FileSystem[freeIndex + j] = FileSystem[position + j];
+        //
+        //                 FileSystem[position + j] = -1;
+        //             }
+        //
+        //             return;
+        //         }
+        //     }
+        //
+        //     freeSize = 0;
+        // }
     }
 }
