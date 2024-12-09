@@ -3,6 +3,7 @@ using AoC.Visualisations.Exceptions;
 using AoC.Visualisations.Infrastructure;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace AoC.Visualisations.Visualisations._2024._09;
 
@@ -10,13 +11,25 @@ namespace AoC.Visualisations.Visualisations._2024._09;
 public class Visualisation : VisualisationBase<PuzzleState>
 {
     private const int GridSize = 308;
+
+    private const int Scale = 3;
+
+    private readonly Color[] _data = new Color[GridSize * GridSize];
+
+    private Texture2D _texture;
+
+    private SpriteBatch _spriteBatch;
+
+    private PuzzleState _state;
+
+    private PuzzleState _previousState;
     
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
         {
-            PreferredBackBufferWidth = GridSize * 3,
-            PreferredBackBufferHeight = GridSize * 3
+            PreferredBackBufferWidth = GridSize * Scale,
+            PreferredBackBufferHeight = GridSize * Scale
         };
 
         Content.RootDirectory = "./09";
@@ -31,5 +44,75 @@ public class Visualisation : VisualisationBase<PuzzleState>
             2 => new Part2(this),
             _ => throw new VisualisationParameterException()
         };
+    }
+
+    protected override void Initialize()
+    {
+        IsMouseVisible = true;
+
+        _texture = new Texture2D(GraphicsDeviceManager.GraphicsDevice, GridSize, GridSize);
+
+        _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+        base.Initialize();
+    }
+
+    protected override void Update(GameTime gameTime)
+    {
+        if (_state == null)
+        {
+            _state = GetNextState();
+        }
+
+        // if (HasNextState)
+        // {
+        //     _previousState = _state;
+        //
+        //     _state = GetNextState();
+        // }
+
+        base.Update(gameTime);
+    }
+
+    protected override void Draw(GameTime gameTime)
+    {
+        for (var y = 0; y < GridSize; y++)
+        {
+            for (var x = 0; x < GridSize; x++)
+            {
+                var part = y * GridSize + x;
+
+                if (part >= _state.Length)
+                {
+                    _data[part] = Color.Black;
+                    
+                    continue;
+                }
+
+                if (_state[part] != -1)
+                {
+                    _data[part] = Color.Aqua;
+                    
+                    continue;
+                }
+
+                _data[part] = Color.Black;
+            }
+        }
+
+        _texture.SetData(_data);
+        
+        GraphicsDevice.Clear(Color.Black);
+
+        _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
+
+        _spriteBatch.Draw(_texture, 
+            new Rectangle(0, 0, GridSize * Scale, GridSize * Scale), 
+            new Rectangle(0, 0, GridSize, GridSize), Color.White);
+
+        
+        _spriteBatch.End();
+        
+        base.Draw(gameTime);
     }
 }
