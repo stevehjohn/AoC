@@ -1,3 +1,4 @@
+using AoC.Solutions.Infrastructure;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2024._09;
@@ -7,21 +8,41 @@ public class Part2 : Base
 {
     private readonly List<(int Position, int Size)> _freeSpace = [];
     
+    private readonly IVisualiser<PuzzleState> _visualiser;
+
+    public Part2()
+    {
+    }
+    
+    public Part2(IVisualiser<PuzzleState> visualiser)
+    {
+        _visualiser = visualiser;
+    }
+    
     public override string GetAnswer()
     {
         CalculateRequiredSize();
 
         IdentifyFiles();
         
+        Visualise();
+
         MapFreeSpace();
         
         Defragment();
         
+        Visualise();
+
         var result = CalculateChecksum(false);
         
         return result.ToString();
     }
 
+    private void Visualise()
+    {
+        _visualiser?.PuzzleStateChanged(new PuzzleState(FileSystem));
+    }
+    
     private void Defragment()
     {
         var fileId = FileSystem[Size - 1];
