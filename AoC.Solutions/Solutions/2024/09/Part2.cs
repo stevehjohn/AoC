@@ -28,31 +28,61 @@ public class Part2 : Base
 
         for (var i = Size - 2; i >= 0; i--)
         {
-            if (FileSystem[i] == -1)
-            {
-                continue;
-            }
-
             if (FileSystem[i] == fileId)
             {
                 fileSize++;
                 
                 continue;
             }
-            
-            TryRelocateFile(fileId, fileSize);
+
+            TryRelocateFile(fileId, i + 1, fileSize);
 
             fileId = FileSystem[i];
             
             fileSize = 1;
+
+            while (FileSystem[i] == -1)
+            {
+                i--;
+            }
+
+            fileId = FileSystem[i];
         }
-            
-        TryRelocateFile(fileId, fileSize);
     }
 
-    private void TryRelocateFile(int id, int size)
+    private void TryRelocateFile(int id, int position, int size)
     {
-        Console.WriteLine($"Id: {id}, Size: {size}");
+        var freeSpaceIndex = 0;
+        
+        while (FileSystem[freeSpaceIndex] >= 0 && freeSpaceIndex < Size)
+        {
+            freeSpaceIndex++;
+        }
+
+        if (freeSpaceIndex == Size)
+        {
+            return;
+        }
+
+        var freeSize = 0;
+        
+        Console.WriteLine($"Id: {id}, Size: {size}, Position: {position}");
+
+        while (FileSystem[freeSpaceIndex] == -1 && freeSpaceIndex < Size)
+        {
+            freeSpaceIndex++;
+
+            freeSize++;
+        }
+        
+        Console.WriteLine($"Space Index: {freeSpaceIndex - freeSize}, Size: {freeSize}");
+
+        if (freeSize <= size)
+        {
+            for (var i = freeSpaceIndex - freeSize; i < freeSpaceIndex; i++)
+            {
+            }
+        }
     }
 
     private void Dump()
