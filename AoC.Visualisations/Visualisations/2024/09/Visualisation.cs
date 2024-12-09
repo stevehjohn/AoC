@@ -118,6 +118,18 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 }
             }
 
+            _texture.SetData(_data);
+        
+            _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
+
+            _spriteBatch.Draw(_texture, 
+                new Rectangle(0, 0, Width * XScale, Height * YScale), 
+                new Rectangle(0, 0, Width, Height), Color.White);
+        
+            _spriteBatch.End();
+        
+            base.Draw(gameTime);
+
             return;
         }
 
