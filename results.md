@@ -486,7 +486,7 @@ Tests performed on a 2023 MacBook Pro.
  2024  3.1: 444μs         Mull it over
  2024  3.2: 592μs         
  2024  4.1: 286μs         Ceres search
- 2024  4.2: 97μs          
+ 2024  4.2: 96μs          
  2024  5.1: 125μs         Print queue
  2024  5.2: 1,859μs       
  2024  6.1: 389μs         Guard gallivant
@@ -495,10 +495,10 @@ Tests performed on a 2023 MacBook Pro.
  2024  7.2: 6,184μs       
  2024  8.1: 91μs          Resonant collinearity
  2024  8.2: 152μs         
- 2024  9.1: 0μs           Puzzle 09
- 2024  9.2: 0μs           
+ 2024  9.1: 310μs         Disk fragmenter
+ 2024  9.2: 291,553μs     
             -------------
-            46.185ms     
+            338.047ms    
 
- 460 puzzles solved in 51.158ms.
+ 460 puzzles solved in 51.450ms.
 ```
