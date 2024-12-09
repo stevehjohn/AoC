@@ -81,10 +81,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             
             _state = _stateQueue.Dequeue();
 
-            if (_initialState == null)
-            {
-                _initialState = _state;
-            }
+            _initialState ??= _state;
         }
 
         if (_previousState == null)
