@@ -30,8 +30,6 @@ public class Part2 : Base
         MapFreeSpace();
         
         Defragment();
-        
-        Visualise();
 
         var result = CalculateChecksum(false);
         
@@ -57,6 +55,8 @@ public class Part2 : Base
             {
                 size++;
             }
+        
+            Visualise();
 
             TryRelocateFile(position, size);
 

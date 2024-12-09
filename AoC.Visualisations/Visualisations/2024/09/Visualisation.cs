@@ -22,7 +22,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private SpriteBatch _spriteBatch;
 
+    private PuzzleState _initialState;
+    
     private PuzzleState _state;
+
+    private PuzzleState _previousState;
     
     public Visualisation()
     {
@@ -69,11 +73,25 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     protected override void Draw(GameTime gameTime)
     {
+        GraphicsDevice.Clear(Color.Black);
+
         if (_stateQueue.Count > 0)
         {
+            _previousState = _state;
+            
             _state = _stateQueue.Dequeue();
+
+            if (_initialState == null)
+            {
+                _initialState = _state;
+            }
         }
-        
+
+        if (_previousState == null)
+        {
+            return;
+        }
+
         for (var y = 0; y < GridSize; y++)
         {
             for (var x = 0; x < GridSize; x++)
@@ -87,9 +105,23 @@ public class Visualisation : VisualisationBase<PuzzleState>
                     continue;
                 }
 
-                if (_state[part] != -1)
+                if (_state[part] != -1 && _initialState[part] ==-1)
                 {
                     _data[part] = Color.Aqua;
+                    
+                    continue;
+                }
+
+                if (_state[part] != -1)
+                {
+                    _data[part] = Color.Blue;
+                    
+                    continue;
+                }
+
+                if (_initialState[part] != -1)
+                {
+                    _data[part] = Color.DarkBlue;
                     
                     continue;
                 }
@@ -100,14 +132,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         _texture.SetData(_data);
         
-        GraphicsDevice.Clear(Color.Black);
-
         _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
 
         _spriteBatch.Draw(_texture, 
             new Rectangle(0, 0, GridSize * Scale, GridSize * Scale), 
             new Rectangle(0, 0, GridSize, GridSize), Color.White);
-
         
         _spriteBatch.End();
         
