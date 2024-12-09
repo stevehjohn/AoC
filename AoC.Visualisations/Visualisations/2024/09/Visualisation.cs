@@ -98,28 +98,42 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 if (part >= _state.Length)
                 {
                     _data[part] = Color.Black;
-                    
-                    continue;
-                }
 
-                if (_state[part] != -1 && _initialState[part] ==-1)
-                {
-                    _data[part] = Color.Aqua;
-                    
                     continue;
                 }
 
                 if (_state[part] != -1)
                 {
-                    _data[part] = Color.Blue;
+                    if (_initialState[part] != -1)
+                    {
+                        _data[part] = Color.FromNonPremultiplied(0, 0, 255, 255);
+                        
+                        continue;
+                    }
+
+                    if (_previousState[part] == -1)
+                    {
+                        _data[part] = Color.FromNonPremultiplied(255, 255, 255, 255);
+                        
+                        continue;
+                    }
+
+                    _data[part] = Color.FromNonPremultiplied(64, 64, 255, 255);
                     
+                    continue;
+                }
+
+                if (_previousState[part] != -1)
+                {
+                    _data[part] = Color.FromNonPremultiplied(255, 0, 0, 255);
+                
                     continue;
                 }
 
                 if (_initialState[part] != -1)
                 {
-                    _data[part] = Color.DarkBlue;
-                    
+                    _data[part] = Color.FromNonPremultiplied(0, 0, 128, 255);
+                
                     continue;
                 }
 
