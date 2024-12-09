@@ -13,7 +13,7 @@ public class Part2 : Base
         
         Defragment();
         
-        var result = CalculateChecksum();
+        var result = CalculateChecksum(false);
         
         return result.ToString();
     }
@@ -33,15 +33,13 @@ public class Part2 : Base
                 size++;
             }
 
-            // Console.WriteLine($"Id: {fileId} Pos: {position} Size: {size}");
-
-            TryRelocateFile(fileId, position, size);
+            TryRelocateFile(position, size);
 
             fileId--;
         }
     }
 
-    private void TryRelocateFile(int id, int position, int size)
+    private void TryRelocateFile(int position, int size)
     {
         var freeSize = 0;
 
@@ -70,8 +68,6 @@ public class Part2 : Base
 
                 if (freeIndex < position)
                 {
-                    // Console.WriteLine($"Can move {id} to {freeIndex}");
-
                     for (var j = 0; j < size; j++)
                     {
                         FileSystem[freeIndex + j] = FileSystem[position + j];
@@ -79,23 +75,11 @@ public class Part2 : Base
                         FileSystem[position + j] = -1;
                     }
 
-                    // Dump();
-
                     return;
                 }
             }
 
             freeSize = 0;
         }
-    }
-
-    private void Dump()
-    {
-        for (var i = 0; i < FileSystem.Length; i++)
-        {
-            Console.Write(FileSystem[i] == -1 ? '.' : FileSystem[i].ToString());
-        }
-        
-        Console.WriteLine();
     }
 }

@@ -17,7 +17,7 @@ public abstract class Base : Solution
         _fileMap = Input[0];
     }
 
-    protected long CalculateChecksum()
+    protected long CalculateChecksum(bool contiguous = true)
     {
         var checksum = 0L;
         
@@ -25,7 +25,12 @@ public abstract class Base : Solution
         {
             if (FileSystem[i] == -1)
             {
-                break;
+                if (contiguous)
+                {
+                    break;
+                }
+                
+                continue;
             }
 
             checksum += i * FileSystem[i];
