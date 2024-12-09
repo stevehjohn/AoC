@@ -25,7 +25,7 @@ Tests performed on a 2023 MacBook Pro.
  2015  7.1: 95μs          Logic gates
  2015  7.2: 93μs          
  2015  8.1: 28μs          Matchsticks
- 2015  8.2: 34μs          
+ 2015  8.2: 33μs          
  2015  9.1: 13,039μs      All in a single night
  2015  9.2: 12,825μs      
  2015 10.1: 3,823μs       Elves look, elves say
@@ -402,7 +402,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 13.1: 50μs          Distress signal
  2022 13.2: 512μs         
  2022 14.1: 462μs         Regolith reservoir
- 2022 14.2: 4,974μs       
+ 2022 14.2: 4,950μs       
  2022 15.1: 9μs           Beacon exclusion zone
  2022 15.2: 11,044μs      
  2022 16.1: 29,037μs      Proboscidea volcanium
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 60,123μs      
  2022 25.1: 10μs          Full of hot air
             -------------
-            306.635ms    
+            306.611ms    
 
  2023  1.1: 120μs         Trebuchet
  2023  1.2: 338μs         
@@ -483,7 +483,7 @@ Tests performed on a 2023 MacBook Pro.
  2024  1.2: 97μs          
  2024  2.1: 173μs         Red-nosed reports
  2024  2.2: 341μs         
- 2024  3.1: 444μs         Mull it over
+ 2024  3.1: 436μs         Mull it over
  2024  3.2: 592μs         
  2024  4.1: 286μs         Ceres search
  2024  4.2: 96μs          
@@ -494,11 +494,11 @@ Tests performed on a 2023 MacBook Pro.
  2024  7.1: 195μs         Bridge repair
  2024  7.2: 5,984μs       
  2024  8.1: 91μs          Resonant collinearity
- 2024  8.2: 152μs         
+ 2024  8.2: 149μs         
  2024  9.1: 304μs         Disk fragmenter
- 2024  9.2: 40,090μs      
+ 2024  9.2: 40,062μs      
             -------------
-            86.268ms     
+            86.229ms     
 
  460 puzzles solved in 51.196s.
 ```
