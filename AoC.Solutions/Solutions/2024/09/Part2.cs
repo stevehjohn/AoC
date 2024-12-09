@@ -94,7 +94,7 @@ public class Part2 : Base
 
                 if (block.Size == size)
                 {
-                    _freeSpace.Remove(block);
+                    _freeSpace.RemoveAt(i);
                 }
                 else
                 {
