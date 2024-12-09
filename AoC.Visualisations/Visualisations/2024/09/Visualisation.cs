@@ -10,13 +10,17 @@ namespace AoC.Visualisations.Visualisations._2024._09;
 [UsedImplicitly]
 public class Visualisation : VisualisationBase<PuzzleState>
 {
-    private const int GridSize = 308;
+    private const int Width = 556;
 
-    private const int Scale = 3;
+    private const int Height = 170;
+
+    private const int XScale = 3;
+
+    private const int YScale = 6;
 
     private readonly Queue<PuzzleState> _stateQueue = [];
 
-    private readonly Color[] _data = new Color[GridSize * GridSize];
+    private readonly Color[] _data = new Color[Width * Height];
 
     private Texture2D _texture;
 
@@ -32,8 +36,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
         {
-            PreferredBackBufferWidth = GridSize * Scale,
-            PreferredBackBufferHeight = GridSize * Scale
+            PreferredBackBufferWidth = Width * XScale,
+            PreferredBackBufferHeight = Height * YScale
         };
 
         Content.RootDirectory = "./09";
@@ -54,7 +58,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         IsMouseVisible = true;
 
-        _texture = new Texture2D(GraphicsDeviceManager.GraphicsDevice, GridSize, GridSize);
+        _texture = new Texture2D(GraphicsDeviceManager.GraphicsDevice, Width, Height);
 
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -89,11 +93,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
             return;
         }
 
-        for (var y = 0; y < GridSize; y++)
+        for (var y = 0; y < Height; y++)
         {
-            for (var x = 0; x < GridSize; x++)
+            for (var x = 0; x < Width; x++)
             {
-                var part = y * GridSize + x;
+                var part = y * Width + x;
 
                 if (part >= _state.Length)
                 {
@@ -146,8 +150,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
         _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
 
         _spriteBatch.Draw(_texture, 
-            new Rectangle(0, 0, GridSize * Scale, GridSize * Scale), 
-            new Rectangle(0, 0, GridSize, GridSize), Color.White);
+            new Rectangle(0, 0, Width * XScale, Height * YScale), 
+            new Rectangle(0, 0, Width, Height), Color.White);
         
         _spriteBatch.End();
         
