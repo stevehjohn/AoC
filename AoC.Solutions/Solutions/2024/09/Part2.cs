@@ -15,6 +15,8 @@ public class Part2 : Base
         
         Defragment();
         
+        Dump();
+        
         var result = CalculateChecksum();
         
         return result.ToString();
@@ -24,64 +26,70 @@ public class Part2 : Base
     {
         var fileId = FileSystem[Size - 1];
 
-        var fileSize = 1;
-
-        for (var i = Size - 2; i >= 0; i--)
+        while (fileId > 0)
         {
-            if (FileSystem[i] == fileId)
-            {
-                fileSize++;
-                
-                continue;
-            }
+            var position = Array.IndexOf(FileSystem, fileId);
 
-            TryRelocateFile(fileId, i + 1, fileSize);
-
-            fileId = FileSystem[i];
+            var size = 1;
             
-            fileSize = 1;
-
-            while (FileSystem[i] == -1)
+            while ( position + size < Size && FileSystem[position + size] == fileId)
             {
-                i--;
+                size++;
             }
 
-            fileId = FileSystem[i];
+            Console.WriteLine($"Id: {fileId} Pos: {position} Size: {size}");
+
+            TryRelocateFile(fileId, position, size);
+
+            fileId--;
         }
     }
 
     private void TryRelocateFile(int id, int position, int size)
     {
-        var freeSpaceIndex = 0;
-        
-        while (FileSystem[freeSpaceIndex] >= 0 && freeSpaceIndex < Size)
-        {
-            freeSpaceIndex++;
-        }
-
-        if (freeSpaceIndex == Size)
-        {
-            return;
-        }
-
         var freeSize = 0;
-        
-        Console.WriteLine($"Id: {id}, Size: {size}, Position: {position}");
 
-        while (FileSystem[freeSpaceIndex] == -1 && freeSpaceIndex < Size)
+        for (var i = 0; i < Size; i++)
         {
-            freeSpaceIndex++;
-
-            freeSize++;
-        }
-        
-        Console.WriteLine($"Space Index: {freeSpaceIndex - freeSize}, Size: {freeSize}");
-
-        if (freeSize <= size)
-        {
-            for (var i = freeSpaceIndex - freeSize; i < freeSpaceIndex; i++)
+            if (FileSystem[i] >= 0)
             {
+                continue;
             }
+
+            while (FileSystem[i] == -1)
+            {
+                freeSize++;
+
+                i++;
+
+                if (i == Size)
+                {
+                    return;
+                }
+            }
+
+            if (size <= freeSize)
+            {
+                var freeIndex = i - freeSize;
+
+                if (freeIndex < position)
+                {
+                    Console.WriteLine($"Can move {id} to {freeIndex}");
+
+                    for (var j = 0; j < size; j++)
+                    {
+                        FileSystem[freeIndex + j] = FileSystem[position + j];
+
+                        FileSystem[position + j] = -1;
+                    }
+
+                    Dump();
+
+                    return;
+                }
+            }
+
+            freeSize = 0;
         }
     }
 
