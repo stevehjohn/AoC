@@ -18,10 +18,56 @@ public class Part1 : Base
         CalculateRequiredSize();
 
         IdentifyFiles();
+
+        Defragment();
+
+        var result = CalculateChecksum();
         
-        Dump();
+        return result.ToString();
+    }
+
+    private long CalculateChecksum()
+    {
+        var checksum = 0L;
         
-        return "Unknown";
+        for (var i = 0; i < _fileSystem.Length; i++)
+        {
+            if (_fileSystem[i] == -1)
+            {
+                break;
+            }
+
+            checksum += i * _fileSystem[i];
+        }
+
+        return checksum;
+    }
+
+    private void Defragment()
+    {
+        var target = 0;
+        
+        for (var i = _fileSystem.Length - 1; i >= 0; i--)
+        {
+            if (_fileSystem[i] == -1)
+            {
+                continue;
+            }
+
+            while (_fileSystem[target] >= 0)
+            {
+                target++;
+            }
+
+            if (target >= i)
+            {
+                break;
+            }
+
+            _fileSystem[target] = _fileSystem[i];
+
+            _fileSystem[i] = -1;
+        }
     }
 
     private void Dump()
@@ -55,11 +101,9 @@ public class Part1 : Base
 
             if (i < _fileMap.Length - 1)
             {
-                position += _fileMap[i] - '0';
-
-                position++;
-                
                 i++;
+
+                position += _fileMap[i] - '0';
             }
 
             id++;
