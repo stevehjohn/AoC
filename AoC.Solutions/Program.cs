@@ -179,7 +179,7 @@ public static class Program
 
         WriteYearSummary();
         
-        Console.WriteLine($" {count} puzzle{(count != 1 ? "s" : string.Empty)} solved in {totalMs / 1_000_000d:N3}ms.\n");
+        Console.WriteLine($" {count} puzzle{(count != 1 ? "s" : string.Empty)} solved in {totalMs / 1_000_000d:N3}s.\n");
 
         if (arguments.Length > 0)
         {
@@ -276,7 +276,7 @@ public static class Program
 
                 if (line.Contains("solved in"))
                 {
-                    file[i] = $" {puzzles} puzzle{(count != 1 ? "s" : string.Empty)} solved in {overall / 1_000_000d:N3}ms.";
+                    file[i] = $" {puzzles} puzzle{(count != 1 ? "s" : string.Empty)} solved in {overall / 1_000_000d:N3}s.";
                 }
 
                 if (line.StartsWith(" 20") && year == 0)
