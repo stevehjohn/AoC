@@ -89,50 +89,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
             _initialState ??= _state;
         }
 
-        if (_state == null)
-        {
-            for (var y = 0; y < Height; y++)
-            {
-                for (var x = 0; x < Width; x++)
-                {
-                    var part = y * Width + x;
-
-                    if (_data[part].G > 64)
-                    {
-                        _data[part].G -= 2;
-
-                        _data[part].R -= 2;
-                        
-                        continue;
-                    }
-
-                    if (_data[part].R > 2)
-                    {
-                        _data[part].R -= 2;
-                    
-                        if (_data[part].B < 128)
-                        {
-                            _data[part].B++;
-                        }
-                    }
-                }
-            }
-
-            _texture.SetData(_data);
-        
-            _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
-
-            _spriteBatch.Draw(_texture, 
-                new Rectangle(0, 0, Width * XScale, Height * YScale), 
-                new Rectangle(0, 0, Width, Height), Color.White);
-        
-            _spriteBatch.End();
-        
-            base.Draw(gameTime);
-
-            return;
-        }
-
         if (_previousState == null)
         {
             for (var y = 0; y < Height; y++)
