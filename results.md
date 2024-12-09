@@ -288,7 +288,7 @@ Tests performed on a 2023 MacBook Pro.
  2020  8.2: 2,601μs       
  2020  9.1: 517μs         Cypher cracking
  2020  9.2: 30μs          
- 2020 10.1: 24μs          Joltage meter
+ 2020 10.1: 23μs          Joltage meter
  2020 10.2: 28μs          
  2020 11.1: 3,212μs       Conway's game of seating
  2020 11.2: 42,532μs      
@@ -496,9 +496,9 @@ Tests performed on a 2023 MacBook Pro.
  2024  8.1: 91μs          Resonant collinearity
  2024  8.2: 152μs         
  2024  9.1: 304μs         Disk fragmenter
- 2024  9.2: 291,328μs     
+ 2024  9.2: 40,090μs      
             -------------
-            337.506ms    
+            86.268ms     
 
- 460 puzzles solved in 51.447s.
+ 460 puzzles solved in 51.196s.
 ```
