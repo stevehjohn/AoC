@@ -1,3 +1,4 @@
+using AoC.Solutions.Infrastructure;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2024._09;
@@ -5,11 +6,21 @@ namespace AoC.Solutions.Solutions._2024._09;
 [UsedImplicitly]
 public class Part1 : Base
 {
+    public Part1()
+    {
+    }
+
+    public Part1(IVisualiser<PuzzleState> visualiser) : base(visualiser)
+    {
+    }
+    
     public override string GetAnswer()
     {
         CalculateRequiredSize();
 
         IdentifyFiles();
+        
+        Visualise();
         
         Defragment();
 
@@ -42,6 +53,8 @@ public class Part1 : Base
             FileSystem[target] = FileSystem[i];
 
             FileSystem[i] = -1;
+            
+            Visualise();
         }
     }
 }

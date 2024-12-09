@@ -8,6 +8,8 @@ public abstract class Base : Solution
 
     private readonly string _fileMap;
     
+    private readonly IVisualiser<PuzzleState> _visualiser;
+    
     protected int[] FileSystem;
 
     protected int Size;
@@ -15,6 +17,18 @@ public abstract class Base : Solution
     protected Base()
     {
         _fileMap = Input[0];
+    }
+    
+    protected Base(IVisualiser<PuzzleState> visualiser)
+    {
+        _fileMap = Input[0];
+
+        _visualiser = visualiser;
+    }
+
+    protected void Visualise()
+    {
+        _visualiser?.PuzzleStateChanged(new PuzzleState(FileSystem));
     }
 
     protected long CalculateChecksum(bool contiguous = true)

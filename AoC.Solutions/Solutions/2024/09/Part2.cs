@@ -7,16 +7,13 @@ namespace AoC.Solutions.Solutions._2024._09;
 public class Part2 : Base
 {
     private readonly List<(int Position, int Size)> _freeSpace = [];
-    
-    private readonly IVisualiser<PuzzleState> _visualiser;
 
     public Part2()
     {
     }
     
-    public Part2(IVisualiser<PuzzleState> visualiser)
+    public Part2(IVisualiser<PuzzleState> visualiser) : base(visualiser)
     {
-        _visualiser = visualiser;
     }
     
     public override string GetAnswer()
@@ -36,11 +33,6 @@ public class Part2 : Base
         return result.ToString();
     }
 
-    private void Visualise()
-    {
-        _visualiser?.PuzzleStateChanged(new PuzzleState(FileSystem));
-    }
-    
     private void Defragment()
     {
         var fileId = FileSystem[Size - 1];

@@ -49,6 +49,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         Puzzle = part switch
         {
+            1 => new Part1(this),
             2 => new Part2(this),
             _ => throw new VisualisationParameterException()
         };
