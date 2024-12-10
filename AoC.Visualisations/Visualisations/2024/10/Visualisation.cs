@@ -114,7 +114,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                         for (var i = 0; i < 8; i++)
                         {
-                            _vertices[baseIndex + i].Color = Color.Aqua;
+                            _vertices[baseIndex + i].Color = Color.White;
                         }
                     }
                 }
@@ -148,6 +148,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         _counter = 2;
 
+        int baseIndex;
+
+        (int X, int Y) point;
+        
         if (_index == -1)
         {
             for (var x = 0; x < _width; x++)
@@ -156,7 +160,14 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 {
                     var height = PuzzleState.Map[x, y];
 
-                    _vertices[x + y * _width].Color = _palette[height - '0'];
+                    point = (x, y);
+
+                    baseIndex = (point.X + point.Y * _width) * 8;
+
+                    for (var i = 0; i < 8; i++)
+                    {
+                        _vertices[baseIndex + i].Color = _palette[height - '0'];
+                    }
                 }
             }
         }
@@ -168,9 +179,14 @@ public class Visualisation : VisualisationBase<PuzzleState>
             return;
         }
 
-        var point = PuzzleState.AllVisited[_index];
+        point = PuzzleState.AllVisited[_index];
+        
+        baseIndex = (point.X + point.Y * _width) * 8;
 
-        _vertices[point.X + point.Y * _width].Color = Color.Cyan;
+        for (var i = 0; i < 8; i++)
+        {
+            _vertices[baseIndex + i].Color = Color.Cyan;
+        }
     }
 
     private void InitialiseTerrain()
@@ -261,9 +277,19 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private void SetUpCamera()
     {
-        // TODO: I hate magic numbers...
-        _viewMatrix = Matrix.CreateLookAt(new Vector3(0, 100, 75), new Vector3(0, 40, 0), new Vector3(0, 1, 0));
+        // Adjust eye position for lower height (reduce Y) and zoom (reduce Z).
+        // Original: new Vector3(0, 100, 75)
+        var eye = new Vector3(0, 50, 40);
 
+        // Keep the target position the same.
+        var target = new Vector3(0, 00, 0);
+
+        // Up direction remains the same.
+        var up = Vector3.Up;
+
+        _viewMatrix = Matrix.CreateLookAt(eye, target, up);
+
+        // Keep the perspective projection the same.
         _projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, GraphicsDevice.Viewport.AspectRatio, 1f, 300.0f);
     }
 
