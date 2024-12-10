@@ -185,8 +185,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             for (var y = 0; y < _height; y++)
             {
-                var height = PuzzleState.Map[x, y];
-                var color = _palette[height - '0'];
+                var height = PuzzleState.Map[x, y] - '.';
+                var color = _palette[PuzzleState.Map[x, y] - '0'];
 
                 var baseIndex = (x + y * _width) * 8;
 
