@@ -8,6 +8,8 @@ public class PuzzleState
     
     public List<(int X, int Y)> Visited { get; private set; }
 
+    public static List<(int X, int Y)> AllVisited { get; private set; } = [];
+
     public PuzzleState(char[,] map, HashSet<(int X, int Y)> visited)
     {
         if (Map == null)
@@ -24,5 +26,7 @@ public class PuzzleState
         }
         
         Visited = visited.ToList();
+        
+        AllVisited.AddRange(Visited);
     }
 }

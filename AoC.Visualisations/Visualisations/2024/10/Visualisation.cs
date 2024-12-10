@@ -156,14 +156,17 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         _index++;
         
-        if (_index > _state.Visited.Count - 1)
+        if (_index > PuzzleState.AllVisited.Count - 1)
         {
             return;
         }
         
-        var point = _state.Visited[_index];
+        var point = PuzzleState.AllVisited[_index];
         
-        _vertices[point.X + point.Y * _width].Color = Color.Cyan;
+        _vertices[point.X * 2 + point.Y * 2 * _width].Color = Color.Cyan;
+        _vertices[point.X * 2 + 1 + point.Y * 2 * _width].Color = Color.Cyan;
+        _vertices[point.X * 2 + 1 + (point.Y * 2 + 1) * _width].Color = Color.Cyan;
+        _vertices[point.X * 2 + (point.Y * 2 + 1) * _width].Color = Color.Cyan;
     }
 
     private void InitialiseTerrain()
