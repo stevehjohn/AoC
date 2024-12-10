@@ -321,12 +321,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         GraphicsDevice.RasterizerState = rasterizerState;
 
-        foreach (var pass in effect.CurrentTechnique.Passes)
-        {
-            pass.Apply();
-
-            GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, _outlines, 0, _outlines.Length, _indices, 0, _indices.Length / 3,
-                VertexPositionColorNormal.VertexDeclaration);
-        }
+        // foreach (var pass in effect.CurrentTechnique.Passes)
+        // {
+        //     pass.Apply();
+        //
+        //     GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, _outlines, 0, _outlines.Length, _indices, 0, _indices.Length / 3,
+        //         VertexPositionColorNormal.VertexDeclaration);
+        // }
     }
 }
