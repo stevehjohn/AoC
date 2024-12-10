@@ -26,7 +26,13 @@ public class PuzzleState
         }
         
         Visited = visited.ToList();
-        
-        AllVisited.AddRange(Visited);
+
+        foreach (var item in visited)
+        {
+            if (! AllVisited.Contains(item))
+            {
+                AllVisited.Add(item);
+            }
+        }
     }
 }
