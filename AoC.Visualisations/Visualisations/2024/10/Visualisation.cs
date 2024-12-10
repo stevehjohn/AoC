@@ -105,7 +105,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 {
                     foreach (var point in _state.Visited)
                     {
-                        _vertices[point.X + point.Y * _width].Color = Color.AntiqueWhite;
+                        _vertices[point.X * 2 + point.Y * 2 * _width].Color = Color.AntiqueWhite;
+                        _vertices[point.X * 2 + 1 + point.Y * 2 * _width].Color = Color.AntiqueWhite;
+                        _vertices[point.X * 2 + 1 + (point.Y * 2 + 1) * _width].Color = Color.AntiqueWhite;
+                        _vertices[point.X * 2 + (point.Y * 2 + 1) * _width].Color = Color.AntiqueWhite;
                     }
                 }
             }
