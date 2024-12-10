@@ -230,7 +230,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                 for (var i = 0; i < 8; i++)
                 {
-                    _outlines[baseIndex / 8 + i] = new VertexPositionColorNormal(_vertices[baseIndex + i].Position, Color.Black, Vector3.Zero);
+                    _outlines[baseIndex + i] = new VertexPositionColorNormal(_vertices[baseIndex + i].Position, Color.Black, Vector3.Zero);
                 }
             }
         }
