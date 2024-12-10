@@ -277,19 +277,14 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private void SetUpCamera()
     {
-        // Adjust eye position for lower height (reduce Y) and zoom (reduce Z).
-        // Original: new Vector3(0, 100, 75)
         var eye = new Vector3(0, 50, 40);
 
-        // Keep the target position the same.
-        var target = new Vector3(0, 00, 0);
+        var target = new Vector3(0, 0, 0);
 
-        // Up direction remains the same.
         var up = Vector3.Up;
 
         _viewMatrix = Matrix.CreateLookAt(eye, target, up);
 
-        // Keep the perspective projection the same.
         _projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, GraphicsDevice.Viewport.AspectRatio, 1f, 300.0f);
     }
 
