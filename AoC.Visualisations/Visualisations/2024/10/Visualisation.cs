@@ -20,7 +20,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private int _height;
 
     private VertexPositionColorNormal[] _vertices;
-    // private VertexPositionColorNormal[] _outlines;
+    private VertexPositionColorNormal[] _outlines;
 
     private short[] _indices;
 
@@ -205,7 +205,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private void SetUpVertices()
     {
         _vertices = new VertexPositionColorNormal[_width * _height * 8];
-        // _outlines = new VertexPositionColorNormal[_width * _height * 4];
+        _outlines = new VertexPositionColorNormal[_width * _height * 8];
 
         for (var x = 0; x < _width; x++)
         {
@@ -228,10 +228,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 _vertices[baseIndex + 6] = new VertexPositionColorNormal(new Vector3(x, -100, z + 1), color, Vector3.Down);
                 _vertices[baseIndex + 7] = new VertexPositionColorNormal(new Vector3(x + 1, -100, z + 1), color, Vector3.Down);
 
-                // for (var i = 0; i < 4; i++)
-                // {
-                //     _outlines[baseIndex / 2 + i] = new VertexPositionColorNormal(_vertices[baseIndex + i].Position, Color.Black, Vector3.Zero);
-                // }
+                for (var i = 0; i < 8; i++)
+                {
+                    _outlines[baseIndex / 8 + i] = new VertexPositionColorNormal(_vertices[baseIndex + i].Position, Color.Black, Vector3.Zero);
+                }
             }
         }
     }
@@ -321,12 +321,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         GraphicsDevice.RasterizerState = rasterizerState;
 
-        // foreach (var pass in effect.CurrentTechnique.Passes)
-        // {
-        //     pass.Apply();
-        //
-        //     GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, _outlines, 0, _outlines.Length, _indices, 0, _indices.Length / 3,
-        //         VertexPositionColorNormal.VertexDeclaration);
-        // }
+        foreach (var pass in effect.CurrentTechnique.Passes)
+        {
+            pass.Apply();
+        
+            GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, _outlines, 0, _outlines.Length, _indices, 0, _indices.Length / 3,
+                VertexPositionColorNormal.VertexDeclaration);
+        }
     }
 }
