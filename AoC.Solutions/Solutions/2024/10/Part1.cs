@@ -6,7 +6,9 @@ namespace AoC.Solutions.Solutions._2024._10;
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private readonly HashSet<(int, int)> _trailheads = [];
+    private readonly HashSet<(int, int)> _trailEnds = [];
+
+    private readonly HashSet<(int, int)> _visited = [];
 
     private readonly Queue<(int X, int Y)> _queue = [];
     
@@ -39,7 +41,9 @@ public class Part1 : Base
 
     private int CountTrailheads(int x, int y)
     {
-        _trailheads.Clear();
+        _trailEnds.Clear();
+        
+        _visited.Clear();
         
         _queue.Enqueue((x, y));
 
@@ -49,23 +53,23 @@ public class Part1 : Base
 
             if (_map[position.X, position.Y] == '9')
             {
-                _trailheads.Add((position.X, position.Y));
+                _trailEnds.Add((position.X, position.Y));
                 
                 continue;
             }
 
-            var height = _map[x, y];
+            var height = _map[position.X, position.Y];
             
-            SafeEnqueueValue(1 - 1, y, height);
+            SafeEnqueueValue(position.X - 1, position.Y, height);
             
-            SafeEnqueueValue(1 + 1, y, height);
+            SafeEnqueueValue(position.X + 1, position.Y, height);
             
-            SafeEnqueueValue(1, y - 1, height);
+            SafeEnqueueValue(position.X, position.Y - 1, height);
             
-            SafeEnqueueValue(1, y + 1, height);
+            SafeEnqueueValue(position.X, position.Y + 1, height);
         }
 
-        return _trailheads.Count;
+        return _trailEnds.Count;
     }
 
     private void SafeEnqueueValue(int x, int y, char height)
@@ -75,7 +79,7 @@ public class Part1 : Base
             return;
         }
 
-        if (_map[x, y] == height + 1)
+        if (_map[x, y] == height + 1 && _visited.Add((x, y)))
         {
             _queue.Enqueue((x, y));
         }
