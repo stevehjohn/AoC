@@ -91,7 +91,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 {
                     var height = PuzzleState.Map[x, y];
 
-                    _vertices[x + y * _width].Color = _palette[height - '0'];
+                    var baseIndex = (x + y * _width) * 8;
+
+                    for (var i = 0; i < 8; i++)
+                    {
+                        _vertices[baseIndex + i].Color = _palette[height - '0'];
+                    }
                 }
             }
 
@@ -105,7 +110,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 {
                     foreach (var point in _state.Visited)
                     {
-                        _vertices[point.X + point.Y * _width].Color = Color.AntiqueWhite;
+                        var baseIndex = (point.X + point.Y * _width) * 8;
+
+                        for (var i = 0; i < 8; i++)
+                        {
+                            _vertices[baseIndex + i].Color = Color.Aqua;
+                        }
                     }
                 }
             }
@@ -252,7 +262,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private void SetUpCamera()
     {
         // TODO: I hate magic numbers...
-        _viewMatrix = Matrix.CreateLookAt(new Vector3(0, 150, 75), new Vector3(0, 40, 0), new Vector3(0, 1, 0));
+        _viewMatrix = Matrix.CreateLookAt(new Vector3(0, 100, 75), new Vector3(0, 40, 0), new Vector3(0, 1, 0));
 
         _projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, GraphicsDevice.Viewport.AspectRatio, 1f, 300.0f);
     }
