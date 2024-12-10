@@ -8,7 +8,7 @@ public class PuzzleState
     
     public List<(int X, int Y)> Visited { get; private set; }
 
-    public static List<(int X, int Y)> AllVisited { get; private set; } = [];
+    public static List<(int X, int Y)> AllVisited { get; } = [];
 
     public PuzzleState(char[,] map, HashSet<(int X, int Y)> visited)
     {
