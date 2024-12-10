@@ -204,8 +204,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private void SetUpVertices()
     {
-        _vertices = new VertexPositionColorNormal[_width * _height * 8];
-        _outlines = new VertexPositionColorNormal[_width * _height * 8];
+        _vertices = new VertexPositionColorNormal[_width * _height * 4];
+        // _outlines = new VertexPositionColorNormal[_width * _height * 8];
 
         for (var x = 0; x < _width; x++)
         {
@@ -214,7 +214,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 var height = PuzzleState.Map[x, y] - '.';
                 var color = _palette[PuzzleState.Map[x, y] - '0'];
 
-                var baseIndex = (x + y * _width) * 8;
+                var baseIndex = (x + y * _width) * 4;
 
                 var z = -_height / 2 + y;
 
@@ -223,15 +223,15 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 _vertices[baseIndex + 2] = new VertexPositionColorNormal(new Vector3(x, height, z + 1), color, Vector3.Up);
                 _vertices[baseIndex + 3] = new VertexPositionColorNormal(new Vector3(x + 1, height, z + 1), color, Vector3.Up);
 
-                _vertices[baseIndex + 4] = new VertexPositionColorNormal(new Vector3(x, 0, z), color, Vector3.Down);
-                _vertices[baseIndex + 5] = new VertexPositionColorNormal(new Vector3(x + 1, 0, z), color, Vector3.Down);
-                _vertices[baseIndex + 6] = new VertexPositionColorNormal(new Vector3(x, 0, z + 1), color, Vector3.Down);
-                _vertices[baseIndex + 7] = new VertexPositionColorNormal(new Vector3(x + 1, 0, z + 1), color, Vector3.Down);
+                // _vertices[baseIndex + 4] = new VertexPositionColorNormal(new Vector3(x, 0, z), color, Vector3.Down);
+                // _vertices[baseIndex + 5] = new VertexPositionColorNormal(new Vector3(x + 1, 0, z), color, Vector3.Down);
+                // _vertices[baseIndex + 6] = new VertexPositionColorNormal(new Vector3(x, 0, z + 1), color, Vector3.Down);
+                // _vertices[baseIndex + 7] = new VertexPositionColorNormal(new Vector3(x + 1, 0, z + 1), color, Vector3.Down);
 
-                for (var i = 0; i < 8; i++)
-                {
-                    _outlines[baseIndex + i] = new VertexPositionColorNormal(_vertices[baseIndex + i].Position, Color.Black, Vector3.Zero);
-                }
+                // for (var i = 0; i < 8; i++)
+                // {
+                //     _outlines[baseIndex + i] = new VertexPositionColorNormal(_vertices[baseIndex + i].Position, Color.Black, Vector3.Zero);
+                // }
             }
         }
     }
