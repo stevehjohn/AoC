@@ -1,17 +1,14 @@
-﻿// ReSharper disable PossibleLossOfFraction
+// ReSharper disable PossibleLossOfFraction
 
-using AoC.Solutions.Solutions._2023._17;
+using AoC.Solutions.Solutions._2024._10;
 using AoC.Visualisations.Exceptions;
 using AoC.Visualisations.Infrastructure;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Color = Microsoft.Xna.Framework.Color;
-using FillMode = Microsoft.Xna.Framework.Graphics.FillMode;
-using PrimitiveType = Microsoft.Xna.Framework.Graphics.PrimitiveType;
 using VertexPositionColorNormal = AoC.Visualisations.Infrastructure.VertexPositionColorNormal;
 
-namespace AoC.Visualisations.Visualisations._2023._17;
+namespace AoC.Visualisations.Visualisations._2024._10;
 
 [UsedImplicitly]
 public class Visualisation : VisualisationBase<PuzzleState>
@@ -122,9 +119,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                         _state = state;
 
-                        if (_state.History != null)
+                        if (_state.Visited != null)
                         {
-                            foreach (var point in _state.History)
+                            foreach (var point in _state.Visited)
                             {
                                 _vertices[point.X + point.Y * _width].Color = Color.AntiqueWhite;
                             }
@@ -176,12 +173,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         _index++;
         
-        if (_index > _state.History.Count - 1)
+        if (_index > _state.Visited.Count - 1)
         {
             return;
         }
         
-        var point = _state.History[_index];
+        var point = _state.Visited[_index];
         
         _vertices[point.X + point.Y * _width].Color = Color.Cyan;
     }

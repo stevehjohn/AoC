@@ -12,6 +12,8 @@ public abstract class Base : Solution
     private readonly HashSet<(int, int)> _visited = [];
 
     private readonly Queue<(int X, int Y)> _queue = [];
+
+    private readonly IVisualiser<PuzzleState> _visualiser;
     
     private char[,] _map;
 
@@ -21,6 +23,15 @@ public abstract class Base : Solution
 
     private bool _isPart2;
 
+    protected Base()
+    {
+    }
+    
+    protected Base(IVisualiser<PuzzleState> visualiser)
+    {
+        _visualiser = visualiser;
+    }
+    
     protected string GetAnswer(bool isPart2)
     {
         _isPart2 = isPart2;
@@ -44,6 +55,11 @@ public abstract class Base : Solution
         return result.ToString();
     }
 
+    private void Visualise()
+    {
+        _visualiser?.PuzzleStateChanged(new PuzzleState(_map, _visited));
+    }
+
     private int CountTrailheads(int x, int y)
     {
         _trailEnds.Clear();
@@ -55,6 +71,8 @@ public abstract class Base : Solution
         while (_queue.Count > 0)
         {
             var position = _queue.Dequeue();
+            
+            Visualise();
 
             if (_map[position.X, position.Y] == '9')
             {
