@@ -84,38 +84,28 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                 InitialiseTerrain();
             }
-            else
+            
+            for (var x = 0; x < _width; x++)
             {
-                for (var x = 0; x < _width; x++)
+                for (var y = 0; y < _height; y++)
                 {
-                    for (var y = 0; y < _height; y++)
-                    {
-                        var height = PuzzleState.Map[x, y];
+                    var height = PuzzleState.Map[x, y];
 
-                        _vertices[x + y * _width].Color = _palette[height - '0'];
-                    }
+                    _vertices[x + y * _width].Color = _palette[height - '0'];
                 }
+            }
 
-                for (var i = 0; i < 10; i++)
+            if (HasNextState)
+            {
+                var state = GetNextState();
+                
+                _state = state;
+
+                if (_state.Visited != null)
                 {
-                    if (HasNextState)
+                    foreach (var point in _state.Visited)
                     {
-                        var state = GetNextState();
-
-                        if (state == null)
-                        {
-                            break;
-                        }
-
-                        _state = state;
-
-                        if (_state.Visited != null)
-                        {
-                            foreach (var point in _state.Visited)
-                            {
-                                _vertices[point.X + point.Y * _width].Color = Color.AntiqueWhite;
-                            }
-                        }
+                        _vertices[point.X + point.Y * _width].Color = Color.AntiqueWhite;
                     }
                 }
             }
