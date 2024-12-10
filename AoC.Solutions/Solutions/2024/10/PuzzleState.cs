@@ -1,5 +1,3 @@
-using AoC.Solutions.Extensions;
-
 namespace AoC.Solutions.Solutions._2024._10;
 
 public class PuzzleState
@@ -12,10 +10,7 @@ public class PuzzleState
 
     public PuzzleState(char[,] map, HashSet<(int X, int Y)> visited)
     {
-        if (Map == null)
-        {
-            Map = map;
-        }
+        Map ??= map;
         
         Visited = visited.ToList();
 
