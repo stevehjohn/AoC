@@ -223,10 +223,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 _vertices[baseIndex + 2] = new VertexPositionColorNormal(new Vector3(x, height, z + 1), color, Vector3.Up);
                 _vertices[baseIndex + 3] = new VertexPositionColorNormal(new Vector3(x + 1, height, z + 1), color, Vector3.Up);
 
-                _vertices[baseIndex + 4] = new VertexPositionColorNormal(new Vector3(x, 0, z), color, Vector3.Down);
-                _vertices[baseIndex + 5] = new VertexPositionColorNormal(new Vector3(x + 1, 0, z), color, Vector3.Down);
-                _vertices[baseIndex + 6] = new VertexPositionColorNormal(new Vector3(x, 0, z + 1), color, Vector3.Down);
-                _vertices[baseIndex + 7] = new VertexPositionColorNormal(new Vector3(x + 1, 0, z + 1), color, Vector3.Down);
+                _vertices[baseIndex + 4] = new VertexPositionColorNormal(new Vector3(x, -100, z), color, Vector3.Down);
+                _vertices[baseIndex + 5] = new VertexPositionColorNormal(new Vector3(x + 1, -100, z), color, Vector3.Down);
+                _vertices[baseIndex + 6] = new VertexPositionColorNormal(new Vector3(x, -100, z + 1), color, Vector3.Down);
+                _vertices[baseIndex + 7] = new VertexPositionColorNormal(new Vector3(x + 1, -100, z + 1), color, Vector3.Down);
 
                 // for (var i = 0; i < 4; i++)
                 // {
