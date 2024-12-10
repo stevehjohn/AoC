@@ -402,7 +402,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 13.1: 50μs          Distress signal
  2022 13.2: 512μs         
  2022 14.1: 462μs         Regolith reservoir
- 2022 14.2: 4,950μs       
+ 2022 14.2: 4,921μs       
  2022 15.1: 9μs           Beacon exclusion zone
  2022 15.2: 11,044μs      
  2022 16.1: 29,037μs      Proboscidea volcanium
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 60,123μs      
  2022 25.1: 10μs          Full of hot air
             -------------
-            306.611ms    
+            306.582ms    
 
  2023  1.1: 120μs         Trebuchet
  2023  1.2: 338μs         
@@ -491,14 +491,16 @@ Tests performed on a 2023 MacBook Pro.
  2024  5.2: 1,859μs       
  2024  6.1: 389μs         Guard gallivant
  2024  6.2: 34,925μs      
- 2024  7.1: 195μs         Bridge repair
+ 2024  7.1: 186μs         Bridge repair
  2024  7.2: 5,984μs       
  2024  8.1: 91μs          Resonant collinearity
  2024  8.2: 149μs         
  2024  9.1: 304μs         Disk fragmenter
- 2024  9.2: 40,062μs      
+ 2024  9.2: 39,406μs      
+ 2024 10.1: 315μs         Hoof it
+ 2024 10.2: 519μs         
             -------------
-            86.229ms     
+            86.398ms     
 
- 460 puzzles solved in 51.196s.
+ 462 puzzles solved in 51.196s.
 ```
