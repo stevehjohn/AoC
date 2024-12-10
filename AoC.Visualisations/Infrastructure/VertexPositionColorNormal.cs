@@ -14,6 +14,13 @@ public struct VertexPositionColorNormal : IVertexType
     [UsedImplicitly] 
     public Vector3 Normal;
 
+    public VertexPositionColorNormal(Vector3 position, Color color, Vector3 normal)
+    {
+        Position = position;
+        Color = color;
+        Normal = normal;
+    }
+
     public static readonly VertexDeclaration VertexDeclaration = new
     (
         new VertexElement(0, VertexElementFormat.Vector3, VertexElementUsage.Position, 0),

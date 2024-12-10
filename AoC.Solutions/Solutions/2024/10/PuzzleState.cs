@@ -14,15 +14,7 @@ public class PuzzleState
     {
         if (Map == null)
         {
-            Map = new char[map.GetLength(0) * 2, map.GetLength(1) * 2];
-
-            map.ForAll((x, y, c) =>
-            {
-                Map[x * 2, y * 2] = c;
-                Map[x * 2 + 1, y * 2] = c;
-                Map[x * 2, y * 2 + 1] = c;
-                Map[x * 2 + 1, y * 2 + 1] = c;
-            });
+            Map = map;
         }
         
         Visited = visited.ToList();
