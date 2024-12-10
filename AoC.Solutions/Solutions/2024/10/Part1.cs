@@ -74,7 +74,7 @@ public class Part1 : Base
 
     private void SafeEnqueueValue(int x, int y, char height)
     {
-        if (x < 0 || x >= _width || y < 0 || y >= _height)
+        if (x < 0 || x > _width || y < 0 || y > _height)
         {
             return;
         }
