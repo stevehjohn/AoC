@@ -44,7 +44,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         IsMouseVisible = true;
 
-        _palette = PaletteGenerator.GetPalette(18,
+        _palette = PaletteGenerator.GetPalette(12,
         [
             new Color(46, 27, 134),
             new Color(119, 35, 172),
@@ -246,9 +246,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private void SetUpCamera()
     {
         // TODO: I hate magic numbers...
-        _viewMatrix = Matrix.CreateLookAt(new Vector3(0, 280, 150), new Vector3(0, -20, 0), new Vector3(0, 1, 0));
+        _viewMatrix = Matrix.CreateLookAt(new Vector3(0, 180, 75), new Vector3(0, 50, 0), new Vector3(0, 1, 0));
 
-        _projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, GraphicsDevice.Viewport.AspectRatio, 1.0f, 300.0f);
+        _projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4 / 2, GraphicsDevice.Viewport.AspectRatio, 1f, 300.0f);
     }
 
     private void DrawMap()
