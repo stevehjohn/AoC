@@ -57,21 +57,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     public override void SetPart(int part)
     {
-        switch (part)
+        Puzzle = part switch
         {
-            case 1:
-                Puzzle = new Part1(this);
-
-                break;
-
-            case 2:
-                Puzzle = new Part2(this);
-
-                break;
-
-            default:
-                throw new VisualisationParameterException();
-        }
+            1 => new Part1(this),
+            2 => new Part2(this),
+            _ => throw new VisualisationParameterException()
+        };
     }
 
     protected override void Update(GameTime gameTime)
@@ -99,7 +90,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 {
                     for (var y = 0; y < _height; y++)
                     {
-                        var height = _state.Map[x, y];
+                        var height = PuzzleState.Map[x, y];
 
                         _vertices[x + y * _width].Color = _palette[height - '0'];
                     }
@@ -163,7 +154,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             {
                 for (var y = 0; y < _height; y++)
                 {
-                    var height = _state.Map[x, y];
+                    var height = PuzzleState.Map[x, y];
 
                     _vertices[x + y * _width].Color = _palette[height - '0'];
                 }
@@ -184,9 +175,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private void InitialiseTerrain()
     {
-        _width = _state.Map.GetLength(0);
+        _width = PuzzleState.Map.GetLength(0);
 
-        _height = _state.Map.GetLength(1);
+        _height = PuzzleState.Map.GetLength(1);
 
         SetUpVertices();
 
@@ -204,7 +195,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             for (var y = 0; y < _height; y++)
             {
-                var height = _state.Map[x, y];
+                var height = PuzzleState.Map[x, y];
 
                 _vertices[x + y * _width].Position = new Vector3(x, height, -_height / 2 + y);
                 _vertices[x + y * _width].Color = _palette[height - '0'];
