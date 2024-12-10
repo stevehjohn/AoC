@@ -66,7 +66,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
             case 2:
                 Puzzle = new Part2(this);
-                _angle = -(float) Math.PI / 4;
 
                 break;
 
@@ -102,7 +101,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                     {
                         var height = _state.Map[x, y];
 
-                        _vertices[x + y * _width].Color = _palette[height];
+                        _vertices[x + y * _width].Color = _palette[height - '0'];
                     }
                 }
 
@@ -166,7 +165,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 {
                     var height = _state.Map[x, y];
 
-                    _vertices[x + y * _width].Color = _palette[height];
+                    _vertices[x + y * _width].Color = _palette[height - '0'];
                 }
             }
         }
@@ -208,7 +207,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 var height = _state.Map[x, y];
 
                 _vertices[x + y * _width].Position = new Vector3(x, height, -_height / 2 + y);
-                _vertices[x + y * _width].Color = _palette[height];
+                _vertices[x + y * _width].Color = _palette[height - '0'];
                 _vertices[x + y * _width].Normal = Vector3.Right;
 
                 _outlines[x + y * _width].Position = new Vector3(x, height, -_height / 2 + y);
@@ -247,7 +246,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private void SetUpCamera()
     {
         // TODO: I hate magic numbers...
-        _viewMatrix = Matrix.CreateLookAt(new Vector3(0, 80, 150), new Vector3(0, -20, 0), new Vector3(0, 1, 0));
+        _viewMatrix = Matrix.CreateLookAt(new Vector3(0, 280, 150), new Vector3(0, -20, 0), new Vector3(0, 1, 0));
 
         _projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, GraphicsDevice.Viewport.AspectRatio, 1.0f, 300.0f);
     }
