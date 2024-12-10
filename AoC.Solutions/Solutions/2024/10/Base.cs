@@ -7,7 +7,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Hoof it";
     
-    private readonly HashSet<(int, int)> _trailEnds = [];
+    private readonly Dictionary<(int, int), int> _trailEnds = [];
 
     private readonly HashSet<(int, int)> _visited = [];
 
@@ -19,8 +19,12 @@ public abstract class Base : Solution
 
     private int _height;
 
+    private bool _isPart2;
+
     protected string GetAnswer(bool isPart2)
     {
+        _isPart2 = isPart2;
+        
         _map = Input.To2DArray();
 
         _width = _map.GetUpperBound(0);
@@ -54,8 +58,15 @@ public abstract class Base : Solution
 
             if (_map[position.X, position.Y] == '9')
             {
-                _trailEnds.Add((position.X, position.Y));
-                
+                if (_trailEnds.TryGetValue((position.X, position.Y), out _))
+                {
+                    _trailEnds[(position.X, position.Y)]++;
+                }
+                else
+                {
+                    _trailEnds.Add((position.X, position.Y), 1);
+                }
+
                 continue;
             }
 
@@ -70,7 +81,7 @@ public abstract class Base : Solution
             SafeEnqueueValue(position.X, position.Y + 1, height);
         }
 
-        return _trailEnds.Count;
+        return _trailEnds.Sum(e => e.Value);
     }
 
     private void SafeEnqueueValue(int x, int y, char height)
@@ -80,7 +91,7 @@ public abstract class Base : Solution
             return;
         }
 
-        if (_map[x, y] == height + 1 && _visited.Add((x, y)))
+        if (_map[x, y] == height + 1 && (_visited.Add((x, y)) || _isPart2))
         {
             _queue.Enqueue((x, y));
         }
