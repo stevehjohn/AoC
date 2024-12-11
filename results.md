@@ -402,7 +402,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 13.1: 50μs          Distress signal
  2022 13.2: 512μs         
  2022 14.1: 462μs         Regolith reservoir
- 2022 14.2: 4,921μs       
+ 2022 14.2: 4,918μs       
  2022 15.1: 9μs           Beacon exclusion zone
  2022 15.2: 11,044μs      
  2022 16.1: 29,037μs      Proboscidea volcanium
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 60,123μs      
  2022 25.1: 10μs          Full of hot air
             -------------
-            306.581ms    
+            306.578ms    
 
  2023  1.1: 120μs         Trebuchet
  2023  1.2: 338μs         
@@ -497,12 +497,12 @@ Tests performed on a 2023 MacBook Pro.
  2024  8.2: 149μs         
  2024  9.1: 304μs         Disk fragmenter
  2024  9.2: 39,065μs      
- 2024 10.1: 315μs         Hoof it
- 2024 10.2: 510μs         
+ 2024 10.1: 312μs         Hoof it
+ 2024 10.2: 504μs         
  2024 11.1: 411μs         Plutonian pebbles
  2024 11.2: 17,052μs      
             -------------
-            103.511ms    
+            103.502ms    
 
  464 puzzles solved in 51.198s.
 ```
