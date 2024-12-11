@@ -116,7 +116,7 @@ Tests performed on a 2023 MacBook Pro.
 
  2017  1.1: 9μs           Captcha
  2017  1.2: 10μs          
- 2017  2.1: 11μs          Spreadsheet checksum
+ 2017  2.1: 10μs          Spreadsheet checksum
  2017  2.2: 24μs          
  2017  3.1: 0μs           Spiral memory
  2017  3.2: 20μs          
@@ -238,7 +238,7 @@ Tests performed on a 2023 MacBook Pro.
  2019  9.2: 28,505μs      
  2019 10.1: 18,082μs      Asteroids
  2019 10.2: 1,678μs       
- 2019 11.1: 77,184μs      Personal plate (CPU used unmodified)
+ 2019 11.1: 62,852μs      Personal plate (CPU used unmodified)
  2019 11.2: 789μs         
  2019 12.1: 503μs         Orbital simulation
  2019 12.2: 66,543μs      
@@ -268,7 +268,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 24.2: 7,433μs       
  2019 25.1: 272,715μs     Airlock password (CPU used unmodified)
             -------------
-            1.384s       
+            1.370s       
 
  2020  1.1: 25μs          Expenses
  2020  1.2: 106μs         
@@ -376,7 +376,7 @@ Tests performed on a 2023 MacBook Pro.
             3.934s       
 
  2022  1.1: 24μs          Calorie counting
- 2022  1.2: 35μs          
+ 2022  1.2: 34μs          
  2022  2.1: 37μs          Rock paper scissors
  2022  2.2: 30μs          
  2022  3.1: 73μs          Rucksack reorganization
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 60,123μs      
  2022 25.1: 10μs          Full of hot air
             -------------
-            306.582ms    
+            306.581ms    
 
  2023  1.1: 120μs         Trebuchet
  2023  1.2: 338μs         
@@ -438,7 +438,7 @@ Tests performed on a 2023 MacBook Pro.
  2023  5.1: 36μs          If you give a seed a fertilizer
  2023  5.2: 132μs         
  2023  6.1: 2μs           Wait for it
- 2023  6.2: 39μs          
+ 2023  6.2: 38μs          
  2023  7.1: 596μs         Camel cards
  2023  7.2: 644μs         
  2023  8.1: 424μs         Haunted wasteland
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,631μs       
  2023 25.1: 10,476μs      Snowverload
             -------------
-            405.558ms    
+            405.557ms    
 
  2024  1.1: 125μs         Historian hysteria
  2024  1.2: 97μs          
@@ -496,13 +496,13 @@ Tests performed on a 2023 MacBook Pro.
  2024  8.1: 91μs          Resonant collinearity
  2024  8.2: 149μs         
  2024  9.1: 304μs         Disk fragmenter
- 2024  9.2: 39,406μs      
+ 2024  9.2: 39,065μs      
  2024 10.1: 315μs         Hoof it
  2024 10.2: 510μs         
  2024 11.1: 411μs         Plutonian pebbles
- 2024 11.2: 18,922μs      
+ 2024 11.2: 17,052μs      
             -------------
-            105.722ms    
+            103.511ms    
 
- 464 puzzles solved in 51.215s.
+ 464 puzzles solved in 51.198s.
 ```

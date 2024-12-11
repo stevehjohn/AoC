@@ -11,10 +11,10 @@ public class Part1 : Base
 
         var result = 0L;
 
-        for (var i = 0; i < Stones.Length; i++)
+        Parallel.For(0, Stones.Length, i =>
         {
-            result += Blink(Stones[i], 25);
-        }
+            Interlocked.Add(ref result, Blink(Stones[i], 25));
+        });
 
         return result.ToString();
     }

@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2024._11;
@@ -8,7 +9,7 @@ public abstract class Base : Solution
 
     protected long[] Stones;
 
-    private readonly Dictionary<long, long> _cache = [];
+    private readonly ConcurrentDictionary<long, long> _cache = [];
     
     protected void ParseInput()
     {
@@ -57,7 +58,7 @@ public abstract class Base : Solution
             }
         }
         
-        _cache.Add(key, sum);
+        _cache.TryAdd(key, sum);
 
         return sum;
     }
