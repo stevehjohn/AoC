@@ -6,40 +6,39 @@ public abstract class Base : Solution
 {
     public override string Description => "Plutonian pebbles";
 
-    protected readonly LinkedList<long> Stones = [];
+    protected long[] Stones;
+
+    private readonly Dictionary<string, long> _cache = [];
     
     protected void ParseInput()
     {
-        var stones = Input[0].Split(' ').Select(long.Parse).ToArray();
-
-        var node = Stones.AddFirst(stones[0]);
-
-        for (var i = 1; i < stones.Length; i++)
-        {
-            node = Stones.AddAfter(node, stones[i]);
-        }
+        Stones = Input[0].Split(' ').Select(long.Parse).ToArray();
     }
 
-    protected void Blink()
+    protected long Blink(long stone, int times)
     {
-        var stone = Stones.First;
-        
-        while (stone != null)
+        var key = $"{stone}|{times}";
+
+        if (_cache.TryGetValue(key, out var value))
         {
-            var value = stone.Value;
-            
-            if (value == 0)
+            return value;
+        }
+
+        long sum;
+
+        var digits = (int) Math.Log10(stone) + 1;
+
+        if (times == 1)
+        {
+            sum = digits % 2 == 0 ? 2 : 1;
+        }
+        else
+        {
+            if (stone == 0)
             {
-                stone.Value = 1;
-
-                stone = stone.Next;
-                
-                continue;
+                sum = Blink(1, times - 1);
             }
-
-            var digits = (int) Math.Log10(value) + 1;
-            
-            if (digits % 2 == 0)
+            else if (digits % 2 == 0)
             {
                 var pow = 1;
         
@@ -47,17 +46,53 @@ public abstract class Base : Solution
                 {
                     pow *= 10;
                 }
-            
-                stone.Value = value / pow;
 
-                stone = Stones.AddAfter(stone, value % pow).Next;
-                
-                continue;
+                sum = Blink(stone / pow, times - 1);
+
+                sum += Blink(stone % pow, times - 1);
             }
-
-            stone.Value *= 2_024;
-            
-            stone = stone.Next;
+            else
+            {
+                sum = Blink(stone * 2_024, times - 1);
+            }
         }
+        
+        _cache.Add(key, sum);
+
+        return sum;
+
+        // while (stone != null)
+        // {
+        //     if (value == 0)
+        //     {
+        //         stone.Value = 1;
+        //
+        //         stone = stone.Next;
+        //         
+        //         continue;
+        //     }
+        //
+        //     var digits = (int) Math.Log10(value) + 1;
+        //     
+        //     if (digits % 2 == 0)
+        //     {
+        //         var pow = 1;
+        //
+        //         for (var i = 0; i < digits / 2; i++)
+        //         {
+        //             pow *= 10;
+        //         }
+        //     
+        //         stone.Value = value / pow;
+        //
+        //         stone = Stones.AddAfter(stone, value % pow).Next;
+        //         
+        //         continue;
+        //     }
+        //
+        //     stone.Value *= 2_024;
+        //     
+        //     stone = stone.Next;
+        // }
     }
 }

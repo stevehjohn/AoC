@@ -1,4 +1,3 @@
-using AoC.Solutions.Extensions;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2024._11;
@@ -9,18 +8,14 @@ public class Part2 : Base
     public override string GetAnswer()
     {
         ParseInput();
-        
-        var i = 0;
-        
-        75.Repetitions(() =>
-        {
-            Console.WriteLine($"{i}: {Stones.Count}");
-            
-            Blink();
 
-            i++;
-        });
-        
-        return Stones.Count.ToString();
+        var result = 0L;
+
+        for (var i = 0; i < Stones.Length; i++)
+        {
+            result += Blink(Stones[i], 75);
+        }
+
+        return result.ToString();
     }
 }
