@@ -60,39 +60,5 @@ public abstract class Base : Solution
         _cache.Add(key, sum);
 
         return sum;
-
-        // while (stone != null)
-        // {
-        //     if (value == 0)
-        //     {
-        //         stone.Value = 1;
-        //
-        //         stone = stone.Next;
-        //         
-        //         continue;
-        //     }
-        //
-        //     var digits = (int) Math.Log10(value) + 1;
-        //     
-        //     if (digits % 2 == 0)
-        //     {
-        //         var pow = 1;
-        //
-        //         for (var i = 0; i < digits / 2; i++)
-        //         {
-        //             pow *= 10;
-        //         }
-        //     
-        //         stone.Value = value / pow;
-        //
-        //         stone = Stones.AddAfter(stone, value % pow).Next;
-        //         
-        //         continue;
-        //     }
-        //
-        //     stone.Value *= 2_024;
-        //     
-        //     stone = stone.Next;
-        // }
     }
 }
