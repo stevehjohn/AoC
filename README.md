@@ -70,6 +70,8 @@ There are visualisations for:
 - 2023.22.2
 - 2024.09.1 - Disk fragmenter
 - 2024.09.2
+- 2024.10.1 - Hoof It
+- 2024.10.2
 
 ## Mental Notes to Self
 
