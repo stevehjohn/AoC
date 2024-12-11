@@ -9,8 +9,17 @@ public class Part2 : Base
     public override string GetAnswer()
     {
         ParseInput();
+        
+        var i = 0;
+        
+        75.Repetitions(() =>
+        {
+            Console.WriteLine($"{i}: {Stones.Count}");
+            
+            Blink();
 
-        25.Repetitions(Blink);
+            i++;
+        });
         
         return Stones.Count.ToString();
     }
