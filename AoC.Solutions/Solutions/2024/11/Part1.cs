@@ -12,6 +12,6 @@ public class Part1 : Base
 
         25.Repetitions(Blink);
         
-        return Stones.Count.ToString();   
+        return Stones.Count.ToString();
     }
 }
