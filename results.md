@@ -275,7 +275,7 @@ Tests performed on a 2023 MacBook Pro.
  2020  2.1: 178μs         Password policy
  2020  2.2: 114μs         
  2020  3.1: 141μs         Tobogganing through the trees
- 2020  3.2: 26μs          
+ 2020  3.2: 25μs          
  2020  4.1: 276μs         Passport validation
  2020  4.2: 640μs         
  2020  5.1: 121μs         Boarding parse
@@ -498,9 +498,11 @@ Tests performed on a 2023 MacBook Pro.
  2024  9.1: 304μs         Disk fragmenter
  2024  9.2: 39,406μs      
  2024 10.1: 315μs         Hoof it
- 2024 10.2: 519μs         
+ 2024 10.2: 510μs         
+ 2024 11.1: 411μs         Plutonian pebbles
+ 2024 11.2: 18,922μs      
             -------------
-            86.398ms     
+            105.722ms    
 
- 462 puzzles solved in 51.196s.
+ 464 puzzles solved in 51.215s.
 ```
