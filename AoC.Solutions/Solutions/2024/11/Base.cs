@@ -8,7 +8,7 @@ public abstract class Base : Solution
 
     protected long[] Stones;
 
-    private readonly Dictionary<string, long> _cache = [];
+    private readonly Dictionary<long, long> _cache = [];
     
     protected void ParseInput()
     {
@@ -17,7 +17,7 @@ public abstract class Base : Solution
 
     protected long Blink(long stone, int times)
     {
-        var key = $"{stone}|{times}";
+        var key = stone * 100 + times;
 
         if (_cache.TryGetValue(key, out var value))
         {
