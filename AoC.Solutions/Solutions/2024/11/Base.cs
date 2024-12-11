@@ -24,9 +24,8 @@ public abstract class Base : Solution
     {
         var stone = Stones.First;
         
-        for (var index = 0; index < Stones.Count; index++)
+        while (stone != null)
         {
-            // ReSharper disable once PossibleNullReferenceException
             var value = stone.Value;
             
             if (value == 0)
@@ -51,11 +50,13 @@ public abstract class Base : Solution
             
                 stone.Value = value / pow;
 
-                stone = Stones.AddAfter(stone, value % pow);
+                stone = Stones.AddAfter(stone, value % pow).Next;
                 
                 continue;
             }
 
+            stone.Value *= 2_024;
+            
             stone = stone.Next;
         }
     }

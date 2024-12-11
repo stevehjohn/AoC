@@ -10,16 +10,7 @@ public class Part1 : Base
     {
         ParseInput();
 
-        var i = 1;
-        
-        25.Repetitions(() =>
-        {
-            Console.WriteLine($"{i}: {Stones.Count}");
-            
-            Blink();
-
-            i++;
-        });
+        25.Repetitions(Blink);
         
         return Stones.Count.ToString();   
     }
