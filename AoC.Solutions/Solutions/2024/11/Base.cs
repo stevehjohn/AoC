@@ -6,27 +6,37 @@ public abstract class Base : Solution
 {
     public override string Description => "Plutonian pebbles";
 
-    protected List<long> Stones = [];
+    protected readonly LinkedList<long> Stones = [];
     
     protected void ParseInput()
     {
-        Stones = Input[0].Split(' ').Select(long.Parse).ToList();
+        var stones = Input[0].Split(' ').Select(long.Parse).ToArray();
+
+        var node = Stones.AddFirst(stones[0]);
+
+        for (var i = 1; i < stones.Length; i++)
+        {
+            node = Stones.AddAfter(node, stones[i]);
+        }
     }
 
     protected void Blink()
     {
+        var stone = Stones.First;
+        
         for (var index = 0; index < Stones.Count; index++)
         {
-            var stone = Stones[index];
-
-            if (stone == 0)
+            // ReSharper disable once PossibleNullReferenceException
+            var value = stone.Value;
+            
+            if (value == 0)
             {
-                Stones[index] = 1;
+                stone.Value = 1;
                 
                 continue;
             }
 
-            var digits = (int) Math.Log10(stone) + 1;
+            var digits = (int) Math.Log10(value) + 1;
             
             if (digits % 2 == 0)
             {
@@ -37,12 +47,14 @@ public abstract class Base : Solution
                     pow *= 10;
                 }
             
-                Stones[index] = stone / pow;
+                stone.Value = value / pow;
+
+                stone = Stones.AddAfter(stone, value % pow);
                 
-                Stones.Insert(index + 1, stone % pow);
+                continue;
             }
 
-            Stones[index] = stone * 2_024;
+            stone = stone.Next;
         }
     }
 }

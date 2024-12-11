@@ -14,7 +14,7 @@ public class Part1 : Base
         
         25.Repetitions(() =>
         {
-            Console.WriteLine(i);
+            Console.WriteLine($"{i}: {Stones.Count}");
             
             Blink();
 
