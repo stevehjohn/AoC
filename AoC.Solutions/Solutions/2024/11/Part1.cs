@@ -1,3 +1,4 @@
+using AoC.Solutions.Extensions;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2024._11;
@@ -7,6 +8,19 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        return "Unknown";
+        ParseInput();
+
+        var i = 1;
+        
+        25.Repetitions(() =>
+        {
+            Console.WriteLine(i);
+            
+            Blink();
+
+            i++;
+        });
+        
+        return Stones.Count.ToString();   
     }
 }
