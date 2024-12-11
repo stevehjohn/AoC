@@ -32,6 +32,8 @@ public abstract class Base : Solution
             if (value == 0)
             {
                 stone.Value = 1;
+
+                stone = stone.Next;
                 
                 continue;
             }
