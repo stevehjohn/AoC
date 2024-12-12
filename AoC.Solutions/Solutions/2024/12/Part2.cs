@@ -28,7 +28,7 @@ public class Part2 : Base
         var count = 0;
 
         var perimeter = GetPerimeterCells(region);
-        
+
         return count;
     }
 
