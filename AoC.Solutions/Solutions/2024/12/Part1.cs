@@ -1,4 +1,3 @@
-using AoC.Solutions.Extensions;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2024._12;
@@ -23,5 +22,4 @@ public class Part1 : Base
 
         return cost.ToString();
     }
-
 }

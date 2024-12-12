@@ -7,6 +7,19 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        return "Unknown";
+        ParseInput();
+
+        FindRegions();
+
+        var cost = 0;
+
+        for (var i = 0; i < Regions.Count; i++)
+        {
+            var region = Regions[i];
+
+            cost += region.Cells.Count * GetPerimeter(region);
+        }
+
+        return cost.ToString();
     }
 }
