@@ -25,5 +25,6 @@ public class Part2 : Base
 
     private int CountEdges((char Plant, List<(int X, int Y)> Cells) region)
     {
+        return 1;
     }
 }
