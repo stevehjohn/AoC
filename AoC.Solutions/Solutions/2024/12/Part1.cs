@@ -55,11 +55,6 @@ public class Part1 : Base
         {
             var cell = _queue.Dequeue();
 
-            if (_map[cell.X, cell.Y] != plant)
-            {
-                continue;
-            }
-
             if (! _visited.Add((cell.X, cell.Y)))
             {
                 continue;
@@ -67,21 +62,21 @@ public class Part1 : Base
 
             region.Add((cell.X, cell.Y));
             
-            SafeEnqueue(cell.X + 1, cell.Y);
-            SafeEnqueue(cell.X - 1, cell.Y);
-            SafeEnqueue(cell.X, cell.Y + 1);
-            SafeEnqueue(cell.X, cell.Y - 1);
+            SafeEnqueue(plant, cell.X + 1, cell.Y);
+            SafeEnqueue(plant, cell.X - 1, cell.Y);
+            SafeEnqueue(plant, cell.X, cell.Y + 1);
+            SafeEnqueue(plant, cell.X, cell.Y - 1);
         }
     }
 
-    private void SafeEnqueue(int x, int y)
+    private void SafeEnqueue(char plant, int x, int y)
     {
         if (x < 0 || x >= _width || y < 0 || y >= _height)
         {
             return;
         }
 
-        if (_visited.Contains((x, y)))
+        if (_map[x, y] != plant || _visited.Contains((x, y)))
         {
             return;
         }
