@@ -17,9 +17,13 @@ public class Part2 : Base
         {
             var region = Regions[i];
 
-            //cost += region.Cells.Count * GetPerimeter(region);
+            cost += region.Cells.Count * CountEdges(region);
         }
 
         return cost.ToString();
+    }
+
+    private int CountEdges((char Plant, List<(int X, int Y)> Cells) region)
+    {
     }
 }
