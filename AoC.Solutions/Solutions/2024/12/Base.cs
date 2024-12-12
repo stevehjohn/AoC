@@ -42,16 +42,6 @@ public abstract class Base : Solution
         }
     }
     
-    protected bool IsEdge(char plant, int x, int y)
-    {
-        if (x < 0 || x >= Width || y < 0 || y >= Height)
-        {
-            return true;
-        }
-
-        return Map[x, y] != plant;
-    }
-    
     private void MapRegion(int x, int y)
     {
         var region = new List<(int X, int Y)>();

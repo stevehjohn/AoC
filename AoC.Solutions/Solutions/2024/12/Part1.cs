@@ -39,4 +39,14 @@ public class Part1 : Base
 
         return perimeter;
     }
+    
+    private bool IsEdge(char plant, int x, int y)
+    {
+        if (x < 0 || x >= Width || y < 0 || y >= Height)
+        {
+            return true;
+        }
+
+        return Map[x, y] != plant;
+    }
 }

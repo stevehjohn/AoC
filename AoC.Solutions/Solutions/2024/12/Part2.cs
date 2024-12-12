@@ -17,48 +17,15 @@ public class Part2 : Base
         {
             var region = Regions[i];
 
-            cost += region.Cells.Count * CountEdges(region);
+            cost += region.Cells.Count * CountCorners(region);
         }
 
         return cost.ToString();
     }
-
-    private int CountEdges((char Plant, List<(int X, int Y)> Cells) region)
+    private int CountCorners((char Plant, List<(int X, int Y)> Cells) region)
     {
-        var perimeter = GetPerimeterCells(region);
+        var cornerCount = 0;
 
-        return 0;
-    }
-
-    private HashSet<(int X, int Y)> GetPerimeterCells((char Plant, List<(int X, int Y)> Cells) region)
-    {
-        var perimeter = new HashSet<(int X, int Y)>();
-        
-        for (var i = 0; i < region.Cells.Count; i++)
-        {
-            var cell = region.Cells[i];
-
-            if (IsEdge(region.Plant, cell.X + 1, cell.Y))
-            {
-                perimeter.Add((cell.X, cell.Y));
-            }
-            
-            if (IsEdge(region.Plant, cell.X - 1, cell.Y))
-            {
-                perimeter.Add((cell.X, cell.Y));
-            }
-            
-            if (IsEdge(region.Plant, cell.X, cell.Y + 1))
-            {
-                perimeter.Add((cell.X, cell.Y));
-            }
-            
-            if (IsEdge(region.Plant, cell.X, cell.Y - 1))
-            {
-                perimeter.Add((cell.X, cell.Y));
-            }
-        }
-
-        return perimeter;
+        return cornerCount;
     }
 }
