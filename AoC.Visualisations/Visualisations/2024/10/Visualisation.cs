@@ -40,7 +40,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             PreferredBackBufferHeight = 980
         };
 
-        Content.RootDirectory = "./17";
+        Content.RootDirectory = "./10";
 
         IsMouseVisible = true;
 
