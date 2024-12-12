@@ -9,30 +9,30 @@ public abstract class Base : Solution
 
     protected readonly List<(char Plant, List<(int X, int Y)> Cells)> Regions = [];
 
+    protected char[,] Map;
+
+    protected int Width;
+
+    protected int Height;
+    
     private readonly HashSet<(int X, int Y)> _visited = [];
 
     private readonly Queue<(int X, int Y)> _queue = [];
     
-    private char[,] _map;
-
-    private int _width;
-
-    private int _height;
-    
     protected void ParseInput()
     {
-        _map = Input.To2DArray();
+        Map = Input.To2DArray();
 
-        _width = _map.GetLength(0);
+        Width = Map.GetLength(0);
 
-        _height = _map.GetLength(1);
+        Height = Map.GetLength(1);
     }
 
     protected void FindRegions()
     {
-        for (var y = 0; y < _height; y++)
+        for (var y = 0; y < Height; y++)
         {
-            for (var x = 0; x < _width; x++)
+            for (var x = 0; x < Width; x++)
             {
                 if (! _visited.Contains((x, y)))
                 {
@@ -42,38 +42,11 @@ public abstract class Base : Solution
         }
     }
 
-    protected int GetPerimeter((char Plant, List<(int X, int Y)> Cells) region)
-    {
-        var perimeter = 0;
-        
-        for (var i = 0; i < region.Cells.Count; i++)
-        {
-            var cell = region.Cells[i];
-
-            perimeter += IsEdge(region.Plant, cell.X - 1, cell.Y) ? 1 : 0;
-            perimeter += IsEdge(region.Plant, cell.X + 1, cell.Y) ? 1 : 0;
-            perimeter += IsEdge(region.Plant, cell.X, cell.Y - 1) ? 1 : 0;
-            perimeter += IsEdge(region.Plant, cell.X, cell.Y + 1) ? 1 : 0;
-        }
-
-        return perimeter;
-    }
-    
-    private bool IsEdge(char plant, int x, int y)
-    {
-        if (x < 0 || x >= _width || y < 0 || y >= _height)
-        {
-            return true;
-        }
-
-        return _map[x, y] != plant;
-    }
-
     private void MapRegion(int x, int y)
     {
         var region = new List<(int X, int Y)>();
 
-        var plant = _map[x, y];
+        var plant = Map[x, y];
         
         Regions.Add((plant, region));
         
@@ -99,12 +72,12 @@ public abstract class Base : Solution
 
     private void SafeEnqueue(char plant, int x, int y)
     {
-        if (x < 0 || x >= _width || y < 0 || y >= _height)
+        if (x < 0 || x >= Width || y < 0 || y >= Height)
         {
             return;
         }
 
-        if (_map[x, y] != plant || _visited.Contains((x, y)))
+        if (Map[x, y] != plant || _visited.Contains((x, y)))
         {
             return;
         }

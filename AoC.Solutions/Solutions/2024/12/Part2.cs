@@ -17,7 +17,7 @@ public class Part2 : Base
         {
             var region = Regions[i];
 
-            cost += region.Cells.Count * GetPerimeter(region);
+            //cost += region.Cells.Count * GetPerimeter(region);
         }
 
         return cost.ToString();
