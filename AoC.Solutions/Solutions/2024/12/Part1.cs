@@ -33,12 +33,10 @@ public class Part1 : Base
         {
             for (var x = 0; x < _width; x++)
             {
-                if (_visited.Add((x, y)))
+                if (! _visited.Contains((x, y)))
                 {
-                    continue;
+                    MapRegion(x, y);
                 }
-                
-                MapRegion(x, y);
             }
         }
     }
@@ -46,10 +44,10 @@ public class Part1 : Base
     private void MapRegion(int x, int y)
     {
         var region = new List<(int X, int Y)>();
-        
-        _regions.Add((_map[x, y], region));
 
-        _visited.Add((x, y));
+        var plant = _map[x, y];
+        
+        _regions.Add((plant, region));
         
         _queue.Enqueue((x, y));
 
@@ -57,7 +55,7 @@ public class Part1 : Base
         {
             var cell = _queue.Dequeue();
 
-            if (_visited.Contains(cell))
+            if (_map[cell.X, cell.Y] != plant)
             {
                 continue;
             }
@@ -66,10 +64,10 @@ public class Part1 : Base
             
             region.Add((x, y));
             
-            SafeEnqueue(x, y);
+            SafeEnqueue(x + 1, y);
             SafeEnqueue(x - 1, y);
+            SafeEnqueue(x, y + 1);
             SafeEnqueue(x, y - 1);
-            SafeEnqueue(x - 1, y - 1);
         }
     }
 
@@ -79,7 +77,12 @@ public class Part1 : Base
         {
             return;
         }
-        
+
+        if (_visited.Contains((x, y)))
+        {
+            return;
+        }
+
         _queue.Enqueue((x, y));
     }
 
