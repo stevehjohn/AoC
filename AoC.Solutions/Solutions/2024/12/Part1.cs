@@ -60,14 +60,17 @@ public class Part1 : Base
                 continue;
             }
 
-            _visited.Add((x, y));
+            if (! _visited.Add((cell.X, cell.Y)))
+            {
+                continue;
+            }
+
+            region.Add((cell.X, cell.Y));
             
-            region.Add((x, y));
-            
-            SafeEnqueue(x + 1, y);
-            SafeEnqueue(x - 1, y);
-            SafeEnqueue(x, y + 1);
-            SafeEnqueue(x, y - 1);
+            SafeEnqueue(cell.X + 1, cell.Y);
+            SafeEnqueue(cell.X - 1, cell.Y);
+            SafeEnqueue(cell.X, cell.Y + 1);
+            SafeEnqueue(cell.X, cell.Y - 1);
         }
     }
 
