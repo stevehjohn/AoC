@@ -32,9 +32,9 @@ public class Part2 : Base
         return count;
     }
 
-    private List<(int X, int Y)> GetPerimeterCells((char Plant, List<(int X, int Y)> Cells) region)
+    private HashSet<(int X, int Y)> GetPerimeterCells((char Plant, List<(int X, int Y)> Cells) region)
     {
-        var perimeter = new List<(int, int)>();
+        var perimeter = new HashSet<(int X, int Y)>();
         
         for (var i = 0; i < region.Cells.Count; i++)
         {
