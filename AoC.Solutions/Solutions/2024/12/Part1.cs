@@ -8,6 +8,10 @@ public class Part1 : Base
 {
     private readonly HashSet<(int X, int Y)> _visited = [];
 
+    private readonly List<(char Plant, List<(int X, int Y)> Cells)> _regions = [];
+
+    private readonly Queue<(int X, int Y)> _queue = [];
+    
     private char[,] _map;
 
     private int _width;
@@ -41,6 +45,42 @@ public class Part1 : Base
 
     private void MapRegion(int x, int y)
     {
+        var region = new List<(int X, int Y)>();
+        
+        _regions.Add((_map[x, y], region));
+
+        _visited.Add((x, y));
+        
+        _queue.Enqueue((x, y));
+
+        while (_queue.Count > 0)
+        {
+            var cell = _queue.Dequeue();
+
+            if (_visited.Contains(cell))
+            {
+                continue;
+            }
+
+            _visited.Add((x, y));
+            
+            region.Add((x, y));
+            
+            SafeEnqueue(x, y);
+            SafeEnqueue(x - 1, y);
+            SafeEnqueue(x, y - 1);
+            SafeEnqueue(x - 1, y - 1);
+        }
+    }
+
+    private void SafeEnqueue(int x, int y)
+    {
+        if (x < 0 || x >= _width || y < 0 || y >= _height)
+        {
+            return;
+        }
+        
+        _queue.Enqueue((x, y));
     }
 
     private void ParseInput()
