@@ -483,26 +483,28 @@ Tests performed on a 2023 MacBook Pro.
  2024  1.2: 97μs          
  2024  2.1: 173μs         Red-nosed reports
  2024  2.2: 341μs         
- 2024  3.1: 436μs         Mull it over
- 2024  3.2: 592μs         
- 2024  4.1: 286μs         Ceres search
+ 2024  3.1: 408μs         Mull it over
+ 2024  3.2: 538μs         
+ 2024  4.1: 271μs         Ceres search
  2024  4.2: 96μs          
  2024  5.1: 125μs         Print queue
  2024  5.2: 1,859μs       
  2024  6.1: 389μs         Guard gallivant
- 2024  6.2: 34,925μs      
+ 2024  6.2: 33,235μs      
  2024  7.1: 186μs         Bridge repair
- 2024  7.2: 5,984μs       
+ 2024  7.2: 5,806μs       
  2024  8.1: 91μs          Resonant collinearity
  2024  8.2: 149μs         
- 2024  9.1: 304μs         Disk fragmenter
+ 2024  9.1: 287μs         Disk fragmenter
  2024  9.2: 39,065μs      
  2024 10.1: 312μs         Hoof it
  2024 10.2: 504μs         
  2024 11.1: 411μs         Plutonian pebbles
  2024 11.2: 17,052μs      
+ 2024 12.1: 6,905μs       Garden groups
+ 2024 12.2: 8,232μs       
             -------------
-            103.502ms    
+            116.657ms    
 
- 464 puzzles solved in 51.198s.
+ 466 puzzles solved in 51.212s.
 ```
