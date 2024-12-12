@@ -23,8 +23,44 @@ public class Part1 : Base
         ParseInput();
 
         FindRegions();
+
+        var cost = 0;
+
+        for (var i = 0; i < _regions.Count; i++)
+        {
+            var region = _regions[i];
+
+            cost += region.Cells.Count * GetPerimeter(region);
+        }
+
+        return cost.ToString();
+    }
+
+    private int GetPerimeter((char Plant, List<(int X, int Y)> Cells) region)
+    {
+        var perimeter = 0;
         
-        return "Unknown";
+        for (var i = 0; i < region.Cells.Count; i++)
+        {
+            var cell = region.Cells[i];
+
+            perimeter += IsEdge(region.Plant, cell.X - 1, cell.Y) ? 1 : 0;
+            perimeter += IsEdge(region.Plant, cell.X + 1, cell.Y) ? 1 : 0;
+            perimeter += IsEdge(region.Plant, cell.X, cell.Y - 1) ? 1 : 0;
+            perimeter += IsEdge(region.Plant, cell.X, cell.Y + 1) ? 1 : 0;
+        }
+
+        return perimeter;
+    }
+
+    private bool IsEdge(char plant, int x, int y)
+    {
+        if (x < 0 || x >= _width || y < 0 || y >= _height)
+        {
+            return true;
+        }
+
+        return _map[x, y] != plant;
     }
 
     private void FindRegions()
