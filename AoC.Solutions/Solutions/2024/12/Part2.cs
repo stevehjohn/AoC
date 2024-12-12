@@ -27,44 +27,40 @@ public class Part2 : Base
     {
         var count = 0;
 
-        count += WalkEdge(region.Plant, region.Cells[0].X, region.Cells[0].Y);
+        var perimeter = GetPerimeterCells(region);
         
         return count;
     }
 
-    private int WalkEdge(char plant, int startX, int startY)
+    private List<(int X, int Y)> GetPerimeterCells((char Plant, List<(int X, int Y)> Cells) region)
     {
-        var turns = 0;
+        var perimeter = new List<(int, int)>();
         
-        var x = startX;
-
-        var y = startY;
-
-        var dX = 1;
-
-        var dY = 0;
-        
-        do
+        for (var i = 0; i < region.Cells.Count; i++)
         {
-            x += dX;
+            var cell = region.Cells[i];
 
-            y += dY;
-
-            if (x < 0 || x >= Width || y < 0 || y >= Height || Map[x, y] != plant)
+            if (IsEdge(region.Plant, cell.X + 1, cell.Y))
             {
-                x -= dX;
-
-                y -= dY;
-
-                dX = -dY;
-
-                dY = dX;
-
-                turns++;
+                perimeter.Add((cell.X, cell.Y));
             }
+            
+            if (IsEdge(region.Plant, cell.X - 1, cell.Y))
+            {
+                perimeter.Add((cell.X, cell.Y));
+            }
+            
+            if (IsEdge(region.Plant, cell.X, cell.Y + 1))
+            {
+                perimeter.Add((cell.X, cell.Y));
+            }
+            
+            if (IsEdge(region.Plant, cell.X, cell.Y - 1))
+            {
+                perimeter.Add((cell.X, cell.Y));
+            }
+        }
 
-        } while (x != startX && y != startY);
-
-        return turns;
+        return perimeter;
     }
 }
