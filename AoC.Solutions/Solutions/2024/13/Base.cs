@@ -47,6 +47,10 @@ public abstract class Base : Solution
             targetY *= 10_000_000_000_000;
         }
 
+        if (targetX == 13260)
+        {
+        }
+
         for (var a = 1; a < 100; a++)
         {
             for (var b = 1; b < 100; b++)
@@ -60,7 +64,16 @@ public abstract class Base : Solution
                     if (targetY % divisorY == 0)
                     {
                         var pressesBase = targetX / divisorX;
+
+                        var dX = machine.ButtonA.X * a * pressesBase + machine.ButtonB.X * b * pressesBase;
                         
+                        var dY = machine.ButtonA.Y * a * pressesBase + machine.ButtonB.Y * b * pressesBase;
+
+                        if (dX != targetX || dY != targetY)
+                        {
+                            continue;
+                        }
+
                         return (a * pressesBase, b * pressesBase);
                     }
                 }
