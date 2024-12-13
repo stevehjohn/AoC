@@ -18,10 +18,10 @@ public class Part1 : Base
             var result = GetButtonPresses(machine);
 
             tokens += result.A * 3 + result.B;
-            
-            machine = ParseMachine(i);
 
             i++;
+            
+            machine = ParseMachine(i);
         }
         
         return tokens.ToString();
