@@ -9,7 +9,7 @@ public class Part1 : Base
     {
         var i = 0;
 
-        var tokens = 0;
+        var tokens = 0L;
         
         var machine = ParseMachine(i);
 

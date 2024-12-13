@@ -34,7 +34,7 @@ public abstract class Base : Solution
         return new Point(int.Parse(parts[0][2..]), int.Parse(parts[1][2..]));
     }
 
-    protected static (int A, int B) GetButtonPresses(Machine machine)
+    protected static (long A, long B) GetButtonPresses(Machine machine, bool isPart2 = false)
     {
         for (var a = 0; a < 100; a++)
         {
