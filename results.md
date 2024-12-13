@@ -503,10 +503,12 @@ Tests performed on a 2023 MacBook Pro.
  2024 11.2: 15,578μs      
  2024 12.1: 4,050μs       Garden groups
  2024 12.2: 5,280μs       
- 2024 13.1: 114μs         Claw contraption
- 2024 13.2: 132μs         
+ 2024 13.1: 91μs          Claw contraption
+ 2024 13.2: 87μs          
+ 2024 14.1: 100,000μs           Puzzle 14
+ 2024 14.2: 100,000μs           
             -------------
-            106.185ms    
+            106.117ms    
 
- 468 puzzles solved in 51.147s.
+ 470 puzzles solved in 51.147s.
 ```
