@@ -46,34 +46,27 @@ public abstract class Base : Solution
 
             targetY += 10_000_000_000_000;
         }
-
-        for (var a = 1; a < 100; a++)
+        
+        var d = machine.ButtonA.X * machine.ButtonB.Y - machine.ButtonA.Y * machine.ButtonB.X;
+        
+        var dx = targetX * machine.ButtonB.Y - targetY * machine.ButtonB.X;
+        
+        var dy = machine.ButtonA.X * targetY - machine.ButtonA.Y * targetX;
+ 
+        if (dx % d != 0 || dy % d != 0)
         {
-            for (var b = 1; b < 100; b++)
-            {
-                var divisorX = machine.ButtonA.X * a + machine.ButtonB.X * b;
-                
-                if (targetX % divisorX == 0)
-                {
-                    var divisorY = machine.ButtonA.Y * a + machine.ButtonB.Y * b;
-                
-                    if (targetY % divisorY == 0)
-                    {
-                        var pressesBaseX = targetX / divisorX;
-
-                        var pressesBaseY = targetY / divisorY;
-
-                        if (pressesBaseX != pressesBaseY)
-                        {
-                            continue;
-                        }
-
-                        return (a * pressesBaseX, b * pressesBaseX);
-                    }
-                }
-            }
+            return (0, 0);
+        }
+ 
+        var x = dx / d;
+        
+        var y = dy / d;
+ 
+        if (! isPart2 && (x > 100 || y > 100))
+        {
+            return (0, 0);
         }
 
-        return (0, 0);
+        return (x, y);
     }
 }
