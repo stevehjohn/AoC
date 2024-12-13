@@ -42,9 +42,9 @@ public abstract class Base : Solution
 
         if (isPart2)
         {
-            targetX *= 10_000_000_000_000;
+            targetX += 10_000_000_000_000;
 
-            targetY *= 10_000_000_000_000;
+            targetY += 10_000_000_000_000;
         }
 
         for (var a = 1; a < 100; a++)
