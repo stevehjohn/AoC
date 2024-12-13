@@ -16,7 +16,7 @@ public class Part2 : Base
         while (machine != null)
         {
             var result = GetButtonPresses(machine, true);
-
+            
             tokens += result.A * 3 + result.B;
 
             i++;

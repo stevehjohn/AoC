@@ -36,15 +36,28 @@ public abstract class Base : Solution
 
     protected static (long A, long B) GetButtonPresses(Machine machine, bool isPart2 = false)
     {
-        for (var a = 0; a < 100; a++)
+        var targetX = (double) machine.Target.X;
+
+        var targetY = (double) machine.Target.Y;
+
+        if (isPart2)
         {
-            for (var b = 0; b < 100; b++)
+            targetX *= 10_000_000_000_000;
+
+            targetY *= 10_000_000_000_000;
+        }
+
+        for (var a = 1; a < 100; a++)
+        {
+            for (var b = 1; b < 100; b++)
             {
-                if (machine.ButtonA.X * a + machine.ButtonB.X * b == machine.Target.X)
+                if (targetX % (machine.ButtonA.X * a + machine.ButtonB.X * b) == 0)
                 {
-                    if (machine.ButtonA.Y * a + machine.ButtonB.Y * b == machine.Target.Y)
+                    if (targetY % (machine.ButtonA.Y * a + machine.ButtonB.Y * b) == 0)
                     {
-                        return (a, b);
+                        var pressesBase = (long) (targetX / (machine.ButtonA.X * a + machine.ButtonB.X * b));
+                        
+                        return (a * pressesBase, b * pressesBase);
                     }
                 }
             }

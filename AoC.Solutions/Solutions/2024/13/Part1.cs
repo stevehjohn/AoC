@@ -13,9 +13,16 @@ public class Part1 : Base
         
         var machine = ParseMachine(i);
 
+        var count = 0;
+        
         while (machine != null)
         {
             var result = GetButtonPresses(machine);
+
+            if (result.A > 0)
+            {
+                count++;
+            }
 
             tokens += result.A * 3 + result.B;
 
@@ -23,6 +30,8 @@ public class Part1 : Base
             
             machine = ParseMachine(i);
         }
+        
+        Console.WriteLine(count);
         
         return tokens.ToString();
     }
