@@ -7,6 +7,19 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        return "Unknown";
+        var i = 0;
+
+        var tokens = 0;
+        
+        var machine = ParseMachine(i);
+
+        while (machine != null)
+        {
+            machine = ParseMachine(i);
+            
+            i++;
+        }
+        
+        return tokens.ToString();
     }
 }
