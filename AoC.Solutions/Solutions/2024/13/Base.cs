@@ -47,10 +47,6 @@ public abstract class Base : Solution
             targetY *= 10_000_000_000_000;
         }
 
-        if (targetX == 13260)
-        {
-        }
-
         for (var a = 1; a < 100; a++)
         {
             for (var b = 1; b < 100; b++)
