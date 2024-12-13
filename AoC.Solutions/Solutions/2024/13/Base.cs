@@ -47,20 +47,20 @@ public abstract class Base : Solution
             targetY += 10_000_000_000_000;
         }
         
-        var d = machine.ButtonA.X * machine.ButtonB.Y - machine.ButtonA.Y * machine.ButtonB.X;
+        var originalDeterminant = machine.ButtonA.X * machine.ButtonB.Y - machine.ButtonA.Y * machine.ButtonB.X;
         
-        var dx = targetX * machine.ButtonB.Y - targetY * machine.ButtonB.X;
+        var determinantX = targetX * machine.ButtonB.Y - targetY * machine.ButtonB.X;
         
-        var dy = machine.ButtonA.X * targetY - machine.ButtonA.Y * targetX;
+        var determinantY = machine.ButtonA.X * targetY - machine.ButtonA.Y * targetX;
  
-        if (dx % d != 0 || dy % d != 0)
+        if (determinantX % originalDeterminant != 0 || determinantY % originalDeterminant != 0)
         {
             return (0, 0);
         }
  
-        var x = dx / d;
+        var x = determinantX / originalDeterminant;
         
-        var y = dy / d;
+        var y = determinantY / originalDeterminant;
  
         if (! isPart2 && (x > 100 || y > 100))
         {
