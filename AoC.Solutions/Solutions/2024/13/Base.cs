@@ -51,11 +51,15 @@ public abstract class Base : Solution
         {
             for (var b = 1; b < 100; b++)
             {
-                if (targetX % (machine.ButtonA.X * a + machine.ButtonB.X * b) == 0)
+                var divisorX = machine.ButtonA.X * a + machine.ButtonB.X * b;
+                
+                if (targetX % divisorX == 0)
                 {
-                    if (targetY % (machine.ButtonA.Y * a + machine.ButtonB.Y * b) == 0)
+                    var divisorY = machine.ButtonA.Y * a + machine.ButtonB.Y * b;
+                
+                    if (targetY % divisorY == 0)
                     {
-                        var pressesBase = targetX / (machine.ButtonA.X * a + machine.ButtonB.X * b);
+                        var pressesBase = targetX / divisorX;
                         
                         return (a * pressesBase, b * pressesBase);
                     }
