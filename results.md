@@ -486,7 +486,7 @@ Tests performed on a 2023 MacBook Pro.
  2024  3.1: 408μs         Mull it over
  2024  3.2: 538μs         
  2024  4.1: 270μs         Ceres search
- 2024  4.2: 96μs          
+ 2024  4.2: 94μs          
  2024  5.1: 125μs         Print queue
  2024  5.2: 1,731μs       
  2024  6.1: 368μs         Guard gallivant
@@ -503,8 +503,9 @@ Tests performed on a 2023 MacBook Pro.
  2024 11.2: 15,578μs      
  2024 12.1: 4,050μs       Garden groups
  2024 12.2: 5,280μs       
+ 2024 13.1: 3,156μs       Claw contraption
             -------------
-            105.941ms    
+            109.095ms    
 
- 466 puzzles solved in 51.147s.
+ 468 puzzles solved in 51.150s.
 ```
