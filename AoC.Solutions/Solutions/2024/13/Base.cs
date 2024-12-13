@@ -59,18 +59,16 @@ public abstract class Base : Solution
                 
                     if (targetY % divisorY == 0)
                     {
-                        var pressesBase = targetX / divisorX;
+                        var pressesBaseX = targetX / divisorX;
 
-                        var dX = machine.ButtonA.X * a * pressesBase + machine.ButtonB.X * b * pressesBase;
-                        
-                        var dY = machine.ButtonA.Y * a * pressesBase + machine.ButtonB.Y * b * pressesBase;
+                        var pressesBaseY = targetY / divisorY;
 
-                        if (dX != targetX || dY != targetY)
+                        if (pressesBaseX != pressesBaseY)
                         {
                             continue;
                         }
 
-                        return (a * pressesBase, b * pressesBase);
+                        return (a * pressesBaseX, b * pressesBaseX);
                     }
                 }
             }
