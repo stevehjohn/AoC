@@ -15,8 +15,12 @@ public class Part1 : Base
 
         while (machine != null)
         {
-            machine = ParseMachine(i);
+            var result = GetButtonPresses(machine);
+
+            tokens += result.A * 3 + result.B;
             
+            machine = ParseMachine(i);
+
             i++;
         }
         
