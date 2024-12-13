@@ -505,8 +505,8 @@ Tests performed on a 2023 MacBook Pro.
  2024 12.2: 5,280μs       
  2024 13.1: 86μs          Claw contraption
  2024 13.2: 87μs          
- 2024 14.1: 0μs           Puzzle 14
- 2024 14.2: 0μs           
+ 2024 14.1: 100,000μs           Puzzle 14
+ 2024 14.2: 100,000μs           
             -------------
             106.112ms    
 
