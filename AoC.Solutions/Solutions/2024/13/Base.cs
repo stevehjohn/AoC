@@ -36,9 +36,9 @@ public abstract class Base : Solution
 
     protected static (long A, long B) GetButtonPresses(Machine machine, bool isPart2 = false)
     {
-        var targetX = (double) machine.Target.X;
+        var targetX = (long) machine.Target.X;
 
-        var targetY = (double) machine.Target.Y;
+        var targetY = (long) machine.Target.Y;
 
         if (isPart2)
         {
@@ -55,7 +55,7 @@ public abstract class Base : Solution
                 {
                     if (targetY % (machine.ButtonA.Y * a + machine.ButtonB.Y * b) == 0)
                     {
-                        var pressesBase = (long) (targetX / (machine.ButtonA.X * a + machine.ButtonB.X * b));
+                        var pressesBase = targetX / (machine.ButtonA.X * a + machine.ButtonB.X * b);
                         
                         return (a * pressesBase, b * pressesBase);
                     }
