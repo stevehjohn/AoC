@@ -11,11 +11,11 @@ public abstract class Base : Solution
 
     protected const int Height = 103;
     
-    private Robot[] _robots;
+    protected Robot[] Robots;
     
     protected void ParseInput()
     {
-        _robots = new Robot[Input.Length];
+        Robots = new Robot[Input.Length];
         
         for (var i = 0; i < Input.Length; i++)
         {
@@ -29,7 +29,7 @@ public abstract class Base : Solution
                 Velocity = Point.Parse(parts[1][2..])
             };
 
-            _robots[i] = robot;
+            Robots[i] = robot;
         }
     }
 
@@ -37,9 +37,9 @@ public abstract class Base : Solution
     {
         for (var s = 0; s < seconds; s++)
         {
-            for (var i = 0; i < _robots.Length; i++)
+            for (var i = 0; i < Robots.Length; i++)
             {
-                var robot = _robots[i];
+                var robot = Robots[i];
 
                 robot.Position.X = (robot.Position.X + robot.Velocity.X + Width) % Width;
 
@@ -52,9 +52,9 @@ public abstract class Base : Solution
     {
         var count = 0;
         
-        for (var i = 0; i < _robots.Length; i++)
+        for (var i = 0; i < Robots.Length; i++)
         {
-            var robot = _robots[i];
+            var robot = Robots[i];
 
             if (robot.Position.X >= x && robot.Position.X < x + width && robot.Position.Y >= y && robot.Position.Y < y + height)
             {
