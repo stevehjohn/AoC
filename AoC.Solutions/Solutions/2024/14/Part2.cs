@@ -8,14 +8,16 @@ public class Part2 : Base
 
         var seconds = 0;
 
+        var unique = new HashSet<(int, int)>();
+            
         while (true)
         {
             seconds++;
             
             Simulate(1);
-
-            var unique = new HashSet<(int, int)>();
             
+            unique.Clear();
+
             for (var i = 0; i < Robots.Length; i++)
             {
                 var robot = Robots[i];

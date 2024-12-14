@@ -79,7 +79,7 @@ Tests performed on a 2023 MacBook Pro.
  2016  8.1: 150μs         MFA
  2016  8.2: 136μs         
  2016  9.1: 45μs          Cyberspace explosives
- 2016  9.2: 130μs         
+ 2016  9.2: 127μs         
  2016 10.1: 836μs         Balance bots
  2016 10.2: 1,669μs       
  2016 11.1: 61μs          Radioisotope thermoelectric elevators
@@ -93,7 +93,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 15.1: 468μs         Disc timing
  2016 15.2: 3,444μs       
  2016 16.1: 6μs           Dragon checksum
- 2016 16.2: 231,365μs     
+ 2016 16.2: 223,418μs     
  2016 17.1: 21μs          Two steps forward
  2016 17.2: 25,856μs      
  2016 18.1: 76μs          Like a rogue
@@ -112,18 +112,18 @@ Tests performed on a 2023 MacBook Pro.
  2016 24.2: 19,739μs      
  2016 25.1: 190,041μs     Clock signal
             -------------
-            16.798s      
+            16.790s      
 
  2017  1.1: 9μs           Captcha
  2017  1.2: 10μs          
  2017  2.1: 10μs          Spreadsheet checksum
  2017  2.2: 24μs          
  2017  3.1: 0μs           Spiral memory
- 2017  3.2: 20μs          
+ 2017  3.2: 18μs          
  2017  4.1: 137μs         Passphrase validation
  2017  4.2: 407,059μs     
  2017  5.1: 512μs         Memory trampoline
- 2017  5.2: 48,324μs      
+ 2017  5.2: 48,255μs      
  2017  6.1: 3,406μs       Garbage collection
  2017  6.2: 7,370μs       
  2017  7.1: 244μs         Balancing act
@@ -134,7 +134,7 @@ Tests performed on a 2023 MacBook Pro.
  2017  9.2: 50μs          
  2017 10.1: 6μs           Knot hash
  2017 10.2: 425μs         
- 2017 11.1: 540μs         Hex ed
+ 2017 11.1: 534μs         Hex ed
  2017 11.2: 248μs         
  2017 12.1: 560μs         Path through the pipes
  2017 12.2: 8,551μs       
@@ -168,12 +168,12 @@ Tests performed on a 2023 MacBook Pro.
 
  2018  1.1: 19μs          Tardis calibration
  2018  1.2: 3,880μs       
- 2018  2.1: 319μs         Warehouse checksum
+ 2018  2.1: 312μs         Warehouse checksum
  2018  2.2: 187μs         
  2018  3.1: 5,742μs       Fabric overlap
  2018  3.2: 5,155μs       
  2018  4.1: 817μs         Sleepy guards
- 2018  4.2: 1,260μs       
+ 2018  4.2: 1,220μs       
  2018  5.1: 950μs         Polymer reactions
  2018  5.2: 37,012μs      
  2018  6.1: 9,471μs       Safe coordinates
@@ -282,8 +282,8 @@ Tests performed on a 2023 MacBook Pro.
  2020  5.2: 280μs         
  2020  6.1: 207μs         Customs questions
  2020  6.2: 1,642μs       
- 2020  7.1: 11,060μs      Recursive bag packing
- 2020  7.2: 973μs         
+ 2020  7.1: 10,898μs      Recursive bag packing
+ 2020  7.2: 963μs         
  2020  8.1: 9μs           Console assembly debugging
  2020  8.2: 2,601μs       
  2020  9.1: 517μs         Cypher cracking
@@ -397,7 +397,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 10.2: 5μs           
  2022 11.1: 9μs           Monkey in the middle
  2022 11.2: 2,786μs       
- 2022 12.1: 1,254μs       Hill climbing algorithm
+ 2022 12.1: 1,252μs       Hill climbing algorithm
  2022 12.2: 1,399μs       
  2022 13.1: 50μs          Distress signal
  2022 13.2: 512μs         
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 60,123μs      
  2022 25.1: 10μs          Full of hot air
             -------------
-            306.574ms    
+            306.572ms    
 
  2023  1.1: 120μs         Trebuchet
  2023  1.2: 338μs         
@@ -458,7 +458,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 15.1: 181μs         Lens library
  2023 15.2: 493μs         
  2023 16.1: 135μs         The floor will be lava
- 2023 16.2: 5,963μs       
+ 2023 16.2: 5,953μs       
  2023 17.1: 45,127μs      Clumsy crucible
  2023 17.2: 45,682μs      
  2023 18.1: 87μs          Lavaduct lagoon
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,426μs       
  2023 25.1: 10,476μs      Snowverload
             -------------
-            403.732ms    
+            403.722ms    
 
  2024  1.1: 125μs         Historian hysteria
  2024  1.2: 97μs          
@@ -500,15 +500,15 @@ Tests performed on a 2023 MacBook Pro.
  2024 10.1: 302μs         Hoof it
  2024 10.2: 483μs         
  2024 11.1: 411μs         Plutonian pebbles
- 2024 11.2: 15,578μs      
+ 2024 11.2: 15,090μs      
  2024 12.1: 4,050μs       Garden groups
  2024 12.2: 5,280μs       
  2024 13.1: 86μs          Claw contraption
  2024 13.2: 87μs          
- 2024 14.1: 100,000μs           Puzzle 14
- 2024 14.2: 100,000μs           
+ 2024 14.1: 260μs         Restroom redoubt
+ 2024 14.2: 16,267μs      
             -------------
-            106.112ms    
+            122.151ms    
 
- 470 puzzles solved in 51.136s.
+ 470 puzzles solved in 51.144s.
 ```
