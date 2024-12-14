@@ -7,9 +7,9 @@ public abstract class Base : Solution
 {
     public override string Description => "Restroom redoubt";
 
-    private const int _width = 11;
+    protected const int Width = 101;
 
-    private const int _height = 7;
+    protected const int Height = 103;
     
     private Robot[] _robots;
     
@@ -47,30 +47,30 @@ public abstract class Base : Solution
 
                 if (robot.Position.X < 0)
                 {
-                    robot.Position.X += _width;
+                    robot.Position.X += Width;
                 }
 
-                if (robot.Position.X >= _width)
+                if (robot.Position.X >= Width)
                 {
-                    robot.Position.X -= _width;
+                    robot.Position.X -= Width;
                 }
 
                 if (robot.Position.Y < 0)
                 {
-                    robot.Position.Y += _height;
+                    robot.Position.Y += Height;
                 }
 
-                if (robot.Position.Y >= _height)
+                if (robot.Position.Y >= Height)
                 {
-                    robot.Position.Y -= _height;
+                    robot.Position.Y -= Height;
                 }
             }
         }
     }
 
-    protected int CountArea(int x, int y, int width, int height)
+    protected long CountArea(int x, int y, int width, int height)
     {
-        var count = 0;
+        var count = 0L;
         
         for (var i = 0; i < _robots.Length; i++)
         {
