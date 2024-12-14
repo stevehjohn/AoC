@@ -47,21 +47,4 @@ public abstract class Base : Solution
             }
         }
     }
-
-    protected int CountArea(int x, int y, int width, int height)
-    {
-        var count = 0;
-        
-        for (var i = 0; i < Robots.Length; i++)
-        {
-            var robot = Robots[i];
-
-            if (robot.Position.X >= x && robot.Position.X < x + width && robot.Position.Y >= y && robot.Position.Y < y + height)
-            {
-                count++;
-            }
-        }
-
-        return count;
-    }
 }
