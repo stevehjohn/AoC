@@ -41,36 +41,16 @@ public abstract class Base : Solution
             {
                 var robot = _robots[i];
 
-                robot.Position.X += robot.Velocity.X;
+                robot.Position.X = (robot.Position.X + robot.Velocity.X) % Width;
 
-                robot.Position.Y += robot.Velocity.Y;
-
-                if (robot.Position.X < 0)
-                {
-                    robot.Position.X += Width;
-                }
-
-                if (robot.Position.X >= Width)
-                {
-                    robot.Position.X -= Width;
-                }
-
-                if (robot.Position.Y < 0)
-                {
-                    robot.Position.Y += Height;
-                }
-
-                if (robot.Position.Y >= Height)
-                {
-                    robot.Position.Y -= Height;
-                }
+                robot.Position.Y = (robot.Position.Y + robot.Velocity.Y) % Height;
             }
         }
     }
 
-    protected long CountArea(int x, int y, int width, int height)
+    protected int CountArea(int x, int y, int width, int height)
     {
-        var count = 0L;
+        var count = 0;
         
         for (var i = 0; i < _robots.Length; i++)
         {
