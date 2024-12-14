@@ -12,7 +12,7 @@ public class Part1 : Base
 
         answer *= CountArea(Width / 2 + 1, 0, Width / 2, Height / 2);
 
-        answer *= CountArea(0, 4, Width / 2, Height / 2);
+        answer *= CountArea(0, Height / 2 + 1, Width / 2, Height / 2);
 
         answer *= CountArea(Width / 2 + 1, Height / 2 + 1, Width / 2, Height / 2);
         

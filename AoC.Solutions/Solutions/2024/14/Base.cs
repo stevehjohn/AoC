@@ -41,9 +41,9 @@ public abstract class Base : Solution
             {
                 var robot = _robots[i];
 
-                robot.Position.X = (robot.Position.X + robot.Velocity.X) % Width;
+                robot.Position.X = (robot.Position.X + robot.Velocity.X + Width) % Width;
 
-                robot.Position.Y = (robot.Position.Y + robot.Velocity.Y) % Height;
+                robot.Position.Y = (robot.Position.Y + robot.Velocity.Y + Height) % Height;
             }
         }
     }
