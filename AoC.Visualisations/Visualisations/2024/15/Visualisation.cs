@@ -12,15 +12,13 @@ public class Visualisation : VisualisationBase<PuzzleState>
 {
     private const int Width = 100;
 
-    private const int Height = 100;
+    private const int Height = 50;
 
     private const int Scale = 16;
 
     private readonly Queue<PuzzleState> _stateQueue = [];
 
     private readonly Color[] _data = new Color[Width * Height];
-
-    private int _left;
 
     private Texture2D _texture;
 
@@ -52,7 +50,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         if (part == 1)
         {
-            _left = Width / 4;
+            GraphicsDeviceManager.PreferredBackBufferWidth /= 2;
         }
     }
 
@@ -95,7 +93,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             for (var x = 0; x < _state.Width; x++)
             {
-                var pixel = y * Width + x + _left;
+                var pixel = y * Width + x;
 
                 var item = _state.Map[x, y];
 
