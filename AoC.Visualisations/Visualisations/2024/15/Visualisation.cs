@@ -14,7 +14,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private const int Height = 50;
 
-    private const int Scale = 16;
+    private const int Scale = 12;
 
     private readonly Queue<PuzzleState> _stateQueue = [];
 
@@ -104,6 +104,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                         break;
                     
                     case '@':
+                        _data[pixel] = Color.FromNonPremultiplied(192, 192, 0, 255);
                         break;
                     
                     case 'O':
@@ -116,8 +117,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                         if (_data[pixel].R > 4)
                         {
                             _data[pixel].R -= 4;
-                            _data[pixel].G -= 1;
-                            _data[pixel].B -= 3;
+                            _data[pixel].G -= 4;
                         }
 
                         break;
