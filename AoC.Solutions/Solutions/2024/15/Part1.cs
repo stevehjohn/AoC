@@ -9,6 +9,8 @@ public class Part1 : Base
     {
         ParseInput();
         
+        RunRobot();
+        
         return "Unknown";
     }
 }
