@@ -160,7 +160,7 @@ public abstract class Base : Solution
 
         _map = Input[..y].To2DArray();
 
-        _map[(int) _robotX, _robotY] = '.';
+        _map[_robotX, _robotY] = '.';
         
         y++;
 
