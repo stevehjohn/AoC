@@ -104,7 +104,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                         break;
                     
                     case '@':
-                        _data[pixel] = Color.FromNonPremultiplied(192, 192, 0, 255);
+                        _data[pixel] = Color.FromNonPremultiplied(128, 128, 0, 255);
                         break;
                     
                     case 'O':
