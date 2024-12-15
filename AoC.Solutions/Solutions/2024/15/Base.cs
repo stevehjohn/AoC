@@ -24,8 +24,6 @@ public abstract class Base : Solution
 
     protected void RunRobot()
     {
-        Console.Clear();
-            
         for (var i = 0; i < _directions.Length; i++)
         {
             var (dX, dY) = _directions[i] switch
@@ -35,18 +33,6 @@ public abstract class Base : Solution
                 '<' => (-1, 0),
                 _ => (1, 0)
             };
-
-            Console.CursorLeft = 0;
-
-            Console.CursorTop = 0;
-            
-            Console.WriteLine($"{i}: {_directions[i]}");
-            
-            Console.WriteLine();
-
-            DumpMap();
-
-            Console.ReadKey();
             
             if (MakeMove(_map, _robotX, _robotY, dX, dY))
             {
@@ -55,16 +41,6 @@ public abstract class Base : Solution
                 _robotY += dY;
             }
         }
-        
-        Console.CursorLeft = 0;
-
-        Console.CursorTop = 0;
-            
-        Console.WriteLine();
-
-        Console.WriteLine();
-
-        DumpMap();
     }
 
     private bool MakeMove(char[,] map, int x, int y, int dX, int dY)
@@ -75,23 +51,17 @@ public abstract class Base : Solution
 
         var cell = map[x, y];
         
-        if (cell == '#')
+        switch (cell)
         {
-            return false;
-        }
-        
-        if (cell is 'O' or '@')
-        { 
-            MakeMove(map, x, y, dX, dY);
-        }
-
-        if (cell is '[' or ']')
-        {
-            if (dY == 0)
-            {
+            case '#':
+                return false;
+            
+            case 'O' or '@':
+            case '[' or ']' when dY == 0:
                 MakeMove(map, x, y, dX, dY);
-            }
-            else
+                break;
+            
+            case '[' or ']':
             {
                 var copy = new char[_width, _height];
             
@@ -105,6 +75,8 @@ public abstract class Base : Solution
 
                     MakeMove(map, x, y, dX, dY);
                 }
+
+                break;
             }
         }
 
@@ -135,21 +107,6 @@ public abstract class Base : Solution
         }
 
         return sum;
-    }
-
-    private void DumpMap()
-    {
-        for (var y = 0; y < _height; y++)
-        {
-            for (var x = 0; x < _width; x++)
-            {
-                Console.Write(_map[x, y]);
-            }
-            
-            Console.WriteLine();
-        }
-        
-        Console.WriteLine();
     }
 
     protected void ParseInput()
