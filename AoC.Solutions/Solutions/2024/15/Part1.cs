@@ -8,9 +8,13 @@ public class Part1 : Base
     public override string GetAnswer()
     {
         ParseInput();
+
+        Dump();
         
         RunRobot();
+
+        var result = SumCoordinates();
         
-        return "Unknown";
+        return result.ToString();
     }
 }

@@ -56,6 +56,58 @@ public abstract class Base : Solution
             
             return;
         }
+
+        var i = 1;
+        
+        while (_map[x + i * dX, y + i * dY] is 'O' and not '#')
+        {
+            i++;
+        }
+
+        if (_map[x + i * dX, y + i * dY] == '#')
+        {
+            return;
+        }
+
+        for (; i > 0; i--)
+        {
+            _map[x + i * dX, y + i * dY] = _map[x + (i - 1) * dX, y + (i - 1) * dY];
+
+            _map[x + (i - 1) * dX, y + (i - 1) * dY] = '.';
+        }
+    }
+
+    protected long SumCoordinates()
+    {
+        var sum = 0L;
+        
+        for (var x = 0; x < _width; x++)
+        {
+            for (var y = 0; y < _height; y++)
+            {
+                if (_map[x, y] == 'O')
+                {
+                    sum += x + y * 100;
+                }
+            }
+        }
+
+        Dump();
+
+        return sum;
+    }
+
+    protected void Dump()
+    {
+        for (var y = 0; y < _height; y++)
+        {
+            for (var x = 0; x < _width; x++)
+            {
+                Console.Write(_map[x, y]);
+            }
+            
+            Console.WriteLine();
+        }
     }
 
     protected void ParseInput()
