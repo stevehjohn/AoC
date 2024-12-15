@@ -24,73 +24,54 @@ public abstract class Base : Solution
 
     protected void RunRobot()
     {
-        Console.Clear();
-        
         for (var i = 0; i < _directions.Length; i++)
         {
-            MakeMove(_directions[i]);
+            var (dX, dY) = _directions[i] switch
+            {
+                '^' => (0, -1),
+                'v' => (0, 1),
+                '<' => (-1, 0),
+                _ => (1, 0)
+            };
 
-            Console.CursorTop = 0;
+            if (MakeMove(_robotX, _robotY, dX, dY))
+            {
+                _robotX += dX;
 
-            Console.CursorLeft = 0;
-            
-            DumpMap();
-
-            Console.ReadKey();
+                _robotY += dY;
+            }
         }
+        
+        DumpMap();
     }
 
-    private void MakeMove(char direction)
+    private bool MakeMove(int x, int y, int dX, int dY)
     {
-        var (dX, dY) = direction switch
-        {
-            '^' => (0, -1),
-            'v' => (0, 1),
-            '<' => (-1, 0),
-            _ => (1, 0)
-        };
+        x += dX;
 
-        var x = _robotX + dX;
-
-        var y = _robotY + dY;
+        y += dY;
 
         var cell = _map[x, y];
-
-        switch (cell)
+        
+        if (cell == '#')
         {
-            case '#':
-                return;
+            return false;
+        }
+        
+        if (cell is 'O' or '@')
+        { 
+            MakeMove(x, y, dX, dY);
+        }
+        
+        if (_map[x, y] == '.')
+        {
+            _map[x, y] = _map[x - dX, y - dY];
+            _map[x - dX, y - dY] = '.';
 
-            case '.':
-                _robotX = x;
-
-                _robotY = y;
-
-                return;
+            return true;
         }
 
-        var i = 1;
-
-        while (_map[x + i * dX, y + i * dY] is 'O' and not '#')
-        {
-            i++;
-        }
-
-        if (_map[x + i * dX, y + i * dY] == '#')
-        {
-            return;
-        }
-
-        for (; i > 0; i--)
-        {
-            _map[x + i * dX, y + i * dY] = _map[x + (i - 1) * dX, y + (i - 1) * dY];
-
-            _map[x + (i - 1) * dX, y + (i - 1) * dY] = '.';
-        }
-
-        _robotX = x;
-
-        _robotY = y;
+        return false;
     }
 
     protected long SumCoordinates()
@@ -117,12 +98,12 @@ public abstract class Base : Solution
         {
             for (var x = 0; x < _width; x++)
             {
-                if (x == _robotX && y == _robotY)
-                {
-                    Console.Write('@');
-                    
-                    continue;
-                }
+                // if (x == _robotX && y == _robotY)
+                // {
+                //     Console.Write('@');
+                //     
+                //     continue;
+                // }
 
                 Console.Write(_map[x, y]);
             }
@@ -202,7 +183,7 @@ public abstract class Base : Solution
         {
             _map = Input[..y].To2DArray();
 
-            _map[_robotX, _robotY] = '.';
+            // _map[_robotX, _robotY] = '.';
         }
         
         y++;
