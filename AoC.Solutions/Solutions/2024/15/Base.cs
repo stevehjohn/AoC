@@ -24,6 +24,8 @@ public abstract class Base : Solution
 
     protected void RunRobot()
     {
+        Console.Clear();
+            
         for (var i = 0; i < _directions.Length; i++)
         {
             var (dX, dY) = _directions[i] switch
@@ -34,7 +36,19 @@ public abstract class Base : Solution
                 _ => (1, 0)
             };
 
-            if (MakeMove(_robotX, _robotY, dX, dY))
+            Console.CursorLeft = 0;
+
+            Console.CursorTop = 0;
+            
+            Console.WriteLine($"{i}: {_directions[i]}");
+            
+            Console.WriteLine();
+
+            DumpMap();
+
+            Console.ReadKey();
+            
+            if (MakeMove(_map, _robotX, _robotY, dX, dY))
             {
                 _robotX += dX;
 
@@ -42,16 +56,24 @@ public abstract class Base : Solution
             }
         }
         
+        Console.CursorLeft = 0;
+
+        Console.CursorTop = 0;
+            
+        Console.WriteLine();
+
+        Console.WriteLine();
+
         DumpMap();
     }
 
-    private bool MakeMove(int x, int y, int dX, int dY)
+    private bool MakeMove(char[,] map, int x, int y, int dX, int dY)
     {
         x += dX;
 
         y += dY;
 
-        var cell = _map[x, y];
+        var cell = map[x, y];
         
         if (cell == '#')
         {
@@ -60,13 +82,36 @@ public abstract class Base : Solution
         
         if (cell is 'O' or '@')
         { 
-            MakeMove(x, y, dX, dY);
+            MakeMove(map, x, y, dX, dY);
         }
-        
-        if (_map[x, y] == '.')
+
+        if (cell is '[' or ']')
         {
-            _map[x, y] = _map[x - dX, y - dY];
-            _map[x - dX, y - dY] = '.';
+            if (dY == 0)
+            {
+                MakeMove(map, x, y, dX, dY);
+            }
+            else
+            {
+                var copy = new char[_width, _height];
+            
+                Buffer.BlockCopy(map, 0, copy, 0, sizeof(char) * _width * _height);
+
+                var sX = cell == '[' ? 1 : -1;
+
+                if (MakeMove(copy, x + sX, y, dX, dY) && MakeMove(copy, x, y, dX, dY))
+                {
+                    MakeMove(map, x + sX, y, dX, dY);
+
+                    MakeMove(map, x, y, dX, dY);
+                }
+            }
+        }
+
+        if (map[x, y] == '.')
+        {
+            map[x, y] = map[x - dX, y - dY];
+            map[x - dX, y - dY] = '.';
 
             return true;
         }
@@ -98,13 +143,6 @@ public abstract class Base : Solution
         {
             for (var x = 0; x < _width; x++)
             {
-                // if (x == _robotX && y == _robotY)
-                // {
-                //     Console.Write('@');
-                //     
-                //     continue;
-                // }
-
                 Console.Write(_map[x, y]);
             }
             
@@ -157,20 +195,27 @@ public abstract class Base : Solution
                 
                 for (var x = 0; x < _width; x++)
                 {
-                    var character = line[x];
-                    
-                    switch (character)
+                    switch (line[x])
                     {
-                        case '.':
+                        case 'O':
+                            _map[x * 2, y] = '[';
+                            _map[x * 2 + 1, y] = ']';
+                            break;
+                        
+                        case '#':
+                            _map[x * 2, y] = '#';
+                            _map[x * 2 + 1, y] = '#';
+                            break;
+                        
                         case '@':
+                            _map[x * 2, y] = '@';
+                            _map[x * 2 + 1, y] = '.';
+                            break;
+
+                        default:
                             _map[x * 2, y] = '.';
                             _map[x * 2 + 1, y] = '.';
                             break;
-                        
-                        default:
-                            _map[x * 2, y] = character;
-                            _map[x * 2 + 1, y] = character;
-                            break;                            
                     }
                 }
             }
@@ -182,8 +227,6 @@ public abstract class Base : Solution
         else
         {
             _map = Input[..y].To2DArray();
-
-            // _map[_robotX, _robotY] = '.';
         }
         
         y++;
