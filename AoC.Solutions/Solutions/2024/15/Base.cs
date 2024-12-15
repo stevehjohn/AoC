@@ -9,6 +9,8 @@ public abstract class Base : Solution
     public override string Description => "Warehouse woes";
 
     protected bool IsPart2;
+
+    private readonly IVisualiser<PuzzleState> _visualiser;
     
     private char[,] _map;
 
@@ -22,8 +24,19 @@ public abstract class Base : Solution
 
     private int _robotY;
 
+    protected Base()
+    {
+    }
+
+    protected Base(IVisualiser<PuzzleState> visualiser)
+    {
+        _visualiser = visualiser;
+    }
+    
     protected void RunRobot()
     {
+        Visualise();
+        
         for (var i = 0; i < _directions.Length; i++)
         {
             var (dX, dY) = _directions[i] switch
@@ -39,8 +52,15 @@ public abstract class Base : Solution
                 _robotX += dX;
 
                 _robotY += dY;
+            
+                Visualise();
             }
         }
+    }
+
+    private void Visualise()
+    {
+        _visualiser?.PuzzleStateChanged(new PuzzleState(_map));
     }
 
     private bool MakeMove(char[,] map, int x, int y, int dX, int dY)
