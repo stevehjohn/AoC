@@ -9,8 +9,6 @@ public class Part1 : Base
     {
         ParseInput();
 
-        Dump();
-        
         RunRobot();
 
         var result = SumCoordinates();

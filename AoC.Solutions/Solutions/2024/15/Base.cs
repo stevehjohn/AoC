@@ -75,6 +75,10 @@ public abstract class Base : Solution
 
             _map[x + (i - 1) * dX, y + (i - 1) * dY] = '.';
         }
+
+        _robot.X = x;
+
+        _robot.Y = y;
     }
 
     protected long SumCoordinates()
@@ -92,22 +96,29 @@ public abstract class Base : Solution
             }
         }
 
-        Dump();
-
         return sum;
     }
 
-    protected void Dump()
+    private void Dump()
     {
         for (var y = 0; y < _height; y++)
         {
             for (var x = 0; x < _width; x++)
             {
+                if (x == _robot.X && y == _robot.Y)
+                {
+                    Console.Write('@');
+                    
+                    continue;
+                }
+
                 Console.Write(_map[x, y]);
             }
             
             Console.WriteLine();
         }
+        
+        Console.WriteLine();
     }
 
     protected void ParseInput()
