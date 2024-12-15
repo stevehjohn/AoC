@@ -104,7 +104,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
                         break;
                     
                     case '@':
-                        _data[pixel] = Color.Black;
                         break;
                     
                     case 'O':
@@ -117,7 +116,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
                         if (_data[pixel].R > 4)
                         {
                             _data[pixel].R -= 4;
-                            _data[pixel].G -= 4;
+                            _data[pixel].G -= 1;
+                            _data[pixel].B -= 3;
                         }
 
                         break;
