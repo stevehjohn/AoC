@@ -24,12 +24,20 @@ public abstract class Base : Solution
 
     protected void RunRobot()
     {
+        Console.Clear();
+        
         for (var i = 0; i < _directions.Length; i++)
         {
             MakeMove(_directions[i]);
-        }
+
+            Console.CursorTop = 0;
+
+            Console.CursorLeft = 0;
             
-        DumpMap();
+            DumpMap();
+
+            Console.ReadKey();
+        }
     }
 
     private void MakeMove(char direction)
@@ -158,9 +166,44 @@ public abstract class Base : Solution
 
         _height = y;
 
-        _map = Input[..y].To2DArray();
+        if (IsPart2)
+        {
+            _map = new char[_width * 2, _height];
+            
+            for (y = 0; y < _height; y++)
+            {
+                var line = Input[y];
+                
+                for (var x = 0; x < _width; x++)
+                {
+                    var character = line[x];
+                    
+                    switch (character)
+                    {
+                        case '.':
+                        case '@':
+                            _map[x * 2, y] = '.';
+                            _map[x * 2 + 1, y] = '.';
+                            break;
+                        
+                        default:
+                            _map[x * 2, y] = character;
+                            _map[x * 2 + 1, y] = character;
+                            break;                            
+                    }
+                }
+            }
 
-        _map[_robotX, _robotY] = '.';
+            _width *= 2;
+
+            _robotX *= 2;
+        }
+        else
+        {
+            _map = Input[..y].To2DArray();
+
+            _map[_robotX, _robotY] = '.';
+        }
         
         y++;
 
