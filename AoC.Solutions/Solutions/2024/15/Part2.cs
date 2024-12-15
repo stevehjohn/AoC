@@ -7,7 +7,7 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        ParseInput();
+        ParseInput(true);
 
         RunRobot();
 

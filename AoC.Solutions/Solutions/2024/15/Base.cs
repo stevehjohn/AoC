@@ -121,7 +121,7 @@ public abstract class Base : Solution
         Console.WriteLine();
     }
 
-    protected void ParseInput()
+    protected void ParseInput(bool isPart2 = false)
     {
         _width = Input[0].Length;
         
@@ -152,10 +152,50 @@ public abstract class Base : Solution
 
         _height = y;
 
-        _map = Input[..y].To2DArray();
+        if (isPart2)
+        {
+            _robot.X *= 2;
 
-        _map[_robot.X, _robot.Y] = '.';
+            _map = new char[_width * 2, _height];
 
+            for (y = 0; y < _height; y++)
+            {
+                var line = Input[y];
+
+                for (var x = 0; x < _width; x++)
+                {
+                    switch (line[x])
+                    {
+                        case '@':
+                        case '.':
+                            _map[x * 2, y] = '.';
+                            _map[x * 2 + 1, y] = '.';
+                            break;
+
+                        case '#':
+                            _map[x * 2, y] = '#';
+                            _map[x * 2 + 1, y] = '#';
+                            break;
+                        
+                        case 'O':
+                            _map[x * 2, y] = '[';
+                            _map[x * 2 + 1, y] = ']';
+                            break;
+                    }
+                }
+            }
+            
+            _width *= 2;
+            
+            Dump();
+        }
+        else
+        {
+            _map = Input[..y].To2DArray();
+
+            _map[_robot.X, _robot.Y] = '.';
+        }
+        
         y++;
 
         var builder = new StringBuilder();
