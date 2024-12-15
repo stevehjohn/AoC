@@ -39,7 +39,7 @@ public abstract class Base : Solution
             
             Console.WriteLine($"{i}: {_directions[i]}");
 
-            if (i > 308)
+            if (i > 500)
             {
                 Console.ReadKey();
             }
@@ -206,7 +206,50 @@ public abstract class Base : Solution
                 }
             }
 
+            // Console.CursorLeft = 0;
+            //
+            // Console.CursorTop = 0;
+
             cY -= dY;
+
+            for (var i = 2; i < _width - 2; i++)
+            {
+                if (_pushMask[i] != '.')
+                {
+                    if (_map[i, cY - dY] is ']' or '#')
+                    {
+                        _pushMask[i] = '.';
+                    }
+
+                    break;
+                }
+            }
+            
+            for (var i = _width - 2; i > 2; i--)
+            {
+                if (_pushMask[i] != '.')
+                {
+                    if (_map[i, cY - dY] is '[' or '#')
+                    {
+                        _pushMask[i] = '.';
+                    }
+
+                    break;
+                }
+            }
+            
+            // DumpMap();
+            //
+            // Console.WriteLine();
+            //
+            // for (var i = 0; i < _width; i++)
+            // {
+            //     Console.Write(_pushMask[i]);
+            // }
+            //
+            // Console.WriteLine($" {cY}");
+            //
+            // Console.ReadKey();
         }
     }
 
