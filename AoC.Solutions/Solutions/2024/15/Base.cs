@@ -9,7 +9,11 @@ public abstract class Base : Solution
 {
     public override string Description => "Warehouse woes";
 
+    protected bool IsPart2;
+    
     private char[,] _map;
+
+    private char[] _pushMask;
 
     private int _width;
 
@@ -21,8 +25,25 @@ public abstract class Base : Solution
 
     protected void RunRobot()
     {
+        Console.Clear();
+        
         for (var i = 0; i < _directions.Length; i++)
         {
+            Console.CursorLeft = 0;
+
+            Console.CursorTop = 0;
+            
+            DumpMap();
+            
+            Console.WriteLine();
+            
+            Console.WriteLine($"{i}: {_directions[i]}");
+
+            if (i > 308)
+            {
+                Console.ReadKey();
+            }
+
             MakeMove(_directions[i]);
         }
     }
@@ -57,9 +78,16 @@ public abstract class Base : Solution
             return;
         }
 
+        if (dY != 0 && IsPart2)
+        {
+            TryPushVertically(x, y, dY);
+            
+            return;
+        }
+
         var i = 1;
         
-        while (_map[x + i * dX, y + i * dY] is 'O' and not '#')
+        while (_map[x + i * dX, y + i * dY] is ('O' or '[' or ']') and not '#')
         {
             i++;
         }
@@ -81,6 +109,107 @@ public abstract class Base : Solution
         _robot.Y = y;
     }
 
+    private void TryPushVertically(int x, int y, int dY)
+    {
+        Array.Fill(_pushMask, '.');
+
+        _pushMask[x] = 'O';
+
+        if (_map[x, y] == '[')
+        {
+            _pushMask[x + 1] = 'O';
+        }
+        else
+        {
+            _pushMask[x - 1] = 'O';
+        }
+
+        var cY = y;
+        
+        var clear = true;
+
+        while (cY > 0 && cY < _height - 1)
+        {
+            cY += dY;
+
+            var pushed = false;
+            
+            for (var i = 2; i < _width - 2; i++)
+            {
+                if (_pushMask[i] == 'O' && _map[i, cY] == '#')
+                {
+                    clear = false;
+                    
+                    break;
+                }
+
+                if (_map[i, cY] is '.' or '#')
+                {
+                    continue;
+                }
+
+                if (_pushMask[i] != 'O')
+                {
+                    continue;
+                }
+
+                _pushMask[i] = 'O';
+                
+                if (_map[i, cY] == '[')
+                {
+                    _pushMask[i + 1] = 'O';
+                }
+                else
+                {
+                    _pushMask[i - 1] = 'O';
+                }
+
+                pushed = true;
+            }
+
+            if (clear && ! pushed)
+            {
+                break;
+            }
+        }
+
+        if (clear)
+        {
+            Console.WriteLine();
+            
+            for (var i = 0; i < _width; i++)
+            {
+                Console.Write(_pushMask[i]);
+            }
+
+            Console.WriteLine($" {cY}");
+            
+            PushVertically(y, dY, cY);
+
+            _robot.X = x;
+
+            _robot.Y = y;
+        }
+    }
+
+    private void PushVertically(int y, int dY, int cY)
+    {
+        while (cY != y)
+        {
+            for (var i = 2; i < _width - 2; i++)
+            {
+                if (_pushMask[i] == 'O' && _map[i, cY] == '.')
+                {
+                    _map[i, cY] = _map[i, cY - dY];
+
+                    _map[i, cY - dY] = '.';
+                }
+            }
+
+            cY -= dY;
+        }
+    }
+
     protected long SumCoordinates()
     {
         var sum = 0L;
@@ -89,7 +218,7 @@ public abstract class Base : Solution
         {
             for (var y = 0; y < _height; y++)
             {
-                if (_map[x, y] == 'O')
+                if (_map[x, y] is 'O' or '[')
                 {
                     sum += x + y * 100;
                 }
@@ -99,7 +228,7 @@ public abstract class Base : Solution
         return sum;
     }
 
-    private void Dump()
+    private void DumpMap()
     {
         for (var y = 0; y < _height; y++)
         {
@@ -121,7 +250,7 @@ public abstract class Base : Solution
         Console.WriteLine();
     }
 
-    protected void ParseInput(bool isPart2 = false)
+    protected void ParseInput()
     {
         _width = Input[0].Length;
         
@@ -152,7 +281,7 @@ public abstract class Base : Solution
 
         _height = y;
 
-        if (isPart2)
+        if (IsPart2)
         {
             _robot.X *= 2;
 
@@ -186,8 +315,10 @@ public abstract class Base : Solution
             }
             
             _width *= 2;
+
+            _pushMask = new char[_width];
             
-            Dump();
+            DumpMap();
         }
         else
         {
