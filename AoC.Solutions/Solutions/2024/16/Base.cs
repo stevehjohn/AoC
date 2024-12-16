@@ -14,7 +14,7 @@ public abstract class Base : Solution
 
     private readonly HashSet<(Point, Point, int)> _visited = [];
 
-    private readonly Dictionary<int, int> _visitCounts = [];
+    private int[] _visitCounts;
 
     private byte[] _bestPaths;
 
@@ -41,6 +41,8 @@ public abstract class Base : Solution
         if (IsPart2)
         {
             _bestPaths = new byte[_width * _height / 8];
+
+            _visitCounts = new int[_width * _height * 100 + 10];
         }
 
         while (_queue.Count > 0)
@@ -144,17 +146,6 @@ public abstract class Base : Solution
             
             for (var x = 0; x < _width; x++)
             {
-                if (IsPart2)
-                {
-                    var key = (y * _width + x) * 100;
-
-                    _visitCounts.Add(key, 0);
-                    _visitCounts.Add(key + 10, 0);
-                    _visitCounts.Add(key - 10, 0);
-                    _visitCounts.Add(key + 1, 0);
-                    _visitCounts.Add(key - 1, 0);
-                }
-                
                 var cell = line[x];
 
                 switch (cell)
