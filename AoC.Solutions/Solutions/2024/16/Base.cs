@@ -18,11 +18,13 @@ public abstract class Base : Solution
 
     private byte[] _bestPaths;
 
-    private char[,] _map;
+    private char[] _map;
 
     private int _width;
 
     private int _height;
+
+    private int _length;
 
     private Point _start;
 
@@ -40,15 +42,15 @@ public abstract class Base : Solution
 
         if (IsPart2)
         {
-            _bestPaths = new byte[_width * _height / 8];
+            _bestPaths = new byte[_length / 8];
 
-            _visitCounts = new int[_width * _height * 100 + 10];
+            _visitCounts = new int[_length * 100 + 10];
         }
 
         while (_queue.Count > 0)
         {
             var state = _queue.Dequeue();
-
+            
             if (IsPart2)
             {
                 var key = (state.Position.Y * _width + state.Position.X) * 100 + state.Direction.Y * 10 + state.Direction.X;
@@ -65,9 +67,9 @@ public abstract class Base : Solution
 
             if (IsPart2)
             {
-                var newPath = new byte[_width * _height / 8];
+                var newPath = new byte[_length / 8];
                 
-                Buffer.BlockCopy(state.Path, 0, newPath, 0, sizeof(byte) * _width * _height / 8);
+                Buffer.BlockCopy(state.Path, 0, newPath, 0, sizeof(byte) * _length / 8);
 
                 newPath[(state.Position.X + state.Position.Y * _width) / 8] |= (byte) (1 << ((state.Position.X + state.Position.Y * _width) % 8));
 
@@ -87,7 +89,7 @@ public abstract class Base : Solution
                 {
                     var count = 0;
                     
-                    for (var i = 0; i < _width * _height / 8; i++)
+                    for (var i = 0; i < _length / 8; i++)
                     {
                         count += BitOperations.PopCount(_bestPaths[i]);
                     }
@@ -95,7 +97,7 @@ public abstract class Base : Solution
                     return count;
                 }
                 
-                for (var i = 0; i < _width * _height / 8; i++)
+                for (var i = 0; i < _length / 8; i++)
                 {
                     _bestPaths[i] |= state.Path[i];
                 }
@@ -117,7 +119,7 @@ public abstract class Base : Solution
 
         score += scoreChange;
         
-        if (_map[position.X, position.Y] == '.')
+        if (_map[position.X + position.Y * _width] == '.')
         {
             var penalty = 0;
 
@@ -138,7 +140,9 @@ public abstract class Base : Solution
 
         _height = Input.Length;
 
-        _map = new char[_width, _height];
+        _length = _width * _height;
+
+        _map = new char[_length];
 
         for (var y = 0; y < _height; y++)
         {
@@ -148,20 +152,22 @@ public abstract class Base : Solution
             {
                 var cell = line[x];
 
+                var index = x + y * _width;
+
                 switch (cell)
                 {
                     case 'S':
                         _start = new Point(x, y);
-                        _map[x, y] = '.';
+                        _map[index] = '.';
                         continue;
                     
                     case 'E':
                         _end = new Point(x, y);
-                        _map[x, y] = '.';
+                        _map[index] = '.';
                         continue;
                     
                     default:
-                        _map[x, y] = cell;
+                        _map[index] = cell;
                         break;
                 }
             }
