@@ -16,7 +16,7 @@ public abstract class Base : Solution
 
     private readonly HashSet<int> _bestPaths = [];
     
-    private int[] _visitCounts;
+    private int[] _scores;
 
     private char[] _map;
 
@@ -44,7 +44,9 @@ public abstract class Base : Solution
 
         if (IsPart2)
         {
-            _visitCounts = new int[_length * 100 + 10];
+            _scores = new int[_length * 100 + 10];
+            
+            Array.Fill(_scores, int.MaxValue);
         }
 
         while (_queue.Count > 0)
@@ -55,7 +57,12 @@ public abstract class Base : Solution
             {
                 var key = (state.Position.Y * _width + state.Position.X) * 100 + state.Direction.Y * 10 + state.Direction.X;
 
-                _visitCounts[key]++;
+                if (_scores[key] < state.Score)
+                {
+                    continue;
+                }
+
+                _scores[key] = state.Score;
             }
             else
             {
@@ -112,16 +119,7 @@ public abstract class Base : Solution
         
         if (_map[state.Position.X + state.Position.Y * _width] == '.')
         {
-            var penalty = 0;
-
-            if (IsPart2)
-            {
-                var key = (state.Position.Y * _width + state.Position.X) * 100 + direction.Y * 10 + direction.X;
-                
-                penalty = _visitCounts[key] * 1_000_000;
-            }
-
-            _queue.Enqueue(new State(state.Position, direction, state.Path, state.Score), state.Score + penalty);
+            _queue.Enqueue(new State(state.Position, direction, state.Path, state.Score), state.Score);
         }
     }
 

@@ -505,14 +505,14 @@ Tests performed on a 2023 MacBook Pro.
  2024 12.2: 5,189μs       
  2024 13.1: 86μs          Claw contraption
  2024 13.2: 87μs          
- 2024 14.1: 253μs         Restroom redoubt
+ 2024 14.1: 242μs         Restroom redoubt
  2024 14.2: 15,982μs      
  2024 15.1: 279μs         Warehouse woes
  2024 15.2: 6,106μs       
- 2024 16.1: 6,057μs       Reindeer maze
- 2024 16.2: 176,729μs     
+ 2024 16.1: 5,284μs       Reindeer maze
+ 2024 16.2: 173,439μs     
             -------------
-            308.174ms    
+            304.100ms    
 
- 474 puzzles solved in 51.324s.
+ 474 puzzles solved in 51.320s.
 ```
