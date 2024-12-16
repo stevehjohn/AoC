@@ -500,7 +500,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 10.1: 302μs         Hoof it
  2024 10.2: 483μs         
  2024 11.1: 411μs         Plutonian pebbles
- 2024 11.2: 14,914μs      
+ 2024 11.2: 12,328μs      
  2024 12.1: 4,050μs       Garden groups
  2024 12.2: 5,189μs       
  2024 13.1: 86μs          Claw contraption
@@ -508,11 +508,11 @@ Tests performed on a 2023 MacBook Pro.
  2024 14.1: 253μs         Restroom redoubt
  2024 14.2: 15,982μs      
  2024 15.1: 279μs         Warehouse woes
- 2024 15.2: 6,383μs       
+ 2024 15.2: 6,106μs       
  2024 16.1: 6,057μs       Reindeer maze
- 2024 16.2: 470,602μs     
+ 2024 16.2: 176,729μs     
             -------------
-            604.910ms    
+            308.174ms    
 
- 474 puzzles solved in 51.621s.
+ 474 puzzles solved in 51.324s.
 ```
