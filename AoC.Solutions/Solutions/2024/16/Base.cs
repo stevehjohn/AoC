@@ -1,3 +1,4 @@
+using System.Numerics;
 using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
 
@@ -9,13 +10,13 @@ public abstract class Base : Solution
 
     protected bool IsPart2;
 
-    private readonly PriorityQueue<(Point Position, Point Direction, HashSet<Point> Path, int Score), int> _queue = new();
+    private readonly PriorityQueue<(Point Position, Point Direction, byte[] Path, int Score), int> _queue = new();
 
     private readonly HashSet<(Point, Point, int)> _visited = [];
 
     private readonly Dictionary<int, int> _visitCount = [];
 
-    private readonly HashSet<Point> _bestPaths = [];
+    private byte[] _bestPaths;
 
     private char[,] _map;
 
@@ -31,13 +32,18 @@ public abstract class Base : Solution
     {
         _queue.Clear();
         
-        _queue.Enqueue((_start, new Point(1, 0), IsPart2 ? [] : null, 0), 0);
+        _queue.Enqueue((_start, new Point(1, 0), IsPart2 ? new byte[_width * _height / 8] : null, 0), 0);
         
         _visited.Clear();
         
         _visitCount.Clear();
 
         var bestScore = int.MaxValue;
+
+        if (IsPart2)
+        {
+            _bestPaths = new byte[_width * _height / 8];
+        }
 
         while (_queue.Count > 0)
         {
@@ -62,7 +68,13 @@ public abstract class Base : Solution
 
             if (IsPart2)
             {
-                state.Path = [..state.Path, state.Position];
+                var newPath = new byte[_width * _height / 8];
+                
+                Buffer.BlockCopy(state.Path, 0, newPath, 0, sizeof(byte) * _width * _height / 8);
+
+                newPath[(state.Position.X + state.Position.Y * _width) / 8] |= (byte) (1 << ((state.Position.X + state.Position.Y * _width) % 8));
+
+                state.Path = newPath;
             }
 
             if (state.Position.Equals(_end))
@@ -76,10 +88,20 @@ public abstract class Base : Solution
 
                 if (state.Score > bestScore)
                 {
-                    return _bestPaths.Count;
+                    var count = 0;
+                    
+                    for (var i = 0; i < _width * _height / 8; i++)
+                    {
+                        count += BitOperations.PopCount(_bestPaths[i]);
+                    }
+
+                    return count;
                 }
                 
-                _bestPaths.UnionWith(state.Path);
+                for (var i = 0; i < _width * _height / 8; i++)
+                {
+                    _bestPaths[i] |= state.Path[i];
+                }
             }
 
             EnqueueMove(state.Position, state.Direction, state.Path, state.Score, 1);
@@ -92,7 +114,7 @@ public abstract class Base : Solution
         return -1;
     }
 
-    private void EnqueueMove(Point position, Point direction, HashSet<Point> path, int score, int scoreChange)
+    private void EnqueueMove(Point position, Point direction, byte[] path, int score, int scoreChange)
     {
         position += direction;
 
