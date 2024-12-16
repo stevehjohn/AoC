@@ -7,9 +7,13 @@ public abstract class Base : Solution
 {
     public override string Description => "Reindeer maze";
 
-    private readonly PriorityQueue<(Point Positon, Point Direction, int Score), int> _queue = new();
+    protected bool IsPart2;
+
+    private readonly PriorityQueue<(Point Positon, Point Direction, HashSet<Point> Path, int Score), int> _queue = new();
 
     private readonly HashSet<(Point, Point)> _visited = [];
+
+    private readonly HashSet<Point> _bestPaths = [];
 
     private char[,] _map;
 
@@ -25,41 +29,61 @@ public abstract class Base : Solution
     {
         _queue.Clear();
         
-        _queue.Enqueue((_start, new Point(1, 0), 0), 0);
+        _queue.Enqueue((_start, new Point(1, 0), IsPart2 ? [] : null, 0), 0);
         
         _visited.Clear();
+
+        var bestScore = int.MaxValue;
 
         while (_queue.Count > 0)
         {
             var state = _queue.Dequeue();
 
-            if (! _visited.Add((state.Positon, state.Direction)))
+            if (! _visited.Add((state.Positon, state.Direction)) && ! IsPart2)
             {
                 continue;
             }
 
+            state.Path?.Add(state.Positon);
+
             if (state.Positon.Equals(_end))
             {
-                return state.Score;
+                if (! IsPart2)
+                {
+                    return state.Score;
+                }
+
+                bestScore = Math.Min(bestScore, state.Score);
+
+                if (state.Score > bestScore)
+                {
+                    return _bestPaths.Count;
+                }
+                
+                Console.WriteLine(state.Path.Count);
+                
+                _bestPaths.UnionWith(state.Path);
             }
 
-            EnqueueMove(state.Positon, state.Direction, state.Score + 1);
+            EnqueueMove(state.Positon, state.Direction, state.Path, state.Score, 1);
             
-            EnqueueMove(state.Positon, new Point(-state.Direction.Y, state.Direction.X), state.Score + 1_001);
+            EnqueueMove(state.Positon, new Point(-state.Direction.Y, state.Direction.X), state.Path, state.Score, 1_001);
             
-            EnqueueMove(state.Positon, new Point(state.Direction.Y, -state.Direction.X), state.Score + 1_001);
+            EnqueueMove(state.Positon, new Point(state.Direction.Y, -state.Direction.X), state.Path, state.Score, 1_001);
         }
         
         return -1;
     }
 
-    private void EnqueueMove(Point position, Point direction, int score)
+    private void EnqueueMove(Point position, Point direction, HashSet<Point> path, int score, int scoreChange)
     {
         position += direction;
+
+        score += scoreChange;
         
         if (_map[position.X, position.Y] == '.')
         {
-            _queue.Enqueue((position, direction, score), score);
+            _queue.Enqueue((position, direction, path == null ? null : [..path], score), score);
         }
     }
 
