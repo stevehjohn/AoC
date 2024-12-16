@@ -8,7 +8,9 @@ public class Part1 : Base
     public override string GetAnswer()
     {
         ParseInput();
+
+        var score = WalkMaze();
         
-        return "Unknown";
+        return score.ToString();
     }
 }

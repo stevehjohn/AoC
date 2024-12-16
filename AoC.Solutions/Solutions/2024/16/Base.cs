@@ -1,4 +1,4 @@
-using System.Drawing;
+using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2024._16;
@@ -6,6 +6,10 @@ namespace AoC.Solutions.Solutions._2024._16;
 public abstract class Base : Solution
 {
     public override string Description => "Reindeer maze";
+
+    private readonly PriorityQueue<(Point Positon, Point Direction, int Score), int> _queue = new();
+
+    private readonly HashSet<Point> _visited = [];
 
     private char[,] _map;
 
@@ -16,7 +20,49 @@ public abstract class Base : Solution
     private Point _start;
 
     private Point _end;
-    
+
+    protected int WalkMaze()
+    {
+        _queue.Clear();
+        
+        _visited.Clear();
+        
+        _queue.Enqueue((_start, new Point(1, 0), 0), 0);
+
+        while (_queue.Count > 0)
+        {
+            var state = _queue.Dequeue();
+
+            if (! _visited.Add(state.Positon))
+            {
+                continue;
+            }
+
+            if (state.Positon.Equals(_end))
+            {
+                return state.Score;
+            }
+
+            EnqueueMove(state.Positon, new Point(0, 0), state.Score + 1);
+            
+            EnqueueMove(state.Positon, new Point(-state.Direction.Y, state.Direction.X), state.Score + 1_000);
+            
+            EnqueueMove(state.Positon, new Point(state.Direction.Y, -state.Direction.X), state.Score + 1_000);
+        }
+        
+        return -1;
+    }
+
+    private void EnqueueMove(Point position, Point direction, int score)
+    {
+        position += direction;
+        
+        if (_map[position.X, position.Y] == '.')
+        {
+            _queue.Enqueue((position, direction, score), score);
+        }
+    }
+
     protected void ParseInput()
     {
         _width = Input[0].Length;
