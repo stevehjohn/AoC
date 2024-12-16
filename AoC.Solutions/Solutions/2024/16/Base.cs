@@ -10,7 +10,7 @@ public abstract class Base : Solution
 
     protected bool IsPart2;
 
-    private readonly PriorityQueue<(Point Position, Point Direction, byte[] Path, int Score), int> _queue = new();
+    private readonly PriorityQueue<State, int> _queue = new();
 
     private readonly HashSet<(Point, Point, int)> _visited = [];
 
@@ -34,7 +34,7 @@ public abstract class Base : Solution
     {
         _queue.Clear();
         
-        _queue.Enqueue((_start, new Point(1, 0), IsPart2 ? new byte[_width * _height / 8] : null, 0), 0);
+        _queue.Enqueue(new State(_start, new Point(1, 0), IsPart2 ? new byte[_width * _height / 8] : null, 0), 0);
         
         _visited.Clear();
 
@@ -103,34 +103,34 @@ public abstract class Base : Solution
                 }
             }
 
-            EnqueueMove(state.Position, state.Direction, state.Path, state.Score, 1);
+            EnqueueMove(state, state.Direction, 1);
             
-            EnqueueMove(state.Position, new Point(-state.Direction.Y, state.Direction.X), state.Path, state.Score, 1_001);
+            EnqueueMove(state, new Point(-state.Direction.Y, state.Direction.X) , 1_001);
             
-            EnqueueMove(state.Position, new Point(state.Direction.Y, -state.Direction.X), state.Path, state.Score, 1_001);
+            EnqueueMove(state, new Point(state.Direction.Y, -state.Direction.X), 1_001);
         }
         
         return -1;
     }
 
-    private void EnqueueMove(Point position, Point direction, byte[] path, int score, int scoreChange)
+    private void EnqueueMove(State state, Point direction, int scoreChange)
     {
-        position += direction;
+        state.Position += direction;
 
-        score += scoreChange;
+        state.Score += scoreChange;
         
-        if (_map[position.X + position.Y * _width] == '.')
+        if (_map[state.Position.X + state.Position.Y * _width] == '.')
         {
             var penalty = 0;
 
             if (IsPart2)
             {
-                var key = (position.Y * _width + position.X) * 100 + direction.Y * 10 + direction.X;
+                var key = (state.Position.Y * _width + state.Position.X) * 100 + direction.Y * 10 + direction.X;
                 
                 penalty = _visitCounts[key] * 1_000_000;
             }
 
-            _queue.Enqueue((position, direction, path, score), score + penalty);
+            _queue.Enqueue(new State(state.Position, direction, state.Path, state.Score), state.Score + penalty);
         }
     }
 
