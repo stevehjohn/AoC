@@ -275,7 +275,7 @@ Tests performed on a 2023 MacBook Pro.
  2020  2.1: 178μs         Password policy
  2020  2.2: 114μs         
  2020  3.1: 141μs         Tobogganing through the trees
- 2020  3.2: 25μs          
+ 2020  3.2: 24μs          
  2020  4.1: 272μs         Passport validation
  2020  4.2: 640μs         
  2020  5.1: 121μs         Boarding parse
@@ -509,10 +509,10 @@ Tests performed on a 2023 MacBook Pro.
  2024 14.2: 15,982μs      
  2024 15.1: 279μs         Warehouse woes
  2024 15.2: 6,106μs       
- 2024 16.1: 5,225μs       Reindeer maze
- 2024 16.2: 173,439μs     
+ 2024 16.1: 5,107μs       Reindeer maze
+ 2024 16.2: 169,954μs     
             -------------
-            304.041ms    
+            300.438ms    
 
- 474 puzzles solved in 51.320s.
+ 474 puzzles solved in 51.316s.
 ```
