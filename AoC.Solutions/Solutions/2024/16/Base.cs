@@ -48,7 +48,7 @@ public abstract class Base : Solution
 
             if (state.Positon.Equals(_end))
             {
-                if (! IsPart2)
+                if (state.Path == null)
                 {
                     return state.Score;
                 }
