@@ -33,25 +33,22 @@ public abstract class Base : Solution
             {
                 var cell = line[x];
 
-                if (cell == 'S')
+                switch (cell)
                 {
-                    _start = new Point(x, y);
-
-                    _map[x, y] = '.';
+                    case 'S':
+                        _start = new Point(x, y);
+                        _map[x, y] = '.';
+                        continue;
                     
-                    continue;
-                }
-
-                if (cell == 'E')
-                {
-                    _end = new Point(x, y);
-
-                    _map[x, y] = '.';
+                    case 'E':
+                        _end = new Point(x, y);
+                        _map[x, y] = '.';
+                        continue;
                     
-                    continue;
+                    default:
+                        _map[x, y] = cell;
+                        break;
                 }
-
-                _map[x, y] = cell;
             }
         }
     }
