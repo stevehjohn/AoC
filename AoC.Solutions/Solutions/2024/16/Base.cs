@@ -12,8 +12,6 @@ public abstract class Base : Solution
 
     private readonly PriorityQueue<State, int> _queue = new();
 
-    private readonly HashSet<(Point, Point)> _visited = [];
-
     private readonly HashSet<int> _bestPaths = [];
     
     private int[] _scores;
@@ -36,41 +34,26 @@ public abstract class Base : Solution
         
         _queue.Enqueue(new State(_start, new Point(1, 0), IsPart2 ? ImmutableStack<int>.Empty : null, 0), 0);
         
-        _visited.Clear();
-        
         _bestPaths.Clear();
 
         var bestScore = int.MaxValue;
 
-        if (IsPart2)
-        {
-            _scores = new int[_length * 100 + 10];
-            
-            Array.Fill(_scores, int.MaxValue);
-        }
+        _scores = new int[_length * 100 + 10];
+        
+        Array.Fill(_scores, int.MaxValue);
 
         while (_queue.Count > 0)
         {
             var state = _queue.Dequeue();
             
-            if (IsPart2)
-            {
-                var key = (state.Position.Y * _width + state.Position.X) * 100 + state.Direction.Y * 10 + state.Direction.X;
+            var key = (state.Position.Y * _width + state.Position.X) * 100 + state.Direction.Y * 10 + state.Direction.X;
 
-                if (_scores[key] < state.Score)
-                {
-                    continue;
-                }
-
-                _scores[key] = state.Score;
-            }
-            else
+            if ((_scores[key] != int.MaxValue && ! IsPart2) || _scores[key] < state.Score)
             {
-                if (! _visited.Add((state.Position, state.Direction)))
-                {
-                    continue;
-                }
+                continue;
             }
+
+            _scores[key] = state.Score;
 
             if (IsPart2)
             {
