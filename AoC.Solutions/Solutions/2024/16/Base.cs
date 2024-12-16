@@ -80,8 +80,6 @@ public abstract class Base : Solution
                     return _bestPaths.Count;
                 }
                 
-                Console.WriteLine(state.Path.Count);
-                
                 _bestPaths.UnionWith(state.Path);
             }
 
