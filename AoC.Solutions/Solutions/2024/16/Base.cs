@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Immutable;
+using System.Runtime.CompilerServices;
 using AoC.Solutions.Infrastructure;
-using AoC.Solutions.Libraries;
 
 namespace AoC.Solutions.Solutions._2024._16;
 
@@ -17,7 +17,7 @@ public abstract class Base : Solution
     
     private int[] _scores;
 
-    private BitArray _map;
+    private bool[] _map;
 
     private int _width;
 
@@ -93,6 +93,7 @@ public abstract class Base : Solution
         return -1;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void EnqueueMove(State state, int dX, int dY, int scoreChange)
     {
         var position = state.Position + dX + dY * _width;
@@ -113,7 +114,7 @@ public abstract class Base : Solution
 
         _length = _width * height;
 
-        _map = new BitArray(_length);
+        _map = new bool[_length];
 
         for (var y = 0; y < height; y++)
         {
