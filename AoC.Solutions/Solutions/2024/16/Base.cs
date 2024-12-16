@@ -36,7 +36,7 @@ public abstract class Base : Solution
 
         var bestScore = int.MaxValue;
 
-        _scores = new int[_length * 100 + 10];
+        _scores = new int[_length << 4];
         
         Array.Fill(_scores, int.MaxValue);
 
@@ -44,7 +44,7 @@ public abstract class Base : Solution
         {
             var state = _queue.Dequeue();
 
-            var key = state.Position * 100 + state.Dy * 10 + state.Dx;
+            var key = (state.Position << 4) | ((state.Dy + 1) << 2) | (state.Dx + 1);
 
             if ((_scores[key] != int.MaxValue && ! IsPart2) || _scores[key] < state.Score)
             {
