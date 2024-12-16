@@ -60,7 +60,10 @@ public abstract class Base : Solution
                 }
             }
 
-            state.Path?.Add(state.Position);
+            if (IsPart2)
+            {
+                state.Path = [..state.Path, state.Position];
+            }
 
             if (state.Position.Equals(_end))
             {
@@ -109,7 +112,7 @@ public abstract class Base : Solution
                 }
             }
 
-            _queue.Enqueue((position, direction, path == null ? null : [..path], score), score + penalty);
+            _queue.Enqueue((position, direction, path, score), score + penalty);
         }
     }
 
