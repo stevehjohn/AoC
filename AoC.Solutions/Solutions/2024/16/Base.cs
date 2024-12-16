@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Immutable;
 using AoC.Solutions.Infrastructure;
 
@@ -15,11 +16,9 @@ public abstract class Base : Solution
     
     private int[] _scores;
 
-    private char[] _map;
+    private BitArray _map;
 
     private int _width;
-
-    private int _height;
 
     private int _length;
 
@@ -97,7 +96,7 @@ public abstract class Base : Solution
     {
         var position = state.Position + dX + dY * _width;
         
-        if (_map[position] == '.')
+        if (! _map[position])
         {
             _queue.Enqueue(new State(position, dX, dY, state.Path, state.Score + scoreChange), state.Score + scoreChange);
         }
@@ -107,13 +106,13 @@ public abstract class Base : Solution
     {
         _width = Input[0].Length;
 
-        _height = Input.Length;
+        var height = Input.Length;
 
-        _length = _width * _height;
+        _length = _width * height;
 
-        _map = new char[_length];
+        _map = new BitArray(_length);
 
-        for (var y = 0; y < _height; y++)
+        for (var y = 0; y < height; y++)
         {
             var line = Input[y];
             
@@ -123,21 +122,17 @@ public abstract class Base : Solution
 
                 var index = x + y * _width;
 
+                _map[index] = cell == '#';
+
                 switch (cell)
                 {
                     case 'S':
-                        _start = x + y * _width;
-                        _map[index] = '.';
+                        _start = index;
                         continue;
                     
                     case 'E':
-                        _end = x + y * _width;
-                        _map[index] = '.';
+                        _end = index;
                         continue;
-                    
-                    default:
-                        _map[index] = cell;
-                        break;
                 }
             }
         }
