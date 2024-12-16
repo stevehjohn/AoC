@@ -14,7 +14,7 @@ public abstract class Base : Solution
 
     private readonly HashSet<(Point, Point, int)> _visited = [];
 
-    private readonly Dictionary<int, int> _visitCount = [];
+    private readonly Dictionary<int, int> _visitCounts = [];
 
     private byte[] _bestPaths;
 
@@ -35,8 +35,6 @@ public abstract class Base : Solution
         _queue.Enqueue((_start, new Point(1, 0), IsPart2 ? new byte[_width * _height / 8] : null, 0), 0);
         
         _visited.Clear();
-        
-        _visitCount.Clear();
 
         var bestScore = int.MaxValue;
 
@@ -52,11 +50,8 @@ public abstract class Base : Solution
             if (IsPart2)
             {
                 var key = (state.Position.Y * _width + state.Position.X) * 100 + state.Direction.Y * 10 + state.Direction.X;
-                
-                if (! _visitCount.TryAdd(key, 1))
-                {
-                    _visitCount[key]++;
-                }
+
+                _visitCounts[key]++;
             }
             else
             {
@@ -128,10 +123,7 @@ public abstract class Base : Solution
             {
                 var key = (position.Y * _width + position.X) * 100 + direction.Y * 10 + direction.X;
                 
-                if (_visitCount.TryGetValue(key, out var value))
-                {
-                    penalty = value * 1_000_000;
-                }
+                penalty = _visitCounts[key] * 1_000_000;
             }
 
             _queue.Enqueue((position, direction, path, score), score + penalty);
@@ -152,6 +144,17 @@ public abstract class Base : Solution
             
             for (var x = 0; x < _width; x++)
             {
+                if (IsPart2)
+                {
+                    var key = (y * _width + x) * 100;
+
+                    _visitCounts.Add(key, 0);
+                    _visitCounts.Add(key + 10, 0);
+                    _visitCounts.Add(key - 10, 0);
+                    _visitCounts.Add(key + 1, 0);
+                    _visitCounts.Add(key - 1, 0);
+                }
+                
                 var cell = line[x];
 
                 switch (cell)
