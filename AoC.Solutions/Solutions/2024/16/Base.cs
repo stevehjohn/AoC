@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2024._16;
@@ -24,15 +23,15 @@ public abstract class Base : Solution
 
     private int _length;
 
-    private Point _start;
+    private int _start;
 
-    private Point _end;
+    private int _end;
 
     protected int WalkMaze()
     {
         _queue.Clear();
         
-        _queue.Enqueue(new State(_start, new Point(1, 0), IsPart2 ? ImmutableStack<int>.Empty : null, 0), 0);
+        _queue.Enqueue(new State(_start, 1, 0, IsPart2 ? ImmutableStack<int>.Empty : null, 0), 0);
         
         _bestPaths.Clear();
 
@@ -46,7 +45,7 @@ public abstract class Base : Solution
         {
             var state = _queue.Dequeue();
 
-            var key = (state.Position.Y * _width + state.Position.X) * 100 + state.Direction.Y * 10 + state.Direction.X;
+            var key = state.Position * 100 + state.Dy * 10 + state.Dx;
 
             if ((_scores[key] != int.MaxValue && ! IsPart2) || _scores[key] < state.Score)
             {
@@ -57,10 +56,10 @@ public abstract class Base : Solution
 
             if (IsPart2)
             {
-                state.Path = state.Path.Push(state.Position.X + state.Position.Y * _width);
+                state.Path = state.Path.Push(state.Position);
             }
 
-            if (state.Position.Equals(_end))
+            if (state.Position == _end)
             {
                 if (state.Path == null)
                 {
@@ -84,25 +83,25 @@ public abstract class Base : Solution
                 }
             }
 
-            EnqueueMove(state, state.Direction, 1);
+            EnqueueMove(state, state.Dx, state.Dy, 1);
 
-            EnqueueMove(state, new Point(-state.Direction.Y, state.Direction.X), 1_001);
+            EnqueueMove(state, -state.Dy, state.Dx, 1_001);
 
-            EnqueueMove(state, new Point(state.Direction.Y, -state.Direction.X), 1_001);
+            EnqueueMove(state, state.Dy, -state.Dx, 1_001);
         }
 
         return -1;
     }
 
-    private void EnqueueMove(State state, Point direction, int scoreChange)
+    private void EnqueueMove(State state, int dX, int dY, int scoreChange)
     {
-        state.Position += direction;
+        state.Position += dX + dY * _width;
 
         state.Score += scoreChange;
         
-        if (_map[state.Position.X + state.Position.Y * _width] == '.')
+        if (_map[state.Position] == '.')
         {
-            _queue.Enqueue(new State(state.Position, direction, state.Path, state.Score), state.Score);
+            _queue.Enqueue(new State(state.Position, dX, dY, state.Path, state.Score), state.Score);
         }
     }
 
@@ -129,12 +128,12 @@ public abstract class Base : Solution
                 switch (cell)
                 {
                     case 'S':
-                        _start = new Point(x, y);
+                        _start = x + y * _width;
                         _map[index] = '.';
                         continue;
                     
                     case 'E':
-                        _end = new Point(x, y);
+                        _end = x + y * _width;
                         _map[index] = '.';
                         continue;
                     
