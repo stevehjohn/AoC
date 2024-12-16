@@ -9,7 +9,7 @@ public abstract class Base : Solution
 
     private readonly PriorityQueue<(Point Positon, Point Direction, int Score), int> _queue = new();
 
-    private readonly HashSet<Point> _visited = [];
+    private readonly HashSet<(Point, Point)> _visited = [];
 
     private char[,] _map;
 
@@ -25,15 +25,15 @@ public abstract class Base : Solution
     {
         _queue.Clear();
         
-        _visited.Clear();
-        
         _queue.Enqueue((_start, new Point(1, 0), 0), 0);
+        
+        _visited.Clear();
 
         while (_queue.Count > 0)
         {
             var state = _queue.Dequeue();
 
-            if (! _visited.Add(state.Positon))
+            if (! _visited.Add((state.Positon, state.Direction)))
             {
                 continue;
             }
@@ -43,11 +43,11 @@ public abstract class Base : Solution
                 return state.Score;
             }
 
-            EnqueueMove(state.Positon, new Point(0, 0), state.Score + 1);
+            EnqueueMove(state.Positon, state.Direction, state.Score + 1);
             
-            EnqueueMove(state.Positon, new Point(-state.Direction.Y, state.Direction.X), state.Score + 1_000);
+            EnqueueMove(state.Positon, new Point(-state.Direction.Y, state.Direction.X), state.Score + 1_001);
             
-            EnqueueMove(state.Positon, new Point(state.Direction.Y, -state.Direction.X), state.Score + 1_000);
+            EnqueueMove(state.Positon, new Point(state.Direction.Y, -state.Direction.X), state.Score + 1_001);
         }
         
         return -1;
