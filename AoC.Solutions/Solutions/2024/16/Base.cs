@@ -45,7 +45,7 @@ public abstract class Base : Solution
         while (_queue.Count > 0)
         {
             var state = _queue.Dequeue();
-            
+
             var key = (state.Position.Y * _width + state.Position.X) * 100 + state.Direction.Y * 10 + state.Direction.X;
 
             if ((_scores[key] != int.MaxValue && ! IsPart2) || _scores[key] < state.Score)
@@ -75,7 +75,7 @@ public abstract class Base : Solution
                 }
 
                 var stack = state.Path;
-                
+
                 while (! stack.IsEmpty)
                 {
                     _bestPaths.Add(stack.Peek());
@@ -85,12 +85,12 @@ public abstract class Base : Solution
             }
 
             EnqueueMove(state, state.Direction, 1);
-            
-            EnqueueMove(state, new Point(-state.Direction.Y, state.Direction.X) , 1_001);
-            
+
+            EnqueueMove(state, new Point(-state.Direction.Y, state.Direction.X), 1_001);
+
             EnqueueMove(state, new Point(state.Direction.Y, -state.Direction.X), 1_001);
         }
-        
+
         return -1;
     }
 
