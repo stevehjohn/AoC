@@ -9,13 +9,11 @@ public abstract class Base : Solution
 
     protected bool IsPart2;
 
-    private const int MaxVisits = 60;
-
     private readonly PriorityQueue<(Point Position, Point Direction, HashSet<Point> Path, int Score), int> _queue = new();
 
     private readonly HashSet<(Point, Point, int)> _visited = [];
 
-    private readonly Dictionary<(Point, Point), int> _visitCount = [];
+    private readonly Dictionary<int, int> _visitCount = [];
 
     private readonly HashSet<Point> _bestPaths = [];
 
@@ -47,13 +45,11 @@ public abstract class Base : Solution
 
             if (IsPart2)
             {
-                if (! _visitCount.ContainsKey((state.Position, state.Direction)))
+                var key = (state.Position.Y * _width + state.Position.X) * 100 + state.Direction.Y * 10 + state.Direction.X;
+                
+                if (! _visitCount.TryAdd(key, 1))
                 {
-                    _visitCount.Add((state.Position, state.Direction), 1);
-                }
-                else
-                {
-                    _visitCount[(state.Position, state.Direction)]++;
+                    _visitCount[key]++;
                 }
             }
             else
@@ -105,9 +101,11 @@ public abstract class Base : Solution
 
             if (IsPart2)
             {
-                if (_visitCount.ContainsKey((position, direction)))
+                var key = (position.Y * _width + position.X) * 100 + direction.Y * 10 + direction.X;
+                
+                if (_visitCount.TryGetValue(key, out var value))
                 {
-                    penalty = _visitCount[(position, direction)] * 1_000;
+                    penalty = value * 1_000;
                 }
             }
 
