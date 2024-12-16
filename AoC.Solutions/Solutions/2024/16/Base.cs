@@ -9,9 +9,13 @@ public abstract class Base : Solution
 
     protected bool IsPart2;
 
-    private readonly PriorityQueue<(Point Positon, Point Direction, HashSet<Point> Path, int Score), int> _queue = new();
+    private const int MaxVisits = 60;
 
-    private readonly HashSet<(Point, Point)> _visited = [];
+    private readonly PriorityQueue<(Point Position, Point Direction, HashSet<Point> Path, int Score), int> _queue = new();
+
+    private readonly HashSet<(Point, Point, int)> _visited = [];
+
+    private readonly Dictionary<(Point, Point), int> _visitCount = [];
 
     private readonly HashSet<Point> _bestPaths = [];
 
@@ -32,6 +36,8 @@ public abstract class Base : Solution
         _queue.Enqueue((_start, new Point(1, 0), IsPart2 ? [] : null, 0), 0);
         
         _visited.Clear();
+        
+        _visitCount.Clear();
 
         var bestScore = int.MaxValue;
 
@@ -39,14 +45,28 @@ public abstract class Base : Solution
         {
             var state = _queue.Dequeue();
 
-            if (! _visited.Add((state.Positon, state.Direction)) && ! IsPart2)
+            if (IsPart2)
             {
-                continue;
+                if (! _visitCount.ContainsKey((state.Position, state.Direction)))
+                {
+                    _visitCount.Add((state.Position, state.Direction), 1);
+                }
+                else
+                {
+                    _visitCount[(state.Position, state.Direction)]++;
+                }
+            }
+            else
+            {
+                if (! _visited.Add((state.Position, state.Direction, 1)))
+                {
+                    continue;
+                }
             }
 
-            state.Path?.Add(state.Positon);
+            state.Path?.Add(state.Position);
 
-            if (state.Positon.Equals(_end))
+            if (state.Position.Equals(_end))
             {
                 if (state.Path == null)
                 {
@@ -65,11 +85,11 @@ public abstract class Base : Solution
                 _bestPaths.UnionWith(state.Path);
             }
 
-            EnqueueMove(state.Positon, state.Direction, state.Path, state.Score, 1);
+            EnqueueMove(state.Position, state.Direction, state.Path, state.Score, 1);
             
-            EnqueueMove(state.Positon, new Point(-state.Direction.Y, state.Direction.X), state.Path, state.Score, 1_001);
+            EnqueueMove(state.Position, new Point(-state.Direction.Y, state.Direction.X), state.Path, state.Score, 1_001);
             
-            EnqueueMove(state.Positon, new Point(state.Direction.Y, -state.Direction.X), state.Path, state.Score, 1_001);
+            EnqueueMove(state.Position, new Point(state.Direction.Y, -state.Direction.X), state.Path, state.Score, 1_001);
         }
         
         return -1;
@@ -83,7 +103,17 @@ public abstract class Base : Solution
         
         if (_map[position.X, position.Y] == '.')
         {
-            _queue.Enqueue((position, direction, path == null ? null : [..path], score), score);
+            var penalty = 0;
+
+            if (IsPart2)
+            {
+                if (_visitCount.ContainsKey((position, direction)))
+                {
+                    penalty = _visitCount[(position, direction)] * 1_000;
+                }
+            }
+
+            _queue.Enqueue((position, direction, path == null ? null : [..path], score), score + penalty);
         }
     }
 
