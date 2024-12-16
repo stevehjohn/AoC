@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Numerics;
 using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
@@ -14,9 +15,9 @@ public abstract class Base : Solution
 
     private readonly HashSet<(Point, Point)> _visited = [];
 
+    private readonly HashSet<int> _bestPaths = [];
+    
     private int[] _visitCounts;
-
-    private byte[] _bestPaths;
 
     private char[] _map;
 
@@ -34,16 +35,16 @@ public abstract class Base : Solution
     {
         _queue.Clear();
         
-        _queue.Enqueue(new State(_start, new Point(1, 0), IsPart2 ? new byte[_width * _height / 8] : null, 0), 0);
+        _queue.Enqueue(new State(_start, new Point(1, 0), IsPart2 ? ImmutableStack<int>.Empty : null, 0), 0);
         
         _visited.Clear();
+        
+        _bestPaths.Clear();
 
         var bestScore = int.MaxValue;
 
         if (IsPart2)
         {
-            _bestPaths = new byte[_length / 8];
-
             _visitCounts = new int[_length * 100 + 10];
         }
 
@@ -67,13 +68,7 @@ public abstract class Base : Solution
 
             if (IsPart2)
             {
-                var newPath = new byte[_length / 8];
-                
-                Buffer.BlockCopy(state.Path, 0, newPath, 0, sizeof(byte) * _length / 8);
-
-                newPath[(state.Position.X + state.Position.Y * _width) / 8] |= (byte) (1 << ((state.Position.X + state.Position.Y * _width) % 8));
-
-                state.Path = newPath;
+                state.Path = state.Path.Push(state.Position.X + state.Position.Y * _width);
             }
 
             if (state.Position.Equals(_end))
@@ -87,19 +82,16 @@ public abstract class Base : Solution
 
                 if (state.Score > bestScore)
                 {
-                    var count = 0;
-                    
-                    for (var i = 0; i < _length / 8; i++)
-                    {
-                        count += BitOperations.PopCount(_bestPaths[i]);
-                    }
-
-                    return count;
+                    return _bestPaths.Count;
                 }
+
+                var stack = state.Path;
                 
-                for (var i = 0; i < _length / 8; i++)
+                while (! stack.IsEmpty)
                 {
-                    _bestPaths[i] |= state.Path[i];
+                    _bestPaths.Add(stack.Peek());
+
+                    stack = stack.Pop();
                 }
             }
 

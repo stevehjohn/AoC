@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using AoC.Solutions.Common;
 
 namespace AoC.Solutions.Solutions._2024._16;
@@ -8,11 +9,11 @@ public struct State
     
     public Point Direction { get; }
     
-    public byte[] Path { get; set; }
+    public ImmutableStack<int> Path { get; set; }
     
     public int Score { get; set; }
 
-    public State(Point position, Point direction, byte[] path, int score)
+    public State(Point position, Point direction, ImmutableStack<int> path, int score)
     {
         Position = position;
         
