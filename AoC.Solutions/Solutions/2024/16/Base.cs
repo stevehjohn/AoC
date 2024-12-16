@@ -12,7 +12,7 @@ public abstract class Base : Solution
 
     private readonly PriorityQueue<State, int> _queue = new();
 
-    private readonly HashSet<(Point, Point, int)> _visited = [];
+    private readonly HashSet<(Point, Point)> _visited = [];
 
     private int[] _visitCounts;
 
@@ -59,7 +59,7 @@ public abstract class Base : Solution
             }
             else
             {
-                if (! _visited.Add((state.Position, state.Direction, 1)))
+                if (! _visited.Add((state.Position, state.Direction)))
                 {
                     continue;
                 }
