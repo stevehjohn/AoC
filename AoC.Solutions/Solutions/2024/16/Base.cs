@@ -95,13 +95,11 @@ public abstract class Base : Solution
 
     private void EnqueueMove(State state, int dX, int dY, int scoreChange)
     {
-        state.Position += dX + dY * _width;
-
-        state.Score += scoreChange;
+        var position = state.Position + dX + dY * _width;
         
-        if (_map[state.Position] == '.')
+        if (_map[position] == '.')
         {
-            _queue.Enqueue(new State(state.Position, dX, dY, state.Path, state.Score), state.Score);
+            _queue.Enqueue(new State(position, dX, dY, state.Path, state.Score + scoreChange), state.Score + scoreChange);
         }
     }
 
