@@ -67,14 +67,13 @@ public abstract class Base : Solution
 
             if (IsPart2)
             {
-                // var newPath = new byte[_length / 8];
-                //
-                // Buffer.BlockCopy(state.Path, 0, newPath, 0, sizeof(byte) * _length / 8);
-                //
-                // newPath[(state.Position.X + state.Position.Y * _width) / 8] |= (byte) (1 << ((state.Position.X + state.Position.Y * _width) % 8));
-                //
-                // state.Path = newPath;
-                state.Path[(state.Position.X + state.Position.Y * _width) / 8] |= (byte) (1 << ((state.Position.X + state.Position.Y * _width) % 8));
+                var newPath = new byte[_length / 8];
+                
+                Buffer.BlockCopy(state.Path, 0, newPath, 0, sizeof(byte) * _length / 8);
+
+                newPath[(state.Position.X + state.Position.Y * _width) / 8] |= (byte) (1 << ((state.Position.X + state.Position.Y * _width) % 8));
+
+                state.Path = newPath;
             }
 
             if (state.Position.Equals(_end))
