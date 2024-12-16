@@ -1,11 +1,10 @@
 using System.Collections.Immutable;
-using AoC.Solutions.Common;
 
 namespace AoC.Solutions.Solutions._2024._16;
 
 public struct State
 {
-    public int Position { get; set; }
+    public int Position { get; }
     
     public int Dx { get; }
     
@@ -13,7 +12,7 @@ public struct State
     
     public ImmutableStack<int> Path { get; set; }
     
-    public int Score { get; set; }
+    public int Score { get; }
 
     public State(int position, int dX, int dY, ImmutableStack<int> path, int score)
     {
