@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using System.Numerics;
 using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
 
