@@ -428,7 +428,7 @@ Tests performed on a 2023 MacBook Pro.
             306.565ms    
 
  2023  1.1: 120μs         Trebuchet
- 2023  1.2: 338μs         
+ 2023  1.2: 334μs         
  2023  2.1: 68μs          Cube conundrum
  2023  2.2: 92μs          
  2023  3.1: 53μs          Gear ratios
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,426μs       
  2023 25.1: 10,476μs      Snowverload
             -------------
-            403.287ms    
+            403.283ms    
 
  2024  1.1: 125μs         Historian hysteria
  2024  1.2: 97μs          
@@ -492,7 +492,7 @@ Tests performed on a 2023 MacBook Pro.
  2024  6.1: 368μs         Guard gallivant
  2024  6.2: 33,123μs      
  2024  7.1: 186μs         Bridge repair
- 2024  7.2: 5,802μs       
+ 2024  7.2: 5,783μs       
  2024  8.1: 91μs          Resonant collinearity
  2024  8.2: 141μs         
  2024  9.1: 287μs         Disk fragmenter
@@ -506,13 +506,13 @@ Tests performed on a 2023 MacBook Pro.
  2024 13.1: 86μs          Claw contraption
  2024 13.2: 87μs          
  2024 14.1: 242μs         Restroom redoubt
- 2024 14.2: 15,982μs      
+ 2024 14.2: 15,878μs      
  2024 15.1: 279μs         Warehouse woes
  2024 15.2: 6,106μs       
- 2024 16.1: 5,107μs       Reindeer maze
- 2024 16.2: 169,954μs     
+ 2024 16.1: 4,256μs       Reindeer maze
+ 2024 16.2: 63,054μs      
             -------------
-            300.438ms    
+            192.564ms    
 
- 474 puzzles solved in 51.316s.
+ 474 puzzles solved in 51.208s.
 ```
