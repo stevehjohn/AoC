@@ -472,12 +472,12 @@ Tests performed on a 2023 MacBook Pro.
  2023 22.1: 38,164μs      Sand slabs
  2023 22.2: 76,660μs      
  2023 23.1: 12,081μs      A long walk
- 2023 23.2: 71,409μs      
+ 2023 23.2: 70,974μs      
  2023 24.1: 1,578μs       Never tell me the odds
  2023 24.2: 5,426μs       
  2023 25.1: 10,476μs      Snowverload
             -------------
-            403.722ms    
+            403.287ms    
 
  2024  1.1: 125μs         Historian hysteria
  2024  1.2: 97μs          
@@ -509,10 +509,10 @@ Tests performed on a 2023 MacBook Pro.
  2024 14.2: 15,982μs      
  2024 15.1: 279μs         Warehouse woes
  2024 15.2: 6,106μs       
- 2024 16.1: 5,284μs       Reindeer maze
+ 2024 16.1: 5,225μs       Reindeer maze
  2024 16.2: 173,439μs     
             -------------
-            304.100ms    
+            304.041ms    
 
  474 puzzles solved in 51.320s.
 ```
