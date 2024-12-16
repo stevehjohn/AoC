@@ -105,7 +105,7 @@ public abstract class Base : Solution
                 
                 if (_visitCount.TryGetValue(key, out var value))
                 {
-                    penalty = value * 1_000;
+                    penalty = value * 1_000_000;
                 }
             }
 
