@@ -85,8 +85,6 @@ public class Graph
 
         var visited = new HashSet<Point> { start };
 
-        map[start.X, start.Y] = 'O';
-
         var id = 1;
 
         while (queue.Count > 0)
@@ -99,8 +97,6 @@ public class Graph
             {
                 continue;
             }
-
-            map[position.X, position.Y] = 'O';
 
             if (! visited.Add(position))
             {
@@ -120,8 +116,6 @@ public class Graph
                 position += direction;
 
                 visited.Add(position);
-
-                map[position.X, position.Y] = 'O';
 
                 steps++;
             }
