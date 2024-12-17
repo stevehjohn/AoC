@@ -7,6 +7,28 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        return "Unknown";
+        ParseInput();
+
+        var a = 0L;
+
+        var result = string.Empty;
+        
+        while (result == string.Empty)
+        {
+            result = RunProgram(a);
+
+            if (a % 1000000 == 0)
+            {
+                Console.Write(a);
+
+                Console.CursorLeft = 0;
+            }
+
+            a++;
+        }
+        
+        Console.WriteLine(result);
+
+        return (a - 1).ToString();
     }
 }

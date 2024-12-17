@@ -10,8 +10,13 @@ public abstract class Base : Solution
 
     private byte[] _program;
 
-    protected string RunProgram()
+    protected string RunProgram(long a = -1)
     {
+        if (a > -1)
+        {
+            _registers[0] = a;
+        }
+
         var output = new List<long>();
 
         for (var counter = 0; counter < _program.Length; counter += 2)
@@ -53,6 +58,22 @@ public abstract class Base : Solution
                     _registers[2] = _registers[0] >> (int) GetComboOperand(operand);
                     break;
             }
+
+            if (a != -1 && output.Count > 0)
+            {
+                for (var i = 0; i < output.Count; i++)
+                {
+                    if (output[i] != _program[i])
+                    {
+                        return string.Empty;
+                    }
+                }
+            }
+        }
+
+        if (a != -1 && output.Count != _program.Length)
+        {
+            return string.Empty;
         }
 
         return string.Join(',', output);
