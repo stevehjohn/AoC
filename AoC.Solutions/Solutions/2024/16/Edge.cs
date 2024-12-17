@@ -5,14 +5,18 @@ public readonly struct Edge
     private readonly List<Vertex> _vertices = [];
 
     public int Id { get; }
+    
+    public Point Position { get; }
 
     public string MetaData { get; }
     
     public IReadOnlyList<Vertex> Vertices => _vertices;
     
-    public Edge(int id, string metaData)
+    public Edge(int id, Point position, string metaData)
     {
         Id = id;
+
+        Position = position;
 
         MetaData = metaData;
     }

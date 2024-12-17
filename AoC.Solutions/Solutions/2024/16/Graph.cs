@@ -6,6 +6,8 @@ public class Graph
 {
     private Edge _start;
 
+    private readonly Dictionary<Point, Edge> _edges = [];
+
     public Graph(char[,] map)
     {
         ParseMap(map);
@@ -67,12 +69,12 @@ public class Graph
             }
         });
 
-        _start = new Edge(0, "Start");
+        _start = new Edge(0, start, "Start");
 
         FindEdges(map, _start, start, end);
     }
 
-    private static void FindEdges(char[,] map, Edge startEdge, Point start, Point end)
+    private void FindEdges(char[,] map, Edge startEdge, Point start, Point end)
     {
         var queue = new Queue<(Edge Edge, Point Position, Point Direction)>();
         
@@ -123,15 +125,20 @@ public class Graph
 
                 steps++;
             }
+
+            if (! _edges.TryGetValue(position, out var next))
+            {
+                next = new Edge(id++, position, position.Equals(end) ? "End" : string.Empty);
+                
+                _edges.Add(position, next);
+            }
             
-            var newEdge = new Edge(id++, position.Equals(end) ? "End" : string.Empty);
+            edge.AddHeading(new Vertex(direction, steps, next));
             
-            edge.AddHeading(new Vertex(direction, steps, newEdge));
-            
-            queue.Enqueue((newEdge, position, Point.North));
-            queue.Enqueue((newEdge, position, Point.East));
-            queue.Enqueue((newEdge, position, Point.South));
-            queue.Enqueue((newEdge, position, Point.West));
+            queue.Enqueue((next, position, Point.North));
+            queue.Enqueue((next, position, Point.East));
+            queue.Enqueue((next, position, Point.South));
+            queue.Enqueue((next, position, Point.West));
         }
     }
 }
