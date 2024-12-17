@@ -67,11 +67,6 @@ public abstract class Base : Solution
             }
         }
 
-        if (a != -1 && output.Count != Program.Length)
-        {
-            return null;
-        }
-
         return output;
     }
 
