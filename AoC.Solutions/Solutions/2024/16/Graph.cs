@@ -13,7 +13,7 @@ public class Graph
         ParseMap(map);
     }
 
-    public int WalkToEnd(Func<Point, Vertex, int> heuristic)
+    public int WalkToEnd(Func<int, int, Point, Vertex, int> heuristic)
     {
         var queue = new PriorityQueue<(Edge Edge, Point Direction, int Score), int>();
         
@@ -39,7 +39,7 @@ public class Graph
             {
                 var vertex = node.Edge.Vertices[i];
 
-                var newScore = node.Score + heuristic(node.Direction, vertex);
+                var newScore = node.Score + heuristic(node.Edge.Id, vertex.Edge.Id, node.Direction, vertex);
                 
                 queue.Enqueue((vertex.Edge, vertex.Heading, newScore), newScore);
             }
