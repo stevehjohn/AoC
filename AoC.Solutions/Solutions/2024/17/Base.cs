@@ -21,18 +21,25 @@ public abstract class Base : Solution
 
         for (var counter = 0; counter < _program.Length; counter += 2)
         {
+            if (_program[counter] is 0 or 2 or 5 or 6 or 7 && _program[counter + 1] == 7)
+            {
+                return string.Empty;
+            }
+
+            var combo = GetComboOperand(_program[counter + 1]);
+
             switch (_program[counter], _program[counter + 1])
             {
-                case (0, var operand):
-                    _registers[0] >>= (int) GetComboOperand(operand);
+                case (0, _):
+                    _registers[0] >>= (int) combo;
                     break;
                 
                 case (1, var operand):
                     _registers[1] ^= operand;
                     break;
                 
-                case (2, var operand):
-                    _registers[1] = GetComboOperand(operand) % 8;
+                case (2, _):
+                    _registers[1] = combo % 8;
                     break;
                 
                 case (3, var operand):
@@ -46,16 +53,16 @@ public abstract class Base : Solution
                     _registers[1] ^= _registers[2];
                     break;
                 
-                case (5, var operand):
-                    output.Add(GetComboOperand(operand) % 8);
+                case (5, _):
+                    output.Add(combo % 8);
                     break;
                 
-                case (6, var operand):
-                    _registers[1] = _registers[0] >> (int) GetComboOperand(operand);
+                case (6, _):
+                    _registers[1] = _registers[0] >> (int) combo;
                     break;
                 
-                case (7, var operand):
-                    _registers[2] = _registers[0] >> (int) GetComboOperand(operand);
+                case (7, _):
+                    _registers[2] = _registers[0] >> (int) combo;
                     break;
             }
 
@@ -81,6 +88,11 @@ public abstract class Base : Solution
 
     private long GetComboOperand(byte operand)
     {
+        if (operand == 7)
+        {
+            return long.MinValue;
+        }
+
         if (operand < 4)
         {
             return operand;

@@ -9,7 +9,7 @@ public class Part2 : Base
     {
         ParseInput();
 
-        var a = 0L;
+        var a = (long) Math.Pow(8, 15);
 
         var result = string.Empty;
         
