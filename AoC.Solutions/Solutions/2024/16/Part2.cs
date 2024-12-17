@@ -7,11 +7,7 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        IsPart2 = true;
-        
-        ParseInput();
-
-        var score = WalkMaze();
+        var score = 0;
         
         return score.ToString();
     }
