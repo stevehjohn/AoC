@@ -9,7 +9,13 @@ public class Part2 : Base
     public override string GetAnswer()
     {
         var graph = new Graph(Input.To2DArray());
-        
-        return "Unknown";
+
+        var result = graph.WalkToEnd((direction, vertex) => direction == vertex.Heading
+            ? vertex.Distance
+            : direction == -vertex.Heading
+                ? 2_000 + vertex.Distance
+                : 1_000 + vertex.Distance);
+
+        return result.ToString();
     }
 }

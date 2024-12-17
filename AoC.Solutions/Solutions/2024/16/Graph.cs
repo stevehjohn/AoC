@@ -1,5 +1,3 @@
-using AoC.Solutions.Common;
-using AoC.Solutions.Exceptions;
 using AoC.Solutions.Extensions;
 
 namespace AoC.Solutions.Solutions._2024._16;
@@ -13,11 +11,46 @@ public class Graph
         ParseMap(map);
     }
 
+    public int WalkToEnd(Func<Point, Vertex, int> heuristic)
+    {
+        var queue = new PriorityQueue<(Edge Edge, Point Direction, int Score), int>();
+        
+        queue.Enqueue((_start, Point.East, 0), 0);
+
+        var visited = new HashSet<(int, Point)>();
+        
+        while (queue.Count > 0)
+        {
+            var node = queue.Dequeue();
+
+            if (! visited.Add((node.Edge.Id, node.Direction)))
+            {
+                continue;
+            }
+
+            if (node.Edge.MetaData == "End")
+            {
+                return node.Score;
+            }
+
+            for (var i = 0; i < node.Edge.Vertices.Count; i++)
+            {
+                var vertex = node.Edge.Vertices[i];
+
+                var newScore = node.Score + heuristic(node.Direction, vertex);
+                
+                queue.Enqueue((vertex.Edge, vertex.Heading, newScore), newScore);
+            }
+        }
+
+        return 0;
+    }
+
     private void ParseMap(char[,] map)
     {
-        Point start = null;
+        var start = Point.Null;
 
-        Point end = null;
+        var end = Point.Null;
         
         map.ForAll((x, y, c) =>
         {
@@ -43,10 +76,10 @@ public class Graph
     {
         var queue = new Queue<(Edge Edge, Point Position, Point Direction)>();
         
-        queue.Enqueue((startEdge, start, new Point(0, -1)));
-        queue.Enqueue((startEdge, start, new Point(1, 0)));
-        queue.Enqueue((startEdge, start, new Point(0, 1)));
-        queue.Enqueue((startEdge, start, new Point(-1, 0)));
+        queue.Enqueue((startEdge, start, Point.North));
+        queue.Enqueue((startEdge, start, Point.East));
+        queue.Enqueue((startEdge, start, Point.South));
+        queue.Enqueue((startEdge, start, Point.West));
 
         var visited = new HashSet<Point> { start };
 
@@ -93,34 +126,12 @@ public class Graph
             
             var newEdge = new Edge(id++, position.Equals(end) ? "End" : string.Empty);
             
-            edge.AddHeading(new Vertex(GetHeading(direction), steps, newEdge));
+            edge.AddHeading(new Vertex(direction, steps, newEdge));
             
-            queue.Enqueue((newEdge, position, new Point(0, -1)));
-            queue.Enqueue((newEdge, position, new Point(1, 0)));
-            queue.Enqueue((newEdge, position, new Point(0, 1)));
-            queue.Enqueue((newEdge, position, new Point(-1, 0)));
+            queue.Enqueue((newEdge, position, Point.North));
+            queue.Enqueue((newEdge, position, Point.East));
+            queue.Enqueue((newEdge, position, Point.South));
+            queue.Enqueue((newEdge, position, Point.West));
         }
-
-        for (var y = 0; y < map.GetLength(1); y++)
-        {
-            for (var x = 0; x < map.GetLength(0); x++)
-            {
-                Console.Write(map[x, y]);
-            }
-                
-            Console.WriteLine();
-        }
-    }
-
-    private static Heading GetHeading(Point direction)
-    {
-        return (direction.X, direction.Y) switch
-        {
-            (0, -1) => Heading.North,
-            (1, 0) => Heading.East,
-            (0, 1) => Heading.South,
-            (-1, 0) => Heading.West,
-            _ => throw new PuzzleException($"Invalid direction ({direction}).")
-        };
     }
 }

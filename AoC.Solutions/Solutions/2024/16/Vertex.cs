@@ -2,13 +2,13 @@ namespace AoC.Solutions.Solutions._2024._16;
 
 public readonly struct Vertex
 {
-    public Heading Heading { get; }
+    public Point Heading { get; }
     
     public int Distance { get; }
     
     public Edge Edge { get; }
 
-    public Vertex(Heading heading, int distance, Edge edge)
+    public Vertex(Point heading, int distance, Edge edge)
     {
         Heading = heading;
         
