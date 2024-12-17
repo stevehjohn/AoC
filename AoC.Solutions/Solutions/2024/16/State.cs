@@ -1,5 +1,3 @@
-using System.Collections.Immutable;
-
 namespace AoC.Solutions.Solutions._2024._16;
 
 public struct State
