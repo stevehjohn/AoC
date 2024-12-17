@@ -37,7 +37,7 @@ public abstract class Base : Solution
                         break;
                     }
 
-                    operand = _registers[operand - 3];
+                    operand = _registers[operand - 4];
 
                     break;
 
@@ -51,7 +51,7 @@ public abstract class Base : Solution
             switch (opcode)
             {
                 case 0:
-                    _registers[0] /= (int) Math.Pow(2, operand);
+                    _registers[0] = (int) Math.Floor(_registers[0] / Math.Pow(2, operand));
                     break;
                     
                 case 1:
@@ -67,6 +67,11 @@ public abstract class Base : Solution
                     {
                         counter = operand;
                     }
+                    else
+                    {
+                        counter += 2;
+                    }
+
                     break;
                     
                 case 4:
