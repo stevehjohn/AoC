@@ -72,17 +72,12 @@ public abstract class Base : Solution
 
     private long GetComboOperand(long operand)
     {
-        if (operand == 7)
+        return operand switch
         {
-            return long.MinValue;
-        }
-
-        if (operand < 4)
-        {
-            return operand;
-        }
-
-        return _registers[operand - 4];
+            7 => long.MinValue,
+            < 4 => operand,
+            _ => _registers[operand - 4]
+        };
     }
 
     protected void ParseInput()
