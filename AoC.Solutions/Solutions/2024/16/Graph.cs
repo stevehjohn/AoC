@@ -19,13 +19,13 @@ public class Graph
         
         queue.Enqueue((_start, Point.East, 0), 0);
 
-        var visited = new HashSet<int>();
+        var visited = new HashSet<(int, Point)>();
         
         while (queue.Count > 0)
         {
             var node = queue.Dequeue();
 
-            if (! visited.Add(node.Edge.Id))
+            if (! visited.Add((node.Edge.Id, node.Direction)))
             {
                 continue;
             }
