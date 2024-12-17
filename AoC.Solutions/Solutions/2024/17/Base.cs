@@ -1,4 +1,3 @@
-using System.Text;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2024._17;
@@ -7,108 +6,71 @@ public abstract class Base : Solution
 {
     public override string Description => "Chronospatial computer";
 
-    private int[] _registers;
+    private long[] _registers;
 
     private byte[] _program;
 
     protected string RunProgram()
     {
-        var output = new StringBuilder();
+        var output = new List<long>();
 
-        var counter = 0;
-
-        while (counter < _program.Length)
+        for (var counter = 0; counter < _program.Length; counter += 2)
         {
-            var opcode = _program[counter];
-
-            var operand = 0;
-
-            switch (opcode)
+            switch (_program[counter], _program[counter + 1])
             {
-                case 0:
-                case 2:
-                case 5:
-                    operand = _program[counter + 1];
-                    
-                    // 7???
-                    
-                    if (operand < 4)
-                    {
-                        break;
-                    }
-
-                    operand = _registers[operand - 4];
-
+                case (0, var operand):
+                    _registers[0] >>= (int) GetComboOperand(operand);
                     break;
-
-                case 1:
-                case 3:
-                    operand = _program[counter + 1] & 0b0111;
-                    break;
-            }
-
-            
-            switch (opcode)
-            {
-                case 0:
-                    _registers[0] = (int) Math.Floor(_registers[0] / Math.Pow(2, operand));
-                    break;
-                    
-                case 1:
+                
+                case (1, var operand):
                     _registers[1] ^= operand;
                     break;
-                    
-                case 2:
-                    _registers[1] = operand % 8;
+                
+                case (2, var operand):
+                    _registers[1] = GetComboOperand(operand) % 8;
                     break;
-                    
-                case 3:
+                
+                case (3, var operand):
                     if (_registers[0] != 0)
                     {
-                        counter = operand;
+                        counter = operand - 2;
                     }
-                    else
-                    {
-                        counter += 2;
-                    }
-
                     break;
-                    
-                case 4:
+                
+                case (4, _):
                     _registers[1] ^= _registers[2];
                     break;
-                    
-                case 5:
-                    if (output.Length > 0 && output[^1] != ',')
-                    {
-                        output.Append(',');
-                    }
-
-                    output.Append(operand % 8);
-
+                
+                case (5, var operand):
+                    output.Add(GetComboOperand(operand) % 8);
                     break;
-                    
-                case 6:
-                    _registers[1] = _registers[0] / (int) Math.Pow(2, operand);
+                
+                case (6, var operand):
+                    _registers[1] = _registers[0] >> (int) GetComboOperand(operand);
                     break;
-                    
-                case 7:
-                    _registers[2] = _registers[0] / (int) Math.Pow(2, operand);
+                
+                case (7, var operand):
+                    _registers[2] = _registers[0] >> (int) GetComboOperand(operand);
                     break;
-            }
-
-            if (opcode != 3)
-            {
-                counter += 2;
             }
         }
 
-        return output.ToString();
+        return string.Join(',', output);
+    }
+
+    private long GetComboOperand(byte operand)
+    {
+        if (operand < 4)
+        {
+            return operand;
+        }
+
+        return _registers[operand - 4];
     }
 
     protected void ParseInput()
     {
-        _registers = new int[3];
+        _registers = new long[3];
 
         for (var i = 0; i < 3; i++)
         {
