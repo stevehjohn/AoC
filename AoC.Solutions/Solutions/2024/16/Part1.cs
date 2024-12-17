@@ -1,4 +1,3 @@
-using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 
@@ -9,10 +8,8 @@ public class Part1 : Base
 {
     private readonly PriorityQueue<State, int> _queue = new();
 
-    private readonly HashSet<int> _bestPaths = [];
+    private bool[] _visited;
     
-    private int[] _scores;
-
     private bool[] _map;
 
     private int _width;
@@ -32,19 +29,13 @@ public class Part1 : Base
         return score.ToString();
     }
 
-    protected int WalkMaze()
+    private int WalkMaze()
     {
         _queue.Clear();
         
-        _queue.Enqueue(new State(_start, 1, 0, IsPart2 ? ImmutableStack<int>.Empty : null, 0), 0);
-        
-        _bestPaths.Clear();
+        _queue.Enqueue(new State(_start, 1, 0, 0), 0);
 
-        var bestScore = int.MaxValue;
-
-        _scores = new int[_length << 4];
-        
-        Array.Fill(_scores, int.MaxValue);
+        _visited = new bool[_length << 4];
 
         while (_queue.Count > 0)
         {
@@ -52,40 +43,16 @@ public class Part1 : Base
 
             var key = (state.Position << 4) | ((state.Dy + 1) << 2) | (state.Dx + 1);
 
-            if ((_scores[key] != int.MaxValue && ! IsPart2) || _scores[key] < state.Score)
+            if (_visited[key])
             {
                 continue;
             }
 
-            _scores[key] = state.Score;
-
-            if (IsPart2)
-            {
-                state.Path = state.Path.Push(state.Position);
-            }
+            _visited[key] = true;
 
             if (state.Position == _end)
             {
-                if (state.Path == null)
-                {
-                    return state.Score;
-                }
-
-                bestScore = Math.Min(bestScore, state.Score);
-
-                if (state.Score > bestScore)
-                {
-                    return _bestPaths.Count;
-                }
-
-                var stack = state.Path;
-
-                while (! stack.IsEmpty)
-                {
-                    _bestPaths.Add(stack.Peek());
-
-                    stack = stack.Pop();
-                }
+                return state.Score;
             }
 
             EnqueueMove(state, state.Dx, state.Dy, 1);
@@ -107,11 +74,11 @@ public class Part1 : Base
 
         if (! _map[position])
         {
-            _queue.Enqueue(new State(position, dX, dY, state.Path, score), score);
+            _queue.Enqueue(new State(position, dX, dY, score), score);
         }
     }
 
-    protected void ParseInput()
+    private void ParseInput()
     {
         _width = Input[0].Length;
 

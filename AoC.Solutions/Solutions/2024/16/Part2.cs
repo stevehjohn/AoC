@@ -7,8 +7,6 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        var score = 0;
-        
-        return score.ToString();
+        return "Unknown";
     }
 }
