@@ -8,9 +8,9 @@ public abstract class Base : Solution
 
     private long[] _registers;
 
-    private byte[] _program;
+    protected long[] Program;
 
-    protected string RunProgram(long a = -1)
+    protected List<long> RunProgram(long a = -1)
     {
         if (a > -1)
         {
@@ -19,16 +19,16 @@ public abstract class Base : Solution
 
         var output = new List<long>();
 
-        for (var counter = 0; counter < _program.Length; counter += 2)
+        for (var counter = 0L; counter < Program.Length; counter += 2)
         {
-            if (_program[counter] is 0 or 2 or 5 or 6 or 7 && _program[counter + 1] == 7)
+            if (Program[counter] is 0 or 2 or 5 or 6 or 7 && Program[counter + 1] == 7)
             {
-                return string.Empty;
+                return null;
             }
 
-            var combo = GetComboOperand(_program[counter + 1]);
+            var combo = GetComboOperand(Program[counter + 1]);
 
-            switch (_program[counter], _program[counter + 1])
+            switch (Program[counter], Program[counter + 1])
             {
                 case (0, _):
                     _registers[0] >>= (int) combo;
@@ -65,28 +65,17 @@ public abstract class Base : Solution
                     _registers[2] = _registers[0] >> (int) combo;
                     break;
             }
-
-            if (a != -1 && output.Count > 0)
-            {
-                for (var i = 0; i < output.Count; i++)
-                {
-                    if (output[i] != _program[i])
-                    {
-                        return string.Empty;
-                    }
-                }
-            }
         }
 
-        if (a != -1 && output.Count != _program.Length)
+        if (a != -1 && output.Count != Program.Length)
         {
-            return string.Empty;
+            return null;
         }
 
-        return string.Join(',', output);
+        return output;
     }
 
-    private long GetComboOperand(byte operand)
+    private long GetComboOperand(long operand)
     {
         if (operand == 7)
         {
@@ -110,6 +99,6 @@ public abstract class Base : Solution
             _registers[i] = int.Parse(Input[i][12..]);
         }
 
-        _program = Input[4][9..].Split(',').Select(byte.Parse).ToArray();
+        Program = Input[4][9..].Split(',').Select(long.Parse).ToArray();
     }
 }

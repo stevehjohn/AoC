@@ -9,26 +9,37 @@ public class Part2 : Base
     {
         ParseInput();
 
-        var a = (long) Math.Pow(8, 15);
-
-        var result = string.Empty;
+        var queue = new Queue<(long A, int Offest)>();
         
-        while (result == string.Empty)
+        queue.Enqueue((0, Program.Length - 1));
+
+        while (queue.Count > 0)
         {
-            result = RunProgram(a);
+            var input = queue.Dequeue();
 
-            if (a % 1000000 == 0)
+            for (var i = 0; i < 8; i++)
             {
-                Console.Write(a);
+                var a = (input.A << 3) + i;
+                
+                var result = RunProgram(a);
 
-                Console.CursorLeft = 0;
+                if (result == null)
+                {
+                    continue;
+                }
+
+                if (result.SequenceEqual(Program[input.Offest..]))
+                {
+                    if (input.Offest == 0)
+                    {
+                        return a.ToString();
+                    }
+                    
+                    queue.Enqueue((a, input.Offest - 1));
+                }
             }
-
-            a++;
         }
-        
-        Console.WriteLine(result);
 
-        return (a - 1).ToString();
+        return "Failed";
     }
 }

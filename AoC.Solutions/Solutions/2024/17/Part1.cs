@@ -11,6 +11,6 @@ public class Part1 : Base
 
         var result = RunProgram();
 
-        return result;
+        return string.Join(',', result);
     }
 }
