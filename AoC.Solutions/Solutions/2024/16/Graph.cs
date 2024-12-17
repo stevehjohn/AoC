@@ -70,6 +70,8 @@ public class Graph
         });
 
         _start = new Edge(0, "Start");
+        
+        _edges.Add(start, _start);
 
         FindEdges(map, _start, start, end);
     }
@@ -134,5 +136,22 @@ public class Graph
             queue.Enqueue((next, position, Point.South));
             queue.Enqueue((next, position, Point.West));
         }
+
+        // for (var y = 0; y < map.GetLength(1); y++)
+        // {
+        //     for (var x = 0; x < map.GetLength(0); x++)
+        //     {
+        //         if (_edges.ContainsKey(new Point(x, y)))
+        //         {
+        //             Console.Write('+');
+        //             
+        //             continue;
+        //         }
+        //         
+        //         Console.Write(map[x, y]);
+        //     }
+        //     
+        //     Console.WriteLine();
+        // }
     }
 }
