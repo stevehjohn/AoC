@@ -18,13 +18,15 @@ public abstract class Base : Solution
 
     protected State WalkMaze()
     {
-        _queue.Enqueue(new State(new Point2D(1, 1), 0, null, null), 0);
+        _queue.Enqueue(new State(new Point2D(1, 1), 0, null, _visited), 0);
         
         Array.Fill(_visited, false);
 
+        State node = null;
+        
         while (_queue.Count > 0)
         {
-            var node = _queue.Dequeue();
+            node = _queue.Dequeue();
 
             var point = node.Position.X + node.Position.Y * Size;
             
@@ -37,7 +39,7 @@ public abstract class Base : Solution
             
             if (node.Position is { X: Size - 2, Y: Size - 2 })
             {
-                return new State(node.Position, node.Steps, node, _visited);
+                return node;
             }
 
             EnqueueMove(node, Point2D.North);
@@ -49,7 +51,7 @@ public abstract class Base : Solution
             EnqueueMove(node, Point2D.West);
         }
 
-        return new State(default, -1, null, null);
+        return new State(default, -1, node?.Previous, _visited);
     }
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
