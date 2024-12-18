@@ -78,6 +78,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         if (_state == null)
         {
+            Console.WriteLine("!!!");
             return;
         }
 

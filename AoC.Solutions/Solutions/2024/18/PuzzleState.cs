@@ -45,7 +45,7 @@ public class PuzzleState
 
         while (node != null)
         {
-            Path.Add(node.Position);
+            Path.Add(new Point2D(node.Position.X, node.Position.Y));
 
             node = node.Previous;
         }
