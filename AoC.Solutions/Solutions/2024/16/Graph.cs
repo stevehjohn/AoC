@@ -32,7 +32,6 @@ public class Graph
 
             if (node.Edge.MetaData == "End")
             {
-                Console.WriteLine(string.Join("\n", node.previous));
                 return node.Score;
             }
 
