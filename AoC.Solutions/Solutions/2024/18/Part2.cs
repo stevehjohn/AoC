@@ -20,23 +20,23 @@ public class Part2 : Base
 
     public override string GetAnswer()
     {
-        ParseInput(1_024);
+        ParseInput(_visualiser == null ? int.MaxValue : 1_024);
 
         WalkMaze();
-        
-        var result = -1;
 
-        var i = 1_023; //Input.Length;
+        var result = _visualiser == null ? -1 : 0;
+
+        var i = _visualiser == null ? Input.Length : 1_023;
 
         var offset = new Point2D(1, 1);
         
-        while (result == -1)
+        while (_visualiser == null ? result == -1 : result != -1)
         {
-            i++;
+            i += _visualiser == null ? -1 : 1;
 
             var point = new Point2D(Input[i]) + offset;
 
-            Map[point.X, point.Y] = '#';
+            Map[point.X, point.Y] = _visualiser == null ? '.' : '#';
             
             result = WalkMaze();
         }

@@ -62,7 +62,7 @@ public abstract class Base : Solution
         }
     }
 
-    protected void ParseInput(int maxBytes = int.MaxValue)
+    protected void ParseInput(int maxBytes)
     {
         for (var i = 0; i < Size * Size; i++)
         {
