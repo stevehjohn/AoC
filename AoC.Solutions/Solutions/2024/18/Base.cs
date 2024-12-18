@@ -6,8 +6,8 @@ namespace AoC.Solutions.Solutions._2024._18;
 public abstract class Base : Solution
 {
     public override string Description => "RAM run";
-    
-    protected readonly char[,] Map = new char[Size, Size];
+
+    private readonly char[,] _map = new char[Size, Size];
 
     private const int Size = 73;
 
@@ -15,8 +15,13 @@ public abstract class Base : Solution
 
     private readonly HashSet<Point> _visited = [];
 
-    protected int WalkMaze()
+    protected int WalkMaze(Point newByte = default)
     {
+        if (newByte != default)
+        {
+            _map[newByte.X, newByte.Y] = '#';
+        }
+
         _queue.Enqueue((new Point(1, 1), 0), 0);
         
         _visited.Clear();
@@ -51,7 +56,7 @@ public abstract class Base : Solution
     {
         position += direction;
 
-        if (Map[position.X, position.Y] != '#')
+        if (_map[position.X, position.Y] != '#')
         {
             _queue.Enqueue((position, steps + 1), steps + 1);
         }
@@ -61,18 +66,18 @@ public abstract class Base : Solution
     {
         for (var i = 0; i < Size * Size; i++)
         {
-            Map[i % Size, i / Size] = '.';
+            _map[i % Size, i / Size] = '.';
         }
 
         for (var i = 0; i < Size; i++)
         {
-            Map[i, 0] = '#';
+            _map[i, 0] = '#';
 
-            Map[i, Size - 1] = '#';
+            _map[i, Size - 1] = '#';
 
-            Map[0, i] = '#';
+            _map[0, i] = '#';
 
-            Map[Size - 1, i] = '#';
+            _map[Size - 1, i] = '#';
         }
 
         for (var i = 0; i < 1_024; i++)
@@ -82,9 +87,9 @@ public abstract class Base : Solution
                 break;
             }
 
-            var parts = Input[i].Split(',');
+            var position = new Point(Input[i]);
 
-            Map[int.Parse(parts[0]) + 1, int.Parse(parts[1]) + 1] = '#';
+            _map[position.X + 1, position.Y + 1] = '#';
         }
     }
 }

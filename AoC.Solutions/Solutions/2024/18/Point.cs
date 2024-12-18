@@ -1,6 +1,6 @@
 namespace AoC.Solutions.Solutions._2024._18;
 
-public readonly struct Point
+public readonly struct Point : IEquatable<Point>
 {
     public int X { get; }
     
@@ -11,6 +11,15 @@ public readonly struct Point
         X = x;
         
         Y = y;
+    }
+
+    public Point(string text)
+    {
+        var parts = text.Split(',');
+
+        X = int.Parse(parts[0]);
+
+        Y = int.Parse(parts[1]);
     }
 
     public static readonly Point North = new(0, -1);

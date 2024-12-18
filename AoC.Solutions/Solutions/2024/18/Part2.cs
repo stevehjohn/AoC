@@ -9,21 +9,21 @@ public class Part2 : Base
     {
         ParseInput();
 
+        WalkMaze();
+        
         var result = 0;
         
-        var i = 1_024;
+        var i = 1_023;
 
+        var offset = new Point(1, 1);
+        
         while (result != -1)
         {
-            var parts = Input[i].Split(',');
-
-            Map[int.Parse(parts[0]) + 1, int.Parse(parts[1]) + 1] = '#';
-            
-            result = WalkMaze();
-
             i++;
+
+            result = WalkMaze(new Point(Input[i]) + offset);
         }
         
-        return Input[i - 1];
+        return Input[i];
     }
 }
