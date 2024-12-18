@@ -11,11 +11,13 @@ namespace AoC.Visualisations.Visualisations._2024._18;
 [UsedImplicitly]
 public class Visualisation : VisualisationBase<PuzzleState>
 {
-    private const int TileSize = 12;
+    private const int TileWidth = 16;
+
+    private const int TileHeight = 12;
 
     private const int FrameDelay = 4;
 
-    private readonly Color[] _data = new Color[PuzzleState.Size * TileSize * PuzzleState.Size * TileSize];
+    private readonly Color[] _data = new Color[PuzzleState.Size * TileWidth * PuzzleState.Size * TileHeight];
 
     private readonly Queue<PuzzleState> _stateQueue = [];
 
@@ -35,8 +37,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
         {
-            PreferredBackBufferWidth = PuzzleState.Size * TileSize,
-            PreferredBackBufferHeight = PuzzleState.Size * TileSize
+            PreferredBackBufferWidth = PuzzleState.Size * TileWidth,
+            PreferredBackBufferHeight = PuzzleState.Size * TileHeight
         };
 
         Content.RootDirectory = "./15";
@@ -55,7 +57,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         IsMouseVisible = true;
 
-        _texture = new Texture2D(GraphicsDeviceManager.GraphicsDevice, PuzzleState.Size * TileSize, PuzzleState.Size * TileSize);
+        _texture = new Texture2D(GraphicsDeviceManager.GraphicsDevice, PuzzleState.Size * TileWidth, PuzzleState.Size * TileHeight);
 
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -156,8 +158,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
         _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
 
         _spriteBatch.Draw(_texture, 
-            new Rectangle(0, 0, PuzzleState.Size * TileSize, PuzzleState.Size * TileSize), 
-            new Rectangle(0, 0, PuzzleState.Size * TileSize, PuzzleState.Size * TileSize), Color.White);
+            new Rectangle(0, 0, PuzzleState.Size * TileWidth, PuzzleState.Size * TileHeight), 
+            new Rectangle(0, 0, PuzzleState.Size * TileWidth, PuzzleState.Size * TileHeight), Color.White);
         
         _spriteBatch.End();
         
@@ -166,11 +168,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private void DrawTile(int x, int y, int border, Color color)
     {
-        for (var tX = border; tX < TileSize - border; tX++)
+        for (var tX = border; tX < TileWidth - border; tX++)
         {
-            for (var tY = border; tY < TileSize - border; tY++)
+            for (var tY = border; tY < TileHeight - border; tY++)
             {
-                _data[x * TileSize + tX + (y * TileSize + tY) * PuzzleState.Size * TileSize] = color;
+                _data[x * TileWidth + tX + (y * TileHeight + tY) * PuzzleState.Size * TileWidth] = color;
             }
         }
     }
