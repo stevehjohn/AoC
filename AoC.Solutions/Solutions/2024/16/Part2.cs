@@ -1,3 +1,4 @@
+using AoC.Solutions.Extensions;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2024._16;
@@ -7,12 +8,11 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        IsPart2 = true;
-        
-        ParseInput();
+        var graph = new Graph(Input.To2DArray());
 
-        var score = WalkMaze();
-        
-        return score.ToString();
+        var result = graph.WalkToEnd((direction, vertex) =>
+            direction == vertex.Direction ? vertex.Distance : 1_000 + vertex.Distance);
+
+        return result.ToString();
     }
 }
