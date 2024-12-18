@@ -130,6 +130,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
         
         foreach (var point in _state.Path)
         {
+            if (point.X < 1 || point.Y < 1)
+            {
+                continue;
+            }
+
             DrawTile(point.X, point.Y, 1, Color.FromNonPremultiplied(0, 192, 0, 255));
         }
 

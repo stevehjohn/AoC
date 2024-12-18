@@ -51,8 +51,16 @@ public class Part2 : Base
                 Visualise(result, point);
             }
         }
-        
-        Visualise(result);
+
+        if (_visualiser != null)
+        {
+            while (i < Input.Length)
+            {
+                Visualise(result, new Point2D(Input[i]) + offset);
+
+                i++;
+            }
+        }
 
         return Input[i];
     }
