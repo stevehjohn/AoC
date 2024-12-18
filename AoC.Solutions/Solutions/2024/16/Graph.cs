@@ -41,7 +41,7 @@ public class Graph
 
                 var newScore = node.Score + heuristic(node.Direction, vertex);
                 
-                queue.Enqueue((vertex.Edge, vertex.Heading, newScore, [..node.previous, vertex.Edge.Position]), newScore);
+                queue.Enqueue((vertex.Edge, vertex.Direction, newScore, [..node.previous, vertex.Edge.Position]), newScore);
             }
         }
 

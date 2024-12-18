@@ -11,7 +11,7 @@ public class Part2 : Base
         var graph = new Graph(Input.To2DArray());
 
         var result = graph.WalkToEnd((direction, vertex) =>
-            direction == vertex.Heading ? vertex.Distance : 1_000 + vertex.Distance);
+            direction == vertex.Direction ? vertex.Distance : 1_000 + vertex.Distance);
 
         return result.ToString();
     }
