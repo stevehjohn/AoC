@@ -68,9 +68,13 @@ public class Graph
                 }
             }
 
-            for (var i = 0; i < node.Edge.Vertices.Count; i++)
+            var vertices = node.Edge.Vertices;
+
+            var count = vertices.Count;
+            
+            for (var i = 0; i < count; i++)
             {
-                var vertex = node.Edge.Vertices[i];
+                var vertex = vertices[i];
 
                 var newScore = node.Score + heuristic(node.Direction, vertex);
 
