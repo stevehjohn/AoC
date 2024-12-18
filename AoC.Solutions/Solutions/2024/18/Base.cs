@@ -13,7 +13,7 @@ public abstract class Base : Solution
 
     private readonly PriorityQueue<(Point Position, int Steps), int> _queue = new();
 
-    private readonly HashSet<Point> _visited = [];
+    private readonly bool[] _visited = new bool[Size * Size];
 
     protected int WalkMaze(Point newByte = default)
     {
@@ -24,18 +24,22 @@ public abstract class Base : Solution
 
         _queue.Enqueue((new Point(1, 1), 0), 0);
         
-        _visited.Clear();
+        Array.Fill(_visited, false);
 
         while (_queue.Count > 0)
         {
             var node = _queue.Dequeue();
 
-            if (! _visited.Add(node.Position))
+            var point = node.Position.X + node.Position.Y * Size;
+            
+            if (_visited[point])
             {
                 continue;
             }
 
-            if (node.Position.X == Size - 2 && node.Position.Y == Size - 2)
+            _visited[point] = true;
+            
+            if (node.Position is { X: Size - 2, Y: Size - 2 })
             {
                 return node.Steps;
             }

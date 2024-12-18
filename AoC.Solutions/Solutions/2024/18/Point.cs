@@ -30,8 +30,6 @@ public readonly struct Point : IEquatable<Point>
 
     public static readonly Point West = new(-1, 0);
 
-    public static readonly Point Null = new(int.MinValue, int.MaxValue);
-
     public static Point operator +(Point left, Point right)
     {
         return new Point(left.X + right.X, left.Y + right.Y);
