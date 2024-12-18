@@ -514,9 +514,9 @@ Tests performed on a 2023 MacBook Pro.
  2024 17.1: 19μs          Chronospatial computer
  2024 17.2: 2,704μs       
  2024 18.1: 3,513μs       RAM run
- 2024 18.2: 1,884μs       
+ 2024 18.2: 1,809μs       
             -------------
-            200.057ms    
+            199.982ms    
 
  478 puzzles solved in 51.207s.
 ```

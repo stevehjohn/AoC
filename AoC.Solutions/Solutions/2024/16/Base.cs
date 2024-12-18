@@ -12,7 +12,7 @@ public abstract class Base : Solution
 
     private readonly PriorityQueue<State, int> _queue = new();
 
-    private readonly HashSet<int> _bestPaths = [];
+    private bool[] _bestPaths;
     
     private int[] _scores;
 
@@ -31,8 +31,8 @@ public abstract class Base : Solution
         _queue.Clear();
         
         _queue.Enqueue(new State(_start, 1, 0, IsPart2 ? ImmutableStack<int>.Empty : null, 0), 0);
-        
-        _bestPaths.Clear();
+
+        _bestPaths = new bool[_length];
 
         var bestScore = int.MaxValue;
 
@@ -69,14 +69,24 @@ public abstract class Base : Solution
 
                 if (state.Score > bestScore)
                 {
-                    return _bestPaths.Count;
+                    var count = 0;
+                    
+                    for (var i = 0; i < _length; i++)
+                    {
+                        if (_bestPaths[i])
+                        {
+                            count++;
+                        }
+                    }
+
+                    return count;
                 }
 
                 var stack = state.Path;
 
                 while (! stack.IsEmpty)
                 {
-                    _bestPaths.Add(stack.Peek());
+                    _bestPaths[stack.Peek()] = true;
 
                     stack = stack.Pop();
                 }
