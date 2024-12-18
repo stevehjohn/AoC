@@ -49,8 +49,6 @@ public class Graph
                     return unique.Count;
                 }
                 
-                // Note: this is only the corners, hence low score.
-                
                 var walker = node;
 
                 var position = node.Edge.Position;

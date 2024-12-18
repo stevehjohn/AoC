@@ -15,9 +15,9 @@ public struct Point : IEquatable<Point>
 
     public void StepTowards(Point other)
     {
-        X += other.X > X ? 1 : -1;
+        X += other.X == X ? 0 : other.X > X ? 1 : -1;
 
-        Y += other.Y > Y ? 1 : -1;
+        Y += other.Y == Y ? 0 :  other.Y > Y ? 1 : -1;
     }
 
     public static readonly Point North = new(0, -1);
