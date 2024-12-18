@@ -34,8 +34,8 @@ public abstract class Base : Solution
             {
                 continue;
             }
-
-            if (node.Position.X == Size - 2 && node.Position.Y == Size - 2)
+            
+            if (node.Position is { X: Size - 2, Y: Size - 2 })
             {
                 return node.Steps;
             }
