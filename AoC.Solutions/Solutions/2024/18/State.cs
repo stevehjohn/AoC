@@ -9,13 +9,17 @@ public class State
     public int Steps { get; }
     
     public State Previous { get; }
+    
+    public bool[] Visited { get; }
 
-    public State(Point2D position, int steps, State previous)
+    public State(Point2D position, int steps, State previous, bool[] visited)
     {
         Position = position;
         
         Steps = steps;
         
         Previous = previous;
+
+        Visited = visited;
     }
 }
