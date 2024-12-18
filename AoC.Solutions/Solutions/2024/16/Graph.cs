@@ -53,9 +53,18 @@ public class Graph
                 
                 var walker = node;
 
+                var position = node.Edge.Position;
+                
+                unique.Add(position);
+
                 while (walker != null)
                 {
-                    unique.Add(walker.Edge.Position);
+                    while (position != walker.Edge.Position)
+                    {
+                        position.StepTowards(walker.Edge.Position);
+
+                        unique.Add(position);
+                    }
                     
                     walker = walker.Previous;
                 }

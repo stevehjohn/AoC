@@ -1,16 +1,23 @@
 namespace AoC.Solutions.Solutions._2024._16;
 
-public readonly struct Point : IEquatable<Point>
+public struct Point : IEquatable<Point>
 {
-    public int X { get; }
+    public int X { get; private set; }
     
-    public int Y { get; }
+    public int Y { get; private set; }
 
     public Point(int x, int y)
     {
         X = x;
         
         Y = y;
+    }
+
+    public void StepTowards(Point other)
+    {
+        X += other.X > X ? 1 : -1;
+
+        Y += other.Y > Y ? 1 : -1;
     }
 
     public static readonly Point North = new(0, -1);
