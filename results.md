@@ -57,7 +57,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 23.1: 76μs          Opening the Turing lock
  2015 23.2: 92μs          
  2015 24.1: 96,233μs      It hangs in the balance
- 2015 24.2: 143μs         
+ 2015 24.2: 140μs         
  2015 25.1: 57,359μs      Let it snow
             -------------
             6.378s       
@@ -337,7 +337,7 @@ Tests performed on a 2023 MacBook Pro.
  2021  7.1: 90μs          Crab submarines
  2021  7.2: 75μs          
  2021  7.X: 40μs          Easter egg (2019 CPU used)
- 2021  8.1: 87μs          Old school displays
+ 2021  8.1: 84μs          Old school displays
  2021  8.2: 818μs         
  2021  9.1: 86μs          Lava level
  2021  9.2: 2,082μs       
@@ -509,14 +509,14 @@ Tests performed on a 2023 MacBook Pro.
  2024 14.2: 15,878μs      
  2024 15.1: 279μs         Warehouse woes
  2024 15.2: 6,106μs       
- 2024 16.1: 3,640μs       Reindeer maze
- 2024 16.2: 63,054μs      
- 2024 17.1: 19μs          Chronospatial computer
+ 2024 16.1: 3,608μs       Reindeer maze
+ 2024 16.2: 39,435μs      
+ 2024 17.1: 8μs           Chronospatial computer
  2024 17.2: 2,704μs       
  2024 18.1: 3,513μs       RAM run
  2024 18.2: 1,809μs       
             -------------
-            199.982ms    
+            176.320ms    
 
- 478 puzzles solved in 51.207s.
+ 480 puzzles solved in 51.183s.
 ```
