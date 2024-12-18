@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2024._18;
@@ -11,13 +12,13 @@ public abstract class Base : Solution
 
     private const int Size = 73;
 
-    private readonly PriorityQueue<(Point Position, int Steps), int> _queue = new();
+    private readonly PriorityQueue<(Point2D Position, int Steps), int> _queue = new();
 
     private readonly bool[] _visited = new bool[Size * Size];
 
     protected int WalkMaze()
     {
-        _queue.Enqueue((new Point(1, 1), 0), 0);
+        _queue.Enqueue((new Point2D(1, 1), 0), 0);
         
         Array.Fill(_visited, false);
 
@@ -39,19 +40,19 @@ public abstract class Base : Solution
                 return node.Steps;
             }
 
-            EnqueueMove(node.Position, Point.North, node.Steps);
+            EnqueueMove(node.Position, Point2D.North, node.Steps);
 
-            EnqueueMove(node.Position, Point.East, node.Steps);
+            EnqueueMove(node.Position, Point2D.East, node.Steps);
 
-            EnqueueMove(node.Position, Point.South, node.Steps);
+            EnqueueMove(node.Position, Point2D.South, node.Steps);
 
-            EnqueueMove(node.Position, Point.West, node.Steps);
+            EnqueueMove(node.Position, Point2D.West, node.Steps);
         }
 
         return -1;
     }
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private void EnqueueMove(Point position, Point direction, int steps)
+    private void EnqueueMove(Point2D position, Point2D direction, int steps)
     {
         position += direction;
 
@@ -86,7 +87,7 @@ public abstract class Base : Solution
                 break;
             }
 
-            var position = new Point(Input[i]);
+            var position = new Point2D(Input[i]);
 
             Map[position.X + 1, position.Y + 1] = '#';
         }

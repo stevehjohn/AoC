@@ -1,3 +1,5 @@
+using AoC.Solutions.Common;
+
 namespace AoC.Solutions.Solutions._2024._16;
 
 public readonly struct Edge
@@ -6,13 +8,13 @@ public readonly struct Edge
 
     public int Id { get; }
     
-    public Point Position { get; }
+    public Point2D Position { get; }
     
     public string MetaData { get; }
     
     public IReadOnlyList<Vertex> Vertices => _vertices;
     
-    public Edge(int id, Point position, string metaData)
+    public Edge(int id, Point2D position, string metaData)
     {
         Id = id;
 

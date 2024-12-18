@@ -1,3 +1,4 @@
+using AoC.Solutions.Common;
 using AoC.Solutions.Extensions;
 
 namespace AoC.Solutions.Solutions._2024._16;
@@ -6,24 +7,24 @@ public class Graph
 {
     private Edge _start;
 
-    private readonly Dictionary<Point, Edge> _edges = [];
+    private readonly Dictionary<Point2D, Edge> _edges = [];
 
     public Graph(char[,] map)
     {
         ParseMap(map);
     }
 
-    public int WalkToEnd(Func<Point, Vertex, int> heuristic)
+    public int WalkToEnd(Func<Point2D, Vertex, int> heuristic)
     {
         var queue = new PriorityQueue<Node, int>();
         
-        queue.Enqueue(new Node(_start, Point.East, 0, null), 0);
+        queue.Enqueue(new Node(_start, Point2D.East, 0, null), 0);
 
         var scores = new int[_edges.Count << 4];
         
         Array.Fill(scores, int.MaxValue);
 
-        var unique = new HashSet<Point>();
+        var unique = new HashSet<Point2D>();
 
         var bestScore = int.MaxValue;
         
@@ -99,9 +100,9 @@ public class Graph
 
     private void ParseMap(char[,] map)
     {
-        var start = Point.Null;
+        var start = Point2D.Null;
 
-        var end = Point.Null;
+        var end = Point2D.Null;
         
         map.ForAll((x, y, c) =>
         {
@@ -109,11 +110,11 @@ public class Graph
             {
                 case 'S':
                     map[x, y] = '.';
-                    start = new Point(x, y);
+                    start = new Point2D(x, y);
                     break;
                 case 'E':
                     map[x, y] = '.';
-                    end = new Point(x, y);
+                    end = new Point2D(x, y);
                     break;
             }
         });
@@ -125,21 +126,21 @@ public class Graph
         FindEdges(map, _start, start, end);
     }
 
-    private void FindEdges(char[,] map, Edge startEdge, Point start, Point end)
+    private void FindEdges(char[,] map, Edge startEdge, Point2D start, Point2D end)
     {
-        var queue = new Queue<(Edge Edge, Point Position, Point Direction)>();
+        var queue = new Queue<(Edge Edge, Point2D Position, Point2D Direction)>();
         
-        queue.Enqueue((startEdge, start, Point.North));
-        queue.Enqueue((startEdge, start, Point.East));
-        queue.Enqueue((startEdge, start, Point.South));
-        queue.Enqueue((startEdge, start, Point.West));
+        queue.Enqueue((startEdge, start, Point2D.North));
+        queue.Enqueue((startEdge, start, Point2D.East));
+        queue.Enqueue((startEdge, start, Point2D.South));
+        queue.Enqueue((startEdge, start, Point2D.West));
 
-        var visited = new HashSet<(Point, Point)>
+        var visited = new HashSet<(Point2D, Point2D)>
         {
-            (start, Point.North),
-            (start, Point.South),
-            (start, Point.East),
-            (start, Point.West)
+            (start, Point2D.North),
+            (start, Point2D.South),
+            (start, Point2D.East),
+            (start, Point2D.West)
         };
 
         var id = 1;
@@ -162,9 +163,9 @@ public class Graph
 
             var steps = 1;
 
-            var left = new Point(direction.Y, -direction.X);
+            var left = new Point2D(direction.Y, -direction.X);
 
-            var right = new Point(-direction.Y, direction.X);
+            var right = new Point2D(-direction.Y, direction.X);
 
             while (map[position.X + left.X, position.Y + left.Y] == '#' 
                    && map[position.X + right.X, position.Y + right.Y] == '#'
@@ -186,10 +187,10 @@ public class Graph
             
             edge.AddHeading(new Vertex(direction, steps, next));
             
-            queue.Enqueue((next, position, Point.North));
-            queue.Enqueue((next, position, Point.East));
-            queue.Enqueue((next, position, Point.South));
-            queue.Enqueue((next, position, Point.West));
+            queue.Enqueue((next, position, Point2D.North));
+            queue.Enqueue((next, position, Point2D.East));
+            queue.Enqueue((next, position, Point2D.South));
+            queue.Enqueue((next, position, Point2D.West));
         }
     }
 }

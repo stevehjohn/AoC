@@ -1,3 +1,4 @@
+using AoC.Solutions.Common;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2024._18;
@@ -15,11 +16,11 @@ public class Part2 : Base
 
         var i = Input.Length - 1;
 
-        var offset = new Point(1, 1);
+        var offset = new Point2D(1, 1);
         
         while (result == -1)
         {
-            var point = new Point(Input[i]) + offset;
+            var point = new Point2D(Input[i]) + offset;
 
             Map[point.X, point.Y] = '.';
             
