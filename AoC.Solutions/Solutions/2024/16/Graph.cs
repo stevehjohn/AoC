@@ -15,11 +15,15 @@ public class Graph
 
     public int WalkToEnd(Func<Point, Vertex, int> heuristic)
     {
-        var queue = new PriorityQueue<(Edge Edge, Point Direction, int Score, List<Point> previous), int>();
+        var queue = new PriorityQueue<(Edge Edge, Point Direction, int Score, HashSet<Point> Path), int>();
         
         queue.Enqueue((_start, Point.East, 0, [ _start.Position ]), 0);
 
         var visited = new HashSet<(int, Point)>();
+
+        var unique = new HashSet<Point>();
+
+        var bestScore = int.MaxValue;
         
         while (queue.Count > 0)
         {
@@ -32,7 +36,14 @@ public class Graph
 
             if (node.Edge.MetaData == "End")
             {
-                return node.Score;
+                bestScore = Math.Min(bestScore, node.Score);
+
+                if (node.Score > bestScore)
+                {
+                    return unique.Count;
+                }
+                
+                unique.UnionWith(node.Path);
             }
 
             for (var i = 0; i < node.Edge.Vertices.Count; i++)
@@ -41,7 +52,7 @@ public class Graph
 
                 var newScore = node.Score + heuristic(node.Direction, vertex);
                 
-                queue.Enqueue((vertex.Edge, vertex.Direction, newScore, [..node.previous, vertex.Edge.Position]), newScore);
+                queue.Enqueue((vertex.Edge, vertex.Direction, newScore, [..node.Path, vertex.Edge.Position]), newScore);
             }
         }
 
