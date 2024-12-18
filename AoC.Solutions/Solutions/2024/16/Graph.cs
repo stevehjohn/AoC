@@ -69,7 +69,7 @@ public class Graph
             }
         });
 
-        _start = new Edge(0, "Start");
+        _start = new Edge(0, start, "Start");
         
         _edges.Add(start, _start);
 
@@ -124,7 +124,7 @@ public class Graph
 
             if (! _edges.TryGetValue(position, out var next))
             {
-                next = new Edge(id++, position.Equals(end) ? "End" : string.Empty);
+                next = new Edge(id++, position, position.Equals(end) ? "End" : string.Empty);
                 
                 _edges.Add(position, next);
             }

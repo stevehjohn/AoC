@@ -40,7 +40,7 @@ public class Part1 : Base
         while (_queue.Count > 0)
         {
             var state = _queue.Dequeue();
-
+            
             var key = (state.Position << 4) | ((state.Dy + 1) << 2) | (state.Dx + 1);
 
             if (_visited[key])

@@ -57,4 +57,9 @@ public readonly struct Point : IEquatable<Point>
     {
         return HashCode.Combine(X, Y);
     }
+
+    public override string ToString()
+    {
+        return $"{X}, {Y}";
+    }
 }
