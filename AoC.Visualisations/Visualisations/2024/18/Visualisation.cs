@@ -139,7 +139,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             DrawTile(point.X, point.Y, 1, Color.FromNonPremultiplied(130, 90, 30, 255));
         }
 
-        for (var i = 0; i <= _state.Path.Count; i++)
+        for (var i = 0; i < _state.Path.Count; i++)
         {
             var point = _state.Path[i];
 
