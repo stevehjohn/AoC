@@ -75,8 +75,11 @@ public class Graph
                 {
                     newScore += penalty;
                 }
-                
-                queue.Enqueue(new Node(vertex.Edge, vertex.Direction, newScore, node), newScore);
+
+                if (scores[key] > newScore)
+                {
+                    queue.Enqueue(new Node(vertex.Edge, vertex.Direction, newScore, node), newScore);
+                }
             }
         }
 
