@@ -67,7 +67,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.Black);
+        Array.Fill(_data, Color.Black);
 
         if (_stateQueue.Count > 0)
         {
@@ -99,7 +99,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         foreach (var point in _state.Visited)
         {
-            DrawTile(point.X, point.Y, 1, Color.FromNonPremultiplied(127, 63, 0, 255));
+            DrawTile(point.X, point.Y, 1, Color.FromNonPremultiplied(191, 127, 0, 255));
         }
         
         foreach (var point in _state.Path)
@@ -113,7 +113,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             {
                 var position = x + y * PuzzleState.Size * TileSize;
                 
-                if (_data[position].R > 64)
+                if (_data[position].R > 64 && _data[position].B > 0)
                 {
                     _data[position].R -= 3;
                     _data[position].G --;
