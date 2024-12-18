@@ -11,19 +11,23 @@ public class Part2 : Base
 
         WalkMaze();
         
-        var result = 0;
-        
-        var i = 1_023;
+        var result = -1;
+
+        var i = Input.Length - 1;
 
         var offset = new Point(1, 1);
         
-        while (result != -1)
+        while (result == -1)
         {
-            i++;
+            var point = new Point(Input[i]) + offset;
 
-            result = WalkMaze(new Point(Input[i]) + offset);
+            Map[point.X, point.Y] = '.';
+            
+            result = WalkMaze();
+
+            i--;
         }
         
-        return Input[i];
+        return Input[i + 1];
     }
 }

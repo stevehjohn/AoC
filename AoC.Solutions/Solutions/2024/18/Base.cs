@@ -7,7 +7,7 @@ public abstract class Base : Solution
 {
     public override string Description => "RAM run";
 
-    private readonly char[,] _map = new char[Size, Size];
+    protected readonly char[,] Map = new char[Size, Size];
 
     private const int Size = 73;
 
@@ -15,13 +15,8 @@ public abstract class Base : Solution
 
     private readonly bool[] _visited = new bool[Size * Size];
 
-    protected int WalkMaze(Point newByte = default)
+    protected int WalkMaze()
     {
-        if (newByte != default)
-        {
-            _map[newByte.X, newByte.Y] = '#';
-        }
-
         _queue.Enqueue((new Point(1, 1), 0), 0);
         
         Array.Fill(_visited, false);
@@ -60,31 +55,31 @@ public abstract class Base : Solution
     {
         position += direction;
 
-        if (_map[position.X, position.Y] != '#')
+        if (Map[position.X, position.Y] != '#')
         {
             _queue.Enqueue((position, steps + 1), steps + 1);
         }
     }
 
-    protected void ParseInput()
+    protected void ParseInput(int maxBytes = int.MaxValue)
     {
         for (var i = 0; i < Size * Size; i++)
         {
-            _map[i % Size, i / Size] = '.';
+            Map[i % Size, i / Size] = '.';
         }
 
         for (var i = 0; i < Size; i++)
         {
-            _map[i, 0] = '#';
+            Map[i, 0] = '#';
 
-            _map[i, Size - 1] = '#';
+            Map[i, Size - 1] = '#';
 
-            _map[0, i] = '#';
+            Map[0, i] = '#';
 
-            _map[Size - 1, i] = '#';
+            Map[Size - 1, i] = '#';
         }
 
-        for (var i = 0; i < 1_024; i++)
+        for (var i = 0; i < maxBytes; i++)
         {
             if (i >= Input.Length)
             {
@@ -93,7 +88,7 @@ public abstract class Base : Solution
 
             var position = new Point(Input[i]);
 
-            _map[position.X + 1, position.Y + 1] = '#';
+            Map[position.X + 1, position.Y + 1] = '#';
         }
     }
 }

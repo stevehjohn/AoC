@@ -7,7 +7,7 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        ParseInput();
+        ParseInput(1_024);
         
         var result = WalkMaze();
         
