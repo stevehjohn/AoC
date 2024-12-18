@@ -184,7 +184,7 @@ Tests performed on a 2023 MacBook Pro.
  2018  8.2: 22,592μs      
  2018  9.1: 939μs         Marble madness
  2018  9.2: 505,967μs     
- 2018 10.1: 19,819μs      Writing in the stars
+ 2018 10.1: 15,389μs      Writing in the stars
  2018 10.2: 13,685μs      
  2018 11.1: 350μs         Max power... cell
  2018 11.2: 151,320μs     
@@ -216,7 +216,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 331,654μs     
  2018 25.1: 32,693μs      4D chocolate teleportation
             -------------
-            18.263s      
+            18.259s      
 
  2019  1.1: 2μs           Calculate launch fuel
  2019  1.2: 5μs           
@@ -504,19 +504,19 @@ Tests performed on a 2023 MacBook Pro.
  2024 12.1: 4,050μs       Garden groups
  2024 12.2: 5,189μs       
  2024 13.1: 86μs          Claw contraption
- 2024 13.2: 87μs          
- 2024 14.1: 242μs         Restroom redoubt
+ 2024 13.2: 85μs          
+ 2024 14.1: 235μs         Restroom redoubt
  2024 14.2: 15,878μs      
  2024 15.1: 279μs         Warehouse woes
  2024 15.2: 6,106μs       
- 2024 16.1: 3,862μs       Reindeer maze
+ 2024 16.1: 3,810μs       Reindeer maze
  2024 16.2: 63,054μs      
- 2024 17.1: 28μs          Chronospatial computer
+ 2024 17.1: 19μs          Chronospatial computer
  2024 17.2: 2,704μs       
- 2024 18.1: 4,055μs       RAM run
- 2024 18.2: 384,565μs     
+ 2024 18.1: 3,553μs       RAM run
+ 2024 18.2: 262,724μs     
             -------------
-            583.520ms    
+            461.107ms    
 
- 478 puzzles solved in 51.595s.
+ 478 puzzles solved in 51.468s.
 ```
