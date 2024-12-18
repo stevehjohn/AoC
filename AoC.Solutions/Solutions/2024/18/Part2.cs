@@ -44,13 +44,13 @@ public class Part2 : Base
 
             steps = result.Steps;
 
-            if (result.Steps != -1)
+            //if (result.Steps != -1)
             {
                 Visualise(result, point);
             }
         }
         
-        Visualise();
+        // Visualise();
 
         return Input[i];
     }

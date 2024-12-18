@@ -74,7 +74,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         if (_stateQueue.Count > 0)
         {
-            _state = _stateQueue.Dequeue();
+             _state = _stateQueue.Dequeue();
 
             _map ??= PuzzleState.Map;
         }
@@ -97,14 +97,14 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         if (_state.NewPoint != default)
         {
-            _newPoints.Add(_state.NewPoint, 0);
+            _newPoints.TryAdd(_state.NewPoint, 0);
         }
 
         Point2D remove = default;
         
         foreach (var point in _newPoints)
         {
-            var color = Color.FromNonPremultiplied(255 - point.Value, 255 - point.Value * 2, 255 - point.Value * 2, 255);
+            var color = Color.FromNonPremultiplied(255 - point.Value, 192 - point.Value * 2, 192 - point.Value * 2, 255);
             
             DrawTile(point.Key.X, point.Key.Y, 0, color);
 
