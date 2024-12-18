@@ -24,9 +24,9 @@ public struct Point2D : IEquatable<Point2D>
 
     public void StepTowards(Point2D other)
     {
-        X += other.X == X ? 0 : other.X > X ? 1 : -1;
+        X += Math.Sign(other.X - X);
 
-        Y += other.Y == Y ? 0 :  other.Y > Y ? 1 : -1;
+        Y += Math.Sign(other.Y - Y);
     }
 
     public static readonly Point2D North = new(0, -1);
