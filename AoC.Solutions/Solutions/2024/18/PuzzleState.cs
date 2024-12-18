@@ -7,8 +7,10 @@ public class PuzzleState
     public const int Size = 73;
     
     private static char[,] _map;
+    
+    public State State { get; }
 
-    public PuzzleState(string[] input, State endState)
+    public PuzzleState(string[] input, State state)
     {
         if (_map == null)
         {
@@ -36,5 +38,7 @@ public class PuzzleState
                 _map[point.X, point.Y] = '#';
             }
         }
+
+        State = state;
     }
 }
