@@ -30,6 +30,8 @@ public class Part2 : Base
 
         var offset = new Point2D(1, 1);
         
+        Visualise();
+        
         while (_visualiser == null ? result == -1 : result != -1)
         {
             i += _visualiser == null ? -1 : 1;
@@ -39,6 +41,8 @@ public class Part2 : Base
             Map[point.X, point.Y] = _visualiser == null ? '.' : '#';
             
             result = WalkMaze();
+            
+            Visualise();
         }
         
         return Input[i];
