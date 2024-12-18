@@ -8,7 +8,7 @@ public class PuzzleState
     
     private static char[,] _map;
 
-    public PuzzleState(string[] input)
+    public PuzzleState(string[] input, State endState)
     {
         if (_map == null)
         {
