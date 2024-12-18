@@ -129,7 +129,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         foreach (var point in _state.Visited)
         {
-            DrawTile(point.X, point.Y, 1, Color.FromNonPremultiplied(131, 100, 0, 255));
+            DrawTile(point.X, point.Y, 1, Color.FromNonPremultiplied(161, 110, 0, 255));
         }
 
         for (var i = 0; i <= _steps; i++)
@@ -154,6 +154,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
         if (_state.Path.Count > 0)
         {
             _steps += StepSize;
+        }
+        else
+        {
+            _steps = 0;
         }
 
         _texture.SetData(_data);
