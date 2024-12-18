@@ -97,6 +97,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
             return;
         }
 
+        foreach (var point in _state.Visited)
+        {
+            DrawTile(point.X, point.Y, 1, Color.FromNonPremultiplied(130, 90, 30, 255));
+        }
+
         for (var y = 0; y < PuzzleState.Size; y++)
         {
             for (var x = 0; x < PuzzleState.Size; x++)
@@ -134,11 +139,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
             _newPoints.Remove(remove);
 
             _map[remove.X, remove.Y] = '#';
-        }
-
-        foreach (var point in _state.Visited)
-        {
-            DrawTile(point.X, point.Y, 1, Color.FromNonPremultiplied(130, 90, 30, 255));
         }
 
         for (var i = 0; i < _state.Path.Count; i++)
