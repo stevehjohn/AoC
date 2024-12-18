@@ -1,3 +1,5 @@
+using AoC.Solutions.Common;
+
 namespace AoC.Solutions.Solutions._2024._18;
 
 public class PuzzleState
@@ -25,6 +27,13 @@ public class PuzzleState
 
                     _map[x, y] = '.';
                 }
+            }
+
+            for (var i = 1_024; i < input.Length; i++)
+            {
+                var point = new Point2D(input[i]);
+
+                _map[point.X, point.Y] = '#';
             }
         }
     }
