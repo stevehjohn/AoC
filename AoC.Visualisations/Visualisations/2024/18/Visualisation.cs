@@ -10,7 +10,7 @@ namespace AoC.Visualisations.Visualisations._2024._18;
 [UsedImplicitly]
 public class Visualisation : VisualisationBase<PuzzleState>
 {
-    private const int TileSize = 12; 
+    private const int TileSize = 12;
 
     private readonly Color[] _data = new Color[PuzzleState.Size * TileSize * PuzzleState.Size * TileSize];
 
@@ -88,13 +88,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
             }
         }
 
-        var node = _state.State;
-
-        while (node != null)
+        foreach (var point in _state.Path)
         {
-            DrawTile(node.Position.X, node.Position.Y, 1, Color.FromNonPremultiplied(0, 192, 0, 255));
-            
-            node = node.Previous;
+            DrawTile(point.X, point.Y, 1, Color.FromNonPremultiplied(0, 192, 0, 255));
         }
 
         _texture.SetData(_data);

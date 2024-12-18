@@ -6,7 +6,7 @@ public class PuzzleState
 {
     public const int Size = 73;
 
-    public State State { get; }
+    public List<Point2D> Path { get; } = [];
 
     public static char[,] Map { get; private set; }
 
@@ -15,7 +15,7 @@ public class PuzzleState
         if (Map == null)
         {
             Map = new char[Size, Size];
-            
+
             for (var y = 0; y < Size; y++)
             {
                 for (var x = 0; x < Size; x++)
@@ -23,7 +23,7 @@ public class PuzzleState
                     if (x is 0 or Size - 1 || y is 0 or Size - 1)
                     {
                         Map[x, y] = '#';
-                        
+
                         continue;
                     }
 
@@ -39,6 +39,13 @@ public class PuzzleState
             }
         }
 
-        State = state;
+        var node = state;
+
+        while (node != null)
+        {
+            Path.Add(node.Position);
+
+            node = node.Previous;
+        }
     }
 }
