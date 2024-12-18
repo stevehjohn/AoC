@@ -97,20 +97,20 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         if (_state.NewPoint != default)
         {
-            _newPoints.Add(_state.NewPoint, 255);
+            _newPoints.Add(_state.NewPoint, 0);
         }
 
         Point2D remove = default;
         
         foreach (var point in _newPoints)
         {
-            var color = Color.FromNonPremultiplied(point.Value, point.Value / 3, point.Value / 3, 255);
+            var color = Color.FromNonPremultiplied(255 - point.Value, 255 - point.Value * 2, 255 - point.Value * 2, 255);
             
             DrawTile(point.Key.X, point.Key.Y, 0, color);
 
-            _newPoints[point.Key]--;
+            _newPoints[point.Key]++;
 
-            if (_newPoints[point.Key] < 64)
+            if (_newPoints[point.Key] > 63)
             {
                 remove = point.Key;
             }
@@ -119,6 +119,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
         if (remove != default)
         {
             _newPoints.Remove(remove);
+
+            _map[remove.X, remove.Y] = '#';
         }
 
         foreach (var point in _state.Visited)
@@ -129,21 +131,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
         foreach (var point in _state.Path)
         {
             DrawTile(point.X, point.Y, 1, Color.FromNonPremultiplied(0, 192, 0, 255));
-        }
-
-        for (var x = 0; x < PuzzleState.Size * TileSize; x++)
-        {
-            for (var y = 0; y < PuzzleState.Size * TileSize; y++)
-            {
-                var position = x + y * PuzzleState.Size * TileSize;
-                
-                if (_data[position].R > 64 && _data[position].B > 0)
-                {
-                    _data[position].R -= 3;
-                    _data[position].G --;
-                    _data[position].B --;
-                }
-            }
         }
 
         _texture.SetData(_data);
