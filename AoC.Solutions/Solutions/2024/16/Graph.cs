@@ -19,7 +19,9 @@ public class Graph
         
         queue.Enqueue(new Node(_start, Point.East, 0, null), 0);
 
-        var scores = new Dictionary<(int, Point), int>();
+        var scores = new int[_edges.Count << 4];
+        
+        Array.Fill(scores, int.MaxValue);
 
         var unique = new HashSet<Point>();
 
@@ -29,15 +31,14 @@ public class Graph
         {
             var node = queue.Dequeue();
 
-            if (! scores.ContainsKey((node.Edge.Id, node.Direction)))
-            {
-                scores.Add((node.Edge.Id, node.Direction), node.Score);
-            }
-
-            if (scores[(node.Edge.Id, node.Direction)] < node.Score)
+            var key = (node.Edge.Id << 4) | ((node.Direction.Y + 1) << 2) | (node.Direction.X + 1);
+            
+            if (scores[key] < node.Score)
             {
                 continue;
             }
+
+            scores[key] = node.Score;
 
             if (node.Edge.MetaData == "End")
             {
@@ -66,9 +67,13 @@ public class Graph
 
                 var newScore = node.Score + heuristic(node.Direction, vertex);
 
-                if (scores.ContainsKey((vertex.Edge.Id, node.Direction)))
+                key = (vertex.Edge.Id << 4) | ((vertex.Direction.Y + 1) << 2) | (vertex.Direction.X + 1);
+
+                var penalty = scores[key];
+
+                if (penalty != int.MaxValue)
                 {
-                    newScore += scores[(vertex.Edge.Id, node.Direction)];
+                    newScore += penalty;
                 }
                 
                 queue.Enqueue(new Node(vertex.Edge, vertex.Direction, newScore, node), newScore);
