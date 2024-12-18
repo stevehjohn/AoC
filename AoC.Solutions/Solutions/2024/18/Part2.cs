@@ -44,14 +44,14 @@ public class Part2 : Base
 
             steps = result.Steps;
             
-            Visualise(result);
+            Visualise(result, point);
         }
         
         return Input[i];
     }
 
-    private void Visualise(State state = null)
+    private void Visualise(State state = null, Point2D newPoint = default)
     {
-        _visualiser?.PuzzleStateChanged(new PuzzleState(Input, state));
+        _visualiser?.PuzzleStateChanged(new PuzzleState(Input, state, newPoint));
     }
 }

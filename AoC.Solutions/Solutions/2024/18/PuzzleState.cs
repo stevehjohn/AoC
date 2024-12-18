@@ -10,7 +10,7 @@ public class PuzzleState
 
     public static char[,] Map { get; private set; }
 
-    public PuzzleState(string[] input, State state)
+    public PuzzleState(string[] input, State state, Point2D newPoint)
     {
         if (Map == null)
         {
@@ -46,6 +46,11 @@ public class PuzzleState
             Path.Add(node.Position);
 
             node = node.Previous;
+        }
+
+        if (newPoint != default)
+        {
+            Map[newPoint.X, newPoint.Y] = '#';
         }
     }
 }
