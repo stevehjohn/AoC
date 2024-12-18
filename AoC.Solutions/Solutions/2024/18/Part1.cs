@@ -7,6 +7,10 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        return "Unknown";
+        ParseInput();
+        
+        var result = WalkMaze();
+        
+        return result.ToString();
     }
 }
