@@ -16,7 +16,7 @@ public abstract class Base : Solution
 
     private readonly bool[] _visited = new bool[Size * Size];
 
-    protected int WalkMaze()
+    protected State WalkMaze()
     {
         _queue.Enqueue(new State(new Point2D(1, 1), 0, null), 0);
         
@@ -37,7 +37,7 @@ public abstract class Base : Solution
             
             if (node.Position is { X: Size - 2, Y: Size - 2 })
             {
-                return node.Steps;
+                return node;
             }
 
             EnqueueMove(node, Point2D.North);
@@ -49,7 +49,7 @@ public abstract class Base : Solution
             EnqueueMove(node, Point2D.West);
         }
 
-        return -1;
+        return new State(default, -1, null);
     }
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void EnqueueMove(State state, Point2D direction)

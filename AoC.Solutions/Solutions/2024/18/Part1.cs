@@ -11,6 +11,6 @@ public class Part1 : Base
         
         var result = WalkMaze();
         
-        return result.ToString();
+        return result.Steps.ToString();
     }
 }

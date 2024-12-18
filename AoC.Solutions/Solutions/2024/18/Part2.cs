@@ -24,7 +24,7 @@ public class Part2 : Base
 
         WalkMaze();
 
-        var result = _visualiser == null ? -1 : 0;
+        var steps = _visualiser == null ? -1 : 0;
 
         var i = _visualiser == null ? Input.Length : 1_023;
 
@@ -32,7 +32,7 @@ public class Part2 : Base
         
         Visualise();
         
-        while (_visualiser == null ? result == -1 : result != -1)
+        while (_visualiser == null ? steps == -1 : steps != -1)
         {
             i += _visualiser == null ? -1 : 1;
 
@@ -40,7 +40,9 @@ public class Part2 : Base
 
             Map[point.X, point.Y] = _visualiser == null ? '.' : '#';
             
-            result = WalkMaze();
+            var result = WalkMaze();
+
+            steps = result.Steps;
             
             Visualise();
         }
