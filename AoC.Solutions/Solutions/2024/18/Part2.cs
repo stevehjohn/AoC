@@ -1,4 +1,5 @@
 using AoC.Solutions.Common;
+using AoC.Solutions.Infrastructure;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2024._18;
@@ -6,6 +7,17 @@ namespace AoC.Solutions.Solutions._2024._18;
 [UsedImplicitly]
 public class Part2 : Base
 {
+    private readonly IVisualiser<PuzzleState> _visualiser;
+
+    public Part2()
+    {
+    }
+
+    public Part2(IVisualiser<PuzzleState> visualiser)
+    {
+        _visualiser = visualiser;
+    }
+
     public override string GetAnswer()
     {
         ParseInput();
@@ -30,5 +42,10 @@ public class Part2 : Base
         }
         
         return Input[i + 1];
+    }
+
+    private void Visualise()
+    {
+        _visualiser?.PuzzleStateChanged(new PuzzleState(Input));
     }
 }
