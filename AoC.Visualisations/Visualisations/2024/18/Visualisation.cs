@@ -104,7 +104,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         
         foreach (var point in _newPoints)
         {
-            var color = Color.FromNonPremultiplied(255 - point.Value * 2, 192 - point.Value, 192 - point.Value, 255);
+            var color = Color.FromNonPremultiplied(255 - point.Value * 3, 128 - point.Value, 128 - point.Value, 255);
             
             DrawTile(point.Key.X, point.Key.Y, 0, color);
 
