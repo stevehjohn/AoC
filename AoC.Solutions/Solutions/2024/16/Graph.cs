@@ -15,9 +15,9 @@ public class Graph
 
     public int WalkToEnd(Func<Point, Vertex, int> heuristic)
     {
-        var queue = new PriorityQueue<(Edge Edge, Point Direction, int Score, HashSet<Point> Path), int>();
+        var queue = new PriorityQueue<Node, int>();
         
-        queue.Enqueue((_start, Point.East, 0, [ _start.Position ]), 0);
+        queue.Enqueue(new Node(_start, Point.East, 0, null), 0);
 
         var scores = new Dictionary<(int, Point), int>();
 
@@ -50,7 +50,14 @@ public class Graph
                 
                 // Note: this is only the corners, hence low score.
                 
-                unique.UnionWith(node.Path);
+                var walker = node;
+
+                while (walker != null)
+                {
+                    unique.Add(walker.Edge.Position);
+                    
+                    walker = walker.Previous;
+                }
             }
 
             for (var i = 0; i < node.Edge.Vertices.Count; i++)
@@ -64,7 +71,7 @@ public class Graph
                     newScore += scores[(vertex.Edge.Id, node.Direction)];
                 }
                 
-                queue.Enqueue((vertex.Edge, vertex.Direction, newScore, [..node.Path, vertex.Edge.Position]), newScore);
+                queue.Enqueue(new Node(vertex.Edge, vertex.Direction, newScore, node), newScore);
             }
         }
 
