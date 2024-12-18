@@ -78,7 +78,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         if (_state == null)
         {
-            Console.WriteLine("!!!");
             return;
         }
 
@@ -98,6 +97,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
             DrawTile(_state.NewPoint.X, _state.NewPoint.Y, 0, Color.FromNonPremultiplied(255, 128, 128, 255));
         }
 
+        foreach (var point in _state.Visited)
+        {
+            DrawTile(point.X, point.Y, 1, Color.FromNonPremultiplied(127, 63, 0, 255));
+        }
+        
         foreach (var point in _state.Path)
         {
             DrawTile(point.X, point.Y, 1, Color.FromNonPremultiplied(0, 192, 0, 255));

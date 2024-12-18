@@ -43,8 +43,11 @@ public class Part2 : Base
             var result = WalkMaze();
 
             steps = result.Steps;
-            
-            Visualise(result, point);
+
+            if (result.Steps != -1)
+            {
+                Visualise(result, point);
+            }
         }
 
         return Input[i];

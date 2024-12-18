@@ -54,7 +54,7 @@ public class PuzzleState
 
         NewPoint = newPoint;
 
-        var visited = state.Visited;
+        var visited = state?.Visited;
         
         if (visited != null)
         {
