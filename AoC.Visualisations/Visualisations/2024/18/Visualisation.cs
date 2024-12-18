@@ -13,6 +13,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 {
     private const int TileSize = 12;
 
+    private const int StepSize = 5;
+
     private readonly Color[] _data = new Color[PuzzleState.Size * TileSize * PuzzleState.Size * TileSize];
 
     private readonly Queue<PuzzleState> _stateQueue = [];
@@ -26,6 +28,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private SpriteBatch _spriteBatch;
 
     private char[,] _map;
+
+    private int _steps;
 
     public Visualisation()
     {
@@ -72,7 +76,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         Array.Fill(_data, Color.Black);
 
-        if (_stateQueue.Count > 0)
+        if (_stateQueue.Count > 0 && _steps == 0)
         {
              _state = _stateQueue.Dequeue();
 
@@ -127,15 +131,19 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             DrawTile(point.X, point.Y, 1, Color.FromNonPremultiplied(161, 110, 0, 255));
         }
-        
-        foreach (var point in _state.Path)
+
+        for (var i = 0; i < StepSize; i++)
         {
+            var point = _state.Path[_steps + i];
+
             if (point.X < 1 || point.Y < 1)
             {
                 continue;
             }
 
             DrawTile(point.X, point.Y, 1, Color.FromNonPremultiplied(0, 192, 0, 255));
+
+            _steps++;
         }
 
         _texture.SetData(_data);
