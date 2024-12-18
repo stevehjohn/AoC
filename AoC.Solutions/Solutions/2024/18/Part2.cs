@@ -49,6 +49,8 @@ public class Part2 : Base
                 Visualise(result, point);
             }
         }
+        
+        Visualise();
 
         return Input[i];
     }

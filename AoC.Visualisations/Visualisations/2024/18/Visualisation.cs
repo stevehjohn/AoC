@@ -1,3 +1,4 @@
+using AoC.Solutions.Common;
 using AoC.Solutions.Solutions._2024._18;
 using AoC.Visualisations.Exceptions;
 using AoC.Visualisations.Infrastructure;
@@ -15,6 +16,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private readonly Color[] _data = new Color[PuzzleState.Size * TileSize * PuzzleState.Size * TileSize];
 
     private readonly Queue<PuzzleState> _stateQueue = [];
+
+    private readonly Dictionary<Point2D, int> _newPoints = [];
 
     private PuzzleState _state;
 
@@ -94,12 +97,33 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         if (_state.NewPoint != default)
         {
-            DrawTile(_state.NewPoint.X, _state.NewPoint.Y, 0, Color.FromNonPremultiplied(255, 128, 128, 255));
+            _newPoints.Add(_state.NewPoint, 255);
+        }
+
+        Point2D remove = default;
+        
+        foreach (var point in _newPoints)
+        {
+            var color = Color.FromNonPremultiplied(point.Value * 2, point.Value, point.Value, 255);
+            
+            DrawTile(point.Key.X, point.Key.Y, 0, color);
+
+            _newPoints[point.Key]--;
+
+            if (_newPoints[point.Key] < 64)
+            {
+                remove = point.Key;
+            }
+        }
+
+        if (remove != default)
+        {
+            _newPoints.Remove(remove);
         }
 
         foreach (var point in _state.Visited)
         {
-            DrawTile(point.X, point.Y, 1, Color.FromNonPremultiplied(191, 127, 0, 255));
+            DrawTile(point.X, point.Y, 1, Color.FromNonPremultiplied(161, 110, 0, 255));
         }
         
         foreach (var point in _state.Path)
