@@ -12,13 +12,13 @@ public abstract class Base : Solution
 
     private const int Size = 73;
 
-    private readonly PriorityQueue<(Point2D Position, int Steps), int> _queue = new();
+    private readonly PriorityQueue<State, int> _queue = new();
 
     private readonly bool[] _visited = new bool[Size * Size];
 
     protected int WalkMaze()
     {
-        _queue.Enqueue((new Point2D(1, 1), 0), 0);
+        _queue.Enqueue(new State(new Point2D(1, 1), 0, null), 0);
         
         Array.Fill(_visited, false);
 
@@ -40,25 +40,25 @@ public abstract class Base : Solution
                 return node.Steps;
             }
 
-            EnqueueMove(node.Position, Point2D.North, node.Steps);
+            EnqueueMove(node, Point2D.North);
 
-            EnqueueMove(node.Position, Point2D.East, node.Steps);
+            EnqueueMove(node, Point2D.East);
 
-            EnqueueMove(node.Position, Point2D.South, node.Steps);
+            EnqueueMove(node, Point2D.South);
 
-            EnqueueMove(node.Position, Point2D.West, node.Steps);
+            EnqueueMove(node, Point2D.West);
         }
 
         return -1;
     }
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private void EnqueueMove(Point2D position, Point2D direction, int steps)
+    private void EnqueueMove(State state, Point2D direction)
     {
-        position += direction;
+        var position = state.Position + direction;
 
         if (Map[position.X, position.Y] != '#')
         {
-            _queue.Enqueue((position, steps + 1), steps + 1);
+            _queue.Enqueue(new State(position, state.Steps + 1, state), state.Steps + 1);
         }
     }
 
