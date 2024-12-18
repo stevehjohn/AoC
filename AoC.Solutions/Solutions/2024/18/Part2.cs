@@ -26,22 +26,22 @@ public class Part2 : Base
         
         var result = -1;
 
-        var i = Input.Length - 1;
+        var i = Input.Length;
 
         var offset = new Point2D(1, 1);
         
         while (result == -1)
         {
+            i--;
+
             var point = new Point2D(Input[i]) + offset;
 
             Map[point.X, point.Y] = '.';
             
             result = WalkMaze();
-
-            i--;
         }
         
-        return Input[i + 1];
+        return Input[i];
     }
 
     private void Visualise()
