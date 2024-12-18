@@ -52,6 +52,8 @@ public class PuzzleState
             node = node.Previous;
         }
 
+        Path.Reverse();
+
         NewPoint = newPoint;
 
         var visited = state?.Visited;

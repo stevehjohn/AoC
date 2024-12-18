@@ -132,9 +132,16 @@ public class Visualisation : VisualisationBase<PuzzleState>
             DrawTile(point.X, point.Y, 1, Color.FromNonPremultiplied(161, 110, 0, 255));
         }
 
-        for (var i = 0; i < StepSize; i++)
+        for (var i = 0; i <= _steps; i++)
         {
-            var point = _state.Path[_steps + i];
+            if (i >= _state.Path.Count)
+            {
+                _steps = 0;
+                
+                break;
+            }
+
+            var point = _state.Path[i];
 
             if (point.X < 1 || point.Y < 1)
             {
@@ -142,8 +149,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
             }
 
             DrawTile(point.X, point.Y, 1, Color.FromNonPremultiplied(0, 192, 0, 255));
+        }
 
-            _steps++;
+        if (_state.Path.Count > 0)
+        {
+            _steps += StepSize;
         }
 
         _texture.SetData(_data);
