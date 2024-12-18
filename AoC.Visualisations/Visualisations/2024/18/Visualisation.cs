@@ -81,11 +81,20 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             for (var x = 0; x < PuzzleState.Size; x++)
             {
-                if (_state.Map[x, y] == '#')
+                if (PuzzleState.Map[x, y] == '#')
                 {
                     DrawTile(x, y, 0, Color.FromNonPremultiplied(64, 64, 64, 255));
                 }
             }
+        }
+
+        var node = _state.State;
+
+        while (node != null)
+        {
+            DrawTile(node.Position.X, node.Position.Y, 1, Color.FromNonPremultiplied(0, 192, 0, 255));
+            
+            node = node.Previous;
         }
 
         _texture.SetData(_data);

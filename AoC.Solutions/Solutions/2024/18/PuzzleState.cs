@@ -5,18 +5,16 @@ namespace AoC.Solutions.Solutions._2024._18;
 public class PuzzleState
 {
     public const int Size = 73;
-    
-    private static char[,] _map;
-    
+
     public State State { get; }
 
-    public char[,] Map => _map;
+    public static char[,] Map { get; private set; }
 
     public PuzzleState(string[] input, State state)
     {
-        if (_map == null)
+        if (Map == null)
         {
-            _map = new char[Size, Size];
+            Map = new char[Size, Size];
             
             for (var y = 0; y < Size; y++)
             {
@@ -24,12 +22,12 @@ public class PuzzleState
                 {
                     if (x is 0 or Size - 1 || y is 0 or Size - 1)
                     {
-                        _map[x, y] = '#';
+                        Map[x, y] = '#';
                         
                         continue;
                     }
 
-                    _map[x, y] = '.';
+                    Map[x, y] = '.';
                 }
             }
 
@@ -37,7 +35,7 @@ public class PuzzleState
             {
                 var point = new Point2D(input[i]);
 
-                _map[point.X + 1, point.Y + 1] = '#';
+                Map[point.X + 1, point.Y + 1] = '#';
             }
         }
 
