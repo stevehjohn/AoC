@@ -129,7 +129,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         foreach (var point in _state.Visited)
         {
-            DrawTile(point.X, point.Y, 1, Color.FromNonPremultiplied(161, 110, 0, 255));
+            DrawTile(point.X, point.Y, 1, Color.FromNonPremultiplied(131, 100, 0, 255));
         }
 
         for (var i = 0; i <= _steps; i++)
