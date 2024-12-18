@@ -85,7 +85,13 @@ public class Graph
         queue.Enqueue((startEdge, start, Point.South));
         queue.Enqueue((startEdge, start, Point.West));
 
-        var visited = new HashSet<Point> { start };
+        var visited = new HashSet<(Point, Point)>
+        {
+            (start, Point.North),
+            (start, Point.South),
+            (start, Point.East),
+            (start, Point.West)
+        };
 
         var id = 1;
 
@@ -100,7 +106,7 @@ public class Graph
                 continue;
             }
 
-            if (! visited.Add(position))
+            if (! visited.Add((position, direction)))
             {
                 continue;
             }
@@ -117,7 +123,7 @@ public class Graph
             {
                 position += direction;
 
-                visited.Add(position);
+                visited.Add((position, direction));
 
                 steps++;
             }
