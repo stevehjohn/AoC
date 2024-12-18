@@ -7,6 +7,8 @@ public class PuzzleState
     public const int Size = 73;
 
     public List<Point2D> Path { get; } = [];
+    
+    public Point2D NewPoint { get; private set; }
 
     public static char[,] Map { get; private set; }
 
@@ -48,9 +50,6 @@ public class PuzzleState
             node = node.Previous;
         }
 
-        if (newPoint != default)
-        {
-            Map[newPoint.X, newPoint.Y] = '#';
-        }
+        NewPoint = newPoint;
     }
 }

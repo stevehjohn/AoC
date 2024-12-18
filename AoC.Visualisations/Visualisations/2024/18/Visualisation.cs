@@ -22,6 +22,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private SpriteBatch _spriteBatch;
 
+    private char[,] _map;
+
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -70,6 +72,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
         if (_stateQueue.Count > 0)
         {
             _state = _stateQueue.Dequeue();
+
+            _map ??= PuzzleState.Map;
         }
 
         if (_state == null)
@@ -88,9 +92,29 @@ public class Visualisation : VisualisationBase<PuzzleState>
             }
         }
 
+        if (_state.NewPoint != default)
+        {
+            DrawTile(_state.NewPoint.X, _state.NewPoint.Y, 0, Color.FromNonPremultiplied(255, 128, 128, 255));
+        }
+
         foreach (var point in _state.Path)
         {
             DrawTile(point.X, point.Y, 1, Color.FromNonPremultiplied(0, 192, 0, 255));
+        }
+
+        for (var x = 0; x < PuzzleState.Size * TileSize; x++)
+        {
+            for (var y = 0; y < PuzzleState.Size * TileSize; y++)
+            {
+                var position = x + y * PuzzleState.Size * TileSize;
+                
+                if (_data[position].R > 64)
+                {
+                    _data[position].R -= 3;
+                    _data[position].G --;
+                    _data[position].B --;
+                }
+            }
         }
 
         _texture.SetData(_data);
