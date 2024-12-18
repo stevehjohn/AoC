@@ -19,7 +19,7 @@ public class Graph
         
         queue.Enqueue((_start, Point.East, 0, [ _start.Position ]), 0);
 
-        var visited = new HashSet<(int, Point)>();
+        var scores = new Dictionary<(int, Point), int>();
 
         var unique = new HashSet<Point>();
 
@@ -29,7 +29,12 @@ public class Graph
         {
             var node = queue.Dequeue();
 
-            if (! visited.Add((node.Edge.Id, node.Direction)))
+            if (! scores.ContainsKey((node.Edge.Id, node.Direction)))
+            {
+                scores.Add((node.Edge.Id, node.Direction), node.Score);
+            }
+
+            if (scores[(node.Edge.Id, node.Direction)] < node.Score)
             {
                 continue;
             }
@@ -43,6 +48,8 @@ public class Graph
                     return unique.Count;
                 }
                 
+                // Note: this is only the corners, hence low score.
+                
                 unique.UnionWith(node.Path);
             }
 
@@ -51,6 +58,11 @@ public class Graph
                 var vertex = node.Edge.Vertices[i];
 
                 var newScore = node.Score + heuristic(node.Direction, vertex);
+
+                if (scores.ContainsKey((vertex.Edge.Id, node.Direction)))
+                {
+                    newScore += scores[(vertex.Edge.Id, node.Direction)];
+                }
                 
                 queue.Enqueue((vertex.Edge, vertex.Direction, newScore, [..node.Path, vertex.Edge.Position]), newScore);
             }
