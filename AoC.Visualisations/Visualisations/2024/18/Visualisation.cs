@@ -13,7 +13,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 {
     private const int TileSize = 12;
 
-    private const int StepSize = 5;
+    private const int FrameDelay = 4;
 
     private readonly Color[] _data = new Color[PuzzleState.Size * TileSize * PuzzleState.Size * TileSize];
 
@@ -29,8 +29,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private char[,] _map;
 
-    private int _steps;
-
+    private int _frameCount;
+    
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -76,11 +76,18 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         Array.Fill(_data, Color.Black);
 
-        if (_stateQueue.Count > 0 && _steps == 0)
+        if (_stateQueue.Count > 0 && _frameCount == 0)
         {
              _state = _stateQueue.Dequeue();
 
             _map ??= PuzzleState.Map;
+
+            _frameCount++;
+
+            if (_frameCount == FrameDelay)
+            {
+                _frameCount = 0;
+            }
         }
 
         if (_state == null)
@@ -108,7 +115,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         
         foreach (var point in _newPoints)
         {
-            var color = Color.FromNonPremultiplied(255 - point.Value * 3, 128 - point.Value, 128 - point.Value, 255);
+            var color = Color.FromNonPremultiplied(255 - point.Value * 3, 255 - point.Value * 3, 0, 255);
             
             DrawTile(point.Key.X, point.Key.Y, 0, color);
 
@@ -129,18 +136,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         foreach (var point in _state.Visited)
         {
-            DrawTile(point.X, point.Y, 1, Color.FromNonPremultiplied(161, 110, 0, 255));
+            DrawTile(point.X, point.Y, 1, Color.FromNonPremultiplied(130, 90, 30, 255));
         }
 
-        for (var i = 0; i <= _steps; i++)
+        for (var i = 0; i <= _state.Path.Count; i++)
         {
-            if (i >= _state.Path.Count)
-            {
-                _steps = 0;
-                
-                break;
-            }
-
             var point = _state.Path[i];
 
             if (point.X < 1 || point.Y < 1)
@@ -149,15 +149,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
             }
 
             DrawTile(point.X, point.Y, 1, Color.FromNonPremultiplied(0, 192, 0, 255));
-        }
-
-        if (_state.Path.Count > 0)
-        {
-            _steps += StepSize;
-        }
-        else
-        {
-            _steps = 0;
         }
 
         _texture.SetData(_data);
