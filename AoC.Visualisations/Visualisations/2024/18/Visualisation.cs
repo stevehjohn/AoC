@@ -76,7 +76,18 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             return;
         }
-        
+
+        for (var y = 0; y < PuzzleState.Size; y++)
+        {
+            for (var x = 0; x < PuzzleState.Size; x++)
+            {
+                if (_state.Map[x, y] == '#')
+                {
+                    DrawTile(x, y, 0, Color.FromNonPremultiplied(64, 64, 64, 255));
+                }
+            }
+        }
+
         _texture.SetData(_data);
         
         _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
@@ -88,5 +99,16 @@ public class Visualisation : VisualisationBase<PuzzleState>
         _spriteBatch.End();
         
         base.Draw(gameTime);
+    }
+
+    private void DrawTile(int x, int y, int border, Color color)
+    {
+        for (var tX = border; tX < TileSize - border; tX++)
+        {
+            for (var tY = border; tY < TileSize - border; tY++)
+            {
+                _data[x * TileSize + tX + (y * TileSize + tY) * PuzzleState.Size * TileSize] = color;
+            }
+        }
     }
 }

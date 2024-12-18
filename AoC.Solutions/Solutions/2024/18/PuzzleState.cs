@@ -10,6 +10,8 @@ public class PuzzleState
     
     public State State { get; }
 
+    public char[,] Map => _map;
+
     public PuzzleState(string[] input, State state)
     {
         if (_map == null)
@@ -31,11 +33,11 @@ public class PuzzleState
                 }
             }
 
-            for (var i = 1_024; i < input.Length; i++)
+            for (var i = 0; i < 1_024; i++)
             {
                 var point = new Point2D(input[i]);
 
-                _map[point.X, point.Y] = '#';
+                _map[point.X + 1, point.Y + 1] = '#';
             }
         }
 
