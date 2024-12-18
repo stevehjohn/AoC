@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
+using System.Text;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2024._16;
@@ -30,7 +31,7 @@ public abstract class Base : Solution
     {
         _queue.Clear();
         
-        _queue.Enqueue(new State(_start, 1, 0, IsPart2 ? ImmutableStack<int>.Empty : null, 0), 0);
+        _queue.Enqueue(new State(_start, 1, 0, IsPart2 ? ImmutableStack<int>.Empty : ImmutableStack<int>.Empty, 0), 0);
         
         _bestPaths.Clear();
 
@@ -53,15 +54,37 @@ public abstract class Base : Solution
 
             _scores[key] = state.Score;
 
-            if (IsPart2)
+            //if (IsPart2)
             {
                 state.Path = state.Path.Push(state.Position);
             }
 
             if (state.Position == _end)
             {
-                if (state.Path == null)
+                if (! IsPart2)
                 {
+                    var s = state.Path;
+
+                    var px = -1;
+
+                    var py = -1;
+                    
+                    while (! s.IsEmpty)
+                    {
+                        var x = s.Peek() % _width;
+
+                        var y = s.Peek() / _width;
+                        
+                        //if (! (x == px || y == py))
+                            Console.WriteLine($"{x}, {y}");
+
+                        px = x;
+
+                        py = y;
+                        
+                        s = s.Pop();
+                    }
+                    
                     return state.Score;
                 }
 
