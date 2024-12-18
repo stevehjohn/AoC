@@ -7,9 +7,9 @@ public abstract class Base : Solution
 {
     public override string Description => "RAM run";
     
-    private const int Size = 73;
+    protected readonly char[,] Map = new char[Size, Size];
 
-    private readonly char[,] _map = new char[Size, Size];
+    private const int Size = 73;
 
     private readonly PriorityQueue<(Point Position, int Steps), int> _queue = new();
 
@@ -51,31 +51,31 @@ public abstract class Base : Solution
     {
         position += direction;
 
-        if (_map[position.X, position.Y] != '#')
+        if (Map[position.X, position.Y] != '#')
         {
             _queue.Enqueue((position, steps + 1), steps + 1);
         }
     }
 
-    protected void ParseInput(int bytes = 1_024)
+    protected void ParseInput()
     {
         for (var i = 0; i < Size * Size; i++)
         {
-            _map[i % Size, i / Size] = '.';
+            Map[i % Size, i / Size] = '.';
         }
 
         for (var i = 0; i < Size; i++)
         {
-            _map[i, 0] = '#';
+            Map[i, 0] = '#';
 
-            _map[i, Size - 1] = '#';
+            Map[i, Size - 1] = '#';
 
-            _map[0, i] = '#';
+            Map[0, i] = '#';
 
-            _map[Size - 1, i] = '#';
+            Map[Size - 1, i] = '#';
         }
 
-        for (var i = 0; i < bytes; i++)
+        for (var i = 0; i < 1_024; i++)
         {
             if (i >= Input.Length)
             {
@@ -84,17 +84,7 @@ public abstract class Base : Solution
 
             var parts = Input[i].Split(',');
 
-            _map[int.Parse(parts[0]) + 1, int.Parse(parts[1]) + 1] = '#';
+            Map[int.Parse(parts[0]) + 1, int.Parse(parts[1]) + 1] = '#';
         }
-
-        // for (var y = 0; y < Size; y++)
-        // {
-        //     for (var x = 0; x < Size; x++)
-        //     {
-        //         Console.Write(_map[x, y]);
-        //     }
-        //     
-        //     Console.WriteLine();
-        // }
     }
 }
