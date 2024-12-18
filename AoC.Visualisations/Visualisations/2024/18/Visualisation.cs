@@ -81,13 +81,13 @@ public class Visualisation : VisualisationBase<PuzzleState>
              _state = _stateQueue.Dequeue();
 
             _map ??= PuzzleState.Map;
+        }
 
-            _frameCount++;
+        _frameCount++;
 
-            if (_frameCount == FrameDelay)
-            {
-                _frameCount = 0;
-            }
+        if (_frameCount == FrameDelay)
+        {
+            _frameCount = 0;
         }
 
         if (_state == null)
