@@ -522,3 +522,4 @@ Tests performed on a 2023 MacBook Pro.
 
  480 puzzles solved in 51.328s.
 ```
+~~~~
