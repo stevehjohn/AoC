@@ -10,7 +10,7 @@ public abstract class Base : Solution
 
     private string[] _designs;
 
-    private HashSet<string> _possibles = [];
+    private readonly HashSet<string> _possibles = [];
     
     protected void ParseInput()
     {
@@ -25,7 +25,9 @@ public abstract class Base : Solution
 
         for (var i = 0; i < _designs.Length; i++)
         {
-            count += IsPossible(_designs[i]) ? 1 : 0;
+            Console.WriteLine($"{_designs[i]}: {IsPossible(_designs[i])}");
+            
+            //count += IsPossible(_designs[i]) ? 1 : 0;
         }
 
         return count;
@@ -42,21 +44,24 @@ public abstract class Base : Solution
         {
             var towel = _towels[i];
 
+            if (towel.Length > design.Length)
+            {
+                continue;
+            }
+
             if (design.StartsWith(towel))
             {
                 _possibles.Add(design);
-
-                if (towel.Length > design.Length)
-                {
-                    continue;
-                }
 
                 if (towel.Length == design.Length)
                 {
                     return true;
                 }
 
-                return IsPossible(design[towel.Length..]);
+                if (IsPossible(design[towel.Length..]))
+                {
+                    return true;
+                }
             }
         }
 
