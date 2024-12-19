@@ -25,9 +25,9 @@ public abstract class Base : Solution
 
         for (var i = 0; i < _designs.Length; i++)
         {
-            Console.WriteLine($"{_designs[i]}: {IsPossible(_designs[i])}");
+            var isPossible = IsPossible(_designs[i]);
             
-            //count += IsPossible(_designs[i]) ? 1 : 0;
+            count += isPossible ? 1 : 0;
         }
 
         return count;
@@ -49,7 +49,7 @@ public abstract class Base : Solution
                 continue;
             }
 
-            if (design.StartsWith(towel))
+            if (design.EndsWith(towel))
             {
                 _possibles.Add(design);
 
@@ -58,7 +58,7 @@ public abstract class Base : Solution
                     return true;
                 }
 
-                if (IsPossible(design[towel.Length..]))
+                if (IsPossible(design[..^towel.Length]))
                 {
                     return true;
                 }
