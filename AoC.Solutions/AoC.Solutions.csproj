@@ -42,13 +42,5 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Ocp.Security" Version="1.0.1" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="Solutions\2024\21\" />
-    <Folder Include="Solutions\2024\22\" />
-    <Folder Include="Solutions\2024\23\" />
-    <Folder Include="Solutions\2024\24\" />
-    <Folder Include="Solutions\2024\25\" />
-  </ItemGroup>
 
 </Project>
