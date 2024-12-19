@@ -50,7 +50,14 @@ public abstract class Base : Solution
 
             if (design.StartsWith(towel))
             {
-                count += CountPossibilities(design[towel.Length..]);
+                var nextCount = CountPossibilities(design[towel.Length..]);
+
+                if (nextCount > 0 && ! IsPart2)
+                {
+                    return nextCount;
+                }
+
+                count += nextCount;
             }
         }
 
