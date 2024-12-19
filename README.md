@@ -74,6 +74,7 @@ There are visualisations for:
 - 2024.10.2
 - 2024.15.1 - Warehouse Woes
 - 2024.15.2
+- 2024.18.2 - RAM Run
 
 ## Mental Notes to Self
 
