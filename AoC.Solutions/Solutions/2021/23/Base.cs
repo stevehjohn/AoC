@@ -22,6 +22,8 @@ public abstract class Base : Solution
     {
         var state = new List<int>();
 
+        string[] modifiedInput;
+
         if (insertExtra)
         {
             _burrowDepth = 4;
@@ -36,19 +38,25 @@ public abstract class Base : Solution
 
             newInput.AddRange(Input.Skip(3).Take(2));
 
-            Input = newInput.ToArray();
+            modifiedInput = newInput.ToArray();
+        }
+        else
+        {
+            _burrowDepth = 2;
+
+            modifiedInput = Input;
         }
 
         for (var y = 1; y < 2 + _burrowDepth; y++)
         {
             for (var x = 1; x < 12; x += 2)
             {
-                if (x >= Input[y].Length)
+                if (x >= modifiedInput[y].Length)
                 {
                     continue;
                 }
 
-                var c = Input[y][x];
+                var c = modifiedInput[y][x];
 
                 if (c is '#' or '.' or ' ')
                 {

@@ -9,9 +9,9 @@ public abstract class Base : Solution
 
     private readonly List<Blueprint> _blueprints = [];
 
-    protected void ParseInput()
+    protected void ParseInput(Range range)
     {
-        foreach (var line in Input)
+        foreach (var line in Input[range])
         {
             var parts = line.Split(':', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 

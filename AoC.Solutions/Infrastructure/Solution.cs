@@ -4,7 +4,7 @@ namespace AoC.Solutions.Infrastructure;
 
 public abstract class Solution
 {
-    protected string[] Input;
+    protected readonly string[] Input;
 
     public abstract string Description { get; }
 

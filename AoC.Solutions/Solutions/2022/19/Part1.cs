@@ -7,7 +7,7 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        ParseInput();
+        ParseInput(new Range(0, Input.Length));
 
         var results = Simulate(24);
 
