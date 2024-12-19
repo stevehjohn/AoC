@@ -9,6 +9,8 @@ public abstract class Base : Solution
     private string[] _towels;
 
     private string[] _designs;
+
+    private HashSet<string> _possibles = [];
     
     protected void ParseInput()
     {
@@ -31,7 +33,7 @@ public abstract class Base : Solution
 
     private bool IsPossible(string design)
     {
-        if (string.IsNullOrWhiteSpace(design))
+        if (_possibles.Contains(design))
         {
             return true;
         }
@@ -42,6 +44,13 @@ public abstract class Base : Solution
 
             if (design.StartsWith(towel))
             {
+                _possibles.Add(design);
+
+                if (towel.Length == design.Length)
+                {
+                    return true;
+                }
+
                 return IsPossible(design[towel.Length..]);
             }
         }
