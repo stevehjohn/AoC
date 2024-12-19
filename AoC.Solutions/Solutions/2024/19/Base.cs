@@ -10,7 +10,7 @@ public abstract class Base : Solution
 
     private string[] _designs;
 
-    private readonly HashSet<string> _possibles = [];
+    private readonly Dictionary<string, long> _cache = [];
     
     protected void ParseInput()
     {
@@ -19,52 +19,39 @@ public abstract class Base : Solution
         _designs = Input[2..];
     }
 
-    protected int CountPossibilities()
+    protected long CheckEachTowel()
     {
-        var count = 0;
+        var count = 0L;
 
         for (var i = 0; i < _designs.Length; i++)
         {
-            var isPossible = IsPossible(_designs[i]);
-            
-            count += isPossible ? 1 : 0;
+            count += CountPossibilities(_designs[i]);
         }
 
         return count;
     }
 
-    private bool IsPossible(string design)
+    private long CountPossibilities(string design)
     {
-        if (_possibles.Contains(design))
+        if (_cache.TryGetValue(design, out var value))
         {
-            return true;
+            return value;
         }
+
+        var count = _towels.Contains(design) ? 1L : 0L;
         
         for (var i = 0; i < _towels.Length; i++)
         {
             var towel = _towels[i];
 
-            if (towel.Length > design.Length)
+            if (design.StartsWith(towel))
             {
-                continue;
-            }
-
-            if (design.EndsWith(towel))
-            {
-                _possibles.Add(design);
-
-                if (towel.Length == design.Length)
-                {
-                    return true;
-                }
-
-                if (IsPossible(design[..^towel.Length]))
-                {
-                    return true;
-                }
+                count += CountPossibilities(design[towel.Length..]);
             }
         }
 
-        return false;
+        _cache[design] = count;
+
+        return count;
     }
 }

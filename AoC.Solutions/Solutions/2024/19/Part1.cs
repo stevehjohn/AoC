@@ -9,7 +9,7 @@ public class Part1 : Base
     {
         ParseInput();
         
-        var result = CountPossibilities();
+        var result = CheckEachTowel();
         
         return result.ToString();
     }
