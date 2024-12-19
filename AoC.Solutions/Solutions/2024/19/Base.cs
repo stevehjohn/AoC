@@ -46,6 +46,11 @@ public abstract class Base : Solution
             {
                 _possibles.Add(design);
 
+                if (towel.Length > design.Length)
+                {
+                    continue;
+                }
+
                 if (towel.Length == design.Length)
                 {
                     return true;
