@@ -229,7 +229,7 @@ Tests performed on a 2023 MacBook Pro.
  2019  5.1: 31μs          Air conditioning (CPU extension 1)
  2019  5.2: 25μs          
  2019  6.1: 241μs         Orbital transfers
- 2019  6.2: 34μs          
+ 2019  6.2: 33μs          
  2019  7.1: 5,274μs       Amplifiers (CPU used unmodified)
  2019  7.2: 6,832μs       
  2019  8.1: 1,161μs       Space GIF
@@ -513,10 +513,12 @@ Tests performed on a 2023 MacBook Pro.
  2024 16.2: 39,435μs      
  2024 17.1: 8μs           Chronospatial computer
  2024 17.2: 2,704μs       
- 2024 18.1: 3,513μs       RAM run
- 2024 18.2: 1,809μs       
+ 2024 18.1: 1,373μs       RAM run
+ 2024 18.2: 1,702μs       
+ 2024 19.1: 100,206μs     Linen layout
+ 2024 19.2: 88,394μs      
             -------------
-            176.320ms    
+            362.673ms    
 
- 480 puzzles solved in 51.183s.
+ 480 puzzles solved in 51.370s.
 ```
