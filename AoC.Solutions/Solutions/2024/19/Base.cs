@@ -6,6 +6,8 @@ public abstract class Base : Solution
 {
     public override string Description => "Linen layout";
 
+    protected bool IsPart2;
+    
     private string[] _towels;
 
     private string[] _designs;
@@ -25,7 +27,9 @@ public abstract class Base : Solution
 
         for (var i = 0; i < _designs.Length; i++)
         {
-            count += CountPossibilities(_designs[i]);
+            var result = CountPossibilities(_designs[i]);
+
+            count += IsPart2 ? result : result > 0 ? 1 : 0;
         }
 
         return count;
