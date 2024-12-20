@@ -85,16 +85,12 @@ public abstract class Base : Solution
 
     private State Race()
     {
-        var queue = new PriorityQueue<State, int>();
+        var queue = new Queue<State>();
 
-        var visited = new HashSet<Point2D>();
-        
-        queue.Enqueue(new State(_start, Point2D.North,  1), 1);
-        queue.Enqueue(new State(_start, Point2D.East,  1), 1);
-        queue.Enqueue(new State(_start, Point2D.South,  1), 1);
-        queue.Enqueue(new State(_start, Point2D.West,  1), 1);
-
-        visited.Add(_start);
+        queue.Enqueue(new State(_start, Point2D.North,  1));
+        queue.Enqueue(new State(_start, Point2D.East,  1));
+        queue.Enqueue(new State(_start, Point2D.South,  1));
+        queue.Enqueue(new State(_start, Point2D.West,  1));
         
         while (queue.Count > 0)
         {
@@ -109,11 +105,6 @@ public abstract class Base : Solution
                 continue;
             }
 
-            if (! visited.Add(position))
-            {
-                continue;
-            }
-
             var steps = state.Steps;
             
             if (position == _end)
@@ -121,10 +112,25 @@ public abstract class Base : Solution
                 return new State(position, Point2D.Null, steps + 1, state);
             }
 
-            queue.Enqueue(new State(position, Point2D.North, steps + 1, state), steps + 1);
-            queue.Enqueue(new State(position, Point2D.East, steps + 1, state), steps + 1);
-            queue.Enqueue(new State(position, Point2D.South, steps + 1, state), steps + 1);
-            queue.Enqueue(new State(position, Point2D.West, steps + 1, state), steps + 1);
+            if (state.Direction != Point2D.South)
+            {
+                queue.Enqueue(new State(position, Point2D.North, steps + 1, state));
+            }
+
+            if (state.Direction != Point2D.West)
+            {
+                queue.Enqueue(new State(position, Point2D.East, steps + 1, state));
+            }
+
+            if (state.Direction != Point2D.North)
+            {
+                queue.Enqueue(new State(position, Point2D.South, steps + 1, state));
+            }
+
+            if (state.Direction != Point2D.East)
+            {
+                queue.Enqueue(new State(position, Point2D.West, steps + 1, state));
+            }
         }
 
         return null;
