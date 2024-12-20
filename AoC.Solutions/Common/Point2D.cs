@@ -22,13 +22,6 @@ public struct Point2D : IEquatable<Point2D>
         Y = int.Parse(parts[1]);
     }
 
-    public Point2D(Point2D point)
-    {
-        X = point.X;
-
-        Y = point.Y;
-    }
-
     public int ManhattanDistance(Point2D other)
     {
         return Math.Abs(X - other.X) + Math.Abs(Y - other.Y);

@@ -63,7 +63,7 @@ public abstract class Base : Solution
         return count;
     }
 
-    protected State Race()
+    private State Race()
     {
         var queue = new PriorityQueue<State, int>();
 
