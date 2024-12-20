@@ -8,7 +8,11 @@ public class Part2 : Base
     public override string GetAnswer()
     {
         ParseInput();
+
+        var baseTime = Race();
+
+        var count = 0;
         
-        return "Unknown";
+        return count.ToString();
     }
 }
