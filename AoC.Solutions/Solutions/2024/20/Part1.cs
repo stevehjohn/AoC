@@ -39,16 +39,12 @@ public class Part1 : Base
                 
                 if (left.Position.ManhattanDistance(right.Position) == 2)
                 {
-                    var middle = new Point2D(left.Position);
-                    
-                    middle.StepTowards(right.Position);
+                    var saving = left.Steps - right.Steps - 2;
 
-                    if (Map[middle.X, middle.Y] == '.')
+                    if (saving < 2)
                     {
                         continue;
                     }
-
-                    var saving = left.Steps - right.Steps - 2;
 
                     if (! cheats.TryAdd(saving, 1))
                     {
