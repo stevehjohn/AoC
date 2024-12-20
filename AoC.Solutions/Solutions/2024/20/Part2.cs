@@ -38,7 +38,7 @@ public class Part2 : Base
                 {
                     var saving = left.Steps - right.Steps - 2;
 
-                    if (saving <= 50)
+                    if (saving <= 100)
                     {
                         continue;
                     }
