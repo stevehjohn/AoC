@@ -1,3 +1,4 @@
+using AoC.Solutions.Common;
 using AoC.Solutions.Solutions._2024._20;
 using AoC.Visualisations.Exceptions;
 using AoC.Visualisations.Infrastructure;
@@ -104,6 +105,33 @@ public class Visualisation : VisualisationBase<PuzzleState>
             if (_position > PuzzleState.Track.Count)
             {
                 _position = PuzzleState.Track.Count;
+            }
+        }
+
+        if (_state.ShortcutStart != Point2D.Null)
+        {
+            var render = false;
+            
+            for (var i = 0; i < PuzzleState.Track.Count; i++)
+            {
+                if (PuzzleState.Track[i] == _state.ShortcutStart)
+                {
+                    render = true;
+                }
+
+                if (PuzzleState.Track[i] == _state.ShortcutEnd)
+                {
+                    render = true;
+                }
+
+                if (! render)
+                {
+                    continue;
+                }
+
+                var cell = PuzzleState.Track[i]; 
+                
+                DrawTile(cell.X, cell.Y, 1, Color.FromNonPremultiplied(130, 90, 30, 255));
             }
         }
 

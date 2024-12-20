@@ -47,7 +47,7 @@ public abstract class Base : Solution
             i++;
         }
 
-        Visualise(track);
+        Visualise(track, Point2D.Null, Point2D.Null);
         
         for (i = 0; i < track.Length - 1; i++)
         {
@@ -69,6 +69,8 @@ public abstract class Base : Solution
                     }
 
                     count++;
+                    
+                    Visualise(null, left.Position, right.Position);
                 }
             }
         }
@@ -76,9 +78,9 @@ public abstract class Base : Solution
         return count;
     }
 
-    private void Visualise(State[] state)
+    private void Visualise(State[] state, Point2D shortcutStart, Point2D shortcutEnd)
     {
-        _visualiser.PuzzleStateChanged(new PuzzleState(_map, state));
+        _visualiser.PuzzleStateChanged(new PuzzleState(_map, state, shortcutStart, shortcutEnd));
     }
 
     private State Race()
