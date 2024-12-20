@@ -10,9 +10,9 @@ namespace AoC.Visualisations.Visualisations._2024._20;
 [UsedImplicitly]
 public class Visualisation : VisualisationBase<PuzzleState>
 {
-    private const int TileWidth = 16;
+    private const int TileWidth = 8;
 
-    private const int TileHeight = 12;
+    private const int TileHeight = 6;
 
     private const int FrameDelay = 4;
 
