@@ -35,26 +35,28 @@ public class Part1 : Base
         
         for (i = 0; i < track.Length - 1; i++)
         {
+            var left = track[i];
+
             for (var j = i + 1; j < track.Length; j++)
             {
-                if (track[i].Position.ManhattanDistance(track[j].Position) == 2)
+                var right = track[j];
+                
+                if (left.Position.ManhattanDistance(right.Position) == 2)
                 {
-                    var middle = new Point2D(track[i].Position);
+                    var middle = new Point2D(left.Position);
                     
-                    middle.StepTowards(track[j].Position);
+                    middle.StepTowards(right.Position);
 
                     if (Map[middle.X, middle.Y] == '.')
                     {
                         continue;
                     }
 
-                    if (cheats.ContainsKey(track[i].Steps - track[j].Steps))
+                    var saving = left.Steps - right.Steps;
+
+                    if (! cheats.TryAdd(saving, 1))
                     {
-                        cheats[track[i].Steps - track[j].Steps]++;
-                    }
-                    else
-                    {
-                        cheats.Add(track[i].Steps - track[j].Steps, 1);
+                        cheats[saving]++;
                     }
 
                     count++;
