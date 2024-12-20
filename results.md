@@ -510,17 +510,17 @@ Tests performed on a 2023 MacBook Pro.
  2024 15.1: 279μs         Warehouse woes
  2024 15.2: 6,106μs       
  2024 16.1: 3,510μs       Reindeer maze
- 2024 16.2: 38,877μs      
+ 2024 16.2: 38,833μs      
  2024 17.1: 8μs           Chronospatial computer
  2024 17.2: 2,704μs       
  2024 18.1: 1,373μs       RAM run
- 2024 18.2: 1,497μs       
- 2024 19.1: 57,541μs      Linen layout
+ 2024 18.2: 1,451μs       
+ 2024 19.1: 57,442μs      Linen layout
  2024 19.2: 88,023μs      
  2024 20.1: 41,189μs      Race condition
  2024 20.2: 40,717μs      
             -------------
-            400.679ms    
+            400.490ms    
 
  482 puzzles solved in 51.408s.
 ```
