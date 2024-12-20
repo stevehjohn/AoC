@@ -83,7 +83,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
             {
                 _state = _stateQueue.Dequeue();
 
-                _mode = 1;
+                if (_mode == 0)
+                {
+                    _mode = 1;
+                }
             }
 
             if (_mode == 2)
