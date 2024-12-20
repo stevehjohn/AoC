@@ -12,10 +12,6 @@ public class Part1 : Base
 
         var state = Race();
 
-        var baseTime = state.Steps;
-        
-        Console.WriteLine(baseTime);
-
         var count = 0;
 
         var track = new State[state.Steps];
@@ -52,7 +48,7 @@ public class Part1 : Base
                         continue;
                     }
 
-                    var saving = left.Steps - right.Steps;
+                    var saving = left.Steps - right.Steps - 2;
 
                     if (! cheats.TryAdd(saving, 1))
                     {
