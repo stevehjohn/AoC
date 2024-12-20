@@ -34,6 +34,18 @@ public struct Point2D : IEquatable<Point2D>
         Y += Math.Sign(other.Y - Y);
     }
 
+    public void StepTowardsSingleAxis(Point2D other)
+    {
+        if (X == other.X)
+        {
+            Y += Math.Sign(other.Y - Y);
+            
+            return;
+        }
+
+        X += Math.Sign(other.X - X);
+    }
+
     public static readonly Point2D North = new(0, -1);
 
     public static readonly Point2D East = new(1, 0);

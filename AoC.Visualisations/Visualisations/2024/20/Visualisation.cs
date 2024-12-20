@@ -15,9 +15,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private const int TileHeight = 6;
 
-    private const int FrameIncrement = 6;
+    private int _frameIncrement = 6;
 
-    private const int FrameDelay = 5;
+    private int _frameDelay = 5;
 
     private readonly Color[] _data = new Color[PuzzleState.Size * TileWidth * PuzzleState.Size * TileHeight];
 
@@ -51,8 +51,16 @@ public class Visualisation : VisualisationBase<PuzzleState>
         Puzzle = part switch
         {
             1 => new Part1(this),
+            2 => new Part2(this),
             _ => throw new VisualisationParameterException()
         };
+
+        if (part == 2)
+        {
+            _frameIncrement = 12;
+            
+            _frameDelay = 0;
+        }
     }
 
     protected override void Initialize()
@@ -84,7 +92,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             if (_mode is 0 or 3)
             {
-                if (_mode == 0 || _frame == FrameDelay)
+                if (_mode == 0 || _frame == _frameDelay)
                 {
                     _state = _stateQueue.Dequeue();
 
@@ -127,7 +135,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         if (_position < PuzzleState.Track.Count)
         {
-            _position += FrameIncrement;
+            _position += _frameIncrement;
 
             if (_position > PuzzleState.Track.Count)
             {
@@ -162,10 +170,17 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 
                 DrawTile(cell.X, cell.Y, 1, Color.FromNonPremultiplied(64, 64, 64, 255));
             }
+
+            var cheat = _state.ShortcutStart;
+
+            while (cheat != _state.ShortcutEnd)
+            {
+                DrawTile(cheat.X, cheat.Y, 1, Color.FromNonPremultiplied(255, 165, 0, 255));
+                
+                cheat.StepTowardsSingleAxis(_state.ShortcutEnd);
+            }
             
             DrawTile(_state.ShortcutEnd.X, _state.ShortcutEnd.Y, 1, Color.FromNonPremultiplied(255, 165, 0, 255));
-
-            DrawTile(_state.ShortcutStart.X, _state.ShortcutStart.Y, 1, Color.FromNonPremultiplied(255, 165, 0, 255));
 
             var middle = _state.ShortcutStart;
             
