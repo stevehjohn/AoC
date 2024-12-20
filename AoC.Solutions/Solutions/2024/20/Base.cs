@@ -48,13 +48,13 @@ public abstract class Base : Solution
                 continue;
             }
 
-            if (position == _end)
-            {
-                return state;
-            }
-
             var steps = state.Steps;
             
+            if (position == _end)
+            {
+                return new State(position, Point2D.Null, steps + 1, state);
+            }
+
             queue.Enqueue(new State(position, Point2D.North, steps + 1, state), steps + 1);
             queue.Enqueue(new State(position, Point2D.East, steps + 1, state), steps + 1);
             queue.Enqueue(new State(position, Point2D.South, steps + 1, state), steps + 1);

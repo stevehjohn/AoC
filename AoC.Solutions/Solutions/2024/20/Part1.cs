@@ -1,4 +1,3 @@
-using AoC.Solutions.Common;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2024._20;
