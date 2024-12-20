@@ -30,11 +30,11 @@ public abstract class Base : Solution
     
     protected int Solve(int cheatTime)
     {
-        var state = Race();
+        var state = Race(new State(_start, Point2D.South, 0));
 
         var count = 0;
 
-        var track = new State[state.Steps];
+        var track = new State[state.Steps + 1];
 
         var i = 0;
         
@@ -83,54 +83,37 @@ public abstract class Base : Solution
         _visualiser?.PuzzleStateChanged(new PuzzleState(_map, state, shortcutStart, shortcutEnd));
     }
 
-    private State Race()
+    private State Race(State state)
     {
-        var queue = new Queue<State>();
+        var position = state.Position;
 
-        queue.Enqueue(new State(_start, Point2D.North,  1));
-        queue.Enqueue(new State(_start, Point2D.East,  1));
-        queue.Enqueue(new State(_start, Point2D.South,  1));
-        queue.Enqueue(new State(_start, Point2D.West,  1));
-        
-        while (queue.Count > 0)
+        position += state.Direction;
+
+        var steps = state.Steps;
+
+        if (position == _end)
         {
-            var state = queue.Dequeue();
+            return new State(position, Point2D.Null, steps + 1, state);
+        }
 
-            var position = state.Position;
+        if (state.Direction != Point2D.South && _map[position.X, position.Y - 1] != '#')
+        {
+            return Race(new State(position, Point2D.North, steps + 1, state));
+        }
 
-            position += state.Direction;
+        if (state.Direction != Point2D.West && _map[position.X + 1, position.Y] != '#')
+        {
+            return Race(new State(position, Point2D.East, steps + 1, state));
+        }
 
-            if (_map[position.X, position.Y] == '#')
-            {
-                continue;
-            }
+        if (state.Direction != Point2D.North && _map[position.X, position.Y + 1] != '#')
+        {
+            return Race(new State(position, Point2D.South, steps + 1, state));
+        }
 
-            var steps = state.Steps;
-            
-            if (position == _end)
-            {
-                return new State(position, Point2D.Null, steps + 1, state);
-            }
-
-            if (state.Direction != Point2D.South)
-            {
-                queue.Enqueue(new State(position, Point2D.North, steps + 1, state));
-            }
-
-            if (state.Direction != Point2D.West)
-            {
-                queue.Enqueue(new State(position, Point2D.East, steps + 1, state));
-            }
-
-            if (state.Direction != Point2D.North)
-            {
-                queue.Enqueue(new State(position, Point2D.South, steps + 1, state));
-            }
-
-            if (state.Direction != Point2D.East)
-            {
-                queue.Enqueue(new State(position, Point2D.West, steps + 1, state));
-            }
+        if (state.Direction != Point2D.East && _map[position.X - 1, position.Y] != '#')
+        {
+            return Race(new State(position, Point2D.West, steps + 1, state));
         }
 
         return null;
