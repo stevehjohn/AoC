@@ -7,15 +7,61 @@ public abstract class Base : Solution
 {
     public override string Description => "Race condition";
 
-    protected char[,] Map;
+    private char[,] _map;
 
-    protected int Width;
+    private int _width;
 
-    protected int Height;
+    private int _height;
 
     private Point2D _start;
 
     private Point2D _end;
+
+    protected int Solve(int cheatTime)
+    {
+        var state = Race();
+
+        var count = 0;
+
+        var track = new State[state.Steps];
+
+        var i = 0;
+        
+        while (state != null)
+        {
+            track[i] = state;
+            
+            state = state.Previous;
+
+            i++;
+        }
+
+        for (i = 0; i < track.Length - 1; i++)
+        {
+            var left = track[i];
+
+            for (var j = i + 1; j < track.Length; j++)
+            {
+                var right = track[j];
+
+                var distance = left.Position.ManhattanDistance(right.Position);
+                
+                if (distance <= cheatTime)
+                {
+                    var saving = left.Steps - right.Steps - distance;
+
+                    if (saving < 100)
+                    {
+                        continue;
+                    }
+
+                    count++;
+                }
+            }
+        }
+
+        return count;
+    }
 
     protected State Race()
     {
@@ -38,7 +84,7 @@ public abstract class Base : Solution
 
             position += state.Direction;
 
-            if (Map[position.X, position.Y] == '#')
+            if (_map[position.X, position.Y] == '#')
             {
                 continue;
             }
@@ -66,22 +112,22 @@ public abstract class Base : Solution
 
     protected void ParseInput()
     {
-        Width = Input[0].Length;
+        _width = Input[0].Length;
 
-        Height = Input.Length;
+        _height = Input.Length;
 
-        Map = new char[Width, Height];
+        _map = new char[_width, _height];
 
-        for (var y = 0; y < Height; y++)
+        for (var y = 0; y < _height; y++)
         {
-            for (var x = 0; x < Width; x++)
+            for (var x = 0; x < _width; x++)
             {
                 var c = Input[y][x];
 
                 switch (c)
                 {
                     case '#':
-                        Map[x, y] = '#';
+                        _map[x, y] = '#';
                         continue;
                     
                     case 'S':
@@ -93,7 +139,7 @@ public abstract class Base : Solution
                         break;
                 }
 
-                Map[x, y] = '.';
+                _map[x, y] = '.';
             }
         }
     }

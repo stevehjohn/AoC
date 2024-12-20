@@ -9,46 +9,7 @@ public class Part2 : Base
     {
         ParseInput();
 
-        var state = Race();
-
-        var count = 0;
-
-        var track = new State[state.Steps];
-
-        var i = 0;
-        
-        while (state != null)
-        {
-            track[i] = state;
-            
-            state = state.Previous;
-
-            i++;
-        }
-
-        for (i = 0; i < track.Length - 1; i++)
-        {
-            var left = track[i];
-
-            for (var j = i + 1; j < track.Length; j++)
-            {
-                var right = track[j];
-
-                var distance = left.Position.ManhattanDistance(right.Position);
-                
-                if (distance <= 20)
-                {
-                    var saving = left.Steps - right.Steps - distance;
-
-                    if (saving < 100)
-                    {
-                        continue;
-                    }
-
-                    count++;
-                }
-            }
-        }
+        var count = Solve(20);
 
         return count.ToString();
     }
