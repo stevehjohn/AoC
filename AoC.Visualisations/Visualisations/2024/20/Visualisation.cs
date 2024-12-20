@@ -15,7 +15,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private const int TileHeight = 6;
 
-    private const int FrameIncrement = 1000;
+    private const int FrameIncrement = 10;
+
+    private const int FrameDelay = 4;
 
     private readonly Color[] _data = new Color[PuzzleState.Size * TileWidth * PuzzleState.Size * TileHeight];
 
@@ -30,6 +32,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private int _position;
 
     private int _mode;
+
+    private int _frame;
 
     public Visualisation()
     {
@@ -80,7 +84,16 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             if (_mode is 0 or 3)
             {
-                _state = _stateQueue.Dequeue();
+                if (_mode == 0 || _frame == FrameDelay)
+                {
+                    _state = _stateQueue.Dequeue();
+
+                    _frame = 0;
+                }
+                else
+                {
+                    _frame++;
+                }
 
                 if (_mode == 0)
                 {
