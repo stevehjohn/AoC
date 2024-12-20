@@ -72,7 +72,7 @@ Tests performed on a 2023 MacBook Pro.
  2016  4.2: 4,359μs       
  2016  5.1: 1,196,538μs   Password hash
  2016  5.2: 3,530,053μs   
- 2016  6.1: 1,015μs       Signals and noise
+ 2016  6.1: 1,003μs       Signals and noise
  2016  6.2: 280μs         
  2016  7.1: 755μs         ABBA internet protocol
  2016  7.2: 1,068μs       
@@ -517,10 +517,19 @@ Tests performed on a 2023 MacBook Pro.
  2024 18.2: 1,497μs       
  2024 19.1: 57,541μs      Linen layout
  2024 19.2: 88,023μs      
- 2024 20.1: 42,224μs      Race condition
+ 2024 20.1: 41,189μs      Race condition
  2024 20.2: 40,717μs      
+ 2024 21.1: 0μs           Puzzle 21
+ 2024 21.2: 0μs           
+ 2024 22.1: 0μs           Puzzle 22
+ 2024 22.2: 0μs           
+ 2024 23.1: 0μs           Puzzle 23
+ 2024 23.2: 0μs           
+ 2024 24.1: 0μs           Puzzle 24
+ 2024 24.2: 0μs           
+ 2024 25.1: 0μs           Puzzle 25
             -------------
-            401.716ms    
+            400.679ms    
 
- 491 puzzles solved in 51.409s.
+ 491 puzzles solved in 51.408s.
 ```
