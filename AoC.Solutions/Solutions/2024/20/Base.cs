@@ -55,10 +55,10 @@ public abstract class Base : Solution
 
             var steps = state.Steps;
             
-            queue.Enqueue(new State(position, Point2D.North, steps + 1), steps + 1);
-            queue.Enqueue(new State(position, Point2D.East, steps + 1), steps + 1);
-            queue.Enqueue(new State(position, Point2D.South, steps + 1), steps + 1);
-            queue.Enqueue(new State(position, Point2D.West, steps + 1), steps + 1);
+            queue.Enqueue(new State(position, Point2D.North, steps + 1, state), steps + 1);
+            queue.Enqueue(new State(position, Point2D.East, steps + 1, state), steps + 1);
+            queue.Enqueue(new State(position, Point2D.South, steps + 1, state), steps + 1);
+            queue.Enqueue(new State(position, Point2D.West, steps + 1, state), steps + 1);
         }
 
         return null;
