@@ -312,7 +312,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 20.2: 1,150μs       
  2020 21.1: 198μs         Allergen detective
  2020 21.2: 193μs         
- 2020 22.1: 16μs          Crab cards
+ 2020 22.1: 15μs          Crab cards
  2020 22.2: 104,740μs     
  2020 23.1: 3μs           Crab cups
  2020 23.2: 140,627μs     
@@ -515,12 +515,12 @@ Tests performed on a 2023 MacBook Pro.
  2024 17.2: 2,704μs       
  2024 18.1: 1,373μs       RAM run
  2024 18.2: 1,497μs       
- 2024 19.1: 58,214μs      Linen layout
+ 2024 19.1: 57,541μs      Linen layout
  2024 19.2: 88,023μs      
- 2024 20.1: 61,255μs      Race condition
- 2024 20.2: 61,668μs      
+ 2024 20.1: 42,224μs      Race condition
+ 2024 20.2: 40,717μs      
             -------------
-            442.373ms    
+            401.716ms    
 
- 491 puzzles solved in 51.450s.
+ 491 puzzles solved in 51.409s.
 ```
