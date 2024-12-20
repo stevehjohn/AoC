@@ -57,7 +57,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         if (part == 2)
         {
-            _frameIncrement = 12;
+            _frameIncrement = 24;
             
             _frameDelay = 0;
         }
