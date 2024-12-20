@@ -33,12 +33,14 @@ public class Part2 : Base
             for (var j = i + 1; j < track.Length; j++)
             {
                 var right = track[j];
-                
-                if (left.Position.ManhattanDistance(right.Position) <= 20)
-                {
-                    var saving = left.Steps - right.Steps - 2;
 
-                    if (saving <= 100)
+                var distance = left.Position.ManhattanDistance(right.Position);
+                
+                if (distance <= 20)
+                {
+                    var saving = left.Steps - right.Steps - distance;
+
+                    if (saving < 100)
                     {
                         continue;
                     }
