@@ -9,8 +9,34 @@ public class Part1 : Base
     {
         ParseInput();
 
-        var result = Race();
+        var baseTime = Race();
+
+        var count = 0;
+
+        for (var y = 1; y < Height - 1; y++)
+        {
+            for (var x = 1; x < Width - 1; x++)
+            {
+                if (Map[x, y] == '.')
+                {
+                    continue;
+                }
+
+                Map[x, y] = '.';
+                
+                var result = Race();
+
+                Map[x, y] = '#';
+
+                if (result < baseTime - 100)
+                {
+                    count++;
+                }
+            }
+            
+            Console.WriteLine(y);
+        }
         
-        return result.ToString();
+        return count.ToString();
     }
 }

@@ -7,11 +7,11 @@ public abstract class Base : Solution
 {
     public override string Description => "Race condition";
 
-    private char[,] _map;
+    protected char[,] Map;
 
-    private int _width;
+    protected int Width;
 
-    private int _height;
+    protected int Height;
 
     private Point2D _start;
 
@@ -36,7 +36,7 @@ public abstract class Base : Solution
 
             position += direction;
 
-            if (_map[position.X, position.Y] == '#')
+            if (Map[position.X, position.Y] == '#')
             {
                 continue;
             }
@@ -62,22 +62,22 @@ public abstract class Base : Solution
 
     protected void ParseInput()
     {
-        _width = Input[0].Length;
+        Width = Input[0].Length;
 
-        _height = Input.Length;
+        Height = Input.Length;
 
-        _map = new char[_width, _height];
+        Map = new char[Width, Height];
 
-        for (var y = 0; y < _height; y++)
+        for (var y = 0; y < Height; y++)
         {
-            for (var x = 0; x < _width; x++)
+            for (var x = 0; x < Width; x++)
             {
                 var c = Input[y][x];
 
                 switch (c)
                 {
                     case '#':
-                        _map[x, y] = '#';
+                        Map[x, y] = '#';
                         continue;
                     
                     case 'S':
@@ -89,7 +89,7 @@ public abstract class Base : Solution
                         break;
                 }
 
-                _map[x, y] = '.';
+                Map[x, y] = '.';
             }
         }
     }
