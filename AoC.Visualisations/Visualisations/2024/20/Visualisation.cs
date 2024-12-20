@@ -15,9 +15,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private const int TileHeight = 6;
 
-    private const int FrameIncrement = 10;
+    private const int FrameIncrement = 6;
 
-    private const int FrameDelay = 4;
+    private const int FrameDelay = 5;
 
     private readonly Color[] _data = new Color[PuzzleState.Size * TileWidth * PuzzleState.Size * TileHeight];
 
