@@ -36,11 +36,11 @@ public class Part2 : Base
             {
                 var right = track[j];
                 
-                if (left.Position.ManhattanDistance(right.Position) == 2)
+                if (left.Position.ManhattanDistance(right.Position) <= 20)
                 {
                     var saving = left.Steps - right.Steps - 2;
 
-                    if (saving < 100)
+                    if (saving <= 50)
                     {
                         continue;
                     }
@@ -53,6 +53,11 @@ public class Part2 : Base
                     count++;
                 }
             }
+        }
+
+        foreach (var cheat in cheats.OrderBy(c => c.Key))
+        {
+            Console.WriteLine($"  Count: {cheat.Value}, saving: {cheat.Key}");
         }
 
         return count.ToString();

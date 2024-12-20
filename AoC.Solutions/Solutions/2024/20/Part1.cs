@@ -26,8 +26,6 @@ public class Part1 : Base
             i++;
         }
 
-        var cheats = new Dictionary<int, int>();
-
         for (i = 0; i < track.Length - 1; i++)
         {
             var left = track[i];
@@ -43,11 +41,6 @@ public class Part1 : Base
                     if (saving < 100)
                     {
                         continue;
-                    }
-
-                    if (! cheats.TryAdd(saving, 1))
-                    {
-                        cheats[saving]++;
                     }
 
                     count++;
