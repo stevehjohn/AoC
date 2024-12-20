@@ -7,6 +7,8 @@ public abstract class Base : Solution
 {
     public override string Description => "Race condition";
 
+    private readonly IVisualiser<PuzzleState> _visualiser;
+
     private char[,] _map;
 
     private int _width;
@@ -17,6 +19,15 @@ public abstract class Base : Solution
 
     private Point2D _end;
 
+    protected Base()
+    {
+    }
+
+    protected Base(IVisualiser<PuzzleState> visualiser)
+    {
+        _visualiser = visualiser;
+    }
+    
     protected int Solve(int cheatTime)
     {
         var state = Race();
@@ -36,6 +47,8 @@ public abstract class Base : Solution
             i++;
         }
 
+        Visualise(track);
+        
         for (i = 0; i < track.Length - 1; i++)
         {
             var left = track[i];
@@ -61,6 +74,11 @@ public abstract class Base : Solution
         }
 
         return count;
+    }
+
+    private void Visualise(State[] state)
+    {
+        _visualiser.PuzzleStateChanged(new PuzzleState(state));
     }
 
     private State Race()
