@@ -164,16 +164,16 @@ public static class Program
 
             var summary = $" {year} {day,2}.{part}: {$"{microseconds:N0}μs",-12}  {description}";
 
-            results.Add((year, day, part), (microseconds, summary));
-
             Console.WriteLine(summary);
-
-            yearMs += (long) microseconds;
-
-            totalMs += (long) microseconds;
 
             if (! answer.Equals("Unknown", StringComparison.InvariantCultureIgnoreCase))
             {
+                results.Add((year, day, part), (microseconds, summary));
+
+                yearMs += (long) microseconds;
+
+                totalMs += (long) microseconds;
+
                 count++;
             }
         }

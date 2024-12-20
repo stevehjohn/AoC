@@ -336,7 +336,7 @@ Tests performed on a 2023 MacBook Pro.
  2021  6.2: 10μs          
  2021  7.1: 90μs          Crab submarines
  2021  7.2: 75μs          
- 2021  7.X: 40μs          Easter egg (2019 CPU used)
+ 2021  7.X: 39μs          Easter egg (2019 CPU used)
  2021  8.1: 84μs          Old school displays
  2021  8.2: 818μs         
  2021  9.1: 86μs          Lava level
@@ -522,5 +522,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             400.679ms    
 
- 491 puzzles solved in 51.408s.
+ 482 puzzles solved in 51.408s.
 ```
