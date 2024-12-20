@@ -14,7 +14,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private const int TileHeight = 6;
 
-    private const int FrameDelay = 4;
+    private const int FrameIncrement = 5;
 
     private readonly Color[] _data = new Color[PuzzleState.Size * TileWidth * PuzzleState.Size * TileHeight];
 
@@ -25,6 +25,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private Texture2D _texture;
 
     private SpriteBatch _spriteBatch;
+
+    private int _position;
 
     public Visualisation()
     {
@@ -81,10 +83,27 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             for (var x = 0; x < PuzzleState.Size; x++)
             {
-                if (_state.Map[x, y] == '#')
+                if (PuzzleState.Map[x, y] == '#')
                 {
                     DrawTile(x, y, 0, Color.FromNonPremultiplied(64, 64, 64, 255));
                 }
+            }
+        }
+
+        for (var i = 0; i < _position; i++)
+        {
+            var cell = PuzzleState.Track[i];
+
+            DrawTile(cell.X, cell.Y, 1, Color.FromNonPremultiplied(0, 192, 0, 255));
+        }
+
+        if (_position < PuzzleState.Track.Count)
+        {
+            _position += FrameIncrement;
+
+            if (_position > PuzzleState.Track.Count)
+            {
+                _position = PuzzleState.Track.Count;
             }
         }
 

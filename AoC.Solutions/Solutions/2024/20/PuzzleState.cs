@@ -6,9 +6,9 @@ public class PuzzleState
 {
     public const int Size = 141;
 
-    public char[,] Map => _map;
+    public static char[,] Map => _map;
 
-    public IReadOnlyList<Point2D> Track => _track;
+    public static IReadOnlyList<Point2D> Track => _track;
 
     private static char[,] _map;
     
