@@ -17,24 +17,26 @@ public abstract class Base : Solution
 
     private Point2D _end;
 
-    protected int Race()
+    protected State Race()
     {
-        var queue = new PriorityQueue<(Point2D Position, Point2D Direction, int Steps), int>();
+        var queue = new PriorityQueue<State, int>();
 
         var visited = new HashSet<Point2D>();
         
-        queue.Enqueue((_start, Point2D.North,  1), 1);
-        queue.Enqueue((_start, Point2D.East,  1), 1);
-        queue.Enqueue((_start, Point2D.South,  1), 1);
-        queue.Enqueue((_start, Point2D.West,  1), 1);
+        queue.Enqueue(new State(_start, Point2D.North,  1), 1);
+        queue.Enqueue(new State(_start, Point2D.East,  1), 1);
+        queue.Enqueue(new State(_start, Point2D.South,  1), 1);
+        queue.Enqueue(new State(_start, Point2D.West,  1), 1);
 
         visited.Add(_start);
         
         while (queue.Count > 0)
         {
-            var (position, direction, steps) = queue.Dequeue();
+            var state = queue.Dequeue();
 
-            position += direction;
+            var position = state.Position;
+
+            position += state.Direction;
 
             if (Map[position.X, position.Y] == '#')
             {
@@ -48,16 +50,18 @@ public abstract class Base : Solution
 
             if (position == _end)
             {
-                return steps;
+                return state;
             }
+
+            var steps = state.Steps;
             
-            queue.Enqueue((position, Point2D.North, steps + 1), steps + 1);
-            queue.Enqueue((position, Point2D.East, steps + 1), steps + 1);
-            queue.Enqueue((position, Point2D.South, steps + 1), steps + 1);
-            queue.Enqueue((position, Point2D.West, steps + 1), steps + 1);
+            queue.Enqueue(new State(position, Point2D.North, steps + 1), steps + 1);
+            queue.Enqueue(new State(position, Point2D.East, steps + 1), steps + 1);
+            queue.Enqueue(new State(position, Point2D.South, steps + 1), steps + 1);
+            queue.Enqueue(new State(position, Point2D.West, steps + 1), steps + 1);
         }
 
-        return -1;
+        return null;
     }
 
     protected void ParseInput()
