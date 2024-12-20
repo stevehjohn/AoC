@@ -47,7 +47,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
         Puzzle = part switch
         {
             1 => new Part1(this),
-            2 => new Part2(this),
             _ => throw new VisualisationParameterException()
         };
     }
@@ -79,7 +78,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         if (_stateQueue.Count > 0)
         {
-            if (_mode == 0 || _mode == 3)
+            if (_mode is 0 or 3)
             {
                 _state = _stateQueue.Dequeue();
 
@@ -148,8 +147,18 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                 var cell = PuzzleState.Track[i]; 
                 
-                DrawTile(cell.X, cell.Y, 1, Color.FromNonPremultiplied(130, 90, 30, 255));
+                DrawTile(cell.X, cell.Y, 1, Color.FromNonPremultiplied(64, 64, 64, 255));
             }
+            
+            DrawTile(_state.ShortcutEnd.X, _state.ShortcutEnd.Y, 1, Color.FromNonPremultiplied(255, 165, 0, 255));
+
+            DrawTile(_state.ShortcutStart.X, _state.ShortcutStart.Y, 1, Color.FromNonPremultiplied(255, 165, 0, 255));
+
+            var middle = _state.ShortcutStart;
+            
+            middle.StepTowards(_state.ShortcutEnd);
+
+            DrawTile(middle.X, middle.Y, 1, Color.FromNonPremultiplied(255, 165, 0, 255));
         }
 
         _texture.SetData(_data);
