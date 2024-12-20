@@ -28,7 +28,7 @@ public class Part1 : Base
 
                 Map[x, y] = '#';
 
-                if (result < baseTime - 100)
+                if (result < baseTime - 99)
                 {
                     count++;
                 }
