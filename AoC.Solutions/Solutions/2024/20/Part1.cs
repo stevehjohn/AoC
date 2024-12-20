@@ -40,7 +40,7 @@ public class Part1 : Base
                 {
                     var saving = left.Steps - right.Steps - 2;
 
-                    if (saving < 2)
+                    if (saving < 100)
                     {
                         continue;
                     }
@@ -53,11 +53,6 @@ public class Part1 : Base
                     count++;
                 }
             }
-        }
-
-        foreach (var cheat in cheats.OrderBy(c => c.Key))
-        {
-            Console.WriteLine($"Count: {cheat.Value}, saving: {cheat.Key}.");
         }
 
         return count.ToString();
