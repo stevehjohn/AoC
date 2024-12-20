@@ -80,7 +80,7 @@ public abstract class Base : Solution
 
     private void Visualise(State[] state, Point2D shortcutStart, Point2D shortcutEnd)
     {
-        _visualiser.PuzzleStateChanged(new PuzzleState(_map, state, shortcutStart, shortcutEnd));
+        _visualiser?.PuzzleStateChanged(new PuzzleState(_map, state, shortcutStart, shortcutEnd));
     }
 
     private State Race()
