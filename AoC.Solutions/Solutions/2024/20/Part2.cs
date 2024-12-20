@@ -26,8 +26,6 @@ public class Part2 : Base
             i++;
         }
 
-        var cheats = new Dictionary<int, int>();
-
         for (i = 0; i < track.Length - 1; i++)
         {
             var left = track[i];
@@ -45,19 +43,9 @@ public class Part2 : Base
                         continue;
                     }
 
-                    if (! cheats.TryAdd(saving, 1))
-                    {
-                        cheats[saving]++;
-                    }
-
                     count++;
                 }
             }
-        }
-
-        foreach (var cheat in cheats.OrderBy(c => c.Key))
-        {
-            Console.WriteLine($"  Count: {cheat.Value}, saving: {cheat.Key}");
         }
 
         return count.ToString();
