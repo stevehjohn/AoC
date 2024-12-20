@@ -33,6 +33,8 @@ public class Part1 : Base
                     count++;
                 }
             }
+            
+            Console.WriteLine(y);
         }
         
         return count.ToString();

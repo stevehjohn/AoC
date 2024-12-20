@@ -21,14 +21,14 @@ public abstract class Base : Solution
     {
         var queue = new PriorityQueue<(Point2D Position, Point2D Direction, int Steps), int>();
 
-        var visited = new HashSet<(Point2D, Point2D)>();
+        var visited = new HashSet<Point2D>();
         
         queue.Enqueue((_start, Point2D.North,  1), 1);
         queue.Enqueue((_start, Point2D.East,  1), 1);
         queue.Enqueue((_start, Point2D.South,  1), 1);
         queue.Enqueue((_start, Point2D.West,  1), 1);
 
-        visited.Add((_start, Point2D.North));
+        visited.Add(_start);
         
         while (queue.Count > 0)
         {
@@ -41,7 +41,7 @@ public abstract class Base : Solution
                 continue;
             }
 
-            if (! visited.Add((position, direction)))
+            if (! visited.Add(position))
             {
                 continue;
             }
