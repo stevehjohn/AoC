@@ -1,27 +1,27 @@
 using AoC.Solutions.Common;
-using AoC.Solutions.Solutions._2024._18;
+using AoC.Solutions.Solutions._2024._20;
 using AoC.Visualisations.Exceptions;
 using AoC.Visualisations.Infrastructure;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace AoC.Visualisations.Visualisations._2024._18;
+namespace AoC.Visualisations.Visualisations._2024._20;
 
 [UsedImplicitly]
 public class Visualisation : VisualisationBase<PuzzleState>
 {
-    private const int TileWidth = 16;
+    private const int TileWidth = 8;
 
-    private const int TileHeight = 12;
+    private const int TileHeight = 6;
 
-    private const int FrameDelay = 4;
+    private int _frameIncrement = 6;
+
+    private int _frameDelay = 5;
 
     private readonly Color[] _data = new Color[PuzzleState.Size * TileWidth * PuzzleState.Size * TileHeight];
 
     private readonly Queue<PuzzleState> _stateQueue = [];
-
-    private readonly Dictionary<Point2D, int> _newPoints = [];
 
     private PuzzleState _state;
 
@@ -29,10 +29,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private SpriteBatch _spriteBatch;
 
-    private char[,] _map;
+    private int _position;
 
-    private int _frameCount;
-    
+    private int _mode;
+
+    private int _frame;
+
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -41,16 +43,24 @@ public class Visualisation : VisualisationBase<PuzzleState>
             PreferredBackBufferHeight = PuzzleState.Size * TileHeight
         };
 
-        Content.RootDirectory = "./18";
+        Content.RootDirectory = "./20";
     }
     
     public override void SetPart(int part)
     {
         Puzzle = part switch
         {
+            1 => new Part1(this),
             2 => new Part2(this),
             _ => throw new VisualisationParameterException()
         };
+
+        if (part == 2)
+        {
+            _frameIncrement = 24;
+            
+            _frameDelay = 0;
+        }
     }
 
     protected override void Initialize()
@@ -78,28 +88,31 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         Array.Fill(_data, Color.Black);
 
-        if (_stateQueue.Count > 0 && _frameCount == 0)
+        if (_stateQueue.Count > 0)
         {
-             _state = _stateQueue.Dequeue();
+            if (_mode is 0 or 3)
+            {
+                if (_mode == 0 || _frame == _frameDelay)
+                {
+                    _state = _stateQueue.Dequeue();
 
-            _map ??= PuzzleState.Map;
-        }
+                    _frame = 0;
+                }
+                else
+                {
+                    _frame++;
+                }
 
-        _frameCount++;
+                if (_mode == 0)
+                {
+                    _mode = 1;
+                }
+            }
 
-        if (_frameCount == FrameDelay)
-        {
-            _frameCount = 0;
-        }
-
-        if (_state == null)
-        {
-            return;
-        }
-
-        foreach (var point in _state.Visited)
-        {
-            DrawTile(point.X, point.Y, 1, Color.FromNonPremultiplied(130, 90, 30, 255));
+            if (_mode == 2)
+            {
+                _mode = 3;
+            }
         }
 
         for (var y = 0; y < PuzzleState.Size; y++)
@@ -113,44 +126,61 @@ public class Visualisation : VisualisationBase<PuzzleState>
             }
         }
 
-        if (_state.NewPoint != default)
+        for (var i = 0; i < _position; i++)
         {
-            _newPoints.TryAdd(_state.NewPoint, 0);
+            var cell = PuzzleState.Track[i];
+
+            DrawTile(cell.X, cell.Y, 1, Color.FromNonPremultiplied(0, 192, 0, 255));
         }
 
-        Point2D remove = default;
-        
-        foreach (var point in _newPoints)
+        if (_position < PuzzleState.Track.Count)
         {
-            var color = Color.FromNonPremultiplied(255 - point.Value * 3, 255 - point.Value * 3, 0, 255);
+            _position += _frameIncrement;
+
+            if (_position > PuzzleState.Track.Count)
+            {
+                _position = PuzzleState.Track.Count;
+
+                _mode = 2;
+            }
+        }
+
+        if (_state.ShortcutStart != Point2D.Null)
+        {
+            var render = false;
             
-            DrawTile(point.Key.X, point.Key.Y, 0, color);
-
-            _newPoints[point.Key]++;
-
-            if (_newPoints[point.Key] > 63)
+            for (var i = 0; i < PuzzleState.Track.Count; i++)
             {
-                remove = point.Key;
-            }
-        }
+                if (PuzzleState.Track[i] == _state.ShortcutEnd)
+                {
+                    render = true;
+                }
 
-        if (remove != default)
-        {
-            _newPoints.Remove(remove);
+                if (PuzzleState.Track[i] == _state.ShortcutStart)
+                {
+                    break;
+                }
 
-            _map[remove.X, remove.Y] = '#';
-        }
+                if (! render)
+                {
+                    continue;
+                }
 
-        for (var i = 0; i < _state.Path.Count; i++)
-        {
-            var point = _state.Path[i];
-
-            if (point.X < 1 || point.Y < 1)
-            {
-                continue;
+                var cell = PuzzleState.Track[i]; 
+                
+                DrawTile(cell.X, cell.Y, 1, Color.FromNonPremultiplied(64, 64, 64, 255));
             }
 
-            DrawTile(point.X, point.Y, 1, Color.FromNonPremultiplied(0, 192, 0, 255));
+            var cheat = _state.ShortcutStart;
+
+            while (cheat != _state.ShortcutEnd)
+            {
+                DrawTile(cheat.X, cheat.Y, 1, Color.FromNonPremultiplied(255, 165, 0, 255));
+                
+                cheat.StepTowardsSingleAxis(_state.ShortcutEnd);
+            }
+            
+            DrawTile(_state.ShortcutEnd.X, _state.ShortcutEnd.Y, 1, Color.FromNonPremultiplied(255, 165, 0, 255));
         }
 
         _texture.SetData(_data);
