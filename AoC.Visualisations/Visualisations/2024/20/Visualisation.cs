@@ -1,13 +1,13 @@
-using AoC.Solutions.Common;
 using AoC.Solutions.Solutions._2024._20;
 using AoC.Visualisations.Exceptions;
 using AoC.Visualisations.Infrastructure;
+using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Color = System.Drawing.Color;
 
 namespace AoC.Visualisations.Visualisations._2024._20;
 
+[UsedImplicitly]
 public class Visualisation : VisualisationBase<PuzzleState>
 {
     private const int TileWidth = 16;
@@ -26,8 +26,17 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private SpriteBatch _spriteBatch;
 
-    private char[,] _map;
+    public Visualisation()
+    {
+        GraphicsDeviceManager = new GraphicsDeviceManager(this)
+        {
+            PreferredBackBufferWidth = PuzzleState.Size * TileWidth,
+            PreferredBackBufferHeight = PuzzleState.Size * TileHeight
+        };
 
+        Content.RootDirectory = "./20";
+    }
+    
     public override void SetPart(int part)
     {
         Puzzle = part switch
@@ -54,10 +63,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
         if (HasNextState)
         {
             _stateQueue.Enqueue(GetNextState());
-
-            if (_map == null)
-            {
-            }
         }
 
         base.Update(gameTime);
@@ -66,5 +71,44 @@ public class Visualisation : VisualisationBase<PuzzleState>
     protected override void Draw(GameTime gameTime)
     {
         Array.Fill(_data, Color.Black);
+
+        if (_stateQueue.Count > 0)
+        {
+            _state = _stateQueue.Dequeue();
+        }
+
+        for (var y = 0; y < PuzzleState.Size; y++)
+        {
+            for (var x = 0; x < PuzzleState.Size; x++)
+            {
+                if (_state.Map[x, y] == '#')
+                {
+                    DrawTile(x, y, 0, Color.FromNonPremultiplied(64, 64, 64, 255));
+                }
+            }
+        }
+
+        _texture.SetData(_data);
+        
+        _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
+
+        _spriteBatch.Draw(_texture, 
+            new Rectangle(0, 0, PuzzleState.Size * TileWidth, PuzzleState.Size * TileHeight), 
+            new Rectangle(0, 0, PuzzleState.Size * TileWidth, PuzzleState.Size * TileHeight), Color.White);
+        
+        _spriteBatch.End();
+        
+        base.Draw(gameTime);
+    }
+
+    private void DrawTile(int x, int y, int border, Color color)
+    {
+        for (var tX = border; tX < TileWidth - border; tX++)
+        {
+            for (var tY = border; tY < TileHeight - border; tY++)
+            {
+                _data[x * TileWidth + tX + (y * TileHeight + tY) * PuzzleState.Size * TileWidth] = color;
+            }
+        }
     }
 }

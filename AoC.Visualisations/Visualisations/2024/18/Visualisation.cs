@@ -41,7 +41,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             PreferredBackBufferHeight = PuzzleState.Size * TileHeight
         };
 
-        Content.RootDirectory = "./15";
+        Content.RootDirectory = "./18";
     }
     
     public override void SetPart(int part)
