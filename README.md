@@ -76,7 +76,8 @@ There are visualisations for:
 - 2024.15.2
 - 2024.18.2 - RAM Run
 - 2024.20.1 - Race condition
-
+- 2024.20.2
+- 
 ## Mental Notes to Self
 
 The `.encrypted` files, safe to push to GitHub, have to be deleted to be recreated from the `.clear` versions.

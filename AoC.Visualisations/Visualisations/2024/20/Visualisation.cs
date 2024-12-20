@@ -181,12 +181,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
             }
             
             DrawTile(_state.ShortcutEnd.X, _state.ShortcutEnd.Y, 1, Color.FromNonPremultiplied(255, 165, 0, 255));
-
-            var middle = _state.ShortcutStart;
-            
-            middle.StepTowards(_state.ShortcutEnd);
-
-            DrawTile(middle.X, middle.Y, 1, Color.FromNonPremultiplied(255, 165, 0, 255));
         }
 
         _texture.SetData(_data);
