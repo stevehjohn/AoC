@@ -109,7 +109,7 @@ public static class Program
                 }
             }
 
-            GC.Collect();
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true, true);
 
             // ReSharper disable once CompareOfFloatsByEqualityOperator
             if (firstTime == double.MaxValue || firstTime < TimeSpan.FromSeconds(10).TotalMicroseconds)
@@ -172,7 +172,10 @@ public static class Program
 
             totalMs += (long) microseconds;
 
-            count++;
+            if (! answer.Equals("Unknown", StringComparison.InvariantCultureIgnoreCase))
+            {
+                count++;
+            }
         }
 
         CleanUp();
