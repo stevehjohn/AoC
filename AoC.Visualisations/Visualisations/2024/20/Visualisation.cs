@@ -15,7 +15,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private const int TileHeight = 6;
 
-    private const int FrameIncrement = 5;
+    private const int FrameIncrement = 1000;
 
     private readonly Color[] _data = new Color[PuzzleState.Size * TileWidth * PuzzleState.Size * TileHeight];
 
@@ -28,6 +28,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private SpriteBatch _spriteBatch;
 
     private int _position;
+
+    private int _mode;
 
     public Visualisation()
     {
@@ -77,7 +79,17 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         if (_stateQueue.Count > 0)
         {
-            _state = _stateQueue.Dequeue();
+            if (_mode == 0 || _mode == 3)
+            {
+                _state = _stateQueue.Dequeue();
+
+                _mode = 1;
+            }
+
+            if (_mode == 2)
+            {
+                _mode = 3;
+            }
         }
 
         for (var y = 0; y < PuzzleState.Size; y++)
@@ -105,6 +117,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
             if (_position > PuzzleState.Track.Count)
             {
                 _position = PuzzleState.Track.Count;
+
+                _mode = 2;
             }
         }
 
@@ -114,14 +128,14 @@ public class Visualisation : VisualisationBase<PuzzleState>
             
             for (var i = 0; i < PuzzleState.Track.Count; i++)
             {
-                if (PuzzleState.Track[i] == _state.ShortcutStart)
+                if (PuzzleState.Track[i] == _state.ShortcutEnd)
                 {
                     render = true;
                 }
 
-                if (PuzzleState.Track[i] == _state.ShortcutEnd)
+                if (PuzzleState.Track[i] == _state.ShortcutStart)
                 {
-                    render = true;
+                    break;
                 }
 
                 if (! render)
