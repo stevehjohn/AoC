@@ -78,7 +78,7 @@ public abstract class Base : Solution
 
     private void Visualise(State[] state)
     {
-        _visualiser.PuzzleStateChanged(new PuzzleState(state));
+        _visualiser.PuzzleStateChanged(new PuzzleState(_map, state));
     }
 
     private State Race()
