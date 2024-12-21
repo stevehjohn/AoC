@@ -1,53 +1,55 @@
-using System.Text;
+using AoC.Solutions.Common;
 
 namespace AoC.Solutions.Solutions._2024._21;
 
 public class DPad
 {
-    private readonly Dictionary<string, string> _map = new()
+    private readonly Dictionary<Point2D, char> _layout = new()
     {
-        { "A^", "<A" },
-        { "A<", "<v<A" },
-        { "Av", "<vA" },
-        { "A>", "vA" },
-        { "^A", ">A" },
-        { "^<", "v<A" },
-        { "^v", "vA" },
-        { "^>", "v>A" },
-        { "<^", ">^A" },
-        { "<A", ">^>A" },
-        { "<v", ">A" },
-        { "<>", ">>A" },
-        { "v^", "^A" },
-        { "vA", "^>A" },
-        { "v<", "<A" },
-        { "v>", ">A" },
-        { ">^", "<^A" },
-        { ">A", "^A" },
-        { "><", "<<A" },
-        { ">v", "<A" }
+        { new Point2D(1, 0), '^' },
+        { new Point2D(2, 0), 'A' },
+        { new Point2D(0, 1), '<' },
+        { new Point2D(1, 1), 'v' },
+        { new Point2D(2, 1), '>' }
     };
 
-    private char _position = 'A';
+    private Point2D _position = new(2, 0);
 
     public string GetSequence(string code)
     {
-        var sequence = new StringBuilder();
-        
-        for (var i = 0; i < code.Length; i++)
+        var queue = new PriorityQueue<(Point2D Position, int Digit, string Moves), int>();
+
+        queue.Enqueue((_position, 0, string.Empty), 0);
+
+        while (queue.Count > 0)
         {
-            if (_position == code[i])
+            var state = queue.Dequeue();
+
+            if (! _layout.TryGetValue(state.Position, out var value))
             {
-                sequence.Append('A');
-                
                 continue;
             }
+            
+            if (value == code[state.Digit])
+            {
+                state.Moves = $"{state.Moves}A";
 
-            sequence.Append(_map[$"{_position}{code[i]}"]);
+                state.Digit++;
+                
+                if (state.Digit == code.Length)
+                {
+                    _position = state.Position;
+                    
+                    return state.Moves;
+                }
+            }
 
-            _position = code[i];
+            queue.Enqueue((state.Position + Point2D.North, state.Digit, $"{state.Moves}^"), state.Moves.Length + 1);
+            queue.Enqueue((state.Position + Point2D.East, state.Digit, $"{state.Moves}>"), state.Moves.Length + 1);
+            queue.Enqueue((state.Position + Point2D.South, state.Digit, $"{state.Moves}v"), state.Moves.Length + 1);
+            queue.Enqueue((state.Position + Point2D.West, state.Digit, $"{state.Moves}<"), state.Moves.Length + 1);
         }
 
-        return sequence.ToString();
+        return null;
     }
 }

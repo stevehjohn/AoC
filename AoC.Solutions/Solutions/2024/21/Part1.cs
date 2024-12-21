@@ -13,6 +13,8 @@ public class Part1 : Base
 
         var dPad2 = new DPad();
 
+        var result = 0;
+        
         foreach (var line in Input)
         {
             var sequence = numPad.GetSequence(line);
@@ -23,13 +25,13 @@ public class Part1 : Base
             
             Console.WriteLine(sequence);
             
-            // sequence = dPad2.GetSequence(sequence);
-            //
-            // Console.WriteLine(sequence);
+            sequence = dPad2.GetSequence(sequence);
             
-            break;
+            Console.WriteLine(sequence);
+
+            result += sequence.Length * int.Parse(line[..3]);
         }
         
-        return "Unknown";
+        return result.ToString();
     }
 }
