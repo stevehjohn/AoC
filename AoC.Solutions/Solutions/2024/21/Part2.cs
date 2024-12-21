@@ -11,7 +11,7 @@ public class Part2 : Base
         
         foreach (var line in Input)
         {
-            result += Solve(line, 8) * int.Parse(line[..3]);
+            result += Solve(line, 25) * int.Parse(line[..3]);
         }
         
         return result.ToString();

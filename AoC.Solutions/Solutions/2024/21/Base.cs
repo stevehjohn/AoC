@@ -36,12 +36,11 @@ public abstract class Base : Solution
     
     protected long Solve(string code, int depth, Dictionary<char, Dictionary<char, char>> pad = null)
     {
-        if (pad == null)
-        {
-            pad = _numberPadMoves;
-        }
+        var key = (code, depth, pad == null);
+        
+        pad ??= _numberPadMoves;
 
-        if (_cache.TryGetValue((code, depth, pad == _dPadMoves), out var result))
+        if (_cache.TryGetValue(key, out var result))
         {
             return result;
         }
@@ -76,7 +75,7 @@ public abstract class Base : Solution
             }
         }
 
-        _cache[(code, depth, pad == _dPadMoves)] = result;
+        _cache[key] = result;
 
         return result;
     }
