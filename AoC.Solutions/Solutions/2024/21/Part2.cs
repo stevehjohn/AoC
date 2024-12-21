@@ -7,6 +7,13 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        return "Unknown";
+        var result = 0L;
+        
+        foreach (var line in Input)
+        {
+            result += Solve(line, 8) * int.Parse(line[..3]);
+        }
+        
+        return result.ToString();
     }
 }

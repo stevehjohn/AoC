@@ -32,6 +32,8 @@ public abstract class Base : Solution
             { 'A', new Dictionary<char, char> { { '^', '<' }, { '>', 'v' } } }
         };
     
+    private readonly Dictionary<(string, int, bool), long> _cache = [];
+    
     protected long Solve(string code, int depth, Dictionary<char, Dictionary<char, char>> pad = null)
     {
         if (pad == null)
@@ -39,9 +41,14 @@ public abstract class Base : Solution
             pad = _numberPadMoves;
         }
 
+        if (_cache.TryGetValue((code, depth, pad == _dPadMoves), out var result))
+        {
+            return result;
+        }
+
         code = $"A{code}";
 
-        var result = 0L;
+        result = 0L;
         
         for (var i = 0; i < code.Length - 1; i++)
         {
@@ -68,6 +75,8 @@ public abstract class Base : Solution
                 result += minimum;
             }
         }
+
+        _cache[(code, depth, pad == _dPadMoves)] = result;
 
         return result;
     }
