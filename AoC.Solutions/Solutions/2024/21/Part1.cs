@@ -17,19 +17,30 @@ public class Part1 : Base
         
         foreach (var line in Input)
         {
-            var sequence = numPad.GetSequence(line);
-            
-            Console.WriteLine(sequence);
-            
-            sequence = dPad1.GetSequence(sequence);
-            
-            Console.WriteLine(sequence);
-            
-            sequence = dPad2.GetSequence(sequence);
-            
-            Console.WriteLine(sequence);
+            var sequences = numPad.GetSequences(line);
 
-            result += sequence.Length * int.Parse(line[..3]);
+            Console.WriteLine();
+            
+            // foreach (var sequence in sequences)
+            // {
+            //     // Console.WriteLine(sequence);
+            //
+            //     // var next = dPad1.GetSequence(sequence);
+            //     //
+            //     // Console.WriteLine(next);
+            // }
+            
+            // sequence = dPad1.GetSequence(sequence);
+            //
+            // Console.WriteLine(sequence);
+            //
+            // sequence = dPad2.GetSequence(sequence);
+            //
+            // Console.WriteLine(sequence);
+            //
+            // result += sequence.Length * int.Parse(line[..3]);
+            
+            // break;
         }
         
         return result.ToString();

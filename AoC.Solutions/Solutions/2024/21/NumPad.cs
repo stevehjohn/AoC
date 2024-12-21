@@ -21,11 +21,15 @@ public class NumPad
 
     private Point2D _position = new(2, 3);
 
-    public string GetSequence(string code)
+    public List<string> GetSequences(string code)
     {
         var queue = new PriorityQueue<(Point2D Position, int Digit, string Moves), int>();
 
         queue.Enqueue((_position, 0, string.Empty), 0);
+
+        var results = new List<string>();
+
+        var length = int.MaxValue;
         
         while (queue.Count > 0)
         {
@@ -45,17 +49,28 @@ public class NumPad
                 if (state.Digit == code.Length)
                 {
                     _position = state.Position;
+
+                    if (state.Moves.Length <= length)
+                    {
+                        length = state.Moves.Length;
+                    }
+                    else
+                    {
+                        break;
+                    }
                     
-                    return state.Moves;
+                    Console.WriteLine(state.Moves);
+                    
+                    results.Add(state.Moves);
                 }
             }
 
-            queue.Enqueue((state.Position + Point2D.North, state.Digit, $"{state.Moves}^"), state.Moves.Length + 1);
-            queue.Enqueue((state.Position + Point2D.East, state.Digit, $"{state.Moves}>"), state.Moves.Length + 1);
-            queue.Enqueue((state.Position + Point2D.South, state.Digit, $"{state.Moves}v"), state.Moves.Length + 1);
-            queue.Enqueue((state.Position + Point2D.West, state.Digit, $"{state.Moves}<"), state.Moves.Length + 1);
+            queue.Enqueue((state.Position + Point2D.North, state.Digit, $"{state.Moves}^"), state.Digit + state.Moves.Length + 1);
+            queue.Enqueue((state.Position + Point2D.East, state.Digit, $"{state.Moves}>"), state.Digit + state.Moves.Length + 1);
+            queue.Enqueue((state.Position + Point2D.South, state.Digit, $"{state.Moves}v"), state.Digit + state.Moves.Length + 1);
+            queue.Enqueue((state.Position + Point2D.West, state.Digit, $"{state.Moves}<"), state.Digit + state.Moves.Length + 1);
         }
 
-        return null;
+        return results;
     }
 }
