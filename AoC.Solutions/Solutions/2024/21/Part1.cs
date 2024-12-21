@@ -9,9 +9,25 @@ public class Part1 : Base
     {
         var numPad = new NumPad();
 
+        var dPad1 = new DPad();
+
+        var dPad2 = new DPad();
+
         foreach (var line in Input)
         {
-            Console.WriteLine(numPad.GetSequence(line));
+            var sequence = numPad.GetSequence(line);
+            
+            Console.WriteLine(sequence);
+            
+            sequence = dPad1.GetSequence(sequence);
+            
+            Console.WriteLine(sequence);
+            
+            sequence = dPad2.GetSequence(sequence);
+            
+            Console.WriteLine(sequence);
+            
+            break;
         }
         
         return "Unknown";

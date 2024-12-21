@@ -19,7 +19,7 @@ public class NumPad
         { new Point2D(2, 3), 'A' }
     };
 
-    private Point2D _position = new Point2D(2, 3);
+    private Point2D _position = new(2, 3);
 
     public string GetSequence(string code)
     {
@@ -50,10 +50,10 @@ public class NumPad
                 }
             }
 
-            queue.Enqueue((state.Position + Point2D.North, state.Digit, $"{state.Moves}^"), state.Moves.Length);
-            queue.Enqueue((state.Position + Point2D.East, state.Digit, $"{state.Moves}>"), state.Moves.Length);
-            queue.Enqueue((state.Position + Point2D.South, state.Digit, $"{state.Moves}v"), state.Moves.Length);
-            queue.Enqueue((state.Position + Point2D.West, state.Digit, $"{state.Moves}<"), state.Moves.Length);
+            queue.Enqueue((state.Position + Point2D.North, state.Digit, $"{state.Moves}^"), state.Moves.Length + 1);
+            queue.Enqueue((state.Position + Point2D.East, state.Digit, $"{state.Moves}>"), state.Moves.Length + 1);
+            queue.Enqueue((state.Position + Point2D.South, state.Digit, $"{state.Moves}v"), state.Moves.Length + 1);
+            queue.Enqueue((state.Position + Point2D.West, state.Digit, $"{state.Moves}<"), state.Moves.Length + 1);
         }
 
         return null;
