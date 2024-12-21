@@ -14,7 +14,7 @@ public class DPad
     };
 
     private Point2D _position = new(2, 0);
-
+    
     public string GetSequence(string code)
     {
         var queue = new PriorityQueue<(Point2D Position, int Digit, string Moves), int>();
