@@ -7,6 +7,10 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
+        var numPad = new NumPad();
+        
+        Console.WriteLine(numPad.GetSequence("029A"));
+        
         return "Unknown";
     }
 }
