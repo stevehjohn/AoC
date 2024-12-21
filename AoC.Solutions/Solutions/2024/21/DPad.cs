@@ -1,5 +1,4 @@
 using System.Text;
-using AoC.Solutions.Common;
 
 namespace AoC.Solutions.Solutions._2024._21;
 
@@ -16,7 +15,7 @@ public class DPad
         { "^v", "vA" },
         { "^>", "v>A" },
         { "<^", ">^A" },
-        { "<A", ">>^A" },
+        { "<A", ">^>A" },
         { "<v", ">A" },
         { "<>", ">>A" },
         { "v^", "^A" },

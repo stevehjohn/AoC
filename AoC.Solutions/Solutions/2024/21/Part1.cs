@@ -23,9 +23,9 @@ public class Part1 : Base
             
             Console.WriteLine(sequence);
             
-            sequence = dPad2.GetSequence(sequence);
-            
-            Console.WriteLine(sequence);
+            // sequence = dPad2.GetSequence(sequence);
+            //
+            // Console.WriteLine(sequence);
             
             break;
         }
