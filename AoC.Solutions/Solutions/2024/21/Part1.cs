@@ -7,40 +7,11 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var numPad = new NumPad();
-
-        var dPad1 = new DPad();
-
-        var dPad2 = new DPad();
-
-        var result = 0;
+        var result = 0L;
         
         foreach (var line in Input)
         {
-            var sequences = numPad.GetSequences(line);
-
-            Console.WriteLine();
-            
-            // foreach (var sequence in sequences)
-            // {
-            //     // Console.WriteLine(sequence);
-            //
-            //     // var next = dPad1.GetSequence(sequence);
-            //     //
-            //     // Console.WriteLine(next);
-            // }
-            
-            // sequence = dPad1.GetSequence(sequence);
-            //
-            // Console.WriteLine(sequence);
-            //
-            // sequence = dPad2.GetSequence(sequence);
-            //
-            // Console.WriteLine(sequence);
-            //
-            // result += sequence.Length * int.Parse(line[..3]);
-            
-            // break;
+            result += Solve(line, 2) * int.Parse(line[..3]);
         }
         
         return result.ToString();
