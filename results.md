@@ -181,7 +181,7 @@ Tests performed on a 2023 MacBook Pro.
  2018  7.1: 51μs          Ikea sleigh
  2018  7.2: 225μs         
  2018  8.1: 46,974μs      Navigation licensing
- 2018  8.2: 22,592μs      
+ 2018  8.2: 15,614μs      
  2018  9.1: 939μs         Marble madness
  2018  9.2: 505,967μs     
  2018 10.1: 15,389μs      Writing in the stars
@@ -216,7 +216,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 331,654μs     
  2018 25.1: 32,693μs      4D chocolate teleportation
             -------------
-            18.259s      
+            18.252s      
 
  2019  1.1: 2μs           Calculate launch fuel
  2019  1.2: 5μs           
@@ -323,7 +323,7 @@ Tests performed on a 2023 MacBook Pro.
             1.246s       
 
  2021  1.1: 51μs          Depth scan
- 2021  1.2: 159μs         
+ 2021  1.2: 138μs         
  2021  2.1: 45μs          Navigate forward
  2021  2.2: 45μs          
  2021  3.1: 51μs          Power consumption
@@ -373,7 +373,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 24.2: 2μs           
  2021 25.1: 103,190μs     Landing among the cucumbers
             -------------
-            3.920s       
+            3.919s       
 
  2022  1.1: 24μs          Calorie counting
  2022  1.2: 33μs          
@@ -519,8 +519,10 @@ Tests performed on a 2023 MacBook Pro.
  2024 19.2: 88,023μs      
  2024 20.1: 41,189μs      Race condition
  2024 20.2: 40,717μs      
+ 2024 21.1: 814μs         Keypad conundrum
+ 2024 21.2: 5,188μs       
             -------------
-            400.490ms    
+            406.492ms    
 
- 482 puzzles solved in 51.408s.
+ 484 puzzles solved in 51.407s.
 ```
