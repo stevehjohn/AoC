@@ -32,15 +32,41 @@ public abstract class Base : Solution
             { 'A', new Dictionary<char, char> { { '^', '<' }, { '>', 'v' } } }
         };
     
-    protected long Solve(string code, int depth)
+    protected long Solve(string code, int depth, Dictionary<char, Dictionary<char, char>> pad = null)
     {
+        if (pad == null)
+        {
+            pad = _numberPadMoves;
+        }
+
         code = $"A{code}";
 
         var result = 0L;
         
         for (var i = 0; i < code.Length - 1; i++)
         {
-            var paths = GetPaths(code[i], code[i + 1], _numberPadMoves);
+            var paths = GetPaths(code[i], code[i + 1], pad);
+
+            if (depth == 0)
+            {
+                result += paths.MinBy(p => p.Length).Length;
+            }
+            else
+            {
+                var minimum = long.MaxValue;
+                
+                foreach (var path in paths)
+                {
+                    var next = Solve(path, depth - 1, _dPadMoves);
+
+                    if (next < minimum)
+                    {
+                        minimum = next;
+                    }
+                }
+
+                result += minimum;
+            }
         }
 
         return result;
