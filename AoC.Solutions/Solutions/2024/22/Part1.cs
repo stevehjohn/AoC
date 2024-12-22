@@ -7,6 +7,13 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        return "Unknown";
+        var result = 0L;
+
+        foreach (var line in Input)
+        {
+            result += SimulateBuyer(long.Parse(line));
+        }
+
+        return result.ToString();
     }
 }
