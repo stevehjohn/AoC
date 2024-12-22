@@ -5,7 +5,7 @@ namespace AoC.Solutions.Solutions._2024._22;
 [UsedImplicitly]
 public class Part2 : Base
 {
-    private long[] _candidates = new long[4];
+    private readonly long[] _candidates = new long[4];
     
     public override string GetAnswer()
     {
@@ -16,15 +16,51 @@ public class Part2 : Base
             sequences.Add(GetSequence(long.Parse(line)));
         }
 
+        var maximumBananas = new List<int>();
+        
         for (var i = 9; i > 0; i--)
         {
-            foreach (var sequence in sequences)
+            var bananas = 0;
+            
+            GetCandidates(sequences[0], i);
+            
+            foreach (var sequence in sequences[1..])
             {
-                GetCandidates(sequence, 9);
+                if (FindCandidates(sequence))
+                {
+                    bananas += i;
+                }
+            }
+            
+            maximumBananas.Add(bananas);
+        }
+
+        return maximumBananas.Max().ToString();
+    }
+
+    private bool FindCandidates(List<(int Price, int Delta)> sequence)
+    {
+        for (var i = 0; i < sequence.Count - 4; i++)
+        {
+            var found = true;
+            
+            for (var j = 0; j < 4; j++)
+            {
+                if (sequence[i + j].Delta != _candidates[j])
+                {
+                    found = false;
+                    
+                    break;
+                }
+            }
+
+            if (found)
+            {
+                return true;
             }
         }
 
-        return "Unknown";
+        return false;
     }
 
     private void GetCandidates(List<(int Price, int Delta)> sequence, int maximum)
