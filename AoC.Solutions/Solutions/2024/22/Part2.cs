@@ -17,22 +17,27 @@ public class Part2 : Base
         }
 
         var maximumBananas = new List<int>();
-        
+
         for (var i = 9; i > 0; i--)
         {
-            var bananas = 0;
+            Console.WriteLine(i);
             
-            GetCandidates(sequences[0], i);
-            
-            foreach (var sequence in sequences[1..])
+            foreach (var left in sequences)
             {
-                if (FindCandidates(sequence))
+                var bananas = 0;
+
+                GetCandidates(left, i);
+
+                foreach (var sequence in sequences)
                 {
-                    bananas += i;
+                    if (FindCandidates(sequence))
+                    {
+                        bananas += i;
+                    }
                 }
+
+                maximumBananas.Add(bananas);
             }
-            
-            maximumBananas.Add(bananas);
         }
 
         return maximumBananas.Max().ToString();
@@ -40,7 +45,7 @@ public class Part2 : Base
 
     private bool FindCandidates(List<(int Price, int Delta)> sequence)
     {
-        for (var i = 0; i < sequence.Count - 4; i++)
+        for (var i = 0; i < sequence.Count - 1; i++)
         {
             var found = true;
             
@@ -88,6 +93,8 @@ public class Part2 : Base
         {
             _candidates[i + 3] = sequence[maximumIndex + i].Delta;
         }
+        
+        //Console.WriteLine(maximumIndex);
     }
 
     private static List<(int Price, int Delta)> GetSequence(long seed)
