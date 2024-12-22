@@ -438,7 +438,7 @@ Tests performed on a 2023 MacBook Pro.
  2023  5.1: 36μs          If you give a seed a fertilizer
  2023  5.2: 132μs         
  2023  6.1: 2μs           Wait for it
- 2023  6.2: 38μs          
+ 2023  6.2: 37μs          
  2023  7.1: 596μs         Camel cards
  2023  7.2: 644μs         
  2023  8.1: 424μs         Haunted wasteland
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,426μs       
  2023 25.1: 10,476μs      Snowverload
             -------------
-            399.436ms    
+            399.435ms    
 
  2024  1.1: 125μs         Historian hysteria
  2024  1.2: 97μs          
@@ -518,11 +518,13 @@ Tests performed on a 2023 MacBook Pro.
  2024 19.1: 57,442μs      Linen layout
  2024 19.2: 88,023μs      
  2024 20.1: 41,189μs      Race condition
- 2024 20.2: 40,717μs      
+ 2024 20.2: 40,704μs      
  2024 21.1: 814μs         Keypad conundrum
- 2024 21.2: 5,188μs       
+ 2024 21.2: 5,181μs       
+ 2024 22.1: 50,949μs      Monkey market
+ 2024 22.2: 154,361μs     
             -------------
-            406.492ms    
+            611.782ms    
 
- 484 puzzles solved in 51.407s.
+ 486 puzzles solved in 51.612s.
 ```
