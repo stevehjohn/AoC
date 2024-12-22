@@ -12,15 +12,15 @@ public abstract class Base : Solution
         
         for (var i = 0; i < rounds; i++)
         {
-            number ^= number * 64;
+            number ^= number << 6;
 
             number %= 16_777_216;
 
-            number ^= number / 32;
+            number ^= number >> 5;
             
             number %= 16_777_216;
 
-            number ^= number * 2_024;
+            number ^= number << 11;
             
             number %= 16_777_216;
         }
