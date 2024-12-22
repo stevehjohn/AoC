@@ -12,6 +12,8 @@ public class Part1 : Base
         foreach (var line in Input)
         {
             result += SimulateBuyer(long.Parse(line));
+            
+            Console.WriteLine($"{line}: {SimulateBuyer(long.Parse(line))}");
         }
 
         return result.ToString();
