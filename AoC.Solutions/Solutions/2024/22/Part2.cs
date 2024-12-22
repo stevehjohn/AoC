@@ -5,111 +5,52 @@ namespace AoC.Solutions.Solutions._2024._22;
 [UsedImplicitly]
 public class Part2 : Base
 {
-    private readonly long[] _candidates = new long[4];
-    
     public override string GetAnswer()
     {
-        var sequences = new List<List<(int Price, int Delta)>>();
+        var visited = new HashSet<long>();
+
+        var patternResults = new Dictionary<long, int>();
         
         foreach (var line in Input)
         {
-            sequences.Add(GetSequence(long.Parse(line)));
-        }
-
-        var maximumBananas = new List<int>();
-
-        for (var i = 9; i > 0; i--)
-        {
-            Console.WriteLine(i);
+            var sequence = GetSequence(long.Parse(line));
             
-            foreach (var left in sequences)
+            visited.Clear();
+
+            for (var i = 0; i < sequence.Count - 4; i++)
             {
-                var bananas = 0;
+                var key = (sequence[i].Delta << 24) | (sequence[i + 1].Delta << 16) | (sequence[i + 2].Delta << 8) | sequence[i + 3].Delta;
 
-                GetCandidates(left, i);
-
-                foreach (var sequence in sequences)
+                if (visited.Add(key))
                 {
-                    if (FindCandidates(sequence))
+                    if (patternResults.ContainsKey(key))
                     {
-                        bananas += i;
+                        patternResults[key] += sequence[i + 3].Price;
+                    }
+                    else
+                    {
+                        patternResults[key] = sequence[i + 3].Price;
                     }
                 }
-
-                maximumBananas.Add(bananas);
             }
         }
 
-        return maximumBananas.Max().ToString();
+        return patternResults.MaxBy(p => p.Value).Value.ToString();
     }
 
-    private bool FindCandidates(List<(int Price, int Delta)> sequence)
+    private static List<(byte Price, byte Delta)> GetSequence(long seed)
     {
-        for (var i = 0; i < sequence.Count - 1; i++)
-        {
-            var found = true;
-            
-            for (var j = 0; j < 4; j++)
-            {
-                if (sequence[i + j].Delta != _candidates[j])
-                {
-                    found = false;
-                    
-                    break;
-                }
-            }
-
-            if (found)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private void GetCandidates(List<(int Price, int Delta)> sequence, int maximum)
-    {
-        var maximumIndex = -1;
-
-        var maximumCount = 0;
-
-        do
-        {
-            for (var i = 0; i < sequence.Count; i++)
-            {
-                var item = sequence[i];
-
-                if (item.Price == maximum)
-                {
-                    maximumCount++;
-
-                    maximumIndex = i;
-                }
-            }
-        } while (maximumCount < 2);
-
-        for (var i = -3; i <= 0; i++)
-        {
-            _candidates[i + 3] = sequence[maximumIndex + i].Delta;
-        }
+        var previous = (byte) (seed % 10);
         
-        //Console.WriteLine(maximumIndex);
-    }
-
-    private static List<(int Price, int Delta)> GetSequence(long seed)
-    {
-        var previous = (int) seed % 10;
-        
-        var sequence = new List<(int Price, int Delta)>();
+        var sequence = new List<(byte Price, byte Delta)>();
 
         for (var i = 0; i < 1_999; i++)
         {
             seed = SimulateRound(seed);
 
-            var price = (int) seed % 10;
+            var price = (byte) (seed % 10);
             
-            sequence.Add((price, price - previous));
+            sequence.Add((price, (byte) (price - previous)));
 
             previous = price;
         }
