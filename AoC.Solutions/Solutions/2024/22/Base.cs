@@ -10,15 +10,15 @@ public abstract class Base : Solution
     {
         number ^= number << 6;
 
-        number %= 16_777_216;
+        number &= 0b0000_0000_1111_1111_1111_1111_1111_1111;
 
         number ^= number >> 5;
             
-        number %= 16_777_216;
+        number &= 0b0000_0000_1111_1111_1111_1111_1111_1111;
 
         number ^= number << 11;
             
-        number %= 16_777_216;
+        number &= 0b0000_0000_1111_1111_1111_1111_1111_1111;
 
         return number;
     }
