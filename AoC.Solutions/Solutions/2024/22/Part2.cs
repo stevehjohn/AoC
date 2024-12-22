@@ -23,13 +23,9 @@ public class Part2 : Base
 
                 if (visited.Add(key))
                 {
-                    if (patternResults.ContainsKey(key))
+                    if (! patternResults.TryAdd(key, sequence[i + 3].Price))
                     {
                         patternResults[key] += sequence[i + 3].Price;
-                    }
-                    else
-                    {
-                        patternResults[key] = sequence[i + 3].Price;
                     }
                 }
             }
