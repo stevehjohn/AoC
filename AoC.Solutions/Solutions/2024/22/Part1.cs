@@ -16,4 +16,16 @@ public class Part1 : Base
 
         return result.ToString();
     }
+
+    private static long SimulateBuyer(long seed)
+    {
+        var number = seed;
+        
+        for (var i = 0; i < 2_000; i++)
+        {
+            number = SimulateRound(number);
+        }
+
+        return number;
+    }
 }
