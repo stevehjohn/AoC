@@ -28,7 +28,7 @@ public class Part1 : Base
 
         if (visited.Count == steps)
         {
-            var result = node.Connections.Any(n => n.Name == start) && visited.Any(n => n >> 8 == 19);
+            var result = node.Connections.Any(n => n.Id == start) && visited.Any(n => n >> 8 == 19);
             
             if (result)
             {
@@ -40,12 +40,12 @@ public class Part1 : Base
 
         foreach (var connection in node.Connections)
         {
-            if (visited.Contains(connection.Name))
+            if (visited.Contains(connection.Id))
             {
                 continue;
             }
 
-            WalkNodes(start, connection, [..visited, connection.Name], steps);
+            WalkNodes(start, connection, [..visited, connection.Id], steps);
         }
     }
 }

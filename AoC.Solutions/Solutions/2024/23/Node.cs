@@ -2,17 +2,17 @@ namespace AoC.Solutions.Solutions._2024._23;
 
 public class Node
 {
-    public int Name { get; }
+    public int Id { get; }
 
     public List<Node> Connections { get; } = [];
 
-    public Node(int name)
+    public Node(int id)
     {
-        Name = name;
+        Id = id;
     }
 
     public override string ToString()
     {
-        return $"{Name}: {string.Join(", ", Connections.Select(c => c.Name))}";
+        return $"{Id}: {string.Join(", ", Connections.Select(c => c.Id))}";
     }
 }

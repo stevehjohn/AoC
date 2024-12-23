@@ -33,7 +33,7 @@ public class Part2 : Base
             
             foreach (var name in clique)
             {
-                if (Lan[name].Connections.All(c => c.Name != connection.Name))
+                if (Lan[name].Connections.All(c => c.Id != connection.Id))
                 {
                     connected = false;
                     
@@ -43,7 +43,7 @@ public class Part2 : Base
 
             if (connected)
             {
-                clique.Add(connection.Name);
+                clique.Add(connection.Id);
 
                 BuildClique(clique, connection);
             }
