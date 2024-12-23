@@ -32,7 +32,7 @@ public class Part1 : Base
             
             if (result)
             {
-                _loops.Add(string.Join(" -> ", visited.Order()));
+                _loops.Add(string.Join(",", visited.Order()));
             }
 
             return;
