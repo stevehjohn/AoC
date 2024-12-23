@@ -16,11 +16,6 @@ public class Part1 : Base
             WalkNodes(node.Key, node.Value, [node.Key], 3);
         }
 
-        foreach (var loop in _loops)
-        {
-            Console.WriteLine(loop);
-        }
-
         return _loops.Count.ToString();
     }
 
