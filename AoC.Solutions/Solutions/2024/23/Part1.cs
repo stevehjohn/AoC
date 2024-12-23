@@ -5,7 +5,7 @@ namespace AoC.Solutions.Solutions._2024._23;
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private readonly HashSet<string> _visited = [];
+    private readonly HashSet<string> _loops = [];
     
     public override string GetAnswer()
     {
@@ -13,39 +13,46 @@ public class Part1 : Base
 
         var count = 0;
 
-        foreach (var node in Lan)
+        foreach (var node in Lan.OrderBy(c => c.Key))
         {
-            _visited.Clear();
-            
-            count += WalkNodes(node.Key, node.Value.Connections, 2) ? 1 : 0;
+            WalkNodes(node.Key, node.Value, [node.Key], 3);
         }
 
-        return count.ToString();
+        foreach (var loop in _loops)
+        {
+            Console.WriteLine(loop);
+        }
+
+        return _loops.Count.ToString();
     }
 
-    private bool WalkNodes(string start, List<Node> connections, int depth)
+    private void WalkNodes(string start, Node node, HashSet<string> visited, int steps)
     {
-        foreach (var connection in connections)
+        if (visited.Count > steps)
         {
-            if (! _visited.Add(connection.Name))
+            return;
+        }
+
+        if (visited.Count == steps)
+        {
+            var result = node.Connections.Any(n => n.Name == start);
+            
+            if (result)
+            {
+                _loops.Add(string.Join(" -> ", visited.Order()));
+            }
+
+            return;
+        }
+
+        foreach (var connection in node.Connections)
+        {
+            if (visited.Contains(connection.Name))
             {
                 continue;
             }
 
-            if (connection.Name == start && depth == 0)
-            {
-                return true;
-            }
-
-            if (depth > 0)
-            {
-                if (WalkNodes(start, Lan[connection.Name].Connections, depth - 1))
-                {
-                    return true;
-                }
-            }
+            WalkNodes(start, connection, [..visited, connection.Name], steps);
         }
-
-        return false;
     }
 }
