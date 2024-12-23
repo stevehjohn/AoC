@@ -5,38 +5,47 @@ namespace AoC.Solutions.Solutions._2024._23;
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private readonly List<(string Left, string Right)> _connections = [];
+    private readonly HashSet<string> _visited = [];
     
     public override string GetAnswer()
     {
         ParseInput();
 
-        var result = 0;
+        var count = 0;
 
-        foreach (var connection in _connections)
+        foreach (var node in Lan)
         {
-            var leftConnections = _connections.Where(c => c.Right == connection.Left).ToList();
-
-            var rightConnections = _connections.Where(c => c.Left == connection.Right).ToList();
-
-            var union = leftConnections.Union(rightConnections).ToList();
-
-            if (union.Count > 3 && union.Any(c => c.Left[0] == 't' || c.Right[0] == 't'))
-            {
-                result++;
+            _visited.Clear();
             
-                Console.WriteLine(string.Join(',', union));
-            }
+            count += WalkNodes(node.Key, node.Value.Connections, 2) ? 1 : 0;
         }
-        
-        return result.ToString();
+
+        return count.ToString();
     }
 
-    private void ParseInput()
+    private bool WalkNodes(string start, List<Node> connections, int depth)
     {
-        foreach (var line in Input)
+        foreach (var connection in connections)
         {
-            _connections.Add((line[..2], line[3..]));
+            if (! _visited.Add(connection.Name))
+            {
+                continue;
+            }
+
+            if (connection.Name == start && depth == 0)
+            {
+                return true;
+            }
+
+            if (depth > 0)
+            {
+                if (WalkNodes(start, Lan[connection.Name].Connections, depth - 1))
+                {
+                    return true;
+                }
+            }
         }
+
+        return false;
     }
 }
