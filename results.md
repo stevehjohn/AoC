@@ -516,17 +516,17 @@ Tests performed on a 2023 MacBook Pro.
  2024 18.1: 1,373μs       RAM run
  2024 18.2: 1,451μs       
  2024 19.1: 57,442μs      Linen layout
- 2024 19.2: 88,023μs      
+ 2024 19.2: 82,431μs      
  2024 20.1: 41,189μs      Race condition
  2024 20.2: 40,655μs      
  2024 21.1: 814μs         Keypad conundrum
- 2024 21.2: 5,155μs       
- 2024 22.1: 39,848μs      Monkey market
- 2024 22.2: 147,445μs     
+ 2024 21.2: 5,134μs       
+ 2024 22.1: 37,876μs      Monkey market
+ 2024 22.2: 144,206μs     
  2024 23.1: 20,579μs      LAN party
- 2024 23.2: 32,732μs      
+ 2024 23.2: 21,942μs      
             -------------
-            646.938ms    
+            625.324ms    
 
- 488 puzzles solved in 51.647s.
+ 488 puzzles solved in 51.625s.
 ```
