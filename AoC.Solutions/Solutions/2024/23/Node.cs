@@ -2,11 +2,11 @@ namespace AoC.Solutions.Solutions._2024._23;
 
 public class Node
 {
-    public string Name { get; }
+    public int Name { get; }
 
     public List<Node> Connections { get; } = [];
 
-    public Node(string name)
+    public Node(int name)
     {
         Name = name;
     }

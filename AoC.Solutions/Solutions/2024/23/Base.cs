@@ -6,15 +6,15 @@ public abstract class Base : Solution
 {
     public override string Description => "LAN party";
 
-    protected readonly Dictionary<string, Node> Lan = [];
+    protected readonly Dictionary<int, Node> Lan = [];
 
     protected void ParseInput()
     {
         foreach (var line in Input)
         {
-            var left = line[..2];
+            var left = GetId(line[..2]);
 
-            var right = line[3..];
+            var right = GetId(line[3..]);
 
             Lan.TryAdd(left, new Node(left));
 
@@ -23,13 +23,18 @@ public abstract class Base : Solution
 
         foreach (var line in Input)
         {
-            var left = line[..2];
+            var left = GetId(line[..2]);
 
-            var right = line[3..];
-            
+            var right = GetId(line[3..]);
+
             Lan[left].Connections.Add(Lan[right]);
             
             Lan[right].Connections.Add(Lan[left]);
         }
+    }
+
+    private static int GetId(string name)
+    {
+        return ((name[0] - 'a') << 8) | (name[1] - 'a');
     }
 }

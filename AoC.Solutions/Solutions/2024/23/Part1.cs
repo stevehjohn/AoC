@@ -19,7 +19,7 @@ public class Part1 : Base
         return _loops.Count.ToString();
     }
 
-    private void WalkNodes(string start, Node node, HashSet<string> visited, int steps)
+    private void WalkNodes(int start, Node node, HashSet<int> visited, int steps)
     {
         if (visited.Count > steps)
         {
@@ -28,7 +28,7 @@ public class Part1 : Base
 
         if (visited.Count == steps)
         {
-            var result = node.Connections.Any(n => n.Name == start) && visited.Any(n => n[0] == 't');
+            var result = node.Connections.Any(n => n.Name == start) && visited.Any(n => n >> 8 == 't' - 'a');
             
             if (result)
             {
