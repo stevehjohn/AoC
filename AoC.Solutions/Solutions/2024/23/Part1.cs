@@ -21,7 +21,7 @@ public class Part1 : Base
 
             var union = leftConnections.Union(rightConnections).ToList();
 
-            if (union.Count > 3)// && union.Any(c => c.Left[0] == 't' || c.Right[0] == 't'))
+            if (union.Count > 3 && union.Any(c => c.Left[0] == 't' || c.Right[0] == 't'))
             {
                 result++;
             
