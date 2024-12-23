@@ -11,9 +11,7 @@ public class Part1 : Base
     {
         ParseInput();
 
-        var count = 0;
-
-        foreach (var node in Lan.OrderBy(c => c.Key))
+        foreach (var node in Lan)
         {
             WalkNodes(node.Key, node.Value, [node.Key], 3);
         }
@@ -35,7 +33,7 @@ public class Part1 : Base
 
         if (visited.Count == steps)
         {
-            var result = node.Connections.Any(n => n.Name == start);
+            var result = node.Connections.Any(n => n.Name == start) && visited.Any(n => n[0] == 't');
             
             if (result)
             {
