@@ -25,7 +25,7 @@ public class Part2 : Base
         return string.Join(',', longest.Order());
     }
 
-    private bool BuildClique(HashSet<string> clique, Node node)
+    private void BuildClique(HashSet<string> clique, Node node)
     {
         foreach (var connection in node.Connections)
         {
@@ -47,14 +47,6 @@ public class Part2 : Base
 
                 BuildClique(clique, connection);
             }
-
-            if (connected)
-            {
-            }
-
-            return connected;
         }
-
-        return false;
     }
 }
