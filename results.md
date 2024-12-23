@@ -509,7 +509,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 14.2: 15,878μs      
  2024 15.1: 279μs         Warehouse woes
  2024 15.2: 6,106μs       
- 2024 16.1: 3,510μs       Reindeer maze
+ 2024 16.1: 3,447μs       Reindeer maze
  2024 16.2: 38,833μs      
  2024 17.1: 8μs           Chronospatial computer
  2024 17.2: 2,704μs       
@@ -518,13 +518,15 @@ Tests performed on a 2023 MacBook Pro.
  2024 19.1: 57,442μs      Linen layout
  2024 19.2: 88,023μs      
  2024 20.1: 41,189μs      Race condition
- 2024 20.2: 40,704μs      
+ 2024 20.2: 40,655μs      
  2024 21.1: 814μs         Keypad conundrum
- 2024 21.2: 5,181μs       
- 2024 22.1: 50,949μs      Monkey market
- 2024 22.2: 154,361μs     
+ 2024 21.2: 5,155μs       
+ 2024 22.1: 39,848μs      Monkey market
+ 2024 22.2: 147,445μs     
+ 2024 23.1: 20,579μs      LAN party
+ 2024 23.2: 32,732μs      
             -------------
-            611.782ms    
+            646.938ms    
 
- 486 puzzles solved in 51.612s.
+ 488 puzzles solved in 51.647s.
 ```
