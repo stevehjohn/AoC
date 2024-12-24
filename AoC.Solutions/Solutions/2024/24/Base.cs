@@ -6,12 +6,12 @@ public abstract class Base : Solution
 {
     public override string Description => "Crossed wires";
 
+    protected readonly Dictionary<string, Gate> Gates = [];
+    
     private int _maxZ;
 
     private readonly Dictionary<string, bool> _wires = [];
 
-    private readonly Dictionary<string, Gate> _gates = [];
-    
     protected void ParseInput()
     {
         var i = 0;
@@ -37,7 +37,7 @@ public abstract class Base : Solution
 
             var gate = new Gate(parts[0], parts[2], Enum.Parse<Type>(parts[1]));
             
-            _gates.Add(parts[4], gate);
+            Gates.Add(parts[4], gate);
 
             if (parts[4][0] == 'z')
             {
@@ -50,7 +50,7 @@ public abstract class Base : Solution
 
     private bool GetWireValue(string wire)
     {
-        return GetGateValue(_gates[wire]);
+        return GetGateValue(Gates[wire]);
     }
 
     private bool GetGateValue(Gate gate)
