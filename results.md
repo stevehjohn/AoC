@@ -472,12 +472,12 @@ Tests performed on a 2023 MacBook Pro.
  2023 22.1: 38,164μs      Sand slabs
  2023 22.2: 76,660μs      
  2023 23.1: 12,081μs      A long walk
- 2023 23.2: 67,127μs      
+ 2023 23.2: 64,751μs      
  2023 24.1: 1,578μs       Never tell me the odds
  2023 24.2: 5,426μs       
  2023 25.1: 10,476μs      Snowverload
             -------------
-            399.435ms    
+            397.059ms    
 
  2024  1.1: 125μs         Historian hysteria
  2024  1.2: 97μs          
@@ -520,13 +520,15 @@ Tests performed on a 2023 MacBook Pro.
  2024 20.1: 41,189μs      Race condition
  2024 20.2: 40,655μs      
  2024 21.1: 814μs         Keypad conundrum
- 2024 21.2: 5,134μs       
- 2024 22.1: 37,876μs      Monkey market
+ 2024 21.2: 5,097μs       
+ 2024 22.1: 37,771μs      Monkey market
  2024 22.2: 144,206μs     
  2024 23.1: 20,579μs      LAN party
  2024 23.2: 21,942μs      
+ 2024 24.1: 359μs         Crossed wires
+ 2024 24.2: 288μs         
             -------------
-            625.324ms    
+            625.829ms    
 
- 488 puzzles solved in 51.625s.
+ 490 puzzles solved in 51.624s.
 ```
