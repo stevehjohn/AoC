@@ -50,6 +50,30 @@ public abstract class Base : Solution
 
     protected bool GetWireValue(string wire)
     {
-        return false;
+        return GetGateValue(_gates[wire]);
+    }
+
+    private bool GetGateValue(Gate gate)
+    {
+        var left = gate.Left[0] is 'x' or 'y' 
+            ? _wires[gate.Left] 
+            : GetWireValue(gate.Left);
+
+        var right = gate.Left[0] is 'x' or 'y' 
+            ? _wires[gate.Right] 
+            : GetWireValue(gate.Right);
+
+        switch (gate.Type)
+        {
+            case Type.AND:
+                return left && right;
+            
+            case Type.OR:
+                return left || right;
+
+            case Type.XOR:
+            default:
+                return left != right;
+        }
     }
 }
