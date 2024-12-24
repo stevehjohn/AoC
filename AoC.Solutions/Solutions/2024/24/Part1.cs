@@ -9,7 +9,7 @@ public class Part1 : Base
     {
         ParseInput();
 
-        var result = GetBusValue('z');
+        var result = GetOutputValue();
         
         return result.ToString();
     }

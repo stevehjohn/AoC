@@ -12,6 +12,21 @@ public abstract class Base : Solution
 
     private int _maxZ;
 
+    protected ulong GetOutputValue()
+    {
+        var result = 0UL;
+
+        for (var i = 0; i <= _maxZ; i++)
+        {
+            if (GetWireValue($"z{i:D2}"))
+            {
+                result |= 1UL << i;
+            }
+        }
+
+        return result;
+    }
+
     protected void ParseInput()
     {
         var i = 0;
@@ -75,23 +90,6 @@ public abstract class Base : Solution
             default:
                 return left != right;
         }
-    }
-
-    protected ulong GetBusValue(char prefix)
-    {
-        var result = 0UL;
-
-        var max = prefix == 'z' ? _maxZ : _maxZ - 1;
-        
-        for (var i = 0; i <= max; i++)
-        {
-            if (GetWireValue($"{prefix}{i:D2}"))
-            {
-                result |= 1UL << i;
-            }
-        }
-
-        return result;
     }
 
     protected void SetBusValue(char prefix, ulong value)

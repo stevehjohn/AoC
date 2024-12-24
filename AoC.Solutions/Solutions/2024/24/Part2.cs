@@ -43,7 +43,7 @@ public class Part2 : Base
 
             SetBusValue('y', y);
 
-            var actual = GetBusValue('z');
+            var actual = GetOutputValue();
 
             incorrectBits |= actual ^ expected;
         }
