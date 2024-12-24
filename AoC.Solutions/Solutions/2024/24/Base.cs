@@ -77,7 +77,7 @@ public abstract class Base : Solution
         }
     }
 
-    protected ulong GetNumber(char prefix)
+    protected ulong GetBusValue(char prefix)
     {
         var result = 0UL;
 
