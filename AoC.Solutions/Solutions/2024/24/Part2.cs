@@ -1,3 +1,4 @@
+using System.Numerics;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2024._24;
@@ -10,10 +11,20 @@ public class Part2 : Base
     public override string GetAnswer()
     {
         ParseInput();
-        
+
+        for (var i = 0; i < 10; i++)
+        {
+            Console.WriteLine(TestCircuit());
+        }
+
+        return "Unknown";
+    }
+
+    private int TestCircuit()
+    {
         var incorrectBits = 0UL;
 
-        for (var i = 0; i < 1_000; i++)
+        for (var i = 0; i < 100; i++)
         {
             var x = GetRandomNumber();
 
@@ -29,8 +40,8 @@ public class Part2 : Base
 
             incorrectBits |= actual ^ expected;
         }
-        
-        return Convert.ToString((long) incorrectBits, 2).PadLeft(45, '0');
+
+        return BitOperations.PopCount(incorrectBits);
     }
 
     private ulong GetRandomNumber()
