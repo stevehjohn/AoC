@@ -9,6 +9,8 @@ public class Part2 : Base
     
     public override string GetAnswer()
     {
+        ParseInput();
+        
         var incorrectBits = 0UL;
 
         for (var i = 0; i < 10; i++)
@@ -28,6 +30,8 @@ public class Part2 : Base
             Console.WriteLine(Convert.ToString((long) expected, 2).PadLeft(45, '0'));
 
             Console.WriteLine(Convert.ToString((long) actual, 2).PadLeft(45, '0'));
+            
+            Console.WriteLine(Convert.ToString((long) (actual ^ expected), 2).PadLeft(45, '0'));
             
             Console.WriteLine();
         }
