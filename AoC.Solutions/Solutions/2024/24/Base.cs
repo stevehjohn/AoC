@@ -38,12 +38,17 @@ public abstract class Base : Solution
             var gate = new Gate(parts[0], parts[2], Enum.Parse<Type>(parts[1]));
             
             _gates.Add(parts[4], gate);
-            
+
+            if (parts[4][0] == 'z')
+            {
+                MaxZ = Math.Max(int.Parse(parts[4][1..]), MaxZ);
+            }
+
             i++;
         }
     }
 
-    protected bool GetValue(string wire)
+    protected bool GetWireValue(string wire)
     {
         return false;
     }

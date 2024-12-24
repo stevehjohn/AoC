@@ -8,7 +8,17 @@ public class Part1 : Base
     public override string GetAnswer()
     {
         ParseInput();
+
+        var result = 0UL;
         
-        return "Unknown";
+        for (var i = 0; i <= MaxZ; i++)
+        {
+            if (GetWireValue($"z{i:D2}"))
+            {
+                result |= 1UL << i;
+            }
+        }
+
+        return result.ToString();
     }
 }
