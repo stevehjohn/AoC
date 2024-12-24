@@ -13,7 +13,7 @@ public class Part2 : Base
         
         var incorrectBits = 0UL;
 
-        for (var i = 0; i < 10; i++)
+        for (var i = 0; i < 1_000; i++)
         {
             var x = GetRandomNumber();
 
@@ -27,13 +27,7 @@ public class Part2 : Base
 
             var actual = GetBusValue('z');
 
-            Console.WriteLine(Convert.ToString((long) expected, 2).PadLeft(45, '0'));
-
-            Console.WriteLine(Convert.ToString((long) actual, 2).PadLeft(45, '0'));
-            
-            Console.WriteLine(Convert.ToString((long) (actual ^ expected), 2).PadLeft(45, '0'));
-            
-            Console.WriteLine();
+            incorrectBits |= actual ^ expected;
         }
         
         return Convert.ToString((long) incorrectBits, 2).PadLeft(45, '0');
