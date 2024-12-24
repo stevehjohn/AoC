@@ -12,7 +12,7 @@ public class Part2 : Base
     {
         ParseInput();
 
-        var wrong = Gates.Where(g => g.Key[0] == 'z' && g.Key != "z45" && g.Value.Type != Type.XOR).Select(g => g.Key);
+        var wrong = Gates.Where(g => g.Key[0] == 'z' && g.Key != "z45" && g.Value.Type != Type.XOR).Select(g => g.Key).ToList();
 
         wrong = wrong.Union(Gates.Where(g => g.Key[0] != 'z'
                                              && g.Value.Left[0] is not ('x' or 'y')

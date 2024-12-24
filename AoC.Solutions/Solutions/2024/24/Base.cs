@@ -8,9 +8,9 @@ public abstract class Base : Solution
 
     protected readonly Dictionary<string, Gate> Gates = [];
     
-    private int _maxZ;
-
     private readonly Dictionary<string, bool> _wires = [];
+
+    private int _maxZ;
 
     protected void ParseInput()
     {
