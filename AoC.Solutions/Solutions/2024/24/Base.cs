@@ -8,25 +8,10 @@ public abstract class Base : Solution
 
     protected readonly Dictionary<string, Gate> Gates = [];
     
-    private readonly Dictionary<string, bool> _wires = [];
+    protected readonly Dictionary<string, bool> Wires = [];
 
-    private int _maxZ;
-
-    protected ulong GetOutputValue()
-    {
-        var result = 0UL;
-
-        for (var i = 0; i <= _maxZ; i++)
-        {
-            if (GetWireValue($"z{i:D2}"))
-            {
-                result |= 1UL << i;
-            }
-        }
-
-        return result;
-    }
-
+    protected int MaxZ;
+    
     protected void ParseInput()
     {
         var i = 0;
@@ -35,7 +20,7 @@ public abstract class Base : Solution
         
         while (! string.IsNullOrWhiteSpace(line))
         {
-            _wires.Add(line[..3], line[5] == '1');
+            Wires.Add(line[..3], line[5] == '1');
 
             i++;
 
@@ -56,39 +41,10 @@ public abstract class Base : Solution
 
             if (parts[4][0] == 'z')
             {
-                _maxZ = Math.Max(int.Parse(parts[4][1..]), _maxZ);
+                MaxZ = Math.Max(int.Parse(parts[4][1..]), MaxZ);
             }
 
             i++;
-        }
-    }
-
-    private bool GetWireValue(string wire)
-    {
-        return GetGateValue(Gates[wire]);
-    }
-
-    private bool GetGateValue(Gate gate)
-    {
-        var left = gate.Left[0] is 'x' or 'y' 
-            ? _wires[gate.Left] 
-            : GetWireValue(gate.Left);
-
-        var right = gate.Left[0] is 'x' or 'y' 
-            ? _wires[gate.Right] 
-            : GetWireValue(gate.Right);
-
-        switch (gate.Type)
-        {
-            case Type.AND:
-                return left && right;
-            
-            case Type.OR:
-                return left || right;
-
-            case Type.XOR:
-            default:
-                return left != right;
         }
     }
 }
