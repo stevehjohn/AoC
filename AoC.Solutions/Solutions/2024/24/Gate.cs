@@ -16,4 +16,9 @@ public struct Gate
         
         Type = type;
     }
+
+    public override string ToString()
+    {
+        return $"{Left} {Type} {Right}";
+    }
 }
