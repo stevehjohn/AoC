@@ -27,6 +27,17 @@ public class Part2 : Base
             }
         }
 
+        foreach (var left in Gates.Where(g => g.Value.Type == Type.XOR))
+        {
+            foreach (var right in Gates)
+            {
+                if ((left.Key == right.Value.Left || left.Key == right.Value.Right) && right.Value.Type == Type.OR)
+                {
+                    wrong.Add(left.Key);
+                }
+            }
+        }
+
         return string.Join(',', wrong.Order());
     }
 }
