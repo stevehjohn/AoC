@@ -9,16 +9,8 @@ public class Part1 : Base
     {
         ParseInput();
 
-        var result = 0UL;
+        var result = GetNumber('z');
         
-        for (var i = 0; i <= MaxZ; i++)
-        {
-            if (GetWireValue($"z{i:D2}"))
-            {
-                result |= 1UL << i;
-            }
-        }
-
         return result.ToString();
     }
 }

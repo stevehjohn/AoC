@@ -76,4 +76,21 @@ public abstract class Base : Solution
                 return left != right;
         }
     }
+
+    protected ulong GetNumber(char prefix)
+    {
+        var result = 0UL;
+
+        var max = prefix == 'z' ? MaxZ : MaxZ - 1;
+        
+        for (var i = 0; i <= max; i++)
+        {
+            if (GetWireValue($"{prefix}{i:D2}"))
+            {
+                result |= 1UL << i;
+            }
+        }
+
+        return result;
+    }
 }
