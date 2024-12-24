@@ -1,6 +1,6 @@
 namespace AoC.Solutions.Solutions._2024._24;
 
-public struct Gate
+public readonly struct Gate
 {
     public string Left { get; }
     

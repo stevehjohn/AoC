@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Crossed wires";
 
-    protected int MaxZ;
+    private int _maxZ;
 
     private readonly Dictionary<string, bool> _wires = [];
 
@@ -41,14 +41,14 @@ public abstract class Base : Solution
 
             if (parts[4][0] == 'z')
             {
-                MaxZ = Math.Max(int.Parse(parts[4][1..]), MaxZ);
+                _maxZ = Math.Max(int.Parse(parts[4][1..]), _maxZ);
             }
 
             i++;
         }
     }
 
-    protected bool GetWireValue(string wire)
+    private bool GetWireValue(string wire)
     {
         return GetGateValue(_gates[wire]);
     }
@@ -81,7 +81,7 @@ public abstract class Base : Solution
     {
         var result = 0UL;
 
-        var max = prefix == 'z' ? MaxZ : MaxZ - 1;
+        var max = prefix == 'z' ? _maxZ : _maxZ - 1;
         
         for (var i = 0; i <= max; i++)
         {
