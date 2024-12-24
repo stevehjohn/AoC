@@ -91,14 +91,4 @@ public abstract class Base : Solution
                 return left != right;
         }
     }
-
-    protected void SetBusValue(char prefix, ulong value)
-    {
-        var max = prefix == 'z' ? _maxZ : _maxZ - 1;
-        
-        for (var i = 0; i <= max; i++)
-        {
-            _wires[$"{prefix}{i:D2}"] = (value & (1UL << i)) > 0;
-        }
-    }
 }
