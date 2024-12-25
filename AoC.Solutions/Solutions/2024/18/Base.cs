@@ -61,7 +61,7 @@ public abstract class Base : Solution
 
         if (Map[position.X, position.Y] != '#')
         {
-            _queue.Enqueue(new State(position, state.Steps + 1, state, _visited), state.Steps + 1);
+            _queue.Enqueue(new State(position, state.Steps + 1, state, _visited), state.Steps * 10 + ((direction.X + 1) << 2) + direction.Y + 1);
         }
     }
 
