@@ -39,7 +39,7 @@ public class Part1 : Base
 
         while (item < Input.Length)
         {
-            var isLock = Input[item] == "#####";
+            var isLock = Input[item][0] == '#';
 
             var device = 0UL;
 
