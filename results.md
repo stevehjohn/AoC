@@ -491,7 +491,7 @@ Tests performed on a 2023 MacBook Pro.
  2024  5.2: 1,731μs       
  2024  6.1: 368μs         Guard gallivant
  2024  6.2: 33,123μs      
- 2024  7.1: 183μs         Bridge repair
+ 2024  7.1: 180μs         Bridge repair
  2024  7.2: 5,783μs       
  2024  8.1: 91μs          Resonant collinearity
  2024  8.2: 141μs         
@@ -510,26 +510,26 @@ Tests performed on a 2023 MacBook Pro.
  2024 15.1: 279μs         Warehouse woes
  2024 15.2: 6,106μs       
  2024 16.1: 3,447μs       Reindeer maze
- 2024 16.2: 38,284μs      
+ 2024 16.2: 38,140μs      
  2024 17.1: 8μs           Chronospatial computer
  2024 17.2: 2,704μs       
  2024 18.1: 1,367μs       RAM run
  2024 18.2: 1,451μs       
- 2024 19.1: 57,221μs      Linen layout
+ 2024 19.1: 56,350μs      Linen layout
  2024 19.2: 82,431μs      
- 2024 20.1: 40,930μs      Race condition
- 2024 20.2: 40,655μs      
+ 2024 20.1: 40,423μs      Race condition
+ 2024 20.2: 39,641μs      
  2024 21.1: 814μs         Keypad conundrum
  2024 21.2: 5,097μs       
- 2024 22.1: 36,748μs      Monkey market
+ 2024 22.1: 35,998μs      Monkey market
  2024 22.2: 141,868μs     
  2024 23.1: 20,579μs      LAN party
  2024 23.2: 21,942μs      
  2024 24.1: 351μs         Crossed wires
  2024 24.2: 280μs         
- 2024 25.1: 130μs         Code chronicle
+ 2024 25.1: 125μs         Code chronicle
             -------------
-            621.545ms    
+            618.251ms    
 
- 491 puzzles solved in 51.619s.
+ 491 puzzles solved in 51.616s.
 ```
