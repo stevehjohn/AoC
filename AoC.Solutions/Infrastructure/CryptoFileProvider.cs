@@ -105,6 +105,8 @@ public static class CryptoFileProvider
         }
 
         var keyData = Environment.GetEnvironmentVariable("KEYS");
+        
+        Console.WriteLine($"keyData length: {keyData.Length}");
 
         if (! string.IsNullOrWhiteSpace(keyData))
         {
