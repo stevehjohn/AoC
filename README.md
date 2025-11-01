@@ -1,5 +1,7 @@
 # AoC
 
+![Coverage](https://stevehjohn.github.io/BallSort/badge_linecoverage.svg)
+
 Stevo's Advent of Code Repo.
 
 See timings [here](results.md).
