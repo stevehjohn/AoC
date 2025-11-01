@@ -109,7 +109,11 @@ public static class CryptoFileProvider
         
         if (! string.IsNullOrWhiteSpace(keyData))
         {
-            return keyData.Split(Environment.NewLine);
+            var lines = keyData.Split(Environment.NewLine);
+            
+            Console.WriteLine(lines[2]);
+
+            return lines;
         }
 
         return null;
