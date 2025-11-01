@@ -1,0 +1,78 @@
+name: Run Unit Tests
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  repository-projects: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Run Tests
+    concurrency:
+      group: "pages"
+      cancel-in-progress: true
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+          
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Run Tests (with coverage)
+        run: |
+          dotnet test src -c Release \
+            --results-directory ${{ runner.temp }}/testresults \
+            --logger "trx;LogFileName=test_results.trx" \
+            --collect:"XPlat Code Coverage"
+
+      - name: Generate coverage report
+        uses: danielpalme/ReportGenerator-GitHub-Action@v5
+        with:
+          reports: "${{ runner.temp }}/testresults/**/coverage.cobertura.xml"
+          targetdir: "site"
+          reporttypes: "HtmlInline;MarkdownSummary;Badges"
+          tag: "${{ github.run_number }}"
+
+      - name: Verify badge
+        run: test -f site/badge_linecoverage.svg
+
+      - name: Add .nojekyll (prevent Jekyll processing)
+        run: touch site/.nojekyll
+
+      - name: Publish coverage summary
+        run: |
+          echo "### Code Coverage" >> $GITHUB_STEP_SUMMARY
+          cat site/Summary.md >> $GITHUB_STEP_SUMMARY
+          
+      - name: Add .nojekyll
+        run: touch site/.nojekyll
+    
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+    
+      - name: Upload Pages artifact
+        if: ${{ github.ref == 'refs/heads/master' }}
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+    
+      - name: Deploy to GitHub Pages
+        if: ${{ github.ref == 'refs/heads/master' }}
+        id: deploy
+        uses: actions/deploy-pages@v4
