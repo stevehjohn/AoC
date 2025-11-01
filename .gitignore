@@ -300,3 +300,5 @@ lambdas/.serverless/
 *.orig
 AoC.Games.*.zip
 Thumbs.db
+
+.tmp.driveupload/
