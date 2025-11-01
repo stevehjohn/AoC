@@ -45,9 +45,9 @@ public static class CryptoFileProvider
 
             return File.ReadAllLines(clearPath);
         }
-        
-        Console.WriteLine($"Exists: {File.Exists(encryptedPath)}");
 
+        Console.WriteLine(Environment.CurrentDirectory);
+        
         if (File.Exists(encryptedPath) && ! File.Exists(clearPath))
         {
             Decrypt(encryptedPath, clearPath);
