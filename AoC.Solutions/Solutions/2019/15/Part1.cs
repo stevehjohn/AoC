@@ -14,8 +14,7 @@ public class Part1 : Base
         var shortestPath = FindShortestRoute();
 
         SaveResult();
-
-
+        
         return shortestPath.ToString();
     }
 
