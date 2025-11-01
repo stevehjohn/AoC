@@ -38,7 +38,7 @@ jobs:
         run: |
           dotnet test -c Release \
             --results-directory ${{ runner.temp }}/testresults \
-            --logger "trx;LogFileName=test_results.trx" \
+            --logger "console;trx;LogFileName=test_results.trx" \
             --collect:"XPlat Code Coverage"
 
       - name: Generate coverage report
