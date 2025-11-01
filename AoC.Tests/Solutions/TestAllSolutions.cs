@@ -43,12 +43,12 @@ public class TestAllSolutions
 
         _testOutputHelper.WriteLine($"Testing {key}.");
         
-        var correctAnswerLine = _answers.FirstOrDefault(a => a.StartsWith(key));
-        
         _testOutputHelper.WriteLine("Length");
         
         _testOutputHelper.WriteLine(_answers.Length.ToString());
 
+        var correctAnswerLine = _answers.FirstOrDefault(a => a.StartsWith(key));
+        
         if (correctAnswerLine == null)
         {
             throw new TestException($"Please add the correct answer for {key} to AllAnswers.clear.");
