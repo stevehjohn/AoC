@@ -106,19 +106,9 @@ public static class CryptoFileProvider
         }
 
         var keyData = Environment.GetEnvironmentVariable("KEY");
-
-        var vars = Environment.GetEnvironmentVariables();
         
-        Console.WriteLine(vars.Count);
-
-        foreach (DictionaryEntry dictionaryEntry in vars)
-        {
-            Console.WriteLine(dictionaryEntry.Key);
-        }
-
         if (! string.IsNullOrWhiteSpace(keyData))
         {
-            Console.WriteLine("Found");
             return keyData.Split(Environment.NewLine);
         }
 
