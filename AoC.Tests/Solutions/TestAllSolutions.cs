@@ -42,10 +42,6 @@ public class TestAllSolutions
         var key = $"{int.Parse(solution.Namespace?.Split('.')[3].Replace("_", string.Empty) ?? "0")}.{int.Parse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0")}.{solution.Name[4]}";
 
         _testOutputHelper.WriteLine($"Testing {key}.");
-        
-        _testOutputHelper.WriteLine("Length");
-        
-        _testOutputHelper.WriteLine(_answers.Length.ToString());
 
         var correctAnswerLine = _answers.FirstOrDefault(a => a.StartsWith(key));
         
