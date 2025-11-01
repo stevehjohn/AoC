@@ -106,6 +106,10 @@ public static class CryptoFileProvider
 
         var keyData = Environment.GetEnvironmentVariable("KEYS");
 
+        var vars = Environment.GetEnvironmentVariables();
+        
+        Console.WriteLine(vars.Count);
+
         if (! string.IsNullOrWhiteSpace(keyData))
         {
             Console.WriteLine("Found");
