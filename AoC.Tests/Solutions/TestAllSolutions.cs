@@ -25,15 +25,11 @@ public class TestAllSolutions
         {
             path = "./Aoc.Solutions/Solutions/";
             
-            Console.WriteLine($"Loading: {path}");
-            
             _answers = CryptoFileProvider.LoadFile(path, "AllAnswers.clear");
         }
         else
         {
             path = "./Solutions/";
-            
-            Console.WriteLine($"Loading: {path}");
             
             _answers = CryptoFileProvider.LoadFile(path, "AllAnswers.clear");
         }

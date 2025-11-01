@@ -52,6 +52,8 @@ public static class CryptoFileProvider
 
             return File.ReadAllLines(clearPath);
         }
+        
+        Console.WriteLine("Failure.");
 
         return null;
     }
