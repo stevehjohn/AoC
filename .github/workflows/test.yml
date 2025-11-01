@@ -35,6 +35,8 @@ jobs:
           dotnet-version: 9.0.x
 
       - name: Run Tests (with coverage)
+        env:
+          KEY: ${{ secrets.KEY }}
         run: |
           dotnet test -c Release \
             --results-directory ${{ runner.temp }}/testresults \
