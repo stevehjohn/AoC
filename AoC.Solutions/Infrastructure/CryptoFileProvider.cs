@@ -111,14 +111,17 @@ public static class CryptoFileProvider
         {
             var lines = keyData.Split(Environment.NewLine);
 
+            Console.WriteLine(lines[1]);
+
             foreach (var line in lines)
             {
                 Console.WriteLine(line.Length);
             }
-
+            
             return lines;
         }
 
+        
         return null;
     }
 }
