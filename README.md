@@ -1,7 +1,5 @@
 # AoC
 
-![Coverage](https://stevehjohn.github.io/AoC/badge_linecoverage.svg)
-
 Stevo's Advent of Code Repo.
 
 See timings [here](results.md).
