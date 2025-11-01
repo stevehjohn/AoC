@@ -53,7 +53,7 @@ public static class CryptoFileProvider
             return File.ReadAllLines(clearPath);
         }
         
-        Console.WriteLine("Failure.");
+        Console.WriteLine($"Failure loading {encryptedPath}.");
 
         return null;
     }
