@@ -108,6 +108,7 @@ public static class CryptoFileProvider
 
         if (! string.IsNullOrWhiteSpace(keyData))
         {
+            Console.WriteLine("Found");
             return keyData.Split(Environment.NewLine);
         }
 
