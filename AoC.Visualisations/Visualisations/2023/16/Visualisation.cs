@@ -489,10 +489,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 if (_allBeams.TryGetValue(beam.SourceId, out var value) && value.Count > 0)
                 {
                     previous = value.Last().Direction;
-                        
-                    currentBeam.Add((beam.X, beam.Y, beam.Direction, GetTile(previous, beam.Direction), beam.SourceId));
-                        
-                    continue;
                 }
             }
             else

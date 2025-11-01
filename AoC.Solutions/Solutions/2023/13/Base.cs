@@ -44,8 +44,6 @@ public abstract class Base : Solution
             lines = RotateRight(lines);
             
             result = GetVerticalReflectionPoint(lines);
-            
-            return result;
         }
 
         return result;
