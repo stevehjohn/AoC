@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using Security.Crypto;
 
@@ -104,11 +105,16 @@ public static class CryptoFileProvider
             return File.ReadLines("./AoC.Solutions/AoC.Key");
         }
 
-        var keyData = Environment.GetEnvironmentVariable("KEYS");
+        var keyData = Environment.GetEnvironmentVariable("KEY");
 
         var vars = Environment.GetEnvironmentVariables();
         
         Console.WriteLine(vars.Count);
+
+        foreach (DictionaryEntry dictionaryEntry in vars)
+        {
+            Console.WriteLine(dictionaryEntry.Key);
+        }
 
         if (! string.IsNullOrWhiteSpace(keyData))
         {
