@@ -2,10 +2,8 @@
 using AoC.Solutions.Infrastructure;
 using AoC.Solutions.Solutions._2019._01;
 using AoC.Tests.Exceptions;
-using JetBrains.Annotations;
 using Xunit;
 using Xunit.Abstractions;
-using Xunit.Sdk;
 
 namespace AoC.Tests.Solutions;
 
