@@ -1,1 +1,1 @@
-dotnet test -C Release
+dotnet test -c Release --logger "console;verbosity=detailed"
