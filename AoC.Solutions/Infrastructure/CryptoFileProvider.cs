@@ -8,7 +8,7 @@ public static class CryptoFileProvider
 {
     public static string[] LoadFile(string path, string filename)
     {
-        if (GetKeyPath() == null)
+        if (GetKeyData() == null)
         {
             Console.Write("Please provide input decryption credentials in ./AoC.Solutions/AoC.Key\n\n");
 
@@ -62,7 +62,7 @@ public static class CryptoFileProvider
 
         var cipherProvider = new SymmetricCipher();
 
-        var keyData = File.ReadLines(GetKeyPath()).Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1]).ToArray();
+        var keyData = GetKeyData().Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1]).ToArray();
 
         var iv = Convert.FromBase64String(keyData[1]);
 
@@ -79,7 +79,7 @@ public static class CryptoFileProvider
     {
         var cipherProvider = new SymmetricCipher();
 
-        var keyData = File.ReadLines(GetKeyPath()).Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1]).ToArray();
+        var keyData = GetKeyData().Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1]).ToArray();
 
         var iv = Convert.FromBase64String(keyData[1]);
 
@@ -92,16 +92,23 @@ public static class CryptoFileProvider
         File.WriteAllBytes(clearPath, decrypted);
     }
 
-    private static string GetKeyPath()
+    private static IEnumerable<string> GetKeyData()
     {
         if (File.Exists("./AoC.Key"))
         {
-            return "./AoC.Key";
+            return File.ReadLines("./AoC.Key");
         }
 
         if (File.Exists("./AoC.Solutions/AoC.Key"))
         {
-            return "./AoC.Solutions/AoC.Key";
+            return File.ReadLines("./AoC.Solutions/AoC.Key");
+        }
+
+        var keyData = Environment.GetEnvironmentVariable("KEYS");
+
+        if (! string.IsNullOrWhiteSpace(keyData))
+        {
+            return keyData.Split(Environment.NewLine);
         }
 
         return null;
