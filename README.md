@@ -1,6 +1,6 @@
 # AoC
 
-![Coverage](https://stevehjohn.github.io/BallSort/badge_linecoverage.svg)
+![Coverage](https://stevehjohn.github.io/AoC/badge_linecoverage.svg)
 
 Stevo's Advent of Code Repo.
 
