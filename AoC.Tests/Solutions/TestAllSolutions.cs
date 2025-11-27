@@ -33,14 +33,19 @@ public class TestAllSolutions
             
             _answers = CryptoFileProvider.LoadFile(path, "AllAnswers.clear");
         }
-        
-        Console.WriteLine(_answers);
     }
 
     [Theory]
     [MemberData(nameof(Solutions))]
     public void RunTests(Type solution)
     {
+        if (_answers == null)
+        {
+            _testOutputHelper.WriteLine("Could not find answers.");
+            
+            return;
+        }
+        
         var key = $"{int.Parse(solution.Namespace?.Split('.')[3].Replace("_", string.Empty) ?? "0")}.{int.Parse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0")}.{solution.Name[4]}";
 
         var correctAnswerLine = _answers.FirstOrDefault(a => a.StartsWith(key));
