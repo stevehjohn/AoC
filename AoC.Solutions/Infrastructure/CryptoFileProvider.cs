@@ -19,7 +19,7 @@ public static class CryptoFileProvider
         
         var clearPath = $"./AoC.Solutions/{path}{filename}";
 
-        var encryptedPath = $"{path}{Path.GetFileNameWithoutExtension(filename)}.encrypted";
+        var encryptedPath = $"./AoC.Solutions/{path}{Path.GetFileNameWithoutExtension(filename)}.encrypted";
         
         Console.WriteLine($"Clear path: {clearPath}.");
         
