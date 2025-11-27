@@ -1,7 +1,6 @@
 # AoC
 
 ![CI](https://github.com/stevehjohn/AoC/actions/workflows/test.yml/badge.svg?branch=master&event=push)
-![Coverage](https://stevehjohn.github.io/AoC/badge_linecoverage.svg)
 
 Stevo's Advent of Code Repo.
 
