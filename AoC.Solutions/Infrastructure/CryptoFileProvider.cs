@@ -8,6 +8,8 @@ public static class CryptoFileProvider
 {
     public static string[] LoadFile(string path, string filename)
     {
+        Console.WriteLine($"Loading {filename}.");
+            
         if (GetKeyData() == null)
         {
             Console.Write("Please provide input decryption credentials in ./AoC.Solutions/AoC.Key\n\n");
@@ -21,7 +23,7 @@ public static class CryptoFileProvider
 
         if (File.Exists(clearPath))
         {
-            Console.WriteLine("AllAnswers.clear found.");
+            Console.WriteLine($"{filename}.clear found.");
             
             if (! File.Exists(encryptedPath))
             {
@@ -50,7 +52,7 @@ public static class CryptoFileProvider
 
         if (File.Exists(encryptedPath) && ! File.Exists(clearPath))
         {
-            Console.WriteLine("Decrypting AllAnswers.clear.");
+            Console.WriteLine($"Decrypting {filename}.encrypted.");
             
             Decrypt(encryptedPath, clearPath);
 
@@ -114,6 +116,8 @@ public static class CryptoFileProvider
         
         if (! string.IsNullOrWhiteSpace(keyData))
         {
+            Console.WriteLine("Keys found in environment.");
+            
             var lines = keyData.Split(Environment.NewLine);
 
             return lines;
