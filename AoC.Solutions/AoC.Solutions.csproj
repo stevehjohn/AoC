@@ -34,9 +34,6 @@
     <None Update="Solutions\AllAnswers.clear">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Solutions\AllAnswers.encrypted">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   
   <ItemGroup>
