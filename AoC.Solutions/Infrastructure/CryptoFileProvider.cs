@@ -27,7 +27,7 @@ public static class CryptoFileProvider
 
         if (File.Exists(clearPath))
         {
-            Console.WriteLine($"{filename}.clear found.");
+            Console.WriteLine($"{filename}.clear found, starting encryption.");
             
             if (! File.Exists(encryptedPath))
             {
@@ -47,6 +47,8 @@ public static class CryptoFileProvider
 
                     return null;
                 }
+                
+                Console.WriteLine("Encryption complete.");
 
                 File.Delete(tempPath);
             }
