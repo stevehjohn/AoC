@@ -39,6 +39,5 @@ jobs:
           KEY: ${{ secrets.KEY }}
         run: |
           dotnet test -c Release \
-            --results-directory ${{ runner.temp }}/testresults \
             --logger "trx;LogFileName=test_results.trx" \
             --logger "console;verbosity=detailed" \
