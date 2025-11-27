@@ -2,44 +2,47 @@
 
 public static class StringExtensions
 {
-    public static int CommonCharacterCount(this string left, string right)
+    extension(string left)
     {
-        if (right.Length > left.Length)
+        public int CommonCharacterCount(string right)
         {
-            (right, left) = (left, right);
-        }
-
-        var count = 0;
-
-        for (var i = 0; i < left.Length; i++)
-        {
-            if (right.Contains(left[i]))
+            if (right.Length > left.Length)
             {
-                count++;
-            }
-        }
-
-        return count;
-    }
-
-    public static char[,] To2DArray(this string input)
-    {
-        var lines = input.Split('\n');
-
-        var result = new char[lines[0].Length, lines.Length];
-
-        var y = 0;
-
-        foreach (var line in lines)
-        {
-            for (var x = 0; x < line.Length; x++)
-            {
-                result[x, y] = line[x];
+                (right, left) = (left, right);
             }
 
-            y++;
+            var count = 0;
+
+            for (var i = 0; i < left.Length; i++)
+            {
+                if (right.Contains(left[i]))
+                {
+                    count++;
+                }
+            }
+
+            return count;
         }
 
-        return result;
+        public char[,] To2DArray()
+        {
+            var lines = left.Split('\n');
+
+            var result = new char[lines[0].Length, lines.Length];
+
+            var y = 0;
+
+            foreach (var line in lines)
+            {
+                for (var x = 0; x < line.Length; x++)
+                {
+                    result[x, y] = line[x];
+                }
+
+                y++;
+            }
+
+            return result;
+        }
     }
 }

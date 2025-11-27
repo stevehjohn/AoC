@@ -39,7 +39,7 @@ public class MazeSolver
             {
                 if (! node.History.Contains(m))
                 {
-                    queue.Enqueue((m.X, m.Y, new List<(int, int)>(node.History)));
+                    queue.Enqueue((m.X, m.Y, [..node.History]));
                 }
             });
         }

@@ -2,40 +2,43 @@
 
 public static class IntExtensions
 {
-    public static int Converge(this int input, int target)
+    extension(int input)
     {
-        if (input == target)
+        public int Converge(int target)
         {
-            return input;
+            if (input == target)
+            {
+                return input;
+            }
+
+            if (target > input)
+            {
+                return input + 1;
+            }
+
+            return input - 1;
         }
 
-        if (target > input)
+        public int CountBits()
         {
-            return input + 1;
+            var count = 0;
+
+            while (input > 0)
+            {
+                count++;
+
+                input &= input - 1;
+            }
+
+            return count;
         }
 
-        return input - 1;
-    }
-    
-    public static int CountBits(this int value)
-    {
-        var count = 0;
-
-        while (value > 0)
+        public void Repetitions(Action action)
         {
-            count++;
-
-            value &= value - 1;
-        }
-
-        return count;
-    }
-
-    public static void Repetitions(this int times, Action action)
-    {
-        for (var i = 0; i < times; i++)
-        {
-            action();
+            for (var i = 0; i < input; i++)
+            {
+                action();
+            }
         }
     }
 }

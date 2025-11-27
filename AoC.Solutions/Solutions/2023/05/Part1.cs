@@ -58,7 +58,7 @@ public class Part1 : Base
             {
                 _mappings.Add(mapping);
 
-                mapping = new List<(long Destination, long Source, long Range)>();
+                mapping = [];
 
                 continue;
             }

@@ -31,12 +31,7 @@ public abstract class Base : Solution
 
         var parts = instruction.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
-        if (parts.Length != 2)
-        {
-            return int.MinValue;
-        }
-
-        if (! int.TryParse(parts[0], out var left) || ! int.TryParse(parts[1], out var right))
+        if (parts.Length != 2 || ! int.TryParse(parts[0], out var left) || ! int.TryParse(parts[1], out var right))
         {
             return int.MinValue;
         }

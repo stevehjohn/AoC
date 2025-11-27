@@ -63,15 +63,9 @@ public abstract class Base : Solution
 
             var right = FindAdjacent(number, 1);
 
-            if (left != null)
-            {
-                left.Value += number.Left.Value;
-            }
+            left?.Value += number.Left.Value;
 
-            if (right != null)
-            {
-                right.Value += number.Right.Value;
-            }
+            right?.Value += number.Right.Value;
 
             number.Left = null;
 

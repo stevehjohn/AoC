@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿// ReSharper disable DuplicatedSequentialIfBodies
+
+using System.Text;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2016._18;

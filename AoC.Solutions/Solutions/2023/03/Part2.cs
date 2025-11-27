@@ -90,7 +90,7 @@ public class Part2 : Base
     {
         for (var y = 0; y < Height; y++)
         {
-            _numbers.Add(y, new List<(int Y, int Number, int Length)>());
+            _numbers.Add(y, []);
         }
 
         for (var y = 0; y < Height; y++)

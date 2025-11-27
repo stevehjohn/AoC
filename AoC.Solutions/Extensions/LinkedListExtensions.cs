@@ -2,23 +2,26 @@
 
 public static class LinkedListExtensions
 {
-    public static LinkedListNode<T> NextCircular<T>(this LinkedListNode<T> node)
+    extension<T>(LinkedListNode<T> node)
     {
-        if (node.List == null)
+        public LinkedListNode<T> NextCircular()
         {
-            throw new NullReferenceException("Node is not linked to a list");
+            if (node.List == null)
+            {
+                throw new NullReferenceException("Node is not linked to a list");
+            }
+
+            return node.Next ?? node.List.First;
         }
 
-        return node.Next ?? node.List.First;
-    }
-
-    public static LinkedListNode<T> PreviousCircular<T>(this LinkedListNode<T> node)
-    {
-        if (node.List == null)
+        public LinkedListNode<T> PreviousCircular()
         {
-            throw new NullReferenceException("Node is not linked to a list");
-        }
+            if (node.List == null)
+            {
+                throw new NullReferenceException("Node is not linked to a list");
+            }
 
-        return node.Previous ?? node.List.Last;
+            return node.Previous ?? node.List.Last;
+        }
     }
 }

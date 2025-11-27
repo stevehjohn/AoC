@@ -114,12 +114,7 @@ public abstract class Base : Solution
             return new Point(location.X - 1, location.Y);
         }
 
-        if (location.Y == _height - 1)
-        {
-            return new Point(location.X, location.Y - 1);
-        }
-
-        if (_maze[location.X, location.Y - 1] == 0)
+        if (location.Y == _height - 1 || _maze[location.X, location.Y - 1] == 0)
         {
             return new Point(location.X, location.Y - 1);
         }

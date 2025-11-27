@@ -27,17 +27,7 @@ public static class EntryPoint
 
             part = arguments[0][8].ToString();
 
-            if (! int.TryParse(year, out _))
-            {
-                throw new VisualisationParameterException();
-            }
-
-            if (! int.TryParse(day, out _))
-            {
-                throw new VisualisationParameterException();
-            }
-
-            if (! int.TryParse(part, out _))
+            if (! int.TryParse(year, out _) || ! int.TryParse(day, out _) || ! int.TryParse(part, out _))
             {
                 throw new VisualisationParameterException();
             }

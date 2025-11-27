@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>13</LangVersion>
+    <LangVersion>14</LangVersion>
     <OptimizationPreference>Speed</OptimizationPreference>
     <Version>1.0.14</Version>
   </PropertyGroup>
