@@ -33,6 +33,8 @@ public class TestAllSolutions
             
             _answers = CryptoFileProvider.LoadFile(path, "AllAnswers.clear");
         }
+        
+        Console.WriteLine(_answers);
     }
 
     [Theory]
