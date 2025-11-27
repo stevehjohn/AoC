@@ -17,13 +17,13 @@ public static class CryptoFileProvider
             Environment.Exit(0);
         }
         
-        var clearPath = $"./AoC.Solutions/{path}{filename}";
+        var clearPath = $"{path}{filename}";
 
-        var encryptedPath = $"./AoC.Solutions/{path}{Path.GetFileNameWithoutExtension(filename)}.encrypted";
+        var encryptedPath = $"{path}{Path.GetFileNameWithoutExtension(filename)}.encrypted";
         
-        Console.WriteLine($"Clear path: {clearPath}.");
+        Console.WriteLine($"Clear path {clearPath} {(File.Exists(clearPath) ? "exists" : "not found")}.");
         
-        Console.WriteLine($"Encrypted path: {encryptedPath}.");
+        Console.WriteLine($"Encrypted path {encryptedPath} {(File.Exists(encryptedPath) ? "exists" : "not found")}.");
 
         if (File.Exists(clearPath))
         {
