@@ -112,12 +112,12 @@ public static class CryptoFileProvider
         
         if (! string.IsNullOrWhiteSpace(keyData))
         {
-            Console.WriteLine("Keys found in environment.");
-            
             var lines = keyData.Split(Environment.NewLine);
 
             return lines;
         }
+        
+        Console.WriteLine("Decryption keys not found.");
         
         return null;
     }
