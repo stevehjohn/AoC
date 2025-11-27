@@ -83,3 +83,4 @@ There are visualisations for:
 ## Mental Notes to Self
 
 The `.encrypted` files, safe to push to GitHub, have to be deleted to be recreated from the `.clear` versions.
+Remember to set 'Copy if newer' after recreation of .encrypted file.

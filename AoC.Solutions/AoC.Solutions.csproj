@@ -26,17 +26,11 @@
     <None Remove="2019.15.1.result" />
     <None Remove="2020.09.1.result" />
     <None Remove="2020.20.1.result" />
-    <None Update="Solutions\**\input.clear" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="Never" />
-    <None Update="Solutions\**\input.encrypted" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <None Update="Solutions\**\*.clear" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="Never" />
+    <None Update="Solutions\**\*.encrypted" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
     <None Update="AoC.Key" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="Never" />
     <None Update="Common\Ocr\OcrTemplate-Large.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
     <None Update="Common\Ocr\OcrTemplate-Small.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
-    <None Update="Solutions\AllAnswers.clear">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Solutions\AllAnswers.encrypted">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   
   <ItemGroup>
