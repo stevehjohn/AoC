@@ -38,6 +38,6 @@ jobs:
         env:
           KEY: ${{ secrets.KEY }}
         run: |
-          dotnet test -c Release \
+          dotnet test -c Debug \
             --logger "trx;LogFileName=test_results.trx" \
             --logger "console;verbosity=detailed" \
