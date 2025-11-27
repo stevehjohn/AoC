@@ -21,6 +21,8 @@ public static class CryptoFileProvider
 
         if (File.Exists(clearPath))
         {
+            Console.WriteLine("AllAnswers.clear found.");
+            
             if (! File.Exists(encryptedPath))
             {
                 var tempPath = $"{path}{Path.GetFileNameWithoutExtension(filename)}.backup";
@@ -48,6 +50,8 @@ public static class CryptoFileProvider
 
         if (File.Exists(encryptedPath) && ! File.Exists(clearPath))
         {
+            Console.WriteLine("Decrypting AllAnswers.clear.");
+            
             Decrypt(encryptedPath, clearPath);
 
             return File.ReadAllLines(clearPath);
