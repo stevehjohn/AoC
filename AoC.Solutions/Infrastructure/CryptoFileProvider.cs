@@ -17,7 +17,7 @@ public static class CryptoFileProvider
             Environment.Exit(0);
         }
         
-        var clearPath = $"{path}{filename}";
+        var clearPath = $"./AoC.Solutions/{path}{filename}";
 
         var encryptedPath = $"{path}{Path.GetFileNameWithoutExtension(filename)}.encrypted";
         
