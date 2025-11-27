@@ -20,6 +20,10 @@ public static class CryptoFileProvider
         var clearPath = $"{path}{filename}";
 
         var encryptedPath = $"{path}{Path.GetFileNameWithoutExtension(filename)}.encrypted";
+        
+        Console.WriteLine($"Clear path: {clearPath}.");
+        
+        Console.WriteLine($"Encrypted path: {encryptedPath}.");
 
         if (File.Exists(clearPath))
         {
