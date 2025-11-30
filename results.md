@@ -195,7 +195,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 14.1: 21,207μs      Elf recipes
  2018 14.2: 1,072,118μs   
  2018 15.1: 89,252μs      Elves vs Goblins
- 2018 15.2: 374,016μs     
+ 2018 15.2: 373,341μs     
  2018 16.1: 584μs         Opcode reverse-engineering
  2018 16.2: 752μs         
  2018 17.1: 20,437μs      Don't go chasing waterfalls
@@ -216,7 +216,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 276,756μs     
  2018 25.1: 32,693μs      4D chocolate teleportation
             -------------
-            17.947s      
+            17.946s      
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 5μs           
@@ -263,7 +263,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 22.1: 373μs         Space shuffle
  2019 22.2: 26μs          
  2019 23.1: 2,387μs       IntCode network (CPU used unmodified)
- 2019 23.2: 15,733μs      
+ 2019 23.2: 15,717μs      
  2019 24.1: 8μs           Wastl's game of life
  2019 24.2: 7,433μs       
  2019 25.1: 227,289μs     Airlock password (CPU used unmodified)
@@ -272,7 +272,7 @@ Tests performed on a 2023 MacBook Pro.
 
  2020  1.1: 23μs          Expenses
  2020  1.2: 106μs         
- 2020  2.1: 167μs         Password policy
+ 2020  2.1: 163μs         Password policy
  2020  2.2: 103μs         
  2020  3.1: 141μs         Tobogganing through the trees
  2020  3.2: 24μs          
@@ -491,7 +491,7 @@ Tests performed on a 2023 MacBook Pro.
  2024  5.2: 1,731μs       
  2024  6.1: 368μs         Guard gallivant
  2024  6.2: 33,123μs      
- 2024  7.1: 162μs         Bridge repair
+ 2024  7.1: 152μs         Bridge repair
  2024  7.2: 5,570μs       
  2024  8.1: 91μs          Resonant collinearity
  2024  8.2: 128μs         
@@ -529,7 +529,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 250μs         
  2024 25.1: 120μs         Code chronicle
             -------------
-            553.981ms    
+            553.971ms    
 
- 491 puzzles solved in 50.221s.
+ 491 puzzles solved in 50.220s.
 ```
