@@ -89,7 +89,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 13.1: 97μs          Cubicle maze
  2016 13.2: 86μs          
  2016 14.1: 10,371μs      One time pad
- 2016 14.2: 8,703,135μs   
+ 2016 14.2: 8,631,256μs   
  2016 15.1: 414μs         Disc timing
  2016 15.2: 3,274μs       
  2016 16.1: 6μs           Dragon checksum
@@ -112,7 +112,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 24.2: 19,739μs      
  2016 25.1: 173,066μs     Clock signal
             -------------
-            15.688s      
+            15.617s      
 
  2017  1.1: 8μs           Captcha
  2017  1.2: 10μs          
@@ -233,7 +233,7 @@ Tests performed on a 2023 MacBook Pro.
  2019  7.1: 5,274μs       Amplifiers (CPU used unmodified)
  2019  7.2: 6,828μs       
  2019  8.1: 1,081μs       Space GIF
- 2019  8.2: 1,086μs       
+ 2019  8.2: 1,079μs       
  2019  9.1: 45μs          Sensor booster (CPU extension 2)
  2019  9.2: 24,658μs      
  2019 10.1: 18,082μs      Asteroids
@@ -310,7 +310,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 19.2: 6,655μs       
  2020 20.1: 6,962μs       Satellite jigsaw
  2020 20.2: 736μs         
- 2020 21.1: 188μs         Allergen detective
+ 2020 21.1: 186μs         Allergen detective
  2020 21.2: 179μs         
  2020 22.1: 15μs          Crab cards
  2020 22.2: 104,740μs     
@@ -531,5 +531,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             553.971ms    
 
- 491 puzzles solved in 49.554s.
+ 491 puzzles solved in 49.482s.
 ```

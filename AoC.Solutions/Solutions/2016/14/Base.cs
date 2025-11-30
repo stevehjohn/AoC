@@ -1,6 +1,5 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
-using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2016._14;
