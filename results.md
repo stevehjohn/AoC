@@ -155,7 +155,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 20.1: 372μs         Particle swarm
  2017 20.2: 70,136μs      
  2017 21.1: 536μs         Fractal art
- 2017 21.2: 49,720μs      
+ 2017 21.2: 49,524μs      
  2017 22.1: 496μs         Sporifica virus
  2017 22.2: 650,232μs     
  2017 23.1: 5,156μs       Coprocessor conflagration
@@ -164,7 +164,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 24.2: 114,944μs     
  2017 25.1: 124,183μs     Turing tape
             -------------
-            2.307s       
+            2.306s       
 
  2018  1.1: 18μs          Tardis calibration
  2018  1.2: 3,880μs       
@@ -239,7 +239,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 10.1: 18,082μs      Asteroids
  2019 10.2: 1,678μs       
  2019 11.1: 54,072μs      Personal plate (CPU used unmodified)
- 2019 11.2: 744μs         
+ 2019 11.2: 740μs         
  2019 12.1: 503μs         Orbital simulation
  2019 12.2: 65,730μs      
  2019 13.1: 1,262μs       Arkanoid (CPU used unmodified)
@@ -512,10 +512,10 @@ Tests performed on a 2023 MacBook Pro.
  2024 16.1: 3,307μs       Reindeer maze
  2024 16.2: 34,104μs      
  2024 17.1: 8μs           Chronospatial computer
- 2024 17.2: 2,704μs       
+ 2024 17.2: 2,690μs       
  2024 18.1: 1,367μs       RAM run
  2024 18.2: 1,348μs       
- 2024 19.1: 40,231μs      Linen layout
+ 2024 19.1: 40,148μs      Linen layout
  2024 19.2: 66,851μs      
  2024 20.1: 35,372μs      Race condition
  2024 20.2: 34,888μs      
@@ -529,7 +529,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 250μs         
  2024 25.1: 130μs         Code chronicle
             -------------
-            559.750ms    
+            559.653ms    
 
  491 puzzles solved in 50.546s.
 ```

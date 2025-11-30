@@ -1,1 +1,7 @@
-for i in $(seq "$1"); do echo "\n Run $i"; ./run.sh "${@:2}" true; done
+for i in $(seq "$1"); do
+  if [ "$i" -eq 1 ]; then
+      echo
+  fi
+  echo " Run $i"
+  ./run.sh "${@:2}" true
+done
