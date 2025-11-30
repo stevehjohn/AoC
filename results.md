@@ -337,7 +337,7 @@ Tests performed on a 2023 MacBook Pro.
  2021  7.1: 73μs          Crab submarines
  2021  7.2: 60μs          
  2021  7.X: 36μs          Easter egg (2019 CPU used)
- 2021  8.1: 84μs          Old school displays
+ 2021  8.1: 83μs          Old school displays
  2021  8.2: 818μs         
  2021  9.1: 86μs          Lava level
  2021  9.2: 2,082μs       
@@ -471,13 +471,13 @@ Tests performed on a 2023 MacBook Pro.
  2023 21.2: 439μs         
  2023 22.1: 31,706μs      Sand slabs
  2023 22.2: 58,647μs      
- 2023 23.1: 11,932μs      A long walk
+ 2023 23.1: 11,758μs      A long walk
  2023 23.2: 52,499μs      
  2023 24.1: 1,578μs       Never tell me the odds
  2023 24.2: 5,426μs       
  2023 25.1: 10,476μs      Snowverload
             -------------
-            360.068ms    
+            359.894ms    
 
  2024  1.1: 123μs         Historian hysteria
  2024  1.2: 90μs          
