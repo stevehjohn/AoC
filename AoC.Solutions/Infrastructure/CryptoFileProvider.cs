@@ -83,7 +83,7 @@ public static class CryptoFileProvider
 
         Buffer.BlockCopy(iv, 0, fileData, 0, iv.Length);
         
-        Buffer.BlockCopy(encrypted, 0, fileData, 16, encrypted.Length);
+        Buffer.BlockCopy(encrypted, 0, fileData, iv.Length, encrypted.Length);
 
         File.WriteAllBytes(encryptedPath, fileData);
     }
