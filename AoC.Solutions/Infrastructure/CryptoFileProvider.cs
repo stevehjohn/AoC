@@ -1,11 +1,14 @@
 using System.Diagnostics.CodeAnalysis;
 using Security.Crypto;
+using Security.Random;
 
 namespace AoC.Solutions.Infrastructure;
 
 [ExcludeFromCodeCoverage]
 public static class CryptoFileProvider
 {
+    private static IRng _rng = new Rng();
+    
     public static string[] LoadFile(string path, string filename)
     {
         if (GetKeyData() == null)
@@ -68,15 +71,21 @@ public static class CryptoFileProvider
 
         var keyData = GetKeyData().Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1]).ToArray();
 
-        var iv = Convert.FromBase64String(keyData[1]);
-
-        var salt = Convert.FromBase64String(keyData[2]);
-
+        var iv = new byte[16];
+        
+        _rng.GetBytes(iv);
+        
         var key = Convert.FromBase64String(keyData[0]);
 
-        var encrypted = cipherProvider.Encrypt(data, key, iv, salt);
+        var encrypted = cipherProvider.Encrypt(data, key, iv);
 
-        File.WriteAllBytes(encryptedPath, encrypted);
+        var fileData = new byte[iv.Length + encrypted.Length];
+
+        Buffer.BlockCopy(iv, 0, fileData, 0, iv.Length);
+        
+        Buffer.BlockCopy(encrypted, 0, fileData, 16, encrypted.Length);
+
+        File.WriteAllBytes(encryptedPath, fileData);
     }
 
     private static void Decrypt(string encryptedPath, string clearPath)
@@ -85,13 +94,21 @@ public static class CryptoFileProvider
 
         var keyData = GetKeyData().Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1]).ToArray();
 
-        var iv = Convert.FromBase64String(keyData[1]);
-
-        var salt = Convert.FromBase64String(keyData[2]);
-
         var key = Convert.FromBase64String(keyData[0]);
 
-        var decrypted = cipherProvider.Decrypt(File.ReadAllBytes(encryptedPath), key, iv, salt);
+        var fileData = File.ReadAllBytes(encryptedPath);
+        
+        var iv = new byte[16];
+
+        Buffer.BlockCopy(fileData, 0, iv, 0, iv.Length);
+
+        var encryptedSize = fileData.Length - iv.Length;
+
+        var encrypted = new byte[encryptedSize];
+        
+        Buffer.BlockCopy(fileData, iv.Length, encrypted, 0, encryptedSize);
+
+        var decrypted = cipherProvider.Decrypt(encrypted, key, iv);
 
         File.WriteAllBytes(clearPath, decrypted);
     }
