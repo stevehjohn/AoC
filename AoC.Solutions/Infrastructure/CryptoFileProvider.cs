@@ -109,6 +109,8 @@ public static class CryptoFileProvider
         Buffer.BlockCopy(fileData, iv.Length, encrypted, 0, encryptedSize);
 
         var decrypted = cipherProvider.Decrypt(encrypted, key, iv);
+        
+        Console.WriteLine("Decrypted");
 
         File.WriteAllBytes(clearPath, decrypted);
     }
