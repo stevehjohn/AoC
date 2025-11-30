@@ -128,7 +128,7 @@ Tests performed on a 2023 MacBook Pro.
  2017  6.2: 7,370μs       
  2017  7.1: 244μs         Balancing act
  2017  7.2: 259μs         
- 2017  8.1: 187μs         I heard you like registers
+ 2017  8.1: 183μs         I heard you like registers
  2017  8.2: 874μs         
  2017  9.1: 74μs          Stream garbage collection
  2017  9.2: 50μs          
@@ -137,7 +137,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 11.1: 534μs         Hex ed
  2017 11.2: 248μs         
  2017 12.1: 560μs         Path through the pipes
- 2017 12.2: 8,414μs       
+ 2017 12.2: 8,085μs       
  2017 13.1: 48μs          Firewall run
  2017 13.2: 13,480μs      
  2017 14.1: 22,730μs      Defragger
@@ -242,7 +242,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 11.2: 744μs         
  2019 12.1: 503μs         Orbital simulation
  2019 12.2: 66,543μs      
- 2019 13.1: 1,295μs       Arkanoid (CPU used unmodified)
+ 2019 13.1: 1,270μs       Arkanoid (CPU used unmodified)
  2019 13.2: 52,776μs      
  2019 14.1: 105μs         Replicator
  2019 14.2: 4,358μs       
@@ -288,13 +288,13 @@ Tests performed on a 2023 MacBook Pro.
  2020  8.2: 2,601μs       
  2020  9.1: 517μs         Cypher cracking
  2020  9.2: 30μs          
- 2020 10.1: 23μs          Joltage meter
+ 2020 10.1: 22μs          Joltage meter
  2020 10.2: 28μs          
  2020 11.1: 3,212μs       Conway's game of seating
  2020 11.2: 42,532μs      
  2020 12.1: 22μs          Evergreen ship sailing
  2020 12.2: 27μs          
- 2020 13.1: 8μs           Bus timetables
+ 2020 13.1: 7μs           Bus timetables
  2020 13.2: 14μs          
  2020 14.1: 92μs          Memory bit twiddling
  2020 14.2: 3,890μs       
@@ -334,8 +334,8 @@ Tests performed on a 2023 MacBook Pro.
  2021  5.2: 6,617μs       
  2021  6.1: 7μs           Lanternfish parthenogenesis
  2021  6.2: 10μs          
- 2021  7.1: 77μs          Crab submarines
- 2021  7.2: 65μs          
+ 2021  7.1: 76μs          Crab submarines
+ 2021  7.2: 61μs          
  2021  7.X: 39μs          Easter egg (2019 CPU used)
  2021  8.1: 84μs          Old school displays
  2021  8.2: 818μs         
@@ -395,7 +395,7 @@ Tests performed on a 2023 MacBook Pro.
  2022  9.2: 1,191μs       
  2022 10.1: 4μs           Cathode-Ray tube
  2022 10.2: 4μs           
- 2022 11.1: 9μs           Monkey in the middle
+ 2022 11.1: 8μs           Monkey in the middle
  2022 11.2: 2,612μs       
  2022 12.1: 1,252μs       Hill climbing algorithm
  2022 12.2: 1,399μs       
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 60,123μs      
  2022 25.1: 10μs          Full of hot air
             -------------
-            298.117ms    
+            298.116ms    
 
  2023  1.1: 120μs         Trebuchet
  2023  1.2: 334μs         
@@ -515,8 +515,8 @@ Tests performed on a 2023 MacBook Pro.
  2024 17.2: 2,704μs       
  2024 18.1: 1,367μs       RAM run
  2024 18.2: 1,348μs       
- 2024 19.1: 48,877μs      Linen layout
- 2024 19.2: 82,431μs      
+ 2024 19.1: 40,419μs      Linen layout
+ 2024 19.2: 70,572μs      
  2024 20.1: 35,372μs      Race condition
  2024 20.2: 34,888μs      
  2024 21.1: 695μs         Keypad conundrum
@@ -527,9 +527,9 @@ Tests performed on a 2023 MacBook Pro.
  2024 23.2: 20,915μs      
  2024 24.1: 329μs         Crossed wires
  2024 24.2: 250μs         
- 2024 25.1: 300μs         Code chronicle
+ 2024 25.1: 130μs         Code chronicle
             -------------
-            583.970ms    
+            563.666ms    
 
- 491 puzzles solved in 50.598s.
+ 491 puzzles solved in 50.578s.
 ```
