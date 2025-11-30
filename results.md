@@ -162,9 +162,9 @@ Tests performed on a 2023 MacBook Pro.
  2017 23.2: 2,663μs       
  2017 24.1: 114,720μs     Electromagnetic moat
  2017 24.2: 114,944μs     
- 2017 25.1: 97,030μs      Turing tape
+ 2017 25.1: 124,183μs     Turing tape
             -------------
-            2.253s       
+            2.280s       
 
  2018  1.1: 18μs          Tardis calibration
  2018  1.2: 3,880μs       
@@ -209,7 +209,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 21.1: 46μs          Time machine halting problem
  2018 21.2: 15,097,788μs  
  2018 22.1: 208μs         Caving capers
- 2018 22.2: 62,605μs      
+ 2018 22.2: 62,679μs      
  2018 23.1: 176μs         Nanobot teleportation
  2018 23.2: 14,654μs      
  2018 24.1: 7,828μs       Immune system battle
@@ -401,11 +401,11 @@ Tests performed on a 2023 MacBook Pro.
  2022 12.2: 1,399μs       
  2022 13.1: 50μs          Distress signal
  2022 13.2: 512μs         
- 2022 14.1: 436μs         Regolith reservoir
+ 2022 14.1: 455μs         Regolith reservoir
  2022 14.2: 4,431μs       
  2022 15.1: 9μs           Beacon exclusion zone
  2022 15.2: 10,673μs      
- 2022 16.1: 22,948μs      Proboscidea volcanium
+ 2022 16.1: 22,997μs      Proboscidea volcanium
  2022 16.2: 14,158μs      
  2022 17.1: 126μs         Pyroclastic flow
  2022 17.2: 1,288μs       
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 60,123μs      
  2022 25.1: 10μs          Full of hot air
             -------------
-            295.269ms    
+            295.337ms    
 
  2023  1.1: 120μs         Trebuchet
  2023  1.2: 334μs         
@@ -516,7 +516,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 18.1: 1,367μs       RAM run
  2024 18.2: 1,348μs       
  2024 19.1: 38,045μs      Linen layout
- 2024 19.2: 64,919μs      
+ 2024 19.2: 66,851μs      
  2024 20.1: 34,502μs      Race condition
  2024 20.2: 34,463μs      
  2024 21.1: 683μs         Keypad conundrum
@@ -529,7 +529,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 250μs         
  2024 25.1: 120μs         Code chronicle
             -------------
-            552.053ms    
+            553.985ms    
 
- 491 puzzles solved in 50.218s.
+ 491 puzzles solved in 50.248s.
 ```
