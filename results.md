@@ -246,7 +246,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 13.2: 51,113μs      
  2019 14.1: 102μs         Replicator
  2019 14.2: 4,358μs       
- 2019 15.1: 14,406μs      Oxygen repair droid (CPU used unmodified)
+ 2019 15.1: 14,359μs      Oxygen repair droid (CPU used unmodified)
  2019 15.2: 156μs         
  2019 16.1: 13,422μs      FFT
  2019 16.2: 104,080μs     
@@ -501,8 +501,8 @@ Tests performed on a 2023 MacBook Pro.
  2024 10.2: 483μs         
  2024 11.1: 411μs         Plutonian pebbles
  2024 11.2: 12,328μs      
- 2024 12.1: 3,797μs       Garden groups
- 2024 12.2: 4,947μs       
+ 2024 12.1: 3,758μs       Garden groups
+ 2024 12.2: 4,919μs       
  2024 13.1: 74μs          Claw contraption
  2024 13.2: 80μs          
  2024 14.1: 225μs         Restroom redoubt
@@ -529,7 +529,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 250μs         
  2024 25.1: 124μs         Code chronicle
             -------------
-            554.406ms    
+            554.339ms    
 
  491 puzzles solved in 50.268s.
 ```
