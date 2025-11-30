@@ -12,59 +12,80 @@ public abstract class Base : Solution
     protected int RunHashes(int additionalHashes = 0)
     {
         var salt = Input[0];
+        
+        var saltBytes = Encoding.ASCII.GetBytes(salt);
 
         var i = 0;
-
+        
         var found = 0;
 
-        var queued = new Dictionary<char, List<int>>();
+        var queued = new Dictionary<char, List<int>>(16);
+        
+        const string hexChars = "0123456789abcdef";
 
-        const string characters = "0123456789ABCDEF";
-
-        for (var c = 0; c < characters.Length; c++)
+        foreach (var character in hexChars)
         {
-            queued.Add(characters[c], []);
+            queued[character] = [];
         }
 
         var matches = new List<int>();
+
+        Span<byte> baseBuffer = stackalloc byte[saltBytes.Length + 11];
         
+        saltBytes.CopyTo(baseBuffer);
+
+        Span<byte> hashBytes = stackalloc byte[16];
+        
+        Span<byte> hexBytes  = stackalloc byte[32];
+
         while (true)
         {
-            var hash = MD5.HashData(Encoding.ASCII.GetBytes($"{salt}{i}"));
+            var numberSpan = baseBuffer[saltBytes.Length..];
 
-            additionalHashes.Repetitions(() => hash = MD5.HashData(Encoding.ASCII.GetBytes(Convert.ToHexString(hash).ToLower())));
+            var written = Encoding.ASCII.GetBytes(i.ToString(), numberSpan);
+            
+            var toHash = baseBuffer[..(saltBytes.Length + written)];
 
-            var hex = Convert.ToHexString(hash);
+            MD5.TryHashData(toHash, hashBytes, out _);
 
-            var character = GetTripleRepeatedCharacter(hex);
-
-            if (character != '\0')
+            for (var j = 0; j < additionalHashes; j++)
             {
-                queued[character].Add(i);
+                BytesToLowerHex(hashBytes, hexBytes);
+
+                MD5.TryHashData(hexBytes, hashBytes, out _);
             }
 
-            character = GetQuintupleRepeatedCharacter(hex);
+            BytesToLowerHex(hashBytes, hexBytes);
 
-            if (character != '\0')
+            var triple = GetTripleRepeatedCharacter(hexBytes);
+
+            if (triple != '\0')
+            {
+                queued[triple].Add(i);
+            }
+
+            var quint = GetQuintupleRepeatedCharacter(hexBytes);
+
+            if (quint != '\0')
             {
                 matches.Clear();
-                
-                var list = queued[character];
+
+                var list = queued[quint];
 
                 for (var x = list.Count - 1; x >= 0; x--)
                 {
-                    var item = list[x];
-                    
-                    if (item < i - 1_000)
+                    var idx = list[x];
+
+                    if (idx < i - 1_000)
                     {
                         list.RemoveAt(x);
                         
                         continue;
                     }
-                    
-                    if (item >= i - 1_000 && item < i)
+
+                    if (idx < i)
                     {
-                        matches.Add(item);
+                        matches.Add(idx);
                         
                         list.RemoveAt(x);
                     }
@@ -73,7 +94,7 @@ public abstract class Base : Solution
                 if (matches.Count > 0)
                 {
                     var previousFound = found;
-
+                    
                     found += matches.Count;
 
                     if (found > 64)
@@ -87,26 +108,46 @@ public abstract class Base : Solution
         }
     }
 
-    private static char GetTripleRepeatedCharacter(string hex)
+    private static void BytesToLowerHex(ReadOnlySpan<byte> src, Span<byte> dest)
+    {
+        const string hex = "0123456789abcdef";
+
+        var j = 0;
+        
+        for (var i = 0; i < src.Length; i++)
+        {
+            var b = src[i];
+            
+            dest[j++] = (byte)hex[(b >> 4) & 0xF];
+            
+            dest[j++] = (byte)hex[b & 0xF];
+        }
+    }
+
+    private static char GetTripleRepeatedCharacter(ReadOnlySpan<byte> hex)
     {
         for (var i = 0; i < hex.Length - 2; i++)
         {
-            if (hex[i] == hex[i + 1] && hex[i] == hex[i + 2])
+            var c = hex[i];
+            
+            if (c == hex[i + 1] && c == hex[i + 2])
             {
-                return hex[i];
+                return (char)c;
             }
         }
 
         return '\0';
     }
 
-    private static char GetQuintupleRepeatedCharacter(string hex)
+    private static char GetQuintupleRepeatedCharacter(ReadOnlySpan<byte> hex)
     {
         for (var i = 0; i < hex.Length - 4; i++)
         {
-            if (hex[i] == hex[i + 1] && hex[i] == hex[i + 2] && hex[i] == hex[i + 3] && hex[i] == hex[i + 4])
+            var c = hex[i];
+            
+            if (c == hex[i + 1] && c == hex[i + 2] && c == hex[i + 3] && c == hex[i + 4])
             {
-                return hex[i];
+                return (char)c;
             }
         }
 

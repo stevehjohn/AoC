@@ -89,7 +89,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 13.1: 97μs          Cubicle maze
  2016 13.2: 86μs          
  2016 14.1: 10,371μs      One time pad
- 2016 14.2: 9,365,593μs   
+ 2016 14.2: 8,703,135μs   
  2016 15.1: 414μs         Disc timing
  2016 15.2: 3,274μs       
  2016 16.1: 6μs           Dragon checksum
@@ -112,7 +112,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 24.2: 19,739μs      
  2016 25.1: 173,066μs     Clock signal
             -------------
-            16.351s      
+            15.688s      
 
  2017  1.1: 8μs           Captcha
  2017  1.2: 10μs          
@@ -162,9 +162,9 @@ Tests performed on a 2023 MacBook Pro.
  2017 23.2: 2,663μs       
  2017 24.1: 114,720μs     Electromagnetic moat
  2017 24.2: 114,944μs     
- 2017 25.1: 99,392μs      Turing tape
+ 2017 25.1: 97,041μs      Turing tape
             -------------
-            2.253s       
+            2.251s       
 
  2018  1.1: 18μs          Tardis calibration
  2018  1.2: 3,880μs       
@@ -188,7 +188,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 10.2: 6,144μs       
  2018 11.1: 350μs         Max power... cell
  2018 11.2: 151,320μs     
- 2018 12.1: 2,052μs       Plant potty
+ 2018 12.1: 2,016μs       Plant potty
  2018 12.2: 8,562μs       
  2018 13.1: 17,664μs      Crashing carts
  2018 13.2: 31,589μs      
@@ -226,7 +226,7 @@ Tests performed on a 2023 MacBook Pro.
  2019  3.2: 2,134μs       
  2019  4.1: 51,966μs      Forgotten password
  2019  4.2: 51,491μs      
- 2019  5.1: 31μs          Air conditioning (CPU extension 1)
+ 2019  5.1: 30μs          Air conditioning (CPU extension 1)
  2019  5.2: 22μs          
  2019  6.1: 241μs         Orbital transfers
  2019  6.2: 33μs          
@@ -268,7 +268,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 24.2: 7,433μs       
  2019 25.1: 227,289μs     Airlock password (CPU used unmodified)
             -------------
-            1.278s       
+            1.277s       
 
  2020  1.1: 23μs          Expenses
  2020  1.2: 106μs         
@@ -292,8 +292,8 @@ Tests performed on a 2023 MacBook Pro.
  2020 10.2: 26μs          
  2020 11.1: 3,212μs       Conway's game of seating
  2020 11.2: 42,532μs      
- 2020 12.1: 22μs          Evergreen ship sailing
- 2020 12.2: 27μs          
+ 2020 12.1: 20μs          Evergreen ship sailing
+ 2020 12.2: 26μs          
  2020 13.1: 7μs           Bus timetables
  2020 13.2: 14μs          
  2020 14.1: 90μs          Memory bit twiddling
@@ -317,10 +317,10 @@ Tests performed on a 2023 MacBook Pro.
  2020 23.1: 3μs           Crab cups
  2020 23.2: 140,627μs     
  2020 24.1: 676μs         Tile flipping
- 2020 24.2: 182,884μs     
+ 2020 24.2: 181,742μs     
  2020 25.1: 45,753μs      Door cryptography
             -------------
-            1.231s       
+            1.229s       
 
  2021  1.1: 48μs          Depth scan
  2021  1.2: 138μs         
@@ -531,5 +531,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             553.971ms    
 
- 491 puzzles solved in 50.220s.
+ 491 puzzles solved in 49.554s.
 ```
