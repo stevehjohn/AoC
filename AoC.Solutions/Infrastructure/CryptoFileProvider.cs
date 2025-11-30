@@ -11,7 +11,7 @@ public static class CryptoFileProvider
     
     private static readonly Rng Rng = new();
 
-    private static readonly SymmetricCipher _cipherProvider = new();
+    private static readonly SymmetricCipher CipherProvider = new();
     
     public static string[] LoadFile(string path, string filename)
     {
@@ -79,7 +79,7 @@ public static class CryptoFileProvider
         
         var key = Convert.FromBase64String(keyString[0]);
 
-        var encrypted = _cipherProvider.Encrypt(data, key, iv);
+        var encrypted = CipherProvider.Encrypt(data, key, iv);
 
         var fileData = new byte[iv.Length + encrypted.Length];
 
@@ -108,7 +108,7 @@ public static class CryptoFileProvider
         
         Buffer.BlockCopy(fileData, iv.Length, encrypted, 0, encryptedSize);
 
-        var decrypted = _cipherProvider.Decrypt(encrypted, key, iv);
+        var decrypted = CipherProvider.Decrypt(encrypted, key, iv);
 
         File.WriteAllBytes(clearPath, decrypted);
     }
