@@ -41,7 +41,7 @@ public abstract class Base : Solution
                 queued[character].Add(i);
             }
 
-            character = GetQuintupleRepeatedCharacter(Convert.ToHexString(hash));
+            character = GetQuintupleRepeatedCharacter(hex);
 
             if (character != '\0')
             {
