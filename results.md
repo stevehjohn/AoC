@@ -16,7 +16,7 @@ Tests performed on a 2023 MacBook Pro.
  2015  2.2: 439μs         
  2015  3.1: 1,256μs       Perfectly spherical houses in a vacuum
  2015  3.2: 1,101μs       
- 2015  4.1: 138,785μs     Crypto stocking stuffer
+ 2015  4.1: 132,608μs     Crypto stocking stuffer
  2015  4.2: 3,042,866μs   
  2015  5.1: 138μs         Naughty or nice
  2015  5.2: 828μs         
@@ -60,7 +60,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 24.2: 138μs         
  2015 25.1: 57,314μs      Let it snow
             -------------
-            6.145s       
+            6.138s       
 
  2016  1.1: 7μs           Manhattan distance
  2016  1.2: 16μs          
@@ -79,7 +79,7 @@ Tests performed on a 2023 MacBook Pro.
  2016  8.1: 150μs         MFA
  2016  8.2: 136μs         
  2016  9.1: 43μs          Cyberspace explosives
- 2016  9.2: 118μs         
+ 2016  9.2: 117μs         
  2016 10.1: 774μs         Balance bots
  2016 10.2: 1,586μs       
  2016 11.1: 61μs          Radioisotope thermoelectric elevators
@@ -169,7 +169,7 @@ Tests performed on a 2023 MacBook Pro.
  2018  1.1: 18μs          Tardis calibration
  2018  1.2: 3,880μs       
  2018  2.1: 301μs         Warehouse checksum
- 2018  2.2: 187μs         
+ 2018  2.2: 177μs         
  2018  3.1: 5,742μs       Fabric overlap
  2018  3.2: 5,155μs       
  2018  4.1: 680μs         Sleepy guards
@@ -233,7 +233,7 @@ Tests performed on a 2023 MacBook Pro.
  2019  7.1: 5,274μs       Amplifiers (CPU used unmodified)
  2019  7.2: 6,828μs       
  2019  8.1: 1,081μs       Space GIF
- 2019  8.2: 1,111μs       
+ 2019  8.2: 1,086μs       
  2019  9.1: 45μs          Sensor booster (CPU extension 2)
  2019  9.2: 24,658μs      
  2019 10.1: 18,082μs      Asteroids
@@ -322,7 +322,7 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             1.231s       
 
- 2021  1.1: 49μs          Depth scan
+ 2021  1.1: 48μs          Depth scan
  2021  1.2: 138μs         
  2021  2.1: 44μs          Navigate forward
  2021  2.2: 44μs          
@@ -396,7 +396,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 10.1: 3μs           Cathode-Ray tube
  2022 10.2: 4μs           
  2022 11.1: 8μs           Monkey in the middle
- 2022 11.2: 2,555μs       
+ 2022 11.2: 2,554μs       
  2022 12.1: 1,252μs       Hill climbing algorithm
  2022 12.2: 1,399μs       
  2022 13.1: 50μs          Distress signal
@@ -407,7 +407,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 15.2: 10,673μs      
  2022 16.1: 22,997μs      Proboscidea volcanium
  2022 16.2: 14,158μs      
- 2022 17.1: 129μs         Pyroclastic flow
+ 2022 17.1: 126μs         Pyroclastic flow
  2022 17.2: 1,288μs       
  2022 18.1: 342μs         Boiling boulders
  2022 18.2: 1,457μs       
@@ -425,12 +425,12 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 60,123μs      
  2022 25.1: 10μs          Full of hot air
             -------------
-            295.368ms    
+            295.364ms    
 
  2023  1.1: 120μs         Trebuchet
  2023  1.2: 334μs         
- 2023  2.1: 65μs          Cube conundrum
- 2023  2.2: 92μs          
+ 2023  2.1: 61μs          Cube conundrum
+ 2023  2.2: 88μs          
  2023  3.1: 53μs          Gear ratios
  2023  3.2: 186μs         
  2023  4.1: 160μs         Scratchcards
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,426μs       
  2023 25.1: 10,476μs      Snowverload
             -------------
-            357.965ms    
+            357.957ms    
 
  2024  1.1: 114μs         Historian hysteria
  2024  1.2: 90μs          
@@ -491,7 +491,7 @@ Tests performed on a 2023 MacBook Pro.
  2024  5.2: 1,731μs       
  2024  6.1: 368μs         Guard gallivant
  2024  6.2: 33,123μs      
- 2024  7.1: 173μs         Bridge repair
+ 2024  7.1: 166μs         Bridge repair
  2024  7.2: 5,570μs       
  2024  8.1: 91μs          Resonant collinearity
  2024  8.2: 128μs         
@@ -515,7 +515,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 17.2: 2,690μs       
  2024 18.1: 1,367μs       RAM run
  2024 18.2: 1,348μs       
- 2024 19.1: 38,275μs      Linen layout
+ 2024 19.1: 38,226μs      Linen layout
  2024 19.2: 66,851μs      
  2024 20.1: 34,502μs      Race condition
  2024 20.2: 34,463μs      
@@ -523,13 +523,13 @@ Tests performed on a 2023 MacBook Pro.
  2024 21.2: 3,904μs       
  2024 22.1: 33,620μs      Monkey market
  2024 22.2: 137,439μs     
- 2024 23.1: 19,582μs      LAN party
+ 2024 23.1: 19,538μs      LAN party
  2024 23.2: 20,673μs      
  2024 24.1: 329μs         Crossed wires
  2024 24.2: 250μs         
  2024 25.1: 124μs         Code chronicle
             -------------
-            554.339ms    
+            554.239ms    
 
- 491 puzzles solved in 50.268s.
+ 491 puzzles solved in 50.262s.
 ```
