@@ -155,7 +155,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 20.1: 372μs         Particle swarm
  2017 20.2: 70,136μs      
  2017 21.1: 536μs         Fractal art
- 2017 21.2: 49,524μs      
+ 2017 21.2: 49,016μs      
  2017 22.1: 496μs         Sporifica virus
  2017 22.2: 650,232μs     
  2017 23.1: 5,156μs       Coprocessor conflagration
@@ -177,7 +177,7 @@ Tests performed on a 2023 MacBook Pro.
  2018  5.1: 897μs         Polymer reactions
  2018  5.2: 35,042μs      
  2018  6.1: 8,821μs       Safe coordinates
- 2018  6.2: 6,009μs       
+ 2018  6.2: 5,992μs       
  2018  7.1: 51μs          Ikea sleigh
  2018  7.2: 225μs         
  2018  8.1: 5,624μs       Navigation licensing
@@ -531,5 +531,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             559.653ms    
 
- 491 puzzles solved in 50.546s.
+ 491 puzzles solved in 50.545s.
 ```
