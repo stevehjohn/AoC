@@ -31,7 +31,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 10.1: 3,304μs       Elves look, elves say
  2015 10.2: 43,316μs      
  2015 11.1: 1,936μs       Password policy
- 2015 11.2: 7,106μs       
+ 2015 11.2: 6,986μs       
  2015 12.1: 100μs         Json abacus
  2015 12.2: 2,737μs       
  2015 13.1: 19,480μs      Knights of the dinner table
@@ -53,7 +53,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 21.1: 385μs         RPG simulator 2015
  2015 21.2: 365μs         
  2015 22.1: 1,396,555μs   Wizard simulator 2015
- 2015 22.2: 55,814μs      
+ 2015 22.2: 55,647μs      
  2015 23.1: 76μs          Opening the Turing lock
  2015 23.2: 92μs          
  2015 24.1: 91,919μs      It hangs in the balance
@@ -114,7 +114,7 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             16.501s      
 
- 2017  1.1: 9μs           Captcha
+ 2017  1.1: 8μs           Captcha
  2017  1.2: 10μs          
  2017  2.1: 10μs          Spreadsheet checksum
  2017  2.2: 24μs          
@@ -137,13 +137,13 @@ Tests performed on a 2023 MacBook Pro.
  2017 11.1: 534μs         Hex ed
  2017 11.2: 248μs         
  2017 12.1: 560μs         Path through the pipes
- 2017 12.2: 7,512μs       
+ 2017 12.2: 7,508μs       
  2017 13.1: 48μs          Firewall run
  2017 13.2: 13,024μs      
  2017 14.1: 22,730μs      Defragger
  2017 14.2: 23,077μs      
  2017 15.1: 129,663μs     Dueling generators
- 2017 15.2: 264,672μs     
+ 2017 15.2: 263,893μs     
  2017 16.1: 643μs         Permutation promenade
  2017 16.2: 70,113μs      
  2017 17.1: 770μs         Spinlock
@@ -185,7 +185,7 @@ Tests performed on a 2023 MacBook Pro.
  2018  9.1: 737μs         Marble madness
  2018  9.2: 432,392μs     
  2018 10.1: 6,181μs       Writing in the stars
- 2018 10.2: 6,160μs       
+ 2018 10.2: 6,154μs       
  2018 11.1: 350μs         Max power... cell
  2018 11.2: 151,320μs     
  2018 12.1: 2,059μs       Plant potty
@@ -246,7 +246,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 13.2: 51,130μs      
  2019 14.1: 105μs         Replicator
  2019 14.2: 4,358μs       
- 2019 15.1: 14,432μs      Oxygen repair droid (CPU used unmodified)
+ 2019 15.1: 14,406μs      Oxygen repair droid (CPU used unmodified)
  2019 15.2: 156μs         
  2019 16.1: 13,422μs      FFT
  2019 16.2: 104,080μs     
@@ -480,7 +480,7 @@ Tests performed on a 2023 MacBook Pro.
             360.068ms    
 
  2024  1.1: 123μs         Historian hysteria
- 2024  1.2: 91μs          
+ 2024  1.2: 90μs          
  2024  2.1: 158μs         Red-nosed reports
  2024  2.2: 341μs         
  2024  3.1: 253μs         Mull it over
@@ -492,7 +492,7 @@ Tests performed on a 2023 MacBook Pro.
  2024  6.1: 368μs         Guard gallivant
  2024  6.2: 33,123μs      
  2024  7.1: 173μs         Bridge repair
- 2024  7.2: 5,670μs       
+ 2024  7.2: 5,599μs       
  2024  8.1: 91μs          Resonant collinearity
  2024  8.2: 128μs         
  2024  9.1: 287μs         Disk fragmenter
@@ -517,7 +517,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 18.2: 1,348μs       
  2024 19.1: 38,286μs      Linen layout
  2024 19.2: 66,851μs      
- 2024 20.1: 35,079μs      Race condition
+ 2024 20.1: 34,979μs      Race condition
  2024 20.2: 34,501μs      
  2024 21.1: 688μs         Keypad conundrum
  2024 21.2: 3,916μs       
@@ -529,7 +529,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 250μs         
  2024 25.1: 124μs         Code chronicle
             -------------
-            555.606ms    
+            555.434ms    
 
- 491 puzzles solved in 50.444s.
+ 491 puzzles solved in 50.443s.
 ```
