@@ -157,14 +157,14 @@ Tests performed on a 2023 MacBook Pro.
  2017 21.1: 536μs         Fractal art
  2017 21.2: 44,813μs      
  2017 22.1: 478μs         Sporifica virus
- 2017 22.2: 634,378μs     
+ 2017 22.2: 632,360μs     
  2017 23.1: 4,992μs       Coprocessor conflagration
  2017 23.2: 2,663μs       
  2017 24.1: 114,720μs     Electromagnetic moat
  2017 24.2: 114,944μs     
- 2017 25.1: 101,869μs     Turing tape
+ 2017 25.1: 100,236μs     Turing tape
             -------------
-            2.258s       
+            2.254s       
 
  2018  1.1: 18μs          Tardis calibration
  2018  1.2: 3,880μs       
@@ -227,7 +227,7 @@ Tests performed on a 2023 MacBook Pro.
  2019  4.1: 51,966μs      Forgotten password
  2019  4.2: 51,491μs      
  2019  5.1: 31μs          Air conditioning (CPU extension 1)
- 2019  5.2: 23μs          
+ 2019  5.2: 22μs          
  2019  6.1: 241μs         Orbital transfers
  2019  6.2: 33μs          
  2019  7.1: 5,274μs       Amplifiers (CPU used unmodified)
@@ -427,7 +427,7 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             295.337ms    
 
- 2023  1.1: 120μs         Trebuchet
+ 2023  1.1: 118μs         Trebuchet
  2023  1.2: 334μs         
  2023  2.1: 61μs          Cube conundrum
  2023  2.2: 88μs          
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,426μs       
  2023 25.1: 10,476μs      Snowverload
             -------------
-            357.661ms    
+            357.659ms    
 
  2024  1.1: 114μs         Historian hysteria
  2024  1.2: 90μs          
@@ -491,7 +491,7 @@ Tests performed on a 2023 MacBook Pro.
  2024  5.2: 1,731μs       
  2024  6.1: 368μs         Guard gallivant
  2024  6.2: 33,123μs      
- 2024  7.1: 166μs         Bridge repair
+ 2024  7.1: 162μs         Bridge repair
  2024  7.2: 5,570μs       
  2024  8.1: 91μs          Resonant collinearity
  2024  8.2: 128μs         
@@ -529,7 +529,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 250μs         
  2024 25.1: 120μs         Code chronicle
             -------------
-            553.985ms    
+            553.981ms    
 
- 491 puzzles solved in 50.225s.
+ 491 puzzles solved in 50.222s.
 ```
