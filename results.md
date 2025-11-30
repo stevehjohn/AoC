@@ -90,7 +90,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 13.2: 86μs          
  2016 14.1: 10,371μs      One time pad
  2016 14.2: 9,365,593μs   
- 2016 15.1: 468μs         Disc timing
+ 2016 15.1: 435μs         Disc timing
  2016 15.2: 3,370μs       
  2016 16.1: 6μs           Dragon checksum
  2016 16.2: 219,806μs     
@@ -128,7 +128,7 @@ Tests performed on a 2023 MacBook Pro.
  2017  6.2: 7,370μs       
  2017  7.1: 244μs         Balancing act
  2017  7.2: 259μs         
- 2017  8.1: 183μs         I heard you like registers
+ 2017  8.1: 182μs         I heard you like registers
  2017  8.2: 874μs         
  2017  9.1: 74μs          Stream garbage collection
  2017  9.2: 50μs          
