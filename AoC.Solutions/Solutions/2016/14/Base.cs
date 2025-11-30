@@ -55,9 +55,16 @@ public abstract class Base : Solution
                 {
                     var item = list[x];
                     
+                    if (item < i - 1_000)
+                    {
+                        list.RemoveAt(x);
+                        
+                        continue;
+                    }
+                    
                     if (item >= i - 1_000 && item < i)
                     {
-                        matches.Insert(0, item);
+                        matches.Add(item);
                         
                         list.RemoveAt(x);
                     }
@@ -71,7 +78,7 @@ public abstract class Base : Solution
 
                     if (found > 64)
                     {
-                        return matches[63 - previousFound];
+                        return matches[^(64 - previousFound)];
                     }
                 }
             }

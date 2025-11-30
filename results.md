@@ -162,9 +162,9 @@ Tests performed on a 2023 MacBook Pro.
  2017 23.2: 2,663μs       
  2017 24.1: 114,720μs     Electromagnetic moat
  2017 24.2: 114,944μs     
- 2017 25.1: 100,236μs     Turing tape
+ 2017 25.1: 99,392μs      Turing tape
             -------------
-            2.254s       
+            2.253s       
 
  2018  1.1: 18μs          Tardis calibration
  2018  1.2: 3,880μs       
@@ -531,5 +531,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             553.981ms    
 
- 491 puzzles solved in 50.222s.
+ 491 puzzles solved in 50.221s.
 ```
