@@ -62,7 +62,7 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             6.155s       
 
- 2016  1.1: 8μs           Manhattan distance
+ 2016  1.1: 7μs           Manhattan distance
  2016  1.2: 16μs          
  2016  2.1: 16μs          Bathroom security
  2016  2.2: 17μs          
@@ -137,7 +137,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 11.1: 534μs         Hex ed
  2017 11.2: 248μs         
  2017 12.1: 560μs         Path through the pipes
- 2017 12.2: 8,085μs       
+ 2017 12.2: 7,804μs       
  2017 13.1: 48μs          Firewall run
  2017 13.2: 13,480μs      
  2017 14.1: 22,730μs      Defragger
@@ -166,7 +166,7 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             2.307s       
 
- 2018  1.1: 19μs          Tardis calibration
+ 2018  1.1: 18μs          Tardis calibration
  2018  1.2: 3,880μs       
  2018  2.1: 312μs         Warehouse checksum
  2018  2.2: 187μs         
@@ -183,7 +183,7 @@ Tests performed on a 2023 MacBook Pro.
  2018  8.1: 5,624μs       Navigation licensing
  2018  8.2: 5,726μs       
  2018  9.1: 796μs         Marble madness
- 2018  9.2: 475,958μs     
+ 2018  9.2: 458,360μs     
  2018 10.1: 6,181μs       Writing in the stars
  2018 10.2: 6,308μs       
  2018 11.1: 350μs         Max power... cell
@@ -216,7 +216,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 288,332μs     
  2018 25.1: 32,693μs      4D chocolate teleportation
             -------------
-            18.017s      
+            18.000s      
 
  2019  1.1: 2μs           Calculate launch fuel
  2019  1.2: 5μs           
@@ -227,7 +227,7 @@ Tests performed on a 2023 MacBook Pro.
  2019  4.1: 52,453μs      Forgotten password
  2019  4.2: 52,461μs      
  2019  5.1: 31μs          Air conditioning (CPU extension 1)
- 2019  5.2: 25μs          
+ 2019  5.2: 23μs          
  2019  6.1: 241μs         Orbital transfers
  2019  6.2: 33μs          
  2019  7.1: 5,274μs       Amplifiers (CPU used unmodified)
@@ -257,7 +257,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 19.1: 112,897μs     Tractorrr (CPU used unmodified)
  2019 19.2: 121,421μs     
  2019 20.1: 283μs         Doughnut maze
- 2019 20.2: 7,064μs       
+ 2019 20.2: 6,544μs       
  2019 21.1: 1,923μs       Jumping droids (CPU used unmodified)
  2019 21.2: 35,140μs      
  2019 22.1: 375μs         Space shuffle
@@ -289,7 +289,7 @@ Tests performed on a 2023 MacBook Pro.
  2020  9.1: 517μs         Cypher cracking
  2020  9.2: 30μs          
  2020 10.1: 22μs          Joltage meter
- 2020 10.2: 28μs          
+ 2020 10.2: 26μs          
  2020 11.1: 3,212μs       Conway's game of seating
  2020 11.2: 42,532μs      
  2020 12.1: 22μs          Evergreen ship sailing
@@ -336,7 +336,7 @@ Tests performed on a 2023 MacBook Pro.
  2021  6.2: 10μs          
  2021  7.1: 76μs          Crab submarines
  2021  7.2: 61μs          
- 2021  7.X: 39μs          Easter egg (2019 CPU used)
+ 2021  7.X: 37μs          Easter egg (2019 CPU used)
  2021  8.1: 84μs          Old school displays
  2021  8.2: 818μs         
  2021  9.1: 86μs          Lava level
@@ -504,7 +504,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 12.1: 3,865μs       Garden groups
  2024 12.2: 5,046μs       
  2024 13.1: 82μs          Claw contraption
- 2024 13.2: 85μs          
+ 2024 13.2: 82μs          
  2024 14.1: 232μs         Restroom redoubt
  2024 14.2: 13,661μs      
  2024 15.1: 279μs         Warehouse woes
@@ -516,7 +516,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 18.1: 1,367μs       RAM run
  2024 18.2: 1,348μs       
  2024 19.1: 40,419μs      Linen layout
- 2024 19.2: 70,572μs      
+ 2024 19.2: 66,851μs      
  2024 20.1: 35,372μs      Race condition
  2024 20.2: 34,888μs      
  2024 21.1: 695μs         Keypad conundrum
@@ -529,7 +529,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 250μs         
  2024 25.1: 130μs         Code chronicle
             -------------
-            563.666ms    
+            559.942ms    
 
- 491 puzzles solved in 50.578s.
+ 491 puzzles solved in 50.555s.
 ```
