@@ -162,9 +162,9 @@ Tests performed on a 2023 MacBook Pro.
  2017 23.2: 2,663μs       
  2017 24.1: 114,720μs     Electromagnetic moat
  2017 24.2: 114,944μs     
- 2017 25.1: 124,183μs     Turing tape
+ 2017 25.1: 101,869μs     Turing tape
             -------------
-            2.280s       
+            2.258s       
 
  2018  1.1: 18μs          Tardis calibration
  2018  1.2: 3,880μs       
@@ -363,7 +363,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 19.2: 212,184μs     
  2021 20.1: 1,143μs       NCIS image enhancement
  2021 20.2: 76,574μs      
- 2021 21.1: 14μs          Quantum dice
+ 2021 21.1: 13μs          Quantum dice
  2021 21.2: 567,828μs     
  2021 22.1: 1,908μs       Reactor reboot
  2021 22.2: 23,586μs      
@@ -531,5 +531,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             553.985ms    
 
- 491 puzzles solved in 50.248s.
+ 491 puzzles solved in 50.225s.
 ```

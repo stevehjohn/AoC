@@ -26,6 +26,8 @@ public abstract class Base : Solution
             queued.Add(characters[c], []);
         }
 
+        var matches = new List<int>();
+        
         while (true)
         {
             var hash = MD5.HashData(Encoding.ASCII.GetBytes($"{salt}{i}"));
@@ -45,15 +47,27 @@ public abstract class Base : Solution
 
             if (character != '\0')
             {
-                var matches = queued[character].Where(index => index >= i - 1_000 && index < i).ToList();
+                matches.Clear();
+                
+                var list = queued[character];
+
+                for (var x = list.Count - 1; x >= 0; x--)
+                {
+                    var item = list[x];
+                    
+                    if (item >= i - 1_000 && item < i)
+                    {
+                        matches.Insert(0, item);
+                        
+                        list.RemoveAt(x);
+                    }
+                }
 
                 if (matches.Count > 0)
                 {
                     var previousFound = found;
 
                     found += matches.Count;
-
-                    queued[character].RemoveAll(index => index >= i - 1_000 && index < i);
 
                     if (found > 64)
                     {
