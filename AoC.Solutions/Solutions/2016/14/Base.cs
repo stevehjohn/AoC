@@ -17,7 +17,14 @@ public abstract class Base : Solution
 
         var found = 0;
 
-        var queued = new List<(char Character, int Index)>();
+        var queued = new Dictionary<char, List<int>>();
+
+        const string characters = "0123456789ABCDEF";
+
+        for (var c = 0; c < characters.Length; c++)
+        {
+            queued.Add(characters[c], []);
+        }
 
         while (true)
         {
@@ -31,14 +38,14 @@ public abstract class Base : Solution
 
             if (character != '\0')
             {
-                queued.Add((character, i));
+                queued[character].Add(i);
             }
 
             character = GetQuintupleRepeatedCharacter(Convert.ToHexString(hash));
 
             if (character != '\0')
             {
-                var matches = queued.Where(q => q.Character == character && q.Index >= i - 1_000 && q.Index < i).ToList();
+                var matches = queued[character].Where(index => index >= i - 1_000 && index < i).ToList();
 
                 if (matches.Count > 0)
                 {
@@ -46,11 +53,11 @@ public abstract class Base : Solution
 
                     found += matches.Count;
 
-                    queued.RemoveAll(q => q.Character == character && q.Index >= i - 1_000 && q.Index < i);
+                    queued[character].RemoveAll(index => index >= i - 1_000 && index < i);
 
                     if (found > 64)
                     {
-                        return matches[63 - previousFound].Index;
+                        return matches[63 - previousFound];
                     }
                 }
             }
