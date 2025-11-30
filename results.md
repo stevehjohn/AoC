@@ -527,7 +527,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 23.2: 20,915μs      
  2024 24.1: 329μs         Crossed wires
  2024 24.2: 250μs         
- 2024 25.1: 117μs         Code chronicle
+ 2024 25.1: 300μs         Code chronicle
             -------------
             583.970ms    
 
