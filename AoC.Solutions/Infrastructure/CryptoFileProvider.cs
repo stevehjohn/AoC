@@ -7,7 +7,9 @@ namespace AoC.Solutions.Infrastructure;
 [ExcludeFromCodeCoverage]
 public static class CryptoFileProvider
 {
-    private static IRng _rng = new Rng();
+    private const int IvSize = 12;
+    
+    private static readonly Rng Rng = new();
     
     public static string[] LoadFile(string path, string filename)
     {
@@ -71,9 +73,9 @@ public static class CryptoFileProvider
 
         var keyData = GetKeyData().Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1]).ToArray();
 
-        var iv = new byte[16];
+        var iv = new byte[IvSize];
         
-        _rng.GetBytes(iv);
+        Rng.GetBytes(iv);
         
         var key = Convert.FromBase64String(keyData[0]);
 
@@ -98,7 +100,7 @@ public static class CryptoFileProvider
 
         var fileData = File.ReadAllBytes(encryptedPath);
         
-        var iv = new byte[16];
+        var iv = new byte[IvSize];
 
         Buffer.BlockCopy(fileData, 0, iv, 0, iv.Length);
 
