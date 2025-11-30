@@ -71,13 +71,13 @@ public static class CryptoFileProvider
     {
         var data = File.ReadAllBytes(clearPath);
 
-        var keyData = GetKeyData().Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1]).ToArray();
+        var keyString = GetKeyData().Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1]).ToArray();
 
         var iv = new byte[IvSize];
         
         Rng.GetBytes(iv);
         
-        var key = Convert.FromBase64String(keyData[0]);
+        var key = Convert.FromBase64String(keyString[0]);
 
         var encrypted = _cipherProvider.Encrypt(data, key, iv);
 
@@ -92,9 +92,9 @@ public static class CryptoFileProvider
 
     private static void Decrypt(string encryptedPath, string clearPath)
     {
-        var keyData = GetKeyData().Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1]).ToArray();
+        var keyString = GetKeyData().Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1]).ToArray();
 
-        var key = Convert.FromBase64String(keyData[0]);
+        var key = Convert.FromBase64String(keyString[0]);
 
         var fileData = File.ReadAllBytes(encryptedPath);
         
