@@ -4,7 +4,7 @@ namespace AoC.Solutions.Solutions._2025._01;
 
 public abstract class Base : Solution
 {
-    public override string Description => "Puzzle 01";
+    public override string Description => "Secret Entrance";
 
     private int _position = 50;
 
@@ -15,11 +15,6 @@ public abstract class Base : Solution
         foreach (var line in Input)
         {
             var clicks = int.Parse(line[1..]);
-
-            if (passThrough)
-            {
-                password += clicks / 100;
-            }
 
             if (line[0] == 'L')
             {
