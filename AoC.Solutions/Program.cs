@@ -26,6 +26,16 @@ public static class Program
 
         int? previousYear = null;
 
+        var showAnswer = false;
+
+        for (var i = 0; i < arguments.Length; i++)
+        {
+            if (arguments[i].ToLower() == "sa")
+            {
+                showAnswer = true;
+            }
+        }
+
         Console.WriteLine();
 
         string[] answers;
@@ -165,6 +175,11 @@ public static class Program
             var summary = $" {year} {day,2}.{part}: {$"{microseconds:N0}μs",-12}  {description}";
 
             Console.WriteLine(summary);
+
+            if (showAnswer)
+            {
+                Console.WriteLine($"            {answer}");
+            }
 
             if (! answer.Equals("Unknown", StringComparison.InvariantCultureIgnoreCase))
             {
