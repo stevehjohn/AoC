@@ -7,6 +7,27 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        return ProcessDocument().ToString();
+        var position = 50;
+
+        var password = 0;
+
+        foreach (var line in Input)
+        {
+            var clicks = int.Parse(line[1..]);
+
+            if (line[0] == 'L')
+            {
+                clicks = -clicks;
+            }
+
+            position = (position + clicks + 100) % 100;
+
+            if (position == 0)
+            {
+                password++;
+            }
+        }
+
+        return password.ToString();
     }
 }
