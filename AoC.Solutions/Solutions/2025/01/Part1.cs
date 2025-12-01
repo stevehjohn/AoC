@@ -7,6 +7,6 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        return "Unknown";
+        return ProcessDocument().ToString();
     }
 }
