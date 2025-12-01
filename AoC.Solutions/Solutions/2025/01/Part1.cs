@@ -7,27 +7,20 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var position = 50;
-
-        var password = 0;
-
-        foreach (var line in Input)
-        {
-            var clicks = int.Parse(line[1..]);
-
-            if (line[0] == 'L')
-            {
-                clicks = -clicks;
-            }
-
-            position = (position + clicks + 100) % 100;
-
-            if (position == 0)
-            {
-                password++;
-            }
-        }
+        var password = ProcessDocument();
 
         return password.ToString();
+    }
+
+    protected override int RotateDial(ref int position, bool left, int clicks)
+    {
+        if (left)
+        {
+            clicks = -clicks;
+        }
+
+        position = (position + clicks + 100) % 100;
+
+        return position == 0 ? 1 : 0;
     }
 }
