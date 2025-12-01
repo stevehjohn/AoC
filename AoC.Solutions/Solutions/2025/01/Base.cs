@@ -8,7 +8,7 @@ public abstract class Base : Solution
 
     private int _position = 50;
 
-    protected int ProcessDocument()
+    protected int ProcessDocument(bool passThrough = false)
     {
         var password = 0;
         
