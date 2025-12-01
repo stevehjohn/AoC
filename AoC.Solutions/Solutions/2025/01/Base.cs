@@ -21,16 +21,7 @@ public abstract class Base : Solution
                 clicks = -clicks;
             }
 
-            _position += clicks;
-
-            if (_position < 0)
-            {
-                _position += 100;
-            }
-            else if (_position > 99)
-            {
-                _position -= 100;
-            }
+            _position = (_position + clicks + 100) % 100;
 
             if (_position == 0)
             {
