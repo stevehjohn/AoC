@@ -51,7 +51,7 @@ public static class InputProvider
         
         var keyData = File.ReadLines(GetKeyPath()).Select(l => l.Split(":", StringSplitOptions.TrimEntries)[1]).ToArray();
 
-        request.Headers.Add("Cookie", $"session={keyData[3]}");
+        request.Headers.Add("Cookie", $"session={keyData[1]}");
 
         using var client = new HttpClient();
 
@@ -61,7 +61,7 @@ public static class InputProvider
         {
             Console.WriteLine($"Status code {response.StatusCode} received calling {url} to retrieve puzzle input.");
             
-            Console.WriteLine($"Session cookie {keyData[3]} used.");
+            Console.WriteLine($"Session cookie {keyData[1]} used.");
             
             return;
         }
