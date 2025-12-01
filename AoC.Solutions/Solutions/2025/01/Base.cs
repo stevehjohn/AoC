@@ -42,7 +42,6 @@ public abstract class Base : Solution
             {
                 password++;
             }
-
         }
 
         return password;
