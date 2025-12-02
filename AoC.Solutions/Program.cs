@@ -14,12 +14,12 @@ public static class Program
     {
         var solutions = Assembly.GetExecutingAssembly()
             .GetTypes()
-            .Where(t => t.IsSubclassOf(typeof(Solution)) && !t.IsAbstract)
+            .Where(t => t.IsSubclassOf(typeof(Solution)) && ! t.IsAbstract)
             .OrderBy(t => t.Namespace)
             .ThenBy(t => t.Name);
 
         var totalMs = 0L;
-        
+
         var yearMs = 0L;
 
         var count = 0;
@@ -30,7 +30,7 @@ public static class Program
 
         for (var i = 0; i < arguments.Length; i++)
         {
-            if (arguments[i].ToLower() == "sa")
+            if (arguments[i].Equals("sa", StringComparison.InvariantCultureIgnoreCase))
             {
                 showAnswer = true;
             }
@@ -43,30 +43,30 @@ public static class Program
         var results = new Dictionary<(int Year, int Day, int Part), (double Microseconds, string Summary)>();
 
         string path;
-        
+
         if (! Path.Exists("./Solutions"))
         {
             path = "./Aoc.Solutions/Solutions/";
-            
+
             answers = CryptoFileProvider.LoadFile(path, "AllAnswers.clear");
 
             if (answers == null)
             {
                 answers = ["2015.1.1: ????", "2015.1.2: ????", "2015.2.1: ????", "etc..."];
-                
+
                 File.WriteAllLines("./Aoc.Solutions/Solutions/AllAnswers.clear", answers);
             }
         }
         else
         {
             path = "./Solutions/";
-            
+
             answers = CryptoFileProvider.LoadFile(path, "AllAnswers.clear");
 
             if (answers == null)
             {
                 answers = ["2015.1.1: ????", "2015.1.2: ????", "2015.2.1: ????", "etc..."];
-                
+
                 File.WriteAllLines("./Solutions/AllAnswers.clear", answers);
             }
         }
@@ -79,7 +79,9 @@ public static class Program
 
             var day = int.Parse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0");
 
-            if (arguments.Length > 0 && !arguments[0].Equals("true", StringComparison.InvariantCultureIgnoreCase))
+            if (arguments.Length > 0
+                && ! arguments[0].Equals("true", StringComparison.InvariantCultureIgnoreCase)
+                && ! arguments[0].Equals("sa", StringComparison.InvariantCultureIgnoreCase))
             {
                 var solutionKey =
                     $"{int.Parse(solution.Namespace?.Split('.')[3].Replace("_", string.Empty) ?? "0")}.{int.Parse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0"):D2}.{solution.Name[4]}";
@@ -169,7 +171,7 @@ public static class Program
             }
 
             var microseconds = Math.Min(stopwatch.Elapsed.TotalMicroseconds, firstTime);
-            
+
             var part = solution.Name[4];
 
             var summary = $" {year} {day,2}.{part}: {$"{microseconds:N0}μs",-12}  {description}";
@@ -196,7 +198,7 @@ public static class Program
         CleanUp();
 
         WriteYearSummary();
-        
+
         Console.WriteLine($" {count} puzzle{(count != 1 ? "s" : string.Empty)} solved in {totalMs / 1_000_000d:N3}s.\n");
 
         if (arguments.Length > 0)
@@ -213,7 +215,7 @@ public static class Program
         {
             const string resultsFileName = "./results.md";
 
-            if (!File.Exists(resultsFileName))
+            if (! File.Exists(resultsFileName))
             {
                 Console.WriteLine(" results.md not found, will not update.\n");
             }
@@ -221,7 +223,7 @@ public static class Program
             var file = File.ReadAllLines(resultsFileName).ToList();
 
             var updated = 0;
-            
+
             foreach (var result in results)
             {
                 var (year, day, part) = result.Key;
@@ -235,7 +237,7 @@ public static class Program
                     if (day == 1 && part == '1')
                     {
                         insert--;
-                    
+
                         file.Insert(insert, string.Empty);
                         file.Insert(insert, $"{new string(' ', 12)}{"0ms",-13}");
                         file.Insert(insert, $"{new string(' ', 12)}-------------");
@@ -271,9 +273,9 @@ public static class Program
             else
             {
                 RecalculateTotals(file);
-                
+
                 File.WriteAllLines(resultsFileName, file);
-                
+
                 Console.WriteLine($" {updated} times were updated in results.md.\n");
             }
         }
@@ -281,13 +283,13 @@ public static class Program
         void RecalculateTotals(List<string> file)
         {
             var overall = 0L;
-            
+
             var year = 0;
 
             var sum = 0L;
 
             var puzzles = 0;
-            
+
             for (var i = 0; i < file.Count; i++)
             {
                 var line = file[i];
