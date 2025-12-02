@@ -4,7 +4,7 @@ namespace AoC.Solutions.Solutions._2025._01;
 
 public abstract class Base : Solution
 {
-    public override string Description => "Secret Entrance";
+    public override string Description => "Secret entrance";
 
     protected int ProcessDocument()
     {
