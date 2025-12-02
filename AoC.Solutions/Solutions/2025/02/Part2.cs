@@ -43,9 +43,9 @@ public class Part2 : Base
             
             var isRepeating = true;
 
-            for (var k = patternLength; k < text.Length; k += patternLength)
+            for (var i = patternLength; i < text.Length; i += patternLength)
             {
-                var segment = text[k..(k + patternLength)];
+                var segment = text[i..(i + patternLength)];
             
                 if (segment != pattern)
                 {
