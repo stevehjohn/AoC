@@ -225,7 +225,7 @@ Tests performed on a 2023 MacBook Pro.
  2019  3.1: 2,085μs       Path intersections
  2019  3.2: 2,134μs       
  2019  4.1: 51,890μs      Forgotten password
- 2019  4.2: 51,491μs      
+ 2019  4.2: 51,413μs      
  2019  5.1: 30μs          Air conditioning (CPU extension 1)
  2019  5.2: 22μs          
  2019  6.1: 241μs         Orbital transfers
@@ -316,7 +316,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 22.2: 104,740μs     
  2020 23.1: 3μs           Crab cups
  2020 23.2: 140,627μs     
- 2020 24.1: 674μs         Tile flipping
+ 2020 24.1: 671μs         Tile flipping
  2020 24.2: 180,772μs     
  2020 25.1: 45,753μs      Door cryptography
             -------------
@@ -438,7 +438,7 @@ Tests performed on a 2023 MacBook Pro.
  2023  5.1: 32μs          If you give a seed a fertilizer
  2023  5.2: 128μs         
  2023  6.1: 2μs           Wait for it
- 2023  6.2: 37μs          
+ 2023  6.2: 36μs          
  2023  7.1: 595μs         Camel cards
  2023  7.2: 626μs         
  2023  8.1: 424μs         Haunted wasteland
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,143μs       
  2023 25.1: 10,476μs      Snowverload
             -------------
-            355.675ms    
+            355.674ms    
 
  2024  1.1: 114μs         Historian hysteria
  2024  1.2: 85μs          
@@ -538,5 +538,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             113.814ms    
 
- 495 puzzles solved in 48.679s.
+ 495 puzzles solved in 48.678s.
 ```
