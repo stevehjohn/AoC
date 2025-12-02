@@ -7,28 +7,12 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var ranges = Input[0].Split(',');
-
-        var sum = 0L;
-
-        foreach (var range in ranges)
-        {
-            var ids = range.Split('-');
-
-            var start = long.Parse(ids[0]);
-
-            var end = long.Parse(ids[1]);
-
-            for (var i = start; i <= end; i++)
-            {
-                sum += SumInvalidIPatterns(i);
-            }
-        }
+        var sum = IterateInput();
         
         return sum.ToString();
     }
 
-    private static long SumInvalidIPatterns(long id)
+    protected override long SumInvalidIPatterns(long id)
     {
         var text = id.ToString();
 
