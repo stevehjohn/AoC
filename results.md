@@ -169,7 +169,7 @@ Tests performed on a 2023 MacBook Pro.
  2018  1.1: 17μs          Tardis calibration
  2018  1.2: 3,880μs       
  2018  2.1: 298μs         Warehouse checksum
- 2018  2.2: 177μs         
+ 2018  2.2: 176μs         
  2018  3.1: 5,742μs       Fabric overlap
  2018  3.2: 5,155μs       
  2018  4.1: 678μs         Sleepy guards
@@ -183,7 +183,7 @@ Tests performed on a 2023 MacBook Pro.
  2018  8.1: 4,934μs       Navigation licensing
  2018  8.2: 4,962μs       
  2018  9.1: 731μs         Marble madness
- 2018  9.2: 432,246μs     
+ 2018  9.2: 432,175μs     
  2018 10.1: 6,071μs       Writing in the stars
  2018 10.2: 6,088μs       
  2018 11.1: 350μs         Max power... cell
@@ -318,7 +318,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 23.2: 140,627μs     
  2020 24.1: 671μs         Tile flipping
  2020 24.2: 179,553μs     
- 2020 25.1: 45,753μs      Door cryptography
+ 2020 25.1: 45,744μs      Door cryptography
             -------------
             1.221s       
 
@@ -458,7 +458,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 15.1: 177μs         Lens library
  2023 15.2: 493μs         
  2023 16.1: 133μs         The floor will be lava
- 2023 16.2: 5,485μs       
+ 2023 16.2: 5,482μs       
  2023 17.1: 45,127μs      Clumsy crucible
  2023 17.2: 45,060μs      
  2023 18.1: 85μs          Lavaduct lagoon
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,143μs       
  2023 25.1: 10,476μs      Snowverload
             -------------
-            354.788ms    
+            354.785ms    
 
  2024  1.1: 114μs         Historian hysteria
  2024  1.2: 85μs          
@@ -516,7 +516,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 18.1: 1,290μs       RAM run
  2024 18.2: 1,332μs       
  2024 19.1: 38,005μs      Linen layout
- 2024 19.2: 63,398μs      
+ 2024 19.2: 59,627μs      
  2024 20.1: 33,860μs      Race condition
  2024 20.2: 32,521μs      
  2024 21.1: 647μs         Keypad conundrum
@@ -529,7 +529,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 235μs         
  2024 25.1: 115μs         Code chronicle
             -------------
-            534.198ms    
+            530.427ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 88μs          
@@ -540,5 +540,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             63.945ms     
 
- 497 puzzles solved in 48.344s.
+ 497 puzzles solved in 48.341s.
 ```
