@@ -15,21 +15,22 @@ public class Part1 : Base
     protected override long SumInvalidIPatterns(long id)
     {
         var text = id.ToString();
-
+        
         if (text.Length % 2 == 1)
         {
             return 0;
         }
 
-        var left = text[..(text.Length / 2)];
+        var halfway = text.Length / 2;
 
-        var right = text[(text.Length / 2)..];
-
-        if (left == right)
+        for (var i = 0; i < halfway; i++) 
         {
-            return id;
+            if (text[i] != text[halfway + i])
+            {
+                return 0;
+            }
         }
-
-        return 0;
+        
+        return id;
     }
 }

@@ -98,7 +98,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 17.2: 25,439μs      
  2016 18.1: 76μs          Like a rogue
  2016 18.2: 345,058μs     
- 2016 19.1: 5μs           The Josephus problem
+ 2016 19.1: 4μs           The Josephus problem
  2016 19.2: 0μs           
  2016 20.1: 261μs         Firewall rules
  2016 20.2: 4,620μs       
@@ -511,7 +511,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 15.2: 5,854μs       
  2024 16.1: 3,137μs       Reindeer maze
  2024 16.2: 31,976μs      
- 2024 17.1: 8μs           Chronospatial computer
+ 2024 17.1: 7μs           Chronospatial computer
  2024 17.2: 2,690μs       
  2024 18.1: 1,292μs       RAM run
  2024 18.2: 1,348μs       
@@ -529,14 +529,16 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 239μs         
  2024 25.1: 117μs         Code chronicle
             -------------
-            547.190ms    
+            547.189ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 89μs          
  2025  2.1: 28,685μs      Gift shop
- 2025  2.2: 84,942μs      
+ 2025  2.2: 77,062μs      
+ 2025  3.1: 121μs         Lobby
+ 2025  3.2: 224μs         
             -------------
-            113.814ms    
+            106.279ms    
 
- 495 puzzles solved in 48.678s.
+ 497 puzzles solved in 48.671s.
 ```

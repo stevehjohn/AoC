@@ -23,15 +23,11 @@ public class Part2 : Base
                 continue;
             }
 
-            var pattern = text[..patternLength];
-            
             var isRepeating = true;
 
-            for (var i = patternLength; i < text.Length; i += patternLength)
+            for (var i = patternLength; i < text.Length; i++)
             {
-                var segment = text[i..(i + patternLength)];
-            
-                if (segment != pattern)
+                if (text[i] != text[i % patternLength])
                 {
                     isRepeating = false;
                     
