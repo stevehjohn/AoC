@@ -14,7 +14,7 @@ Tests performed on a 2023 MacBook Pro.
  2015  1.2: 11μs          
  2015  2.1: 400μs         Wrapping paper
  2015  2.2: 439μs         
- 2015  3.1: 1,239μs       Perfectly spherical houses in a vacuum
+ 2015  3.1: 1,237μs       Perfectly spherical houses in a vacuum
  2015  3.2: 1,101μs       
  2015  4.1: 132,608μs     Crypto stocking stuffer
  2015  4.2: 3,042,866μs   
@@ -535,10 +535,10 @@ Tests performed on a 2023 MacBook Pro.
  2025  1.2: 89μs          
  2025  2.1: 18,897μs      Gift shop
  2025  2.2: 46,202μs      
- 2025  3.1: 121μs         Lobby
- 2025  3.2: 224μs         
+ 2025  3.1: 112μs         Lobby
+ 2025  3.2: 202μs         
             -------------
-            65.631ms     
+            65.600ms     
 
  497 puzzles solved in 48.618s.
 ```
