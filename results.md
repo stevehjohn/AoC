@@ -49,7 +49,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 19.1: 175μs         Medicine for Rudolph
  2015 19.2: 221μs         
  2015 20.1: 288,974μs     Infinite elves, infinite houses
- 2015 20.2: 2,300μs       
+ 2015 20.2: 2,283μs       
  2015 21.1: 383μs         RPG simulator 2015
  2015 21.2: 365μs         
  2015 22.1: 1,373,084μs   Wizard simulator 2015
@@ -127,7 +127,7 @@ Tests performed on a 2023 MacBook Pro.
  2017  6.1: 3,406μs       Garbage collection
  2017  6.2: 7,370μs       
  2017  7.1: 228μs         Balancing act
- 2017  7.2: 249μs         
+ 2017  7.2: 248μs         
  2017  8.1: 154μs         I heard you like registers
  2017  8.2: 874μs         
  2017  9.1: 74μs          Stream garbage collection
@@ -166,7 +166,7 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             2.206s       
 
- 2018  1.1: 18μs          Tardis calibration
+ 2018  1.1: 17μs          Tardis calibration
  2018  1.2: 3,880μs       
  2018  2.1: 298μs         Warehouse checksum
  2018  2.2: 177μs         
@@ -210,7 +210,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 21.2: 15,097,788μs  
  2018 22.1: 208μs         Caving capers
  2018 22.2: 59,067μs      
- 2018 23.1: 176μs         Nanobot teleportation
+ 2018 23.1: 174μs         Nanobot teleportation
  2018 23.2: 14,654μs      
  2018 24.1: 7,828μs       Immune system battle
  2018 24.2: 266,648μs     
@@ -428,7 +428,7 @@ Tests performed on a 2023 MacBook Pro.
             286.026ms    
 
  2023  1.1: 118μs         Trebuchet
- 2023  1.2: 334μs         
+ 2023  1.2: 331μs         
  2023  2.1: 59μs          Cube conundrum
  2023  2.2: 87μs          
  2023  3.1: 53μs          Gear ratios
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,143μs       
  2023 25.1: 10,476μs      Snowverload
             -------------
-            354.791ms    
+            354.788ms    
 
  2024  1.1: 114μs         Historian hysteria
  2024  1.2: 85μs          
@@ -514,7 +514,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 17.1: 7μs           Chronospatial computer
  2024 17.2: 2,630μs       
  2024 18.1: 1,290μs       RAM run
- 2024 18.2: 1,348μs       
+ 2024 18.2: 1,332μs       
  2024 19.1: 38,005μs      Linen layout
  2024 19.2: 63,398μs      
  2024 20.1: 33,860μs      Race condition
@@ -529,16 +529,16 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 235μs         
  2024 25.1: 115μs         Code chronicle
             -------------
-            534.214ms    
+            534.198ms    
 
  2025  1.1: 98μs          Secret Entrance
- 2025  1.2: 89μs          
+ 2025  1.2: 88μs          
  2025  2.1: 17,247μs      Gift shop
  2025  2.2: 46,202μs      
  2025  3.1: 111μs         Lobby
  2025  3.2: 199μs         
             -------------
-            63.946ms     
+            63.945ms     
 
  497 puzzles solved in 48.344s.
 ```
