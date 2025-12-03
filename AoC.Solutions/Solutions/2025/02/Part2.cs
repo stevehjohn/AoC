@@ -16,7 +16,7 @@ public class Part2 : Base
     {
         var text = id.ToString();
 
-        for (var patternLength = 1; patternLength <= text.Length / 2; patternLength++)
+        for (var patternLength = text.Length / 2; patternLength > 0; patternLength--)
         {
             if (text.Length % patternLength != 0)
             {
