@@ -25,7 +25,7 @@ Tests performed on a 2023 MacBook Pro.
  2015  7.1: 95μs          Logic gates
  2015  7.2: 93μs          
  2015  8.1: 28μs          Matchsticks
- 2015  8.2: 33μs          
+ 2015  8.2: 32μs          
  2015  9.1: 13,039μs      All in a single night
  2015  9.2: 12,825μs      
  2015 10.1: 3,121μs       Elves look, elves say
