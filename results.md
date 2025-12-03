@@ -251,13 +251,13 @@ Tests performed on a 2023 MacBook Pro.
  2019 16.1: 13,422μs      FFT
  2019 16.2: 104,080μs     
  2019 17.1: 3,818μs       Scaffolding vacuum robot (CPU used unmodified)
- 2019 17.2: 12,480μs      
+ 2019 17.2: 12,344μs      
  2019 18.1: 128,408μs     Maze and keys
  2019 18.2: 67,018μs      
  2019 19.1: 112,897μs     Tractorrr (CPU used unmodified)
  2019 19.2: 121,421μs     
  2019 20.1: 263μs         Doughnut maze
- 2019 20.2: 6,148μs       
+ 2019 20.2: 6,124μs       
  2019 21.1: 1,696μs       Jumping droids (CPU used unmodified)
  2019 21.2: 33,246μs      
  2019 22.1: 373μs         Space shuffle
@@ -402,7 +402,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 13.1: 47μs          Distress signal
  2022 13.2: 500μs         
  2022 14.1: 428μs         Regolith reservoir
- 2022 14.2: 4,431μs       
+ 2022 14.2: 4,350μs       
  2022 15.1: 8μs           Beacon exclusion zone
  2022 15.2: 10,321μs      
  2022 16.1: 22,811μs      Proboscidea volcanium
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 53,434μs      
  2022 25.1: 10μs          Full of hot air
             -------------
-            287.406ms    
+            287.325ms    
 
  2023  1.1: 118μs         Trebuchet
  2023  1.2: 334μs         
@@ -533,12 +533,12 @@ Tests performed on a 2023 MacBook Pro.
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 89μs          
- 2025  2.1: 18,699μs      Gift shop
+ 2025  2.1: 18,105μs      Gift shop
  2025  2.2: 46,202μs      
- 2025  3.1: 112μs         Lobby
+ 2025  3.1: 111μs         Lobby
  2025  3.2: 202μs         
             -------------
-            65.402ms     
+            64.807ms     
 
  497 puzzles solved in 48.617s.
 ```
