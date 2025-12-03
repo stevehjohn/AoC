@@ -422,10 +422,10 @@ Tests performed on a 2023 MacBook Pro.
  2022 23.1: 8,070μs       Unstable diffusion
  2022 23.2: 44,961μs      
  2022 24.1: 25,283μs      Blizzard basin
- 2022 24.2: 60,123μs      
+ 2022 24.2: 53,434μs      
  2022 25.1: 10μs          Full of hot air
             -------------
-            294.095ms    
+            287.406ms    
 
  2023  1.1: 118μs         Trebuchet
  2023  1.2: 334μs         
@@ -533,12 +533,12 @@ Tests performed on a 2023 MacBook Pro.
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 89μs          
- 2025  2.1: 28,685μs      Gift shop
- 2025  2.2: 77,062μs      
+ 2025  2.1: 19,057μs      Gift shop
+ 2025  2.2: 48,999μs      
  2025  3.1: 121μs         Lobby
  2025  3.2: 224μs         
             -------------
-            106.279ms    
+            68.588ms     
 
- 497 puzzles solved in 48.671s.
+ 497 puzzles solved in 48.627s.
 ```
