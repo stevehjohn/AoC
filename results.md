@@ -127,7 +127,7 @@ Tests performed on a 2023 MacBook Pro.
  2017  6.1: 2,535μs       Garbage collection
  2017  6.2: 7,370μs       
  2017  7.1: 228μs         Balancing act
- 2017  7.2: 247μs         
+ 2017  7.2: 245μs         
  2017  8.1: 154μs         I heard you like registers
  2017  8.2: 874μs         
  2017  9.1: 74μs          Stream garbage collection

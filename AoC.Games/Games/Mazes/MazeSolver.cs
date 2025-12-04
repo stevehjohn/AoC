@@ -90,17 +90,17 @@ public class MazeSolver
     {
         var moves = new List<(int, int)>();
 
-        if (x > 1 && _maze[x - 1, y])
+        if (x > 0 && _maze[x - 1, y])
         {
             moves.Add((x - 1, y));
         }
 
-        if (x < Constants.Width - 2 && _maze[x + 1, y])
+        if (x < Constants.Width - 1 && _maze[x + 1, y])
         {
             moves.Add((x + 1, y));
         }
 
-        if (y > 1 && _maze[x, y - 1])
+        if (y > 0 && _maze[x, y - 1])
         {
             moves.Add((x, y - 1));
         }
