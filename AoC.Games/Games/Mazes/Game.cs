@@ -71,7 +71,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
     protected override void Update(GameTime gameTime)
     {
-        if (_input.LeftButtonClicked())
+        if (IsActive && _input.LeftButtonClicked() && _input.MouseY > 0 && _input.MouseX > 0 && _input.MouseX < GraphicsDevice.Viewport.Width && _input.MouseY < GraphicsDevice.Viewport.Height)
         {
             Reset();
         }
