@@ -233,7 +233,7 @@ Tests performed on a 2023 MacBook Pro.
  2019  7.1: 5,200μs       Amplifiers (CPU used unmodified)
  2019  7.2: 6,639μs       
  2019  8.1: 1,073μs       Space GIF
- 2019  8.2: 1,033μs       
+ 2019  8.2: 1,030μs       
  2019  9.1: 45μs          Sensor booster (CPU extension 2)
  2019  9.2: 22,676μs      
  2019 10.1: 18,082μs      Asteroids
@@ -251,7 +251,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 16.1: 13,422μs      FFT
  2019 16.2: 104,080μs     
  2019 17.1: 3,750μs       Scaffolding vacuum robot (CPU used unmodified)
- 2019 17.2: 12,335μs      
+ 2019 17.2: 12,266μs      
  2019 18.1: 128,408μs     Maze and keys
  2019 18.2: 67,018μs      
  2019 19.1: 112,897μs     Tractorrr (CPU used unmodified)
@@ -401,7 +401,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 12.2: 1,363μs       
  2022 13.1: 47μs          Distress signal
  2022 13.2: 500μs         
- 2022 14.1: 418μs         Regolith reservoir
+ 2022 14.1: 416μs         Regolith reservoir
  2022 14.2: 4,115μs       
  2022 15.1: 8μs           Beacon exclusion zone
  2022 15.2: 10,175μs      
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 53,434μs      
  2022 25.1: 10μs          Full of hot air
             -------------
-            285.700ms    
+            285.698ms    
 
  2023  1.1: 118μs         Trebuchet
  2023  1.2: 331μs         
@@ -537,8 +537,10 @@ Tests performed on a 2023 MacBook Pro.
  2025  2.2: 46,202μs      
  2025  3.1: 111μs         Lobby
  2025  3.2: 199μs         
+ 2025  4.1: 325μs         Printing department
+ 2025  4.2: 7,733μs       
             -------------
-            62.980ms     
+            71.038ms     
 
- 497 puzzles solved in 48.249s.
+ 499 puzzles solved in 48.257s.
 ```
