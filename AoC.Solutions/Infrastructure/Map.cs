@@ -6,25 +6,28 @@ public class Map
 
     private int Height { get; set; }
 
+    private int _length;
+
+    private char[] _cells;
+
     public char this[int x, int y]
     {
-        set => _cells[y, x] = value;
+        private get => _cells[y * Width + x];
+        set => _cells[y * Width + x] = value;
     }
-
-    private char[,] _cells;
 
     public Map(string[] input)
     {
         Initialise(input);
     }
 
-    public void ForAllCells(Action<Cell> action)
+    public void ForAllCells(Action<int, int, char> action)
     {
         for (var y = 0; y < Height; y++)
         {
             for (var x = 0; x < Width; x++)
             {
-                action(new Cell(x, y, _cells[y, x]));
+                action(x, y, this[x, y]);
             }
         }
     }
@@ -51,8 +54,8 @@ public class Map
         {
             return '\0';
         }
-
-        return _cells[y, x];
+        
+        return _cells[y * Width + x];
     }
 
     private void Initialise(string[] input)
@@ -61,18 +64,18 @@ public class Map
 
         Height = input.Length;
 
-        _cells = new char[Height, Width];
+        _length = Width * Height;
 
-        var y = 0;
+        _cells = new char[_length];
+
+        var i = 0;
 
         foreach (var line in input)
         {
             for (var x = 0; x < Width; x++)
             {
-                _cells[y, x] = line[x];
+                _cells[i++] = line[x];
             }
-
-            y++;
         }
     }
 }

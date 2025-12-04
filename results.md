@@ -87,7 +87,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 12.1: 36,170μs      Monorail
  2016 12.2: 889,522μs     
  2016 13.1: 93μs          Cubicle maze
- 2016 13.2: 84μs          
+ 2016 13.2: 82μs          
  2016 14.1: 10,371μs      One time pad
  2016 14.2: 7,882,774μs   
  2016 15.1: 386μs         Disc timing
@@ -351,7 +351,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 13.2: 3,257μs       
  2021 14.1: 184μs         Ablative armour
  2021 14.2: 892μs         
- 2021 15.1: 1,190μs       Risky business
+ 2021 15.1: 1,187μs       Risky business
  2021 15.2: 60,678μs      
  2021 16.1: 123μs         Packet processing
  2021 16.2: 124μs         
@@ -481,7 +481,7 @@ Tests performed on a 2023 MacBook Pro.
 
  2024  1.1: 112μs         Historian hysteria
  2024  1.2: 82μs          
- 2024  2.1: 157μs         Red-nosed reports
+ 2024  2.1: 156μs         Red-nosed reports
  2024  2.2: 319μs         
  2024  3.1: 253μs         Mull it over
  2024  3.2: 221μs         
@@ -529,18 +529,18 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 231μs         
  2024 25.1: 112μs         Code chronicle
             -------------
-            529.377ms    
+            529.376ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 88μs          
  2025  2.1: 16,282μs      Gift shop
  2025  2.2: 46,202μs      
- 2025  3.1: 111μs         Lobby
+ 2025  3.1: 108μs         Lobby
  2025  3.2: 199μs         
- 2025  4.1: 324μs         Printing department
- 2025  4.2: 7,199μs       
+ 2025  4.1: 564μs         Printing department
+ 2025  4.2: 20,930μs      
             -------------
-            70.503ms     
+            84.471ms     
 
- 499 puzzles solved in 48.227s.
+ 499 puzzles solved in 48.241s.
 ```

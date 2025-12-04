@@ -10,20 +10,20 @@ public class Part2 : Base
     {
         var removed = 0;
 
-        var toRemove = new HashSet<Cell>();
+        var toRemove = new HashSet<(int X, int Y)>();
 
         while (true)
         {
-            Map.ForAllCells(centre =>
+            Map.ForAllCells((x, y, value) =>
             {
-                if (centre.Value == '.')
+                if (value == '.')
                 {
                     return;
                 }
 
                 var surrounding = 0;
 
-                Map.ForAdjacentCells(centre.X, centre.Y,
+                Map.ForAdjacentCells(x, y,
                     cell =>
                     {
                         if (cell == '@')
@@ -34,7 +34,7 @@ public class Part2 : Base
 
                 if (surrounding < 4)
                 {
-                    toRemove.Add(centre);
+                    toRemove.Add((x, y));
                 }
             });
 

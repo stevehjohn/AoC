@@ -9,16 +9,16 @@ public class Part1 : Base
     {
         var sum = 0;
 
-        Map.ForAllCells(centreCell =>
+        Map.ForAllCells((x, y, value) =>
         {
-            if (centreCell.Value == '.')
+            if (value == '.')
             {
                 return;
             }
 
             var surrounding = 0;
 
-            Map.ForAdjacentCells(centreCell.X, centreCell.Y,
+            Map.ForAdjacentCells(x, y,
                 cell =>
                 {
                     if (cell == '@')
