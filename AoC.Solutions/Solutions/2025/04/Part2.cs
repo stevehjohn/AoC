@@ -1,3 +1,4 @@
+using AoC.Solutions.Infrastructure;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2025._04;
@@ -9,7 +10,7 @@ public class Part2 : Base
     {
         var removed = 0;
 
-        var toRemove = new HashSet<(int X, int Y)>();
+        var toRemove = new HashSet<Cell>();
 
         while (true)
         {
@@ -33,7 +34,7 @@ public class Part2 : Base
 
                 if (surrounding < 4)
                 {
-                    toRemove.Add((centre.X, centre.Y));
+                    toRemove.Add(centre);
                 }
             });
 
@@ -44,9 +45,9 @@ public class Part2 : Base
 
             removed += toRemove.Count;
 
-            foreach (var item in toRemove)
+            foreach (var cell in toRemove)
             {
-                Map[item.X, item.Y] = '.';
+                Map[cell.X, cell.Y] = '.';
             }
             
             toRemove.Clear();
