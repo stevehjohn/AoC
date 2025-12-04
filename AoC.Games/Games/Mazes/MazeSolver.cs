@@ -55,61 +55,35 @@ public class MazeSolver
 
     private void FindEntranceAndExit()
     {
+        var openings = new List<(int X, int Y)>();
+
         for (var x = 0; x < Constants.Width; x++)
         {
-            (int X, int Y) position = (-1, -1);
-
             if (_maze[x, 0])
             {
-                position = (x, 0);
+                openings.Add((x, 0));
             }
-            else if (_maze[x, Constants.Height - 1])
+            if (_maze[x, Constants.Height - 1])
             {
-                position = (x, Constants.Height - 1);
-            }
-
-            if (position.X == -1)
-            {
-                continue;
-            }
-
-            if (_entrance.X == -1)
-            {
-                _entrance = position;
-            }
-            else
-            {
-                _exit = position;
+                openings.Add((x, Constants.Height - 1));
             }
         }
 
         for (var y = 0; y < Constants.Height; y++)
         {
-            (int X, int Y) position = (-1, -1);
-
             if (_maze[0, y])
             {
-                position = (0, y);
+                openings.Add((0, y));
             }
-            else if (_maze[Constants.Width - 1, y])
+            if (_maze[Constants.Width - 1, y])
             {
-                position = (Constants.Width - 1, y);
-            }
-
-            if (position.X == -1)
-            {
-                continue;
-            }
-
-            if (_entrance.X == -1)
-            {
-                _entrance = position;
-            }
-            else
-            {
-                _exit = position;
+                openings.Add((Constants.Width - 1, y));
             }
         }
+
+        _entrance = openings[0];
+        
+        _exit = openings[1];
     }
 
     private List<(int X, int Y)> GetMoves(int x, int y)
