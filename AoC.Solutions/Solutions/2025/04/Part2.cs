@@ -1,4 +1,3 @@
-using AoC.Solutions.Infrastructure;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2025._04;

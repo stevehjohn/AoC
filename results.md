@@ -11,7 +11,7 @@ Tests performed on a 2023 MacBook Pro.
 
 ```
  2015  1.1: 90μs          Not quite lisp
- 2015  1.2: 11μs          
+ 2015  1.2: 10μs          
  2015  2.1: 398μs         Wrapping paper
  2015  2.2: 439μs         
  2015  3.1: 1,203μs       Perfectly spherical houses in a vacuum

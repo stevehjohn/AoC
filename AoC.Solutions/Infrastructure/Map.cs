@@ -11,6 +11,7 @@ public sealed class Map
     public char this[int x, int y]
     {
         private get => _cells[y * _width + x];
+        
         set => _cells[y * _width + x] = value;
     }
 
@@ -37,11 +38,13 @@ public sealed class Map
 
     public void ForAllCells(Action<int, int, char> action)
     {
+        var i = 0;
+        
         for (var y = 0; y < _height; y++)
         {
             for (var x = 0; x < _width; x++)
             {
-                action(x, y, this[x, y]);
+                action(x, y, _cells[i++]);
             }
         }
     }
