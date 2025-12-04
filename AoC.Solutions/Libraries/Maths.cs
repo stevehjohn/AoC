@@ -10,25 +10,66 @@ public static class Maths
         return number < default(T) ? -number : number;
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static long LowestCommonMultiple(IEnumerable<long> input)
+    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+    public static long LowestCommonMultiple(List<long> input)
     {
-        return input.Aggregate(1L, (lcm, n) =>
+        var queue = new Queue<long>(input.Count * 2);
+
+        foreach (var item in input)
         {
-            var gcd = GreatestCommonFactor(lcm, n);
+            queue.Enqueue(item);
+        }
+        
+        while (true)
+        {
+            long left;
             
-            return lcm / gcd * n;
-        });
+            long right;
+            
+            if (queue.Count == 2)
+            {
+                left = queue.Dequeue();
+
+                right = queue.Dequeue();
+
+                return left * right / GreatestCommonFactor(left, right);
+            }
+
+            left = queue.Dequeue();
+
+            right = queue.Dequeue();
+
+            var lowestCommonMultiple = left * right / GreatestCommonFactor(left, right);
+
+            queue.Enqueue(lowestCommonMultiple);
+        }
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     private static long GreatestCommonFactor(long left, long right)
     {
-        while (right != 0)
+        var gcdExponentOnTwo = BitOperations.TrailingZeroCount(left | right);
+
+        left >>= gcdExponentOnTwo;
+        
+        right >>= gcdExponentOnTwo;
+
+        while (left != right)
         {
-            (left, right) = (right, left % right);
+            if (left < right)
+            {
+                right -= left;
+
+                right >>= BitOperations.TrailingZeroCount(right);
+            }
+            else
+            {
+                left -= right;
+
+                left >>= BitOperations.TrailingZeroCount(left);
+            }
         }
 
-        return left;
+        return left << gcdExponentOnTwo;
     }
 }
