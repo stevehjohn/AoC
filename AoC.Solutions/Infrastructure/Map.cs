@@ -2,21 +2,13 @@ namespace AoC.Solutions.Infrastructure;
 
 public class Map
 {
-    public int Width { get; private set; }
+    private int Width { get; set; }
 
-    public int Height { get; private set; }
+    private int Height { get; set; }
 
     public char this[int x, int y]
     {
-        get
-        {
-            if (x < 0 || x >= Width || y < 0 || y >= Height)
-            {
-                return '\0';
-            }
-
-            return _cells[y, x];
-        }
+        get => _cells[y, x];
 
         set => _cells[y, x] = value;
     }
@@ -34,7 +26,7 @@ public class Map
         {
             for (var x = 0; x < Width; x++)
             {
-                action(x, y, this[x, y]);
+                action(x, y, _cells[y, x]);
             }
         }
     }
@@ -50,9 +42,19 @@ public class Map
                     continue;
                 }
 
-                action(this[x + x1, y + y1]);
+                action(SafeGetCell(x + x1, y + y1));
             }
         }
+    }
+
+    private char SafeGetCell(int x, int y)
+    {
+        if (x < 0 || x >= Width || y < 0 || y >= Height)
+        {
+            return '\0';
+        }
+
+        return _cells[y, x];
     }
 
     private void Initialise(string[] input)

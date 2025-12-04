@@ -436,7 +436,7 @@ Tests performed on a 2023 MacBook Pro.
  2023  4.1: 160μs         Scratchcards
  2023  4.2: 154μs         
  2023  5.1: 32μs          If you give a seed a fertilizer
- 2023  5.2: 128μs         
+ 2023  5.2: 127μs         
  2023  6.1: 2μs           Wait for it
  2023  6.2: 36μs          
  2023  7.1: 593μs         Camel cards
@@ -447,7 +447,7 @@ Tests performed on a 2023 MacBook Pro.
  2023  9.2: 305μs         
  2023 10.1: 96μs          Pipe maze
  2023 10.2: 917μs         
- 2023 11.1: 298μs         Cosmic expansion
+ 2023 11.1: 297μs         Cosmic expansion
  2023 11.2: 293μs         
  2023 12.1: 3,150μs       Hot springs
  2023 12.2: 19,234μs      
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,143μs       
  2023 25.1: 9,284μs       Snowverload
             -------------
-            351.123ms    
+            351.121ms    
 
  2024  1.1: 112μs         Historian hysteria
  2024  1.2: 82μs          
@@ -485,7 +485,7 @@ Tests performed on a 2023 MacBook Pro.
  2024  2.2: 319μs         
  2024  3.1: 253μs         Mull it over
  2024  3.2: 221μs         
- 2024  4.1: 259μs         Ceres search
+ 2024  4.1: 257μs         Ceres search
  2024  4.2: 89μs          
  2024  5.1: 102μs         Print queue
  2024  5.2: 1,731μs       
@@ -529,7 +529,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 231μs         
  2024 25.1: 112μs         Code chronicle
             -------------
-            529.379ms    
+            529.377ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 88μs          
