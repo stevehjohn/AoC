@@ -9,11 +9,11 @@ public class Part1 : Base
     {
         var sum = 0;
 
-        Map.ForAllCells((index, value) =>
+        for (var index = 0; index < Map.Length; index++)
         {
-            if (value == '.')
+            if (Map[index] == '.')
             {
-                return;
+                continue;
             }
 
             var surrounding = 0;
@@ -30,7 +30,7 @@ public class Part1 : Base
             {
                 sum++;
             }
-        });
+        }
 
         return sum.ToString();
     }

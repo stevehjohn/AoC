@@ -6,12 +6,14 @@ public sealed class Map
 
     private readonly int _height;
 
-    private readonly int _length;
-
     private readonly char[] _cells;
+
+    public readonly int Length;
 
     public char this[int index]
     {
+        get => _cells[index];
+        
         set => _cells[index] = value;
     }
 
@@ -20,10 +22,10 @@ public sealed class Map
         _width = input[0].Length;
 
         _height = input.Length;
+        
+        Length = _width * _height;
 
-        _length = _width * _height;
-
-        _cells = new char[_length];
+        _cells = new char[Length];
 
         var i = 0;
 
@@ -33,14 +35,6 @@ public sealed class Map
             {
                 _cells[i++] = line[x];
             }
-        }
-    }
-
-    public void ForAllCells(Action<int, char> action)
-    {
-        for (var i = 0; i < _length; i++)
-        {
-            action(i, _cells[i]);
         }
     }
 
