@@ -515,7 +515,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 17.2: 2,535μs       
  2024 18.1: 1,286μs       RAM run
  2024 18.2: 1,332μs       
- 2024 19.1: 38,005μs      Linen layout
+ 2024 19.1: 37,983μs      Linen layout
  2024 19.2: 59,627μs      
  2024 20.1: 33,860μs      Race condition
  2024 20.2: 32,521μs      
@@ -529,7 +529,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 231μs         
  2024 25.1: 112μs         Code chronicle
             -------------
-            529.376ms    
+            529.354ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 88μs          
@@ -537,10 +537,10 @@ Tests performed on a 2023 MacBook Pro.
  2025  2.2: 46,202μs      
  2025  3.1: 108μs         Lobby
  2025  3.2: 199μs         
- 2025  4.1: 487μs         Printing department
- 2025  4.2: 17,944μs      
+ 2025  4.1: 427μs         Printing department
+ 2025  4.2: 12,652μs      
             -------------
-            81.408ms     
+            76.056ms     
 
- 499 puzzles solved in 48.238s.
+ 499 puzzles solved in 48.233s.
 ```
