@@ -469,7 +469,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 20.2: 37,608μs      
  2023 21.1: 57μs          Step counter
  2023 21.2: 439μs         
- 2023 22.1: 30,787μs      Sand slabs
+ 2023 22.1: 30,761μs      Sand slabs
  2023 22.2: 56,739μs      
  2023 23.1: 11,219μs      A long walk
  2023 23.2: 50,713μs      
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,143μs       
  2023 25.1: 9,284μs       Snowverload
             -------------
-            351.121ms    
+            351.095ms    
 
  2024  1.1: 112μs         Historian hysteria
  2024  1.2: 82μs          
@@ -537,10 +537,10 @@ Tests performed on a 2023 MacBook Pro.
  2025  2.2: 46,202μs      
  2025  3.1: 108μs         Lobby
  2025  3.2: 199μs         
- 2025  4.1: 564μs         Printing department
- 2025  4.2: 20,930μs      
+ 2025  4.1: 529μs         Printing department
+ 2025  4.2: 20,338μs      
             -------------
-            84.471ms     
+            83.844ms     
 
  499 puzzles solved in 48.241s.
 ```

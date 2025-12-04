@@ -34,28 +34,28 @@ public class Map
 
     public void ForAdjacentCells(int x, int y, Action<char> action)
     {
-        for (var y1 = -1; y1 < 2; y1++)
+        var minY = Math.Max(0, y - 1);
+        
+        var maxY = Math.Min(Height - 1, y + 1);
+        
+        var minX = Math.Max(0, x - 1);
+        
+        var maxX = Math.Min(Width - 1, x + 1);
+
+        for (var y1 = minY; y1 <= maxY; y1++)
         {
-            for (var x1 = -1; x1 < 2; x1++)
+            var row = y1 * Width;
+
+            for (var x1 = minX; x1 <= maxX; x1++)
             {
-                if (x1 == 0 && y1 == 0)
+                if (x1 == x && y1 == y)
                 {
                     continue;
                 }
 
-                action(SafeGetCell(x + x1, y + y1));
+                action(_cells[row + x1]);
             }
         }
-    }
-
-    private char SafeGetCell(int x, int y)
-    {
-        if (x < 0 || x >= Width || y < 0 || y >= Height)
-        {
-            return '\0';
-        }
-        
-        return _cells[y * Width + x];
     }
 
     private void Initialise(string[] input)
