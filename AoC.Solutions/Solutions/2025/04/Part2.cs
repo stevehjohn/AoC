@@ -9,10 +9,12 @@ public class Part2 : Base
     {
         var removed = 0;
 
-        var toRemove = new HashSet<int>();
-
+        var toRemove = new bool[Map.Length];
+        
         while (true)
         {
+            var anyToRemove = false;
+
             for (var index = 0; index < Map.Length; index++)
             {
                 if (Map[index] == '.')
@@ -22,23 +24,28 @@ public class Part2 : Base
 
                 if (Map.CountAdjacentCells(index, '@') < 4)
                 {
-                    toRemove.Add(index);
+                    toRemove[index] = true;
+
+                    anyToRemove = true;
                 }
             }
 
-            if (toRemove.Count == 0)
+            if (! anyToRemove)
             {
                 break;
             }
 
-            removed += toRemove.Count;
-
-            foreach (var cell in toRemove)
+            for (var i = 0; i < Map.Length; i++)
             {
-                Map[cell] = '.';
+                if (toRemove[i])
+                {
+                    Map[i] = '.';
+                    
+                    toRemove[i] = false;
+
+                    removed++;
+                }
             }
-            
-            toRemove.Clear();
         }
 
         return removed.ToString();
