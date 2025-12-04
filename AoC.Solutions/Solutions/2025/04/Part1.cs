@@ -5,25 +5,19 @@ namespace AoC.Solutions.Solutions._2025._04;
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private int _width;
-
-    private int _height;
-    
-    private char[,] _map;
-    
     public override string GetAnswer()
     {
         ParseInput();
 
         var sum = 0;
         
-        for (var y = 0; y < _height; y++)
+        for (var y = 0; y < Height; y++)
         {
-            for (var x = 0; x < _width; x++)
+            for (var x = 0; x < Width; x++)
             {
                 var surrounding = 0;
 
-                if (_map[y, x] == '.')
+                if (Map[y, x] == '.')
                 {
                     continue;
                 }
@@ -52,34 +46,5 @@ public class Part1 : Base
         }
 
         return sum.ToString();
-    }
-
-    private char SafeCheckCell(int y, int x)
-    {
-        if (x < 0 || x >= _width || y < 0 || y >= _height)
-        {
-            return '\0';
-        }
-
-        return _map[y, x];
-    }
-
-    private void ParseInput()
-    {
-        _width = Input[0].Length;
-
-        _height = Input.Length;
-        
-        _map = new char[_height, _width];
-
-        for (var y = 0; y < _height; y++)
-        {
-            var line = Input[y];
-            
-            for (var x = 0; x < _width; x++)
-            {
-                _map[y, x] = line[x];
-            }
-        }
     }
 }
