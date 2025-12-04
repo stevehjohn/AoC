@@ -20,13 +20,13 @@ public class Map
         Initialise(input);
     }
 
-    public void ForAllCells(Action<int, int, char> action)
+    public void ForAllCells(Action<Cell> action)
     {
         for (var y = 0; y < Height; y++)
         {
             for (var x = 0; x < Width; x++)
             {
-                action(x, y, _cells[y, x]);
+                action(new Cell(x, y, _cells[y, x]));
             }
         }
     }

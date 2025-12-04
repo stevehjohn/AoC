@@ -13,16 +13,16 @@ public class Part2 : Base
 
         while (true)
         {
-            Map.ForAllCells((x, y, centre) =>
+            Map.ForAllCells(centre =>
             {
-                if (centre == '.')
+                if (centre.Value == '.')
                 {
                     return;
                 }
 
                 var surrounding = 0;
 
-                Map.ForAdjacentCells(x, y,
+                Map.ForAdjacentCells(centre.X, centre.Y,
                     cell =>
                     {
                         if (cell == '@')
@@ -33,7 +33,7 @@ public class Part2 : Base
 
                 if (surrounding < 4)
                 {
-                    toRemove.Add((x, y));
+                    toRemove.Add((centre.X, centre.Y));
                 }
             });
 
