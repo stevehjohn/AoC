@@ -2,39 +2,26 @@
 
 public static class ArrayExtensions
 {
-    public static void ForAll<T>(this T[,] array, Action<int, int, T> action)
+    extension<T>(T[,] array)
     {
-        for (var y = 0; y <= array.GetUpperBound(1); y++)
+        public void ForAll(Action<int, int, T> action)
         {
-            for (var x = 0; x <= array.GetUpperBound(0); x++)
+            for (var y = 0; y <= array.GetUpperBound(1); y++)
             {
-                action(x, y, array[x, y]);
+                for (var x = 0; x <= array.GetUpperBound(0); x++)
+                {
+                    action(x, y, array[x, y]);
+                }
             }
         }
     }
 
-    public static char[,] To2DArray(this string[] array)
+    extension<T>(T[] array)
     {
-        var twoDimensionalArray = new char[array[0].Length, array.Length];
-        
-        var y = 0;
-
-        foreach (var line in array)
+        public IEnumerable<T[]> GetPermutations()
         {
-            for (var x = 0; x < line.Length; x++)
-            {
-                twoDimensionalArray[x, y] = line[x];
-            }
-
-            y++;
+            return GetPermutationsInternal(array.Length, array);
         }
-
-        return twoDimensionalArray;
-    }
-
-    public static IEnumerable<T[]> GetPermutations<T>(this T[] array)
-    {
-        return GetPermutationsInternal(array.Length, array);
     }
 
     private static IEnumerable<T[]> GetPermutationsInternal<T>(int remainingIterations, T[] array)
