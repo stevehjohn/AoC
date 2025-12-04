@@ -6,13 +6,13 @@ public sealed class Map
 
     private readonly int _height;
 
+    private readonly int _length;
+
     private readonly char[] _cells;
 
-    public char this[int x, int y]
+    public char this[int index]
     {
-        private get => _cells[y * _width + x];
-        
-        set => _cells[y * _width + x] = value;
+        set => _cells[index] = value;
     }
 
     public Map(string[] input)
@@ -21,9 +21,9 @@ public sealed class Map
 
         _height = input.Length;
 
-        var length = _width * _height;
+        _length = _width * _height;
 
-        _cells = new char[length];
+        _cells = new char[_length];
 
         var i = 0;
 
@@ -36,42 +36,67 @@ public sealed class Map
         }
     }
 
-    public void ForAllCells(Action<int, int, char> action)
+    public void ForAllCells(Action<int, char> action)
     {
-        var i = 0;
-        
-        for (var y = 0; y < _height; y++)
+        for (var i = 0; i < _length; i++)
         {
-            for (var x = 0; x < _width; x++)
+            action(i, _cells[i]);
+        }
+    }
+
+    public void ForAdjacentCells(int index, Action<char> action)
+    {
+        var x = index % _width;
+        
+        var y = index / _width;
+
+        var hasLeft   = x > 0;
+        
+        var hasRight  = x < _width - 1;
+
+        if (y > 0)
+        {
+            var up = index - _width;
+
+            if (hasLeft)
             {
-                action(x, y, _cells[i++]);
+                action(_cells[up - 1]);
+            }
+            
+            action(_cells[up]);
+
+            if (hasRight)
+            {
+                action(_cells[up + 1]);
+            }
+        }
+
+        if (hasLeft)
+        {
+            action(_cells[index - 1]);
+        }
+
+        if (hasRight)
+        {
+            action(_cells[index + 1]);
+        }
+
+        if (y < _height - 1)
+        {
+            var down = index + _width;
+
+            if (hasLeft)
+            {
+                action(_cells[down - 1]);
+            }
+            
+            action(_cells[down]);
+
+            if (hasRight)
+            {
+                action(_cells[down + 1]);
             }
         }
     }
 
-    public void ForAdjacentCells(int x, int y, Action<char> action)
-    {
-        var minY = Math.Max(0, y - 1);
-        
-        var maxY = Math.Min(_height - 1, y + 1);
-        
-        var minX = Math.Max(0, x - 1);
-        
-        var maxX = Math.Min(_width - 1, x + 1);
-
-        for (var y1 = minY; y1 <= maxY; y1++)
-        {
-            var row = y1 * _width;
-
-            for (var x1 = minX; x1 <= maxX; x1++)
-            {
-                if (x1 == x && y1 == y)
-                {
-                    continue;
-                }
-
-                action(_cells[row + x1]);
-            }
-        }
-    }
 }

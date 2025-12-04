@@ -9,11 +9,11 @@ public class Part2 : Base
     {
         var removed = 0;
 
-        var toRemove = new HashSet<(int X, int Y)>();
+        var toRemove = new HashSet<int>();
 
         while (true)
         {
-            Map.ForAllCells((x, y, value) =>
+            Map.ForAllCells((index, value) =>
             {
                 if (value == '.')
                 {
@@ -22,8 +22,7 @@ public class Part2 : Base
 
                 var surrounding = 0;
 
-                Map.ForAdjacentCells(x, y,
-                    cell =>
+                Map.ForAdjacentCells(index, cell =>
                     {
                         if (cell == '@')
                         {
@@ -33,7 +32,7 @@ public class Part2 : Base
 
                 if (surrounding < 4)
                 {
-                    toRemove.Add((x, y));
+                    toRemove.Add(index);
                 }
             });
 
@@ -46,7 +45,7 @@ public class Part2 : Base
 
             foreach (var cell in toRemove)
             {
-                Map[cell.X, cell.Y] = '.';
+                Map[cell] = '.';
             }
             
             toRemove.Clear();

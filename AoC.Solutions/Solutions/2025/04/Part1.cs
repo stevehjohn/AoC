@@ -9,7 +9,7 @@ public class Part1 : Base
     {
         var sum = 0;
 
-        Map.ForAllCells((x, y, value) =>
+        Map.ForAllCells((index, value) =>
         {
             if (value == '.')
             {
@@ -18,8 +18,7 @@ public class Part1 : Base
 
             var surrounding = 0;
 
-            Map.ForAdjacentCells(x, y,
-                cell =>
+            Map.ForAdjacentCells(index, cell =>
                 {
                     if (cell == '@')
                     {
