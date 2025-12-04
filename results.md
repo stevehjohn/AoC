@@ -375,7 +375,7 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             3.700s       
 
- 2022  1.1: 24μs          Calorie counting
+ 2022  1.1: 23μs          Calorie counting
  2022  1.2: 32μs          
  2022  2.1: 37μs          Rock paper scissors
  2022  2.2: 30μs          
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 53,434μs      
  2022 25.1: 10μs          Full of hot air
             -------------
-            285.309ms    
+            285.308ms    
 
  2023  1.1: 118μs         Trebuchet
  2023  1.2: 331μs         

@@ -6,6 +6,10 @@ public class MazeSolver
 {
     private readonly bool[,] _maze;
 
+    private (int X, int Y) _entrance = (-1, -1);
+
+    private (int X, int Y) _exit = (-1, -1);
+
     public MazeSolver(bool[,] maze)
     {
         _maze = maze;
@@ -13,12 +17,14 @@ public class MazeSolver
 
     public (List<(int X, int Y)> Path, List<(int X, int Y)> Visited) SolveMaze()
     {
+        FindEntranceAndExit();
+
         var queue = new Queue<(int X, int Y, List<(int X, int Y)> History)>();
-        
-        queue.Enqueue((1, 0, []));
-        
+
+        queue.Enqueue((_entrance.X, _entrance.Y, []));
+
         var visited = new List<(int X, int Y)>();
-        
+
         while (queue.TryDequeue(out var node))
         {
             node.History.Add((node.X, node.Y));
@@ -28,13 +34,13 @@ public class MazeSolver
                 visited.Add((node.X, node.Y));
             }
 
-            if (node is { X: Constants.Width - 2, Y: Constants.Height - 1 })
+            if (node.X == _exit.X && node.Y == _exit.Y)
             {
                 return (node.History, visited);
             }
 
             var moves = GetMoves(node.X, node.Y);
-            
+
             moves.ForAll((_, m) =>
             {
                 if (! node.History.Contains(m))
@@ -45,6 +51,67 @@ public class MazeSolver
         }
 
         return ([], visited);
+    }
+
+    private void FindEntranceAndExit()
+    {
+        for (var x = 0; x < Constants.Width; x++)
+        {
+            (int X, int Y) position = (-1, -1);
+
+            if (_maze[x, 0])
+            {
+                position = (x, 0);
+            }
+
+            if (_maze[x, Constants.Height - 1] && _entrance.X == -1)
+            {
+                position = (x, Constants.Height - 1);
+            }
+
+            if (position.X == -1)
+            {
+                continue;
+            }
+
+            if (_entrance.X == -1)
+            {
+                _entrance = position;
+            }
+            else
+            {
+                _exit = position;
+            }
+        }
+
+        for (var y = 0; y < Constants.Height; y++)
+        {
+            (int X, int Y) position = (-1, -1);
+
+            if (_maze[0, y])
+            {
+                position = (0, y);
+            }
+
+            if (_maze[Constants.Width - 1, y] && _entrance.X == -1)
+            {
+                position = (Constants.Width - 1, y);
+            }
+
+            if (position.X == -1)
+            {
+                continue;
+            }
+
+            if (_entrance.X == -1)
+            {
+                _entrance = position;
+            }
+            else
+            {
+                _exit = position;
+            }
+        }
     }
 
     private List<(int X, int Y)> GetMoves(int x, int y)
