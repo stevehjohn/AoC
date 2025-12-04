@@ -16,17 +16,7 @@ public class Part1 : Base
                 continue;
             }
 
-            var surrounding = 0;
-
-            Map.ForAdjacentCells(index, cell =>
-                {
-                    if (cell == '@')
-                    {
-                        surrounding++;
-                    }
-                });
-
-            if (surrounding < 4)
+            if (Map.CountAdjacentCells(index, '@') < 4)
             {
                 sum++;
             }

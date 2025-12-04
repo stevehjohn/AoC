@@ -498,7 +498,7 @@ Tests performed on a 2023 MacBook Pro.
  2024  9.1: 287μs         Disk fragmenter
  2024  9.2: 34,934μs      
  2024 10.1: 288μs         Hoof it
- 2024 10.2: 473μs         
+ 2024 10.2: 472μs         
  2024 11.1: 411μs         Plutonian pebbles
  2024 11.2: 12,328μs      
  2024 12.1: 3,542μs       Garden groups
@@ -529,7 +529,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 231μs         
  2024 25.1: 112μs         Code chronicle
             -------------
-            529.354ms    
+            529.353ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 88μs          
@@ -537,10 +537,10 @@ Tests performed on a 2023 MacBook Pro.
  2025  2.2: 46,202μs      
  2025  3.1: 108μs         Lobby
  2025  3.2: 199μs         
- 2025  4.1: 415μs         Printing department
- 2025  4.2: 12,652μs      
+ 2025  4.1: 226μs         Printing department
+ 2025  4.2: 3,440μs       
             -------------
-            76.044ms     
+            66.643ms     
 
- 499 puzzles solved in 48.233s.
+ 499 puzzles solved in 48.223s.
 ```

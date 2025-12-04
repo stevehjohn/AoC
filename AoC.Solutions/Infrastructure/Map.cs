@@ -38,7 +38,7 @@ public sealed class Map
         }
     }
 
-    public void ForAdjacentCells(int index, Action<char> action)
+    public int CountAdjacentCells(int index, char value)
     {
         var x = index % _width;
 
@@ -48,31 +48,45 @@ public sealed class Map
 
         var hasRight = x < _width - 1;
 
+        var count = 0;
+
         if (y > 0)
         {
             var up = index - _width;
 
-            if (hasLeft)
+            if (hasLeft && _cells[up - 1] == value)
             {
-                action(_cells[up - 1]);
+                count++;
             }
 
-            action(_cells[up]);
+            if (_cells[up] == value)
+            {
+                count++;
+            }
 
             if (hasRight)
             {
-                action(_cells[up + 1]);
+                if (_cells[up + 1] == value)
+                {
+                    count++;
+                }
             }
         }
 
         if (hasLeft)
         {
-            action(_cells[index - 1]);
+            if (_cells[index - 1] == value)
+            {
+                count++;
+            }
         }
 
         if (hasRight)
         {
-            action(_cells[index + 1]);
+            if (_cells[index + 1] == value)
+            {
+                count++;
+            }
         }
 
         if (y < _height - 1)
@@ -81,15 +95,26 @@ public sealed class Map
 
             if (hasLeft)
             {
-                action(_cells[down - 1]);
+                if (_cells[down - 1] == value)
+                {
+                    count++;
+                }
             }
 
-            action(_cells[down]);
+            if (_cells[down] == value)
+            {
+                count++;
+            }
 
             if (hasRight)
             {
-                action(_cells[down + 1]);
+                if (_cells[down + 1] == value)
+                {
+                    count++;
+                }
             }
         }
+
+        return count;
     }
 }
