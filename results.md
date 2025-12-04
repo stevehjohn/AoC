@@ -232,7 +232,7 @@ Tests performed on a 2023 MacBook Pro.
  2019  6.2: 33μs          
  2019  7.1: 5,200μs       Amplifiers (CPU used unmodified)
  2019  7.2: 6,639μs       
- 2019  8.1: 1,073μs       Space GIF
+ 2019  8.1: 1,041μs       Space GIF
  2019  8.2: 1,030μs       
  2019  9.1: 45μs          Sensor booster (CPU extension 2)
  2019  9.2: 22,676μs      
