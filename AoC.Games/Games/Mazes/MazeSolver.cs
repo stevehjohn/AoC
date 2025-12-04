@@ -63,8 +63,7 @@ public class MazeSolver
             {
                 position = (x, 0);
             }
-
-            if (_maze[x, Constants.Height - 1] && _entrance.X == -1)
+            else if (_maze[x, Constants.Height - 1])
             {
                 position = (x, Constants.Height - 1);
             }
@@ -92,8 +91,7 @@ public class MazeSolver
             {
                 position = (0, y);
             }
-
-            if (_maze[Constants.Width - 1, y] && _entrance.X == -1)
+            else if (_maze[Constants.Width - 1, y])
             {
                 position = (Constants.Width - 1, y);
             }
