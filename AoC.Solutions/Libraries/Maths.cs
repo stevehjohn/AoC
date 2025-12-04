@@ -10,66 +10,25 @@ public static class Maths
         return number < default(T) ? -number : number;
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-    public static long LowestCommonMultiple(List<long> input)
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static long LowestCommonMultiple(IEnumerable<long> input)
     {
-        var queue = new Queue<long>(input.Count * 2);
-
-        foreach (var item in input)
+        return input.Aggregate(1L, (lcm, n) =>
         {
-            queue.Enqueue(item);
-        }
-        
-        while (true)
-        {
-            long left;
+            var gcd = GreatestCommonFactor(lcm, n);
             
-            long right;
-            
-            if (queue.Count == 2)
-            {
-                left = queue.Dequeue();
-
-                right = queue.Dequeue();
-
-                return left * right / GreatestCommonFactor(left, right);
-            }
-
-            left = queue.Dequeue();
-
-            right = queue.Dequeue();
-
-            var lowestCommonMultiple = left * right / GreatestCommonFactor(left, right);
-
-            queue.Enqueue(lowestCommonMultiple);
-        }
+            return lcm / gcd * n;
+        });
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static long GreatestCommonFactor(long left, long right)
     {
-        var gcdExponentOnTwo = BitOperations.TrailingZeroCount(left | right);
-
-        left >>= gcdExponentOnTwo;
-        
-        right >>= gcdExponentOnTwo;
-
-        while (left != right)
+        while (right != 0)
         {
-            if (left < right)
-            {
-                right -= left;
-
-                right >>= BitOperations.TrailingZeroCount(right);
-            }
-            else
-            {
-                left -= right;
-
-                left >>= BitOperations.TrailingZeroCount(left);
-            }
+            (left, right) = (right, left % right);
         }
 
-        return left << gcdExponentOnTwo;
+        return left;
     }
 }
