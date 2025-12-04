@@ -537,10 +537,10 @@ Tests performed on a 2023 MacBook Pro.
  2025  2.2: 46,202μs      
  2025  3.1: 108μs         Lobby
  2025  3.2: 199μs         
- 2025  4.1: 529μs         Printing department
- 2025  4.2: 20,338μs      
+ 2025  4.1: 487μs         Printing department
+ 2025  4.2: 18,877μs      
             -------------
-            83.844ms     
+            82.341ms     
 
- 499 puzzles solved in 48.241s.
+ 499 puzzles solved in 48.239s.
 ```
