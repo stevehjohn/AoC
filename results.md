@@ -87,7 +87,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 12.1: 36,170μs      Monorail
  2016 12.2: 889,522μs     
  2016 13.1: 53μs          Cubicle maze
- 2016 13.2: 51μs          
+ 2016 13.2: 48μs          
  2016 14.1: 10,371μs      One time pad
  2016 14.2: 7,882,774μs   
  2016 15.1: 386μs         Disc timing
