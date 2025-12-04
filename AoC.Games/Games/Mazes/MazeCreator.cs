@@ -27,9 +27,21 @@ public class MazeCreator
 
     public void Reset()
     {
-        _position = (1, -1);
+        _position = (_rng.Next((Constants.Width - 2) / 2) * 2 + 1, _rng.Next((Constants.Height - 2) / 2) * 2 + 1);
 
-        _direction = (0, 1);
+        var direction = _rng.Next(2) == 0 ? 1 : -1;
+        
+        _direction = _rng.Next(2) == 0 ? (0, direction) : (direction, 0);
+
+        if (_position.X + _direction.Dx is 0 or Constants.Width)
+        {
+            _direction.Dx = -_direction.Dx;
+        }
+
+        if (_position.Y + _direction.Dy is 0 or Constants.Width)
+        {
+            _direction.Dy = -_direction.Dy;
+        }
 
         _move = 0;
 
@@ -59,7 +71,7 @@ public class MazeCreator
             {
                 if (! _stack.TryPop(out var position))
                 {
-                    _maze[Constants.Width - 2, Constants.Height - 1] = true;
+                    AddStartAndEnd();
                     
                     return true;
                 }
@@ -88,6 +100,40 @@ public class MazeCreator
         _move++;
 
         return false;
+    }
+
+    private void AddStartAndEnd()
+    {
+        int x = 0, y = 0;
+
+        for (var i = 0; i < 2; i++)
+        {
+            switch (_rng.Next(2))
+            {
+                case 0:
+                    x = _rng.Next((Constants.Width - 2) / 2) * 2 + 1;
+
+                    y = _rng.Next(2) == 0 ? 0 : Constants.Height - 1;
+                    
+                    break;
+                
+                case 1:
+                    x = _rng.Next(2) == 0 ? 0 : Constants.Width - 1;
+
+                    y = _rng.Next((Constants.Height - 2) / 2) * 2 + 1;
+                    
+                    break;
+            }
+
+            if (_maze[x, y])
+            {
+                i--;
+                
+                continue;
+            }
+
+            _maze[x, y] = true;
+        }
     }
 
     private List<(int Dx, int Dy)> GetDirections()
