@@ -8,8 +8,6 @@ public class Map
 
     public char this[int x, int y]
     {
-        get => _cells[y, x];
-
         set => _cells[y, x] = value;
     }
 
