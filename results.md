@@ -327,7 +327,7 @@ Tests performed on a 2023 MacBook Pro.
  2021  2.1: 44μs          Navigate forward
  2021  2.2: 44μs          
  2021  3.1: 51μs          Power consumption
- 2021  3.2: 82μs          
+ 2021  3.2: 80μs          
  2021  4.1: 930μs         Squid bingo
  2021  4.2: 2,434μs       
  2021  5.1: 3,738μs       Hydrothermal vents
@@ -363,7 +363,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 19.2: 212,184μs     
  2021 20.1: 1,132μs       NCIS image enhancement
  2021 20.2: 72,040μs      
- 2021 21.1: 13μs          Quantum dice
+ 2021 21.1: 12μs          Quantum dice
  2021 21.2: 548,599μs     
  2021 22.1: 1,908μs       Reactor reboot
  2021 22.2: 23,586μs      
@@ -497,7 +497,7 @@ Tests performed on a 2023 MacBook Pro.
  2024  8.2: 122μs         
  2024  9.1: 287μs         Disk fragmenter
  2024  9.2: 34,934μs      
- 2024 10.1: 288μs         Hoof it
+ 2024 10.1: 287μs         Hoof it
  2024 10.2: 472μs         
  2024 11.1: 411μs         Plutonian pebbles
  2024 11.2: 12,328μs      
@@ -529,7 +529,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 231μs         
  2024 25.1: 112μs         Code chronicle
             -------------
-            529.353ms    
+            529.352ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 88μs          
@@ -537,10 +537,10 @@ Tests performed on a 2023 MacBook Pro.
  2025  2.2: 46,202μs      
  2025  3.1: 108μs         Lobby
  2025  3.2: 199μs         
- 2025  4.1: 226μs         Printing department
- 2025  4.2: 3,440μs       
+ 2025  4.1: 217μs         Printing department
+ 2025  4.2: 3,145μs       
             -------------
-            66.643ms     
+            66.339ms     
 
  499 puzzles solved in 48.223s.
 ```
