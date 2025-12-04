@@ -47,12 +47,12 @@ public sealed class Map
     public void ForAdjacentCells(int index, Action<char> action)
     {
         var x = index % _width;
-        
+
         var y = index / _width;
 
-        var hasLeft   = x > 0;
-        
-        var hasRight  = x < _width - 1;
+        var hasLeft = x > 0;
+
+        var hasRight = x < _width - 1;
 
         if (y > 0)
         {
@@ -62,7 +62,7 @@ public sealed class Map
             {
                 action(_cells[up - 1]);
             }
-            
+
             action(_cells[up]);
 
             if (hasRight)
@@ -89,7 +89,7 @@ public sealed class Map
             {
                 action(_cells[down - 1]);
             }
-            
+
             action(_cells[down]);
 
             if (hasRight)
