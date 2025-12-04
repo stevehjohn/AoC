@@ -1,4 +1,6 @@
-﻿namespace AoC.Solutions.Extensions;
+﻿using System.Numerics;
+
+namespace AoC.Solutions.Extensions;
 
 public static class IntExtensions
 {
@@ -21,16 +23,7 @@ public static class IntExtensions
 
         public int CountBits()
         {
-            var count = 0;
-
-            while (input > 0)
-            {
-                count++;
-
-                input &= input - 1;
-            }
-
-            return count;
+            return BitOperations.PopCount((uint) input);
         }
 
         public void Repetitions(Action action)

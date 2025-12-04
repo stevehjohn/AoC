@@ -6,19 +6,25 @@ public static class StringExtensions
     {
         public int CommonCharacterCount(string right)
         {
-            if (right.Length > left.Length)
+            Span<int> leftCounts = stackalloc int[128];
+            
+            Span<int> rightCounts = stackalloc int[128];
+
+            foreach (var c in left)
             {
-                (right, left) = (left, right);
+                leftCounts[c]++;
+            }
+
+            foreach (var c in right)
+            {
+                rightCounts[c]++;
             }
 
             var count = 0;
-
-            for (var i = 0; i < left.Length; i++)
+            
+            for (var i = 0; i < 128; i++)
             {
-                if (right.Contains(left[i]))
-                {
-                    count++;
-                }
+                count += Math.Min(leftCounts[i], rightCounts[i]);
             }
 
             return count;
