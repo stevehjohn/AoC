@@ -107,35 +107,41 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
             
             case State.Visiting:
-                step = _visited[_step];
-
-                _mazeVisited[step.X, step.Y] = true;
-
-                if (_step < _visited.Count - 1)
+                for (var i = 0; i < StepsPerFrame; i++)
                 {
-                    _step++;
-                }
-                else
-                {
-                    _step = 0;
+                    step = _visited[_step];
 
-                    _state = State.Solved;
+                    _mazeVisited[step.X, step.Y] = true;
+
+                    if (_step < _visited.Count - 1)
+                    {
+                        _step++;
+                    }
+                    else
+                    {
+                        _step = 0;
+
+                        _state = State.Solved;
+                    }
                 }
 
                 break;
 
             case State.Solved:
-                step = _solution[_step];
-
-                _mazeSolution[step.X, step.Y] = true;
-
-                if (_step < _solution.Count - 1)
+                for (var i = 0; i < StepsPerFrame; i++)
                 {
-                    _step++;
-                }
-                else
-                {
-                    _state = State.Finished;
+                    step = _solution[_step];
+
+                    _mazeSolution[step.X, step.Y] = true;
+
+                    if (_step < _solution.Count - 1)
+                    {
+                        _step++;
+                    }
+                    else
+                    {
+                        _state = State.Finished;
+                    }
                 }
 
                 break;
