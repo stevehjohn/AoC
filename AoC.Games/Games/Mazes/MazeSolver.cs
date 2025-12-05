@@ -53,6 +53,39 @@ public class MazeSolver
         return ([], visited);
     }
 
+    public (int X, int Y) FindFurthestEdgeFrom(int x, int y)
+    {
+        var queue = new Queue<(int X, int Y)>();
+        
+        var visited = new HashSet<(int X, int Y)>();
+    
+        queue.Enqueue((x, y));
+        
+        visited.Add((x, y));
+    
+        var lastVisited = (X: -1, Y: -1);
+    
+        while (queue.TryDequeue(out var node))
+        {
+            if (node.X is 1 or Constants.Width - 3 || node.Y is 1 or Constants.Height - 3)
+            {
+                lastVisited = node;
+            }
+        
+            var moves = GetMoves(node.X, node.Y);
+        
+            moves.ForAll((_, m) =>
+            {
+                if (visited.Add(m))
+                {
+                    queue.Enqueue(m);
+                }
+            });
+        }
+    
+        return lastVisited;
+    }
+
     private void FindEntranceAndExit()
     {
         var openings = new List<(int X, int Y)>();
@@ -63,6 +96,7 @@ public class MazeSolver
             {
                 openings.Add((x, 0));
             }
+
             if (_maze[x, Constants.Height - 1])
             {
                 openings.Add((x, Constants.Height - 1));
@@ -75,6 +109,7 @@ public class MazeSolver
             {
                 openings.Add((0, y));
             }
+
             if (_maze[Constants.Width - 1, y])
             {
                 openings.Add((Constants.Width - 1, y));
@@ -82,7 +117,7 @@ public class MazeSolver
         }
 
         _entrance = openings[0];
-        
+
         _exit = openings[1];
     }
 

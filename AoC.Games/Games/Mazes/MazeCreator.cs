@@ -104,18 +104,43 @@ public class MazeCreator
 
     private void AddStartAndEnd()
     {
+        var x = 0;
+
+        var y = 0;
+        
         if (_rng.Next(2) == 0)
         {
-            _maze[_rng.Next((Constants.Width - 2) / 2) * 2 + 1, 0] = true;
-            
-            _maze[_rng.Next((Constants.Width - 2) / 2) * 2 + 1, Constants.Height - 1] = true;
+            x = _rng.Next((Constants.Width - 2) / 2) * 2 + 1;
         }
         else
         {
-            _maze[0, _rng.Next((Constants.Height - 2) / 2) * 2 + 1] = true;
-
-            _maze[Constants.Width - 1, _rng.Next((Constants.Height - 2) / 2) * 2 + 1] = true;
+            y = _rng.Next((Constants.Height - 2) / 2) * 2 + 1;
         }
+
+        _maze[x, y] = true;
+
+        var solver = new MazeSolver(_maze);
+
+        var exit = solver.FindFurthestEdgeFrom(x, y);
+
+        if (exit.X == 2)
+        {
+            exit.X = 0;
+        }
+        else if (exit.X == Constants.Width - 3)
+        {
+            exit.X = Constants.Width - 1;
+        }
+        else if (exit.Y == 2)
+        {
+            exit.Y = 0;
+        }
+        else
+        {
+            exit.Y = Constants.Height - 1;
+        }
+
+        _maze[exit.X, exit.Y] = true;
     }
 
     private List<(int Dx, int Dy)> GetDirections()
