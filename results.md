@@ -428,7 +428,7 @@ Tests performed on a 2023 MacBook Pro.
             285.223ms    
 
  2023  1.1: 115μs         Trebuchet
- 2023  1.2: 331μs         
+ 2023  1.2: 330μs         
  2023  2.1: 59μs          Cube conundrum
  2023  2.2: 86μs          
  2023  3.1: 53μs          Gear ratios
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,143μs       
  2023 25.1: 9,284μs       Snowverload
             -------------
-            350.599ms    
+            350.598ms    
 
  2024  1.1: 112μs         Historian hysteria
  2024  1.2: 82μs          
