@@ -52,7 +52,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 20.2: 2,283μs       
  2015 21.1: 383μs         RPG simulator 2015
  2015 21.2: 365μs         
- 2015 22.1: 1,358,829μs   Wizard simulator 2015
+ 2015 22.1: 1,354,122μs   Wizard simulator 2015
  2015 22.2: 52,286μs      
  2015 23.1: 73μs          Opening the Turing lock
  2015 23.2: 87μs          
@@ -60,7 +60,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 24.2: 129μs         
  2015 25.1: 57,271μs      Let it snow
             -------------
-            6.071s       
+            6.066s       
 
  2016  1.1: 6μs           Manhattan distance
  2016  1.2: 15μs          
@@ -122,7 +122,7 @@ Tests performed on a 2023 MacBook Pro.
  2017  3.2: 18μs          
  2017  4.1: 128μs         Passphrase validation
  2017  4.2: 407,059μs     
- 2017  5.1: 512μs         Memory trampoline
+ 2017  5.1: 509μs         Memory trampoline
  2017  5.2: 47,772μs      
  2017  6.1: 2,535μs       Garbage collection
  2017  6.2: 7,370μs       
@@ -177,7 +177,7 @@ Tests performed on a 2023 MacBook Pro.
  2018  5.1: 882μs         Polymer reactions
  2018  5.2: 33,559μs      
  2018  6.1: 8,396μs       Safe coordinates
- 2018  6.2: 5,455μs       
+ 2018  6.2: 5,444μs       
  2018  7.1: 48μs          Ikea sleigh
  2018  7.2: 222μs         
  2018  8.1: 4,928μs       Navigation licensing
@@ -427,7 +427,7 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             285.224ms    
 
- 2023  1.1: 118μs         Trebuchet
+ 2023  1.1: 115μs         Trebuchet
  2023  1.2: 331μs         
  2023  2.1: 59μs          Cube conundrum
  2023  2.2: 86μs          
@@ -472,12 +472,12 @@ Tests performed on a 2023 MacBook Pro.
  2023 22.1: 30,761μs      Sand slabs
  2023 22.2: 56,309μs      
  2023 23.1: 11,219μs      A long walk
- 2023 23.2: 50,713μs      
+ 2023 23.2: 50,650μs      
  2023 24.1: 1,525μs       Never tell me the odds
  2023 24.2: 5,143μs       
  2023 25.1: 9,284μs       Snowverload
             -------------
-            350.665ms    
+            350.599ms    
 
  2024  1.1: 112μs         Historian hysteria
  2024  1.2: 82μs          
@@ -539,8 +539,10 @@ Tests performed on a 2023 MacBook Pro.
  2025  3.2: 199μs         
  2025  4.1: 197μs         Printing department
  2025  4.2: 3,088μs       
+ 2025  5.1: 115μs         Cafeteria
+ 2025  5.2: 50μs          
             -------------
-            66.206ms     
+            66.371ms     
 
- 499 puzzles solved in 48.202s.
+ 501 puzzles solved in 48.198s.
 ```
