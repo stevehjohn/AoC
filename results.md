@@ -86,7 +86,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 11.2: 108μs         
  2016 12.1: 36,170μs      Monorail
  2016 12.2: 889,522μs     
- 2016 13.1: 52μs          Cubicle maze
+ 2016 13.1: 49μs          Cubicle maze
  2016 13.2: 48μs          
  2016 14.1: 10,371μs      One time pad
  2016 14.2: 7,882,774μs   
@@ -226,7 +226,7 @@ Tests performed on a 2023 MacBook Pro.
  2019  3.2: 2,094μs       
  2019  4.1: 49,730μs      Forgotten password
  2019  4.2: 49,640μs      
- 2019  5.1: 30μs          Air conditioning (CPU extension 1)
+ 2019  5.1: 29μs          Air conditioning (CPU extension 1)
  2019  5.2: 22μs          
  2019  6.1: 241μs         Orbital transfers
  2019  6.2: 33μs          
@@ -253,7 +253,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 17.1: 3,694μs       Scaffolding vacuum robot (CPU used unmodified)
  2019 17.2: 12,266μs      
  2019 18.1: 121,718μs     Maze and keys
- 2019 18.2: 67,018μs      
+ 2019 18.2: 63,845μs      
  2019 19.1: 112,897μs     Tractorrr (CPU used unmodified)
  2019 19.2: 121,421μs     
  2019 20.1: 263μs         Doughnut maze
@@ -268,7 +268,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 24.2: 7,264μs       
  2019 25.1: 217,494μs     Airlock password (CPU used unmodified)
             -------------
-            1.240s       
+            1.237s       
 
  2020  1.1: 22μs          Expenses
  2020  1.2: 106μs         
@@ -471,13 +471,13 @@ Tests performed on a 2023 MacBook Pro.
  2023 21.2: 439μs         
  2023 22.1: 30,761μs      Sand slabs
  2023 22.2: 56,309μs      
- 2023 23.1: 11,219μs      A long walk
+ 2023 23.1: 10,949μs      A long walk
  2023 23.2: 50,650μs      
  2023 24.1: 1,525μs       Never tell me the odds
  2023 24.2: 5,143μs       
  2023 25.1: 9,284μs       Snowverload
             -------------
-            350.598ms    
+            350.328ms    
 
  2024  1.1: 112μs         Historian hysteria
  2024  1.2: 82μs          
@@ -515,7 +515,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 17.2: 2,535μs       
  2024 18.1: 1,286μs       RAM run
  2024 18.2: 1,332μs       
- 2024 19.1: 37,983μs      Linen layout
+ 2024 19.1: 37,906μs      Linen layout
  2024 19.2: 59,627μs      
  2024 20.1: 33,860μs      Race condition
  2024 20.2: 32,521μs      
@@ -529,7 +529,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 231μs         
  2024 25.1: 112μs         Code chronicle
             -------------
-            529.146ms    
+            529.069ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 88μs          
@@ -544,5 +544,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             66.361ms     
 
- 501 puzzles solved in 48.194s.
+ 501 puzzles solved in 48.190s.
 ```
