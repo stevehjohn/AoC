@@ -7,23 +7,7 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var ranges = new List<(long Start, long End)>();
-
-        var index = 0;
-        
-        foreach (var line in Input)
-        {
-            if (string.IsNullOrWhiteSpace(line))
-            {
-                break;
-            }
-
-            var parts = line.Split('-');
-            
-            ranges.Add((long.Parse(parts[0]), long.Parse(parts[1])));
-
-            index++;
-        }
+        var index = ParseRanges();
 
         index += 2;
 
@@ -33,9 +17,9 @@ public class Part1 : Base
         {
             var ingredient = long.Parse(Input[index]);
             
-            for (var i = 0; i < ranges.Count; i++)
+            for (var i = 0; i < Ranges.Count; i++)
             {
-                var range = ranges[i];
+                var range = Ranges[i];
 
                 if (ingredient >= range.Start && ingredient <= range.End)
                 {
