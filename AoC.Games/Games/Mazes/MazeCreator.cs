@@ -104,61 +104,17 @@ public class MazeCreator
 
     private void AddStartAndEnd()
     {
-        int x = 0, y = 0;
-        
-        var firstEdge = -1;
-
-        for (var i = 0; i < 2; i++)
+        if (_rng.Next(2) == 0)
         {
-            int edge;
-        
-            if (i == 0)
-            {
-                edge = _rng.Next(4);
-                
-                firstEdge = edge;
-            }
-            else
-            {
-                do
-                {
-                    edge = _rng.Next(4);
-                    
-                } while (edge == firstEdge);
-            }
+            _maze[_rng.Next((Constants.Width - 2) / 2) * 2 + 1, 0] = true;
+            
+            _maze[_rng.Next((Constants.Width - 2) / 2) * 2 + 1, Constants.Height - 1] = true;
+        }
+        else
+        {
+            _maze[0, _rng.Next((Constants.Height - 2) / 2) * 2 + 1] = true;
 
-            switch (edge)
-            {
-                case 0:
-                    x = _rng.Next((Constants.Width - 2) / 2) * 2 + 1;
-                    
-                    y = 0;
-                    
-                    break;
-            
-                case 1:
-                    x = _rng.Next((Constants.Width - 2) / 2) * 2 + 1;
-                    
-                    y = Constants.Height - 1;
-                    
-                    break;
-            
-                case 2:
-                    x = 0;
-                    
-                    y = _rng.Next((Constants.Height - 2) / 2) * 2 + 1;
-                    
-                    break;
-            
-                case 3:
-                    x = Constants.Width - 1;
-                    
-                    y = _rng.Next((Constants.Height - 2) / 2) * 2 + 1;
-                    
-                    break;
-            }
-
-            _maze[x, y] = true;
+            _maze[Constants.Width - 1, _rng.Next((Constants.Height - 2) / 2) * 2 + 1] = true;
         }
     }
 
