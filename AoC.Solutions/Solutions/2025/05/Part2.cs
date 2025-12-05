@@ -1,3 +1,4 @@
+using AoC.Solutions.Infrastructure;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2025._05;
@@ -21,7 +22,7 @@ public class Part2 : Base
 
             if (left.End >= right.Start)
             {
-                Ranges[i] = (left.Start, Math.Max(left.End, right.End));
+                Ranges[i] = left with { End = Math.Max(left.End, right.End) };
                 
                 Ranges.RemoveAt(i + 1);
                 

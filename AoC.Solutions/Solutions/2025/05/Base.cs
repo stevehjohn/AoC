@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Cafeteria";
 
-    protected readonly List<(long Start, long End)> Ranges = [];
+    protected readonly List<Infrastructure.Range<long>> Ranges = [];
 
     protected int ParseRanges()
     {
@@ -21,7 +21,7 @@ public abstract class Base : Solution
 
             var parts = line.Split('-');
             
-            Ranges.Add((long.Parse(parts[0]), long.Parse(parts[1])));
+            Ranges.Add(new Range<long>(long.Parse(parts[0]), long.Parse(parts[1])));
 
             index++;
         }
