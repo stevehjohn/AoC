@@ -9,6 +9,8 @@ namespace AoC.Games.Games.Mazes;
 [UsedImplicitly]
 public class Game : Microsoft.Xna.Framework.Game
 {
+    private const int StepsPerFrame = 3;
+    
     private readonly bool[,] _maze = new bool[Constants.Width, Constants.Height];
 
     private readonly bool[,] _mazeSolution = new bool[Constants.Width, Constants.Height];
@@ -82,9 +84,12 @@ public class Game : Microsoft.Xna.Framework.Game
         switch (_state)
         {
             case State.Creating:
-                if (_mazeCreator.CreateMaze())
+                for (var i = 0; i < StepsPerFrame; i++)
                 {
-                    _state = State.Created;
+                    if (_mazeCreator.CreateMaze())
+                    {
+                        _state = State.Created;
+                    }
                 }
 
                 break;

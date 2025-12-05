@@ -183,7 +183,7 @@ Tests performed on a 2023 MacBook Pro.
  2018  8.1: 4,928μs       Navigation licensing
  2018  8.2: 4,942μs       
  2018  9.1: 727μs         Marble madness
- 2018  9.2: 432,175μs     
+ 2018  9.2: 431,009μs     
  2018 10.1: 5,799μs       Writing in the stars
  2018 10.2: 6,069μs       
  2018 11.1: 350μs         Max power... cell
@@ -216,7 +216,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 265,695μs     
  2018 25.1: 32,693μs      4D chocolate teleportation
             -------------
-            17.828s      
+            17.827s      
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
@@ -540,9 +540,9 @@ Tests performed on a 2023 MacBook Pro.
  2025  4.1: 197μs         Printing department
  2025  4.2: 3,088μs       
  2025  5.1: 113μs         Cafeteria
- 2025  5.2: 43μs          
+ 2025  5.2: 42μs          
             -------------
-            66.362ms     
+            66.361ms     
 
- 501 puzzles solved in 48.195s.
+ 501 puzzles solved in 48.194s.
 ```
