@@ -38,6 +38,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
     private int _step;
 
+    private double _solveTime;
+
     public Game()
     {
         var scaleFactor = AppSettings.Instance.ScaleFactor;
@@ -71,9 +73,17 @@ public class Game : Microsoft.Xna.Framework.Game
 
     protected override void Update(GameTime gameTime)
     {
-        if (IsActive && _input.LeftButtonClicked() && _input.MouseY > 0 && _input.MouseX > 0 && _input.MouseX < GraphicsDevice.Viewport.Width && _input.MouseY < GraphicsDevice.Viewport.Height)
+        if (IsActive && _input.LeftButtonClicked() && _input.MouseY > -30 && _input.MouseX > 0 && _input.MouseX < GraphicsDevice.Viewport.Width && _input.MouseY < GraphicsDevice.Viewport.Height)
         {
             Reset();
+        }
+
+        if (_state == State.Finished && Constants.AutoRestartDelay > 0)
+        {
+            if (gameTime.TotalGameTime.TotalMilliseconds - _solveTime > Constants.AutoRestartDelay)
+            {
+                Reset();
+            }
         }
 
         (int X, int Y) step;
@@ -140,6 +150,8 @@ public class Game : Microsoft.Xna.Framework.Game
                     }
                     else
                     {
+                        _solveTime = gameTime.TotalGameTime.TotalMilliseconds;
+                        
                         _state = State.Finished;
                     }
                 }
