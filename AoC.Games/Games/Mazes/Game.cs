@@ -89,6 +89,8 @@ public class Game : Microsoft.Xna.Framework.Game
                     if (_mazeCreator.CreateMaze())
                     {
                         _state = State.Created;
+                        
+                        break;
                     }
                 }
 
