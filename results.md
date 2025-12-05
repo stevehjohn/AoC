@@ -296,7 +296,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 12.2: 26μs          
  2020 13.1: 7μs           Bus timetables
  2020 13.2: 14μs          
- 2020 14.1: 90μs          Memory bit twiddling
+ 2020 14.1: 89μs          Memory bit twiddling
  2020 14.2: 3,890μs       
  2020 15.1: 14μs          Number memory game
  2020 15.2: 228,198μs     
