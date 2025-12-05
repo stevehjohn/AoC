@@ -9,8 +9,6 @@ namespace AoC.Games.Games.Mazes;
 [UsedImplicitly]
 public class Game : Microsoft.Xna.Framework.Game
 {
-    private const int StepsPerFrame = 3;
-    
     private readonly bool[,] _maze = new bool[Constants.Width, Constants.Height];
 
     private readonly bool[,] _mazeSolution = new bool[Constants.Width, Constants.Height];
@@ -79,17 +77,17 @@ public class Game : Microsoft.Xna.Framework.Game
         }
 
         (int X, int Y) step;
-        
+
         // ReSharper disable once SwitchStatementMissingSomeEnumCasesNoDefault
         switch (_state)
         {
             case State.Creating:
-                for (var i = 0; i < StepsPerFrame; i++)
+                for (var i = 0; i < Constants.StepsPerFrame; i++)
                 {
                     if (_mazeCreator.CreateMaze())
                     {
                         _state = State.Created;
-                        
+
                         break;
                     }
                 }
@@ -107,9 +105,9 @@ public class Game : Microsoft.Xna.Framework.Game
                 _state = State.Visiting;
 
                 break;
-            
+
             case State.Visiting:
-                for (var i = 0; i < StepsPerFrame; i++)
+                for (var i = 0; i < Constants.StepsPerFrame; i++)
                 {
                     step = _visited[_step];
 
@@ -130,7 +128,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
 
             case State.Solved:
-                for (var i = 0; i < StepsPerFrame; i++)
+                for (var i = 0; i < Constants.StepsPerFrame; i++)
                 {
                     step = _solution[_step];
 
@@ -161,7 +159,7 @@ public class Game : Microsoft.Xna.Framework.Game
         _solution = null;
 
         _visited = null;
-        
+
         _maze.ForAll((x, y, _) =>
         {
             _mazeSolution[x, y] = false;
@@ -199,15 +197,15 @@ public class Game : Microsoft.Xna.Framework.Game
                 if (_mazeSolution[x / Constants.TileSize, y / Constants.TileSize])
                 {
                     if (x % Constants.TileSize > 2 && x % Constants.TileSize < Constants.TileSize - 3
-                        && y % Constants.TileSize > 2 && y % Constants.TileSize < Constants.TileSize - 3)
+                                                   && y % Constants.TileSize > 2 && y % Constants.TileSize < Constants.TileSize - 3)
                     {
                         _data[x + y * Constants.Width * Constants.TileSize] = Color.FromNonPremultiplied(0, 192, 0, 255);
 
                         continue;
                     }
-                    
-                    if (x % Constants.TileSize > 1 && x % Constants.TileSize < Constants.TileSize - 2 
-                        && y % Constants.TileSize > 1 && y % Constants.TileSize < Constants.TileSize - 2)
+
+                    if (x % Constants.TileSize > 1 && x % Constants.TileSize < Constants.TileSize - 2
+                                                   && y % Constants.TileSize > 1 && y % Constants.TileSize < Constants.TileSize - 2)
                     {
                         _data[x + y * Constants.Width * Constants.TileSize] = Color.FromNonPremultiplied(0, 96, 0, 255);
 
@@ -217,16 +215,16 @@ public class Game : Microsoft.Xna.Framework.Game
 
                 if (_mazeVisited[x / Constants.TileSize, y / Constants.TileSize])
                 {
-                    if (x % Constants.TileSize > 3 && x % Constants.TileSize < Constants.TileSize - 4 
-                        && y % Constants.TileSize > 3 && y % Constants.TileSize < Constants.TileSize - 4)
+                    if (x % Constants.TileSize > 2 && x % Constants.TileSize < Constants.TileSize - 3
+                                                   && y % Constants.TileSize > 2 && y % Constants.TileSize < Constants.TileSize - 3)
                     {
                         _data[x + y * Constants.Width * Constants.TileSize] = Color.FromNonPremultiplied(191, 127, 0, 255);
 
                         continue;
                     }
-                    
-                    if (x % Constants.TileSize > 2 && x % Constants.TileSize < Constants.TileSize - 3 
-                        && y % Constants.TileSize > 2 && y % Constants.TileSize < Constants.TileSize - 3)
+
+                    if (x % Constants.TileSize > 1 && x % Constants.TileSize < Constants.TileSize - 2
+                                                   && y % Constants.TileSize > 1 && y % Constants.TileSize < Constants.TileSize - 2)
                     {
                         _data[x + y * Constants.Width * Constants.TileSize] = Color.FromNonPremultiplied(127, 63, 0, 255);
 
