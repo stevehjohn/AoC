@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Cafeteria";
 
-    protected readonly List<Infrastructure.Range<long>> Ranges = [];
+    protected readonly List<Range<long>> Ranges = [];
 
     protected int ParseRanges()
     {
