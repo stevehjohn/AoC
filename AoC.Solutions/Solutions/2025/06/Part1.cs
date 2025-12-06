@@ -24,19 +24,17 @@ public class Part1 : Base
         {
             var result = (long) numbers[0][x];
 
+            var isAddition = operators[x] == "+";
+
             for (var y = 1; y < numbers.Count; y++)
             {
-                switch (operators[x])
+                if (isAddition)
                 {
-                    case "+":
-                        result += numbers[y][x];
-                        
-                        break;
-                    
-                    default:
-                        result *= numbers[y][x];
-                        
-                        break;
+                    result += numbers[y][x];
+                }
+                else
+                {
+                    result *= numbers[y][x];
                 }
             }
 
