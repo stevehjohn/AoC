@@ -73,7 +73,7 @@ Tests performed on a 2023 MacBook Pro.
  2016  5.1: 1,149,720μs   Password hash
  2016  5.2: 3,405,382μs   
  2016  6.1: 878μs         Signals and noise
- 2016  6.2: 274μs         
+ 2016  6.2: 273μs         
  2016  7.1: 738μs         ABBA internet protocol
  2016  7.2: 986μs         
  2016  8.1: 150μs         MFA
@@ -122,7 +122,7 @@ Tests performed on a 2023 MacBook Pro.
  2017  3.2: 18μs          
  2017  4.1: 128μs         Passphrase validation
  2017  4.2: 407,059μs     
- 2017  5.1: 509μs         Memory trampoline
+ 2017  5.1: 508μs         Memory trampoline
  2017  5.2: 47,772μs      
  2017  6.1: 2,535μs       Garbage collection
  2017  6.2: 7,370μs       
@@ -233,7 +233,7 @@ Tests performed on a 2023 MacBook Pro.
  2019  7.1: 5,140μs       Amplifiers (CPU used unmodified)
  2019  7.2: 6,596μs       
  2019  8.1: 1,041μs       Space GIF
- 2019  8.2: 1,030μs       
+ 2019  8.2: 1,018μs       
  2019  9.1: 45μs          Sensor booster (CPU extension 2)
  2019  9.2: 22,676μs      
  2019 10.1: 18,082μs      Asteroids
@@ -509,7 +509,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 14.2: 12,824μs      
  2024 15.1: 270μs         Warehouse woes
  2024 15.2: 5,807μs       
- 2024 16.1: 3,137μs       Reindeer maze
+ 2024 16.1: 3,078μs       Reindeer maze
  2024 16.2: 31,459μs      
  2024 17.1: 7μs           Chronospatial computer
  2024 17.2: 2,535μs       
@@ -529,7 +529,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 231μs         
  2024 25.1: 112μs         Code chronicle
             -------------
-            529.069ms    
+            529.010ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 88μs          
@@ -541,8 +541,10 @@ Tests performed on a 2023 MacBook Pro.
  2025  4.2: 3,088μs       
  2025  5.1: 113μs         Cafeteria
  2025  5.2: 42μs          
+ 2025  6.1: 261μs         Trash compactor
+ 2025  6.2: 68μs          
             -------------
-            66.361ms     
+            66.690ms     
 
- 501 puzzles solved in 48.190s.
+ 503 puzzles solved in 48.191s.
 ```
