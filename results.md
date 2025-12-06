@@ -97,7 +97,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 17.1: 18μs          Two steps forward
  2016 17.2: 25,223μs      
  2016 18.1: 76μs          Like a rogue
- 2016 18.2: 342,282μs     
+ 2016 18.2: 341,905μs     
  2016 19.1: 4μs           The Josephus problem
  2016 19.2: 0μs           
  2016 20.1: 261μs         Firewall rules
@@ -112,7 +112,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 24.2: 19,070μs      
  2016 25.1: 162,573μs     Clock signal
             -------------
-            14.719s      
+            14.718s      
 
  2017  1.1: 8μs           Captcha
  2017  1.2: 10μs          
@@ -172,7 +172,7 @@ Tests performed on a 2023 MacBook Pro.
  2018  2.2: 176μs         
  2018  3.1: 5,742μs       Fabric overlap
  2018  3.2: 5,155μs       
- 2018  4.1: 676μs         Sleepy guards
+ 2018  4.1: 674μs         Sleepy guards
  2018  4.2: 1,152μs       
  2018  5.1: 882μs         Polymer reactions
  2018  5.2: 33,559μs      
@@ -541,10 +541,10 @@ Tests performed on a 2023 MacBook Pro.
  2025  4.2: 3,088μs       
  2025  5.1: 113μs         Cafeteria
  2025  5.2: 42μs          
- 2025  6.1: 261μs         Trash compactor
+ 2025  6.1: 259μs         Trash compactor
  2025  6.2: 68μs          
             -------------
-            66.690ms     
+            66.688ms     
 
- 503 puzzles solved in 48.191s.
+ 503 puzzles solved in 48.190s.
 ```
