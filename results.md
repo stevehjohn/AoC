@@ -79,7 +79,7 @@ Tests performed on a 2023 MacBook Pro.
  2016  8.1: 150μs         MFA
  2016  8.2: 136μs         
  2016  9.1: 42μs          Cyberspace explosives
- 2016  9.2: 117μs         
+ 2016  9.2: 116μs         
  2016 10.1: 753μs         Balance bots
  2016 10.2: 1,523μs       
  2016 11.1: 61μs          Radioisotope thermoelectric elevators
@@ -541,10 +541,10 @@ Tests performed on a 2023 MacBook Pro.
  2025  4.2: 3,088μs       
  2025  5.1: 113μs         Cafeteria
  2025  5.2: 42μs          
- 2025  6.1: 256μs         Trash compactor
+ 2025  6.1: 255μs         Trash compactor
  2025  6.2: 67μs          
             -------------
-            66.684ms     
+            66.683ms     
 
  503 puzzles solved in 48.190s.
 ```

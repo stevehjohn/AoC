@@ -11,7 +11,9 @@ public class Part1 : Base
 
         var width = operators.Length;
         
-        var numbers = new int[width][];
+        var rows = Input.Length - 1;
+
+        var numbers = new int[rows][];
 
         for (var y = 0; y < Input.Length - 1; y++)
         {
@@ -26,8 +28,6 @@ public class Part1 : Base
         }
 
         var total = 0L;
-
-        var rows = Input.Length - 1;
         
         for (var x = 0; x < width; x++)
         {
