@@ -302,3 +302,4 @@ AoC.Games.*.zip
 Thumbs.db
 
 .tmp.driveupload/
+*.mgstats
