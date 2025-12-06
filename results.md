@@ -54,7 +54,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 21.2: 365μs         
  2015 22.1: 1,354,122μs   Wizard simulator 2015
  2015 22.2: 52,248μs      
- 2015 23.1: 73μs          Opening the Turing lock
+ 2015 23.1: 72μs          Opening the Turing lock
  2015 23.2: 87μs          
  2015 24.1: 85,996μs      It hangs in the balance
  2015 24.2: 129μs         
@@ -101,7 +101,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 19.1: 4μs           The Josephus problem
  2016 19.2: 0μs           
  2016 20.1: 261μs         Firewall rules
- 2016 20.2: 4,535μs       
+ 2016 20.2: 4,491μs       
  2016 21.1: 19μs          Scrambled letters and hash
  2016 21.2: 22μs          
  2016 22.1: 270,519μs     Grid computing
@@ -109,7 +109,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 23.1: 1,845μs       Safe cracking
  2016 23.2: 589μs         
  2016 24.1: 19,838μs      Air duct spelunking
- 2016 24.2: 19,070μs      
+ 2016 24.2: 19,050μs      
  2016 25.1: 162,573μs     Clock signal
             -------------
             14.718s      
@@ -124,7 +124,7 @@ Tests performed on a 2023 MacBook Pro.
  2017  4.2: 407,059μs     
  2017  5.1: 508μs         Memory trampoline
  2017  5.2: 47,772μs      
- 2017  6.1: 2,535μs       Garbage collection
+ 2017  6.1: 2,456μs       Garbage collection
  2017  6.2: 7,370μs       
  2017  7.1: 228μs         Balancing act
  2017  7.2: 245μs         
@@ -176,14 +176,14 @@ Tests performed on a 2023 MacBook Pro.
  2018  4.2: 1,152μs       
  2018  5.1: 882μs         Polymer reactions
  2018  5.2: 33,559μs      
- 2018  6.1: 8,396μs       Safe coordinates
+ 2018  6.1: 8,371μs       Safe coordinates
  2018  6.2: 5,444μs       
  2018  7.1: 48μs          Ikea sleigh
  2018  7.2: 222μs         
  2018  8.1: 4,928μs       Navigation licensing
  2018  8.2: 4,942μs       
  2018  9.1: 727μs         Marble madness
- 2018  9.2: 431,009μs     
+ 2018  9.2: 430,737μs     
  2018 10.1: 5,799μs       Writing in the stars
  2018 10.2: 6,069μs       
  2018 11.1: 350μs         Max power... cell
@@ -216,7 +216,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 265,695μs     
  2018 25.1: 32,693μs      4D chocolate teleportation
             -------------
-            17.827s      
+            17.826s      
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
@@ -334,7 +334,7 @@ Tests performed on a 2023 MacBook Pro.
  2021  5.2: 6,123μs       
  2021  6.1: 7μs           Lanternfish parthenogenesis
  2021  6.2: 10μs          
- 2021  7.1: 67μs          Crab submarines
+ 2021  7.1: 66μs          Crab submarines
  2021  7.2: 54μs          
  2021  7.X: 33μs          Easter egg (2019 CPU used)
  2021  8.1: 77μs          Old school displays
@@ -397,7 +397,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 10.2: 4μs           
  2022 11.1: 8μs           Monkey in the middle
  2022 11.2: 2,366μs       
- 2022 12.1: 1,205μs       Hill climbing algorithm
+ 2022 12.1: 1,204μs       Hill climbing algorithm
  2022 12.2: 1,352μs       
  2022 13.1: 47μs          Distress signal
  2022 13.2: 500μs         
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 53,434μs      
  2022 25.1: 10μs          Full of hot air
             -------------
-            285.223ms    
+            285.222ms    
 
  2023  1.1: 115μs         Trebuchet
  2023  1.2: 330μs         
@@ -449,7 +449,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 10.2: 917μs         
  2023 11.1: 294μs         Cosmic expansion
  2023 11.2: 293μs         
- 2023 12.1: 3,150μs       Hot springs
+ 2023 12.1: 3,135μs       Hot springs
  2023 12.2: 19,234μs      
  2023 13.1: 106μs         Point of incidence
  2023 13.2: 556μs         
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,143μs       
  2023 25.1: 9,284μs       Snowverload
             -------------
-            350.322ms    
+            350.307ms    
 
  2024  1.1: 112μs         Historian hysteria
  2024  1.2: 82μs          
