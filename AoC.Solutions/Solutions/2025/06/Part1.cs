@@ -13,17 +13,31 @@ public class Part1 : Base
         
         var rows = Input.Length - 1;
 
-        var numbers = new int[rows][];
+        var totals = new long[width];
 
-        for (var y = 0; y < Input.Length - 1; y++)
+        for (var y = 0; y < rows; y++)
         {
-            numbers[y] = new int[width];
-
             var numberStrings = Input[y].Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
             for (var x = 0; x < width; x++)
             {
-                numbers[y][x] = int.Parse(numberStrings[x]);
+                var number = long.Parse(numberStrings[x]);
+                
+                if (y == 0)
+                {
+                    totals[x] = number;
+                    
+                    continue;
+                }
+
+                if (operators[x] == "+")
+                {
+                    totals[x] += number;
+                }
+                else
+                {
+                    totals[x] *= number;
+                }
             }
         }
 
@@ -31,23 +45,7 @@ public class Part1 : Base
         
         for (var x = 0; x < width; x++)
         {
-            var result = (long) numbers[0][x];
-
-            var isAddition = operators[x] == "+";
-
-            for (var y = 1; y < rows; y++)
-            {
-                if (isAddition)
-                {
-                    result += numbers[y][x];
-                }
-                else
-                {
-                    result *= numbers[y][x];
-                }
-            }
-
-            total += result;
+            total += totals[x];
         }
 
         return total.ToString();
