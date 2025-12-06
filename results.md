@@ -541,10 +541,10 @@ Tests performed on a 2023 MacBook Pro.
  2025  4.2: 3,088μs       
  2025  5.1: 113μs         Cafeteria
  2025  5.2: 42μs          
- 2025  6.1: 259μs         Trash compactor
+ 2025  6.1: 256μs         Trash compactor
  2025  6.2: 67μs          
             -------------
-            66.687ms     
+            66.684ms     
 
  503 puzzles solved in 48.190s.
 ```
