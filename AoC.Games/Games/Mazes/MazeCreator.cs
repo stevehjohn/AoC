@@ -123,21 +123,27 @@ public class MazeCreator
 
         var exit = solver.FindFurthestEdgeFrom(x, y);
 
-        if (exit.X == 2)
+        switch (exit.X)
         {
-            exit.X = 0;
-        }
-        else if (exit.X == Constants.Width - 3)
-        {
-            exit.X = Constants.Width - 1;
-        }
-        else if (exit.Y == 2)
-        {
-            exit.Y = 0;
-        }
-        else
-        {
-            exit.Y = Constants.Height - 1;
+            case 2:
+                exit.X = 0;
+                break;
+            case Constants.Width - 3:
+                exit.X = Constants.Width - 1;
+                break;
+            default:
+            {
+                if (exit.Y == 2)
+                {
+                    exit.Y = 0;
+                }
+                else
+                {
+                    exit.Y = Constants.Height - 1;
+                }
+
+                break;
+            }
         }
 
         _maze[exit.X, exit.Y] = true;
