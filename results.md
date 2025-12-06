@@ -447,7 +447,7 @@ Tests performed on a 2023 MacBook Pro.
  2023  9.2: 305μs         
  2023 10.1: 96μs          Pipe maze
  2023 10.2: 917μs         
- 2023 11.1: 297μs         Cosmic expansion
+ 2023 11.1: 294μs         Cosmic expansion
  2023 11.2: 293μs         
  2023 12.1: 3,150μs       Hot springs
  2023 12.2: 19,234μs      
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,143μs       
  2023 25.1: 9,284μs       Snowverload
             -------------
-            350.328ms    
+            350.325ms    
 
  2024  1.1: 112μs         Historian hysteria
  2024  1.2: 82μs          
