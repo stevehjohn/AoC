@@ -87,7 +87,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 12.1: 36,170μs      Monorail
  2016 12.2: 889,522μs     
  2016 13.1: 49μs          Cubicle maze
- 2016 13.2: 48μs          
+ 2016 13.2: 47μs          
  2016 14.1: 10,371μs      One time pad
  2016 14.2: 7,882,774μs   
  2016 15.1: 378μs         Disc timing
@@ -257,7 +257,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 19.1: 112,897μs     Tractorrr (CPU used unmodified)
  2019 19.2: 121,421μs     
  2019 20.1: 263μs         Doughnut maze
- 2019 20.2: 6,124μs       
+ 2019 20.2: 6,039μs       
  2019 21.1: 1,652μs       Jumping droids (CPU used unmodified)
  2019 21.2: 31,810μs      
  2019 22.1: 371μs         Space shuffle
@@ -542,9 +542,9 @@ Tests performed on a 2023 MacBook Pro.
  2025  5.1: 113μs         Cafeteria
  2025  5.2: 42μs          
  2025  6.1: 259μs         Trash compactor
- 2025  6.2: 68μs          
+ 2025  6.2: 67μs          
             -------------
-            66.688ms     
+            66.687ms     
 
  503 puzzles solved in 48.190s.
 ```
