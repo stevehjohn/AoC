@@ -13,8 +13,12 @@ public class Part1 : Base
         
         var rows = Input.Length - 1;
 
+        var end = rows - 1;
+
         var totals = new long[width];
 
+        var total = 0L;
+        
         for (var y = 0; y < rows; y++)
         {
             var numberStrings = Input[y].Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
@@ -38,14 +42,12 @@ public class Part1 : Base
                 {
                     totals[x] *= number;
                 }
-            }
-        }
 
-        var total = 0L;
-        
-        for (var x = 0; x < width; x++)
-        {
-            total += totals[x];
+                if (y == end)
+                {
+                    total += totals[x];
+                }
+            }
         }
 
         return total.ToString();

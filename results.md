@@ -344,7 +344,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 10.1: 375μs         Esoteric language parser
  2021 10.2: 547μs         
  2021 11.1: 1,722μs       Flashers
- 2021 11.2: 3,110μs       
+ 2021 11.2: 3,082μs       
  2021 12.1: 3,307μs       Caving
  2021 12.2: 55,048μs      
  2021 13.1: 974μs         ZX Spectrum copy protection
@@ -439,7 +439,7 @@ Tests performed on a 2023 MacBook Pro.
  2023  5.2: 127μs         
  2023  6.1: 2μs           Wait for it
  2023  6.2: 36μs          
- 2023  7.1: 593μs         Camel cards
+ 2023  7.1: 590μs         Camel cards
  2023  7.2: 623μs         
  2023  8.1: 424μs         Haunted wasteland
  2023  8.2: 747μs         
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,143μs       
  2023 25.1: 9,284μs       Snowverload
             -------------
-            350.325ms    
+            350.322ms    
 
  2024  1.1: 112μs         Historian hysteria
  2024  1.2: 82μs          
@@ -532,7 +532,7 @@ Tests performed on a 2023 MacBook Pro.
             529.010ms    
 
  2025  1.1: 98μs          Secret Entrance
- 2025  1.2: 88μs          
+ 2025  1.2: 87μs          
  2025  2.1: 16,226μs      Gift shop
  2025  2.2: 46,202μs      
  2025  3.1: 108μs         Lobby
@@ -540,11 +540,11 @@ Tests performed on a 2023 MacBook Pro.
  2025  4.1: 197μs         Printing department
  2025  4.2: 3,088μs       
  2025  5.1: 113μs         Cafeteria
- 2025  5.2: 42μs          
- 2025  6.1: 255μs         Trash compactor
+ 2025  5.2: 39μs          
+ 2025  6.1: 134μs         Trash compactor
  2025  6.2: 67μs          
             -------------
-            66.683ms     
+            66.558ms     
 
  503 puzzles solved in 48.190s.
 ```
