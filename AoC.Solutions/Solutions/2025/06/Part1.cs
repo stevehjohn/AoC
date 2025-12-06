@@ -7,26 +7,35 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var numbers = new List<int[]>();
-
-        for (var i = 0; i < Input.Length - 1; i++)
-        {
-            numbers.Add(Input[i].Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray());
-        }
-
         var operators = Input[^1].Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
         var width = operators.Length;
+        
+        var numbers = new int[width][];
+
+        for (var y = 0; y < Input.Length - 1; y++)
+        {
+            numbers[y] = new int[width];
+
+            var numberStrings = Input[y].Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+
+            for (var x = 0; x < width; x++)
+            {
+                numbers[y][x] = int.Parse(numberStrings[x]);
+            }
+        }
 
         var total = 0L;
 
+        var rows = Input.Length - 1;
+        
         for (var x = 0; x < width; x++)
         {
             var result = (long) numbers[0][x];
 
             var isAddition = operators[x] == "+";
 
-            for (var y = 1; y < numbers.Count; y++)
+            for (var y = 1; y < rows; y++)
             {
                 if (isAddition)
                 {
