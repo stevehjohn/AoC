@@ -57,7 +57,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 23.1: 72μs          Opening the Turing lock
  2015 23.2: 85μs          
  2015 24.1: 85,996μs      It hangs in the balance
- 2015 24.2: 129μs         
+ 2015 24.2: 127μs         
  2015 25.1: 57,269μs      Let it snow
             -------------
             6.064s       
@@ -311,7 +311,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 20.1: 6,457μs       Satellite jigsaw
  2020 20.2: 677μs         
  2020 21.1: 186μs         Allergen detective
- 2020 21.2: 173μs         
+ 2020 21.2: 171μs         
  2020 22.1: 15μs          Crab cards
  2020 22.2: 101,987μs     
  2020 23.1: 3μs           Crab cups
@@ -384,7 +384,7 @@ Tests performed on a 2023 MacBook Pro.
  2022  4.1: 108μs         Camp cleanup
  2022  4.2: 107μs         
  2022  5.1: 87μs          Supply stacks
- 2022  5.2: 167μs         
+ 2022  5.2: 165μs         
  2022  6.1: 116μs         Tuning trouble
  2022  6.2: 169μs         
  2022  7.1: 247μs         No space left on device
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 53,434μs      
  2022 25.1: 10μs          Full of hot air
             -------------
-            284.395ms    
+            284.393ms    
 
  2023  1.1: 115μs         Trebuchet
  2023  1.2: 330μs         
@@ -544,9 +544,9 @@ Tests performed on a 2023 MacBook Pro.
  2025  6.1: 127μs         Trash compactor
  2025  6.2: 64μs          
  2025  7.1: 5μs           Laboratories
- 2025  7.2: 310μs         
+ 2025  7.2: 274μs         
             -------------
-            66.704ms     
+            66.668ms     
 
  505 puzzles solved in 48.176s.
 ```
