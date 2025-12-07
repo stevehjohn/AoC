@@ -180,7 +180,7 @@ Tests performed on a 2023 MacBook Pro.
  2018  6.2: 5,432μs       
  2018  7.1: 48μs          Ikea sleigh
  2018  7.2: 222μs         
- 2018  8.1: 4,911μs       Navigation licensing
+ 2018  8.1: 4,905μs       Navigation licensing
  2018  8.2: 4,942μs       
  2018  9.1: 726μs         Marble madness
  2018  9.2: 430,737μs     
@@ -237,10 +237,10 @@ Tests performed on a 2023 MacBook Pro.
  2019  9.1: 45μs          Sensor booster (CPU extension 2)
  2019  9.2: 22,676μs      
  2019 10.1: 18,082μs      Asteroids
- 2019 10.2: 1,544μs       
+ 2019 10.2: 1,537μs       
  2019 11.1: 52,614μs      Personal plate (CPU used unmodified)
  2019 11.2: 669μs         
- 2019 12.1: 501μs         Orbital simulation
+ 2019 12.1: 498μs         Orbital simulation
  2019 12.2: 63,653μs      
  2019 13.1: 1,069μs       Arkanoid (CPU used unmodified)
  2019 13.2: 49,597μs      
@@ -299,7 +299,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 14.1: 89μs          Memory bit twiddling
  2020 14.2: 3,890μs       
  2020 15.1: 14μs          Number memory game
- 2020 15.2: 228,198μs     
+ 2020 15.2: 227,935μs     
  2020 16.1: 597μs         Ticket deciphering
  2020 16.2: 1,041μs       
  2020 17.1: 31,180μs      Conway cubes
@@ -399,7 +399,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 11.2: 2,366μs       
  2022 12.1: 1,204μs       Hill climbing algorithm
  2022 12.2: 1,352μs       
- 2022 13.1: 47μs          Distress signal
+ 2022 13.1: 46μs          Distress signal
  2022 13.2: 500μs         
  2022 14.1: 410μs         Regolith reservoir
  2022 14.2: 4,092μs       
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 53,434μs      
  2022 25.1: 10μs          Full of hot air
             -------------
-            284.393ms    
+            284.392ms    
 
  2023  1.1: 115μs         Trebuchet
  2023  1.2: 330μs         
@@ -517,7 +517,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 18.2: 1,332μs       
  2024 19.1: 37,906μs      Linen layout
  2024 19.2: 59,627μs      
- 2024 20.1: 33,860μs      Race condition
+ 2024 20.1: 33,844μs      Race condition
  2024 20.2: 32,521μs      
  2024 21.1: 638μs         Keypad conundrum
  2024 21.2: 3,662μs       
@@ -529,24 +529,24 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 231μs         
  2024 25.1: 112μs         Code chronicle
             -------------
-            528.773ms    
+            528.757ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 87μs          
  2025  2.1: 16,207μs      Gift shop
  2025  2.2: 46,202μs      
- 2025  3.1: 108μs         Lobby
+ 2025  3.1: 107μs         Lobby
  2025  3.2: 199μs         
  2025  4.1: 197μs         Printing department
  2025  4.2: 2,952μs       
- 2025  5.1: 110μs         Cafeteria
+ 2025  5.1: 109μs         Cafeteria
  2025  5.2: 38μs          
  2025  6.1: 127μs         Trash compactor
  2025  6.2: 64μs          
  2025  7.1: 5μs           Laboratories
  2025  7.2: 274μs         
             -------------
-            66.668ms     
+            66.666ms     
 
  505 puzzles solved in 48.170s.
 ```
