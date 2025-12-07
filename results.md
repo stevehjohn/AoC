@@ -16,7 +16,7 @@ Tests performed on a 2023 MacBook Pro.
  2015  2.2: 438μs         
  2015  3.1: 1,203μs       Perfectly spherical houses in a vacuum
  2015  3.2: 1,101μs       
- 2015  4.1: 130,736μs     Crypto stocking stuffer
+ 2015  4.1: 121,081μs     Crypto stocking stuffer
  2015  4.2: 3,042,866μs   
  2015  5.1: 136μs         Naughty or nice
  2015  5.2: 807μs         
@@ -60,7 +60,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 24.2: 127μs         
  2015 25.1: 57,269μs      Let it snow
             -------------
-            6.058s       
+            6.048s       
 
  2016  1.1: 6μs           Manhattan distance
  2016  1.2: 15μs          
@@ -548,5 +548,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             66.666ms     
 
- 505 puzzles solved in 48.170s.
+ 505 puzzles solved in 48.160s.
 ```
