@@ -7,8 +7,6 @@ public abstract class Base : Solution
 {
     public override string Description => "Laboratories";
 
-    protected readonly HashSet<int> Beams = [];
-
     protected char[,] Map;
 
     protected int Height;
@@ -21,8 +19,6 @@ public abstract class Base : Solution
 
         Height = Input.Length;
         
-        Beams.Add(Width / 2);
-
         Map = Input.To2DArray();
     }
 }

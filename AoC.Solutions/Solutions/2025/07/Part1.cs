@@ -5,9 +5,13 @@ namespace AoC.Solutions.Solutions._2025._07;
 [UsedImplicitly]
 public class Part1 : Base
 {
+    private readonly HashSet<int> _beams = [];
+
     public override string GetAnswer()
     {
         ParseInput();
+
+        _beams.Add(Width / 2);
 
         var splits = 0;
         
@@ -17,13 +21,13 @@ public class Part1 : Base
         {
             for (var x = 0; x < Width; x++)
             {
-                if (Map[x, y] == '^' && Beams.Contains(x))
+                if (Map[x, y] == '^' && _beams.Contains(x))
                 {
-                    Beams.Remove(x);
+                    _beams.Remove(x);
 
-                    Beams.Add(x - 1);
+                    _beams.Add(x - 1);
 
-                    Beams.Add(x + 1);
+                    _beams.Add(x + 1);
 
                     splits++;
                 }
