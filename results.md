@@ -409,7 +409,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 16.2: 13,463μs      
  2022 17.1: 126μs         Pyroclastic flow
  2022 17.2: 1,236μs       
- 2022 18.1: 330μs         Boiling boulders
+ 2022 18.1: 327μs         Boiling boulders
  2022 18.2: 1,418μs       
  2022 19.1: 19,068μs      Not enough minerals
  2022 19.2: 3,987μs       
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 53,434μs      
  2022 25.1: 10μs          Full of hot air
             -------------
-            284.398ms    
+            284.395ms    
 
  2023  1.1: 115μs         Trebuchet
  2023  1.2: 330μs         
@@ -544,8 +544,9 @@ Tests performed on a 2023 MacBook Pro.
  2025  6.1: 127μs         Trash compactor
  2025  6.2: 64μs          
  2025  7.1: 5μs           Laboratories
+ 2025  7.2: 310μs         
             -------------
-            66.394ms     
+            66.704ms     
 
- 504 puzzles solved in 48.176s.
+ 505 puzzles solved in 48.176s.
 ```
