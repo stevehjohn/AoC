@@ -12,7 +12,7 @@ public abstract class Base : Solution
 
     private PriorityQueue<(int[] State, int Index, int Cost), int> _queue;
 
-    private HashSet<int> _encounteredStates;
+    private Dictionary<int, int> _bestCosts;
 
     private static int _burrowDepth = 2;
 
@@ -76,7 +76,7 @@ public abstract class Base : Solution
 
         _queue = new PriorityQueue<(int[] State, int Index, int Cost), int>();
 
-        _encounteredStates = [];
+        _bestCosts = [];
 
         for (var i = 0; i < _initialAmphipodState.Length; i++)
         {
@@ -87,7 +87,7 @@ public abstract class Base : Solution
 
             _queue.Enqueue((Copy(_initialAmphipodState), i, 0), 0);
 
-            IsNewState(_initialAmphipodState, i);
+            UpdateBestCost(_initialAmphipodState, i, 0);
         }
 
         ProcessQueue();
@@ -112,11 +112,6 @@ public abstract class Base : Solution
                     continue;
                 }
 
-                if (! IsNewState(move.State, index))
-                {
-                    continue;
-                }
-
                 if (AllHome(move.State))
                 {
                     if (moveCost < _lowestCost)
@@ -130,6 +125,11 @@ public abstract class Base : Solution
                 for (var i = 0; i < state.Length; i++)
                 {
                     if (i == index)
+                    {
+                        continue;
+                    }
+
+                    if (! UpdateBestCost(move.State, i, moveCost))
                     {
                         continue;
                     }
@@ -151,21 +151,37 @@ public abstract class Base : Solution
         };
     }
 
-    private bool IsNewState(int[] state, int index)
+    private static int HashState(int[] state, int index)
     {
-        var hash = 0;
-
-        for (var i = 0; i < state.Length; i++)
+        unchecked
         {
-            hash = HashCode.Combine(hash, state[i]);
+            var hash = 17;
+
+            for (var i = 0; i < state.Length; i++)
+            {
+                hash = hash * 31 + state[i];
+            }
+
+            hash = hash * 31 + index;
+
+            return hash;
+        }
+    }
+    
+    private bool UpdateBestCost(int[] state, int index, int cost)
+    {
+        var hash = HashState(state, index);
+
+        if (_bestCosts.TryGetValue(hash, out var existing))
+        {
+            if (existing <= cost)
+            {
+                // already reached this (state,index) cheaper or equal → don’t explore
+                return false;
+            }
         }
 
-        hash = HashCode.Combine(hash, index);
-
-        if (! _encounteredStates.Add(hash))
-        {
-            return false;
-        }
+        _bestCosts[hash] = cost;
 
         return true;
     }
