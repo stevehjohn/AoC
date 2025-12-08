@@ -545,8 +545,10 @@ Tests performed on a 2023 MacBook Pro.
  2025  6.2: 64μs          
  2025  7.1: 5μs           Laboratories
  2025  7.2: 274μs         
+ 2025  8.1: 145,115μs     Playground
+ 2025  8.2: 97,701μs      
             -------------
-            66.666ms     
+            309.482ms    
 
- 505 puzzles solved in 48.160s.
+ 507 puzzles solved in 48.403s.
 ```
