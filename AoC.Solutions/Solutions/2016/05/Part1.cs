@@ -29,7 +29,17 @@ public class Part1 : Base
         {
             while (true)
             {
-                var suffixLength = 1 + (int) Math.Log10(suffix);
+                var value = suffix;
+                
+                var suffixLength = 0;
+
+                do
+                {
+                    suffixLength++;
+                    
+                    value /= 10;
+                    
+                } while (value > 0);
 
                 var workingSuffix = suffix;
 
