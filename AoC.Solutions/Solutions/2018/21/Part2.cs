@@ -19,7 +19,7 @@ public class Part2 : Base
 
         var register = int.Parse(breakOn.Split(' ', StringSplitOptions.TrimEntries)[1]);
 
-        cpu.Run(-1, "eqrr");
+        cpu.Run(-1, OpCode.Eqrr);
 
         var last = 0;
 

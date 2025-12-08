@@ -36,11 +36,11 @@ public class Part1 : Base
     {
         var matches = 0;
 
-        for (var i = 0; i < OpCodes.Length; i++)
+        for (var i = 0; i < Enum.GetValues<OpCode>().Length; i++)
         {
             _cpu.SetRegisters(initial);
 
-            _cpu.Execute(OpCodes[i], a, b, c);
+            _cpu.Execute((OpCode) i, a, b, c);
 
             matches += expected.SequenceEqual(_cpu.GetRegisters()) ? 1 : 0;
         }

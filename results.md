@@ -137,7 +137,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 11.1: 490μs         Hex ed
  2017 11.2: 246μs         
  2017 12.1: 553μs         Path through the pipes
- 2017 12.2: 6,933μs       
+ 2017 12.2: 6,924μs       
  2017 13.1: 48μs          Firewall run
  2017 13.2: 12,256μs      
  2017 14.1: 22,730μs      Defragger
@@ -180,7 +180,7 @@ Tests performed on a 2023 MacBook Pro.
  2018  6.2: 5,432μs       
  2018  7.1: 48μs          Ikea sleigh
  2018  7.2: 222μs         
- 2018  8.1: 4,905μs       Navigation licensing
+ 2018  8.1: 4,904μs       Navigation licensing
  2018  8.2: 4,942μs       
  2018  9.1: 726μs         Marble madness
  2018  9.2: 430,737μs     
@@ -202,7 +202,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 17.2: 20,199μs      
  2018 18.1: 405μs         I'm a lumberjack...
  2018 18.2: 18,093μs      
- 2018 19.1: 58,143μs      Tardis halting problem
+ 2018 19.1: 57,630μs      Tardis halting problem
  2018 19.2: 34,365μs      
  2018 20.1: 3,075μs       Regex maze
  2018 20.2: 3,791μs       
@@ -367,13 +367,13 @@ Tests performed on a 2023 MacBook Pro.
  2021 21.2: 548,599μs     
  2021 22.1: 1,908μs       Reactor reboot
  2021 22.2: 23,586μs      
- 2021 23.1: 160,840μs     Hotel amphipod
- 2021 23.2: 508,399μs     
+ 2021 23.1: 157,862μs     Hotel amphipod
+ 2021 23.2: 490,815μs     
  2021 24.1: 2μs           Model number
  2021 24.2: 2μs           
  2021 25.1: 76,392μs      Landing among the cucumbers
             -------------
-            1.949s       
+            1.929s       
 
  2022  1.1: 22μs          Calorie counting
  2022  1.2: 32μs          
@@ -550,5 +550,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             270.352ms    
 
- 507 puzzles solved in 46.617s.
+ 507 puzzles solved in 46.596s.
 ```

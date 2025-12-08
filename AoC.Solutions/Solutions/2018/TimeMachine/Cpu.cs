@@ -4,7 +4,7 @@ public class Cpu
 {
     private readonly int[] _registers;
 
-    private readonly List<(string OpCode, int A, int B, int C)> _program = [];
+    private readonly List<(OpCode OpCode, int A, int B, int C)> _program = [];
 
     private int _instructionPointer;
 
@@ -12,14 +12,14 @@ public class Cpu
 
     private int _breakAt;
 
-    private string _breakOn;
+    private OpCode? _breakOn;
 
     public Cpu(int registerCount)
     {
         _registers = new int[registerCount];
     }
 
-    public void Run(int breakAt = -1, string breakOn = "")
+    public void Run(int breakAt = -1, OpCode? breakOn = null)
     {
         _instructionPointer = 0;
 
@@ -96,36 +96,57 @@ public class Cpu
         return _registers[register];
     }
 
-    public void Execute(string opCode, int a, int b, int c)
+    public void Execute(OpCode opCode, int a, int b, int c)
     {
-        // ReSharper disable StringLiteralTypo
         _registers[c] = opCode switch
         {
-            "addr" => _registers[a] + _registers[b],
-            "addi" => _registers[a] + b,
-            "mulr" => _registers[a] * _registers[b],
-            "muli" => _registers[a] * b,
-            "banr" => _registers[a] & _registers[b],
-            "bani" => _registers[a] & b,
-            "borr" => _registers[a] | _registers[b],
-            "bori" => _registers[a] | b,
-            "setr" => _registers[a],
-            "seti" => a,
-            "gtir" => a > _registers[b] ? 1 : 0,
-            "gtri" => _registers[a] > b ? 1 : 0,
-            "gtrr" => _registers[a] > _registers[b] ? 1 : 0,
-            "eqir" => a == _registers[b] ? 1 : 0,
-            "eqri" => _registers[a] == b ? 1 : 0,
-            "eqrr" => _registers[a] == _registers[b] ? 1 : 0,
+            OpCode.Addr => _registers[a] + _registers[b],
+            OpCode.Addi => _registers[a] + b,
+            OpCode.Mulr => _registers[a] * _registers[b],
+            OpCode.Muli => _registers[a] * b,
+            OpCode.Banr => _registers[a] & _registers[b],
+            OpCode.Bani => _registers[a] & b,
+            OpCode.Borr => _registers[a] | _registers[b],
+            OpCode.Bori => _registers[a] | b,
+            OpCode.Setr => _registers[a],
+            OpCode.Seti => a,
+            OpCode.Gtir => a > _registers[b] ? 1 : 0,
+            OpCode.Gtri => _registers[a] > b ? 1 : 0,
+            OpCode.Gtrr => _registers[a] > _registers[b] ? 1 : 0,
+            OpCode.Eqir => a == _registers[b] ? 1 : 0,
+            OpCode.Eqri => _registers[a] == b ? 1 : 0,
+            OpCode.Eqrr => _registers[a] == _registers[b] ? 1 : 0,
             _ => _registers[c]
         };
-        // ReSharper restore StringLiteralTypo
     }
 
-    private static (string OpCode, int A, int B, int C) ParseLine(string line)
+    private static (OpCode OpCode, int A, int B, int C) ParseLine(string line)
     {
         var parts = line.Split(' ', StringSplitOptions.TrimEntries);
 
-        return (parts[0], int.Parse(parts[1]), int.Parse(parts[2]), int.Parse(parts[3]));
+        return (ParseOpCode(parts[0]), int.Parse(parts[1]), int.Parse(parts[2]), int.Parse(parts[3]));
     }
+
+    private static OpCode ParseOpCode(string op) => op switch
+    {
+        // ReSharper disable StringLiteralTypo
+        "addr" => OpCode.Addr,
+        "addi" => OpCode.Addi,
+        "mulr" => OpCode.Mulr,
+        "muli" => OpCode.Muli,
+        "banr" => OpCode.Banr,
+        "bani" => OpCode.Bani,
+        "borr" => OpCode.Borr,
+        "bori" => OpCode.Bori,
+        "setr" => OpCode.Setr,
+        "seti" => OpCode.Seti,
+        "gtir" => OpCode.Gtir,
+        "gtri" => OpCode.Gtri,
+        "gtrr" => OpCode.Gtrr,
+        "eqir" => OpCode.Eqir,
+        "eqri" => OpCode.Eqri,
+        "eqrr" => OpCode.Eqrr,
+        // ReSharper restore StringLiteralTypo
+        _ => throw new ArgumentOutOfRangeException(nameof(op), op, "Unknown opcode")
+    };
 }

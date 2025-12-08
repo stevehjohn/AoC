@@ -8,15 +8,15 @@ public class Part2 : Base
 {
     private readonly Cpu _cpu = new(4);
 
-    private readonly Dictionary<string, HashSet<int>> _opCodes = new();
+    private readonly Dictionary<OpCode, HashSet<int>> _opCodes = new();
 
-    private readonly Dictionary<int, string> _matchedOpCodes = new();
+    private readonly Dictionary<int, OpCode> _matchedOpCodes = new();
 
     public override string GetAnswer()
     {
-        foreach (var opCode in OpCodes)
+        foreach (var op in Enum.GetValues<OpCode>())
         {
-            _opCodes.Add(opCode, []);
+            _opCodes.Add(op, []);
         }
 
         var lastSampleLine = RunSamples();
@@ -82,15 +82,15 @@ public class Part2 : Base
 
     private void ExecuteSample(int code, int a, int b, int c, int[] initial, int[] expected)
     {
-        for (var i = 0; i < OpCodes.Length; i++)
+        for (var i = 0; i < Enum.GetValues<OpCode>().Length; i++)
         {
             _cpu.SetRegisters(initial);
 
-            _cpu.Execute(OpCodes[i], a, b, c);
+            _cpu.Execute((OpCode) i, a, b, c);
 
             if (expected.SequenceEqual(_cpu.GetRegisters()))
             {
-                _opCodes[OpCodes[i]].Add(code);
+                _opCodes[(OpCode) i].Add(code);
             }
         }
     }

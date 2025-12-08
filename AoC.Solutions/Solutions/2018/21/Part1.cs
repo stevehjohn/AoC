@@ -13,7 +13,7 @@ public class Part1 : Base
 
         cpu.LoadProgram(Input);
 
-        cpu.Run(-1, "eqrr");
+        cpu.Run(-1, OpCode.Eqrr);
 
         var breakOn = Input.Single(i => i.StartsWith("eqrr"));
 
