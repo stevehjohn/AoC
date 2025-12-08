@@ -56,16 +56,16 @@ public class DisjointSet<T> where T : notnull
 
     private T Find(T x)
     {
-        if (! _parents.ContainsKey(x))
+        if (! _parents.TryGetValue(x, out var value))
         {
             Add(x);
 
             return x;
         }
 
-        if (! EqualityComparer<T>.Default.Equals(_parents[x], x))
+        if (! EqualityComparer<T>.Default.Equals(value, x))
         {
-            _parents[x] = Find(_parents[x]);
+            _parents[x] = Find(value);
         }
 
         return _parents[x];

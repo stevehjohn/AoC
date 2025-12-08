@@ -5,11 +5,11 @@ namespace AoC.Solutions.Solutions._2025._08;
 
 public class Edge : IComparable<Edge>
 {
+    private readonly double _distance;
+
     public Vertex A { get; }
     
     public Vertex B { get; }
-    
-    public double Distance { get; }
 
     public Edge(Vertex a, Vertex b)
     {
@@ -17,7 +17,7 @@ public class Edge : IComparable<Edge>
         
         B = b;
         
-        Distance = Measurement.GetDistance(a, b);
+        _distance = Measurement.GetDistance(a, b);
     }
 
     public int CompareTo(Edge other)
@@ -32,11 +32,11 @@ public class Edge : IComparable<Edge>
             return 1;
         }
         
-        return Distance.CompareTo(other.Distance);
+        return _distance.CompareTo(other._distance);
     }
 
     public override string ToString()
     {
-        return $"{A} - {B}: {Distance}";
+        return $"{A} - {B}: {_distance}";
     }
 }
