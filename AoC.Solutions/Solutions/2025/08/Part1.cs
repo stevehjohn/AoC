@@ -6,9 +6,13 @@ namespace AoC.Solutions.Solutions._2025._08;
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private readonly List<Vertex> _junctions = [];
-
     private readonly List<Edge> _edges = [];
+    
+    private Vertex[] _junctions;
+
+    private int[] _parents;
+    
+    private int[] _sizes;
     
     public override string GetAnswer()
     {
@@ -18,14 +22,37 @@ public class Part1 : Base
         
         _edges.Sort();
 
-        return "Unknown";
+        var connections = 0;
+
+        var disjointSet = new DisjointSet<Vertex>();
+        
+        foreach (var v in _junctions)
+        {
+            disjointSet.Add(v);
+        }
+        
+        foreach (var edge in _edges)
+        {
+            disjointSet.Union(edge.A, edge.B);
+
+            connections++;
+
+            if (connections == 1_000)
+            {
+                break;
+            }
+        }
+
+        var sizes = disjointSet.GetSizes().OrderDescending().ToArray();
+
+        return (sizes[0] * sizes[1] * sizes[2]).ToString();
     }
 
     private void CalculateDistances()
     {
-        for (var l = 0; l < _junctions.Count - 1; l++)
+        for (var l = 0; l < _junctions.Length - 1; l++)
         {
-            for (var r = l + 1; r < _junctions.Count; r++)
+            for (var r = l + 1; r < _junctions.Length; r++)
             {
                 _edges.Add(new Edge(_junctions[l], _junctions[r]));
             }
@@ -34,9 +61,21 @@ public class Part1 : Base
 
     private void ParseInput()
     {
+        var i = 0;
+
+        var size = Input.Length;
+        
+        _junctions = new Vertex[size];
+
+        _parents = new int[size];
+
+        _sizes = new int[size];
+        
         foreach (var line in Input)
         {
-            _junctions.Add(Vertex.Parse(line));
+            var vertex = Vertex.Parse(line);
+            
+            _junctions[i++] = vertex;
         }
     }
 }
