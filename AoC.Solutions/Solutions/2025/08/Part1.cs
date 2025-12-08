@@ -6,28 +6,24 @@ namespace AoC.Solutions.Solutions._2025._08;
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private readonly List<Edge> _edges = [];
-    
-    private Vertex[] _junctions;
-
     public override string GetAnswer()
     {
         ParseInput();
 
         CalculateDistances();
         
-        _edges.Sort();
+        Edges.Sort();
 
         var connections = 0;
 
         var disjointSet = new DisjointSet<Vertex>();
         
-        foreach (var v in _junctions)
+        foreach (var v in Junctions)
         {
             disjointSet.Add(v);
         }
         
-        foreach (var edge in _edges)
+        foreach (var edge in Edges)
         {
             disjointSet.Union(edge.A, edge.B);
 
