@@ -300,7 +300,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 14.2: 3,890μs       
  2020 15.1: 14μs          Number memory game
  2020 15.2: 227,935μs     
- 2020 16.1: 597μs         Ticket deciphering
+ 2020 16.1: 592μs         Ticket deciphering
  2020 16.2: 1,041μs       
  2020 17.1: 31,180μs      Conway cubes
  2020 17.2: 404,419μs     
