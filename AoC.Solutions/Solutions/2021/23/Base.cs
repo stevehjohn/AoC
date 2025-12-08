@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using System.Runtime.CompilerServices;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2021._23;
 
@@ -392,9 +393,12 @@ public abstract class Base : Solution
         return (x, y, home);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static int DecodeX(int state) => (state >> 16) & 255;
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static int DecodeY(int state) => (state >> 8) & 255;
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static int DecodeHome(int state) => state & 255;
 }

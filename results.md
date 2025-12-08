@@ -124,7 +124,7 @@ Tests performed on a 2023 MacBook Pro.
  2017  4.2: 407,059μs     
  2017  5.1: 508μs         Memory trampoline
  2017  5.2: 47,579μs      
- 2017  6.1: 2,456μs       Garbage collection
+ 2017  6.1: 2,252μs       Garbage collection
  2017  6.2: 7,370μs       
  2017  7.1: 228μs         Balancing act
  2017  7.2: 245μs         
@@ -367,13 +367,13 @@ Tests performed on a 2023 MacBook Pro.
  2021 21.2: 548,599μs     
  2021 22.1: 1,908μs       Reactor reboot
  2021 22.2: 23,586μs      
- 2021 23.1: 161,521μs     Hotel amphipod
+ 2021 23.1: 160,840μs     Hotel amphipod
  2021 23.2: 508,399μs     
  2021 24.1: 2μs           Model number
  2021 24.2: 2μs           
  2021 25.1: 76,392μs      Landing among the cucumbers
             -------------
-            1.950s       
+            1.949s       
 
  2022  1.1: 22μs          Calorie counting
  2022  1.2: 32μs          
@@ -550,5 +550,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             270.352ms    
 
- 507 puzzles solved in 46.618s.
+ 507 puzzles solved in 46.617s.
 ```
