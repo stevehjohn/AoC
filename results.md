@@ -50,7 +50,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 19.2: 221μs         
  2015 20.1: 288,974μs     Infinite elves, infinite houses
  2015 20.2: 2,283μs       
- 2015 21.1: 383μs         RPG simulator 2015
+ 2015 21.1: 380μs         RPG simulator 2015
  2015 21.2: 365μs         
  2015 22.1: 1,354,122μs   Wizard simulator 2015
  2015 22.2: 52,248μs      
@@ -206,7 +206,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 19.2: 34,365μs      
  2018 20.1: 3,075μs       Regex maze
  2018 20.2: 3,791μs       
- 2018 21.1: 37μs          Time machine halting problem
+ 2018 21.1: 35μs          Time machine halting problem
  2018 21.2: 10,623,648μs  
  2018 22.1: 208μs         Caving capers
  2018 22.2: 59,067μs      
@@ -295,7 +295,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 12.1: 20μs          Evergreen ship sailing
  2020 12.2: 26μs          
  2020 13.1: 7μs           Bus timetables
- 2020 13.2: 14μs          
+ 2020 13.2: 13μs          
  2020 14.1: 89μs          Memory bit twiddling
  2020 14.2: 3,890μs       
  2020 15.1: 14μs          Number memory game
@@ -473,11 +473,11 @@ Tests performed on a 2023 MacBook Pro.
  2023 22.2: 56,309μs      
  2023 23.1: 10,839μs      A long walk
  2023 23.2: 50,650μs      
- 2023 24.1: 1,525μs       Never tell me the odds
+ 2023 24.1: 1,517μs       Never tell me the odds
  2023 24.2: 5,143μs       
  2023 25.1: 9,284μs       Snowverload
             -------------
-            350.138ms    
+            350.130ms    
 
  2024  1.1: 112μs         Historian hysteria
  2024  1.2: 82μs          
