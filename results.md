@@ -19,7 +19,7 @@ Tests performed on a 2023 MacBook Pro.
  2015  4.1: 121,081μs     Crypto stocking stuffer
  2015  4.2: 3,042,866μs   
  2015  5.1: 136μs         Naughty or nice
- 2015  5.2: 807μs         
+ 2015  5.2: 806μs         
  2015  6.1: 23,877μs      Bournville estate lights
  2015  6.2: 26,663μs      
  2015  7.1: 95μs          Logic gates
@@ -322,7 +322,7 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             1.215s       
 
- 2021  1.1: 48μs          Depth scan
+ 2021  1.1: 47μs          Depth scan
  2021  1.2: 138μs         
  2021  2.1: 44μs          Navigate forward
  2021  2.2: 44μs          
@@ -348,7 +348,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 12.1: 3,307μs       Caving
  2021 12.2: 55,048μs      
  2021 13.1: 973μs         ZX Spectrum copy protection
- 2021 13.2: 3,257μs       
+ 2021 13.2: 3,255μs       
  2021 14.1: 184μs         Ablative armour
  2021 14.2: 892μs         
  2021 15.1: 1,184μs       Risky business
@@ -392,7 +392,7 @@ Tests performed on a 2023 MacBook Pro.
  2022  8.1: 809μs         Treetop tree house
  2022  8.2: 804μs         
  2022  9.1: 463μs         Rope bridge
- 2022  9.2: 1,167μs       
+ 2022  9.2: 1,166μs       
  2022 10.1: 3μs           Cathode-Ray tube
  2022 10.2: 4μs           
  2022 11.1: 8μs           Monkey in the middle
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 53,434μs      
  2022 25.1: 10μs          Full of hot air
             -------------
-            284.392ms    
+            284.391ms    
 
  2023  1.1: 115μs         Trebuchet
  2023  1.2: 330μs         
@@ -545,10 +545,10 @@ Tests performed on a 2023 MacBook Pro.
  2025  6.2: 64μs          
  2025  7.1: 5μs           Laboratories
  2025  7.2: 274μs         
- 2025  8.1: 137,375μs     Playground
+ 2025  8.1: 106,168μs     Playground
  2025  8.2: 97,518μs      
             -------------
-            301.559ms    
+            270.352ms    
 
- 507 puzzles solved in 48.395s.
+ 507 puzzles solved in 48.364s.
 ```
