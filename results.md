@@ -312,7 +312,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 20.2: 677μs         
  2020 21.1: 186μs         Allergen detective
  2020 21.2: 171μs         
- 2020 22.1: 15μs          Crab cards
+ 2020 22.1: 14μs          Crab cards
  2020 22.2: 101,987μs     
  2020 23.1: 3μs           Crab cups
  2020 23.2: 140,627μs     

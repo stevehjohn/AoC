@@ -29,7 +29,7 @@ public abstract class Base : Solution
 
         var count = 0;
 
-        long answer = 0;
+        var answer = 0L;
 
         foreach (var edge in _edges)
         {
@@ -51,7 +51,7 @@ public abstract class Base : Solution
             {
                 var sizes = disjointSet.GetSizes().OrderDescending().ToArray();
 
-                return sizes[0] * sizes[1] * sizes[2];
+                return (long) sizes[0] * sizes[1] * sizes[2];
             }
         }
 
