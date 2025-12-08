@@ -1,44 +1,49 @@
-﻿using AoC.Solutions.Solutions._2018.TimeMachine;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2018._21;
 
 [UsedImplicitly]
 public class Part2 : Base
 {
-    // ReSharper disable StringLiteralTypo
     public override string GetAnswer()
     {
-        var cpu = new Cpu(6);
-
-        cpu.LoadProgram(Input);
-
-        var previousValues = new HashSet<int>();
-
-        var breakOn = Input.Single(i => i.StartsWith("eqrr"));
-
-        var register = int.Parse(breakOn.Split(' ', StringSplitOptions.TrimEntries)[1]);
-
-        cpu.Run(-1, "eqrr");
-
+        var seen = new HashSet<int>();
+        
         var last = 0;
+
+        var r5 = 0;
 
         while (true)
         {
-            cpu.Continue();
+            var r3 = r5 | 65536;
+            r5 = 7586220;
 
-            var registerValue = cpu.GetRegister(register);
-
-            if (previousValues.Contains(registerValue))
+            while (true)
             {
-                break;
+                var r1 = r3 & 255;
+                unchecked
+                {
+                    r5 = (r5 + r1) & 0xFFFFFF;
+                    r5 = (r5 * 65899) & 0xFFFFFF;
+                }
+
+                if (r3 < 256)
+                {
+                    break;
+                }
+
+                r3 /= 256;
             }
 
-            last = registerValue;
+            // At this point, r5 is exactly the value compared against r0 at `eqrr 5 0 1`.
 
-            previousValues.Add(registerValue);
+            if (!seen.Add(r5))
+            {
+                // First repeat; last is the final unique value that gives the longest run
+                return last.ToString();
+            }
+
+            last = r5;
         }
-
-        return last.ToString();
     }
 }
