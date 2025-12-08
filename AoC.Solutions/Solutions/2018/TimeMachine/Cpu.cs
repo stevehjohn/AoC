@@ -7,15 +7,15 @@ public sealed class Cpu
     private readonly int[] _registers;
 
     private Instruction[] _program = Array.Empty<Instruction>();
-    
+
     private int _programLength;
 
     private int _instructionPointer;
-    
+
     private int _instructionPointerBinding = -1;
 
     private int _breakAt;
-    
+
     private OpCode? _breakOn;
 
     public Cpu(int registerCount)
@@ -26,48 +26,50 @@ public sealed class Cpu
     public void Run(int breakAt = -1, OpCode? breakOn = null)
     {
         _instructionPointer = 0;
-        
+
         _breakAt = breakAt;
-        
+
         _breakOn = breakOn;
 
         Continue();
     }
+
     public void Execute(OpCode opCode, int a, int b, int c)
     {
-        _registers[c] = opCode switch
+        var instruction = new Instruction(opCode, a, b, c);
+
+        switch (instruction.OpCode)
         {
-            OpCode.Addr => _registers[a] + _registers[b],
-            OpCode.Addi => _registers[a] + b,
-            OpCode.Mulr => _registers[a] * _registers[b],
-            OpCode.Muli => _registers[a] * b,
-            OpCode.Banr => _registers[a] & _registers[b],
-            OpCode.Bani => _registers[a] & b,
-            OpCode.Borr => _registers[a] | _registers[b],
-            OpCode.Bori => _registers[a] | b,
-            OpCode.Setr => _registers[a],
-            OpCode.Seti => a,
-            OpCode.Gtir => a > _registers[b] ? 1 : 0,
-            OpCode.Gtri => _registers[a] > b ? 1 : 0,
-            OpCode.Gtrr => _registers[a] > _registers[b] ? 1 : 0,
-            OpCode.Eqir => a == _registers[b] ? 1 : 0,
-            OpCode.Eqri => _registers[a] == b ? 1 : 0,
-            OpCode.Eqrr => _registers[a] == _registers[b] ? 1 : 0,
-            _ => _registers[c]
-        };
+            case OpCode.Addr: _registers[instruction.C] = _registers[instruction.A] + _registers[instruction.B]; break;
+            case OpCode.Addi: _registers[instruction.C] = _registers[instruction.A] + instruction.B; break;
+            case OpCode.Mulr: _registers[instruction.C] = _registers[instruction.A] * _registers[instruction.B]; break;
+            case OpCode.Muli: _registers[instruction.C] = _registers[instruction.A] * instruction.B; break;
+            case OpCode.Banr: _registers[instruction.C] = _registers[instruction.A] & _registers[instruction.B]; break;
+            case OpCode.Bani: _registers[instruction.C] = _registers[instruction.A] & instruction.B; break;
+            case OpCode.Borr: _registers[instruction.C] = _registers[instruction.A] | _registers[instruction.B]; break;
+            case OpCode.Bori: _registers[instruction.C] = _registers[instruction.A] | instruction.B; break;
+            case OpCode.Setr: _registers[instruction.C] = _registers[instruction.A]; break;
+            case OpCode.Seti: _registers[instruction.C] = instruction.A; break;
+            case OpCode.Gtir: _registers[instruction.C] = instruction.A > _registers[instruction.B] ? 1 : 0; break;
+            case OpCode.Gtri: _registers[instruction.C] = _registers[instruction.A] > instruction.B ? 1 : 0; break;
+            case OpCode.Gtrr: _registers[instruction.C] = _registers[instruction.A] > _registers[instruction.B] ? 1 : 0; break;
+            case OpCode.Eqir: _registers[instruction.C] = instruction.A == _registers[instruction.B] ? 1 : 0; break;
+            case OpCode.Eqri: _registers[instruction.C] = _registers[instruction.A] == instruction.B ? 1 : 0; break;
+            case OpCode.Eqrr: _registers[instruction.C] = _registers[instruction.A] == _registers[instruction.B] ? 1 : 0; break;
+        }
     }
-    
+
     public void Continue()
     {
         var registers = _registers;
-        
+
         var program = _program;
-        
+
         var length = _programLength;
-        
+
         var instructionPointerBinding = _instructionPointerBinding;
 
-        while ((uint)_instructionPointer < (uint)length)
+        while ((uint) _instructionPointer < (uint) length)
         {
             if (instructionPointerBinding >= 0)
             {
@@ -76,31 +78,30 @@ public sealed class Cpu
 
             ref readonly var instr = ref program[_instructionPointer];
 
-            registers[instr.C] = instr.OpCode switch
+            switch (instr.OpCode)
             {
-                OpCode.Addr => registers[instr.A] + registers[instr.B],
-                OpCode.Addi => registers[instr.A] + instr.B,
-                OpCode.Mulr => registers[instr.A] * registers[instr.B],
-                OpCode.Muli => registers[instr.A] * instr.B,
-                OpCode.Banr => registers[instr.A] & registers[instr.B],
-                OpCode.Bani => registers[instr.A] & instr.B,
-                OpCode.Borr => registers[instr.A] | registers[instr.B],
-                OpCode.Bori => registers[instr.A] | instr.B,
-                OpCode.Setr => registers[instr.A],
-                OpCode.Seti => instr.A,
-                OpCode.Gtir => instr.A > registers[instr.B] ? 1 : 0,
-                OpCode.Gtri => registers[instr.A] > instr.B ? 1 : 0,
-                OpCode.Gtrr => registers[instr.A] > registers[instr.B] ? 1 : 0,
-                OpCode.Eqir => instr.A == registers[instr.B] ? 1 : 0,
-                OpCode.Eqri => registers[instr.A] == instr.B ? 1 : 0,
-                OpCode.Eqrr => registers[instr.A] == registers[instr.B] ? 1 : 0,
-                _ => registers[instr.C]
-            };
+                case OpCode.Addr: registers[instr.C] = registers[instr.A] + registers[instr.B]; break;
+                case OpCode.Addi: registers[instr.C] = registers[instr.A] + instr.B; break;
+                case OpCode.Mulr: registers[instr.C] = registers[instr.A] * registers[instr.B]; break;
+                case OpCode.Muli: registers[instr.C] = registers[instr.A] * instr.B; break;
+                case OpCode.Banr: registers[instr.C] = registers[instr.A] & registers[instr.B]; break;
+                case OpCode.Bani: registers[instr.C] = registers[instr.A] & instr.B; break;
+                case OpCode.Borr: registers[instr.C] = registers[instr.A] | registers[instr.B]; break;
+                case OpCode.Bori: registers[instr.C] = registers[instr.A] | instr.B; break;
+                case OpCode.Setr: registers[instr.C] = registers[instr.A]; break;
+                case OpCode.Seti: registers[instr.C] = instr.A; break;
+                case OpCode.Gtir: registers[instr.C] = instr.A > registers[instr.B] ? 1 : 0; break;
+                case OpCode.Gtri: registers[instr.C] = registers[instr.A] > instr.B ? 1 : 0; break;
+                case OpCode.Gtrr: registers[instr.C] = registers[instr.A] > registers[instr.B] ? 1 : 0; break;
+                case OpCode.Eqir: registers[instr.C] = instr.A == registers[instr.B] ? 1 : 0; break;
+                case OpCode.Eqri: registers[instr.C] = registers[instr.A] == instr.B ? 1 : 0; break;
+                case OpCode.Eqrr: registers[instr.C] = registers[instr.A] == registers[instr.B] ? 1 : 0; break;
+            }
 
             if (_breakAt > -1 && _instructionPointer == _breakAt)
             {
                 _registers.AsSpan().CopyTo(registers);
-                
+
                 return;
             }
 
@@ -114,7 +115,7 @@ public sealed class Cpu
             if (_breakOn.HasValue && instr.OpCode == _breakOn.Value)
             {
                 _registers.AsSpan().CopyTo(registers);
-                
+
                 return;
             }
         }
@@ -131,7 +132,7 @@ public sealed class Cpu
             if (line.StartsWith('#'))
             {
                 _instructionPointerBinding = line[4] - '0';
-                
+
                 continue;
             }
 
@@ -139,7 +140,7 @@ public sealed class Cpu
         }
 
         _program = list.ToArray();
-        
+
         _programLength = _program.Length;
     }
 
@@ -151,9 +152,9 @@ public sealed class Cpu
     public int[] GetRegisters()
     {
         var copy = new int[_registers.Length];
-        
+
         Array.Copy(_registers, 0, copy, 0, _registers.Length);
-        
+
         return copy;
     }
 
