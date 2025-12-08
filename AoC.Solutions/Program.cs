@@ -276,7 +276,7 @@ public static class Program
 
                 File.WriteAllLines(resultsFileName, file);
 
-                Console.WriteLine($" {updated} time(s0 were updated in results.md.\n");
+                Console.WriteLine($" {updated} time(s) were updated in results.md.\n");
             }
         }
 
