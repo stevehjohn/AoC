@@ -196,7 +196,6 @@ public abstract class Base : Solution
                 return false;
             }
         }
-
         return true;
     }
 
