@@ -230,7 +230,7 @@ public abstract class Base : Solution
 
                 if (cost > 0)
                 {
-                    result.Add((MakeMove(state, pod.X, pod.Y, pod.Home, y), cost));
+                    result.Add((MakeMove(state, index, pod.Home, y), cost));
 
                     return result;
                 }
@@ -252,7 +252,7 @@ public abstract class Base : Solution
 
                 if (cost > 0)
                 {
-                    result.Add((MakeMove(state, pod.X, pod.Y, x, 0), cost));
+                    result.Add((MakeMove(state, index, x, 0), cost));
                 }
             }
         }
@@ -260,21 +260,13 @@ public abstract class Base : Solution
         return result;
     }
 
-    private static int[] MakeMove(int[] state, int startX, int startY, int endX, int endY)
+    private static int[] MakeMove(int[] state, int index, int endX, int endY)
     {
         var newState = Copy(state);
 
-        for (var i = 0; i < state.Length; i++)
-        {
-            var pod = Decode(state[i]);
+        var pod = Decode(state[index]);
 
-            if (pod.X == startX && pod.Y == startY)
-            {
-                newState[i] = Encode(endX, endY, pod.Home);
-
-                break;
-            }
-        }
+        newState[index] = Encode(endX, endY, pod.Home);
 
         return newState;
     }
