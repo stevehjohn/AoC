@@ -6,9 +6,9 @@ namespace AoC.Solutions.Solutions._2025._08;
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private List<Vertex> Junctions = [];
+    private readonly List<Vertex> Junctions = [];
 
-    private List<Edge> Edges = [];
+    private readonly List<Edge> Edges = [];
     
     public override string GetAnswer()
     {
