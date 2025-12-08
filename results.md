@@ -86,7 +86,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 11.2: 108μs         
  2016 12.1: 36,170μs      Monorail
  2016 12.2: 889,522μs     
- 2016 13.1: 49μs          Cubicle maze
+ 2016 13.1: 48μs          Cubicle maze
  2016 13.2: 47μs          
  2016 14.1: 10,371μs      One time pad
  2016 14.2: 7,882,774μs   
@@ -367,13 +367,13 @@ Tests performed on a 2023 MacBook Pro.
  2021 21.2: 548,599μs     
  2021 22.1: 1,908μs       Reactor reboot
  2021 22.2: 23,586μs      
- 2021 23.1: 323,302μs     Hotel amphipod
- 2021 23.2: 1,502,020μs   
+ 2021 23.1: 208,628μs     Hotel amphipod
+ 2021 23.2: 641,572μs     
  2021 24.1: 2μs           Model number
  2021 24.2: 2μs           
  2021 25.1: 76,392μs      Landing among the cucumbers
             -------------
-            3.105s       
+            2.130s       
 
  2022  1.1: 22μs          Calorie counting
  2022  1.2: 32μs          
@@ -550,5 +550,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             270.352ms    
 
- 507 puzzles solved in 47.773s.
+ 507 puzzles solved in 46.798s.
 ```

@@ -156,16 +156,20 @@ public abstract class Base : Solution
         unchecked
         {
             var hash = 17;
+            
+            Span<int> sorted = stackalloc int[state.Length];
 
-            var ordered = state.Order().ToArray();
+            state.CopyTo(sorted);
+            
+            sorted.Sort();
 
-            for (var i = 0; i < state.Length; i++)
+            for (var i = 0; i < sorted.Length; i++)
             {
-                hash = hash * 31 + ordered[i];
+                hash = hash * 31 + sorted[i];
             }
 
             hash = hash * 31 + index;
-
+            
             return hash;
         }
     }
