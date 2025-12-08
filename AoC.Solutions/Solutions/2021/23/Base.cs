@@ -157,9 +157,11 @@ public abstract class Base : Solution
         {
             var hash = 17;
 
+            var ordered = state.Order().ToArray();
+
             for (var i = 0; i < state.Length; i++)
             {
-                hash = hash * 31 + state[i];
+                hash = hash * 31 + ordered[i];
             }
 
             hash = hash * 31 + index;
@@ -301,9 +303,11 @@ public abstract class Base : Solution
             cost++;
         }
 
+        var step = startX > endX ? -1 : 1;
+        
         while (startX != endX)
         {
-            startX += startX > endX ? -1 : 1;
+            startX += step;
 
             if (TypeInPosition(state, startX, startY) != 0)
             {
