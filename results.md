@@ -207,7 +207,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 20.1: 3,075μs       Regex maze
  2018 20.2: 3,791μs       
  2018 21.1: 35μs          Time machine halting problem
- 2018 21.2: 10,623,648μs  
+ 2018 21.2: 10,037,547μs  
  2018 22.1: 208μs         Caving capers
  2018 22.2: 59,067μs      
  2018 23.1: 172μs         Nanobot teleportation
@@ -216,7 +216,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 265,695μs     
  2018 25.1: 32,693μs      4D chocolate teleportation
             -------------
-            13.321s      
+            12.735s      
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
@@ -367,13 +367,13 @@ Tests performed on a 2023 MacBook Pro.
  2021 21.2: 548,599μs     
  2021 22.1: 1,908μs       Reactor reboot
  2021 22.2: 23,586μs      
- 2021 23.1: 157,862μs     Hotel amphipod
- 2021 23.2: 490,815μs     
+ 2021 23.1: 154,083μs     Hotel amphipod
+ 2021 23.2: 482,260μs     
  2021 24.1: 2μs           Model number
  2021 24.2: 2μs           
  2021 25.1: 76,392μs      Landing among the cucumbers
             -------------
-            1.929s       
+            1.916s       
 
  2022  1.1: 22μs          Calorie counting
  2022  1.2: 32μs          
@@ -545,10 +545,10 @@ Tests performed on a 2023 MacBook Pro.
  2025  6.2: 64μs          
  2025  7.1: 5μs           Laboratories
  2025  7.2: 274μs         
- 2025  8.1: 106,168μs     Playground
+ 2025  8.1: 104,849μs     Playground
  2025  8.2: 97,518μs      
             -------------
-            270.352ms    
+            269.033ms    
 
- 507 puzzles solved in 42.089s.
+ 507 puzzles solved in 41.489s.
 ```

@@ -63,13 +63,13 @@ public abstract class Base : Solution
                 queued[triple].Add(i);
             }
 
-            var quint = GetQuintupleRepeatedCharacter(hexBytes);
+            var quadruple = GetQuadrupleRepeatedCharacter(hexBytes);
 
-            if (quint != '\0')
+            if (quadruple != '\0')
             {
                 matches.Clear();
 
-                var list = queued[quint];
+                var list = queued[quadruple];
 
                 for (var x = list.Count - 1; x >= 0; x--)
                 {
@@ -138,7 +138,7 @@ public abstract class Base : Solution
         return '\0';
     }
 
-    private static char GetQuintupleRepeatedCharacter(ReadOnlySpan<byte> hex)
+    private static char GetQuadrupleRepeatedCharacter(ReadOnlySpan<byte> hex)
     {
         for (var i = 0; i < hex.Length - 4; i++)
         {
