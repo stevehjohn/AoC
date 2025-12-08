@@ -233,7 +233,7 @@ Tests performed on a 2023 MacBook Pro.
  2019  7.1: 5,140μs       Amplifiers (CPU used unmodified)
  2019  7.2: 6,596μs       
  2019  8.1: 1,041μs       Space GIF
- 2019  8.2: 1,018μs       
+ 2019  8.2: 1,008μs       
  2019  9.1: 45μs          Sensor booster (CPU extension 2)
  2019  9.2: 22,676μs      
  2019 10.1: 18,082μs      Asteroids
@@ -367,13 +367,13 @@ Tests performed on a 2023 MacBook Pro.
  2021 21.2: 548,599μs     
  2021 22.1: 1,908μs       Reactor reboot
  2021 22.2: 23,586μs      
- 2021 23.1: 208,628μs     Hotel amphipod
- 2021 23.2: 641,572μs     
+ 2021 23.1: 161,521μs     Hotel amphipod
+ 2021 23.2: 508,399μs     
  2021 24.1: 2μs           Model number
  2021 24.2: 2μs           
  2021 25.1: 76,392μs      Landing among the cucumbers
             -------------
-            2.130s       
+            1.950s       
 
  2022  1.1: 22μs          Calorie counting
  2022  1.2: 32μs          
@@ -550,5 +550,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             270.352ms    
 
- 507 puzzles solved in 46.798s.
+ 507 puzzles solved in 46.618s.
 ```
