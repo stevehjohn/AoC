@@ -10,10 +10,6 @@ public class Part1 : Base
     
     private Vertex[] _junctions;
 
-    private int[] _parents;
-    
-    private int[] _sizes;
-    
     public override string GetAnswer()
     {
         ParseInput();
@@ -66,10 +62,6 @@ public class Part1 : Base
         var size = Input.Length;
         
         _junctions = new Vertex[size];
-
-        _parents = new int[size];
-
-        _sizes = new int[size];
         
         foreach (var line in Input)
         {

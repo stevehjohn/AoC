@@ -13,14 +13,15 @@ public class DisjointSet<T> where T : notnull
         _sizes[item] = 1;
     }
 
-    public void Union(T a, T b)
+    public bool Union(T a, T b)
     {
         var ra = Find(a);
+        
         var rb = Find(b);
 
         if (EqualityComparer<T>.Default.Equals(ra, rb))
         {
-            return;
+            return false;
         }
 
         if (_sizes[ra] < _sizes[rb])
@@ -29,9 +30,12 @@ public class DisjointSet<T> where T : notnull
         }
 
         _parents[rb] = ra;
-
+        
         _sizes[ra] += _sizes[rb];
+
+        return true;
     }
+
 
     public IEnumerable<int> GetSizes()
     {
