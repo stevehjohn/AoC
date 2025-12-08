@@ -6,9 +6,9 @@ namespace AoC.Solutions.Solutions._2025._08;
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private readonly List<Vertex> Junctions = [];
+    private readonly List<Vertex> _junctions = [];
 
-    private readonly List<Edge> Edges = [];
+    private readonly List<Edge> _edges = [];
     
     public override string GetAnswer()
     {
@@ -16,18 +16,18 @@ public class Part1 : Base
 
         CalculateDistances();
         
-        Edges.Sort();
+        _edges.Sort();
 
         return "Unknown";
     }
 
     private void CalculateDistances()
     {
-        for (var l = 0; l < Junctions.Count - 1; l++)
+        for (var l = 0; l < _junctions.Count - 1; l++)
         {
-            for (var r = l + 1; r < Junctions.Count; r++)
+            for (var r = l + 1; r < _junctions.Count; r++)
             {
-                Edges.Add(new Edge(Junctions[l], Junctions[r]));
+                _edges.Add(new Edge(_junctions[l], _junctions[r]));
             }
         }
     }
@@ -36,7 +36,7 @@ public class Part1 : Base
     {
         foreach (var line in Input)
         {
-            Junctions.Add(Vertex.Parse(line));
+            _junctions.Add(Vertex.Parse(line));
         }
     }
 }
