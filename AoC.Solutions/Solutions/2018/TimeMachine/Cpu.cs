@@ -54,7 +54,6 @@ public sealed class Cpu
             case OpCode.Eqir: _registers[c] = a == _registers[b] ? 1 : 0; break;
             case OpCode.Eqri: _registers[c] = _registers[a] == b ? 1 : 0; break;
             case OpCode.Eqrr: _registers[c] = _registers[a] == _registers[b] ? 1 : 0; break;
-            default: _registers[c] = _registers[c]; break;
         }
     }
 
