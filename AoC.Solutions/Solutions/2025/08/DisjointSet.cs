@@ -35,8 +35,7 @@ public class DisjointSet<T> where T : notnull
 
         return true;
     }
-
-
+    
     public IEnumerable<int> GetSizes()
     {
         var map = new Dictionary<T, int>();
