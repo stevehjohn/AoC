@@ -6,34 +6,82 @@ public abstract class Base : Solution
 {
     public override string Description => "Playground";
 
-    protected readonly List<Edge> Edges = [];
+    private readonly List<Edge> _edges = [];
 
-    protected Vertex[] Junctions;
+    private Vertex[] _junctions;
 
-    protected void CalculateDistances()
+    protected long GetAnswer(bool isPart2 = false)
     {
-        for (var l = 0; l < Junctions.Length - 1; l++)
+        ParseInput();
+
+        CalculateDistances();
+
+        _edges.Sort();
+
+        var disjointSet = new DisjointSet<Vertex>();
+
+        foreach (var v in _junctions)
         {
-            for (var r = l + 1; r < Junctions.Length; r++)
+            disjointSet.Add(v);
+        }
+
+        var components = _junctions.Length;
+
+        var count = 0;
+
+        long answer = 0;
+
+        foreach (var edge in _edges)
+        {
+            if (disjointSet.Union(edge.A, edge.B))
             {
-                Edges.Add(new Edge(Junctions[l], Junctions[r]));
+                components--;
+
+                if (components == 1)
+                {
+                    answer = (long) edge.A.X * edge.B.X;
+
+                    break;
+                }
+            }
+
+            count++;
+
+            if (! isPart2 && count == 1_000)
+            {
+                var sizes = disjointSet.GetSizes().OrderDescending().ToArray();
+
+                return sizes[0] * sizes[1] * sizes[2];
+            }
+        }
+
+        return answer;
+    }
+
+    private void CalculateDistances()
+    {
+        for (var l = 0; l < _junctions.Length - 1; l++)
+        {
+            for (var r = l + 1; r < _junctions.Length; r++)
+            {
+                _edges.Add(new Edge(_junctions[l], _junctions[r]));
             }
         }
     }
 
-    protected void ParseInput()
+    private void ParseInput()
     {
         var i = 0;
 
         var size = Input.Length;
 
-        Junctions = new Vertex[size];
+        _junctions = new Vertex[size];
 
         foreach (var line in Input)
         {
             var vertex = Vertex.Parse(line);
 
-            Junctions[i++] = vertex;
+            _junctions[i++] = vertex;
         }
     }
 }
