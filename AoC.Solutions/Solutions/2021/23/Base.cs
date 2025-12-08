@@ -156,11 +156,11 @@ public abstract class Base : Solution
         unchecked
         {
             var hash = 17;
-            
+
             Span<int> sorted = stackalloc int[state.Length];
 
             state.CopyTo(sorted);
-            
+
             sorted.Sort();
 
             for (var i = 0; i < sorted.Length; i++)
@@ -169,11 +169,11 @@ public abstract class Base : Solution
             }
 
             hash = hash * 31 + index;
-            
+
             return hash;
         }
     }
-    
+
     private bool UpdateBestCost(int[] state, int index, int cost)
     {
         var hash = HashState(state, index);
@@ -195,13 +195,25 @@ public abstract class Base : Solution
     {
         for (var i = 0; i < state.Length; i++)
         {
-            var pod = Decode(state[i]);
+            var encoded = state[i];
 
-            if (pod.Y == 0 || pod.X != pod.Home)
+            var y = DecodeY(encoded);
+
+            if (y == 0)
+            {
+                return false;
+            }
+
+            var x = DecodeX(encoded);
+
+            var home = DecodeHome(encoded);
+
+            if (x != home)
             {
                 return false;
             }
         }
+
         return true;
     }
 
@@ -284,9 +296,9 @@ public abstract class Base : Solution
     {
         var newState = Copy(state);
 
-        var pod = Decode(state[index]);
+        var home = DecodeHome(state[index]);
 
-        newState[index] = Encode(endX, endY, pod.Home);
+        newState[index] = Encode(endX, endY, home);
 
         return newState;
     }
@@ -308,7 +320,7 @@ public abstract class Base : Solution
         }
 
         var step = startX > endX ? -1 : 1;
-        
+
         while (startX != endX)
         {
             startX += step;
@@ -340,11 +352,11 @@ public abstract class Base : Solution
     {
         for (var i = 0; i < state.Length; i++)
         {
-            var pod = Decode(state[i]);
+            var encoded = state[i];
 
-            if (pod.X == x && pod.Y == y)
+            if (DecodeX(encoded) == x && DecodeY(encoded) == y)
             {
-                return pod.Home;
+                return DecodeHome(encoded);
             }
         }
 
@@ -380,18 +392,9 @@ public abstract class Base : Solution
         return (x, y, home);
     }
 
-    private static int DecodeX(int state)
-    {
-        return (state >> 16) & 255;
-    }
+    private static int DecodeX(int state) => (state >> 16) & 255;
 
-    private static int DecodeY(int state)
-    {
-        return (state >> 8) & 255;
-    }
+    private static int DecodeY(int state) => (state >> 8) & 255;
 
-    private static int DecodeHome(int state)
-    {
-        return state & 255;
-    }
+    private static int DecodeHome(int state) => state & 255;
 }
