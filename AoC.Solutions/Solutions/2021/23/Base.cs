@@ -176,7 +176,6 @@ public abstract class Base : Solution
         {
             if (existing <= cost)
             {
-                // already reached this (state,index) cheaper or equal → don’t explore
                 return false;
             }
         }
