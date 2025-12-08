@@ -1,5 +1,5 @@
 using System.Numerics;
-using AoC.Solutions.Common;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Libraries;
 
@@ -10,7 +10,7 @@ public static class Measurement
         return Maths.Abs(x1 - x2) + Maths.Abs(y1 - y2);
     }
 
-    public static double GetDistance(Point left, Point right)
+    public static double GetDistance(Vertex left, Vertex right)
     {
         var distance = Math.Pow(Math.Abs(left.X - right.X), 2);
         
