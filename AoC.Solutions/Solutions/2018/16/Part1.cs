@@ -8,6 +8,8 @@ public class Part1 : Base
 {
     private readonly Cpu _cpu = new(4);
 
+    private readonly int _opCodeCount = Enum.GetValues<OpCode>().Length;
+
     public override string GetAnswer()
     {
         var total = 0;
@@ -36,7 +38,7 @@ public class Part1 : Base
     {
         var matches = 0;
 
-        for (var i = 0; i < Enum.GetValues<OpCode>().Length; i++)
+        for (var i = 0; i < _opCodeCount; i++)
         {
             _cpu.SetRegisters(initial);
 

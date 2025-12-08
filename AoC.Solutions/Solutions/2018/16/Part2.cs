@@ -12,6 +12,8 @@ public class Part2 : Base
 
     private readonly Dictionary<int, OpCode> _matchedOpCodes = new();
 
+    private readonly int _opCodeCount = Enum.GetValues<OpCode>().Length;
+
     public override string GetAnswer()
     {
         foreach (var op in Enum.GetValues<OpCode>())
@@ -82,7 +84,7 @@ public class Part2 : Base
 
     private void ExecuteSample(int code, int a, int b, int c, int[] initial, int[] expected)
     {
-        for (var i = 0; i < Enum.GetValues<OpCode>().Length; i++)
+        for (var i = 0; i < _opCodeCount; i++)
         {
             _cpu.SetRegisters(initial);
 
