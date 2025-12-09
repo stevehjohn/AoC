@@ -94,16 +94,7 @@ public class Part2 : Base
 
         if (start.X == end.X)
         {
-            if (start.X <= startX || start.X >= endX)
-            {
-                return false;
-            }
-
-            var minY = line.MinY;
-
-            var maxY = line.MaxY;
-
-            if (maxY <= startY || minY >= endY)
+            if (start.X <= startX || start.X >= endX || line.MaxY <= startY || line.MinY >= endY)
             {
                 return false;
             }
@@ -113,16 +104,7 @@ public class Part2 : Base
 
         if (start.Y == end.Y)
         {
-            if (start.Y <= startY || start.Y >= endY)
-            {
-                return false;
-            }
-
-            var minX = line.MinX;
-
-            var maxX = line.MaxX;
-
-            if (maxX <= startX || minX >= endX)
+            if (start.Y <= startY || start.Y >= endY || line.MaxX <= startX || line.MinX >= endX)
             {
                 return false;
             }
