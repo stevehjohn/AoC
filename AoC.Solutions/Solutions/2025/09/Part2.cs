@@ -83,7 +83,7 @@ public class Part2 : Base
 
     private static bool Intersects(long startX, long startY, long endX, long endY, ref Line line)
     {
-        if (line.MaxX < startX || line.MinX > endX || line.MaxY < startY || line.MinY > endY)
+        if (line.MaxX <= startX || line.MinX >= endX || line.MaxY <= startY || line.MinY >= endY)
         {
             return false;
         }
@@ -94,7 +94,7 @@ public class Part2 : Base
 
         if (start.X == end.X)
         {
-            if (start.X <= startX || start.X >= endX || line.MaxY <= startY || line.MinY >= endY)
+            if (start.X <= startX || start.X >= endX)
             {
                 return false;
             }
@@ -104,7 +104,7 @@ public class Part2 : Base
 
         if (start.Y == end.Y)
         {
-            if (start.Y <= startY || start.Y >= endY || line.MaxX <= startX || line.MinX >= endX)
+            if (start.Y <= startY || start.Y >= endY)
             {
                 return false;
             }
