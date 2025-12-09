@@ -8,23 +8,23 @@ namespace AoC.Solutions.Solutions._2025._09;
 public class Part2 : Base
 {
     private Line[] _lines;
-    
+
     public override string GetAnswer()
     {
         ParseInput();
 
         var length = Coordinates.Length;
-        
+
         _lines = new Line[length];
 
         var previous = Coordinates[0];
 
         var index = 1;
-        
+
         for (; index < length; index++)
         {
             var coordinate = Coordinates[index];
-            
+
             _lines[index] = new Line(previous, coordinate);
 
             previous = coordinate;
@@ -48,17 +48,17 @@ public class Part2 : Base
                 {
                     continue;
                 }
-                
+
                 var empty = true;
-                
+
                 var startX = Math.Min(left.X, right.X);
-        
+
                 var endX = Math.Max(left.X, right.X);
-        
+
                 var startY = Math.Min(left.Y, right.Y);
-        
+
                 var endY = Math.Max(left.Y, right.Y);
-                
+
                 for (var i = 0; i < _lines.Length; i++)
                 {
                     var line = _lines[i];
@@ -66,7 +66,7 @@ public class Part2 : Base
                     if (Intersects(startX, startY, endX, endY, ref line))
                     {
                         empty = false;
-                        
+
                         break;
                     }
                 }
@@ -89,7 +89,7 @@ public class Part2 : Base
         }
 
         var start = line.Start;
-        
+
         var end = line.End;
 
         if (start.X == end.X)
