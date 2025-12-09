@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.Buffers.Text;
+using System.Security.Cryptography;
 using System.Text;
 using AoC.Solutions.Infrastructure;
 
@@ -14,13 +15,25 @@ public abstract class Base : Solution
 
         var i = 1;
 
+        var keyBytes = Encoding.ASCII.GetBytes(key);
+
+        var buffer = new byte[keyBytes.Length + 11];
+
+        Array.Copy(keyBytes, buffer, keyBytes.Length);
+
+        var requireSixZeroes = pattern.Length == 6;
+        
         using var md5 = MD5.Create();
         
         while (true)
         {
-            var hash = Convert.ToHexString(md5.ComputeHash(Encoding.ASCII.GetBytes($"{key}{i}")));
+            Utf8Formatter.TryFormat(i, buffer.AsSpan(keyBytes.Length), out var written);
 
-            if (hash.StartsWith(pattern))
+            var hash = md5.ComputeHash(buffer, 0, keyBytes.Length + written);
+
+            var isMatch = hash[0] == 0 && hash[1] == 0 && (requireSixZeroes ? hash[2] == 0 : (hash[2] & 0xF0) == 0);
+
+            if (isMatch)
             {
                 break;
             }

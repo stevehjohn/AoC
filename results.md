@@ -16,8 +16,8 @@ Tests performed on a 2023 MacBook Pro.
  2015  2.2: 438μs         
  2015  3.1: 1,203μs       Perfectly spherical houses in a vacuum
  2015  3.2: 1,101μs       
- 2015  4.1: 121,081μs     Crypto stocking stuffer
- 2015  4.2: 3,042,866μs   
+ 2015  4.1: 104,772μs     Crypto stocking stuffer
+ 2015  4.2: 2,877,275μs   
  2015  5.1: 136μs         Naughty or nice
  2015  5.2: 806μs         
  2015  6.1: 23,877μs      Bournville estate lights
@@ -25,7 +25,7 @@ Tests performed on a 2023 MacBook Pro.
  2015  7.1: 95μs          Logic gates
  2015  7.2: 93μs          
  2015  8.1: 27μs          Matchsticks
- 2015  8.2: 31μs          
+ 2015  8.2: 30μs          
  2015  9.1: 13,039μs      All in a single night
  2015  9.2: 12,825μs      
  2015 10.1: 3,071μs       Elves look, elves say
@@ -52,15 +52,15 @@ Tests performed on a 2023 MacBook Pro.
  2015 20.2: 2,283μs       
  2015 21.1: 380μs         RPG simulator 2015
  2015 21.2: 365μs         
- 2015 22.1: 487,380μs     Wizard simulator 2015
- 2015 22.2: 24,850μs      
+ 2015 22.1: 486,454μs     Wizard simulator 2015
+ 2015 22.2: 24,829μs      
  2015 23.1: 72μs          Opening the Turing lock
  2015 23.2: 85μs          
  2015 24.1: 85,996μs      It hangs in the balance
  2015 24.2: 127μs         
  2015 25.1: 57,269μs      Let it snow
             -------------
-            5.154s       
+            4.971s       
 
  2016  1.1: 6μs           Manhattan distance
  2016  1.2: 15μs          
@@ -176,7 +176,7 @@ Tests performed on a 2023 MacBook Pro.
  2018  4.2: 1,150μs       
  2018  5.1: 882μs         Polymer reactions
  2018  5.2: 33,559μs      
- 2018  6.1: 8,340μs       Safe coordinates
+ 2018  6.1: 8,210μs       Safe coordinates
  2018  6.2: 5,432μs       
  2018  7.1: 48μs          Ikea sleigh
  2018  7.2: 222μs         
@@ -256,7 +256,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 18.2: 61,086μs      
  2019 19.1: 112,897μs     Tractorrr (CPU used unmodified)
  2019 19.2: 121,421μs     
- 2019 20.1: 261μs         Doughnut maze
+ 2019 20.1: 252μs         Doughnut maze
  2019 20.2: 5,998μs       
  2019 21.1: 1,652μs       Jumping droids (CPU used unmodified)
  2019 21.2: 31,810μs      
@@ -310,8 +310,8 @@ Tests performed on a 2023 MacBook Pro.
  2020 19.2: 6,655μs       
  2020 20.1: 6,457μs       Satellite jigsaw
  2020 20.2: 677μs         
- 2020 21.1: 186μs         Allergen detective
- 2020 21.2: 171μs         
+ 2020 21.1: 184μs         Allergen detective
+ 2020 21.2: 165μs         
  2020 22.1: 14μs          Crab cards
  2020 22.2: 101,987μs     
  2020 23.1: 3μs           Crab cups
@@ -480,7 +480,7 @@ Tests performed on a 2023 MacBook Pro.
             349.727ms    
 
  2024  1.1: 112μs         Historian hysteria
- 2024  1.2: 82μs          
+ 2024  1.2: 79μs          
  2024  2.1: 156μs         Red-nosed reports
  2024  2.2: 319μs         
  2024  3.1: 252μs         Mull it over
@@ -515,7 +515,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 17.2: 2,535μs       
  2024 18.1: 1,283μs       RAM run
  2024 18.2: 1,318μs       
- 2024 19.1: 37,906μs      Linen layout
+ 2024 19.1: 37,890μs      Linen layout
  2024 19.2: 59,627μs      
  2024 20.1: 33,809μs      Race condition
  2024 20.2: 32,521μs      
@@ -529,7 +529,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 231μs         
  2024 25.1: 112μs         Code chronicle
             -------------
-            528.655ms    
+            528.636ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 87μs          
@@ -548,9 +548,9 @@ Tests performed on a 2023 MacBook Pro.
  2025  8.1: 103,546μs     Playground
  2025  8.2: 94,932μs      
  2025  9.1: 177μs         Movie theater
- 2025  9.2: 7,512μs       
+ 2025  9.2: 7,511μs       
             -------------
-            272.833ms    
+            272.832ms    
 
- 509 puzzles solved in 40.181s.
+ 509 puzzles solved in 39.998s.
 ```
