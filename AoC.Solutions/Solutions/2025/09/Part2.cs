@@ -13,33 +13,30 @@ public class Part2 : Base
     {
         ParseInput();
 
-        _lines = new Line[Coordinates.Length];
-
-        var previous = new Coordinate(-1, -1);
-
-        var index = 0;
+        var length = Coordinates.Length;
         
-        foreach (var coordinate in Coordinates)
-        {
-            if (previous.X == -1)
-            {
-                previous = coordinate;
-                
-                continue;
-            }
+        _lines = new Line[length];
 
-            _lines[index++] = new Line(previous, coordinate);
+        var previous = Coordinates[0];
+
+        var index = 1;
+        
+        for (; index < length; index++)
+        {
+            var coordinate = Coordinates[index];
+            
+            _lines[index] = new Line(previous, coordinate);
 
             previous = coordinate;
         }
 
-        _lines[index] = new Line(previous, Coordinates[0]);
+        _lines[0] = new Line(previous, Coordinates[0]);
 
         var largest = 0L;
 
-        for (var l = 0; l < Coordinates.Length - 1; l++)
+        for (var l = 0; l < length - 1; l++)
         {
-            for (var r = l + 1; r < Coordinates.Length; r++)
+            for (var r = l + 1; r < length; r++)
             {
                 var left = Coordinates[l];
 
