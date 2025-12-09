@@ -86,22 +86,21 @@ public class Part2 : Base
 
     private static bool Intersects(long startX, long startY, long endX, long endY, Line line)
     {
-        var start = line.Start;
+        var (sX, sY) = line.Start;
         
-        var end = line.End;
+        var (eX, eY) = line.End;
 
-        if (start.X == end.X)
+
+        if (sX == eX)
         {
-            var x = start.X;
-            
-            if (x <= startX || x >= endX)
+            if (sX <= startX || sX >= endX)
             {
                 return false;
             }
 
-            var minY = Math.Min(start.Y, end.Y);
+            var minY = Math.Min(sY, eY);
 
-            var maxY = Math.Max(start.Y, end.Y);
+            var maxY = Math.Max(sY, eY);
 
             if (maxY <= startY || minY >= endY)
             {
@@ -111,18 +110,16 @@ public class Part2 : Base
             return true;
         }
 
-        if (start.Y == end.Y)
+        if (sY == eY)
         {
-            var y = start.Y;
-
-            if (y <= startY || y >= endY)
+            if (sY <= startY || sY >= endY)
             {
                 return false;
             }
 
-            var minX = Math.Min(start.X, end.X);
+            var minX = Math.Min(sX, eX);
             
-            var maxX = Math.Max(start.X, end.X);
+            var maxX = Math.Max(sX, eX);
 
             if (maxX <= startX || minX >= endX)
             {

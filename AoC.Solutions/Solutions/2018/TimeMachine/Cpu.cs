@@ -6,7 +6,7 @@ public sealed class Cpu
 {
     private readonly int[] _registers;
 
-    private Instruction[] _program = Array.Empty<Instruction>();
+    private Instruction[] _program = [];
 
     private int _programLength;
 
@@ -36,6 +36,8 @@ public sealed class Cpu
 
     public void Execute(OpCode opCode, int a, int b, int c)
     {
+        // ReSharper disable once ConvertSwitchStatementToSwitchExpression - Statement is faster in this instance
+        // ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault
         switch (opCode)
         {
             case OpCode.Addr: _registers[c] = _registers[a] + _registers[b]; break;
@@ -76,6 +78,8 @@ public sealed class Cpu
 
             ref readonly var instruction = ref program[_instructionPointer];
 
+            // ReSharper disable once ConvertSwitchStatementToSwitchExpression - Statement is faster in this instance
+            // ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault
             switch (instruction.OpCode)
             {
                 case OpCode.Addr: registers[instruction.C] = registers[instruction.A] + registers[instruction.B]; break;
