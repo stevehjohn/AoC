@@ -53,12 +53,20 @@ public class Part2 : Base
                 }
                 
                 var empty = true;
-
+                
+                var startX = Math.Min(left.X, right.X);
+        
+                var endX = Math.Max(left.X, right.X);
+        
+                var startY = Math.Min(left.Y, right.Y);
+        
+                var endY = Math.Max(left.Y, right.Y);
+                
                 for (var i = 0; i < _lines.Length; i++)
                 {
                     var line = _lines[i];
 
-                    if (Intersects(left, right, line))
+                    if (Intersects(startX, startY, endX, endY, line))
                     {
                         empty = false;
                         
@@ -76,34 +84,26 @@ public class Part2 : Base
         return largest.ToString();
     }
 
-    private static bool Intersects(Coordinate rectangleStart, Coordinate rectangleEnd, Line line)
+    private static bool Intersects(long startX, long startY, long endX, long endY, Line line)
     {
-        var minX = Math.Min(rectangleStart.X, rectangleEnd.X);
+        var start = line.Start;
         
-        var maxX = Math.Max(rectangleStart.X, rectangleEnd.X);
-        
-        var minY = Math.Min(rectangleStart.Y, rectangleEnd.Y);
-        
-        var maxY = Math.Max(rectangleStart.Y, rectangleEnd.Y);
+        var end = line.End;
 
-        var p1 = line.Start;
-        
-        var p2 = line.End;
-
-        if (p1.X == p2.X)
+        if (start.X == end.X)
         {
-            var x = p1.X;
-
-            if (x <= minX || x >= maxX)
+            var x = start.X;
+            
+            if (x <= startX || x >= endX)
             {
                 return false;
             }
 
-            var y1 = Math.Min(p1.Y, p2.Y);
+            var minY = Math.Min(start.Y, end.Y);
 
-            var y2 = Math.Max(p1.Y, p2.Y);
+            var maxY = Math.Max(start.Y, end.Y);
 
-            if (y2 <= minY || y1 >= maxY)
+            if (maxY <= startY || minY >= endY)
             {
                 return false;
             }
@@ -111,20 +111,20 @@ public class Part2 : Base
             return true;
         }
 
-        if (p1.Y == p2.Y)
+        if (start.Y == end.Y)
         {
-            var y = p1.Y;
+            var y = start.Y;
 
-            if (y <= minY || y >= maxY)
+            if (y <= startY || y >= endY)
             {
                 return false;
             }
 
-            var x1 = Math.Min(p1.X, p2.X);
+            var minX = Math.Min(start.X, end.X);
             
-            var x2 = Math.Max(p1.X, p2.X);
+            var maxX = Math.Max(start.X, end.X);
 
-            if (x2 <= minX || x1 >= maxX)
+            if (maxX <= startX || minX >= endX)
             {
                 return false;
             }
