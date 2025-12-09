@@ -22,4 +22,9 @@ public static class Measurement
 
         return distance;
     }
+
+    public static long AreaInCells(Coordinate left, Coordinate right)
+    {
+        return (Math.Abs(left.X - right.X) + 1) * (Math.Abs(left.Y - right.Y) + 1);
+    }
 }
