@@ -121,6 +121,7 @@ public class Part2 : Base
             }
 
             var x1 = Math.Min(p1.X, p2.X);
+            
             var x2 = Math.Max(p1.X, p2.X);
 
             if (x2 <= minX || x1 >= maxX)
