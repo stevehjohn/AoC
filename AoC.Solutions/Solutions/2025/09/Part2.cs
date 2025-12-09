@@ -36,10 +36,10 @@ public class Part2 : Base
 
         for (var l = 0; l < length - 1; l++)
         {
+            var left = Coordinates[l];
+
             for (var r = l + 1; r < length; r++)
             {
-                var left = Coordinates[l];
-
                 var right = Coordinates[r];
 
                 var area = Measurement.AreaInCells(left, right);
