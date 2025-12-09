@@ -8,4 +8,5 @@ public readonly record struct Line(Coordinate Start, Coordinate End)
     
     public readonly long MinY = Math.Min(Start.Y, End.Y);
     
-    public readonly long MaxY = Math.Max(Start.Y, End.Y);}
+    public readonly long MaxY = Math.Max(Start.Y, End.Y);
+}

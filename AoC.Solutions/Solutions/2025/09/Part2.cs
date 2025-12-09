@@ -63,12 +63,7 @@ public class Part2 : Base
                 {
                     var line = _lines[i];
 
-                    if (line.MaxX < startX || line.MinX > endX || line.MaxY < startY || line.MinY > endY)
-                    {
-                        continue;
-                    }
-
-                    if (Intersects(startX, startY, endX, endY, line))
+                    if (Intersects(startX, startY, endX, endY, ref line))
                     {
                         empty = false;
                         
@@ -86,22 +81,27 @@ public class Part2 : Base
         return largest.ToString();
     }
 
-    private static bool Intersects(long startX, long startY, long endX, long endY, Line line)
+    private static bool Intersects(long startX, long startY, long endX, long endY, ref Line line)
     {
-        var (sX, sY) = line.Start;
-        
-        var (eX, eY) = line.End;
-
-        if (sX == eX)
+        if (line.MaxX < startX || line.MinX > endX || line.MaxY < startY || line.MinY > endY)
         {
-            if (sX <= startX || sX >= endX)
+            return false;
+        }
+
+        var start = line.Start;
+        
+        var end = line.End;
+
+        if (start.X == end.X)
+        {
+            if (start.X <= startX || start.X >= endX)
             {
                 return false;
             }
 
-            var minY = Math.Min(sY, eY);
+            var minY = line.MinY;
 
-            var maxY = Math.Max(sY, eY);
+            var maxY = line.MaxY;
 
             if (maxY <= startY || minY >= endY)
             {
@@ -111,16 +111,16 @@ public class Part2 : Base
             return true;
         }
 
-        if (sY == eY)
+        if (start.Y == end.Y)
         {
-            if (sY <= startY || sY >= endY)
+            if (start.Y <= startY || start.Y >= endY)
             {
                 return false;
             }
 
-            var minX = Math.Min(sX, eX);
-            
-            var maxX = Math.Max(sX, eX);
+            var minX = line.MinX;
+
+            var maxX = line.MaxX;
 
             if (maxX <= startX || minX >= endX)
             {

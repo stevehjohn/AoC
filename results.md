@@ -241,7 +241,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 11.1: 52,614μs      Personal plate (CPU used unmodified)
  2019 11.2: 669μs         
  2019 12.1: 498μs         Orbital simulation
- 2019 12.2: 63,653μs      
+ 2019 12.2: 63,498μs      
  2019 13.1: 1,069μs       Arkanoid (CPU used unmodified)
  2019 13.2: 49,597μs      
  2019 14.1: 98μs          Replicator
