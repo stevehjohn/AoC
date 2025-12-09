@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using AoC.Solutions.Infrastructure;
 using AoC.Solutions.Libraries;
 using JetBrains.Annotations;
@@ -81,35 +82,9 @@ public class Part2 : Base
         return largest.ToString();
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static bool Intersects(long startX, long startY, long endX, long endY, ref Line line)
     {
-        if (line.MaxX <= startX || line.MinX >= endX || line.MaxY <= startY || line.MinY >= endY)
-        {
-            return false;
-        }
-
-        var start = line.Start;
-
-        var end = line.End;
-
-        if (start.X == end.X)
-        {
-            if (start.X <= startX || start.X >= endX)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        if (start.Y == end.Y)
-        {
-            if (start.Y <= startY || start.Y >= endY)
-            {
-                return false;
-            }
-        }
-
-        return true;
+        return line.MaxX > startX && line.MinX < endX && line.MaxY > startY && line.MinY < endY;
     }
 }
