@@ -63,6 +63,11 @@ public class Part2 : Base
                 {
                     var line = _lines[i];
 
+                    if (line.MaxX < startX || line.MinX > endX || line.MaxY < startY || line.MinY > endY)
+                    {
+                        continue;
+                    }
+
                     if (Intersects(startX, startY, endX, endY, line))
                     {
                         empty = false;
@@ -86,7 +91,6 @@ public class Part2 : Base
         var (sX, sY) = line.Start;
         
         var (eX, eY) = line.End;
-
 
         if (sX == eX)
         {
