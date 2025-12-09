@@ -6,119 +6,118 @@ public abstract class Base : Solution
 {
     public override string Description => "Wizard simulator 2015";
 
-    private (int Cost, string Name, int Turns)[] _spells;
+    private readonly SpellData[] _spells =
+    {
+        new(Spell.MagicMissile, 53, 0),
+        new(Spell.Drain, 73, 0),
+        new(Spell.Shield, 113, 6),
+        new(Spell.Poison, 173, 6),
+        new(Spell.Recharge, 229, 5)
+    };
+
+    private readonly int _effectCounts = Enum.GetValues<Spell>().Length;
+
 
     protected int GetManaCostToWin(bool isPart2 = false)
     {
-        var queue = new PriorityQueue<(Player Player, Player Boss, Dictionary<string, int> ActiveSpells, int PlayerTurn, int TotalCost), int>();
+        var queue = new PriorityQueue<(Player Player, Player Boss, int[] Active, int PlayerTurn, int TotalCost), int>();
 
-        var inputData = Input.Select(l => l.Split(':', StringSplitOptions.TrimEntries)[1]).Select(int.Parse).ToArray();
+        var bossHealth = int.Parse(Input[0].Split(':', StringSplitOptions.TrimEntries)[1]);
 
-        queue.Enqueue((new Player { HitPoints = 50, Mana = 500 }, new Player { HitPoints = inputData[0], Damage = inputData[1] }, new Dictionary<string, int>(), 0, 0), 0);
+        var bossDamage = int.Parse(Input[1].Split(':', StringSplitOptions.TrimEntries)[1]);
+
+        var player = new Player { HitPoints = 50, Mana = 500 };
+
+        var boss = new Player { HitPoints = bossHealth, Damage = bossDamage };
+
+        queue.Enqueue((player, boss, new int[_effectCounts], 0, 0), 0);
 
         while (queue.Count > 0)
         {
-            var round = queue.Dequeue();
+            (player, boss, var active, var playerTurn, var totalCost) = queue.Dequeue();
 
-            var toRemove = new List<string>();
-
-            round.Player.Armour = 0;
-
-            if (isPart2 && round.PlayerTurn == 0)
+            if (isPart2 && playerTurn == 0)
             {
-                round.Player.HitPoints--;
+                player.HitPoints--;
 
-                if (round.Player.HitPoints <= 0)
+                if (player.HitPoints <= 0)
                 {
                     continue;
                 }
             }
 
-            foreach (var spell in round.ActiveSpells)
+            ApplyEffects(player, boss, active);
+
+            if (boss.HitPoints <= 0)
             {
-                switch (spell.Key)
-                {
-                    case "Shield":
-                        round.Player.Armour = 7;
-
-                        break;
-                    case "Poison":
-                        round.Boss.HitPoints -= 3;
-
-                        break;
-                    case "Recharge":
-                        round.Player.Mana += 101;
-
-                        break;
-                }
-
-                round.ActiveSpells[spell.Key]--;
-
-                if (round.ActiveSpells[spell.Key] <= 0)
-                {
-                    toRemove.Add(spell.Key);
-                }
+                return totalCost;
             }
 
-            foreach (var item in toRemove)
+            if (playerTurn == 0)
             {
-                round.ActiveSpells.Remove(item);
-            }
-
-            if (round.Boss.HitPoints <= 0)
-            {
-                return round.TotalCost;
-            }
-
-            if (round.PlayerTurn == 0)
-            {
-                var canCast = _spells.Where(s => ! round.ActiveSpells.ContainsKey(s.Name) && s.Cost <= round.Player.Mana).ToList();
-
-                foreach (var spell in canCast)
+                for (var i = 0; i < _spells.Length; i++)
                 {
-                    var player = new Player(round.Player);
+                    var spell = _spells[i];
 
-                    player.Mana -= spell.Cost;
-
-                    var activeSpells = round.ActiveSpells.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-
-                    var boss = new Player(round.Boss);
-
-                    switch (spell.Name)
+                    if (spell.Cost > player.Mana)
                     {
-                        case "Shield":
-                        case "Poison":
-                        case "Recharge":
-                            activeSpells.Add(spell.Name, spell.Turns);
+                        continue;
+                    }
 
-                            queue.Enqueue((player, boss, activeSpells, 1, round.TotalCost + spell.Cost), round.TotalCost + spell.Cost);
+                    if (spell.Duration > 0 && active[(int) spell.Id] > 0)
+                    {
+                        continue;
+                    }
+
+                    var nextPlayer = new Player(player) { Mana = player.Mana - spell.Cost };
+
+                    var nextBoss = new Player(boss);
+
+                    var nextActive = (int[]) active.Clone();
+
+                    var nextCost = totalCost + spell.Cost;
+
+                    // ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault
+                    switch (spell.Id)
+                    {
+                        case Spell.MagicMissile:
+                            nextBoss.HitPoints -= 4;
 
                             break;
-                        case "MagicMissile":
-                            boss.HitPoints -= 4;
 
-                            queue.Enqueue((player, boss, activeSpells, 1, round.TotalCost + spell.Cost), round.TotalCost + spell.Cost);
-                            
+                        case Spell.Drain:
+                            nextBoss.HitPoints -= 2;
+                            nextPlayer.HitPoints += 2;
+
                             break;
-                        case "Drain":
-                            boss.HitPoints -= 2;
 
-                            player.HitPoints += 2;
-
-                            queue.Enqueue((player, boss, activeSpells, 1, round.TotalCost + spell.Cost), round.TotalCost + spell.Cost);
+                        case Spell.Shield:
+                        case Spell.Poison:
+                        case Spell.Recharge:
+                            nextActive[(int) spell.Id] = spell.Duration;
 
                             break;
                     }
 
+                    if (nextBoss.HitPoints <= 0)
+                    {
+                        return nextCost;
+                    }
+
+                    queue.Enqueue((nextPlayer, nextBoss, nextActive, 1, nextCost), nextCost);
                 }
             }
             else
             {
-                round.Player.HitPoints -= Math.Max(round.Boss.Damage - round.Player.Armour, 1);
-                
-                if (round.Player.HitPoints > 0)
+                var damage = Math.Max(boss.Damage - player.Armour, 1);
+
+                var nextPlayer = new Player(player) { HitPoints = player.HitPoints - damage };
+
+                if (nextPlayer.HitPoints > 0)
                 {
-                    queue.Enqueue((new Player(round.Player), new Player(round.Boss), round.ActiveSpells.ToDictionary(kvp => kvp.Key, kvp => kvp.Value), 0, round.TotalCost), round.TotalCost);
+                    var nextBoss = new Player(boss);
+
+                    queue.Enqueue((nextPlayer, nextBoss, (int[]) active.Clone(), 0, TotalCost: totalCost), totalCost);
                 }
             }
         }
@@ -126,8 +125,29 @@ public abstract class Base : Solution
         return int.MaxValue;
     }
 
-    protected void InitialiseSpells()
+    private static void ApplyEffects(Player player, Player boss, int[] active)
     {
-        _spells = [(53, "MagicMissile", 1), (73, "Drain", 1), (113, "Shield", 6), (173, "Poison", 6), (229, "Recharge", 5)];
+        player.Armour = 0;
+
+        if (active[(int) Spell.Shield] > 0)
+        {
+            player.Armour = 7;
+
+            active[(int) Spell.Shield]--;
+        }
+
+        if (active[(int) Spell.Poison] > 0)
+        {
+            boss.HitPoints -= 3;
+
+            active[(int) Spell.Poison]--;
+        }
+
+        if (active[(int) Spell.Recharge] > 0)
+        {
+            player.Mana += 101;
+
+            active[(int) Spell.Recharge]--;
+        }
     }
 }

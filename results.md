@@ -29,7 +29,7 @@ Tests performed on a 2023 MacBook Pro.
  2015  9.1: 13,039μs      All in a single night
  2015  9.2: 12,825μs      
  2015 10.1: 3,071μs       Elves look, elves say
- 2015 10.2: 41,080μs      
+ 2015 10.2: 41,056μs      
  2015 11.1: 1,866μs       Password policy
  2015 11.2: 6,656μs       
  2015 12.1: 96μs          Json abacus
@@ -171,7 +171,7 @@ Tests performed on a 2023 MacBook Pro.
  2018  2.1: 297μs         Warehouse checksum
  2018  2.2: 176μs         
  2018  3.1: 5,741μs       Fabric overlap
- 2018  3.2: 5,078μs       
+ 2018  3.2: 5,070μs       
  2018  4.1: 674μs         Sleepy guards
  2018  4.2: 1,150μs       
  2018  5.1: 882μs         Polymer reactions
@@ -317,10 +317,10 @@ Tests performed on a 2023 MacBook Pro.
  2020 23.1: 3μs           Crab cups
  2020 23.2: 140,627μs     
  2020 24.1: 668μs         Tile flipping
- 2020 24.2: 175,547μs     
+ 2020 24.2: 172,897μs     
  2020 25.1: 45,743μs      Door cryptography
             -------------
-            1.214s       
+            1.211s       
 
  2021  1.1: 47μs          Depth scan
  2021  1.2: 138μs         
@@ -330,8 +330,8 @@ Tests performed on a 2023 MacBook Pro.
  2021  3.2: 80μs          
  2021  4.1: 930μs         Squid bingo
  2021  4.2: 2,434μs       
- 2021  5.1: 3,738μs       Hydrothermal vents
- 2021  5.2: 6,123μs       
+ 2021  5.1: 3,688μs       Hydrothermal vents
+ 2021  5.2: 6,101μs       
  2021  6.1: 7μs           Lanternfish parthenogenesis
  2021  6.2: 10μs          
  2021  7.1: 65μs          Crab submarines
@@ -340,7 +340,7 @@ Tests performed on a 2023 MacBook Pro.
  2021  8.1: 76μs          Old school displays
  2021  8.2: 772μs         
  2021  9.1: 86μs          Lava level
- 2021  9.2: 1,990μs       
+ 2021  9.2: 1,979μs       
  2021 10.1: 375μs         Esoteric language parser
  2021 10.2: 547μs         
  2021 11.1: 1,722μs       Flashers
@@ -352,7 +352,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 14.1: 184μs         Ablative armour
  2021 14.2: 892μs         
  2021 15.1: 1,184μs       Risky business
- 2021 15.2: 60,678μs      
+ 2021 15.2: 60,664μs      
  2021 16.1: 123μs         Packet processing
  2021 16.2: 124μs         
  2021 17.1: 12,216μs      Probe launch trick shot
@@ -367,13 +367,13 @@ Tests performed on a 2023 MacBook Pro.
  2021 21.2: 548,599μs     
  2021 22.1: 1,908μs       Reactor reboot
  2021 22.2: 23,586μs      
- 2021 23.1: 152,940μs     Hotel amphipod
+ 2021 23.1: 151,733μs     Hotel amphipod
  2021 23.2: 478,835μs     
  2021 24.1: 2μs           Model number
  2021 24.2: 2μs           
  2021 25.1: 76,392μs      Landing among the cucumbers
             -------------
-            1.911s       
+            1.910s       
 
  2022  1.1: 22μs          Calorie counting
  2022  1.2: 32μs          
@@ -501,7 +501,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 10.2: 472μs         
  2024 11.1: 411μs         Plutonian pebbles
  2024 11.2: 12,328μs      
- 2024 12.1: 3,542μs       Garden groups
+ 2024 12.1: 3,535μs       Garden groups
  2024 12.2: 4,660μs       
  2024 13.1: 74μs          Claw contraption
  2024 13.2: 72μs          
@@ -529,7 +529,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 231μs         
  2024 25.1: 112μs         Code chronicle
             -------------
-            528.662ms    
+            528.655ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 87μs          
@@ -545,12 +545,12 @@ Tests performed on a 2023 MacBook Pro.
  2025  6.2: 64μs          
  2025  7.1: 5μs           Laboratories
  2025  7.2: 274μs         
- 2025  8.1: 103,916μs     Playground
+ 2025  8.1: 103,546μs     Playground
  2025  8.2: 94,932μs      
- 2025  9.1: 182μs         Movie theater
- 2025  9.2: 7,546μs       
+ 2025  9.1: 180μs         Movie theater
+ 2025  9.2: 7,512μs       
             -------------
-            273.242ms    
+            272.836ms    
 
- 509 puzzles solved in 41.080s.
+ 509 puzzles solved in 41.075s.
 ```

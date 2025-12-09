@@ -7,8 +7,6 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        InitialiseSpells();
-
         var result = GetManaCostToWin();
 
         return result.ToString();
