@@ -18,6 +18,8 @@ public sealed class Cpu
 
     private OpCode? _breakOn;
 
+    private bool _hasBreakOn;
+
     public Cpu(int registerCount)
     {
         _registers = new int[registerCount];
@@ -30,6 +32,8 @@ public sealed class Cpu
         _breakAt = breakAt;
 
         _breakOn = breakOn;
+
+        _hasBreakOn = _breakOn.HasValue;
 
         Continue();
     }
@@ -114,7 +118,8 @@ public sealed class Cpu
 
             _instructionPointer++;
 
-            if (_breakOn.HasValue && instruction.OpCode == _breakOn.Value)
+            // ReSharper disable once PossibleInvalidOperationException
+            if (_hasBreakOn && instruction.OpCode == _breakOn.Value)
             {
                 _registers.AsSpan().CopyTo(registers);
 
