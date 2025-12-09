@@ -206,7 +206,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 19.2: 34,365μs      
  2018 20.1: 3,075μs       Regex maze
  2018 20.2: 3,791μs       
- 2018 21.1: 34μs          Time machine halting problem
+ 2018 21.1: 32μs          Time machine halting problem
  2018 21.2: 9,644,699μs   
  2018 22.1: 208μs         Caving capers
  2018 22.2: 59,067μs      
@@ -256,7 +256,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 18.2: 63,845μs      
  2019 19.1: 112,897μs     Tractorrr (CPU used unmodified)
  2019 19.2: 121,421μs     
- 2019 20.1: 263μs         Doughnut maze
+ 2019 20.1: 261μs         Doughnut maze
  2019 20.2: 5,998μs       
  2019 21.1: 1,652μs       Jumping droids (CPU used unmodified)
  2019 21.2: 31,810μs      
@@ -547,10 +547,10 @@ Tests performed on a 2023 MacBook Pro.
  2025  7.2: 274μs         
  2025  8.1: 103,916μs     Playground
  2025  8.2: 94,932μs      
- 2025  9.1: 186μs         Movie theater
- 2025  9.2: 11,777μs      
+ 2025  9.1: 182μs         Movie theater
+ 2025  9.2: 11,651μs      
             -------------
-            277.477ms    
+            277.347ms    
 
  509 puzzles solved in 41.087s.
 ```
