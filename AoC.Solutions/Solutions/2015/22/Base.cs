@@ -7,13 +7,13 @@ public abstract class Base : Solution
     public override string Description => "Wizard simulator 2015";
 
     private readonly SpellData[] _spells =
-    {
+    [
         new(Spell.MagicMissile, 53, 0),
         new(Spell.Drain, 73, 0),
         new(Spell.Shield, 113, 6),
         new(Spell.Poison, 173, 6),
         new(Spell.Recharge, 229, 5)
-    };
+    ];
 
     private readonly int _effectCounts = Enum.GetValues<Spell>().Length;
 

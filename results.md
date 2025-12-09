@@ -52,15 +52,15 @@ Tests performed on a 2023 MacBook Pro.
  2015 20.2: 2,283μs       
  2015 21.1: 380μs         RPG simulator 2015
  2015 21.2: 365μs         
- 2015 22.1: 1,354,122μs   Wizard simulator 2015
- 2015 22.2: 52,248μs      
+ 2015 22.1: 487,380μs     Wizard simulator 2015
+ 2015 22.2: 24,850μs      
  2015 23.1: 72μs          Opening the Turing lock
  2015 23.2: 85μs          
  2015 24.1: 85,996μs      It hangs in the balance
  2015 24.2: 127μs         
  2015 25.1: 57,269μs      Let it snow
             -------------
-            6.048s       
+            5.154s       
 
  2016  1.1: 6μs           Manhattan distance
  2016  1.2: 15μs          
@@ -423,9 +423,9 @@ Tests performed on a 2023 MacBook Pro.
  2022 23.2: 44,961μs      
  2022 24.1: 25,283μs      Blizzard basin
  2022 24.2: 53,434μs      
- 2022 25.1: 10μs          Full of hot air
+ 2022 25.1: 9μs           Full of hot air
             -------------
-            284.388ms    
+            284.387ms    
 
  2023  1.1: 115μs         Trebuchet
  2023  1.2: 330μs         
@@ -547,10 +547,10 @@ Tests performed on a 2023 MacBook Pro.
  2025  7.2: 274μs         
  2025  8.1: 103,546μs     Playground
  2025  8.2: 94,932μs      
- 2025  9.1: 180μs         Movie theater
+ 2025  9.1: 177μs         Movie theater
  2025  9.2: 7,512μs       
             -------------
-            272.836ms    
+            272.833ms    
 
- 509 puzzles solved in 41.075s.
+ 509 puzzles solved in 40.181s.
 ```
