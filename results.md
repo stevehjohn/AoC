@@ -547,10 +547,10 @@ Tests performed on a 2023 MacBook Pro.
  2025  7.2: 274μs         
  2025  8.1: 103,916μs     Playground
  2025  8.2: 94,932μs      
- 2025  9.1: 230μs         Movie theater
- 2025  9.2: 24,394μs      
+ 2025  9.1: 195μs         Movie theater
+ 2025  9.2: 11,777μs      
             -------------
-            290.138ms    
+            277.486ms    
 
- 509 puzzles solved in 41.099s.
+ 509 puzzles solved in 41.087s.
 ```
