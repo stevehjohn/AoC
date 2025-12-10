@@ -4,7 +4,7 @@ namespace AoC.Solutions.Solutions._2025._10;
 
 public abstract class Base : Solution
 {
-    public override string Description => "Puzzle 10";
+    public override string Description => "Factory";
 
     protected readonly List<Machine> Machines = [];
     

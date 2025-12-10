@@ -7,6 +7,8 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
+        ParseInput();
+        
         return "Unknown";
     }
 }

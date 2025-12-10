@@ -7,6 +7,8 @@ public class Machine
     private readonly int _display;
 
     private readonly int[] _buttons;
+
+    private readonly int[] _joltages;
     
     public Machine(string configuration)
     {
@@ -34,6 +36,15 @@ public class Machine
             }
 
             _buttons[i - 1] = button;
+        }
+
+        var joltages = parts[^1][1..^1].Split(',');
+
+        _joltages = new int[joltages.Length];
+
+        for (var i = 0; i < joltages.Length; i++)
+        {
+            _joltages[i] = int.Parse(joltages[i]);
         }
     }
 
