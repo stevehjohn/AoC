@@ -15,7 +15,7 @@ public class Machine
     private readonly int _joltageCount;
 
     private readonly int _maximum;
-    
+
     public Machine(string configuration)
     {
         var parts = configuration.Split(' ');
@@ -126,7 +126,7 @@ public class Machine
                 }
 
                 var exceeded = false;
-                
+
                 while (button > 0)
                 {
                     var counter = BitOperations.TrailingZeroCount(button);
@@ -163,9 +163,9 @@ public class Machine
                 if (valid)
                 {
                     visited.Clear();
-                    
+
                     queue.Clear();
-                    
+
                     return newPresses;
                 }
 
@@ -188,13 +188,28 @@ public class Machine
 
     private static int HashCounters(int[] counters)
     {
-        var hash = 0;
+        const uint offsetBasis = 2166136261u;
 
-        for (var i = 0; i < counters.Length; i++)
+        const uint prime = 16777619u;
+
+        var hash = offsetBasis;
+
+        unchecked
         {
-            hash = HashCode.Combine(hash, counters[i]);
+            hash ^= (uint) counters.Length;
+
+            hash *= prime;
+
+            for (var i = 0; i < counters.Length; i++)
+            {
+                uint value = (uint) counters[i];
+
+                hash ^= value;
+
+                hash *= prime;
+            }
         }
 
-        return hash;
+        return (int) hash;
     }
 }
