@@ -7,6 +7,15 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        return "Unknown";
+        ParseInput();
+
+        var result = 0;
+        
+        foreach (var machine in Machines)
+        {
+            result += machine.SwitchOn();
+        }
+        
+        return result.ToString();
     }
 }
