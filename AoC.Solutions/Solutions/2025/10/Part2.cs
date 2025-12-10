@@ -8,23 +8,25 @@ public class Part2 : Base
     public override string GetAnswer()
     {
         ParseInput();
-        
+
         var result = 0;
 
         var count = 0;
 
-        Parallel.For(0, Machines.Count, machineId =>
-        {
-            var presses = Machines[machineId].ConfigureJoltage();
+        Parallel.For(0, Machines.Count,
+            new ParallelOptions { MaxDegreeOfParallelism = Environment.ProcessorCount / 2 },
+            machineId =>
+            {
+                var presses = Machines[machineId].ConfigureJoltage();
 
-            Machines[machineId] = null;
-        
-            Interlocked.Increment(ref count);
-        
-            Interlocked.Add(ref result, presses);
-        
-            Console.WriteLine($"{count}: {presses}. Total: {result}");
-        });
+                Machines[machineId] = null;
+
+                Interlocked.Increment(ref count);
+
+                Interlocked.Add(ref result, presses);
+
+                Console.WriteLine($"{count}: {presses}. Total: {result}");
+            });
 
         return result.ToString();
     }
