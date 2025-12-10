@@ -95,18 +95,27 @@ public class Machine
 
     public int ConfigureJoltage()
     {
-        var queue = new PriorityQueue<(int[] Counters, int Presses), int>();
+        var queue = new PriorityQueue<(int[] Counters, int Presses, int Sum), int>();
 
         var visited = new HashSet<int>();
 
-        queue.Enqueue((new int[_joltageCount], 0), 0);
+        queue.Enqueue((new int[_joltageCount], 0, 0), 0);
 
         while (queue.TryDequeue(out var state, out _))
         {
-            var (counters, presses) = state;
-            
+            var (counters, presses, sum) = state;
+
             for (var buttonIndex = 0; buttonIndex < _buttonCount; buttonIndex++)
             {
+                var button = _buttons[buttonIndex];
+
+                var newSum = sum + BitOperations.PopCount((uint) button);
+
+                if (newSum > _maximum)
+                {
+                    continue;
+                }
+
                 var newCounters = new int[_joltageCount];
 
                 var newPresses = presses + 1;
@@ -115,8 +124,6 @@ public class Machine
                 {
                     newCounters[i] = counters[i];
                 }
-
-                var button = _buttons[buttonIndex];
 
                 var exceeded = false;
 
@@ -129,7 +136,7 @@ public class Machine
                     if (newCounters[counter] > _joltages[counter])
                     {
                         exceeded = true;
-                        
+
                         break;
                     }
 
@@ -140,20 +147,11 @@ public class Machine
                 {
                     continue;
                 }
-                
-                var valid = true;
 
-                var sum = 0;
+                var valid = true;
 
                 for (var i = 0; i < _joltageCount; i++)
                 {
-                    sum += newCounters[i];
-
-                    if (sum > _maximum)
-                    {
-                        exceeded = true;
-                    }
-
                     if (newCounters[i] != _joltages[i])
                     {
                         valid = false;
@@ -175,11 +173,11 @@ public class Machine
                 if (visited.Add(HashCounters(newCounters)))
                 {
                     var remaining = 0;
-                    
+
                     for (var i = 0; i < _joltages.Length; i++)
                     {
                         var counterValue = counters[i];
-                        
+
                         if ((_buttons[buttonIndex] & (1 << i)) != 0)
                         {
                             counterValue++;
@@ -188,7 +186,7 @@ public class Machine
                         remaining += Math.Max(0, _joltages[i] - counterValue);
                     }
 
-                    queue.Enqueue((newCounters, newPresses), newPresses + remaining);
+                    queue.Enqueue((newCounters, newPresses, newSum), newPresses + remaining);
                 }
             }
         }
