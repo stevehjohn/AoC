@@ -251,7 +251,7 @@ public class Machine
         return result == int.MaxValue ? 0 : result;
     }
 
-// depth-first search: returns minimal extra presses needed, or int.MaxValue if impossible
+    // depth-first search: returns minimal extra presses needed, or int.MaxValue if impossible
     private int DfsSolve(int[] need, List<int> availableButtons, List<int>[] digitToButtons)
     {
         // Check if we are done
@@ -286,7 +286,7 @@ public class Machine
                 continue;
             }
 
-            // collect buttons affecting this digit that are still available
+            // count available buttons affecting d
             var count = 0;
 
             foreach (var b in digitToButtons[d])
@@ -299,7 +299,6 @@ public class Machine
 
             if (count == 0)
             {
-                // this digit still needs joltage but no available button can affect it → dead end
                 return int.MaxValue;
             }
 
@@ -309,6 +308,7 @@ public class Machine
                 bestDigit = d;
             }
         }
+
 
         var targetDigit = bestDigit;
         var affecting = new List<int>();
