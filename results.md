@@ -41,7 +41,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 15.1: 727μs         Science for hungry people
  2015 15.2: 724μs         
  2015 16.1: 21μs          Aunt Sue
- 2015 16.2: 102μs         
+ 2015 16.2: 100μs         
  2015 17.1: 126,203μs     Too much eggnog
  2015 17.2: 268,625μs     
  2015 18.1: 178,312μs     Bournville GIF
@@ -332,7 +332,7 @@ Tests performed on a 2023 MacBook Pro.
  2021  4.2: 2,434μs       
  2021  5.1: 3,688μs       Hydrothermal vents
  2021  5.2: 6,101μs       
- 2021  6.1: 7μs           Lanternfish parthenogenesis
+ 2021  6.1: 6μs           Lanternfish parthenogenesis
  2021  6.2: 10μs          
  2021  7.1: 65μs          Crab submarines
  2021  7.2: 53μs          
@@ -549,7 +549,7 @@ Tests performed on a 2023 MacBook Pro.
  2025  8.2: 94,932μs      
  2025  9.1: 175μs         Movie theater
  2025  9.2: 7,245μs       
- 2025 10.1: 1,827μs       Puzzle 10
+ 2025 10.1: 1,797μs       Factory
  2025 10.2: 152,100,093μs  
             -------------
             152.374s     
