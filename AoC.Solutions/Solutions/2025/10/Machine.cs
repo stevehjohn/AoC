@@ -88,12 +88,20 @@ public class Machine
         var initial = new int[_buttons.Length];
         queue.Enqueue(initial, 0);
         visited.Add(string.Join(",", initial));
+
+        var max = _joltages.Sum();
     
         while (queue.Count > 0)
         {
+            start:
             var presses = queue.Dequeue();
             var totalPresses = presses.Sum();
-    
+
+            if (totalPresses > max)
+            {
+                goto start;
+            }
+
             // Calculate current counter state
             var counters = new int[_joltages.Length];
             for (var b = 0; b < _buttons.Length; b++)
@@ -118,7 +126,12 @@ public class Machine
             {
                 var newPresses = (int[]) presses.Clone();
                 newPresses[b]++;
-    
+
+                if (totalPresses + 1 > max)
+                {
+                    goto start;
+                }
+
                 // Check if this would exceed any target
                 var valid = true;
                 for (var i = 0; i < _joltages.Length; i++)
