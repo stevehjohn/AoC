@@ -1,3 +1,5 @@
+using System.Numerics;
+
 namespace AoC.Solutions.Solutions._2025._10;
 
 public class Machine
@@ -7,6 +9,12 @@ public class Machine
     private readonly int[] _buttons;
 
     private readonly int[] _joltages;
+
+    private readonly int _buttonCount;
+
+    private readonly int _joltageCount;
+
+    private readonly int _maximum;
 
     public Machine(string configuration)
     {
@@ -21,6 +29,8 @@ public class Machine
         }
 
         _buttons = new int[parts.Length - 2];
+
+        _buttonCount = _buttons.Length;
 
         for (var i = 1; i < parts.Length - 1; i++)
         {
@@ -40,9 +50,13 @@ public class Machine
 
         _joltages = new int[joltages.Length];
 
+        _joltageCount = _joltages.Length;
+
         for (var i = 0; i < joltages.Length; i++)
         {
             _joltages[i] = int.Parse(joltages[i]);
+
+            _maximum += _joltages[i];
         }
     }
 
@@ -81,25 +95,126 @@ public class Machine
 
     public int ConfigureJoltage()
     {
+        var queue = new PriorityQueue<(int[] Counters, int Presses), int>();
+
+        var visited = new HashSet<int>();
+
+        queue.Enqueue((new int[_joltageCount], 0), 0);
+
+        while (queue.TryDequeue(out var state, out _))
+        {
+            var (counters, presses) = state;
+            
+            for (var buttonIndex = 0; buttonIndex < _buttonCount; buttonIndex++)
+            {
+                var newCounters = new int[_joltageCount];
+
+                var newPresses = presses + 1;
+
+                for (var i = 0; i < _joltageCount; i++)
+                {
+                    newCounters[i] = counters[i];
+                }
+
+                var button = _buttons[buttonIndex];
+
+                var exceeded = false;
+
+                while (button > 0)
+                {
+                    var counter = BitOperations.TrailingZeroCount(button);
+
+                    newCounters[counter]++;
+
+                    if (newCounters[counter] > _joltages[counter])
+                    {
+                        exceeded = true;
+                        
+                        break;
+                    }
+
+                    button &= button - 1;
+                }
+
+                if (exceeded)
+                {
+                    continue;
+                }
+                
+                var valid = true;
+
+                var sum = 0;
+
+                for (var i = 0; i < _joltageCount; i++)
+                {
+                    sum += newCounters[i];
+
+                    if (sum > _maximum)
+                    {
+                        exceeded = true;
+                    }
+
+                    if (newCounters[i] != _joltages[i])
+                    {
+                        valid = false;
+
+                        break;
+                    }
+                }
+
+                if (valid)
+                {
+                    return newPresses;
+                }
+
+                if (exceeded)
+                {
+                    continue;
+                }
+
+                if (visited.Add(HashCounters(newCounters)))
+                {
+                    queue.Enqueue((newCounters, newPresses), newPresses);
+                }
+            }
+        }
+
+        return 0;
+    }
+
+    private static int HashCounters(int[] counters)
+    {
+        var hash = 0;
+
+        for (var i = 0; i < counters.Length; i++)
+        {
+            hash = HashCode.Combine(hash, counters[i]);
+        }
+
+        return hash;
+    }
+
+    public int OldConfigureJoltage()
+    {
         var queue = new PriorityQueue<(int[] counters, int sum), int>();
-    
+
         var visited = new HashSet<string>();
-    
+
         var initial = new int[_buttons.Length];
-        
+
         queue.Enqueue((initial, 0), 0);
-        
+
         visited.Add(string.Join(",", initial));
 
         var max = _joltages.Sum();
-    
+
         while (queue.Count > 0)
         {
             var (presses, totalPresses) = queue.Dequeue();
 
             // Calculate current counter state
             var counters = new int[_joltages.Length];
-            
+
             for (var b = 0; b < _buttons.Length; b++)
             {
                 for (var i = 0; i < _joltages.Length; i++)
@@ -110,12 +225,12 @@ public class Machine
                     }
                 }
             }
-    
+
             // Check if we've reached target
             var sum = 0;
 
             var valid = true;
-            
+
             for (var i = 0; i < _joltages.Length; i++)
             {
                 sum += counters[i];
@@ -131,7 +246,7 @@ public class Machine
                 }
             }
 
-            if (valid)
+            if (valid && sum == _maximum)
             {
                 return totalPresses;
             }
@@ -161,7 +276,7 @@ public class Machine
                         }
                     }
                 }
-    
+
                 if (valid)
                 {
                     var key = string.Join(",", newPresses);
@@ -177,7 +292,7 @@ public class Machine
                             {
                                 counterValue++;
                             }
-    
+
                             remaining += Math.Max(0, _joltages[i] - counterValue);
                         }
 
@@ -189,7 +304,7 @@ public class Machine
                 }
             }
         }
-    
+
         return 0;
     }
 }
