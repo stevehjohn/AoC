@@ -60,9 +60,8 @@ public class Machine
             {
                 var newState = state ^ button;
             
-                if (!visited.Contains(newState))
+                if (visited.Add(newState))
                 {
-                    visited.Add(newState);
                     queue.Enqueue((newState, presses + 1));
                 }
             }
