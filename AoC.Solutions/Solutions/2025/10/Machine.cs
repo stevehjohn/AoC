@@ -1,9 +1,12 @@
+using System.Buffers;
 using System.Numerics;
 
 namespace AoC.Solutions.Solutions._2025._10;
 
 public class Machine
 {
+    private static readonly ArrayPool<int> Pool = ArrayPool<int>.Shared;
+
     private readonly int _display;
 
     private readonly int[] _buttons;
@@ -95,11 +98,11 @@ public class Machine
 
     public int ConfigureJoltage()
     {
-        var queue = new PriorityQueue<(int[] Counters, int Presses, int Sum), int>();
+        var queue = new PriorityQueue<State, int>();
 
         var visited = new HashSet<int>();
 
-        queue.Enqueue((new int[_joltageCount], 0, 0), 0);
+        queue.Enqueue(new State(new int[_joltageCount], 0, 0), 0);
 
         while (queue.TryDequeue(out var state, out _))
         {
@@ -162,6 +165,14 @@ public class Machine
 
                 if (valid)
                 {
+                    visited.Clear();
+                    
+                    visited = null;
+                    
+                    queue.Clear();
+
+                    queue = null;
+                    
                     return newPresses;
                 }
 
@@ -174,7 +185,7 @@ public class Machine
                         remaining += Math.Max(0, _joltages[i] - newCounters[i]);
                     }
 
-                    queue.Enqueue((newCounters, newPresses, newSum), newPresses + remaining);
+                    queue.Enqueue(new State(newCounters, newPresses, newSum), newPresses + remaining);
                 }
             }
         }

@@ -13,17 +13,28 @@ public class Part2 : Base
 
         var count = 0;
 
-        Parallel.ForEach(Machines, machine =>
+        Parallel.For(0, Machines.Count, machineId =>
         {
-            var presses = machine.ConfigureJoltage();
+            var presses = Machines[machineId].ConfigureJoltage();
 
+            Machines[machineId] = null;
+        
             Interlocked.Increment(ref count);
-
+        
             Interlocked.Add(ref result, presses);
-
+        
             Console.WriteLine($"{count}: {presses}. Total: {result}");
         });
-        
+
+        // foreach (var machine in Machines)
+        // {
+        //     var presses = machine.ConfigureJoltage();
+        //
+        //     result += presses;
+        //     
+        //     Console.WriteLine($"{++count}: {presses}. Total: {result}");
+        // }
+
         return result.ToString();
     }
 }
