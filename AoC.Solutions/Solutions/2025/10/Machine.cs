@@ -165,25 +165,13 @@ public class Machine
                     return newPresses;
                 }
 
-                if (exceeded)
-                {
-                    continue;
-                }
-
                 if (visited.Add(HashCounters(newCounters)))
                 {
                     var remaining = 0;
 
-                    for (var i = 0; i < _joltages.Length; i++)
+                    for (var i = 0; i < _joltageCount; i++)
                     {
-                        var counterValue = counters[i];
-
-                        if ((_buttons[buttonIndex] & (1 << i)) != 0)
-                        {
-                            counterValue++;
-                        }
-
-                        remaining += Math.Max(0, _joltages[i] - counterValue);
+                        remaining += Math.Max(0, _joltages[i] - newCounters[i]);
                     }
 
                     queue.Enqueue((newCounters, newPresses, newSum), newPresses + remaining);
