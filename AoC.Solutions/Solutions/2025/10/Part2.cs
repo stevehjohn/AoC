@@ -12,7 +12,6 @@ public class Part2 : Base
         var count = -1;
 
         Parallel.For(0, Input.Length,
-            new ParallelOptions { MaxDegreeOfParallelism = Environment.ProcessorCount },
             machineId =>
             {
                 var machine = new Machine(Input[machineId]);
