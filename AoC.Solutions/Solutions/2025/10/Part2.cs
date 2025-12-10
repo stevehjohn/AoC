@@ -7,23 +7,21 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        ParseInput();
-
         var result = 0;
 
         var count = 0;
 
-        Parallel.For(0, Machines.Count,
+        Parallel.For(0, Input.Length,
             machineId =>
             {
-                var presses = Machines[machineId].ConfigureJoltage();
-
-                Machines[machineId] = null;
+                var machine = new Machine(Input[machineId]);
+                
+                var presses = machine.ConfigureJoltage();
 
                 Interlocked.Increment(ref count);
-
+        
                 Interlocked.Add(ref result, presses);
-
+        
                 Console.WriteLine($"{count}: {presses}. Total: {result}");
             });
 

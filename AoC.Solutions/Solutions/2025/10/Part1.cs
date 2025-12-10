@@ -7,13 +7,11 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        ParseInput();
-
         var result = 0;
         
-        foreach (var machine in Machines)
+        foreach (var line in Input)
         {
-            var presses = machine.SwitchOn();
+            var presses = new Machine(line).SwitchOn();
             
             result += presses;
         }

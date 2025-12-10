@@ -15,7 +15,7 @@ public class Machine
     private readonly int _joltageCount;
 
     private readonly int _maximum;
-
+    
     public Machine(string configuration)
     {
         var parts = configuration.Split(' ');
@@ -126,7 +126,7 @@ public class Machine
                 }
 
                 var exceeded = false;
-
+                
                 while (button > 0)
                 {
                     var counter = BitOperations.TrailingZeroCount(button);
