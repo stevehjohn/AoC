@@ -9,18 +9,18 @@ public class Part2 : Base
     {
         var result = 0;
 
-        var machineId = -1;
+        var count = -1;
 
         Parallel.For(0, Input.Length,
             new ParallelOptions { MaxDegreeOfParallelism = Environment.ProcessorCount },
-            _ =>
+            machineId =>
             {
-                Interlocked.Increment(ref machineId);
-        
                 var machine = new Machine(Input[machineId]);
                 
                 var presses = machine.ConfigureJoltage();
 
+                Interlocked.Increment(ref count);
+        
                 Interlocked.Add(ref result, presses);
         
                 Console.WriteLine($"{machineId}: {presses}. Total: {result}");
