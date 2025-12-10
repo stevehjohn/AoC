@@ -16,13 +16,13 @@ public class Part2 : Base
             {
                 var machine = new Machine(Input[machineId]);
                 
-                var presses = machine.ConfigureJoltage();
+                var presses = machine.ConfigureJoltageDfs();
 
                 Interlocked.Increment(ref count);
         
                 Interlocked.Add(ref result, presses);
         
-                Console.WriteLine($"{count}: Line {machineId}: {presses}. Total: {result}.");
+                // Console.WriteLine($"{count}: Line {machineId}: {presses}. Total: {result}.");
             });
 
         return result.ToString();
