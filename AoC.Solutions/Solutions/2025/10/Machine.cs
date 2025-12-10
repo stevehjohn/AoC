@@ -174,7 +174,21 @@ public class Machine
 
                 if (visited.Add(HashCounters(newCounters)))
                 {
-                    queue.Enqueue((newCounters, newPresses), newPresses);
+                    var remaining = 0;
+                    
+                    for (var i = 0; i < _joltages.Length; i++)
+                    {
+                        var counterValue = counters[i];
+                        
+                        if ((_buttons[buttonIndex] & (1 << i)) != 0)
+                        {
+                            counterValue++;
+                        }
+
+                        remaining += Math.Max(0, _joltages[i] - counterValue);
+                    }
+
+                    queue.Enqueue((newCounters, newPresses), newPresses + remaining);
                 }
             }
         }
