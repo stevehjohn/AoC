@@ -36,6 +36,7 @@
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2024.3.0" />
     <PackageReference Include="Microsoft.Diagnostics.Tracing.TraceEvent" Version="3.1.17" />
+    <PackageReference Include="Microsoft.Z3" Version="4.12.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Ocp.Security" Version="1.0.2" />
   </ItemGroup>
