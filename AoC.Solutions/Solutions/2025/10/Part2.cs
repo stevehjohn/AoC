@@ -1,5 +1,4 @@
 using JetBrains.Annotations;
-using Microsoft.Z3;
 
 namespace AoC.Solutions.Solutions._2025._10;
 
@@ -25,11 +24,6 @@ public class Part2 : Base
         
                 // Console.WriteLine($"{count}: Line {machineId}: {presses}. Total: {result}.");
             });
-
-        using var ctx = new Context();
-
-        // one Int var per button: x_b >= 0
-        var x = new IntExpr[5];
         
         return result.ToString();
     }
