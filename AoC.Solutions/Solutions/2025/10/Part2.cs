@@ -14,7 +14,6 @@ public class Part2 : Base
         var count = 0;
 
         Parallel.For(0, Machines.Count,
-            new ParallelOptions { MaxDegreeOfParallelism = Environment.ProcessorCount / 2 },
             machineId =>
             {
                 var presses = Machines[machineId].ConfigureJoltage();
