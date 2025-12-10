@@ -1,12 +1,9 @@
-using System.Buffers;
 using System.Numerics;
 
 namespace AoC.Solutions.Solutions._2025._10;
 
 public class Machine
 {
-    private static readonly ArrayPool<int> Pool = ArrayPool<int>.Shared;
-
     private readonly int _display;
 
     private readonly int[] _buttons;
@@ -167,11 +164,7 @@ public class Machine
                 {
                     visited.Clear();
                     
-                    visited = null;
-                    
                     queue.Clear();
-
-                    queue = null;
                     
                     return newPresses;
                 }
