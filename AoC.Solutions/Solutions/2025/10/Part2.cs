@@ -22,7 +22,7 @@ public class Part2 : Base
         
                 Interlocked.Add(ref result, presses);
         
-                Console.WriteLine($"{count}: Line {machineId}: {presses}. Total: {result}.");
+                // Console.WriteLine($"{count}: Line {machineId}: {presses}. Total: {result}.");
             });
         
         return result.ToString();
