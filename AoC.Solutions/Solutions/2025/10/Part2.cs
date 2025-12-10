@@ -26,15 +26,6 @@ public class Part2 : Base
             Console.WriteLine($"{count}: {presses}. Total: {result}");
         });
 
-        // foreach (var machine in Machines)
-        // {
-        //     var presses = machine.ConfigureJoltage();
-        //
-        //     result += presses;
-        //     
-        //     Console.WriteLine($"{++count}: {presses}. Total: {result}");
-        // }
-
         return result.ToString();
     }
 }
