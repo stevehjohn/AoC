@@ -31,6 +31,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{D459
 		visualise.bat = visualise.bat
 		visualise.sh = visualise.sh
 		test.sh = test.sh
+		test.bat = test.bat
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workflows", "Workflows", "{E5367B90-8D22-43EF-A3D9-AF10D6642BDC}"
