@@ -13,7 +13,9 @@ public class Part1 : Base
         
         foreach (var machine in Machines)
         {
-            result += machine.SwitchOn();
+            var presses = machine.SwitchOn();
+            
+            result += presses;
         }
         
         return result.ToString();

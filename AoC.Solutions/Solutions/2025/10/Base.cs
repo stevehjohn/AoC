@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Puzzle 10";
 
-    protected List<Machine> Machines = [];
+    protected readonly List<Machine> Machines = [];
     
     protected void ParseInput()
     {

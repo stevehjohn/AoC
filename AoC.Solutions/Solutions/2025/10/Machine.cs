@@ -1,10 +1,12 @@
+using AoC.Solutions.Extensions;
+
 namespace AoC.Solutions.Solutions._2025._10;
 
 public class Machine
 {
-    private int _display;
+    private readonly int _display;
 
-    private int[] _buttons;
+    private readonly int[] _buttons;
     
     public Machine(string configuration)
     {
@@ -17,8 +19,6 @@ public class Machine
                 _display |= 1 << (i - 1);
             }
         }
-        
-        Console.WriteLine(Convert.ToString(_display, 2));
 
         _buttons = new int[parts.Length - 2];
 
@@ -34,15 +34,40 @@ public class Machine
             }
 
             _buttons[i - 1] = button;
-        
-            Console.Write($"{Convert.ToString(button, 2)} ");
         }
-        
-        Console.WriteLine();
     }
 
     public int SwitchOn()
     {
+        var queue = new Queue<(int state, int presses)>();
+        
+        var visited = new HashSet<int>();
+    
+        queue.Enqueue((0, 0));
+        
+        visited.Add(0);
+    
+        while (queue.Count > 0)
+        {
+            var (state, presses) = queue.Dequeue();
+        
+            if (state == _display)
+            {
+                return presses;
+            }
+        
+            foreach (var button in _buttons)
+            {
+                var newState = state ^ button;
+            
+                if (!visited.Contains(newState))
+                {
+                    visited.Add(newState);
+                    queue.Enqueue((newState, presses + 1));
+                }
+            }
+        }
+    
         return 0;
     }
 }
