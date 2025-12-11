@@ -290,25 +290,6 @@ public sealed class MatrixSolver
             }
         }
 
-        if (removedZeros > 0)
-        {
-            if (! doClean)
-            {
-                for (var z = 0; z < removedZeros; z++)
-                {
-                    var zeroInd = zeroInds[z];
-
-                    Vector newRow = default;
-
-                    newRow[zeroInd] = 1;
-
-                    rows.Add(newRow);
-                }
-            }
-
-            return Gaussian(rows, doClean ? 0 : -1);
-        }
-
         for (var i = 0; i < rows.Count; i++)
         {
             var v = rows[i];
