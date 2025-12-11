@@ -5,24 +5,30 @@ namespace AoC.Solutions.Solutions._2025._11;
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private readonly HashSet<string> _visited = [];
+    private readonly HashSet<int> _visited = [];
 
     private int _paths;
+
+    private int _outId;
     
     public override string GetAnswer()
     {
         ParseInput();
 
-        _visited.Add("you");
+        var you = Nodes[NodeIds["you"]];
         
-        CountPaths(Nodes["you"]);
+        _visited.Add(you.Id);
+
+        _outId = NodeIds["out"];
+        
+        CountPaths(you);
         
         return _paths.ToString();
     }
 
     private void CountPaths(Node from)
     {
-        if (from.Name == "out")
+        if (from.Id == _outId)
         {
             _paths++;
             
@@ -31,14 +37,14 @@ public class Part1 : Base
 
         foreach (var connection in from.Connections)
         {
-            if (! _visited.Add(connection.Name))
+            if (! _visited.Add(connection.Id))
             {
                 continue;
             }
 
             CountPaths(connection);
 
-            _visited.Remove(connection.Name);
+            _visited.Remove(connection.Id);
         }        
     }
 }

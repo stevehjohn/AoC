@@ -5,46 +5,45 @@
 // [UsedImplicitly]
 // public class Part2 : Base
 // {
+//     private readonly HashSet<string> _visited = [];
+//
+//     private long _paths;
+//     
 //     public override string GetAnswer()
 //     {
 //         ParseInput();
 //
-//         var result = CountPaths();
-//
-//         return result.ToString();
+//         _visited.Add("svr");
+//         
+//         CountPaths(Nodes["svr"]);
+//         
+//         return _paths.ToString();
 //     }
 //
-//     private int CountPaths()
+//     private void CountPaths(Node from)
 //     {
-//         var queue = new Queue<(Node Node, HashSet<string> Visited)>();
-//
-//         queue.Enqueue((Nodes["svr"], []));
-//
-//         var paths = 0;
-//
-//         while (queue.TryDequeue(out var item))
+//         if (from.Name == "out")
 //         {
-//             if (! item.Visited.Add(item.Node.Name))
+//             if (_visited.Contains("dac") && _visited.Contains("fft"))
+//             {
+//                 _paths++;
+//
+//                 Console.WriteLine(_paths);
+//             }
+//
+//             return;
+//         }
+//         
+//         foreach (var connection in from.Connections)
+//         {
+//             if (! _visited.Add(connection.Name))
 //             {
 //                 continue;
 //             }
 //
-//             foreach (var connection in item.Node.Connections)
-//             {
-//                 if (connection.Name == "out")
-//                 {
-//                     if (item.Visited.Contains("dac") && item.Visited.Contains("fft"))
-//                     {
-//                         paths++;
-//                     }
+//             CountPaths(connection);
 //
-//                     continue;
-//                 }
-//
-//                 queue.Enqueue((Nodes[connection.Name], [..item.Visited]));
-//             }
-//         }
-//
-//         return paths;
+//             _visited.Remove(connection.Name);
+//         }        
 //     }
 // }

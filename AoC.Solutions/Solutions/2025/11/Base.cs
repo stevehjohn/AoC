@@ -6,33 +6,53 @@ public abstract class Base : Solution
 {
     public override string Description => "Reactor";
 
-    protected readonly Dictionary<string, Node> Nodes = [];
+    protected readonly Dictionary<int, Node> Nodes = [];
+
+    protected readonly Dictionary<string, int> NodeIds = [];
 
     protected void ParseInput()
     {
+        var id = 0;
+        
         foreach (var line in Input)
         {
             var name = line[..3];
+
+            Node node;
             
-            if (! Nodes.TryGetValue(name, out var node))
+            if (! NodeIds.TryGetValue(name, out _))
             {
-                node = new Node(name);
+                node = new Node(id);
                 
-                Nodes.Add(name, node);
+                Nodes.Add(id, node);
+                
+                NodeIds.Add(name, id++);
+            }
+            else
+            {
+                node = Nodes[NodeIds[name]];
             }
 
             var connections = line[4..].Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
             foreach (var connection in connections)
             {
-                if (! Nodes.TryGetValue(connection, out var value))
+                if (! NodeIds.TryGetValue(connection, out _))
                 {
-                    value = new Node(connection);
-                    
-                    Nodes.Add(connection, value);
-                }
+                    var connectedNode = new Node(id);
                 
-                node.Connections.Add(value);
+                    Nodes.Add(id, connectedNode);
+                
+                    NodeIds.Add(connection, id++);
+                    
+                    node.Connections.Add(connectedNode);
+                }
+                else
+                {
+                    var connectedNode = Nodes[NodeIds[connection]];
+                
+                    node.Connections.Add(connectedNode);
+                }
             }
         }
     }
