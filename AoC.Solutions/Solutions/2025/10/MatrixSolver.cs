@@ -1,7 +1,5 @@
 namespace AoC.Solutions.Solutions._2025._10;
 
-public record Matrix(int[][] Buttons, int[] Joltages);
-
 public static class MatrixSolver
 {
     public static IEnumerable<Matrix> ParseInput(string[] input)
@@ -32,9 +30,9 @@ public static class MatrixSolver
 
     public static long Solve(Matrix machine)
     {
-        var r = machine.Joltages.Length;
+        var r = machine.Totals.Length;
         
-        var c = machine.Buttons.Length;
+        var c = machine.Values.Length;
 
         var a = BuildMatrix(machine, r, c);
 
@@ -51,12 +49,12 @@ public static class MatrixSolver
         {
             a[r] = new int[x + 1];
             
-            a[r][x] = machine.Joltages[r];
+            a[r][x] = machine.Totals[r];
         }
         
         for (var buttonIndex = 0; buttonIndex < x; buttonIndex++)
         {
-            var toggles = machine.Buttons[buttonIndex];
+            var toggles = machine.Values[buttonIndex];
 
             for (var t = 0; t < toggles.Length; t++)
             {
@@ -117,13 +115,13 @@ public static class MatrixSolver
         {
             var min = int.MaxValue;
 
-            var toggles = machine.Buttons[c];
+            var toggles = machine.Values[c];
 
             for (var i = 0; i < toggles.Length; i++)
             {
                 var idx = toggles[i];
 
-                var val = machine.Joltages[idx];
+                var val = machine.Totals[idx];
 
                 if (val < min)
                 {
