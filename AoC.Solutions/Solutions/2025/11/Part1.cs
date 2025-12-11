@@ -7,6 +7,39 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        return "Unknown";
+        ParseInput();
+
+        var result = CountPaths();
+        
+        return result.ToString();
+    }
+
+    private int CountPaths()
+    {
+        var queue = new Queue<(Node Node, HashSet<string> Visited)>();
+
+        queue.Enqueue((Nodes["you"], ["you"]));
+
+        var paths = 0;
+
+        while (queue.TryDequeue(out var item))
+        {
+            foreach (var connection in item.Node.Connections)
+            {
+                if (connection.Name == "out")
+                {
+                    paths++;
+                    
+                    continue;
+                }
+
+                if (item.Visited.Add(connection.Name))
+                {
+                    queue.Enqueue((Nodes[connection.Name], [..item.Visited]));
+                }
+            }
+        }
+
+        return paths;
     }
 }
