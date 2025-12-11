@@ -8,6 +8,7 @@ public sealed class Machine2
     public Machine2(int[] buttons, int[] joltage)
     {
         Buttons = buttons;
+        
         Joltage = joltage;
     }
 }
