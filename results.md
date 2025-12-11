@@ -533,7 +533,7 @@ Tests performed on a 2023 MacBook Pro.
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 87μs          
- 2025  2.1: 16,207μs      Gift shop
+ 2025  2.1: 15,516μs      Gift shop
  2025  2.2: 45,964μs      
  2025  3.1: 107μs         Lobby
  2025  3.2: 198μs         
@@ -546,14 +546,15 @@ Tests performed on a 2023 MacBook Pro.
  2025  7.1: 5μs           Laboratories
  2025  7.2: 274μs         
  2025  8.1: 103,546μs     Playground
- 2025  8.2: 94,932μs      
+ 2025  8.2: 92,667μs      
  2025  9.1: 175μs         Movie theater
  2025  9.2: 7,245μs       
  2025 10.1: 1,742μs       Factory
  2025 10.2: 152,100,093μs  
- 2025 11.1: 4μs           Reactor
+ 2025 11.1: 221μs         Reactor
+ 2025 11.2: 800μs         
             -------------
-            152.374s     
+            152.372s     
 
- 512 puzzles solved in 191.803s.
+ 513 puzzles solved in 191.801s.
 ```
