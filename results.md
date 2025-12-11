@@ -53,7 +53,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 21.1: 380μs         RPG simulator 2015
  2015 21.2: 365μs         
  2015 22.1: 482,521μs     Wizard simulator 2015
- 2015 22.2: 24,414μs      
+ 2015 22.2: 24,362μs      
  2015 23.1: 72μs          Opening the Turing lock
  2015 23.2: 85μs          
  2015 24.1: 85,779μs      It hangs in the balance
@@ -183,7 +183,7 @@ Tests performed on a 2023 MacBook Pro.
  2018  8.1: 4,904μs       Navigation licensing
  2018  8.2: 4,942μs       
  2018  9.1: 726μs         Marble madness
- 2018  9.2: 430,737μs     
+ 2018  9.2: 426,667μs     
  2018 10.1: 5,799μs       Writing in the stars
  2018 10.2: 5,959μs       
  2018 11.1: 350μs         Max power... cell
@@ -195,7 +195,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 14.1: 21,207μs      Elf recipes
  2018 14.2: 994,447μs     
  2018 15.1: 84,276μs      Elves vs Goblins
- 2018 15.2: 351,863μs     
+ 2018 15.2: 351,773μs     
  2018 16.1: 517μs         Opcode reverse-engineering
  2018 16.2: 725μs         
  2018 17.1: 20,437μs      Don't go chasing waterfalls
@@ -216,7 +216,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 260,875μs     
  2018 25.1: 32,693μs      4D chocolate teleportation
             -------------
-            12.221s      
+            12.217s      
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
@@ -388,7 +388,7 @@ Tests performed on a 2023 MacBook Pro.
  2022  6.1: 116μs         Tuning trouble
  2022  6.2: 169μs         
  2022  7.1: 247μs         No space left on device
- 2022  7.2: 252μs         
+ 2022  7.2: 250μs         
  2022  8.1: 809μs         Treetop tree house
  2022  8.2: 804μs         
  2022  9.1: 463μs         Rope bridge
@@ -401,7 +401,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 12.2: 1,352μs       
  2022 13.1: 46μs          Distress signal
  2022 13.2: 500μs         
- 2022 14.1: 410μs         Regolith reservoir
+ 2022 14.1: 402μs         Regolith reservoir
  2022 14.2: 4,092μs       
  2022 15.1: 8μs           Beacon exclusion zone
  2022 15.2: 10,055μs      
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 53,434μs      
  2022 25.1: 9μs           Full of hot air
             -------------
-            283.840ms    
+            283.830ms    
 
  2023  1.1: 115μs         Trebuchet
  2023  1.2: 330μs         
@@ -556,5 +556,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             336.755ms    
 
- 513 puzzles solved in 39.757s.
+ 513 puzzles solved in 39.753s.
 ```
