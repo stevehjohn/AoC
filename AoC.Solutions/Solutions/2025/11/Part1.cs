@@ -5,7 +5,7 @@ namespace AoC.Solutions.Solutions._2025._11;
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private readonly HashSet<int> _visited = [];
+    private bool[] _visited;
 
     private int _paths;
 
@@ -15,9 +15,11 @@ public class Part1 : Base
     {
         ParseInput();
 
-        var you = Nodes[NodeIds["you"]];
+        _visited = new bool[NodeIds.Count];
         
-        _visited.Add(you.Id);
+        var you = Nodes[NodeIds["you"]];
+
+        _visited[you.Id] = true;
 
         _outId = NodeIds["out"];
         
@@ -37,14 +39,16 @@ public class Part1 : Base
 
         foreach (var connection in from.Connections)
         {
-            if (! _visited.Add(connection.Id))
+            if (_visited[connection.Id])
             {
                 continue;
             }
 
+            _visited[connection.Id] = true;
+
             CountPaths(connection);
 
-            _visited.Remove(connection.Id);
+            _visited[connection.Id] = false;
         }        
     }
 }
