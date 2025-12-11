@@ -1,23 +1,10 @@
 namespace AoC.Solutions.Solutions._2025._10;
 
-public sealed class Machine2
-{
-    public int[] Buttons { get; }
-    public int[] Joltage { get; }
-
-    public Machine2(int[] buttons, int[] joltage)
-    {
-        Buttons = buttons;
-        
-        Joltage = joltage;
-    }
-}
-
 public sealed class MatrixSolver
 {
     private const int Limit = Vector.Limit;
 
-    private readonly Machine2 _machine;
+    private readonly Matrix _matrix;
     
     private readonly int _buttons;
     
@@ -25,13 +12,13 @@ public sealed class MatrixSolver
 
     private readonly List<int>[] _reverse = new List<int>[Limit];
 
-    public MatrixSolver(Machine2 machine)
+    public MatrixSolver(Matrix machine)
     {
-        _machine = machine;
+        _matrix = machine;
         
-        _buttons = machine.Buttons.Length;
+        _buttons = machine.Rows.Length;
         
-        _jolts = machine.Joltage.Length;
+        _jolts = machine.Totals.Length;
 
         for (var i = 0; i < Limit; i++)
         {
@@ -40,7 +27,7 @@ public sealed class MatrixSolver
 
         for (var b = 0; b < _buttons; b++)
         {
-            var buttonMask = machine.Buttons[b];
+            var buttonMask = machine.Rows[b];
 
             for (var j = 0; j < _jolts; j++)
             {
@@ -377,7 +364,7 @@ public sealed class MatrixSolver
                 row[b] = 1;
             }
 
-            row[Limit - 1] = (short) _machine.Joltage[j];
+            row[Limit - 1] = (short) _matrix.Totals[j];
             
             rows.Add(row);
         }
@@ -386,7 +373,7 @@ public sealed class MatrixSolver
         
         var val = 0;
         
-        foreach (var j in _machine.Joltage)
+        foreach (var j in _matrix.Totals)
         {
             if (j > val) val = j;
         }

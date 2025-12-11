@@ -11,29 +11,9 @@ public class Part2 : Base
         
         foreach (var line in Input)
         {
-            var parts = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-
-            var buttonTokens = parts[1..^1];
-
-            var joltageToken = parts[^1];
-
-            var buttons = buttonTokens
-                .Select(t => t[1..^1]
-                    .Split(',', StringSplitOptions.RemoveEmptyEntries)
-                    .Select(int.Parse)
-                    .ToArray())
-                .ToArray();
-
-            var joltages = joltageToken[1..^1]
-                .Split(',', StringSplitOptions.RemoveEmptyEntries)
-                .Select(int.Parse)
-                .ToArray();
-
-            var matrix =  new Matrix(buttons, joltages);
+            var matrix =  ParseLine(line);
             
-            var machine = ToMachine(matrix);
-            
-            var solver = new MatrixSolver(machine);
+            var solver = new MatrixSolver(matrix);
             
             sum += solver.Solve();
         }
@@ -41,25 +21,35 @@ public class Part2 : Base
         return sum.ToString();
     }
     
-    private static Machine2 ToMachine(Matrix m)
+    private static Matrix ParseLine(string line)
     {
-        var buttons = m.Values.Length;
-        
-        var buttonMasks = new int[buttons];
+        var parts = line.Split(' ');
 
-        for (var b = 0; b < buttons; b++)
+        var rows = new int[parts.Length - 2];
+        
+        for (var i = 1; i < parts.Length - 1; i++)
         {
-            var mask = 0;
-            
-            var toggles = m.Values[b];
-            
-            for (var i = 0; i < toggles.Length; i++)
+            var digits = parts[i][1..^1].Split(',');
+
+            var button = 0;
+
+            for (var d = 0; d < digits.Length; d++)
             {
-                mask |= 1 << toggles[i];
+                button |= 1 << (digits[d][0] - '0');
             }
-            buttonMasks[b] = mask;
+
+            rows[i - 1] = button;
         }
 
-        return new Machine2(buttonMasks, m.Totals);
+        var joltages = parts[^1][1..^1].Split(',');
+
+        var totals = new int[joltages.Length];
+
+        for (var i = 0; i < joltages.Length; i++)
+        {
+            totals[i] = int.Parse(joltages[i]);
+        }
+
+        return new Matrix(rows, totals);
     }
 }
