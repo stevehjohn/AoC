@@ -7,24 +7,14 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        var result = 0;
+        var inputPath = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+            "Git", "AoC", "AoC.Solutions", "Solutions", "2025", "10", "input.clear");
 
-        var count = -1;
+        var machines = Temp.ParseInput(inputPath).ToArray();
 
-        Parallel.For(0, Input.Length,
-            machineId =>
-            {
-                var machine = new Machine(Input[machineId]);
-                
-                var presses = machine.ConfigureJoltageDfs();
+        var p2 = machines.Select( Temp.SolvePart2).Sum();
         
-                Interlocked.Increment(ref count);
-        
-                Interlocked.Add(ref result, presses);
-        
-                Console.WriteLine($"{count}: Line {machineId}: {presses}. Total: {result}.");
-            });
-        
-        return result.ToString();
+        return p2.ToString();
     }
 }
