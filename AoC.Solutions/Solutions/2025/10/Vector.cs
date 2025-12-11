@@ -1,6 +1,6 @@
 namespace AoC.Solutions.Solutions._2025._10;
 
-internal struct Vector
+public struct Vector
 {
     public const int Limit = 16;
 
