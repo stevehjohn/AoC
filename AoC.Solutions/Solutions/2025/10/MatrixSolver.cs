@@ -182,7 +182,45 @@ public static class MatrixSolver
             }
             else
             {
-                goto bruteForce;
+                var bestC = -1;
+
+                var bestMax = int.MaxValue;
+
+                for (var y = 0; y < x; y++)
+                {
+                    if (a[row][y] != 0 && pressed[y] == -1)
+                    {
+                        var m = maximums[y];
+
+                        if (m < bestMax)
+                        {
+                            bestMax = m;
+
+                            bestC = y;
+                        }
+                    }
+                }
+
+                if (bestC == -1)
+                {
+                    if (rowTotal == 0)
+                    {
+                        DfsRow(row - 1, sum, x, a, maximums, pressed, ref best);
+                    }
+
+                    return;
+                }
+
+                for (var p = bestMax; p >= 0; p--)
+                {
+                    pressed[bestC] = p;
+
+                    DfsRow(row, sum + p, x, a, maximums, pressed, ref best);
+                }
+
+                pressed[bestC] = -1;
+                
+                return;
             }
         }
 
@@ -190,48 +228,6 @@ public static class MatrixSolver
         {
             DfsRow(row - 1, sum, x, a, maximums, pressed, ref best);
         }
-
-        return;
-
-    bruteForce:
-
-        var bestC = -1;
-
-        var bestMax = int.MaxValue;
-
-        for (var c = 0; c < x; c++)
-        {
-            if (a[row][c] != 0 && pressed[c] == -1)
-            {
-                var m = maximums[c];
-
-                if (m < bestMax)
-                {
-                    bestMax = m;
-
-                    bestC = c;
-                }
-            }
-        }
-
-        if (bestC == -1)
-        {
-            if (rowTotal == 0)
-            {
-                DfsRow(row - 1, sum, x, a, maximums, pressed, ref best);
-            }
-
-            return;
-        }
-
-        for (var p = bestMax; p >= 0; p--)
-        {
-            pressed[bestC] = p;
-
-            DfsRow(row, sum + p, x, a, maximums, pressed, ref best);
-        }
-
-        pressed[bestC] = -1;
     }
 
     private static void Swap<T>(T[] arr, int i0, int i1)
