@@ -39,6 +39,57 @@ public sealed class MatrixSolver
         }
     }
 
+    public int Solve()
+    {
+        var rows = new List<Vector>(_jolts);
+
+        for (var j = 0; j < _jolts; j++)
+        {
+            Vector row = default;
+
+            foreach (var b in _reverse[j])
+            {
+                row[b] = 1;
+            }
+
+            row[Limit - 1] = (short) _matrix.Totals[j];
+            
+            rows.Add(row);
+        }
+
+        Gaussian(rows);
+        
+        var val = 0;
+        
+        foreach (var j in _matrix.Totals)
+        {
+            if (j > val) val = j;
+        }
+
+        for (;; val++)
+        {
+            var cur = new List<Vector>(rows.Count + 1);
+            
+            cur.AddRange(rows);
+
+            Vector sumRow = default;
+
+            for (var b = 0; b < _buttons; b++)
+            {
+                sumRow[b] = 1;
+            }
+
+            sumRow[Limit - 1] = (short) val;
+            
+            cur.Add(sumRow);
+
+            if (Feasible(cur, val))
+            {
+                return val;
+            }
+        }
+    }
+    
     private static int Gcd(int a, int b)
     {
         a = Math.Abs(a);
@@ -349,56 +400,5 @@ public sealed class MatrixSolver
         }
 
         return FeasibleSlow(rows, freeVar, maxVal, limit);
-    }
-
-    public int Solve()
-    {
-        var rows = new List<Vector>(_jolts);
-
-        for (var j = 0; j < _jolts; j++)
-        {
-            Vector row = default;
-
-            foreach (var b in _reverse[j])
-            {
-                row[b] = 1;
-            }
-
-            row[Limit - 1] = (short) _matrix.Totals[j];
-            
-            rows.Add(row);
-        }
-
-        Gaussian(rows);
-        
-        var val = 0;
-        
-        foreach (var j in _matrix.Totals)
-        {
-            if (j > val) val = j;
-        }
-
-        for (;; val++)
-        {
-            var cur = new List<Vector>(rows.Count + 1);
-            
-            cur.AddRange(rows);
-
-            Vector sumRow = default;
-
-            for (var b = 0; b < _buttons; b++)
-            {
-                sumRow[b] = 1;
-            }
-
-            sumRow[Limit - 1] = (short) val;
-            
-            cur.Add(sumRow);
-
-            if (Feasible(cur, val))
-            {
-                return val;
-            }
-        }
     }
 }
