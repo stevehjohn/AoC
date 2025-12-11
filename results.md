@@ -537,7 +537,7 @@ Tests performed on a 2023 MacBook Pro.
  2025  2.2: 45,964μs      
  2025  3.1: 107μs         Lobby
  2025  3.2: 198μs         
- 2025  4.1: 197μs         Printing department
+ 2025  4.1: 190μs         Printing department
  2025  4.2: 2,952μs       
  2025  5.1: 109μs         Cafeteria
  2025  5.2: 38μs          
@@ -545,16 +545,16 @@ Tests performed on a 2023 MacBook Pro.
  2025  6.2: 64μs          
  2025  7.1: 5μs           Laboratories
  2025  7.2: 274μs         
- 2025  8.1: 103,546μs     Playground
- 2025  8.2: 92,667μs      
+ 2025  8.1: 100,718μs     Playground
+ 2025  8.2: 91,692μs      
  2025  9.1: 175μs         Movie theater
- 2025  9.2: 7,245μs       
+ 2025  9.2: 7,218μs       
  2025 10.1: 1,677μs       Factory
- 2025 10.2: 152,100,093μs  
+ 2025 10.2: 868,185μs     
  2025 11.1: 142μs         Reactor
  2025 11.2: 614μs         
             -------------
-            152.372s     
+            1.136s       
 
- 513 puzzles solved in 191.793s.
+ 513 puzzles solved in 40.557s.
 ```
