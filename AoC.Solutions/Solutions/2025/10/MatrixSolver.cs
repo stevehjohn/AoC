@@ -1,514 +1,543 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace AoC.Solutions.Solutions._2025._10
+namespace AoC.Solutions.Solutions._2025._10;
+
+public sealed class Machine2
 {
-    // Equivalent to the C++ Machine used by Solver
-    public sealed class Machine2
-    {
-        public int Length { get; }
-        public long Target { get; }         // not needed for part 2
-        public long[] Buttons { get; }
-        public int[] Joltage { get; }
+    public long[] Buttons { get; }
+    public int[] Joltage { get; }
 
-        public Machine2(int length, long target, long[] buttons, int[] joltage)
+    public Machine2(long[] buttons, int[] joltage)
+    {
+        Buttons = buttons;
+        Joltage = joltage;
+    }
+}
+
+internal struct Vec
+{
+    public const int Limit = 16;
+
+    private short _v0, _v1, _v2, _v3, _v4, _v5, _v6, _v7, _v8, _v9, _v10, _v11, _v12, _v13, _v14, _v15;
+
+    public short this[int index]
+    {
+        readonly get => index switch
         {
-            Length = length;
-            Target = target;
-            Buttons = buttons;
-            Joltage = joltage;
+            0 => _v0, 1 => _v1, 2 => _v2, 3 => _v3,
+            4 => _v4, 5 => _v5, 6 => _v6, 7 => _v7,
+            8 => _v8, 9 => _v9, 10 => _v10, 11 => _v11,
+            12 => _v12, 13 => _v13, 14 => _v14, 15 => _v15,
+            _ => throw new ArgumentOutOfRangeException(nameof(index))
+        };
+
+        set
+        {
+            switch (index)
+            {
+                case 0: _v0 = value; break;
+                case 1: _v1 = value; break;
+                case 2: _v2 = value; break;
+                case 3: _v3 = value; break;
+                case 4: _v4 = value; break;
+                case 5: _v5 = value; break;
+                case 6: _v6 = value; break;
+                case 7: _v7 = value; break;
+                case 8: _v8 = value; break;
+                case 9: _v9 = value; break;
+                case 10: _v10 = value; break;
+                case 11: _v11 = value; break;
+                case 12: _v12 = value; break;
+                case 13: _v13 = value; break;
+                case 14: _v14 = value; break;
+                case 15: _v15 = value; break;
+                default: throw new ArgumentOutOfRangeException(nameof(index));
+            }
         }
     }
 
-    internal struct Vec
+    public static Vec operator +(in Vec a, in Vec b)
     {
-        // LIMIT = 16
-        public const int Limit = 16;
-
-        public short V0, V1, V2, V3, V4, V5, V6, V7,
-                     V8, V9, V10, V11, V12, V13, V14, V15;
-
-        public short this[int index]
+        return new Vec
         {
-            readonly get => index switch
+            _v0 = (short) (a._v0 + b._v0),
+            _v1 = (short) (a._v1 + b._v1),
+            _v2 = (short) (a._v2 + b._v2),
+            _v3 = (short) (a._v3 + b._v3),
+            _v4 = (short) (a._v4 + b._v4),
+            _v5 = (short) (a._v5 + b._v5),
+            _v6 = (short) (a._v6 + b._v6),
+            _v7 = (short) (a._v7 + b._v7),
+            _v8 = (short) (a._v8 + b._v8),
+            _v9 = (short) (a._v9 + b._v9),
+            _v10 = (short) (a._v10 + b._v10),
+            _v11 = (short) (a._v11 + b._v11),
+            _v12 = (short) (a._v12 + b._v12),
+            _v13 = (short) (a._v13 + b._v13),
+            _v14 = (short) (a._v14 + b._v14),
+            _v15 = (short) (a._v15 + b._v15)
+        };
+    }
+
+    public static Vec operator -(in Vec a, in Vec b)
+    {
+        return new Vec
+        {
+            _v0 = (short) (a._v0 - b._v0),
+            _v1 = (short) (a._v1 - b._v1),
+            _v2 = (short) (a._v2 - b._v2),
+            _v3 = (short) (a._v3 - b._v3),
+            _v4 = (short) (a._v4 - b._v4),
+            _v5 = (short) (a._v5 - b._v5),
+            _v6 = (short) (a._v6 - b._v6),
+            _v7 = (short) (a._v7 - b._v7),
+            _v8 = (short) (a._v8 - b._v8),
+            _v9 = (short) (a._v9 - b._v9),
+            _v10 = (short) (a._v10 - b._v10),
+            _v11 = (short) (a._v11 - b._v11),
+            _v12 = (short) (a._v12 - b._v12),
+            _v13 = (short) (a._v13 - b._v13),
+            _v14 = (short) (a._v14 - b._v14),
+            _v15 = (short) (a._v15 - b._v15)
+        };
+    }
+
+    public static Vec operator *(in Vec a, int b)
+    {
+        return new Vec
+        {
+            _v0 = (short) (a._v0 * b),
+            _v1 = (short) (a._v1 * b),
+            _v2 = (short) (a._v2 * b),
+            _v3 = (short) (a._v3 * b),
+            _v4 = (short) (a._v4 * b),
+            _v5 = (short) (a._v5 * b),
+            _v6 = (short) (a._v6 * b),
+            _v7 = (short) (a._v7 * b),
+            _v8 = (short) (a._v8 * b),
+            _v9 = (short) (a._v9 * b),
+            _v10 = (short) (a._v10 * b),
+            _v11 = (short) (a._v11 * b),
+            _v12 = (short) (a._v12 * b),
+            _v13 = (short) (a._v13 * b),
+            _v14 = (short) (a._v14 * b),
+            _v15 = (short) (a._v15 * b)
+        };
+    }
+}
+
+public sealed class Solver
+{
+    private const int Limit = Vec.Limit;
+
+    private readonly Machine2 _machine;
+    private readonly int _buttons;
+    private readonly int _jolts;
+
+    // reverse[j] = list of buttons that affect jolt j
+    private readonly List<int>[] _reverse = new List<int>[Limit];
+
+    public Solver(Machine2 machine)
+    {
+        _machine = machine;
+        _buttons = machine.Buttons.Length;
+        _jolts = machine.Joltage.Length;
+
+        Debug.Assert(_buttons + 1 <= Limit);
+        Debug.Assert(_jolts + 1 <= Limit);
+
+        for (var i = 0; i < Limit; i++)
+        {
+            _reverse[i] = [];
+        }
+
+        for (var b = 0; b < _buttons; b++)
+        {
+            var buttonMask = machine.Buttons[b];
+
+            for (var j = 0; j < _jolts; j++)
             {
-                0 => V0, 1 => V1, 2 => V2, 3 => V3,
-                4 => V4, 5 => V5, 6 => V6, 7 => V7,
-                8 => V8, 9 => V9, 10 => V10, 11 => V11,
-                12 => V12, 13 => V13, 14 => V14, 15 => V15,
-                _ => throw new ArgumentOutOfRangeException(nameof(index))
-            };
-            set
-            {
-                switch (index)
+                if ((buttonMask & (1L << j)) != 0)
                 {
-                    case 0: V0 = value; break;
-                    case 1: V1 = value; break;
-                    case 2: V2 = value; break;
-                    case 3: V3 = value; break;
-                    case 4: V4 = value; break;
-                    case 5: V5 = value; break;
-                    case 6: V6 = value; break;
-                    case 7: V7 = value; break;
-                    case 8: V8 = value; break;
-                    case 9: V9 = value; break;
-                    case 10: V10 = value; break;
-                    case 11: V11 = value; break;
-                    case 12: V12 = value; break;
-                    case 13: V13 = value; break;
-                    case 14: V14 = value; break;
-                    case 15: V15 = value; break;
-                    default: throw new ArgumentOutOfRangeException(nameof(index));
+                    _reverse[j].Add(b);
                 }
             }
-        }
-
-        public static Vec operator +(in Vec a, in Vec b)
-        {
-            return new Vec
-            {
-                V0 = (short)(a.V0 + b.V0),
-                V1 = (short)(a.V1 + b.V1),
-                V2 = (short)(a.V2 + b.V2),
-                V3 = (short)(a.V3 + b.V3),
-                V4 = (short)(a.V4 + b.V4),
-                V5 = (short)(a.V5 + b.V5),
-                V6 = (short)(a.V6 + b.V6),
-                V7 = (short)(a.V7 + b.V7),
-                V8 = (short)(a.V8 + b.V8),
-                V9 = (short)(a.V9 + b.V9),
-                V10 = (short)(a.V10 + b.V10),
-                V11 = (short)(a.V11 + b.V11),
-                V12 = (short)(a.V12 + b.V12),
-                V13 = (short)(a.V13 + b.V13),
-                V14 = (short)(a.V14 + b.V14),
-                V15 = (short)(a.V15 + b.V15),
-            };
-        }
-
-        public static Vec operator -(in Vec a, in Vec b)
-        {
-            return new Vec
-            {
-                V0 = (short)(a.V0 - b.V0),
-                V1 = (short)(a.V1 - b.V1),
-                V2 = (short)(a.V2 - b.V2),
-                V3 = (short)(a.V3 - b.V3),
-                V4 = (short)(a.V4 - b.V4),
-                V5 = (short)(a.V5 - b.V5),
-                V6 = (short)(a.V6 - b.V6),
-                V7 = (short)(a.V7 - b.V7),
-                V8 = (short)(a.V8 - b.V8),
-                V9 = (short)(a.V9 - b.V9),
-                V10 = (short)(a.V10 - b.V10),
-                V11 = (short)(a.V11 - b.V11),
-                V12 = (short)(a.V12 - b.V12),
-                V13 = (short)(a.V13 - b.V13),
-                V14 = (short)(a.V14 - b.V14),
-                V15 = (short)(a.V15 - b.V15),
-            };
-        }
-
-        public static Vec operator *(in Vec a, int b)
-        {
-            return new Vec
-            {
-                V0 = (short)(a.V0 * b),
-                V1 = (short)(a.V1 * b),
-                V2 = (short)(a.V2 * b),
-                V3 = (short)(a.V3 * b),
-                V4 = (short)(a.V4 * b),
-                V5 = (short)(a.V5 * b),
-                V6 = (short)(a.V6 * b),
-                V7 = (short)(a.V7 * b),
-                V8 = (short)(a.V8 * b),
-                V9 = (short)(a.V9 * b),
-                V10 = (short)(a.V10 * b),
-                V11 = (short)(a.V11 * b),
-                V12 = (short)(a.V12 * b),
-                V13 = (short)(a.V13 * b),
-                V14 = (short)(a.V14 * b),
-                V15 = (short)(a.V15 * b),
-            };
         }
     }
 
-    public sealed class Solver
+    private static int Gcd(int a, int b)
     {
-        private const int Limit = Vec.Limit;
-
-        private readonly Machine2 _machine;
-        private readonly int _buttons;
-        private readonly int _jolts;
-
-        // reverse[j] = list of buttons that affect jolt j
-        private readonly List<int>[] _reverse = new List<int>[Limit];
-
-        public Solver(Machine2 machine)
+        a = Math.Abs(a);
+        b = Math.Abs(b);
+        while (b != 0)
         {
-            _machine = machine;
-            _buttons = machine.Buttons.Length;
-            _jolts = machine.Joltage.Length;
+            var t = a % b;
+            a = b;
+            b = t;
+        }
 
-            Debug.Assert(_buttons + 1 <= Limit);
-            Debug.Assert(_jolts + 1 <= Limit);
+        return a;
+    }
 
+    private void Simplify(ref Vec v)
+    {
+        var g = 0;
+        for (var i = 0; i < Limit; i++)
+        {
+            g = Gcd(g, v[i]);
+        }
+
+        if (g > 1)
+        {
             for (var i = 0; i < Limit; i++)
             {
-                _reverse[i] = new List<int>();
-            }
-
-            for (var b = 0; b < _buttons; b++)
-            {
-                long buttonMask = machine.Buttons[b];
-
-                for (var j = 0; j < _jolts; j++)
-                {
-                    if ((buttonMask & (1L << j)) != 0)
-                    {
-                        _reverse[j].Add(b);
-                    }
-                }
+                v[i] = (short) (v[i] / g);
             }
         }
 
-        private static int Gcd(int a, int b)
+        var first = 0;
+        for (; first < _buttons; first++)
         {
-            a = Math.Abs(a);
-            b = Math.Abs(b);
-            while (b != 0)
+            if (v[first] != 0)
             {
-                var t = a % b;
-                a = b;
-                b = t;
+                break;
             }
-            return a;
         }
 
-        private void Simplify(ref Vec v)
+        if (first < _buttons && v[first] < 0)
         {
-            var g = 0;
             for (var i = 0; i < Limit; i++)
             {
-                g = Gcd(g, v[i]);
+                v[i] = (short) -v[i];
             }
+        }
+    }
 
-            if (g > 1)
-            {
-                for (var i = 0; i < Limit; i++)
-                {
-                    v[i] = (short)(v[i] / g);
-                }
-            }
+    private (int freeVar, int maxVal) Gaussian(List<Vec> rows, int limit = -1)
+    {
+        var doClean = limit >= 0;
 
-            var first = 0;
-            for (; first < _buttons; first++)
+        var n = rows.Count;
+
+        for (int h = 0, k = 0; h < n && k < _buttons; k++)
+        {
+            var pivotRow = h;
+
+            for (var i = h; i < n; i++)
             {
-                if (v[first] != 0)
+                if (rows[i][k] != 0)
                 {
+                    pivotRow = i;
                     break;
                 }
             }
 
-            if (first < _buttons && v[first] < 0)
+            if (rows[pivotRow][k] == 0)
             {
-                for (var i = 0; i < Limit; i++)
+                continue;
+            }
+
+            (rows[h], rows[pivotRow]) = (rows[pivotRow], rows[h]);
+
+            for (var i = 0; i < h; i++)
+            {
+                if (rows[i][k] != 0)
                 {
-                    v[i] = (short)(-v[i]);
+                    int a = rows[h][k];
+
+                    int b = rows[i][k];
+
+                    var g = Gcd(a, b);
+
+                    rows[i] = rows[i] * (a / g) - rows[h] * (b / g);
                 }
             }
+
+            // eliminate below
+            for (var i = pivotRow + 1; i < n; i++)
+            {
+                if (rows[i][k] != 0)
+                {
+                    int a = rows[h][k];
+
+                    int b = rows[i][k];
+
+                    var g = Gcd(a, b);
+
+                    rows[i] = rows[i] * (a / g) - rows[h] * (b / g);
+                }
+            }
+
+            h++;
         }
 
-        /// <summary>
-        /// Performs integer Gaussian elimination with GCD-based scaling.
-        /// Returns (freeVar, maxVal).
-        /// freeVar &lt; 0 means no free variable, maxVal used as flag.
-        /// </summary>
-        private (int freeVar, int maxVal) Gaussian(List<Vec> rows, int limit = -1)
+        var candidate = (freeVar: int.MaxValue, maxVal: int.MaxValue);
+
+        Span<int> zeroInds = stackalloc int[Limit];
+
+        var removedZeros = 0;
+
+        for (var j = 0; j < rows.Count; j++)
         {
-            var doClean = limit >= 0;
-            var n = rows.Count;
-            var m = _buttons;
+            var row = rows[j];
 
-            // Full elimination (above and below pivots)
-            for (int h = 0, k = 0; h < n && k < m; k++)
+            var count = 0;
+
+            var lastIndex = -1;
+
+            var numSame = 0;
+
+            var numGt = 0;
+
+            int rhs = row[Limit - 1];
+
+            for (var b = 0; b < Limit - 1; b++)
             {
-                var pivotRow = h;
+                int coeff = row[b];
 
-                for (var i = h; i < n; i++)
+                if (coeff != 0)
                 {
-                    if (rows[i][k] != 0)
+                    count++;
+
+                    lastIndex = b;
+
+                    if (coeff > 0)
                     {
-                        pivotRow = i;
-                        break;
+                        numGt++;
+                    }
+
+                    var sameSign = coeff >= 0 == rhs >= 0 || rhs == 0;
+
+                    if (sameSign)
+                    {
+                        numSame++;
                     }
                 }
-
-                if (rows[pivotRow][k] == 0)
-                {
-                    continue; // no pivot in this column
-                }
-
-                // swap rows[h] <-> rows[pivotRow]
-                (rows[h], rows[pivotRow]) = (rows[pivotRow], rows[h]);
-
-                // eliminate above
-                for (var i = 0; i < h; i++)
-                {
-                    if (rows[i][k] != 0)
-                    {
-                        int a = rows[h][k];
-                        int b = rows[i][k];
-                        var g = Gcd(a, b);
-                        // rows[i] = rows[i] * (a/g) - rows[h] * (b/g)
-                        rows[i] = rows[i] * (a / g) - rows[h] * (b / g);
-                    }
-                }
-
-                // eliminate below
-                for (var i = pivotRow + 1; i < n; i++)
-                {
-                    if (rows[i][k] != 0)
-                    {
-                        int a = rows[h][k];
-                        int b = rows[i][k];
-                        var g = Gcd(a, b);
-                        rows[i] = rows[i] * (a / g) - rows[h] * (b / g);
-                    }
-                }
-
-                h++;
             }
 
-            var candidate = (freeVar: int.MaxValue, maxVal: int.MaxValue);
-            Span<int> zeroInds = stackalloc int[Limit];
-            var removedZeros = 0;
-
-            // Row analysis
-            for (var j = 0; j < rows.Count; j++)
+            if (count == 0)
             {
-                var row = rows[j];
-                var count = 0;
-                var lastIndex = -1;
-                var numSame = 0;
-                var numGt = 0;
-                int rhs = row[Limit - 1];
-
-                for (var b = 0; b < Limit - 1; b++)
+                if (rhs != 0)
                 {
-                    int coeff = row[b];
-                    if (coeff != 0)
-                    {
-                        count++;
-                        lastIndex = b;
-                        if (coeff > 0) numGt++;
-
-                        var sameSign = ((coeff >= 0) == (rhs >= 0)) || rhs == 0;
-                        if (sameSign) numSame++;
-                    }
-                }
-
-                if (count == 0)
-                {
-                    // 0 = rhs
-                    if (rhs != 0)
-                    {
-                        return (-1, -1); // no solution
-                    }
-
-                    rows[j] = rows[^1];
-                    rows.RemoveAt(rows.Count - 1);
-                    j--;
-                    continue;
-                }
-
-                if (numSame == 0)
-                {
-                    // all coefficients "point" opposite to rhs -> no non-negative solution
                     return (-1, -1);
                 }
 
-                if (count == 1)
+                rows[j] = rows[^1];
+
+                rows.RemoveAt(rows.Count - 1);
+
+                j--;
+
+                continue;
+            }
+
+            if (numSame == 0)
+            {
+                return (-1, -1);
+            }
+
+            if (count == 1)
+            {
+                int coeff = row[lastIndex];
+
+                if (rhs % coeff != 0)
                 {
-                    int coeff = row[lastIndex];
-
-                    if (rhs % coeff != 0)
-                    {
-                        return (-1, -1);
-                    }
-
-                    var val = rhs / coeff;
-
-                    if (val < 0)
-                    {
-                        return (-1, -1);
-                    }
-
-                    if (doClean)
-                    {
-                        rows[j] = rows[^1];
-                        rows.RemoveAt(rows.Count - 1);
-                        j--;
-                    }
+                    return (-1, -1);
                 }
-                else
+
+                var val = rhs / coeff;
+
+                if (val < 0)
                 {
-                    // At least 2 variables in this row
-                    candidate = MinCandidate(candidate, (index: lastIndex, limit));
+                    return (-1, -1);
+                }
 
-                    if (numSame == count && (numGt == 0 || numGt == count))
+                if (doClean)
+                {
+                    rows[j] = rows[^1];
+
+                    rows.RemoveAt(rows.Count - 1);
+
+                    j--;
+                }
+            }
+            else
+            {
+                candidate = MinCandidate(candidate, (index: lastIndex, limit));
+
+                if (numSame == count && (numGt == 0 || numGt == count))
+                {
+                    for (var b = 0; b < Limit - 1; b++)
                     {
-                        // All variables are same sign as rhs
-                        for (var b = 0; b < Limit - 1; b++)
-                        {
-                            int coeff = row[b];
-                            if (coeff != 0)
-                            {
-                                var q = rhs / coeff;
-                                if (q == 0)
-                                {
-                                    // this variable must be zero; we can zero the column
-                                    for (var j2 = 0; j2 < rows.Count; j2++)
-                                    {
-                                        var r2 = rows[j2];
-                                        r2[b] = 0;
-                                        rows[j2] = r2;
-                                    }
+                        int coeff = row[b];
 
-                                    zeroInds[removedZeros++] = b;
-                                    continue;
+                        if (coeff != 0)
+                        {
+                            var q = rhs / coeff;
+
+                            if (q == 0)
+                            {
+                                for (var j2 = 0; j2 < rows.Count; j2++)
+                                {
+                                    var r2 = rows[j2];
+
+                                    r2[b] = 0;
+
+                                    rows[j2] = r2;
                                 }
 
-                                candidate = MinCandidate(candidate, (b, q));
+                                zeroInds[removedZeros++] = b;
+
+                                continue;
                             }
+
+                            candidate = MinCandidate(candidate, (b, q));
                         }
                     }
                 }
             }
-
-            if (removedZeros > 0)
-            {
-                if (!doClean)
-                {
-                    for (var z = 0; z < removedZeros; z++)
-                    {
-                        var zeroInd = zeroInds[z];
-                        Vec newRow = default;
-                        newRow[zeroInd] = 1;
-                        rows.Add(newRow);
-                    }
-                }
-
-                return Gaussian(rows, doClean ? 0 : -1);
-            }
-
-            for (var i = 0; i < rows.Count; i++)
-            {
-                var v = rows[i];
-                Simplify(ref v);
-                rows[i] = v;
-            }
-
-            if (candidate.freeVar != int.MaxValue)
-            {
-                return candidate;
-            }
-
-            return (-1, 0);
         }
 
-        private static (int freeVar, int maxVal) MinCandidate(
-            (int freeVar, int maxVal) a,
-            (int index, int limit) b)
+        if (removedZeros > 0)
         {
-            // Lexicographic min like std::min on pair<int,int>
-            if (b.limit < a.maxVal) return (b.index, b.limit);
-            if (b.limit > a.maxVal) return a;
-            if (b.index < a.freeVar) return (b.index, b.limit);
+            if (! doClean)
+            {
+                for (var z = 0; z < removedZeros; z++)
+                {
+                    var zeroInd = zeroInds[z];
+
+                    Vec newRow = default;
+
+                    newRow[zeroInd] = 1;
+
+                    rows.Add(newRow);
+                }
+            }
+
+            return Gaussian(rows, doClean ? 0 : -1);
+        }
+
+        for (var i = 0; i < rows.Count; i++)
+        {
+            var v = rows[i];
+
+            Simplify(ref v);
+
+            rows[i] = v;
+        }
+
+        if (candidate.freeVar != int.MaxValue)
+        {
+            return candidate;
+        }
+
+        return (-1, 0);
+    }
+
+    private static (int freeVar, int maxVal) MinCandidate((int freeVar, int maxVal) a, (int index, int limit) b)
+    {
+        if (b.limit < a.maxVal)
+        {
+            return (b.index, b.limit);
+        }
+
+        if (b.limit > a.maxVal)
+        {
             return a;
         }
 
-        private bool FeasibleSlow(List<Vec> rows, int freeVar, int maxVal, int limit)
+        if (b.index < a.freeVar)
         {
-            for (var val = 0; val <= maxVal; val++)
-            {
-                // copy rows
-                var cur = new List<Vec>(rows.Count + 1);
-                cur.AddRange(rows);
-
-                Vec eq = default;
-                eq[freeVar] = 1;
-                eq[Limit - 1] = (short)val;
-                cur.Add(eq);
-
-                if (Feasible(cur, limit))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return (b.index, b.limit);
         }
 
-        private bool Feasible(List<Vec> rows, int limit)
-        {
-            var (freeVar, maxVal) = Gaussian(rows, limit);
-            if (freeVar < 0)
-            {
-                return maxVal == 0;
-            }
+        return a;
+    }
 
-            return FeasibleSlow(rows, freeVar, maxVal, limit);
+    private bool FeasibleSlow(List<Vec> rows, int freeVar, int maxVal, int limit)
+    {
+        for (var val = 0; val <= maxVal; val++)
+        {
+            var cur = new List<Vec>(rows.Count + 1);
+
+            cur.AddRange(rows);
+
+            Vec eq = default;
+            
+            eq[freeVar] = 1;
+            
+            eq[Limit - 1] = (short) val;
+            
+            cur.Add(eq);
+
+            if (Feasible(cur, limit))
+            {
+                return true;
+            }
         }
 
-        public int Solve()
+        return false;
+    }
+
+    private bool Feasible(List<Vec> rows, int limit)
+    {
+        var (freeVar, maxVal) = Gaussian(rows, limit);
+
+        if (freeVar < 0)
         {
-            // Build rows: one per joltage
-            var rows = new List<Vec>(_jolts);
+            return maxVal == 0;
+        }
 
-            for (var j = 0; j < _jolts; j++)
+        return FeasibleSlow(rows, freeVar, maxVal, limit);
+    }
+
+    public int Solve()
+    {
+        var rows = new List<Vec>(_jolts);
+
+        for (var j = 0; j < _jolts; j++)
+        {
+            Vec row = default;
+
+            foreach (var b in _reverse[j])
             {
-                Vec row = default;
-
-                foreach (var b in _reverse[j])
-                {
-                    row[b] = 1;
-                }
-
-                row[Limit - 1] = (short)_machine.Joltage[j];
-                rows.Add(row);
+                row[b] = 1;
             }
 
-            // initial reduction
-            Gaussian(rows);
+            row[Limit - 1] = (short) _machine.Joltage[j];
+            
+            rows.Add(row);
+        }
 
-            // lower bound on total presses: max(joltage)
-            var val = 0;
-            foreach (int j in _machine.Joltage)
+        Gaussian(rows);
+        
+        var val = 0;
+        
+        foreach (var j in _machine.Joltage)
+        {
+            if (j > val) val = j;
+        }
+
+        for (;; val++)
+        {
+            var cur = new List<Vec>(rows.Count + 1);
+            
+            cur.AddRange(rows);
+
+            Vec sumRow = default;
+
+            for (var b = 0; b < _buttons; b++)
             {
-                if (j > val) val = j;
+                sumRow[b] = 1;
             }
 
-            for (; ; val++)
+            sumRow[Limit - 1] = (short) val;
+            
+            cur.Add(sumRow);
+
+            if (Feasible(cur, val))
             {
-                var cur = new List<Vec>(rows.Count + 1);
-                cur.AddRange(rows);
-
-                // sum of all button presses == val
-                Vec sumRow = default;
-                for (var b = 0; b < _buttons; b++)
-                {
-                    sumRow[b] = 1;
-                }
-
-                sumRow[Limit - 1] = (short)val;
-                cur.Add(sumRow);
-
-                if (Feasible(cur, val))
-                {
-                    return val;
-                }
+                return val;
             }
         }
     }
