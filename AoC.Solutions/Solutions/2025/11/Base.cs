@@ -10,6 +10,8 @@ public abstract class Base : Solution
 
     protected readonly Dictionary<string, int> NodeIds = [];
 
+    protected int NodeCount; 
+
     protected void ParseInput()
     {
         var id = 0;
@@ -55,5 +57,7 @@ public abstract class Base : Solution
                 }
             }
         }
+
+        NodeCount = NodeIds.Count;
     }
 }
