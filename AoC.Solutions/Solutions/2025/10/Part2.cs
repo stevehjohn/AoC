@@ -17,7 +17,7 @@ public class Part2 : Base
                 var machine = new Machine(Input[machineId]);
                 
                 var presses = machine.ConfigureJoltageDfs();
-
+        
                 Interlocked.Increment(ref count);
         
                 Interlocked.Add(ref result, presses);

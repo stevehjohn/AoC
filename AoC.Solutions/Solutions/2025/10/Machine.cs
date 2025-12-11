@@ -14,6 +14,8 @@ public class Machine
 
     private readonly int _joltageCount;
 
+    private readonly int _maximum;
+
     public Machine(string configuration)
     {
         var parts = configuration.Split(' ');
@@ -53,6 +55,8 @@ public class Machine
         for (var i = 0; i < joltages.Length; i++)
         {
             _joltages[i] = int.Parse(joltages[i]);
+
+            _maximum += _joltages[i];
         }
     }
 
@@ -88,7 +92,127 @@ public class Machine
 
         return 0;
     }
+    
+    public int ConfigureJoltage()
+    {
+        var queue = new PriorityQueue<State, int>();
 
+        var visited = new HashSet<int>();
+
+        queue.Enqueue(new State(new int[_joltageCount], 0, 0), 0);
+
+        while (queue.TryDequeue(out var state, out _))
+        {
+            var (counters, presses, sum) = state;
+
+            for (var buttonIndex = 0; buttonIndex < _buttonCount; buttonIndex++)
+            {
+                var button = _buttons[buttonIndex];
+
+                var newSum = sum + BitOperations.PopCount((uint) button);
+
+                if (newSum > _maximum)
+                {
+                    continue;
+                }
+
+                var newCounters = new int[_joltageCount];
+
+                var newPresses = presses + 1;
+
+                for (var i = 0; i < _joltageCount; i++)
+                {
+                    newCounters[i] = counters[i];
+                }
+
+                var exceeded = false;
+
+                while (button > 0)
+                {
+                    var counter = BitOperations.TrailingZeroCount(button);
+
+                    newCounters[counter]++;
+
+                    if (newCounters[counter] > _joltages[counter])
+                    {
+                        exceeded = true;
+
+                        break;
+                    }
+
+                    button &= button - 1;
+                }
+
+                if (exceeded)
+                {
+                    continue;
+                }
+
+                var valid = true;
+
+                for (var i = 0; i < _joltageCount; i++)
+                {
+                    if (newCounters[i] != _joltages[i])
+                    {
+                        valid = false;
+
+                        break;
+                    }
+                }
+
+                if (valid)
+                {
+                    visited.Clear();
+
+                    queue.Clear();
+
+                    return newPresses;
+                }
+
+                if (visited.Add(HashCounters(newCounters)))
+                {
+                    var remaining = 0;
+
+                    for (var i = 0; i < _joltageCount; i++)
+                    {
+                        remaining += Math.Max(0, _joltages[i] - newCounters[i]);
+                    }
+
+                    queue.Enqueue(new State(newCounters, newPresses, newSum), newPresses + remaining);
+                }
+            }
+        }
+
+        return 0;
+    }
+
+    private static int HashCounters(int[] counters)
+    {
+        const uint offsetBasis = 2166136261u;
+
+        const uint prime = 16777619u;
+
+        var hash = offsetBasis;
+
+        unchecked
+        {
+            hash ^= (uint) counters.Length;
+
+            hash *= prime;
+
+            for (var i = 0; i < counters.Length; i++)
+            {
+                var value = (uint) counters[i];
+
+                hash ^= value;
+
+                hash *= prime;
+            }
+        }
+
+        return (int) hash;
+    }
+    
     public int ConfigureJoltageDfs()
     {
         // Remaining required joltages per digit
