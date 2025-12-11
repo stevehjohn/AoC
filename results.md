@@ -53,7 +53,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 21.1: 380μs         RPG simulator 2015
  2015 21.2: 365μs         
  2015 22.1: 482,521μs     Wizard simulator 2015
- 2015 22.2: 24,589μs      
+ 2015 22.2: 24,552μs      
  2015 23.1: 72μs          Opening the Turing lock
  2015 23.2: 85μs          
  2015 24.1: 85,779μs      It hangs in the balance
@@ -550,11 +550,11 @@ Tests performed on a 2023 MacBook Pro.
  2025  9.1: 175μs         Movie theater
  2025  9.2: 7,218μs       
  2025 10.1: 1,677μs       Factory
- 2025 10.2: 868,185μs     
+ 2025 10.2: 72,320μs      
  2025 11.1: 142μs         Reactor
- 2025 11.2: 614μs         
+ 2025 11.2: 555μs         
             -------------
-            1.136s       
+            340.006ms    
 
- 513 puzzles solved in 40.557s.
+ 513 puzzles solved in 39.761s.
 ```

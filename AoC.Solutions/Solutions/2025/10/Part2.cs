@@ -7,36 +7,49 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        var machines = ParseInput(Input).ToArray();
+        var sum = 0;
 
-        var result = machines.Select(MatrixSolver.Solve).Sum();
-
-        return result.ToString();
-    }
-    
-    private static IEnumerable<Matrix> ParseInput(string[] input)
-    {
-        foreach (var line in input)
+        foreach (var line in Input)
         {
-            var parts = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            var matrix = ParseLine(line);
 
-            var buttonTokens = parts[1..^1];
+            var solver = new MatrixSolver(matrix);
 
-            var joltageToken = parts[^1];
-
-            var buttons = buttonTokens
-                .Select(t => t[1..^1]
-                    .Split(',', StringSplitOptions.RemoveEmptyEntries)
-                    .Select(int.Parse)
-                    .ToArray())
-                .ToArray();
-
-            var joltages = joltageToken[1..^1]
-                .Split(',', StringSplitOptions.RemoveEmptyEntries)
-                .Select(int.Parse)
-                .ToArray();
-
-            yield return new Matrix(buttons, joltages);
+            sum += solver.Solve();
         }
+
+        return sum.ToString();
+    }
+
+    private static Matrix ParseLine(string line)
+    {
+        var parts = line.Split(' ');
+
+        var rows = new int[parts.Length - 2];
+
+        for (var i = 1; i < parts.Length - 1; i++)
+        {
+            var digits = parts[i][1..^1].Split(',');
+
+            var button = 0;
+
+            for (var d = 0; d < digits.Length; d++)
+            {
+                button |= 1 << (digits[d][0] - '0');
+            }
+
+            rows[i - 1] = button;
+        }
+
+        var joltages = parts[^1][1..^1].Split(',');
+
+        var totals = new int[joltages.Length];
+
+        for (var i = 0; i < joltages.Length; i++)
+        {
+            totals[i] = int.Parse(joltages[i]);
+        }
+
+        return new Matrix(rows, totals);
     }
 }
