@@ -546,15 +546,15 @@ Tests performed on a 2023 MacBook Pro.
  2025  7.1: 5μs           Laboratories
  2025  7.2: 274μs         
  2025  8.1: 100,498μs     Playground
- 2025  8.2: 91,692μs      
+ 2025  8.2: 91,371μs      
  2025  9.1: 175μs         Movie theater
  2025  9.2: 7,218μs       
  2025 10.1: 1,677μs       Factory
- 2025 10.2: 72,320μs      
+ 2025 10.2: 71,899μs      
  2025 11.1: 142μs         Reactor
  2025 11.2: 555μs         
             -------------
-            340.006ms    
+            339.264ms    
 
- 513 puzzles solved in 39.761s.
+ 513 puzzles solved in 39.760s.
 ```
