@@ -33,11 +33,6 @@ public abstract class Base : Solution
                 }
                 
                 node.Connections.Add(value);
-
-                if (! value.Connections.Contains(node))
-                {
-                    value.Connections.Add(node);
-                }
             }
         }
     }
