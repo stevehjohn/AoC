@@ -5,43 +5,40 @@ namespace AoC.Solutions.Solutions._2025._11;
 [UsedImplicitly]
 public class Part1 : Base
 {
+    private readonly HashSet<string> _visited = [];
+
+    private int _paths;
+    
     public override string GetAnswer()
     {
         ParseInput();
 
-        var result = CountPaths();
+        _visited.Add("you");
         
-        return result.ToString();
+        CountPaths(Nodes["you"]);
+        
+        return _paths.ToString();
     }
 
-    private int CountPaths()
+    private void CountPaths(Node from)
     {
-        var queue = new Queue<(Node Node, HashSet<string> Visited)>();
-
-        queue.Enqueue((Nodes["you"], []));
-
-        var paths = 0;
-
-        while (queue.TryDequeue(out var item))
+        if (from.Name == "out")
         {
-            if (! item.Visited.Add(item.Node.Name))
+            _paths++;
+            
+            return;
+        }
+
+        foreach (var connection in from.Connections)
+        {
+            if (! _visited.Add(connection.Name))
             {
                 continue;
             }
 
-            foreach (var connection in item.Node.Connections)
-            {
-                if (connection.Name == "out")
-                {
-                    paths++;
-                    
-                    continue;
-                }
+            CountPaths(connection);
 
-                queue.Enqueue((Nodes[connection.Name], [..item.Visited]));
-            }
-        }
-
-        return paths;
+            _visited.Remove(connection.Name);
+        }        
     }
 }
