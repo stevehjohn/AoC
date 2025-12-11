@@ -11,9 +11,9 @@ public class Part2 : Base
             Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
             "Git", "AoC", "AoC.Solutions", "Solutions", "2025", "10", "input.clear");
 
-        var machines = Temp.ParseInput(inputPath).ToArray();
+        var machines = MatrixSolver.ParseInput(inputPath).ToArray();
 
-        var p2 = machines.Select( Temp.SolvePart2).Sum();
+        var p2 = machines.Select( MatrixSolver.SolvePart2).Sum();
         
         return p2.ToString();
     }

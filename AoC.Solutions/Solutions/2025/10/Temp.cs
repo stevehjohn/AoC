@@ -2,7 +2,7 @@ using System.Text;
 
 public record Machine2(string TargetLights, int[][] Buttons, int[] Joltages);
 
-public static class Temp
+public static class MatrixSolver
 {
     public static IEnumerable<Machine2> ParseInput(string path)
     {
@@ -67,13 +67,15 @@ public static class Temp
         return A;
     }
 
+    // *** Original-style forward elimination only (no backward phase, no rank trimming) ***
     private static void RowReduce(int[][] A, int R, int C)
     {
-        // Integer Gaussian elimination, preserving your logic
+        // Integer Gaussian elimination, preserving your original logic
         for (int r = 0; r < R && r < C; r++)
         {
             int pivot = -1;
 
+            // Find a pivot row for column r (you were using the last non-zero)
             for (int p = r; p < R; p++)
             {
                 if (A[p][r] != 0)
@@ -90,6 +92,7 @@ public static class Temp
 
             Swap(A, pivot, r);
 
+            // Eliminate below
             for (int p = r + 1; p < R; p++)
             {
                 if (A[p][r] == 0)
@@ -112,31 +115,42 @@ public static class Temp
 
     private static int BackSubstitute(Machine2 machine, int R, int C, int[][] A)
     {
-        // Pre-computed upper bounds for each button
+        // Pre-computed upper bounds for each button (same as before)
         var maximums = machine.Buttons
             .Select(toggles => toggles.Min(idx => machine.Joltages[idx]))
             .ToArray();
 
         var best = int.MaxValue;
 
-        var stack = new Stack<(int Row, int[] Pressed)>();
-        stack.Push((R - 1, Enumerable.Repeat(-1, C).ToArray()));
+        // Track current sum of presses in the stack state for branch-and-bound
+        var stack = new Stack<(int Row, int[] Pressed, int Sum)>();
+
+        stack.Push((R - 1, Enumerable.Repeat(-1, C).ToArray(), 0));
 
         while (stack.Count > 0)
         {
-            var (row, pressed) = stack.Pop();
+            var (row, pressed, sum) = stack.Pop();
+
+            // Branch-and-bound: if we’re already worse than best, prune
+            if (sum >= best)
+            {
+                continue;
+            }
 
             if (row < 0)
             {
                 // All rows consistent → solution
-                best = Math.Min(best, pressed.Sum());
+                if (sum < best)
+                {
+                    best = sum;
+                }
                 continue;
             }
 
             var rowTotal = A[row][C];
 
             // Try to fully resolve the row by substituting known variables
-            for (int c = row; c < C; c++)
+            for (int c = 0; c < C; c++)
             {
                 if (A[row][c] == 0)
                 {
@@ -158,28 +172,57 @@ public static class Temp
             if (rowTotal == 0)
             {
                 // Row is consistent; move to the next row up
-                stack.Push((row - 1, pressed));
+                stack.Push((row - 1, pressed, sum));
             }
 
             continue;
 
         BruteForce:
-            // Find the first unknown variable in this row and branch on it
+            // Choose which variable to branch on in this row.
+            // MRV-ish: pick the unknown with the smallest maximums[c] to minimise branching.
+            int chosenCol = -1;
+            int chosenMax = int.MaxValue;
+
             for (int c = 0; c < C; c++)
             {
                 if (A[row][c] != 0 && pressed[c] == -1)
                 {
                     var max = maximums[c];
 
-                    for (int p = max; p >= 0; p--)
+                    if (max < chosenMax)
                     {
-                        var nextPressed = (int[])pressed.Clone();
-                        nextPressed[c] = p;
-                        stack.Push((row, nextPressed));
+                        chosenMax = max;
+                        chosenCol = c;
                     }
-
-                    break;
                 }
+            }
+
+            if (chosenCol == -1)
+            {
+                // No unknowns left but we got here via goto → treat like known-row case
+                if (rowTotal == 0)
+                {
+                    stack.Push((row - 1, pressed, sum));
+                }
+                continue;
+            }
+
+            // Branch on that chosenCol from max down to 0
+            for (int p = chosenMax; p >= 0; p--)
+            {
+                var newSum = sum + p;
+
+                // Early pruning: if even this assignment is already too big, skip
+                if (newSum >= best)
+                {
+                    continue;
+                }
+
+                var nextPressed = (int[])pressed.Clone();
+                nextPressed[chosenCol] = p;
+
+                // Stay on the same row: we’ve filled one variable, but there might be more
+                stack.Push((row, nextPressed, newSum));
             }
         }
 
