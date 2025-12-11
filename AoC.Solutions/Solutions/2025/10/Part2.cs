@@ -7,10 +7,36 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        var machines = MatrixSolver.ParseInput(Input).ToArray();
+        var machines = ParseInput(Input).ToArray();
 
-        var p2 = machines.Select(MatrixSolver.Solve).Sum();
+        var result = machines.Select(MatrixSolver.Solve).Sum();
 
-        return p2.ToString();
+        return result.ToString();
+    }
+    
+    private static IEnumerable<Matrix> ParseInput(string[] input)
+    {
+        foreach (var line in input)
+        {
+            var parts = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+            var buttonTokens = parts[1..^1];
+
+            var joltageToken = parts[^1];
+
+            var buttons = buttonTokens
+                .Select(t => t[1..^1]
+                    .Split(',', StringSplitOptions.RemoveEmptyEntries)
+                    .Select(int.Parse)
+                    .ToArray())
+                .ToArray();
+
+            var joltages = joltageToken[1..^1]
+                .Split(',', StringSplitOptions.RemoveEmptyEntries)
+                .Select(int.Parse)
+                .ToArray();
+
+            yield return new Matrix(buttons, joltages);
+        }
     }
 }
