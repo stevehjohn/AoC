@@ -33,7 +33,7 @@ public class Part2 : Base
             
             var machine = ToMachine(matrix);
             
-            var solver = new Solver(machine);
+            var solver = new MatrixSolver(machine);
             
             sum += solver.Solve();
         }

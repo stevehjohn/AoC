@@ -12,7 +12,7 @@ public sealed class Machine2
     }
 }
 
-public sealed class Solver
+public sealed class MatrixSolver
 {
     private const int Limit = Vector.Limit;
 
@@ -24,7 +24,7 @@ public sealed class Solver
 
     private readonly List<int>[] _reverse = new List<int>[Limit];
 
-    public Solver(Machine2 machine)
+    public MatrixSolver(Machine2 machine)
     {
         _machine = machine;
         
