@@ -123,7 +123,10 @@ public static class MatrixSolver
 
                 var val = machine.Joltages[idx];
 
-                if (val < min) min = val;
+                if (val < min)
+                {
+                    min = val;
+                }
             }
 
             maximums[c] = min;
@@ -138,98 +141,105 @@ public static class MatrixSolver
             pressed[i] = -1;
         }
 
-        DfsRow(y - 1, 0);
+        DfsRow(y - 1, 0, x, a, maximums, pressed, ref best);
 
         return best;
+    }
 
-        void DfsRow(int row, int sum)
+    private static void DfsRow(int row, int sum, int x, int[][] a, int[] maximums, int[] pressed, ref int best)
+    {
+        if (sum >= best)
         {
-            if (sum >= best)
+            return;
+        }
+
+        if (row < 0)
+        {
+            if (sum < best)
             {
-                return;
-            }
-
-            if (row < 0)
-            {
-                if (sum < best)
-                {
-                    best = sum;
-                }
-
-                return;
-            }
-
-            var rowTotal = a[row][x];
-
-            for (var c = 0; c < x; c++)
-            {
-                var coefficient = a[row][c];
-
-                if (coefficient == 0) continue;
-
-                var v = pressed[c];
-                if (v >= 0)
-                {
-                    rowTotal -= coefficient * v;
-                }
-                else
-                {
-                    goto bruteForce;
-                }
-            }
-
-            if (rowTotal == 0)
-            {
-                DfsRow(row - 1, sum);
+                best = sum;
             }
 
             return;
-
-            bruteForce:
-
-            var bestC = -1;
-
-            var bestMax = int.MaxValue;
-
-            for (var c = 0; c < x; c++)
-            {
-                if (a[row][c] != 0 && pressed[c] == -1)
-                {
-                    var m = maximums[c];
-                    
-                    if (m < bestMax)
-                    {
-                        bestMax = m;
-                        
-                        bestC = c;
-                    }
-                }
-            }
-
-            if (bestC == -1)
-            {
-                if (rowTotal == 0)
-                {
-                    DfsRow(row - 1, sum);
-                }
-
-                return;
-            }
-
-            for (var p = bestMax; p >= 0; p--)
-            {
-                pressed[bestC] = p;
-                
-                DfsRow(row, sum + p);
-            }
-
-            pressed[bestC] = -1;
         }
+
+        var rowTotal = a[row][x];
+
+        for (var c = 0; c < x; c++)
+        {
+            var coefficient = a[row][c];
+
+            if (coefficient == 0)
+            {
+                continue;
+            }
+
+            var v = pressed[c];
+
+            if (v >= 0)
+            {
+                rowTotal -= coefficient * v;
+            }
+            else
+            {
+                goto bruteForce;
+            }
+        }
+
+        if (rowTotal == 0)
+        {
+            DfsRow(row - 1, sum, x, a, maximums, pressed, ref best);
+        }
+
+        return;
+
+    bruteForce:
+
+        var bestC = -1;
+
+        var bestMax = int.MaxValue;
+
+        for (var c = 0; c < x; c++)
+        {
+            if (a[row][c] != 0 && pressed[c] == -1)
+            {
+                var m = maximums[c];
+
+                if (m < bestMax)
+                {
+                    bestMax = m;
+
+                    bestC = c;
+                }
+            }
+        }
+
+        if (bestC == -1)
+        {
+            if (rowTotal == 0)
+            {
+                DfsRow(row - 1, sum, x, a, maximums, pressed, ref best);
+            }
+
+            return;
+        }
+
+        for (var p = bestMax; p >= 0; p--)
+        {
+            pressed[bestC] = p;
+
+            DfsRow(row, sum + p, x, a, maximums, pressed, ref best);
+        }
+
+        pressed[bestC] = -1;
     }
 
     private static void Swap<T>(T[] arr, int i0, int i1)
     {
-        if (i0 == i1) return;
+        if (i0 == i1)
+        {
+            return;
+        }
 
         (arr[i0], arr[i1]) = (arr[i1], arr[i0]);
     }
