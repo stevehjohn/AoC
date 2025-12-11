@@ -53,12 +53,14 @@ public static class MatrixSolver
             
             a[r][x] = machine.Joltages[r];
         }
-
-        foreach (var (buttonIndex, toggles) in machine.Buttons.Select((b, i) => (i, b)))
+        
+        for (var buttonIndex = 0; buttonIndex < x; buttonIndex++)
         {
-            foreach (var toggle in toggles)
+            var toggles = machine.Buttons[buttonIndex];
+
+            for (var t = 0; t < toggles.Length; t++)
             {
-                a[toggle][buttonIndex] = 1;
+                a[toggles[t]][buttonIndex] = 1;
             }
         }
 

@@ -545,7 +545,7 @@ Tests performed on a 2023 MacBook Pro.
  2025  6.2: 64μs          
  2025  7.1: 5μs           Laboratories
  2025  7.2: 274μs         
- 2025  8.1: 100,718μs     Playground
+ 2025  8.1: 100,498μs     Playground
  2025  8.2: 91,692μs      
  2025  9.1: 175μs         Movie theater
  2025  9.2: 7,218μs       
