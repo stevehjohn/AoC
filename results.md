@@ -13,7 +13,7 @@ Tests performed on a 2023 MacBook Pro.
  2015  1.1: 90μs          Not quite lisp
  2015  1.2: 10μs          
  2015  2.1: 396μs         Wrapping paper
- 2015  2.2: 438μs         
+ 2015  2.2: 434μs         
  2015  3.1: 1,203μs       Perfectly spherical houses in a vacuum
  2015  3.2: 1,101μs       
  2015  4.1: 101,286μs     Crypto stocking stuffer
@@ -53,7 +53,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 21.1: 380μs         RPG simulator 2015
  2015 21.2: 365μs         
  2015 22.1: 482,521μs     Wizard simulator 2015
- 2015 22.2: 24,552μs      
+ 2015 22.2: 24,414μs      
  2015 23.1: 72μs          Opening the Turing lock
  2015 23.2: 85μs          
  2015 24.1: 85,779μs      It hangs in the balance
@@ -116,7 +116,7 @@ Tests performed on a 2023 MacBook Pro.
 
  2017  1.1: 8μs           Captcha
  2017  1.2: 10μs          
- 2017  2.1: 10μs          Spreadsheet checksum
+ 2017  2.1: 9μs           Spreadsheet checksum
  2017  2.2: 23μs          
  2017  3.1: 0μs           Spiral memory
  2017  3.2: 18μs          
@@ -209,10 +209,10 @@ Tests performed on a 2023 MacBook Pro.
  2018 21.1: 32μs          Time machine halting problem
  2018 21.2: 9,537,784μs   
  2018 22.1: 208μs         Caving capers
- 2018 22.2: 59,067μs      
+ 2018 22.2: 58,693μs      
  2018 23.1: 172μs         Nanobot teleportation
  2018 23.2: 14,654μs      
- 2018 24.1: 7,799μs       Immune system battle
+ 2018 24.1: 7,776μs       Immune system battle
  2018 24.2: 260,875μs     
  2018 25.1: 32,693μs      4D chocolate teleportation
             -------------
@@ -344,7 +344,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 10.1: 375μs         Esoteric language parser
  2021 10.2: 547μs         
  2021 11.1: 1,722μs       Flashers
- 2021 11.2: 3,082μs       
+ 2021 11.2: 3,077μs       
  2021 12.1: 3,307μs       Caving
  2021 12.2: 55,048μs      
  2021 13.1: 973μs         ZX Spectrum copy protection
@@ -392,7 +392,7 @@ Tests performed on a 2023 MacBook Pro.
  2022  8.1: 809μs         Treetop tree house
  2022  8.2: 804μs         
  2022  9.1: 463μs         Rope bridge
- 2022  9.2: 1,163μs       
+ 2022  9.2: 1,159μs       
  2022 10.1: 3μs           Cathode-Ray tube
  2022 10.2: 4μs           
  2022 11.1: 8μs           Monkey in the middle
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 53,434μs      
  2022 25.1: 9μs           Full of hot air
             -------------
-            283.844ms    
+            283.840ms    
 
  2023  1.1: 115μs         Trebuchet
  2023  1.2: 330μs         
@@ -549,12 +549,12 @@ Tests performed on a 2023 MacBook Pro.
  2025  8.2: 91,371μs      
  2025  9.1: 175μs         Movie theater
  2025  9.2: 7,218μs       
- 2025 10.1: 1,677μs       Factory
- 2025 10.2: 71,899μs      
- 2025 11.1: 142μs         Reactor
- 2025 11.2: 555μs         
+ 2025 10.1: 1,651μs       Factory
+ 2025 10.2: 69,421μs      
+ 2025 11.1: 139μs         Reactor
+ 2025 11.2: 553μs         
             -------------
-            339.264ms    
+            336.755ms    
 
- 513 puzzles solved in 39.760s.
+ 513 puzzles solved in 39.757s.
 ```
