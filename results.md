@@ -550,11 +550,11 @@ Tests performed on a 2023 MacBook Pro.
  2025  9.1: 175μs         Movie theater
  2025  9.2: 7,218μs       
  2025 10.1: 1,677μs       Factory
- 2025 10.2: 868,185μs     
+ 2025 10.2: 74,411μs      
  2025 11.1: 142μs         Reactor
  2025 11.2: 614μs         
             -------------
-            1.136s       
+            342.156ms    
 
- 513 puzzles solved in 40.557s.
+ 513 puzzles solved in 39.763s.
 ```
