@@ -8,25 +8,25 @@ public class Part2 : Base
     public override string GetAnswer()
     {
         var sum = 0;
-        
+
         foreach (var line in Input)
         {
-            var matrix =  ParseLine(line);
-            
+            var matrix = ParseLine(line);
+
             var solver = new MatrixSolver(matrix);
-            
+
             sum += solver.Solve();
         }
 
         return sum.ToString();
     }
-    
+
     private static Matrix ParseLine(string line)
     {
         var parts = line.Split(' ');
 
         var rows = new int[parts.Length - 2];
-        
+
         for (var i = 1; i < parts.Length - 1; i++)
         {
             var digits = parts[i][1..^1].Split(',');
