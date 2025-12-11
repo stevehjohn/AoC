@@ -6,9 +6,9 @@ public sealed class MatrixSolver
 
     private readonly Matrix _matrix;
     
-    private readonly int _buttons;
+    private readonly int _values;
     
-    private readonly int _jolts;
+    private readonly int _totals;
 
     private readonly List<int>[] _reverse = new List<int>[Limit];
 
@@ -16,20 +16,20 @@ public sealed class MatrixSolver
     {
         _matrix = machine;
         
-        _buttons = machine.Rows.Length;
+        _values = machine.Rows.Length;
         
-        _jolts = machine.Totals.Length;
+        _totals = machine.Totals.Length;
 
         for (var i = 0; i < Limit; i++)
         {
             _reverse[i] = [];
         }
 
-        for (var b = 0; b < _buttons; b++)
+        for (var b = 0; b < _values; b++)
         {
             var buttonMask = machine.Rows[b];
 
-            for (var j = 0; j < _jolts; j++)
+            for (var j = 0; j < _totals; j++)
             {
                 if ((buttonMask & (1L << j)) != 0)
                 {
@@ -41,9 +41,9 @@ public sealed class MatrixSolver
 
     public int Solve()
     {
-        var rows = new List<Vector>(_jolts);
+        var rows = new List<Vector>(_totals);
 
-        for (var j = 0; j < _jolts; j++)
+        for (var j = 0; j < _totals; j++)
         {
             Vector row = default;
 
@@ -74,7 +74,7 @@ public sealed class MatrixSolver
 
             Vector sumRow = default;
 
-            for (var b = 0; b < _buttons; b++)
+            for (var b = 0; b < _values; b++)
             {
                 sumRow[b] = 1;
             }
@@ -127,7 +127,7 @@ public sealed class MatrixSolver
 
         var first = 0;
         
-        for (; first < _buttons; first++)
+        for (; first < _values; first++)
         {
             if (v[first] != 0)
             {
@@ -135,7 +135,7 @@ public sealed class MatrixSolver
             }
         }
 
-        if (first < _buttons && v[first] < 0)
+        if (first < _values && v[first] < 0)
         {
             for (var i = 0; i < Limit; i++)
             {
@@ -150,7 +150,7 @@ public sealed class MatrixSolver
 
         var n = rows.Count;
 
-        for (int h = 0, k = 0; h < n && k < _buttons; k++)
+        for (int h = 0, k = 0; h < n && k < _values; k++)
         {
             var pivotRow = h;
 
