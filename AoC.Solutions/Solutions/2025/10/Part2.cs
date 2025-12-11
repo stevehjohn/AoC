@@ -45,17 +45,17 @@ public class Part2 : Base
     {
         var buttons = m.Values.Length;
         
-        var buttonMasks = new long[buttons];
+        var buttonMasks = new int[buttons];
 
         for (var b = 0; b < buttons; b++)
         {
-            var mask = 0L;
+            var mask = 0;
             
             var toggles = m.Values[b];
             
             for (var i = 0; i < toggles.Length; i++)
             {
-                mask |= 1L << toggles[i];
+                mask |= 1 << toggles[i];
             }
             buttonMasks[b] = mask;
         }

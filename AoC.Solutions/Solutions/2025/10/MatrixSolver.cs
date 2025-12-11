@@ -1,150 +1,36 @@
-using System.Diagnostics;
-
 namespace AoC.Solutions.Solutions._2025._10;
 
 public sealed class Machine2
 {
-    public long[] Buttons { get; }
+    public int[] Buttons { get; }
     public int[] Joltage { get; }
 
-    public Machine2(long[] buttons, int[] joltage)
+    public Machine2(int[] buttons, int[] joltage)
     {
         Buttons = buttons;
         Joltage = joltage;
     }
 }
 
-internal struct Vec
-{
-    public const int Limit = 16;
-
-    private short _v0, _v1, _v2, _v3, _v4, _v5, _v6, _v7, _v8, _v9, _v10, _v11, _v12, _v13, _v14, _v15;
-
-    public short this[int index]
-    {
-        readonly get => index switch
-        {
-            0 => _v0, 1 => _v1, 2 => _v2, 3 => _v3,
-            4 => _v4, 5 => _v5, 6 => _v6, 7 => _v7,
-            8 => _v8, 9 => _v9, 10 => _v10, 11 => _v11,
-            12 => _v12, 13 => _v13, 14 => _v14, 15 => _v15,
-            _ => throw new ArgumentOutOfRangeException(nameof(index))
-        };
-
-        set
-        {
-            switch (index)
-            {
-                case 0: _v0 = value; break;
-                case 1: _v1 = value; break;
-                case 2: _v2 = value; break;
-                case 3: _v3 = value; break;
-                case 4: _v4 = value; break;
-                case 5: _v5 = value; break;
-                case 6: _v6 = value; break;
-                case 7: _v7 = value; break;
-                case 8: _v8 = value; break;
-                case 9: _v9 = value; break;
-                case 10: _v10 = value; break;
-                case 11: _v11 = value; break;
-                case 12: _v12 = value; break;
-                case 13: _v13 = value; break;
-                case 14: _v14 = value; break;
-                case 15: _v15 = value; break;
-                default: throw new ArgumentOutOfRangeException(nameof(index));
-            }
-        }
-    }
-
-    public static Vec operator +(in Vec a, in Vec b)
-    {
-        return new Vec
-        {
-            _v0 = (short) (a._v0 + b._v0),
-            _v1 = (short) (a._v1 + b._v1),
-            _v2 = (short) (a._v2 + b._v2),
-            _v3 = (short) (a._v3 + b._v3),
-            _v4 = (short) (a._v4 + b._v4),
-            _v5 = (short) (a._v5 + b._v5),
-            _v6 = (short) (a._v6 + b._v6),
-            _v7 = (short) (a._v7 + b._v7),
-            _v8 = (short) (a._v8 + b._v8),
-            _v9 = (short) (a._v9 + b._v9),
-            _v10 = (short) (a._v10 + b._v10),
-            _v11 = (short) (a._v11 + b._v11),
-            _v12 = (short) (a._v12 + b._v12),
-            _v13 = (short) (a._v13 + b._v13),
-            _v14 = (short) (a._v14 + b._v14),
-            _v15 = (short) (a._v15 + b._v15)
-        };
-    }
-
-    public static Vec operator -(in Vec a, in Vec b)
-    {
-        return new Vec
-        {
-            _v0 = (short) (a._v0 - b._v0),
-            _v1 = (short) (a._v1 - b._v1),
-            _v2 = (short) (a._v2 - b._v2),
-            _v3 = (short) (a._v3 - b._v3),
-            _v4 = (short) (a._v4 - b._v4),
-            _v5 = (short) (a._v5 - b._v5),
-            _v6 = (short) (a._v6 - b._v6),
-            _v7 = (short) (a._v7 - b._v7),
-            _v8 = (short) (a._v8 - b._v8),
-            _v9 = (short) (a._v9 - b._v9),
-            _v10 = (short) (a._v10 - b._v10),
-            _v11 = (short) (a._v11 - b._v11),
-            _v12 = (short) (a._v12 - b._v12),
-            _v13 = (short) (a._v13 - b._v13),
-            _v14 = (short) (a._v14 - b._v14),
-            _v15 = (short) (a._v15 - b._v15)
-        };
-    }
-
-    public static Vec operator *(in Vec a, int b)
-    {
-        return new Vec
-        {
-            _v0 = (short) (a._v0 * b),
-            _v1 = (short) (a._v1 * b),
-            _v2 = (short) (a._v2 * b),
-            _v3 = (short) (a._v3 * b),
-            _v4 = (short) (a._v4 * b),
-            _v5 = (short) (a._v5 * b),
-            _v6 = (short) (a._v6 * b),
-            _v7 = (short) (a._v7 * b),
-            _v8 = (short) (a._v8 * b),
-            _v9 = (short) (a._v9 * b),
-            _v10 = (short) (a._v10 * b),
-            _v11 = (short) (a._v11 * b),
-            _v12 = (short) (a._v12 * b),
-            _v13 = (short) (a._v13 * b),
-            _v14 = (short) (a._v14 * b),
-            _v15 = (short) (a._v15 * b)
-        };
-    }
-}
-
 public sealed class Solver
 {
-    private const int Limit = Vec.Limit;
+    private const int Limit = Vector.Limit;
 
     private readonly Machine2 _machine;
+    
     private readonly int _buttons;
+    
     private readonly int _jolts;
 
-    // reverse[j] = list of buttons that affect jolt j
     private readonly List<int>[] _reverse = new List<int>[Limit];
 
     public Solver(Machine2 machine)
     {
         _machine = machine;
+        
         _buttons = machine.Buttons.Length;
+        
         _jolts = machine.Joltage.Length;
-
-        Debug.Assert(_buttons + 1 <= Limit);
-        Debug.Assert(_jolts + 1 <= Limit);
 
         for (var i = 0; i < Limit; i++)
         {
@@ -168,20 +54,25 @@ public sealed class Solver
     private static int Gcd(int a, int b)
     {
         a = Math.Abs(a);
+        
         b = Math.Abs(b);
+        
         while (b != 0)
         {
             var t = a % b;
+            
             a = b;
+            
             b = t;
         }
 
         return a;
     }
 
-    private void Simplify(ref Vec v)
+    private void Simplify(ref Vector v)
     {
         var g = 0;
+        
         for (var i = 0; i < Limit; i++)
         {
             g = Gcd(g, v[i]);
@@ -196,6 +87,7 @@ public sealed class Solver
         }
 
         var first = 0;
+        
         for (; first < _buttons; first++)
         {
             if (v[first] != 0)
@@ -213,7 +105,7 @@ public sealed class Solver
         }
     }
 
-    private (int freeVar, int maxVal) Gaussian(List<Vec> rows, int limit = -1)
+    private (int freeVar, int maxVal) Gaussian(List<Vector> rows, int limit = -1)
     {
         var doClean = limit >= 0;
 
@@ -253,7 +145,6 @@ public sealed class Solver
                 }
             }
 
-            // eliminate below
             for (var i = pivotRow + 1; i < n; i++)
             {
                 if (rows[i][k] != 0)
@@ -406,7 +297,7 @@ public sealed class Solver
                 {
                     var zeroInd = zeroInds[z];
 
-                    Vec newRow = default;
+                    Vector newRow = default;
 
                     newRow[zeroInd] = 1;
 
@@ -454,15 +345,15 @@ public sealed class Solver
         return a;
     }
 
-    private bool FeasibleSlow(List<Vec> rows, int freeVar, int maxVal, int limit)
+    private bool FeasibleSlow(List<Vector> rows, int freeVar, int maxVal, int limit)
     {
         for (var val = 0; val <= maxVal; val++)
         {
-            var cur = new List<Vec>(rows.Count + 1);
+            var cur = new List<Vector>(rows.Count + 1);
 
             cur.AddRange(rows);
 
-            Vec eq = default;
+            Vector eq = default;
             
             eq[freeVar] = 1;
             
@@ -479,7 +370,7 @@ public sealed class Solver
         return false;
     }
 
-    private bool Feasible(List<Vec> rows, int limit)
+    private bool Feasible(List<Vector> rows, int limit)
     {
         var (freeVar, maxVal) = Gaussian(rows, limit);
 
@@ -493,11 +384,11 @@ public sealed class Solver
 
     public int Solve()
     {
-        var rows = new List<Vec>(_jolts);
+        var rows = new List<Vector>(_jolts);
 
         for (var j = 0; j < _jolts; j++)
         {
-            Vec row = default;
+            Vector row = default;
 
             foreach (var b in _reverse[j])
             {
@@ -520,11 +411,11 @@ public sealed class Solver
 
         for (;; val++)
         {
-            var cur = new List<Vec>(rows.Count + 1);
+            var cur = new List<Vector>(rows.Count + 1);
             
             cur.AddRange(rows);
 
-            Vec sumRow = default;
+            Vector sumRow = default;
 
             for (var b = 0; b < _buttons; b++)
             {
