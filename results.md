@@ -56,7 +56,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 22.2: 24,589μs      
  2015 23.1: 72μs          Opening the Turing lock
  2015 23.2: 85μs          
- 2015 24.1: 85,996μs      It hangs in the balance
+ 2015 24.1: 85,779μs      It hangs in the balance
  2015 24.2: 126μs         
  2015 25.1: 57,269μs      Let it snow
             -------------
@@ -145,7 +145,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 15.1: 129,093μs     Dueling generators
  2017 15.2: 260,150μs     
  2017 16.1: 589μs         Permutation promenade
- 2017 16.2: 64,301μs      
+ 2017 16.2: 64,299μs      
  2017 17.1: 770μs         Spinlock
  2017 17.2: 151,369μs     
  2017 18.1: 181μs         Soundcard shenanigans
@@ -213,10 +213,10 @@ Tests performed on a 2023 MacBook Pro.
  2018 23.1: 172μs         Nanobot teleportation
  2018 23.2: 14,654μs      
  2018 24.1: 7,799μs       Immune system battle
- 2018 24.2: 265,695μs     
+ 2018 24.2: 260,875μs     
  2018 25.1: 32,693μs      4D chocolate teleportation
             -------------
-            12.226s      
+            12.221s      
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
@@ -235,7 +235,7 @@ Tests performed on a 2023 MacBook Pro.
  2019  8.1: 1,041μs       Space GIF
  2019  8.2: 1,008μs       
  2019  9.1: 45μs          Sensor booster (CPU extension 2)
- 2019  9.2: 22,676μs      
+ 2019  9.2: 22,571μs      
  2019 10.1: 17,610μs      Asteroids
  2019 10.2: 1,526μs       
  2019 11.1: 52,614μs      Personal plate (CPU used unmodified)
@@ -317,10 +317,10 @@ Tests performed on a 2023 MacBook Pro.
  2020 23.1: 3μs           Crab cups
  2020 23.2: 140,627μs     
  2020 24.1: 668μs         Tile flipping
- 2020 24.2: 172,897μs     
+ 2020 24.2: 170,528μs     
  2020 25.1: 45,743μs      Door cryptography
             -------------
-            1.209s       
+            1.207s       
 
  2021  1.1: 47μs          Depth scan
  2021  1.2: 138μs         
@@ -371,7 +371,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 23.2: 476,118μs     
  2021 24.1: 2μs           Model number
  2021 24.2: 2μs           
- 2021 25.1: 76,392μs      Landing among the cucumbers
+ 2021 25.1: 76,199μs      Landing among the cucumbers
             -------------
             1.894s       
 
@@ -524,12 +524,12 @@ Tests performed on a 2023 MacBook Pro.
  2024 22.1: 33,620μs      Monkey market
  2024 22.2: 129,952μs     
  2024 23.1: 18,343μs      LAN party
- 2024 23.2: 20,220μs      
+ 2024 23.2: 19,954μs      
  2024 24.1: 329μs         Crossed wires
  2024 24.2: 231μs         
  2024 25.1: 112μs         Code chronicle
             -------------
-            523.850ms    
+            523.584ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 87μs          
@@ -549,12 +549,12 @@ Tests performed on a 2023 MacBook Pro.
  2025  8.2: 92,667μs      
  2025  9.1: 175μs         Movie theater
  2025  9.2: 7,245μs       
- 2025 10.1: 1,742μs       Factory
+ 2025 10.1: 1,677μs       Factory
  2025 10.2: 152,100,093μs  
- 2025 11.1: 221μs         Reactor
- 2025 11.2: 800μs         
+ 2025 11.1: 142μs         Reactor
+ 2025 11.2: 614μs         
             -------------
             152.372s     
 
- 513 puzzles solved in 191.801s.
+ 513 puzzles solved in 191.793s.
 ```
