@@ -172,7 +172,7 @@ Tests performed on a 2023 MacBook Pro.
  2018  2.2: 176μs         
  2018  3.1: 5,741μs       Fabric overlap
  2018  3.2: 5,035μs       
- 2018  4.1: 674μs         Sleepy guards
+ 2018  4.1: 673μs         Sleepy guards
  2018  4.2: 1,150μs       
  2018  5.1: 882μs         Polymer reactions
  2018  5.2: 33,500μs      
@@ -299,8 +299,8 @@ Tests performed on a 2023 MacBook Pro.
  2020 14.1: 89μs          Memory bit twiddling
  2020 14.2: 3,890μs       
  2020 15.1: 14μs          Number memory game
- 2020 15.2: 225,994μs     
- 2020 16.1: 592μs         Ticket deciphering
+ 2020 15.2: 225,474μs     
+ 2020 16.1: 590μs         Ticket deciphering
  2020 16.2: 1,041μs       
  2020 17.1: 31,180μs      Conway cubes
  2020 17.2: 404,419μs     
@@ -320,7 +320,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 24.2: 170,528μs     
  2020 25.1: 45,743μs      Door cryptography
             -------------
-            1.207s       
+            1.206s       
 
  2021  1.1: 47μs          Depth scan
  2021  1.2: 138μs         
@@ -553,9 +553,9 @@ Tests performed on a 2023 MacBook Pro.
  2025 10.2: 67,032μs      
  2025 11.1: 139μs         Reactor
  2025 11.2: 520μs         
- 2025 12.1: 279μs         Christmas tree farm
+ 2025 12.1: 276μs         Christmas tree farm
             -------------
-            334.501ms    
+            334.498ms    
 
  514 puzzles solved in 39.726s.
 ```

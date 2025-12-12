@@ -1,3 +1,4 @@
+using AoC.Solutions.Infrastructure;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2025._12;
@@ -5,6 +6,19 @@ namespace AoC.Solutions.Solutions._2025._12;
 [UsedImplicitly]
 public class Part1 : Base
 {
+    private readonly IVisualiser<PuzzleState> _visualiser;
+
+    private readonly PuzzleState _puzzleState;
+    
+    public Part1() { }
+
+    public Part1(IVisualiser<PuzzleState> visualiser)
+    {
+        _visualiser = visualiser;
+
+        _puzzleState = new PuzzleState();
+    }
+
     public override string GetAnswer()
     {
         var areas = new Dictionary<int, int>();
@@ -50,6 +64,11 @@ public class Part1 : Base
             if (used < area)
             {
                 result++;
+            }
+
+            if (_visualiser != null)
+            {
+                _puzzleState.Areas.Add(new Area(int.Parse(line[..2]), int.Parse(line[3..5]), presentCounts.Select(int.Parse).ToArray(), used < area));
             }
         }
 
