@@ -123,7 +123,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.Black);
-        
+
         Array.Fill(_data, Color.Black);
 
         for (var y = 0; y <= _area.Height; y++)
@@ -222,16 +222,70 @@ public class Visualisation : VisualisationBase<PuzzleState>
             return;
         }
 
-        var position = new Coordinate(_area.Width / 2, _area.Height / 2);
+        var position = _lastPlacement;
+
+        var placed = false;
+
+        if (_lastPlacement.X == -1)
+        {
+            position = new Coordinate(0, 0);
+        }
+        else
+        {
+            // 1) try overlap-by-1 (step 2)
+            position = new Coordinate(_lastPlacement.X + 2, _lastPlacement.Y);
+            if (! CanPlace(position, tile))
+            {
+                // 2) try flush (step 3)
+                position = new Coordinate(_lastPlacement.X + 3, _lastPlacement.Y);
+                if (! CanPlace(position, tile))
+                {
+                    // 3) next row
+                    position = new Coordinate(0, _lastPlacement.Y + 3);
+                    if (! CanPlace(position, tile))
+                    {
+                        // no room (or you need to add vertical overlap rules too)
+                        return;
+                    }
+                }
+            }
+        }
 
         for (var y = 0; y < 3; y++)
         {
             for (var x = 0; x < 3; x++)
             {
-                _grid[position.Y + y][position.X + x] = tile[y][x] ? _presentIndex : 0;
+                if (tile[y][x])
+                {
+                    _grid[position.Y + y][position.X + x] = _presentIndex;
+                }
             }
         }
+
+        _lastPlacement = position;
     }
+
+    private bool CanPlace(Coordinate position, bool[][] tile)
+    {
+        if (position.X < 0 || position.X > _area.Width - 3 || position.Y < 0 || position.Y > _area.Height - 3)
+        {
+            return false;
+        }
+
+        for (var y = 0; y < 3; y++)
+        {
+            for (var x = 0; x < 3; x++)
+            {
+                if (tile[y][x] && _grid[position.Y + y][position.X + x] != 0)
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
 
     private bool[][] GetNextTile()
     {
@@ -245,11 +299,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
                 _area.PresentCounts[_presentIndex]--;
 
+                _presentIndex = (_presentIndex + 1) % _area.PresentCounts.Length;
+
                 return tile;
             }
 
             _presentIndex = (_presentIndex + 1) % _area.PresentCounts.Length;
-            
         } while (_presentIndex != startIndex);
 
         return null;
