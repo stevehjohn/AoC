@@ -104,6 +104,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         if (_needArea)
         {
+            if (_areaIndex >= _puzzleState.Areas.Count)
+            {
+                return;
+            }
+
             _area = _puzzleState.Areas[_areaIndex++];
 
             _width = _area.Width * TileWidth;
