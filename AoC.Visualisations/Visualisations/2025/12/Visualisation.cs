@@ -285,6 +285,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         for (var i = 0; i < 4; i++)
         {
             yield return current;
+            
             current = Rotate90(current);
         }
     
