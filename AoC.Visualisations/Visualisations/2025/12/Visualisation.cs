@@ -283,7 +283,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
         return true;
     }
 
-
     private bool[][] GetNextTile()
     {
         var startIndex = _presentIndex;
