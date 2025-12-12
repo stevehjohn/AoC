@@ -368,12 +368,12 @@ Tests performed on a 2023 MacBook Pro.
  2021 22.1: 1,901μs       Reactor reboot
  2021 22.2: 23,586μs      
  2021 23.1: 151,058μs     Hotel amphipod
- 2021 23.2: 474,436μs     
+ 2021 23.2: 473,471μs     
  2021 24.1: 2μs           Model number
  2021 24.2: 2μs           
  2021 25.1: 76,199μs      Landing among the cucumbers
             -------------
-            1.889s       
+            1.888s       
 
  2022  1.1: 22μs          Calorie counting
  2022  1.2: 32μs          
@@ -553,9 +553,9 @@ Tests performed on a 2023 MacBook Pro.
  2025 10.2: 67,032μs      
  2025 11.1: 139μs         Reactor
  2025 11.2: 520μs         
- 2025 12.1: 297μs         Christmas tree farm
+ 2025 12.1: 283μs         Christmas tree farm
             -------------
-            334.519ms    
+            334.505ms    
 
- 514 puzzles solved in 39.733s.
+ 514 puzzles solved in 39.732s.
 ```
