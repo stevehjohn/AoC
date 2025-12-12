@@ -195,7 +195,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 14.1: 21,207μs      Elf recipes
  2018 14.2: 994,447μs     
  2018 15.1: 84,276μs      Elves vs Goblins
- 2018 15.2: 351,773μs     
+ 2018 15.2: 349,565μs     
  2018 16.1: 512μs         Opcode reverse-engineering
  2018 16.2: 725μs         
  2018 17.1: 20,437μs      Don't go chasing waterfalls
@@ -216,7 +216,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 260,875μs     
  2018 25.1: 32,693μs      4D chocolate teleportation
             -------------
-            12.216s      
+            12.214s      
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
@@ -367,13 +367,13 @@ Tests performed on a 2023 MacBook Pro.
  2021 21.2: 533,835μs     
  2021 22.1: 1,901μs       Reactor reboot
  2021 22.2: 23,586μs      
- 2021 23.1: 151,058μs     Hotel amphipod
+ 2021 23.1: 150,652μs     Hotel amphipod
  2021 23.2: 473,471μs     
  2021 24.1: 2μs           Model number
  2021 24.2: 2μs           
  2021 25.1: 76,199μs      Landing among the cucumbers
             -------------
-            1.888s       
+            1.887s       
 
  2022  1.1: 22μs          Calorie counting
  2022  1.2: 32μs          
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             334.505ms    
 
- 514 puzzles solved in 39.732s.
+ 514 puzzles solved in 39.729s.
 ```
