@@ -41,7 +41,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 15.1: 727μs         Science for hungry people
  2015 15.2: 724μs         
  2015 16.1: 21μs          Aunt Sue
- 2015 16.2: 100μs         
+ 2015 16.2: 89μs          
  2015 17.1: 126,203μs     Too much eggnog
  2015 17.2: 268,625μs     
  2015 18.1: 178,312μs     Bournville GIF
@@ -257,7 +257,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 19.1: 112,897μs     Tractorrr (CPU used unmodified)
  2019 19.2: 121,421μs     
  2019 20.1: 252μs         Doughnut maze
- 2019 20.2: 5,998μs       
+ 2019 20.2: 5,985μs       
  2019 21.1: 1,652μs       Jumping droids (CPU used unmodified)
  2019 21.2: 31,810μs      
  2019 22.1: 371μs         Space shuffle
@@ -386,14 +386,14 @@ Tests performed on a 2023 MacBook Pro.
  2022  5.1: 87μs          Supply stacks
  2022  5.2: 165μs         
  2022  6.1: 116μs         Tuning trouble
- 2022  6.2: 169μs         
+ 2022  6.2: 167μs         
  2022  7.1: 247μs         No space left on device
  2022  7.2: 242μs         
  2022  8.1: 809μs         Treetop tree house
  2022  8.2: 804μs         
  2022  9.1: 462μs         Rope bridge
- 2022  9.2: 1,159μs       
- 2022 10.1: 3μs           Cathode-Ray tube
+ 2022  9.2: 1,154μs       
+ 2022 10.1: 3μs           Cathode-ray tube
  2022 10.2: 4μs           
  2022 11.1: 8μs           Monkey in the middle
  2022 11.2: 2,366μs       
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 53,434μs      
  2022 25.1: 9μs           Full of hot air
             -------------
-            283.821ms    
+            283.814ms    
 
  2023  1.1: 115μs         Trebuchet
  2023  1.2: 330μs         
