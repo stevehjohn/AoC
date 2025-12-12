@@ -271,22 +271,29 @@ public class Visualisation : VisualisationBase<PuzzleState>
         }
     }
 
-    private static IEnumerable<bool[][]> GetAllOrientations(bool[][] tile)
+    private IEnumerable<bool[][]> GetAllOrientations(bool[][] tile)
     {
         var current = tile;
-
-        for (var i = 0; i < 4; i++)
+    
+        var startRotation = _lastPlacement.X == -1 ? 2 : 0;
+    
+        for (var i = 0; i < startRotation; i++)
         {
-            yield return current;
-
             current = Rotate90(current);
         }
-
-        current = FlipHorizontal(tile);
+    
         for (var i = 0; i < 4; i++)
         {
             yield return current;
-
+            current = Rotate90(current);
+        }
+    
+        current = FlipHorizontal(tile);
+        
+        for (var i = 0; i < 4; i++)
+        {
+            yield return current;
+            
             current = Rotate90(current);
         }
     }
