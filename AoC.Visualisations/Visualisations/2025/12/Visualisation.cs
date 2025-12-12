@@ -1,3 +1,4 @@
+using AoC.Solutions.Infrastructure;
 using AoC.Solutions.Solutions._2025._12;
 using AoC.Visualisations.Exceptions;
 using AoC.Visualisations.Infrastructure;
@@ -22,7 +23,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private const int CanvasHeight = Height * TileHeight + 1;
 
-    private int[,] _grid = new int[50, 50];
+    private int[][] _grid;
 
     private SpriteBatch _spriteBatch;
 
@@ -45,6 +46,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private int _left;
 
     private int _top;
+
+    private int _presentIndex;
+
+    private Coordinate _lastPlacement;
 
     public Visualisation()
     {
@@ -96,8 +101,21 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
             _top = CanvasHeight / 2 - _height / 2;
 
+            _presentIndex = 0;
+
+            _lastPlacement = new Coordinate(-1, -1);
+
+            _grid = new int[_area.Height][];
+
+            for (var y = 0; y < _area.Height; y++)
+            {
+                _grid[y] = new int[_area.Width];
+            }
+
             _needArea = false;
         }
+
+        PlaceNextTile();
 
         base.Update(gameTime);
     }
@@ -105,6 +123,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.Black);
+        
+        Array.Fill(_data, Color.Black);
 
         for (var y = 0; y <= _area.Height; y++)
         {
@@ -122,6 +142,27 @@ public class Visualisation : VisualisationBase<PuzzleState>
             }
         }
 
+        for (var y = 0; y < _area.Height; y++)
+        {
+            for (var x = 0; x < _area.Width; x++)
+            {
+                if (_grid[y][x] > 0)
+                {
+                    var tileId = _grid[y][x];
+
+                    var color = GetTileColor(tileId);
+
+                    for (var py = 1; py < TileHeight; py++)
+                    {
+                        for (var px = 1; px < TileWidth; px++)
+                        {
+                            this[x * TileWidth + px, y * TileHeight + py] = color;
+                        }
+                    }
+                }
+            }
+        }
+
         _texture.SetData(_data);
 
         _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
@@ -134,6 +175,84 @@ public class Visualisation : VisualisationBase<PuzzleState>
         _spriteBatch.End();
 
         base.Draw(gameTime);
+    }
+
+    private static Color GetTileColor(int tileId)
+    {
+        var hue = tileId * 137.508f % 360;
+
+        return ColorFromHsv(hue, 0.7f, 0.9f);
+    }
+
+    private static Color ColorFromHsv(float hue, float saturation, float value)
+    {
+        var hi = Convert.ToInt32(Math.Floor(hue / 60)) % 6;
+
+        var f = hue / 60 - Math.Floor(hue / 60);
+
+        value *= 255;
+
+        var v = Convert.ToInt32(value);
+
+        var p = Convert.ToInt32(value * (1 - saturation));
+
+        var q = Convert.ToInt32(value * (1 - f * saturation));
+
+        var t = Convert.ToInt32(value * (1 - (1 - f) * saturation));
+
+        return hi switch
+        {
+            0 => new Color(v, t, p),
+            1 => new Color(q, v, p),
+            2 => new Color(p, v, t),
+            3 => new Color(p, q, v),
+            4 => new Color(t, p, v),
+            _ => new Color(v, p, q)
+        };
+    }
+
+    private void PlaceNextTile()
+    {
+        var tile = GetNextTile();
+
+        if (tile == null)
+        {
+            _needArea = true;
+
+            return;
+        }
+
+        var position = new Coordinate(_area.Width / 2, _area.Height / 2);
+
+        for (var y = 0; y < 3; y++)
+        {
+            for (var x = 0; x < 3; x++)
+            {
+                _grid[position.Y + y][position.X + x] = tile[y][x] ? _presentIndex : 0;
+            }
+        }
+    }
+
+    private bool[][] GetNextTile()
+    {
+        var startIndex = _presentIndex;
+
+        do
+        {
+            if (_area.PresentCounts[_presentIndex] > 0)
+            {
+                var tile = _puzzleState.Tiles[_presentIndex];
+
+                _area.PresentCounts[_presentIndex]--;
+
+                return tile;
+            }
+
+            _presentIndex = (_presentIndex + 1) % _area.PresentCounts.Length;
+            
+        } while (_presentIndex != startIndex);
+
+        return null;
     }
 
     private Color this[int x, int y]

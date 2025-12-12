@@ -44,15 +44,15 @@ public class Part1 : Base
 
             if (_visualiser != null)
             {
-                var tile = new int[3];
+                var tile = new bool[3][];
                 
                 for (var y = 1; y < 4; y++)
                 {
-                    var row = 0;
+                    var row = new bool[3];
                     
                     for (var x = 0; x < 3; x++)
                     {
-                        row |= (Input[i + y][x] == '#' ? 1 : 0) << x;
+                        row[x] = Input[i + y][x] == '#';
                     }
 
                     tile[y - 1] = row;
