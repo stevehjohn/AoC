@@ -130,6 +130,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
             _needArea = false;
         }
 
+        PlaceNextTile(gameTime);
+
         base.Update(gameTime);
     }
 
