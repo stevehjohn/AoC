@@ -106,7 +106,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         GraphicsDevice.Clear(Color.Black);
 
-        for (var y = 0; y < _area.Height; y++)
+        for (var y = 0; y <= _area.Height; y++)
         {
             for (var x = 0; x < _width; x++)
             {
@@ -114,7 +114,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             }
         }
 
-        for (var x = 0; x < _area.Width; x++)
+        for (var x = 0; x <= _area.Width; x++)
         {
             for (var y = 0; y < _height; y++)
             {
