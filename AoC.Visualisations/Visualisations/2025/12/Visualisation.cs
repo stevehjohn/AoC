@@ -11,7 +11,7 @@ namespace AoC.Visualisations.Visualisations._2025._12;
 [UsedImplicitly]
 public class Visualisation : VisualisationBase<PuzzleState>
 {
-    private const int Pause = 200;
+    private const int Pause = 750;
     
     private const int Width = 50;
 
