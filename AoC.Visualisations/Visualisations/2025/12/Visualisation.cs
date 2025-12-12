@@ -254,7 +254,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             {
                 if (tile[y][x])
                 {
-                    _grid[position.Y + y][position.X + x] = _presentIndex;
+                    _grid[position.Y + y][position.X + x] = _presentIndex + 1;
                 }
             }
         }
@@ -301,6 +301,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             }
 
             _presentIndex = (_presentIndex + 1) % _area.PresentCounts.Length;
+            
         } while (_presentIndex != startIndex);
 
         return null;
