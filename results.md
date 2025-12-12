@@ -491,7 +491,7 @@ Tests performed on a 2023 MacBook Pro.
  2024  5.2: 1,731μs       
  2024  6.1: 368μs         Guard gallivant
  2024  6.2: 32,324μs      
- 2024  7.1: 144μs         Bridge repair
+ 2024  7.1: 143μs         Bridge repair
  2024  7.2: 5,496μs       
  2024  8.1: 90μs          Resonant collinearity
  2024  8.2: 121μs         
@@ -529,7 +529,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 231μs         
  2024 25.1: 112μs         Code chronicle
             -------------
-            521.759ms    
+            521.758ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 87μs          
