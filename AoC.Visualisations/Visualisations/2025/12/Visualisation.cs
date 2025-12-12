@@ -221,19 +221,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         if (tile == null)
         {
-            var tilesRemaining = _area.PresentCounts.Sum();
-    
-            if (tilesRemaining == 0)
-            {
-                _backgroundColour = _area.IsValid 
-                    ? Color.FromNonPremultiplied(0, 64, 0, 255) 
-                    : Color.FromNonPremultiplied(64, 0, 0, 255);
-            }
-            else
-            {
-                _backgroundColour = Color.FromNonPremultiplied(64, 0, 0, 255);
-            }
-    
+            _backgroundColour = Color.FromNonPremultiplied(0, 64, 0, 255);
+
             _needArea = true;
             
             return;
@@ -273,6 +262,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 }
             }
         }
+
+        _backgroundColour = Color.FromNonPremultiplied(0, 64, 0, 255);
 
         _needArea = true;
     }
