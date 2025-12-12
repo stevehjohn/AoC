@@ -94,6 +94,11 @@ public class Part1 : Base
             }
         }
 
+        if (_visualiser != null)
+        {
+            _visualiser.PuzzleStateChanged(_puzzleState);
+        }
+
         return result.ToString();
     }
 }
