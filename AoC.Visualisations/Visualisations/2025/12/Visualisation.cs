@@ -221,25 +221,26 @@ public class Visualisation : VisualisationBase<PuzzleState>
             return;
         }
 
-        Coordinate position;
         long startX, startY;
 
         if (_lastPlacement.X == -1)
         {
             startX = 0;
+            
             startY = 0;
         }
         else
         {
             startX = _lastPlacement.X + 1;
+            
             startY = _lastPlacement.Y;
         }
 
         for (var y = startY; y < _area.Height; y++)
         {
-            for (var x = (y == startY ? startX : 0); x < _area.Width; x++)
+            for (var x = y == startY ? startX : 0; x < _area.Width; x++)
             {
-                position = new Coordinate(x, y);
+                var position = new Coordinate(x, y);
 
                 foreach (var orientation in GetAllOrientations(tile))
                 {
@@ -270,7 +271,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         }
     }
 
-    private IEnumerable<bool[][]> GetAllOrientations(bool[][] tile)
+    private static IEnumerable<bool[][]> GetAllOrientations(bool[][] tile)
     {
         var current = tile;
 
@@ -290,7 +291,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         }
     }
 
-    private bool[][] Rotate90(bool[][] tile)
+    private static bool[][] Rotate90(bool[][] tile)
     {
         var rotated = new bool[3][];
 
@@ -310,7 +311,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         return rotated;
     }
 
-    private bool[][] FlipHorizontal(bool[][] tile)
+    private static bool[][] FlipHorizontal(bool[][] tile)
     {
         var flipped = new bool[3][];
 
