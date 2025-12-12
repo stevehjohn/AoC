@@ -51,6 +51,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private Coordinate _lastPlacement;
 
+    private Color _backgroundColour = Color.Black;
+
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -112,6 +114,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 _grid[y] = new int[_area.Width];
             }
 
+            _backgroundColour = Color.Black;
+            
             _needArea = false;
         }
 
@@ -122,7 +126,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.Black);
+        GraphicsDevice.Clear(_backgroundColour);
 
         Array.Fill(_data, Color.Black);
 
@@ -218,6 +222,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
         if (tile == null)
         {
             _needArea = true;
+
+            _backgroundColour = _area.IsValid ? Color.FromNonPremultiplied(0, 64, 0, 255) : Color.FromNonPremultiplied(64, 0, 0, 255);
+            
             return;
         }
 
