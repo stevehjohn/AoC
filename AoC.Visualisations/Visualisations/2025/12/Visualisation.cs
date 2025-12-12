@@ -218,69 +218,116 @@ public class Visualisation : VisualisationBase<PuzzleState>
         if (tile == null)
         {
             _needArea = true;
-
             return;
         }
 
         Coordinate position;
+        long startX, startY;
 
         if (_lastPlacement.X == -1)
         {
-            position = new Coordinate(0, 0);
+            startX = 0;
+            startY = 0;
         }
         else
         {
-            position = _lastPlacement with { X = _lastPlacement.X + 2 };
-            
-            if (! CanPlace(position, tile))
+            startX = _lastPlacement.X + 1;
+            startY = _lastPlacement.Y;
+        }
+
+        for (var y = startY; y < _area.Height; y++)
+        {
+            for (var x = (y == startY ? startX : 0); x < _area.Width; x++)
             {
-                position = _lastPlacement with { X = _lastPlacement.X + 3 };
+                position = new Coordinate(x, y);
 
-                if (! CanPlace(position, tile))
+                foreach (var orientation in GetAllOrientations(tile))
                 {
-                    position = new Coordinate(0, _lastPlacement.Y + 3);
-
-                    if (! CanPlace(position, tile))
+                    if (CanPlace(position, orientation))
                     {
+                        PlaceTile(position, orientation);
+                        
+                        _lastPlacement = position;
+                        
                         return;
                     }
                 }
             }
         }
+    }
 
+    private void PlaceTile(Coordinate position, bool[][] tile)
+    {
         for (var y = 0; y < 3; y++)
         {
             for (var x = 0; x < 3; x++)
             {
                 if (tile[y][x])
                 {
-                    _grid[position.Y + y][position.X + x] = _presentIndex + 1;
+                    _grid[position.Y + y][position.X + x] = _presentIndex;
                 }
             }
         }
-
-        _lastPlacement = position;
     }
 
-    private bool CanPlace(Coordinate position, bool[][] tile)
+    private IEnumerable<bool[][]> GetAllOrientations(bool[][] tile)
     {
-        if (position.X < 0 || position.X > _area.Width - 3 || position.Y < 0 || position.Y > _area.Height - 3)
+        var current = tile;
+
+        for (var i = 0; i < 4; i++)
         {
-            return false;
+            yield return current;
+
+            current = Rotate90(current);
+        }
+
+        current = FlipHorizontal(tile);
+        for (var i = 0; i < 4; i++)
+        {
+            yield return current;
+
+            current = Rotate90(current);
+        }
+    }
+
+    private bool[][] Rotate90(bool[][] tile)
+    {
+        var rotated = new bool[3][];
+
+        for (var i = 0; i < 3; i++)
+        {
+            rotated[i] = new bool[3];
         }
 
         for (var y = 0; y < 3; y++)
         {
             for (var x = 0; x < 3; x++)
             {
-                if (tile[y][x] && _grid[position.Y + y][position.X + x] != 0)
-                {
-                    return false;
-                }
+                rotated[x][2 - y] = tile[y][x];
             }
         }
 
-        return true;
+        return rotated;
+    }
+
+    private bool[][] FlipHorizontal(bool[][] tile)
+    {
+        var flipped = new bool[3][];
+
+        for (var i = 0; i < 3; i++)
+        {
+            flipped[i] = new bool[3];
+        }
+
+        for (var y = 0; y < 3; y++)
+        {
+            for (var x = 0; x < 3; x++)
+            {
+                flipped[y][2 - x] = tile[y][x];
+            }
+        }
+
+        return flipped;
     }
 
     private bool[][] GetNextTile()
@@ -305,6 +352,27 @@ public class Visualisation : VisualisationBase<PuzzleState>
         } while (_presentIndex != startIndex);
 
         return null;
+    }
+
+    private bool CanPlace(Coordinate position, bool[][] tile)
+    {
+        if (position.X < 0 || position.X > _area.Width - 3 || position.Y < 0 || position.Y > _area.Height - 3)
+        {
+            return false;
+        }
+
+        for (var y = 0; y < 3; y++)
+        {
+            for (var x = 0; x < 3; x++)
+            {
+                if (tile[y][x] && _grid[position.Y + y][position.X + x] != 0)
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     private Color this[int x, int y]
