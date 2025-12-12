@@ -407,7 +407,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 15.2: 10,055μs      
  2022 16.1: 21,516μs      Proboscidea volcanium
  2022 16.2: 13,314μs      
- 2022 17.1: 126μs         Pyroclastic flow
+ 2022 17.1: 125μs         Pyroclastic flow
  2022 17.2: 1,236μs       
  2022 18.1: 327μs         Boiling boulders
  2022 18.2: 1,418μs       
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 53,434μs      
  2022 25.1: 9μs           Full of hot air
             -------------
-            283.814ms    
+            283.813ms    
 
  2023  1.1: 115μs         Trebuchet
  2023  1.2: 330μs         
@@ -498,7 +498,7 @@ Tests performed on a 2023 MacBook Pro.
  2024  9.1: 287μs         Disk fragmenter
  2024  9.2: 34,746μs      
  2024 10.1: 287μs         Hoof it
- 2024 10.2: 472μs         
+ 2024 10.2: 469μs         
  2024 11.1: 411μs         Plutonian pebbles
  2024 11.2: 12,328μs      
  2024 12.1: 3,535μs       Garden groups
@@ -509,7 +509,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 14.2: 12,548μs      
  2024 15.1: 270μs         Warehouse woes
  2024 15.2: 5,807μs       
- 2024 16.1: 3,017μs       Reindeer maze
+ 2024 16.1: 3,004μs       Reindeer maze
  2024 16.2: 31,459μs      
  2024 17.1: 7μs           Chronospatial computer
  2024 17.2: 2,535μs       
@@ -529,7 +529,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 231μs         
  2024 25.1: 112μs         Code chronicle
             -------------
-            521.775ms    
+            521.759ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 87μs          
