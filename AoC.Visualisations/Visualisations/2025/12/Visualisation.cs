@@ -274,7 +274,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             }
         }
 
-        _backgroundColour = Color.FromNonPremultiplied(0, 64, 0, 255);
+        _backgroundColour = Color.FromNonPremultiplied(64, 0, 0, 255);
 
         _needArea = true;
 
