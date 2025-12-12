@@ -206,7 +206,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 19.2: 34,365μs      
  2018 20.1: 3,075μs       Regex maze
  2018 20.2: 3,791μs       
- 2018 21.1: 31μs          Time machine halting problem
+ 2018 21.1: 30μs          Time machine halting problem
  2018 21.2: 9,537,784μs   
  2018 22.1: 208μs         Caving capers
  2018 22.2: 58,217μs      
@@ -553,9 +553,9 @@ Tests performed on a 2023 MacBook Pro.
  2025 10.2: 67,032μs      
  2025 11.1: 139μs         Reactor
  2025 11.2: 520μs         
- 2025 12.1: 283μs         Christmas tree farm
+ 2025 12.1: 279μs         Christmas tree farm
             -------------
-            334.505ms    
+            334.501ms    
 
  514 puzzles solved in 39.729s.
 ```
