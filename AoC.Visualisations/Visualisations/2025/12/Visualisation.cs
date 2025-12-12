@@ -11,6 +11,8 @@ namespace AoC.Visualisations.Visualisations._2025._12;
 [UsedImplicitly]
 public class Visualisation : VisualisationBase<PuzzleState>
 {
+    private const int Pause = 200;
+    
     private const int Width = 50;
 
     private const int Height = 50;
@@ -53,6 +55,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private Color _backgroundColour = Color.Black;
 
+    private double _lastCompletion;
+
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -91,6 +95,13 @@ public class Visualisation : VisualisationBase<PuzzleState>
             _puzzleState = GetNextState();
         }
 
+        if (_needArea && _areaIndex > 0 && gameTime.TotalGameTime.TotalMilliseconds - _lastCompletion < Pause)
+        {
+            base.Update(gameTime);
+            
+            return;
+        }
+
         if (_needArea)
         {
             _area = _puzzleState.Areas[_areaIndex++];
@@ -118,8 +129,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
             
             _needArea = false;
         }
-
-        PlaceNextTile();
 
         base.Update(gameTime);
     }
@@ -215,7 +224,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         };
     }
 
-    private void PlaceNextTile()
+    private void PlaceNextTile(GameTime gameTime)
     {
         var tile = GetNextTile();
 
@@ -224,6 +233,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
             _backgroundColour = Color.FromNonPremultiplied(0, 64, 0, 255);
 
             _needArea = true;
+
+            _lastCompletion = gameTime.TotalGameTime.TotalMilliseconds;
             
             return;
         }
@@ -266,6 +277,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
         _backgroundColour = Color.FromNonPremultiplied(0, 64, 0, 255);
 
         _needArea = true;
+
+        _lastCompletion = gameTime.TotalGameTime.TotalMilliseconds;
     }
 
     private void PlaceTile(Coordinate position, bool[][] tile)
