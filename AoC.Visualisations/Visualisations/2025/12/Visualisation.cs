@@ -137,9 +137,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(_backgroundColour);
-
-        Array.Fill(_data, Color.Black);
+        Array.Fill(_data, _backgroundColour);
 
         for (var y = 0; y <= _area.Height; y++)
         {
