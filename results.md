@@ -43,7 +43,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 16.1: 21μs          Aunt Sue
  2015 16.2: 89μs          
  2015 17.1: 126,203μs     Too much eggnog
- 2015 17.2: 268,625μs     
+ 2015 17.2: 265,674μs     
  2015 18.1: 178,312μs     Bournville GIF
  2015 18.2: 177,668μs     
  2015 19.1: 175μs         Medicine for Rudolph
@@ -60,7 +60,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 24.2: 126μs         
  2015 25.1: 57,269μs      Let it snow
             -------------
-            4.813s       
+            4.810s       
 
  2016  1.1: 6μs           Manhattan distance
  2016  1.2: 15μs          
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             334.501ms    
 
- 514 puzzles solved in 39.729s.
+ 514 puzzles solved in 39.726s.
 ```
