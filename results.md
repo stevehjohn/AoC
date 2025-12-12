@@ -183,7 +183,7 @@ Tests performed on a 2023 MacBook Pro.
  2018  8.1: 4,904μs       Navigation licensing
  2018  8.2: 4,942μs       
  2018  9.1: 726μs         Marble madness
- 2018  9.2: 426,667μs     
+ 2018  9.2: 426,411μs     
  2018 10.1: 5,799μs       Writing in the stars
  2018 10.2: 5,959μs       
  2018 11.1: 350μs         Max power... cell

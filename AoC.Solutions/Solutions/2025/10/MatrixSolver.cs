@@ -203,7 +203,7 @@ public sealed class MatrixSolver
 
         var candidate = (freeVar: int.MaxValue, maxVal: int.MaxValue);
 
-        Span<int> zeroInds = stackalloc int[Limit];
+        Span<int> zeroIndices = stackalloc int[Limit];
 
         var removedZeros = 0;
 
@@ -223,20 +223,20 @@ public sealed class MatrixSolver
 
             for (var b = 0; b < Limit - 1; b++)
             {
-                int coeff = row[b];
+                int coefficient = row[b];
 
-                if (coeff != 0)
+                if (coefficient != 0)
                 {
                     count++;
 
                     lastIndex = b;
 
-                    if (coeff > 0)
+                    if (coefficient > 0)
                     {
                         numGt++;
                     }
 
-                    var sameSign = coeff >= 0 == rhs >= 0 || rhs == 0;
+                    var sameSign = coefficient >= 0 == rhs >= 0 || rhs == 0;
 
                     if (sameSign)
                     {
@@ -316,7 +316,7 @@ public sealed class MatrixSolver
                                     rows[j2] = r2;
                                 }
 
-                                zeroInds[removedZeros++] = b;
+                                zeroIndices[removedZeros++] = b;
 
                                 continue;
                             }
