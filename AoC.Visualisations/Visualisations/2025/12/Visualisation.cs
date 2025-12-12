@@ -222,9 +222,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             return;
         }
 
-        var position = _lastPlacement;
-
-        var placed = false;
+        Coordinate position;
 
         if (_lastPlacement.X == -1)
         {
@@ -232,19 +230,18 @@ public class Visualisation : VisualisationBase<PuzzleState>
         }
         else
         {
-            // 1) try overlap-by-1 (step 2)
-            position = new Coordinate(_lastPlacement.X + 2, _lastPlacement.Y);
+            position = _lastPlacement with { X = _lastPlacement.X + 2 };
+            
             if (! CanPlace(position, tile))
             {
-                // 2) try flush (step 3)
-                position = new Coordinate(_lastPlacement.X + 3, _lastPlacement.Y);
+                position = _lastPlacement with { X = _lastPlacement.X + 3 };
+
                 if (! CanPlace(position, tile))
                 {
-                    // 3) next row
                     position = new Coordinate(0, _lastPlacement.Y + 3);
+
                     if (! CanPlace(position, tile))
                     {
-                        // no room (or you need to add vertical overlap rules too)
                         return;
                     }
                 }
