@@ -36,9 +36,31 @@ public class Part1 : Base
             
             for (var y = 1; y < 4; y++)
             {
-                area += Input[i + y].Count(c => c == '#');
+                for (var x = 0; x < 3; x++)
+                {
+                    area += Input[i + y][x] == '#' ? 1 : 0;
+                }
             }
-            
+
+            if (_visualiser != null)
+            {
+                var tile = new int[3];
+                
+                for (var y = 1; y < 4; y++)
+                {
+                    var row = 0;
+                    
+                    for (var x = 0; x < 3; x++)
+                    {
+                        row |= (Input[i + y][x] == '#' ? 1 : 0) << x;
+                    }
+
+                    tile[y - 1] = row;
+                }
+                
+                _puzzleState.Tiles.Add(tile);
+            }
+
             areas.Add(i / 5, area);
         }
 
