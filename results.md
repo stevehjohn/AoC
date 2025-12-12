@@ -553,8 +553,9 @@ Tests performed on a 2023 MacBook Pro.
  2025 10.2: 67,032μs      
  2025 11.1: 139μs         Reactor
  2025 11.2: 520μs         
+ 2025 12.1: 817μs         Christmas tree farm
             -------------
-            334.222ms    
+            335.039ms    
 
- 513 puzzles solved in 39.733s.
+ 514 puzzles solved in 39.734s.
 ```
