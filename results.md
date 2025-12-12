@@ -53,8 +53,8 @@ Tests performed on a 2023 MacBook Pro.
  2015 21.1: 380μs         RPG simulator 2015
  2015 21.2: 365μs         
  2015 22.1: 479,527μs     Wizard simulator 2015
- 2015 22.2: 24,362μs      
- 2015 23.1: 72μs          Opening the Turing lock
+ 2015 22.2: 24,311μs      
+ 2015 23.1: 71μs          Opening the Turing lock
  2015 23.2: 85μs          
  2015 24.1: 85,779μs      It hangs in the balance
  2015 24.2: 126μs         
