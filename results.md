@@ -39,7 +39,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 14.1: 1,330μs       Reindeer olympics
  2015 14.2: 1,385μs       
  2015 15.1: 727μs         Science for hungry people
- 2015 15.2: 724μs         
+ 2015 15.2: 723μs         
  2015 16.1: 21μs          Aunt Sue
  2015 16.2: 89μs          
  2015 17.1: 126,203μs     Too much eggnog
@@ -49,7 +49,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 19.1: 175μs         Medicine for Rudolph
  2015 19.2: 221μs         
  2015 20.1: 288,974μs     Infinite elves, infinite houses
- 2015 20.2: 2,283μs       
+ 2015 20.2: 2,280μs       
  2015 21.1: 380μs         RPG simulator 2015
  2015 21.2: 365μs         
  2015 22.1: 479,527μs     Wizard simulator 2015
@@ -553,9 +553,9 @@ Tests performed on a 2023 MacBook Pro.
  2025 10.2: 67,032μs      
  2025 11.1: 139μs         Reactor
  2025 11.2: 520μs         
- 2025 12.1: 817μs         Christmas tree farm
+ 2025 12.1: 297μs         Christmas tree farm
             -------------
-            335.039ms    
+            334.519ms    
 
- 514 puzzles solved in 39.734s.
+ 514 puzzles solved in 39.733s.
 ```
