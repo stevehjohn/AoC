@@ -273,6 +273,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 }
             }
         }
+
+        _needArea = true;
     }
 
     private void PlaceTile(Coordinate position, bool[][] tile)
