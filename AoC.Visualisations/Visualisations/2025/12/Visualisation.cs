@@ -55,7 +55,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private double _lastCompletion;
 
-    private readonly Random _random = new Random();
+    private readonly Random _random = new();
 
     private List<Coordinate> _availablePositions;
 
@@ -130,7 +130,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                     _grid[y] = new int[_area.Width];
                 }
 
-                _filledCells = new HashSet<(long x, long y)>();
+                _filledCells = [];
             
                 var centerX = _area.Width / 2;
 
