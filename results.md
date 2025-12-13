@@ -155,7 +155,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 20.1: 336μs         Particle swarm
  2017 20.2: 70,136μs      
  2017 21.1: 536μs         Fractal art
- 2017 21.2: 42,628μs      
+ 2017 21.2: 42,608μs      
  2017 22.1: 456μs         Sporifica virus
  2017 22.2: 596,134μs     
  2017 23.1: 4,707μs       Coprocessor conflagration
@@ -260,7 +260,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 20.2: 5,985μs       
  2019 21.1: 1,652μs       Jumping droids (CPU used unmodified)
  2019 21.2: 31,810μs      
- 2019 22.1: 371μs         Space shuffle
+ 2019 22.1: 370μs         Space shuffle
  2019 22.2: 26μs          
  2019 23.1: 2,277μs       IntCode network (CPU used unmodified)
  2019 23.2: 12,732μs      
@@ -346,7 +346,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 11.1: 1,722μs       Flashers
  2021 11.2: 3,077μs       
  2021 12.1: 3,307μs       Caving
- 2021 12.2: 55,048μs      
+ 2021 12.2: 54,989μs      
  2021 13.1: 973μs         ZX Spectrum copy protection
  2021 13.2: 3,255μs       
  2021 14.1: 184μs         Ablative armour
@@ -472,12 +472,12 @@ Tests performed on a 2023 MacBook Pro.
  2023 22.1: 30,575μs      Sand slabs
  2023 22.2: 55,937μs      
  2023 23.1: 10,678μs      A long walk
- 2023 23.2: 50,650μs      
+ 2023 23.2: 50,315μs      
  2023 24.1: 1,509μs       Never tell me the odds
  2023 24.2: 5,110μs       
  2023 25.1: 9,284μs       Snowverload
             -------------
-            348.548ms    
+            348.213ms    
 
  2024  1.1: 112μs         Historian hysteria
  2024  1.2: 79μs          
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             333.812ms    
 
- 514 puzzles solved in 39.694s.
+ 514 puzzles solved in 39.693s.
 ```
