@@ -51,11 +51,15 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private int _presentIndex;
 
-    private Coordinate _lastPlacement;
-
     private Color _backgroundColour = Color.Black;
 
     private double _lastCompletion;
+
+    private readonly Random _random = new Random();
+
+    private List<Coordinate> _availablePositions;
+
+    private HashSet<(long x, long y)> _filledCells;
 
     public Visualisation()
     {
@@ -95,44 +99,58 @@ public class Visualisation : VisualisationBase<PuzzleState>
             _puzzleState = GetNextState();
         }
 
-        if (_needArea && _areaIndex > 0 && gameTime.TotalGameTime.TotalMilliseconds - _lastCompletion < Pause)
+        switch (_needArea)
         {
-            base.Update(gameTime);
+            case true when _areaIndex > 0 && gameTime.TotalGameTime.TotalMilliseconds - _lastCompletion < Pause:
+                base.Update(gameTime);
             
-            return;
-        }
-
-        if (_needArea)
-        {
-            if (_areaIndex >= _puzzleState.Areas.Count)
-            {
                 return;
-            }
-
-            _area = _puzzleState.Areas[_areaIndex++];
-
-            _width = _area.Width * TileWidth;
-
-            _height = _area.Height * TileHeight;
-
-            _left = CanvasWidth / 2 - _width / 2;
-
-            _top = CanvasHeight / 2 - _height / 2;
-
-            _presentIndex = 0;
-
-            _lastPlacement = new Coordinate(-1, -1);
-
-            _grid = new int[_area.Height][];
-
-            for (var y = 0; y < _area.Height; y++)
-            {
-                _grid[y] = new int[_area.Width];
-            }
-
-            _backgroundColour = Color.Black;
             
-            _needArea = false;
+            case true when _areaIndex >= _puzzleState.Areas.Count:
+                return;
+            
+            case true:
+            {
+                _area = _puzzleState.Areas[_areaIndex++];
+
+                _width = _area.Width * TileWidth;
+
+                _height = _area.Height * TileHeight;
+
+                _left = CanvasWidth / 2 - _width / 2;
+
+                _top = CanvasHeight / 2 - _height / 2;
+
+                _presentIndex = 0;
+
+                _grid = new int[_area.Height][];
+
+                for (var y = 0; y < _area.Height; y++)
+                {
+                    _grid[y] = new int[_area.Width];
+                }
+
+                _filledCells = new HashSet<(long x, long y)>();
+            
+                var centerX = _area.Width / 2;
+
+                var centerY = _area.Height / 2;
+            
+                var startX = centerX + _random.Next(-2, 3);
+            
+                var startY = centerY + _random.Next(-2, 3);
+            
+                _availablePositions =
+                [
+                    new Coordinate(Math.Clamp(startX, 0, _area.Width - 3), Math.Clamp(startY, 0, _area.Height - 3))
+                ];
+
+                _backgroundColour = Color.Black;
+            
+                _needArea = false;
+                
+                break;
+            }
         }
 
         PlaceNextTile(gameTime);
@@ -235,7 +253,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         if (tile == null)
         {
-            _backgroundColour = Color.FromNonPremultiplied(0, 64, 0, 255);
+            if (_area.IsValid)
+            {
+                _backgroundColour = Color.FromNonPremultiplied(0, 64, 0, 255);
+            }
 
             _needArea = true;
 
@@ -244,42 +265,66 @@ public class Visualisation : VisualisationBase<PuzzleState>
             return;
         }
 
-        long startX, startY;
-
-        if (_lastPlacement.X == -1)
+        var positionsToTry = new List<Coordinate>(_availablePositions);
+        
+        for (var i = positionsToTry.Count - 1; i > 0; i--)
         {
-            startX = 0;
+            var j = _random.Next(i + 1);
             
-            startY = 0;
-        }
-        else
-        {
-            startX = _lastPlacement.X + 1;
-            
-            startY = _lastPlacement.Y;
+            (positionsToTry[i], positionsToTry[j]) = (positionsToTry[j], positionsToTry[i]);
         }
 
-        for (var y = startY; y < _area.Height; y++)
+        foreach (var position in positionsToTry)
         {
-            for (var x = y == startY ? startX : 0; x < _area.Width; x++)
+            foreach (var orientation in GetAllOrientations(tile))
             {
-                var position = new Coordinate(x, y);
-
-                foreach (var orientation in GetAllOrientations(tile))
+                if (CanPlace(position, orientation))
                 {
-                    if (CanPlace(position, orientation))
-                    {
-                        PlaceTile(position, orientation);
-                        
-                        _lastPlacement = position;
-                        
-                        return;
-                    }
+                    PlaceTile(position, orientation);
+                    
+                    UpdateAvailablePositions(position);
+                    
+                    return;
                 }
             }
         }
 
-        _backgroundColour = Color.FromNonPremultiplied(64, 0, 0, 255);
+        var allPositions = new List<Coordinate>();
+        
+        for (var y = 0; y < _area.Height - 2; y++)
+        {
+            for (var x = 0; x < _area.Width - 2; x++)
+            {
+                allPositions.Add(new Coordinate(x, y));
+            }
+        }
+
+        for (var i = allPositions.Count - 1; i > 0; i--)
+        {
+            var j = _random.Next(i + 1);
+            
+            (allPositions[i], allPositions[j]) = (allPositions[j], allPositions[i]);
+        }
+
+        foreach (var position in allPositions)
+        {
+            foreach (var orientation in GetAllOrientations(tile))
+            {
+                if (CanPlace(position, orientation))
+                {
+                    PlaceTile(position, orientation);
+                    
+                    UpdateAvailablePositions(position);
+                    
+                    return;
+                }
+            }
+        }
+
+        if (! _area.IsValid)
+        {
+            _backgroundColour = Color.FromNonPremultiplied(64, 0, 0, 255);
+        }
 
         _needArea = true;
 
@@ -295,6 +340,47 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 if (tile[y][x])
                 {
                     _grid[position.Y + y][position.X + x] = _presentIndex;
+                    _filledCells.Add((position.X + x, position.Y + y));
+                }
+            }
+        }
+    }
+
+    private void UpdateAvailablePositions(Coordinate placed)
+    {
+        _availablePositions.Remove(placed);
+
+        var offsets = new[] 
+        { 
+            (-3, 0), (3, 0), (0, -3), (0, 3),
+            (-2, 0), (2, 0), (0, -2), (0, 2),
+            (-1, 0), (1, 0), (0, -1), (0, 1),
+            (-2, -2), (-2, 2), (2, -2), (2, 2),
+            (-1, -1), (-1, 1), (1, -1), (1, 1)
+        };
+
+        foreach (var (dx, dy) in offsets)
+        {
+            var newPos = new Coordinate(placed.X + dx, placed.Y + dy);
+            
+            if (newPos.X >= 0 && newPos.X <= _area.Width - 3 && newPos.Y >= 0 && newPos.Y <= _area.Height - 3 && !_availablePositions.Contains(newPos))
+            {
+                var hasAdjacentFilled = false;
+                
+                for (var y = 0; y < 3 && !hasAdjacentFilled; y++)
+                {
+                    for (var x = 0; x < 3 && !hasAdjacentFilled; x++)
+                    {
+                        if (_filledCells.Contains((newPos.X + x, newPos.Y + y)))
+                        {
+                            hasAdjacentFilled = true;
+                        }
+                    }
+                }
+                
+                if (hasAdjacentFilled)
+                {
+                    _availablePositions.Add(newPos);
                 }
             }
         }
@@ -303,8 +389,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private IEnumerable<bool[][]> GetAllOrientations(bool[][] tile)
     {
         var current = tile;
-    
-        var startRotation = _lastPlacement.X == -1 ? 2 : 0;
+        
+        var startRotation = _random.Next(4);
     
         for (var i = 0; i < startRotation; i++)
         {
