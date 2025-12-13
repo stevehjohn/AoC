@@ -291,7 +291,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 10.1: 20μs          Joltage meter
  2020 10.2: 24μs          
  2020 11.1: 3,054μs       Conway's game of seating
- 2020 11.2: 42,165μs      
+ 2020 11.2: 27,664μs      
  2020 12.1: 20μs          Evergreen ship sailing
  2020 12.2: 25μs          
  2020 13.1: 7μs           Bus timetables
@@ -320,7 +320,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 24.2: 170,528μs     
  2020 25.1: 45,743μs      Door cryptography
             -------------
-            1.206s       
+            1.192s       
 
  2021  1.1: 47μs          Depth scan
  2021  1.2: 138μs         
@@ -381,7 +381,7 @@ Tests performed on a 2023 MacBook Pro.
  2022  2.2: 30μs          
  2022  3.1: 71μs          Rucksack reorganization
  2022  3.2: 49μs          
- 2022  4.1: 108μs         Camp cleanup
+ 2022  4.1: 106μs         Camp cleanup
  2022  4.2: 107μs         
  2022  5.1: 87μs          Supply stacks
  2022  5.2: 165μs         
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 53,434μs      
  2022 25.1: 9μs           Full of hot air
             -------------
-            283.805ms    
+            283.803ms    
 
  2023  1.1: 115μs         Trebuchet
  2023  1.2: 330μs         
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             333.812ms    
 
- 514 puzzles solved in 39.693s.
+ 514 puzzles solved in 39.678s.
 ```
