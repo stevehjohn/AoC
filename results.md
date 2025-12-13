@@ -534,7 +534,7 @@ Tests performed on a 2023 MacBook Pro.
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 87μs          
  2025  2.1: 15,516μs      Gift shop
- 2025  2.2: 45,964μs      
+ 2025  2.2: 45,327μs      
  2025  3.1: 107μs         Lobby
  2025  3.2: 197μs         
  2025  4.1: 190μs         Printing department
@@ -555,7 +555,7 @@ Tests performed on a 2023 MacBook Pro.
  2025 11.2: 520μs         
  2025 12.1: 276μs         Christmas tree farm
             -------------
-            334.449ms    
+            333.812ms    
 
  514 puzzles solved in 39.694s.
 ```
