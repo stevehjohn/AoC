@@ -346,7 +346,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 11.1: 1,722μs       Flashers
  2021 11.2: 3,077μs       
  2021 12.1: 3,307μs       Caving
- 2021 12.2: 54,989μs      
+ 2021 12.2: 54,443μs      
  2021 13.1: 973μs         ZX Spectrum copy protection
  2021 13.2: 3,255μs       
  2021 14.1: 184μs         Ablative armour
@@ -373,7 +373,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 24.2: 2μs           
  2021 25.1: 76,199μs      Landing among the cucumbers
             -------------
-            1.885s       
+            1.884s       
 
  2022  1.1: 22μs          Calorie counting
  2022  1.2: 32μs          
@@ -387,7 +387,7 @@ Tests performed on a 2023 MacBook Pro.
  2022  5.2: 165μs         
  2022  6.1: 116μs         Tuning trouble
  2022  6.2: 167μs         
- 2022  7.1: 247μs         No space left on device
+ 2022  7.1: 246μs         No space left on device
  2022  7.2: 242μs         
  2022  8.1: 809μs         Treetop tree house
  2022  8.2: 804μs         
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 53,434μs      
  2022 25.1: 9μs           Full of hot air
             -------------
-            283.806ms    
+            283.805ms    
 
  2023  1.1: 115μs         Trebuchet
  2023  1.2: 330μs         
@@ -491,7 +491,7 @@ Tests performed on a 2023 MacBook Pro.
  2024  5.2: 1,731μs       
  2024  6.1: 368μs         Guard gallivant
  2024  6.2: 32,324μs      
- 2024  7.1: 143μs         Bridge repair
+ 2024  7.1: 142μs         Bridge repair
  2024  7.2: 5,496μs       
  2024  8.1: 90μs          Resonant collinearity
  2024  8.2: 121μs         
@@ -529,7 +529,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 231μs         
  2024 25.1: 112μs         Code chronicle
             -------------
-            521.744ms    
+            521.743ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 87μs          
