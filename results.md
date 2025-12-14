@@ -232,7 +232,7 @@ Tests performed on a 2023 MacBook Pro.
  2019  6.2: 33μs          
  2019  7.1: 5,127μs       Amplifiers (CPU used unmodified)
  2019  7.2: 6,367μs       
- 2019  8.1: 1,041μs       Space GIF
+ 2019  8.1: 1,030μs       Space GIF
  2019  8.2: 1,008μs       
  2019  9.1: 45μs          Sensor booster (CPU extension 2)
  2019  9.2: 22,571μs      
@@ -298,7 +298,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 13.2: 13μs          
  2020 14.1: 89μs          Memory bit twiddling
  2020 14.2: 3,890μs       
- 2020 15.1: 14μs          Number memory game
+ 2020 15.1: 13μs          Number memory game
  2020 15.2: 222,209μs     
  2020 16.1: 590μs         Ticket deciphering
  2020 16.2: 1,041μs       
@@ -370,7 +370,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 23.1: 150,520μs     Hotel amphipod
  2021 23.2: 470,931μs     
  2021 24.1: 2μs           Model number
- 2021 24.2: 2μs           
+ 2021 24.2: 1μs           
  2021 25.1: 76,199μs      Landing among the cucumbers
             -------------
             1.884s       
@@ -457,7 +457,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 14.2: 14,020μs      
  2023 15.1: 175μs         Lens library
  2023 15.2: 493μs         
- 2023 16.1: 133μs         The floor will be lava
+ 2023 16.1: 132μs         The floor will be lava
  2023 16.2: 5,394μs       
  2023 17.1: 45,127μs      Clumsy crucible
  2023 17.2: 43,415μs      
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,110μs       
  2023 25.1: 9,284μs       Snowverload
             -------------
-            347.796ms    
+            347.795ms    
 
  2024  1.1: 112μs         Historian hysteria
  2024  1.2: 79μs          
