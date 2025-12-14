@@ -256,7 +256,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 18.2: 61,086μs      
  2019 19.1: 112,897μs     Tractorrr (CPU used unmodified)
  2019 19.2: 121,421μs     
- 2019 20.1: 252μs         Doughnut maze
+ 2019 20.1: 251μs         Doughnut maze
  2019 20.2: 5,985μs       
  2019 21.1: 1,652μs       Jumping droids (CPU used unmodified)
  2019 21.2: 31,810μs      
@@ -395,7 +395,7 @@ Tests performed on a 2023 MacBook Pro.
  2022  9.2: 1,154μs       
  2022 10.1: 3μs           Cathode-ray tube
  2022 10.2: 4μs           
- 2022 11.1: 8μs           Monkey in the middle
+ 2022 11.1: 7μs           Monkey in the middle
  2022 11.2: 2,366μs       
  2022 12.1: 1,196μs       Hill climbing algorithm
  2022 12.2: 1,346μs       
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 53,434μs      
  2022 25.1: 9μs           Full of hot air
             -------------
-            283.793ms    
+            283.792ms    
 
  2023  1.1: 115μs         Trebuchet
  2023  1.2: 330μs         
@@ -491,7 +491,7 @@ Tests performed on a 2023 MacBook Pro.
  2024  5.2: 1,731μs       
  2024  6.1: 368μs         Guard gallivant
  2024  6.2: 32,324μs      
- 2024  7.1: 142μs         Bridge repair
+ 2024  7.1: 141μs         Bridge repair
  2024  7.2: 5,496μs       
  2024  8.1: 90μs          Resonant collinearity
  2024  8.2: 121μs         
@@ -529,7 +529,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 231μs         
  2024 25.1: 112μs         Code chronicle
             -------------
-            521.686ms    
+            521.685ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 87μs          
