@@ -3,5 +3,5 @@ for i in $(seq "$1"); do
       echo
   fi
   echo " Run $i"
-  ./run.sh "${@:2}" true
+  ./run.sh "${@:2}"
 done
