@@ -209,7 +209,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 21.1: 30μs          Time machine halting problem
  2018 21.2: 9,513,428μs   
  2018 22.1: 208μs         Caving capers
- 2018 22.2: 58,217μs      
+ 2018 22.2: 58,167μs      
  2018 23.1: 172μs         Nanobot teleportation
  2018 23.2: 14,654μs      
  2018 24.1: 7,723μs       Immune system battle
@@ -222,7 +222,7 @@ Tests performed on a 2023 MacBook Pro.
  2019  1.2: 4μs           
  2019  2.1: 26μs          Gravity assist (CPU start)
  2019  2.2: 55,078μs      
- 2019  3.1: 2,010μs       Path intersections
+ 2019  3.1: 2,004μs       Path intersections
  2019  3.2: 2,081μs       
  2019  4.1: 49,009μs      Forgotten password
  2019  4.2: 48,728μs      
@@ -367,7 +367,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 21.2: 533,835μs     
  2021 22.1: 1,901μs       Reactor reboot
  2021 22.2: 23,586μs      
- 2021 23.1: 150,520μs     Hotel amphipod
+ 2021 23.1: 150,185μs     Hotel amphipod
  2021 23.2: 470,931μs     
  2021 24.1: 2μs           Model number
  2021 24.2: 1μs           
@@ -421,11 +421,11 @@ Tests performed on a 2023 MacBook Pro.
  2022 22.2: 547μs         
  2022 23.1: 8,070μs       Unstable diffusion
  2022 23.2: 44,961μs      
- 2022 24.1: 25,283μs      Blizzard basin
+ 2022 24.1: 25,244μs      Blizzard basin
  2022 24.2: 53,434μs      
  2022 25.1: 9μs           Full of hot air
             -------------
-            283.785ms    
+            283.746ms    
 
  2023  1.1: 115μs         Trebuchet
  2023  1.2: 330μs         
@@ -517,19 +517,19 @@ Tests performed on a 2023 MacBook Pro.
  2024 18.2: 1,318μs       
  2024 19.1: 37,654μs      Linen layout
  2024 19.2: 55,434μs      
- 2024 20.1: 32,669μs      Race condition
+ 2024 20.1: 32,630μs      Race condition
  2024 20.2: 32,398μs      
  2024 21.1: 634μs         Keypad conundrum
  2024 21.2: 3,639μs       
  2024 22.1: 33,620μs      Monkey market
  2024 22.2: 128,614μs     
  2024 23.1: 18,009μs      LAN party
- 2024 23.2: 19,937μs      
+ 2024 23.2: 19,914μs      
  2024 24.1: 329μs         Crossed wires
  2024 24.2: 231μs         
  2024 25.1: 112μs         Code chronicle
             -------------
-            520.338ms    
+            520.276ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 87μs          
