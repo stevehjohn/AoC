@@ -272,7 +272,7 @@ Tests performed on a 2023 MacBook Pro.
 
  2020  1.1: 22μs          Expenses
  2020  1.2: 106μs         
- 2020  2.1: 153μs         Password policy
+ 2020  2.1: 152μs         Password policy
  2020  2.2: 100μs         
  2020  3.1: 137μs         Tobogganing through the trees
  2020  3.2: 24μs          
@@ -296,7 +296,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 12.2: 25μs          
  2020 13.1: 7μs           Bus timetables
  2020 13.2: 13μs          
- 2020 14.1: 89μs          Memory bit twiddling
+ 2020 14.1: 88μs          Memory bit twiddling
  2020 14.2: 3,890μs       
  2020 15.1: 13μs          Number memory game
  2020 15.2: 222,209μs     
@@ -462,7 +462,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 17.1: 45,127μs      Clumsy crucible
  2023 17.2: 43,415μs      
  2023 18.1: 83μs          Lavaduct lagoon
- 2023 18.2: 98μs          
+ 2023 18.2: 97μs          
  2023 19.1: 197μs         Aplenty
  2023 19.2: 438μs         
  2023 20.1: 8,050μs       Pulse propagation
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,110μs       
  2023 25.1: 9,284μs       Snowverload
             -------------
-            347.795ms    
+            347.794ms    
 
  2024  1.1: 112μs         Historian hysteria
  2024  1.2: 79μs          
