@@ -9,7 +9,7 @@ public class Part1 : Base
     {
         var length = Input[0].Length;
 
-        var bit = (int) Math.Pow(2, length - 1);
+        var bit = 1 << (length - 1);
 
         var value = 0;
 
