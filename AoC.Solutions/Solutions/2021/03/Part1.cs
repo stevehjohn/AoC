@@ -13,6 +13,8 @@ public class Part1 : Base
 
         var value = 0;
 
+        var half = Input.Length / 2;
+        
         for (var i = 0; i < length; i++)
         {
             var ones = 0;
@@ -23,7 +25,7 @@ public class Part1 : Base
                 {
                     ones++;
 
-                    if (ones > Input.Length / 2)
+                    if (ones > half)
                     {
                         value += bit;
                         
