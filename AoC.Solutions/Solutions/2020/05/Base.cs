@@ -15,7 +15,7 @@ public abstract class Base : Solution
         return (Row: row, Column: column);
     }
 
-    private static int ParseBinarySpace(string input, int max)
+    private static int ParseBinarySpace(string input, int mostSignificantBit)
     {
         var value = 0;
 
@@ -23,7 +23,7 @@ public abstract class Base : Solution
         {
             if (input[i] is 'B' or 'R')
             {
-                value |= max >> i;
+                value |= mostSignificantBit >> i;
             }
         }
         
