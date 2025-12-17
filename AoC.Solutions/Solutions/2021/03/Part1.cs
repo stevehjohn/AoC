@@ -22,12 +22,14 @@ public class Part1 : Base
                 if (line[i] == '1')
                 {
                     ones++;
-                }
-            }
 
-            if (ones > Input.Length / 2)
-            {
-                value += bit;
+                    if (ones > Input.Length / 2)
+                    {
+                        value += bit;
+                        
+                        break;
+                    }
+                }
             }
 
             bit >>= 1;
