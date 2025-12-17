@@ -8,31 +8,25 @@ public abstract class Base : Solution
 
     protected static (int Row, int Column) GetSeatId(string input)
     {
-        var row = ParseBinarySpace(input[..7], 127);
+        var row = ParseBinarySpace(input[..7]);
 
-        var column = ParseBinarySpace(input[7..], 7);
+        var column = ParseBinarySpace(input[7..]);
 
         return (Row: row, Column: column);
     }
 
-    private static int ParseBinarySpace(string input, int max)
+    private static int ParseBinarySpace(string input)
     {
-        var min = 0;
+        var value = 0;
 
-        foreach (var c in input)
+        for (var i = 0; i < input.Length; i++)
         {
-            var halved = (int) Math.Ceiling((max - min) / 2d);
-
-            if (c is 'F' or 'L') // Lower
+            if (input[i] is 'B' or 'R')
             {
-                max -= halved;
-
-                continue;
+                value |= 1 << (input.Length - i - 1);
             }
-
-            min += halved;
         }
         
-        return min;
+        return value;
     }
 }
