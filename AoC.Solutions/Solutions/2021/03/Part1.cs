@@ -17,9 +17,9 @@ public class Part1 : Base
         {
             var ones = 0;
 
-            foreach (var line in Input)
+            for (var l = 0; l < Input.Length; l++)
             {
-                if (line[i] == '1')
+                if (Input[l][i] == '1')
                 {
                     ones++;
 
