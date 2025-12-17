@@ -13,8 +13,6 @@ public class Part1 : Base
 
         var value = 0;
 
-        var mask = 0;
-
         for (var i = 0; i < length; i++)
         {
             var ones = 0;
@@ -32,10 +30,10 @@ public class Part1 : Base
                 value += bit;
             }
 
-            mask += bit;
-
             bit >>= 1;
         }
+
+        var mask = (1 << length) - 1;
 
         return (value * (value ^ mask)).ToString();
     }
