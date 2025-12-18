@@ -10,7 +10,7 @@ public static class Constants
 
     public const int TileSize = 12;
 
-    public const int StraightLength = 2;
+    public const int StraightLength = 1;
 
     public const int AutoRestartDelay = 2_000;
 }
