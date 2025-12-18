@@ -451,7 +451,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 11.2: 292μs         
  2023 12.1: 3,108μs       Hot springs
  2023 12.2: 19,234μs      
- 2023 13.1: 106μs         Point of incidence
+ 2023 13.1: 105μs         Point of incidence
  2023 13.2: 554μs         
  2023 14.1: 99μs          Parabolic reflector dish
  2023 14.2: 14,020μs      
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,110μs       
  2023 25.1: 9,284μs       Snowverload
             -------------
-            347.689ms    
+            347.688ms    
 
  2024  1.1: 112μs         Historian hysteria
  2024  1.2: 79μs          
@@ -490,7 +490,7 @@ Tests performed on a 2023 MacBook Pro.
  2024  5.1: 102μs         Print queue
  2024  5.2: 1,731μs       
  2024  6.1: 368μs         Guard gallivant
- 2024  6.2: 32,324μs      
+ 2024  6.2: 32,247μs      
  2024  7.1: 141μs         Bridge repair
  2024  7.2: 5,496μs       
  2024  8.1: 90μs          Resonant collinearity
@@ -529,7 +529,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 231μs         
  2024 25.1: 112μs         Code chronicle
             -------------
-            520.247ms    
+            520.170ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 87μs          
