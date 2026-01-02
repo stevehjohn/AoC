@@ -132,6 +132,8 @@ public class Game : Microsoft.Xna.Framework.Game
                         _step = 0;
 
                         _state = State.Solved;
+                        
+                        break;
                     }
                 }
 

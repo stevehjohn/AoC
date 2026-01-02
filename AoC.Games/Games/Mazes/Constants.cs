@@ -4,9 +4,9 @@ public static class Constants
 {
     public const int StepsPerFrame = 4;
     
-    public const int Width = 121;
+    public const int Width = 51;
 
-    public const int Height = 81;
+    public const int Height = 41;
 
     public const int TileSize = 12;
 
