@@ -91,7 +91,7 @@ public class TestAllSolutions
                 .OrderBy(t => t.Namespace)
                 .ThenBy(t => t.Name)
                 .ToList()
-                .ForEach(t => theoryData.Add(t));
+                .ForEach(theoryData.Add);
 
             return theoryData;
         }

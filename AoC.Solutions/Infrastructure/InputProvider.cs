@@ -5,6 +5,8 @@ namespace AoC.Solutions.Infrastructure;
 [ExcludeFromCodeCoverage]
 public static class InputProvider
 {
+    private static readonly HttpClient Client = new();
+
     public static string[] GetInput(string nameSpace)
     {
         var parts = nameSpace.Split('.');
@@ -53,9 +55,7 @@ public static class InputProvider
 
         request.Headers.Add("Cookie", $"session={keyData[1]}");
 
-        using var client = new HttpClient();
-
-        using var response = client.Send(request);
+        using var response = Client.Send(request);
 
         if (! response.IsSuccessStatusCode)
         {
