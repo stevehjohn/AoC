@@ -42,6 +42,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
         Content.RootDirectory = "./14";
 
         IgnoreQueueLimit = true;
+        
+        GraphicsDeviceManager.PreferMultiSampling = true;
     }
 
     public override void SetPart(int part)

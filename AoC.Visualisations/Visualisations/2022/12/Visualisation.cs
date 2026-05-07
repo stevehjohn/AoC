@@ -55,6 +55,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
                                                       new Color(254, 211, 56),
                                                       new Color(254, 253, 0)
         ]);
+        
+        GraphicsDeviceManager.PreferMultiSampling = true;
     }
 
     public override void SetPart(int part)
