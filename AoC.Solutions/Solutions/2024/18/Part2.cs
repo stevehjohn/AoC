@@ -20,9 +20,9 @@ public class Part2 : Base
 
     public override string GetAnswer()
     {
-        ParseInput(_visualiser == null ? int.MaxValue : 1_024);
+        ParseInput(_visualiser == null ? int.MaxValue : 0);
 
-        WalkMaze();
+        WalkMaze(_visualiser != null);
 
         var steps = _visualiser == null ? -1 : 0;
 
@@ -42,7 +42,7 @@ public class Part2 : Base
 
             Map[point.X, point.Y] = _visualiser == null ? '.' : '#';
             
-            result = WalkMaze();
+            result = WalkMaze(_visualiser != null);
 
             steps = result.Steps;
 
@@ -67,6 +67,6 @@ public class Part2 : Base
 
     private void Visualise(State state = null, Point2D newPoint = default)
     {
-        _visualiser?.PuzzleStateChanged(new PuzzleState(Input, state, newPoint));
+        _visualiser?.PuzzleStateChanged(new PuzzleState(state, newPoint));
     }
 }

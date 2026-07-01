@@ -14,7 +14,7 @@ public class PuzzleState
 
     public static char[,] Map { get; private set; }
 
-    public PuzzleState(string[] input, State state, Point2D newPoint)
+    public PuzzleState(State state, Point2D newPoint)
     {
         if (Map == null)
         {
@@ -33,13 +33,6 @@ public class PuzzleState
 
                     Map[x, y] = '.';
                 }
-            }
-
-            for (var i = 0; i < 1_024; i++)
-            {
-                var point = new Point2D(input[i]);
-
-                Map[point.X + 1, point.Y + 1] = '#';
             }
         }
 

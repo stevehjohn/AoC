@@ -8,6 +8,16 @@ public abstract class Base : Solution
 {
     public override string Description => "RAM run";
 
+    private static readonly Point2D[] Directions =
+    [
+        Point2D.North,
+        Point2D.East,
+        Point2D.South,
+        Point2D.West
+    ];
+
+    private readonly Random _random = new();
+    
     protected readonly char[,] Map = new char[Size, Size];
 
     private const int Size = 73;
@@ -16,7 +26,7 @@ public abstract class Base : Solution
 
     private readonly bool[] _visited = new bool[Size * Size];
 
-    protected State WalkMaze()
+    protected State WalkMaze(bool visualising)
     {
         _queue.Enqueue(new State(new Point2D(1, 1), 0, null, _visited), 0);
         
@@ -42,13 +52,22 @@ public abstract class Base : Solution
                 return node;
             }
 
-            EnqueueMove(node, Point2D.North);
+            if (visualising)
+            {
+                var directions = Directions.Shuffle();
 
-            EnqueueMove(node, Point2D.East);
-
-            EnqueueMove(node, Point2D.South);
-
-            EnqueueMove(node, Point2D.West);
+                foreach (var direction in directions)
+                {
+                    EnqueueMove(node, direction);
+                }                
+            }
+            else
+            {
+                foreach (var direction in Directions)
+                {
+                    EnqueueMove(node, direction);
+                }                
+            }
         }
 
         return new State(default, -1, node?.Previous, _visited);
@@ -61,8 +80,7 @@ public abstract class Base : Solution
 
         if (Map[position.X, position.Y] != '#')
         {
-            _queue.Enqueue(new State(position, state.Steps + 1, state, _visited), state.Steps * 10 + ((direction.X + 1) << 2) + direction.Y + 1);
-        }
+            _queue.Enqueue(new State(position, state.Steps + 1, state, _visited), state.Steps + 1);        }
     }
 
     protected void ParseInput(int maxBytes)

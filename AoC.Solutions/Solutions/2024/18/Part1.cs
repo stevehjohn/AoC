@@ -9,7 +9,7 @@ public class Part1 : Base
     {
         ParseInput(1_024);
         
-        var result = WalkMaze();
+        var result = WalkMaze(false);
         
         return result.Steps.ToString();
     }
