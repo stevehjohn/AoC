@@ -15,7 +15,7 @@ public abstract class Base : Solution
         Point2D.South,
         Point2D.West
     ];
-    
+
     protected readonly char[,] Map = new char[Size, Size];
 
     private const int Size = 73;
@@ -27,24 +27,24 @@ public abstract class Base : Solution
     protected State WalkMaze(bool visualising)
     {
         _queue.Enqueue(new State(new Point2D(1, 1), 0, null, _visited), 0);
-        
+
         Array.Fill(_visited, false);
 
         State node = null;
-        
+
         while (_queue.Count > 0)
         {
             node = _queue.Dequeue();
 
             var point = node.Position.X + node.Position.Y * Size;
-            
+
             if (_visited[point])
             {
                 continue;
             }
 
             _visited[point] = true;
-            
+
             if (node.Position is { X: Size - 2, Y: Size - 2 })
             {
                 return node;
@@ -57,20 +57,20 @@ public abstract class Base : Solution
                 foreach (var direction in directions)
                 {
                     EnqueueMove(node, direction);
-                }                
+                }
             }
             else
             {
                 foreach (var direction in Directions)
                 {
                     EnqueueMove(node, direction);
-                }                
+                }
             }
         }
 
         return new State(default, -1, node?.Previous, _visited);
     }
-    
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void EnqueueMove(State state, Point2D direction)
     {
@@ -78,7 +78,8 @@ public abstract class Base : Solution
 
         if (Map[position.X, position.Y] != '#')
         {
-            _queue.Enqueue(new State(position, state.Steps + 1, state, _visited), state.Steps + 1);        }
+            _queue.Enqueue(new State(position, state.Steps + 1, state, _visited), state.Steps + 1);
+        }
     }
 
     protected void ParseInput(int maxBytes)
