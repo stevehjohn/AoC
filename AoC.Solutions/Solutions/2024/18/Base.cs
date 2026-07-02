@@ -15,8 +15,6 @@ public abstract class Base : Solution
         Point2D.South,
         Point2D.West
     ];
-
-    private readonly Random _random = new();
     
     protected readonly char[,] Map = new char[Size, Size];
 
