@@ -64,10 +64,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
-                                 {
-                                     PreferredBackBufferWidth = 648,
-                                     PreferredBackBufferHeight = 656
-                                 };
+        {
+            PreferredBackBufferWidth = 648,
+            PreferredBackBufferHeight = 656
+        };
 
         Content.RootDirectory = "./18";
     }
@@ -285,9 +285,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
         }
 
         willy.MapX = move.X;
-        
+
         willy.MapY = move.Y;
-        
+
         willy.Moving = true;
 
         if (char.IsUpper(tile))
@@ -376,7 +376,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             if (_targets[_activeWilly] != token || _paths[_activeWilly].Count == 0)
             {
                 _paths[_activeWilly].Clear();
-                
+
                 QueueRoute(_activeWilly, token);
             }
 
@@ -419,7 +419,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     private void QueueRoute(int robot, char target)
     {
         var cell = NormaliseCell(_willys[robot].Cell);
-        
+
         var key = $"{cell}{target}";
 
         if (! _state.Paths.TryGetValue(key, out var route))
@@ -433,7 +433,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         }
 
         var willy = _willys[robot];
-        
+
         var forwards = route[0].X == willy.MapX && route[0].Y == willy.MapY;
 
         if (forwards)
@@ -454,7 +454,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private static char NormaliseCell(char cell)
     {
-        return (char) (cell > 127 ? cell - (char) 127 : cell);
+        return cell > 127 ? (char) (cell - 127) : cell;
     }
 
     private void StartMove()
