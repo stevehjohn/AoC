@@ -107,7 +107,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 MapY = 40,
                 Direction = -1,
                 FrameDirection = 1,
-                Cell = '1'
+                Cell = '@'
             };
         }
         else
