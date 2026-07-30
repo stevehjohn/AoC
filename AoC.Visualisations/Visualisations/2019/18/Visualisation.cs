@@ -260,6 +260,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
             _targets[_activeWilly] = '\0';
 
             AdvanceSolution();
+
+            return;
         }
 
         if (_frame % 2 != 0)
@@ -315,13 +317,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         willy.Moving = true;
 
-        if (! char.IsLower(tile))
-        {
-            return;
-        }
-
-        willy.Cell = tile;
-        
         if (! char.IsLower(tile))
         {
             return;
@@ -470,19 +465,15 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         var distanceToEnd = Math.Abs(route[^1].X - willy.MapX) + Math.Abs(route[^1].Y - willy.MapY);
 
-        if (distanceToStart <= distanceToEnd)
+        var reversed = distanceToStart != 0 && (distanceToEnd == 0 || distanceToEnd < distanceToStart);
+
+        if (! reversed)
         {
-            foreach (var point in route)
-            {
-                EnqueueIfNew(robot, point);
-            }
+            foreach (var point in route) EnqueueIfNew(robot, point);
         }
         else
         {
-            for (var i = route.Count - 1; i >= 0; i--)
-            {
-                EnqueueIfNew(robot, route[i]);
-            }
+            for (var i = route.Count - 1; i >= 0; i--) EnqueueIfNew(robot, route[i]);
         }
     }
 
