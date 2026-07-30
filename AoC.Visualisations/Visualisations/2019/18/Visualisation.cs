@@ -3,6 +3,7 @@ using AoC.Visualisations.Infrastructure;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using AoCPoint = AoC.Solutions.Common.Point;
 using Color = Microsoft.Xna.Framework.Color;
 using Part2 = AoC.Solutions.Solutions._2019._18.Part2;
 using PuzzleState = AoC.Solutions.Solutions._2019._18.PuzzleState;
@@ -44,14 +45,22 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private readonly Willy[] _willys = new Willy[4];
 
+    private readonly Queue<AoCPoint>[] _paths =
+    [
+        new(),
+        new(),
+        new(),
+        new()
+    ];
+
+    private readonly char[] _targets = new char[4];
+
     private int _pathIndex = -1;
 
     private int _activeWilly;
 
     private int _pause;
 
-    private readonly Queue<AoC.Solutions.Common.Point> _path = new();
-    
     public Visualisation()
     {
         GraphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -111,7 +120,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             FrameDirection = 1,
             Cell = '4'
         };
-        
+
         base.Initialize();
     }
 
@@ -142,13 +151,15 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 _pathIndex = 0;
 
                 StartMove();
+
+                AdvanceSolution();
             }
             else
             {
                 Move();
             }
         }
-        
+
         UpdateSparks();
 
         base.Update(gameTime);
@@ -157,7 +168,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
     protected override void Draw(GameTime gameTime)
     {
         _frame++;
-        
+
         GraphicsDevice.Clear(Color.Black);
 
         _spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
@@ -165,14 +176,14 @@ public class Visualisation : VisualisationBase<PuzzleState>
         DrawMap();
 
         DrawWillys();
-        
+
         DrawSparks();
-        
+
         _spriteBatch.End();
 
         base.Draw(gameTime);
     }
-    
+
     private void DrawSparks()
     {
         foreach (var spark in _sparks)
@@ -208,136 +219,247 @@ public class Visualisation : VisualisationBase<PuzzleState>
             _sparks.Remove(spark);
         }
     }
-    
+
     private void Move()
     {
         if (_pause > 0)
         {
             _pause--;
-            
-            return;
-        }
-
-        if (_path.Count == 0)
-        {
-            _pathIndex++;
-            
-            if (_pathIndex >= _state.Path.Length)
-            {
-                return;
-            }
-
-            if (char.IsNumber(_state.Path[_pathIndex]))
-            {
-                StartMove();
-                
-                return;
-            }
-
-            if (char.IsUpper(_state.Path[_pathIndex]))
-            {
-                return;
-            }
-
-            var cell = _willys[_activeWilly].Cell;
-
-            if (cell > 127)
-            {
-                cell -= (char) 127;
-            }
-
-            var key = $"{cell}{_state.Path[_pathIndex]}";
-
-            if (! _state.Paths.ContainsKey(key))
-            {
-                key = $"{_state.Path[_pathIndex]}{cell}";
-            }
-            
-            var path = _state.Paths[key];
-            
-            if (path[0].X != _willys[_activeWilly].MapX || path[0].Y != _willys[_activeWilly].MapY)
-            {
-                path.Reverse();
-            }
-            
-            foreach (var point in path)
-            {
-                _path.Enqueue(point);
-            }
 
             return;
         }
 
-        if (_frame % 2 == 0)
+        if (_paths[_activeWilly].Count == 0)
         {
-            var move = _path.Dequeue();
+            _targets[_activeWilly] = '\0';
 
-            var wX = _willys[_activeWilly].MapX;
-
-            if (wX > move.X)
-            {
-                _willys[_activeWilly].Direction = -1;
-            }
-            else if (wX < move.X)
-            {
-                _willys[_activeWilly].Direction = 1;
-            }
-
-            _willys[_activeWilly].MapX = move.X;
-            _willys[_activeWilly].MapY = move.Y;
-            
-            var cell = _state.Map[move.X, move.Y];
-
-            if (char.IsUpper(cell))
-            {
-                _willys[_activeWilly].Cell = cell;
-            }
-
-            if (char.IsLower(cell))
-            {
-                _willys[_activeWilly].Cell = cell;
-                
-                _state.Map[move.X, move.Y] = '.';
-                
-                cell = char.ToUpper(cell);
-                
-                for (var y = 0; y < _state.Map.GetLength(1); y++)
-                {
-                    for (var x = 0; x < _state.Map.GetLength(0); x++)
-                    {
-                        if (_state.Map[x, y] == cell)
-                        {
-                            _state.Map[x, y] += (char) 127;
-
-                            for (var i = 0; i < 100; i++)
-                            {
-                                _sparks.Add(new Spark
-                                {
-                                    Position = new PointFloat { X = x * 8 + 4, Y = y * 8 + 4},
-                                    Vector = new PointFloat { X = (-10f + _rng.Next(21)) / 10, Y = -_rng.Next(41) / 10f },
-                                    Ticks = 1000,
-                                    StartTicks = 1000
-                                });
-                            }
-                        }
-
-                        _pause = 50;
-                    }
-                }
-            }
+            AdvanceSolution();
         }
-    }
 
-    private void StartMove()
-    {
+        if (_frame % 2 != 0)
+        {
+            return;
+        }
+
         foreach (var willy in _willys)
         {
             willy.Moving = false;
         }
 
-        _activeWilly = _state.Path[_pathIndex] - '1';
+        for (var i = 0; i < _willys.Length; i++)
+        {
+            MoveWilly(i);
+        }
+    }
+
+    private void MoveWilly(int index)
+    {
+        var path = _paths[index];
+
+        if (path.Count == 0)
+        {
+            return;
+        }
+
+        var move = path.Peek();
+
+        var tile = _state.Map[move.X, move.Y];
+
+        if (index != _activeWilly &&
+            (char.IsLower(tile) || IsLockedDoor(tile)))
+        {
+            return;
+        }
+
+        path.Dequeue();
+
+        var willy = _willys[index];
+
+        if (willy.MapX > move.X)
+        {
+            willy.Direction = -1;
+        }
+        else if (willy.MapX < move.X)
+        {
+            willy.Direction = 1;
+        }
+
+        willy.MapX = move.X;
         
-        _willys[_activeWilly].Moving = true;
+        willy.MapY = move.Y;
+        
+        willy.Moving = true;
+
+        if (char.IsUpper(tile))
+        {
+            willy.Cell = tile;
+        }
+
+        if (! char.IsLower(tile))
+        {
+            return;
+        }
+
+        willy.Cell = tile;
+
+        _state.Map[move.X, move.Y] = '.';
+
+        OpenDoor(char.ToUpper(tile));
+
+        _pause = 50;
+    }
+
+    private static bool IsLockedDoor(char tile)
+    {
+        return tile < 127 && char.IsUpper(tile);
+    }
+
+    private void OpenDoor(char door)
+    {
+        for (var y = 0; y < _state.Map.GetLength(1); y++)
+        {
+            for (var x = 0; x < _state.Map.GetLength(0); x++)
+            {
+                if (_state.Map[x, y] != door)
+                {
+                    continue;
+                }
+
+                _state.Map[x, y] += (char) 127;
+
+                for (var i = 0; i < 100; i++)
+                {
+                    _sparks.Add(new Spark
+                    {
+                        Position = new PointFloat { X = x * 8 + 4, Y = y * 8 + 4 },
+                        Vector = new PointFloat { X = (-10f + _rng.Next(21)) / 10, Y = -_rng.Next(41) / 10f },
+                        Ticks = 1000,
+                        StartTicks = 1000
+                    });
+                }
+            }
+        }
+    }
+
+    private void AdvanceSolution()
+    {
+        while (true)
+        {
+            _pathIndex++;
+
+            if (_pathIndex >= _state.Path.Length)
+            {
+                _pathIndex = _state.Path.Length - 1;
+
+                return;
+            }
+
+            var token = _state.Path[_pathIndex];
+
+            if (char.IsNumber(token))
+            {
+                StartMove();
+
+                continue;
+            }
+
+            if (char.IsUpper(token))
+            {
+                return;
+            }
+
+            if (! char.IsLower(token))
+            {
+                continue;
+            }
+
+            if (_targets[_activeWilly] != token || _paths[_activeWilly].Count == 0)
+            {
+                _paths[_activeWilly].Clear();
+                
+                QueueRoute(_activeWilly, token);
+            }
+
+            _targets[_activeWilly] = token;
+
+            PlanAhead();
+
+            return;
+        }
+    }
+
+    private void PlanAhead()
+    {
+        var robot = _activeWilly;
+
+        for (var i = _pathIndex + 1; i < _state.Path.Length; i++)
+        {
+            var token = _state.Path[i];
+
+            if (char.IsNumber(token))
+            {
+                robot = token - '1';
+
+                continue;
+            }
+
+            if (! char.IsLower(token) || robot == _activeWilly)
+            {
+                continue;
+            }
+
+            if (_targets[robot] == '\0' && _paths[robot].Count == 0)
+            {
+                QueueRoute(robot, token);
+                _targets[robot] = token;
+            }
+        }
+    }
+
+    private void QueueRoute(int robot, char target)
+    {
+        var cell = NormaliseCell(_willys[robot].Cell);
+        
+        var key = $"{cell}{target}";
+
+        if (! _state.Paths.TryGetValue(key, out var route))
+        {
+            key = $"{target}{cell}";
+
+            if (! _state.Paths.TryGetValue(key, out route))
+            {
+                return;
+            }
+        }
+
+        var willy = _willys[robot];
+        
+        var forwards = route[0].X == willy.MapX && route[0].Y == willy.MapY;
+
+        if (forwards)
+        {
+            foreach (var point in route)
+            {
+                _paths[robot].Enqueue(point);
+            }
+        }
+        else
+        {
+            for (var i = route.Count - 1; i >= 0; i--)
+            {
+                _paths[robot].Enqueue(route[i]);
+            }
+        }
+    }
+
+    private static char NormaliseCell(char cell)
+    {
+        return (char) (cell > 127 ? cell - (char) 127 : cell);
+    }
+
+    private void StartMove()
+    {
+        _activeWilly = _state.Path[_pathIndex] - '1';
     }
 
     private void DrawWillys()
@@ -384,7 +506,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 if (tile == '#')
                 {
                     _spriteBatch.Draw(_tiles, new Vector2(x * 8, y * 8), new Rectangle(0, 0, 8, 8), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
-                    
+
                     continue;
                 }
 
@@ -393,14 +515,13 @@ public class Visualisation : VisualisationBase<PuzzleState>
                     if (char.IsLower(tile))
                     {
                         _spriteBatch.Draw(_tiles, new Vector2(x * 8, y * 8), new Rectangle(16, 0, 8, 8), keyColor, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
-                        
+
                         continue;
                     }
 
                     if (tile < 127)
                     {
-                        _spriteBatch.Draw(_tiles, new Vector2(x * 8, y * 8), new Rectangle(8, 0, 8, 8), Color.White, 0,
-                            Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+                        _spriteBatch.Draw(_tiles, new Vector2(x * 8, y * 8), new Rectangle(8, 0, 8, 8), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
                     }
                 }
             }
