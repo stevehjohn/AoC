@@ -48,7 +48,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
     private int _color;
 
-    private  Willy[] _willys;
+    private Willy[] _willys;
 
     private int _pathIndex = -1;
 
@@ -88,7 +88,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         _willys = new Willy[_willyCount];
 
         _paths = new Queue<AoCPoint>[_willyCount];
-        
+
         for (var i = 0; i < _willyCount; i++)
         {
             _paths[i] = new Queue<AoCPoint>();
@@ -146,7 +146,8 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 Direction = 1,
                 FrameDirection = 1,
                 Cell = '4'
-            };        }
+            };
+        }
 
         base.Initialize();
     }
@@ -175,9 +176,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             if (_pathIndex == -1)
             {
-                _pathIndex = 0;
-
-                StartMove();
+                _activeWilly = 0;
 
                 AdvanceSolution();
             }
@@ -377,13 +376,12 @@ public class Visualisation : VisualisationBase<PuzzleState>
             if (_pathIndex >= _state.Path.Length)
             {
                 _pathIndex = _state.Path.Length - 1;
-
                 return;
             }
 
             var token = _state.Path[_pathIndex];
 
-            if (char.IsNumber(token))
+            if (IsRobotMarker(token))
             {
                 StartMove();
 
@@ -409,10 +407,18 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
             _targets[_activeWilly] = token;
 
-            PlanAhead();
+            if (_willyCount > 1)
+            {
+                PlanAhead();
+            }
 
             return;
         }
+    }
+
+    private bool IsRobotMarker(char token)
+    {
+        return _willyCount > 1 && token is >= '1' and <= '4';
     }
 
     private void PlanAhead()
@@ -423,10 +429,10 @@ public class Visualisation : VisualisationBase<PuzzleState>
         {
             var token = _state.Path[i];
 
-            if (char.IsNumber(token))
+            if (IsRobotMarker(token))
             {
                 robot = token - '1';
-
+                
                 continue;
             }
 
