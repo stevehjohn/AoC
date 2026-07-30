@@ -109,45 +109,44 @@ public class Visualisation : VisualisationBase<PuzzleState>
                 FrameDirection = 1,
                 Cell = '1'
             };
-
-            return;
         }
-
-        _willys[0] = new Willy
+        else
         {
-            MapX = 39,
-            MapY = 39,
-            Direction = -1,
-            FrameDirection = 1,
-            Cell = '1'
-        };
+            _willys[0] = new Willy
+            {
+                MapX = 39,
+                MapY = 39,
+                Direction = -1,
+                FrameDirection = 1,
+                Cell = '1'
+            };
 
-        _willys[1] = new Willy
-        {
-            MapX = 41,
-            MapY = 39,
-            Direction = 1,
-            FrameDirection = 1,
-            Cell = '2'
-        };
+            _willys[1] = new Willy
+            {
+                MapX = 41,
+                MapY = 39,
+                Direction = 1,
+                FrameDirection = 1,
+                Cell = '2'
+            };
 
-        _willys[2] = new Willy
-        {
-            MapX = 39,
-            MapY = 41,
-            Direction = -1,
-            FrameDirection = 1,
-            Cell = '3'
-        };
+            _willys[2] = new Willy
+            {
+                MapX = 39,
+                MapY = 41,
+                Direction = -1,
+                FrameDirection = 1,
+                Cell = '3'
+            };
 
-        _willys[3] = new Willy
-        {
-            MapX = 41,
-            MapY = 41,
-            Direction = 1,
-            FrameDirection = 1,
-            Cell = '4'
-        };
+            _willys[3] = new Willy
+            {
+                MapX = 41,
+                MapY = 41,
+                Direction = 1,
+                FrameDirection = 1,
+                Cell = '4'
+            };        }
 
         base.Initialize();
     }
