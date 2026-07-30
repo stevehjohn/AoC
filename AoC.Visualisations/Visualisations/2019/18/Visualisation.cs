@@ -452,11 +452,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         var key = $"{cell}{target}";
 
-        if (! _state.Paths.TryGetValue(key, out var route))
+        if (!_state.Paths.TryGetValue(key, out var route))
         {
             key = $"{target}{cell}";
 
-            if (! _state.Paths.TryGetValue(key, out route))
+            if (!_state.Paths.TryGetValue(key, out route))
             {
                 return;
             }
@@ -464,22 +464,36 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         var willy = _willys[robot];
 
-        var forwards = route[0].X == willy.MapX && route[0].Y == willy.MapY;
+        var distanceToStart = Math.Abs(route[0].X - willy.MapX) + Math.Abs(route[0].Y - willy.MapY);
 
-        if (forwards)
+        var distanceToEnd = Math.Abs(route[^1].X - willy.MapX) + Math.Abs(route[^1].Y - willy.MapY);
+
+        if (distanceToStart <= distanceToEnd)
         {
             foreach (var point in route)
             {
-                _paths[robot].Enqueue(point);
+                EnqueueIfNew(robot, point);
             }
         }
         else
         {
             for (var i = route.Count - 1; i >= 0; i--)
             {
-                _paths[robot].Enqueue(route[i]);
+                EnqueueIfNew(robot, route[i]);
             }
         }
+    }
+
+    private void EnqueueIfNew(int robot, AoCPoint point)
+    {
+        var willy = _willys[robot];
+
+        if (point.X == willy.MapX && point.Y == willy.MapY)
+        {
+            return;
+        }
+
+        _paths[robot].Enqueue(point);
     }
 
     private static char NormaliseCell(char cell)
