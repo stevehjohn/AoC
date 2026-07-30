@@ -85,14 +85,6 @@ public class NodeWalker : INodeWalker
                 _graph.Doors.TryGetValue($"{_node.Name}{child.Name}", out blockers);
             }
 
-            if (blockers != null)
-            {
-                foreach (var blocker in blockers)
-                {
-                    AllVisited.Add(blocker);
-                }
-            }
-
             newWalkers.Add(new NodeWalker(this, child, distance));
         }
 
