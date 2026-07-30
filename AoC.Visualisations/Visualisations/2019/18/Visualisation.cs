@@ -291,8 +291,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         var tile = _state.Map[move.X, move.Y];
 
-        if (index != _activeWilly &&
-            (char.IsLower(tile) || IsLockedDoor(tile)))
+        if (index != _activeWilly && (char.IsLower(tile) || IsLockedDoor(tile)))
         {
             return;
         }
