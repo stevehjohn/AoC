@@ -1,4 +1,5 @@
-﻿using AoC.Visualisations.Exceptions;
+﻿using AoC.Solutions.Solutions._2019._18;
+using AoC.Visualisations.Exceptions;
 using AoC.Visualisations.Infrastructure;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
@@ -14,16 +15,6 @@ namespace AoC.Visualisations.Visualisations._2019._18;
 [UsedImplicitly]
 public class Visualisation : VisualisationBase<PuzzleState>
 {
-    private SpriteBatch _spriteBatch;
-
-    private Texture2D _tiles;
-
-    private Texture2D _sprites;
-
-    private PuzzleState _state;
-
-    private Texture2D _spark;
-
     private readonly List<Spark> _sparks = [];
 
     private readonly Random _rng = new();
@@ -39,27 +30,33 @@ public class Visualisation : VisualisationBase<PuzzleState>
         Color.White
     ];
 
+    private readonly char[] _targets = new char[4];
+
+    private Queue<AoCPoint>[] _paths;
+
+    private SpriteBatch _spriteBatch;
+
+    private Texture2D _tiles;
+
+    private Texture2D _sprites;
+
+    private PuzzleState _state;
+
+    private Texture2D _spark;
+
     private long _frame;
 
     private int _color;
 
-    private readonly Willy[] _willys = new Willy[4];
-
-    private readonly Queue<AoCPoint>[] _paths =
-    [
-        new(),
-        new(),
-        new(),
-        new()
-    ];
-
-    private readonly char[] _targets = new char[4];
+    private  Willy[] _willys;
 
     private int _pathIndex = -1;
 
     private int _activeWilly;
 
     private int _pause;
+
+    private int _willyCount;
 
     public Visualisation()
     {
@@ -76,14 +73,45 @@ public class Visualisation : VisualisationBase<PuzzleState>
     {
         Puzzle = part switch
         {
+            1 => new Part1(this),
             2 => new Part2(this),
             _ => throw new VisualisationParameterException()
         };
+
+        _willyCount = part switch
+        {
+            1 => 1,
+            2 => 4,
+            _ => throw new VisualisationParameterException()
+        };
+
+        _willys = new Willy[_willyCount];
+
+        _paths = new Queue<AoCPoint>[_willyCount];
+        
+        for (var i = 0; i < _willyCount; i++)
+        {
+            _paths[i] = new Queue<AoCPoint>();
+        }
     }
 
     protected override void Initialize()
     {
         IsMouseVisible = true;
+
+        if (_willyCount == 1)
+        {
+            _willys[0] = new Willy
+            {
+                MapX = 40,
+                MapY = 40,
+                Direction = -1,
+                FrameDirection = 1,
+                Cell = '1'
+            };
+
+            return;
+        }
 
         _willys[0] = new Willy
         {
