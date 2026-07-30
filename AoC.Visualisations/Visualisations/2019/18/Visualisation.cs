@@ -315,11 +315,13 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         willy.Moving = true;
 
-        if (char.IsUpper(tile))
+        if (! char.IsLower(tile))
         {
-            willy.Cell = tile;
+            return;
         }
 
+        willy.Cell = tile;
+        
         if (! char.IsLower(tile))
         {
             return;
@@ -429,7 +431,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             if (IsRobotMarker(token))
             {
                 robot = token - '1';
-                
+
                 continue;
             }
 
@@ -452,11 +454,11 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         var key = $"{cell}{target}";
 
-        if (!_state.Paths.TryGetValue(key, out var route))
+        if (! _state.Paths.TryGetValue(key, out var route))
         {
             key = $"{target}{cell}";
 
-            if (!_state.Paths.TryGetValue(key, out route))
+            if (! _state.Paths.TryGetValue(key, out route))
             {
                 return;
             }
