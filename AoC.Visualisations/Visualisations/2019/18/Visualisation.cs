@@ -330,8 +330,6 @@ public class Visualisation : VisualisationBase<PuzzleState>
         _state.Map[move.X, move.Y] = '.';
 
         OpenDoor(char.ToUpper(tile));
-
-        _pause = 50;
     }
 
     private static bool IsLockedDoor(char tile)
