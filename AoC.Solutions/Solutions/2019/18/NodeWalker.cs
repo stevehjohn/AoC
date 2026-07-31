@@ -80,11 +80,6 @@ public class NodeWalker : INodeWalker
                 continue;
             }
 
-            if (! _graph.Doors.TryGetValue($"{child.Name}{_node.Name}", out var blockers))
-            {
-                _graph.Doors.TryGetValue($"{_node.Name}{child.Name}", out blockers);
-            }
-
             newWalkers.Add(new NodeWalker(this, child, distance));
         }
 
