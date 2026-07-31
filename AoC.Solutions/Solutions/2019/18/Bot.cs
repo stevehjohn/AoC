@@ -45,7 +45,7 @@ public class Bot
         _itemHistory = [(Item: _map[Position.X, Position.Y], Steps: 0)];
 
         AllHistory.Add(HashCode.Combine(Name, Position));
-        
+
         _positionsSinceLastItem = [new Point(Position)];
 
         Steps = 0;
@@ -147,32 +147,35 @@ public class Bot
     {
         var c = _map[Position.X, Position.Y];
 
-        if (char.IsLetter(c) || c == '@' || char.IsNumber(c))
+        if (! char.IsLetter(c) && c != '@' && ! char.IsNumber(c))
         {
-            _itemHistory.Add((Item: c, Steps));
+            return;
+        }
 
-            foreach (var i in _itemHistory)
+        _itemHistory.Add((Item: c, Steps));
+
+        foreach (var item in _itemHistory)
+        {
+            if (item.Item == c)
             {
-                var currentSteps = Steps - i.Steps;
+                continue;
+            }
 
-                if (i.Item != c)
-                {
-                    var pair = new string(new[] { i.Item, c }.OrderBy(x => x).ToArray());
+            var currentSteps = Steps - item.Steps;
 
-                    if (! _distances.TryAdd(pair, currentSteps))
-                    {
-                        if (_distances[pair] > currentSteps)
-                        {
-                            _distances[pair] = currentSteps;
+            var pair = new string(new[] { item.Item, c }.OrderBy(x => x).ToArray());
 
-                            _paths[pair] = _positionsSinceLastItem.ToList();
-                        }
-                    }
-                    else
-                    {
-                        _paths.Add(pair, _positionsSinceLastItem.ToList());
-                    }
-                }
+            var route = _positionsSinceLastItem.Skip(item.Steps).Select(point => new Point(point)).ToList();
+
+            if (_distances.TryAdd(pair, currentSteps))
+            {
+                _paths.Add(pair, route);
+            }
+            else if (_distances[pair] > currentSteps)
+            {
+                _distances[pair] = currentSteps;
+                
+                _paths[pair] = route;
             }
         }
     }
