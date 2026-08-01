@@ -93,50 +93,51 @@ public abstract class Base : Solution
 
         while (true)
         {
-            if (_visualiser != null)
+            if (_visualiser != null && --counter == 0)
             {
-                counter--;
-
-                if (counter == 0)
-                {
-                    _positions.Add(new Point(500, 0));
-
-                    counter = _hasFloor ? 2 : 10;
-                }
+                _positions.Add(new Point(500, 0));
+                
+                counter = _hasFloor ? 2 : 10;
             }
 
-            while (_positions.Count > 0)
+            for (var i = _positions.Count - 1; i >= 0; i--)
             {
-                var position = _positions[0];
+                var position = _positions[i];
 
                 if (position.Y == _maxY && !_hasFloor)
                 {
                     EndVisualisation();
-
+                    
                     return units;
                 }
 
                 if (_map[position.X, position.Y + 1] == '\0')
                 {
                     position.Y++;
-
+                    
+                    _positions[i] = position;
+                    
                     continue;
                 }
 
                 if (_map[position.X - 1, position.Y + 1] == '\0')
                 {
                     position.X--;
-
+                    
                     position.Y++;
-
+                    
+                    _positions[i] = position;
+                    
                     continue;
                 }
 
                 if (_map[position.X + 1, position.Y + 1] == '\0')
                 {
                     position.X++;
-
+                    
                     position.Y++;
+                    
+                    _positions[i] = position;
                     
                     continue;
                 }
@@ -144,28 +145,20 @@ public abstract class Base : Solution
                 if (position.X == 500 && position.Y == 0)
                 {
                     EndVisualisation();
-
+                    
                     return units;
                 }
 
                 _map[position.X, position.Y] = 'o';
                 
                 units++;
-
-                if (_visualiser != null)
-                {
-                    _positions.RemoveAt(0);
-                }
-                else
-                {
-                    _positions[0] = new Point(500, 0);
-                }
+                
+                _positions.RemoveAt(i);
             }
 
             Visualise();
         }
     }
-
     protected void AddFloor()
     {
         for (var x = 0; x < Width; x++)
