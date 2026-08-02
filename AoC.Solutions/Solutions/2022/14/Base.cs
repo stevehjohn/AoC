@@ -159,6 +159,7 @@ public abstract class Base : Solution
             Visualise();
         }
     }
+    
     protected void AddFloor()
     {
         for (var x = 0; x < Width; x++)
