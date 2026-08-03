@@ -438,6 +438,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
             if (_targets[robot] == '\0' && _paths[robot].Count == 0)
             {
                 QueueRoute(robot, token);
+                
                 _targets[robot] = token;
             }
         }
