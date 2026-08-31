@@ -70,6 +70,6 @@ public class Part2 : Base
             }
         }
 
-        return rules.Select(r => r[0].Name).ToList();
+        return [.. rules.Select(r => r[0].Name)];
     }
 }

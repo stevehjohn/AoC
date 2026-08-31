@@ -41,7 +41,7 @@ public class Part1 : Base
     {
         ParseInput();
 
-        InitialTileOrder = _tiles.Select(t => t.Id).ToList();
+        InitialTileOrder = [.. _tiles.Select(t => t.Id)];
 
         Solve();
 

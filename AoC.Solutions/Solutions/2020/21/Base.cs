@@ -41,7 +41,7 @@ public abstract class Base : Solution
                     continue;
                 }
 
-                Allergens[allergen] = allergenIngredients.Intersect(ingredients).ToList();
+                Allergens[allergen] = [.. allergenIngredients.Intersect(ingredients)];
             }
         }
     }

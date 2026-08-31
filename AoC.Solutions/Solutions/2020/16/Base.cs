@@ -91,7 +91,7 @@ public abstract class Base : Solution
 
     private static List<int> ParseTicket(string input)
     {
-        return input.Split(',', StringSplitOptions.TrimEntries).Select(int.Parse).ToList();
+        return [.. input.Split(',', StringSplitOptions.TrimEntries).Select(int.Parse)];
     }
 
     private static Rule ParseRule(string input)

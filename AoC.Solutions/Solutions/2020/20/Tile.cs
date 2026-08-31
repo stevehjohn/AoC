@@ -176,6 +176,6 @@ public class Tile
                         LeftFlipped
                     };
 
-        Edges = edges.ToImmutableHashSet();
+        Edges = [.. edges];
     }
 }

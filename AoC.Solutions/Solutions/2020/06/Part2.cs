@@ -31,7 +31,7 @@ public class Part2 : Base
 
             var lineCharacters = line.ToHashSet();
 
-            commonCharacters = commonCharacters.Intersect(lineCharacters).ToHashSet();
+            commonCharacters = [.. commonCharacters.Intersect(lineCharacters)];
         }
 
         total += commonCharacters.Count;
