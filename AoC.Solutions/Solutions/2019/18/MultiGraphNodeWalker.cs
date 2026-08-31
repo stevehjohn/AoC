@@ -64,7 +64,7 @@ public class MultiGraphNodeWalker : INodeWalker
     {
         _graphs = previous._graphs;
      
-        _graphNodes = previous._graphNodes.ToArray();
+        _graphNodes = [.. previous._graphNodes];
 
         _graphIndex = previous._graphIndex;
        
@@ -81,7 +81,7 @@ public class MultiGraphNodeWalker : INodeWalker
     {
         _graphs = previous._graphs;
      
-        _graphNodes = previous._graphNodes.ToArray();
+        _graphNodes = [.. previous._graphNodes];
 
         _graphIndex = newGraphIndex;
 

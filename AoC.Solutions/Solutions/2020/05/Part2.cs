@@ -19,7 +19,7 @@ public class Part2 : Base
             ids.Add(seatId);
         }
 
-        ids = ids.OrderBy(i => i).ToList();
+        ids = [.. ids.OrderBy(i => i)];
 
         for (var i = 0; i < ids.Count - 2; i++)
         {

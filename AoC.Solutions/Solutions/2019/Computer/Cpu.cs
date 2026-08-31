@@ -77,7 +77,7 @@ public class Cpu
 
             _operands = Memory[((int) _programCounter + 1)..((int) _programCounter + instruction.Length)];
 
-            _modes = opCodeWithFlags[..3].Select(c => (byte) (c - '0')).Reverse().ToArray();
+            _modes = [.. opCodeWithFlags[..3].Select(c => (byte) (c - '0')).Reverse()];
 
             switch (instruction.Execute())
             {
