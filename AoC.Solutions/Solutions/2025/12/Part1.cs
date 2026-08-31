@@ -90,7 +90,7 @@ public class Part1 : Base
 
             if (_visualiser != null)
             {
-                _puzzleState.Areas.Add(new Area(int.Parse(line[..2]), int.Parse(line[3..5]), presentCounts.Select(int.Parse).ToArray(), used < area));
+                _puzzleState.Areas.Add(new Area(int.Parse(line[..2]), int.Parse(line[3..5]), [.. presentCounts.Select(int.Parse)], used < area));
             }
         }
 

@@ -12,7 +12,7 @@ public class PuzzleState
     {
         Map ??= map;
         
-        Visited = visited.ToList();
+        Visited = [.. visited];
 
         foreach (var item in visited)
         {

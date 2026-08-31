@@ -8,7 +8,7 @@ public abstract class Base : Solution
 
     protected int[] ReadDraws()
     {
-        return Input[0].Split(',').Select(int.Parse).ToArray();
+        return [.. Input[0].Split(',').Select(int.Parse)];
     }
 
     protected List<Board> ReadBoards()
@@ -21,8 +21,10 @@ public abstract class Base : Solution
         {
             var data = $"{Input[line + 1]} {Input[line + 2]} {Input[line + 3]} {Input[line + 4]} {Input[line + 5]}";
 
-            boards.Add(new Board(data.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-                                     .Select(int.Parse).ToArray()));
+            boards.Add(new Board([
+                .. data.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                    .Select(int.Parse)
+            ]));
 
             line += 6;
         }

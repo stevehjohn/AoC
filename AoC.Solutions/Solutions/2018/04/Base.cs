@@ -104,7 +104,7 @@ public abstract class Base : Solution
             lines.Add((DateTime.Parse(split[0][1..]), line));
         }
 
-        return lines.OrderBy(l => l.Time).Select(l => l.Line).ToList();
+        return [.. lines.OrderBy(l => l.Time).Select(l => l.Line)];
     }
 
     private static (DateTime Time, int GuardId, Event Event) ParseLine(string line, int currentGuard)

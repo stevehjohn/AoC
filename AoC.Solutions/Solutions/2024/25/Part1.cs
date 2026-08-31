@@ -72,8 +72,8 @@ public class Part1 : Base
             item += 8;
         }
 
-        _locks = locks.ToArray();
+        _locks = [.. locks];
 
-        _keys = keys.ToArray();
+        _keys = [.. keys];
     }
 }

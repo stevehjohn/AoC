@@ -13,7 +13,7 @@ public abstract class Base : Solution
     
     protected void ParseInput()
     {
-        Stones = Input[0].Split(' ').Select(long.Parse).ToArray();
+        Stones = [.. Input[0].Split(' ').Select(long.Parse)];
     }
 
     protected long Blink(long stone, int times)

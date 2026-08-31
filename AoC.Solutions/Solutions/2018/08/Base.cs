@@ -43,11 +43,11 @@ public abstract class Base : Solution
             total += remaining.Take(metadataCount).Sum();
         }
 
-        return (total, remaining.Skip(metadataCount).ToList());
+        return (total, [.. remaining.Skip(metadataCount)]);
     }
 
     protected List<int> ParseInput()
     {
-        return Input[0].Split(' ').Select(int.Parse).ToList();
+        return [.. Input[0].Split(' ').Select(int.Parse)];
     }
 }

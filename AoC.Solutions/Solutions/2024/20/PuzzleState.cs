@@ -20,7 +20,7 @@ public class PuzzleState
     {
         if (Map == null)
         {
-            _track = state.Select(c => c.Position).ToList();
+            _track = [.. state.Select(c => c.Position)];
 
             _track.Reverse();
 
