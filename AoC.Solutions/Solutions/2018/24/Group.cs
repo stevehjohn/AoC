@@ -45,11 +45,11 @@ public class Group
             {
                 if (property.StartsWith("weak"))
                 {
-                    WeakTo = property[8..].Split(',', StringSplitOptions.TrimEntries).ToList();
+                    WeakTo = [.. property[8..].Split(',', StringSplitOptions.TrimEntries)];
                 }
                 else
                 {
-                    ImmuneTo = property[10..].Split(',', StringSplitOptions.TrimEntries).ToList();
+                    ImmuneTo = [.. property[10..].Split(',', StringSplitOptions.TrimEntries)];
                 }
             }
         }

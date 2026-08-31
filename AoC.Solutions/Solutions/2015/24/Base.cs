@@ -33,7 +33,7 @@ public abstract class Base : Solution
 
             if (depth + 1 < _minDepth)
             {
-                TryFindQeOfGroup(weights.Where(w => w != weight).ToList(), target, qe * weight, current + weight, depth + 1);
+                TryFindQeOfGroup([.. weights.Where(w => w != weight)], target, qe * weight, current + weight, depth + 1);
             }
         }
     }

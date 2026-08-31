@@ -57,7 +57,7 @@ public abstract class Base : Solution
 
     protected void ParseInput()
     {
-        People = Input.Select(l => l.Split(' ', StringSplitOptions.TrimEntries)[0]).Distinct().ToArray();
+        People = [.. Input.Select(l => l.Split(' ', StringSplitOptions.TrimEntries)[0]).Distinct()];
 
         foreach (var line in Input)
         {

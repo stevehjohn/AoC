@@ -145,7 +145,7 @@ public abstract class Base : Solution
             bit <<= 1;
         }
 
-        return bits.ToArray();
+        return [.. bits];
     }
 
     private static long[] CopyState(long[] state, int newFloor)
