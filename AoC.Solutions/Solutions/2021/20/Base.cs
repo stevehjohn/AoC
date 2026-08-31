@@ -37,7 +37,7 @@ public abstract class Base : Solution
 
     private void ParseInput()
     {
-        _algorithm = Input[0].Select(c => c == '#').ToArray();
+        _algorithm = [.. Input[0].Select(c => c == '#')];
 
         var y = 0;
 

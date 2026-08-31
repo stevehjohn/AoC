@@ -59,7 +59,7 @@ public class Scanner
 
         var beaconPairs = ResolveMatchingBeacons(matchingBeacons);
 
-        FindTranslation(origin, beaconPairs.Take(12).ToList());
+        FindTranslation(origin, [.. beaconPairs.Take(12)]);
     }
 
     public int GetManhattanDistanceFrom(Scanner origin)
@@ -69,9 +69,9 @@ public class Scanner
 
     private void FindTranslation(Scanner origin, List<Pair> pairs)
     {
-        var left = new PointCloud(pairs.Select(p => p.Beacon1).ToList());
+        var left = new PointCloud([.. pairs.Select(p => p.Beacon1)]);
 
-        var right = new PointCloud(pairs.Select(p => p.Beacon2).ToList());
+        var right = new PointCloud([.. pairs.Select(p => p.Beacon2)]);
 
         Transform = new Transform(left, right, pairs[0]);
 
