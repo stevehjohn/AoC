@@ -44,7 +44,7 @@ public abstract class Base : Solution
 
     protected void ParseInput()
     {
-        _locations = Input.Select(l => l.Split(' ', StringSplitOptions.TrimEntries)[0]).Union(Input.Select(l => l.Split(' ', StringSplitOptions.TrimEntries)[2])).Distinct().ToArray();
+        _locations = [.. Input.Select(l => l.Split(' ', StringSplitOptions.TrimEntries)[0]).Union(Input.Select(l => l.Split(' ', StringSplitOptions.TrimEntries)[2])).Distinct()];
 
         foreach (var line in Input)
         {

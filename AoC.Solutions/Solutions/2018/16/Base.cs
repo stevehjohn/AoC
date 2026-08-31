@@ -10,6 +10,6 @@ public abstract class Base : Solution
     {
         line = line[9..][..^1];
 
-        return line.Split(',', StringSplitOptions.TrimEntries).Select(int.Parse).ToArray();
+        return [.. line.Split(',', StringSplitOptions.TrimEntries).Select(int.Parse)];
     }
 }

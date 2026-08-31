@@ -59,7 +59,7 @@ public class Unit
 
     private List<Unit> Move()
     {
-        _unitPositions = _units.Select(u => u.Position).ToHashSet();
+        _unitPositions = [.. _units.Select(u => u.Position)];
 
         var targets = _units.Where(u => u.Type != Type && u != this).ToList();
 
@@ -78,7 +78,7 @@ public class Unit
 
         var targetCells = GetTargetCells(targets).Distinct();
 
-        var paths = IsReachable(targetCells.ToHashSet());
+        var paths = IsReachable([.. targetCells]);
 
         if (paths.Count == 0)
         {
@@ -89,8 +89,11 @@ public class Unit
 
         Position = movesOrdered.First().Skip(1).First();
 
-        adjacent = targets.Where(t => t.Position.X == Position.X && Math.Abs(t.Position.Y - Position.Y) == 1
-                                      || Math.Abs(t.Position.X - Position.X) == 1 && t.Position.Y == Position.Y).ToList();
+        adjacent =
+        [
+            .. targets.Where(t => t.Position.X == Position.X && Math.Abs(t.Position.Y - Position.Y) == 1
+                                  || Math.Abs(t.Position.X - Position.X) == 1 && t.Position.Y == Position.Y)
+        ];
 
         return adjacent;
     }
