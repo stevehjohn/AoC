@@ -100,7 +100,9 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         for (var i = 0; i < Transformers; i++)
         {
-            _transformers[i].OtherTransformers = [.. _transformers.Where(t => t != _transformers[i])];
+            var captured = i;
+            
+            _transformers[i].OtherTransformers = [.. _transformers.Where(t => t != _transformers[captured])];
         }
 
         base.BeginRun();
