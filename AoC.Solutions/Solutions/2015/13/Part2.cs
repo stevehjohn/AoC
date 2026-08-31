@@ -16,7 +16,7 @@ public class Part2 : Base
             Happiness.Add($"Stevo{person}", 0);
         }
 
-        People = People.Append("Stevo").ToArray();
+        People = [.. People, "Stevo"];
 
         var result = Solve();
 
