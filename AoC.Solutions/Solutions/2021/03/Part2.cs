@@ -30,7 +30,9 @@ public class Part2 : Base
                     ? '1'
                     : '0';
 
-            items = [.. items.Where(item => item[i] == bitToKeep)];
+            var captured = i;
+            
+            items = [.. items.Where(item => item[captured] == bitToKeep)];
 
             if (items.Count == 1)
             {
