@@ -69,7 +69,7 @@ public class Bot
 
         _direction = direction;
 
-        _itemHistory = bot._itemHistory.ToList();
+        _itemHistory = [.. bot._itemHistory];
 
         Position.X += _direction.X;
 
@@ -77,9 +77,11 @@ public class Bot
 
         AllHistory.Add(HashCode.Combine(Name, Position));
 
-        _positionsSinceLastItem = bot._positionsSinceLastItem.ToList();
-
-        _positionsSinceLastItem.Add(new Point(Position));
+        _positionsSinceLastItem =
+        [
+            .. bot._positionsSinceLastItem,
+            new Point(Position)
+        ];
 
         Steps++;
 
@@ -249,6 +251,6 @@ public class Bot
             return moves;
         }
 
-        return moves.Where(m => m.X != -_direction.X || m.Y != -_direction.Y).ToList();
+        return [.. moves.Where(m => m.X != -_direction.X || m.Y != -_direction.Y)];
     }
 }

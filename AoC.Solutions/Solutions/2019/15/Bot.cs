@@ -109,6 +109,6 @@ public class Bot
             return moves;
         }
 
-        return moves.Where(m => m.X != -_direction.X || m.Y != -_direction.Y).ToList();
+        return [.. moves.Where(m => m.X != -_direction.X || m.Y != -_direction.Y)];
     }
 }

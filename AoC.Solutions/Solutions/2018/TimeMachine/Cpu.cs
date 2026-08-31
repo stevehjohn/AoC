@@ -146,7 +146,7 @@ public sealed class Cpu
             list.Add(ParseLine(line));
         }
 
-        _program = list.ToArray();
+        _program = [.. list];
 
         _programLength = _program.Length;
     }
