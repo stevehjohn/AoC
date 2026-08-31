@@ -14,6 +14,6 @@ public class PuzzleState
 
         Buffer.BlockCopy(map, 0, Map, 0, sizeof(char) * map.GetLength(0) * map.GetLength(1));
 
-        Positions = positions.Select(p => new Point(p)).ToList();
+        Positions = [.. positions.Select(p => new Point(p))];
     }
 }

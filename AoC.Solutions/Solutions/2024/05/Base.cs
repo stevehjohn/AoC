@@ -38,7 +38,7 @@ public abstract class Base : Solution
 
         while (i < Input.Length)
         {
-            Updates.Add(Input[i].Split(',').Select(int.Parse).ToArray());
+            Updates.Add([.. Input[i].Split(',').Select(int.Parse)]);
 
             i++;
         }

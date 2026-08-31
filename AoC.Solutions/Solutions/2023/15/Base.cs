@@ -26,6 +26,6 @@ public abstract class Base : Solution
     {
         var parts = Input[0].Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
-        return parts.ToList();
+        return [.. parts];
     }
 }

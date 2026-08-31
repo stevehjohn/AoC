@@ -65,7 +65,7 @@ public class Part1 : Base
                 }
             }
 
-            _nodes = backup.ToList();
+            _nodes = [.. backup];
             
             _links = links.ToDictionary(i => i.Key, i => i.Value.ToList());
         }

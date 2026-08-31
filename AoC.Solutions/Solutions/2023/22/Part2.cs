@@ -143,6 +143,6 @@ public class Part2 : Base
             result.Select(b => b.Key).Order().ToList().ForEach(b => Visualise(false, b));
         }
 
-        return result.Select(b => b.Key).ToList();
+        return [.. result.Select(b => b.Key)];
     }
 }

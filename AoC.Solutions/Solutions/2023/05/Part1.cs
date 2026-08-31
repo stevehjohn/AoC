@@ -43,7 +43,7 @@ public class Part1 : Base
 
     private void ParseInput()
     {
-        _seeds = Input[0][6..].Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).Select(long.Parse).ToArray();
+        _seeds = [.. Input[0][6..].Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).Select(long.Parse)];
 
         var mapping = new List<(long Start, long End, long Adjustment)>();
 

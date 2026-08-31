@@ -40,6 +40,6 @@ public class Part2 : Base
             }
         });
         
-        return Maths.LowestCommonMultiple(iterationsToReceiveLow.ToList()).ToString();
+        return Maths.LowestCommonMultiple([.. iterationsToReceiveLow]).ToString();
     }
 }

@@ -89,6 +89,6 @@ public abstract class Base : Solution
             _registers[i] = int.Parse(Input[i][12..]);
         }
 
-        Program = Input[4][9..].Split(',').Select(long.Parse).ToArray();
+        Program = [.. Input[4][9..].Split(',').Select(long.Parse)];
     }
 }

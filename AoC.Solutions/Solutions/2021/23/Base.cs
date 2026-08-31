@@ -39,7 +39,7 @@ public abstract class Base : Solution
 
             newInput.AddRange(Input.Skip(3).Take(2));
 
-            modifiedInput = newInput.ToArray();
+            modifiedInput = [.. newInput];
         }
         else
         {
@@ -68,7 +68,7 @@ public abstract class Base : Solution
             }
         }
 
-        _initialAmphipodState = state.ToArray();
+        _initialAmphipodState = [.. state];
     }
 
     protected int Solve()

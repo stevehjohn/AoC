@@ -46,7 +46,7 @@ public abstract class Base : Solution
             var state = new PuzzleState
             {
                 Map = Input.To2DArray(),
-                Moves = moves.Select(m => (m % _width, m / _width)).ToList()
+                Moves = [.. moves.Select(m => (m % _width, m / _width))]
             };
             
             _visualiser.PuzzleStateChanged(state);

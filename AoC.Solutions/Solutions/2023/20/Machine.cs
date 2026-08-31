@@ -150,7 +150,7 @@ public class Machine
                     break;
             }
 
-            module.Targets = parts[1].Split(',', StringSplitOptions.TrimEntries).ToList();
+            module.Targets = [.. parts[1].Split(',', StringSplitOptions.TrimEntries)];
 
             if (module.Type == Type.Conjunction)
             {

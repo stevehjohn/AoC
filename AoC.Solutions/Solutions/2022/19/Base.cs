@@ -43,7 +43,7 @@ public abstract class Base : Solution
             result.Add((best, bp.Id));
         });
 
-        return result.ToList();
+        return [.. result];
     }
 
     private static int ExecuteBlueprint(Blueprint blueprint, int minutes)
