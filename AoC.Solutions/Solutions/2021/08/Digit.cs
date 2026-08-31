@@ -12,9 +12,9 @@ public class Digit
 
     public Digit(string[] inputs, string[] output)
     {
-        _inputs = inputs.Select(i => new string(i.OrderBy(c => c).ToArray())).ToList();
+        _inputs = [.. inputs.Select(i => new string(i.OrderBy(c => c).ToArray()))];
 
-        _output = output.Select(i => new string(i.OrderBy(c => c).ToArray())).ToArray();
+        _output = [.. output.Select(i => new string(i.OrderBy(c => c).ToArray()))];
     }
 
     public int GetValue()

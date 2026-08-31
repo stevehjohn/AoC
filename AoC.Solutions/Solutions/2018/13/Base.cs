@@ -28,7 +28,7 @@ public abstract class Base : Solution
 
     protected void Visualise(Point collisionPoint = null, bool isFinalState = false)
     {
-        _visualiser?.PuzzleStateChanged(new PuzzleState { Map = _map, Carts = Carts.Select(c => new Cart(c)).ToList(), CollisionPoint = collisionPoint, IsFinalState = isFinalState });
+        _visualiser?.PuzzleStateChanged(new PuzzleState { Map = _map, Carts = [.. Carts.Select(c => new Cart(c))], CollisionPoint = collisionPoint, IsFinalState = isFinalState });
     }
 
     protected void EndVisualisation()

@@ -39,7 +39,7 @@ public abstract class Base : Solution
         {
             line = line[16..];
 
-            parameters = line.Split(" by ", StringSplitOptions.TrimEntries).Select(int.Parse).ToArray();
+            parameters = [.. line.Split(" by ", StringSplitOptions.TrimEntries).Select(int.Parse)];
 
             for (var i = 0; i < parameters[1]; i++)
             {
@@ -58,7 +58,7 @@ public abstract class Base : Solution
 
         line = line[13..];
 
-        parameters = line.Split(" by ", StringSplitOptions.TrimEntries).Select(int.Parse).ToArray();
+        parameters = [.. line.Split(" by ", StringSplitOptions.TrimEntries).Select(int.Parse)];
 
         for (var i = 0; i < parameters[1]; i++)
         {
