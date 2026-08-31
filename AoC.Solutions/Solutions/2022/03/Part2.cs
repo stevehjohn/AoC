@@ -13,7 +13,9 @@ public class Part2 : Base
         {
             var common = Input[i].Where(item => Input[i + 1].Contains(item)).ToArray();
 
-            common = [.. common.Where(item => Input[i + 2].Contains(item))];
+            var captured = i;
+            
+            common = [.. common.Where(item => Input[captured + 2].Contains(item))];
 
             sum += common[0] & 0b0001_1111;
 
