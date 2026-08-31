@@ -29,7 +29,7 @@ public class Part2 : Base
             }
         }
 
-        basins = basins.OrderByDescending(b => b).ToList();
+        basins = [.. basins.OrderByDescending(b => b)];
 
         return (basins[0] * basins[1] * basins[2]).ToString();
     }

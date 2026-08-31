@@ -39,7 +39,7 @@ public class Part2 : Base
             }
         }
 
-        scores = scores.OrderBy(s => s).ToList();
+        scores = [.. scores.OrderBy(s => s)];
 
         return scores[scores.Count / 2].ToString();
     }

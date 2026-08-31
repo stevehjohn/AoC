@@ -8,7 +8,7 @@ public class PointCloud
 
     public PointCloud(List<Point> points)
     {
-        Points = points.Select(p => new PointDecimal(p)).ToList();
+        Points = [.. points.Select(p => new PointDecimal(p))];
     }
 
     public void CentreAtZero()

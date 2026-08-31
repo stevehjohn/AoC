@@ -46,7 +46,7 @@ public class Part2 : Base
 
             if (Allergens.All(a => a.Value.Count == 1))
             {
-                return Allergens.Select(a => (Ingredient: a.Value.Single(), Allergen: a.Key)).ToList();
+                return [.. Allergens.Select(a => (Ingredient: a.Value.Single(), Allergen: a.Key))];
             }
         }
     }

@@ -7,9 +7,9 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        var oxygen = Filter(Input.ToList());
+        var oxygen = Filter([.. Input]);
 
-        var co2 = Filter(Input.ToList(), true);
+        var co2 = Filter([.. Input], true);
 
         return (Convert.ToInt32(oxygen, 2) * Convert.ToInt32(co2, 2)).ToString();
     }
@@ -30,7 +30,7 @@ public class Part2 : Base
                     ? '1'
                     : '0';
 
-            items = items.Where(item => item[i] == bitToKeep).ToList();
+            items = [.. items.Where(item => item[i] == bitToKeep)];
 
             if (items.Count == 1)
             {
