@@ -5,7 +5,7 @@ using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2016._14;
 
-public abstract class Base : Solution
+public abstract partial class Base : Solution
 {
     public override string Description => "One time pad";
 
@@ -199,6 +199,4 @@ public abstract class Base : Solution
 
         return -1;
     }
-
-    private readonly record struct HashInfo(int Triple, int Quintuple);
 }

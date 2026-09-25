@@ -5,7 +5,7 @@ using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2016._05;
 
-public abstract class Base : Solution
+public abstract partial class Base : Solution
 {
     public override string Description => "Password hash";
 
@@ -66,5 +66,4 @@ public abstract class Base : Solution
     }
 
     // ReSharper disable once NotAccessedPositionalProperty.Global
-    protected readonly record struct HashMatch(int Suffix, int Sixth, int Seventh);
 }
