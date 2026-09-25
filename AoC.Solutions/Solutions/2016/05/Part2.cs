@@ -1,6 +1,7 @@
-﻿using System.Text;
+﻿using System.Buffers.Text;
+using System.Security.Cryptography;
+using System.Text;
 using JetBrains.Annotations;
-using Org.BouncyCastle.Crypto.Digests;
 
 namespace AoC.Solutions.Solutions._2016._05;
 
@@ -11,80 +12,84 @@ public class Part2 : Base
     {
         var prefix = Input[0];
 
+        var prefixBytes = Encoding.ASCII.GetBytes(prefix);
+
         var password = new char[8];
+
+        var found = 0;
 
         var suffix = 1;
 
-        var bytes = new byte[prefix.Length + 10];
+        const int batchSize = 4_096;
 
-        Buffer.BlockCopy(Encoding.ASCII.GetBytes(prefix), 0, bytes, 0, prefix.Length);
-
-        var length = prefix.Length;
-        
-        var md5Digest = new MD5Digest();
-
-        var hash = new byte[md5Digest.GetDigestSize()];
+        var matches = new Match[batchSize];
 
         while (true)
         {
-            retry:
-            var value = suffix;
-                
-            var suffixLength = 0;
+            var start = suffix;
 
-            do
+            Parallel.For(0, batchSize, i =>
             {
-                suffixLength++;
-                    
-                value /= 10;
-                    
-            } while (value > 0);
+                matches[i] = Calculate(prefixBytes, start + i);
+            });
 
-            var workingSuffix = suffix;
-
-            var index = suffixLength - 1;
-                
-            while (workingSuffix > 0)
+            for (var i = 0; i < batchSize; i++)
             {
-                bytes[length + index] = (byte) ('0' + (byte) (workingSuffix % 10));
+                var match = matches[i];
 
-                workingSuffix /= 10;
-
-                index--;
-            }
-                
-            md5Digest.BlockUpdate(bytes, 0, length + suffixLength);
-
-            md5Digest.DoFinal(hash, 0);
-
-            suffix++;
-
-            if (hash[0] != 0 || hash[1] != 0 || (hash[2] & 0b1111_0000) != 0)
-            {
-                continue;
-            }
-
-            var position = hash[2] & 0b0000_1111;
-
-            if (position > 7 || password[position] != '\0')
-            {
-                continue;
-            }
-
-            var hex = Convert.ToHexString(new Span<byte>(hash).Slice(3, 1));
-
-            password[position] = hex[0];
-
-            for (var i = 0; i < 8; i++)
-            {
-                if (password[i] == 0)
+                if (! match.IsMatch)
                 {
-                    goto retry;
+                    continue;
+                }
+
+                if (match.Position > 7 || password[match.Position] != '\0')
+                {
+                    continue;
+                }
+
+                password[match.Position] = match.Character;
+
+                found++;
+
+                if (found == 8)
+                {
+                    return new string(password);
                 }
             }
-            
-            break;
+
+            suffix += batchSize;
         }
-        return new string(password).ToLower();
     }
+
+    private static Match Calculate(byte[] prefixBytes, int suffix)
+    {
+        Span<byte> bytes = stackalloc byte[prefixBytes.Length + 10];
+
+        prefixBytes.CopyTo(bytes);
+
+        Utf8Formatter.TryFormat(suffix, bytes[prefixBytes.Length..], out var written);
+
+        Span<byte> hash = stackalloc byte[16];
+
+        MD5.TryHashData(bytes[..(prefixBytes.Length + written)], hash, out _);
+
+        if (hash[0] != 0 ||
+            hash[1] != 0 ||
+            (hash[2] & 0b1111_0000) != 0)
+        {
+            return default;
+        }
+
+        var position = hash[2] & 0b0000_1111;
+
+        var value = hash[3] >> 4;
+
+        var character = value < 10
+            ? (char) ('0' + value)
+            : (char) ('a' + value - 10);
+
+        return new Match(true, position, character);
+    }
+
+    private readonly record struct Match(bool IsMatch, int Position, char Character);
 }
