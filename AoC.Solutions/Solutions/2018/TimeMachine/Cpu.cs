@@ -14,12 +14,6 @@ public sealed class Cpu
 
     private int _instructionPointerBinding = -1;
 
-    private int _breakAt;
-
-    private OpCode? _breakOn;
-
-    private bool _hasBreakOn;
-
     public Cpu(int registerCount)
     {
         _registers = new int[registerCount];
@@ -29,13 +23,7 @@ public sealed class Cpu
     {
         _instructionPointer = 0;
 
-        _breakAt = breakAt;
-
-        _breakOn = breakOn;
-
-        _hasBreakOn = _breakOn.HasValue;
-
-        Continue();
+        Continue(breakAt, breakOn);
     }
 
     public void Execute(OpCode opCode, int a, int b, int c)
@@ -63,7 +51,7 @@ public sealed class Cpu
         }
     }
 
-    public void Continue()
+    public void Continue(int breakAt = -1, OpCode? breakOn = null)
     {
         var registers = _registers;
 
@@ -106,7 +94,7 @@ public sealed class Cpu
                 case OpCode.Eqrr: registers[instruction.C] = registers[instruction.A] == registers[instruction.B] ? 1 : 0; break;
             }
 
-            if (_breakAt > -1 && instructionPointer == _breakAt)
+            if (breakAt > -1 && instructionPointer == breakAt)
             {
                 _instructionPointer = instructionPointer;
                 
@@ -121,7 +109,7 @@ public sealed class Cpu
             instructionPointer++;
 
             // ReSharper disable once PossibleInvalidOperationException
-            if (_hasBreakOn && instruction.OpCode == _breakOn.Value)
+            if (breakOn.HasValue && instruction.OpCode == breakOn.Value)
             {
                 _instructionPointer = instructionPointer;
 

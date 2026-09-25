@@ -25,7 +25,7 @@ public class Part2 : Base
 
         while (true)
         {
-            cpu.Continue();
+            cpu.Continue(-1, OpCode.Eqrr);
 
             var registerValue = cpu.GetRegister(register);
 
