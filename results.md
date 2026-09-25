@@ -202,12 +202,12 @@ Tests performed on a 2023 MacBook Pro.
  2018 17.2: 20,002μs      
  2018 18.1: 405μs         I'm a lumberjack...
  2018 18.2: 18,093μs      
- 2018 19.1: 25,393μs      Tardis halting problem
+ 2018 19.1: 20,029μs      Tardis halting problem
  2018 19.2: 34,365μs      
  2018 20.1: 3,075μs       Regex maze
  2018 20.2: 3,791μs       
  2018 21.1: 30μs          Time machine halting problem
- 2018 21.2: 9,513,428μs   
+ 2018 21.2: 6,071,507μs   
  2018 22.1: 208μs         Caving capers
  2018 22.2: 58,167μs      
  2018 23.1: 172μs         Nanobot teleportation
@@ -216,7 +216,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 260,875μs     
  2018 25.1: 32,604μs      4D chocolate teleportation
             -------------
-            12.188s      
+            8.741s       
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
@@ -513,7 +513,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 16.2: 31,394μs      
  2024 17.1: 7μs           Chronospatial computer
  2024 17.2: 2,525μs       
- 2024 18.1: 1,283μs       RAM run
+ 2024 18.1: 1,170μs       RAM run
  2024 18.2: 1,318μs       
  2024 19.1: 37,654μs      Linen layout
  2024 19.2: 55,434μs      
@@ -529,7 +529,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 231μs         
  2024 25.1: 112μs         Code chronicle
             -------------
-            520.170ms    
+            520.057ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 87μs          
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             333.812ms    
 
- 514 puzzles solved in 39.652s.
+ 514 puzzles solved in 36.205s.
 ```
