@@ -11,16 +11,14 @@ public class Part2 : Base
 
         var found = 0;
 
-        foreach (var match in GetMatches())
+        foreach (var (_, position, seventh) in GetMatches())
         {
-            var position = match.Sixth;
-
             if (position > 7 || password[position] != '\0')
             {
                 continue;
             }
 
-            password[position] = ToHex(match.Seventh);
+            password[position] = ToHex(seventh);
 
             found++;
 

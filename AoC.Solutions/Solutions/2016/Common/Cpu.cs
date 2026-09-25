@@ -2,7 +2,7 @@
 
 namespace AoC.Solutions.Solutions._2016.Common;
 
-public static class Cpu
+public static partial class Cpu
 {
     public static int RunProgram(string[] input, Dictionary<char, int> initialRegisters)
     {
@@ -23,6 +23,7 @@ public static class Cpu
         {
             ref var instruction = ref program[programCounter];
 
+            // ReSharper disable once SwitchStatementMissingSomeEnumCasesNoDefault
             switch (instruction.OpCode)
             {
                 case OpCode.Cpy:
@@ -152,30 +153,5 @@ public static class Cpu
         return operand.IsRegister
             ? registers[operand.Value]
             : operand.Value;
-    }
-
-    private enum OpCode
-    {
-        Nop,
-        Cpy,
-        Inc,
-        Dec,
-        Jnz,
-        Tgl,
-        Mul,
-        Out
-    }
-
-    private readonly record struct Operand(int Value, bool IsRegister);
-
-    private struct Instruction(OpCode opCode, Operand a = default, Operand b = default, Operand c = default)
-    {
-        public OpCode OpCode = opCode;
-
-        public readonly Operand A = a;
-
-        public readonly Operand B = b;
-
-        public readonly Operand C = c;
     }
 }

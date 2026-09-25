@@ -207,7 +207,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 20.1: 3,075μs       Regex maze
  2018 20.2: 3,791μs       
  2018 21.1: 7μs           Time machine halting problem
- 2018 21.2: 4,174μs       
+ 2018 21.2: 4,093μs       
  2018 22.1: 208μs         Caving capers
  2018 22.2: 58,167μs      
  2018 23.1: 172μs         Nanobot teleportation

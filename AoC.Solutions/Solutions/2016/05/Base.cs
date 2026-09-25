@@ -65,5 +65,6 @@ public abstract class Base : Solution
         return value < 10 ? (char) ('0' + value) : (char) ('a' + value - 10);
     }
 
+    // ReSharper disable once NotAccessedPositionalProperty.Global
     protected readonly record struct HashMatch(int Suffix, int Sixth, int Seventh);
 }
