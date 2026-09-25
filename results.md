@@ -202,7 +202,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 17.2: 20,002μs      
  2018 18.1: 405μs         I'm a lumberjack...
  2018 18.2: 18,093μs      
- 2018 19.1: 20,029μs      Tardis halting problem
+ 2018 19.1: 19,996μs      Tardis halting problem
  2018 19.2: 34,365μs      
  2018 20.1: 3,075μs       Regex maze
  2018 20.2: 3,791μs       
