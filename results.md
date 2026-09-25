@@ -16,8 +16,8 @@ Tests performed on a 2023 MacBook Pro.
  2015  2.2: 434μs         
  2015  3.1: 1,203μs       Perfectly spherical houses in a vacuum
  2015  3.2: 1,093μs       
- 2015  4.1: 10,172μs      Crypto stocking stuffer
- 2015  4.2: 265,259μs     
+ 2015  4.1: 8,689μs       Crypto stocking stuffer
+ 2015  4.2: 208,538μs     
  2015  5.1: 136μs         Naughty or nice
  2015  5.2: 806μs         
  2015  6.1: 23,877μs      Bournville estate lights
@@ -60,7 +60,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 24.2: 126μs         
  2015 25.1: 57,269μs      Let it snow
             -------------
-            2.251s       
+            2.193s       
 
  2016  1.1: 6μs           Manhattan distance
  2016  1.2: 15μs          
@@ -70,8 +70,8 @@ Tests performed on a 2023 MacBook Pro.
  2016  3.2: 615μs         
  2016  4.1: 4,290μs       Security through obscurity
  2016  4.2: 4,264μs       
- 2016  5.1: 1,149,720μs   Password hash
- 2016  5.2: 635,706μs     
+ 2016  5.1: 221,519μs     Password hash
+ 2016  5.2: 620,676μs     
  2016  6.1: 874μs         Signals and noise
  2016  6.2: 272μs         
  2016  7.1: 729μs         ABBA internet protocol
@@ -89,7 +89,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 13.1: 48μs          Cubicle maze
  2016 13.2: 46μs          
  2016 14.1: 10,371μs      One time pad
- 2016 14.2: 725,926μs     
+ 2016 14.2: 725,748μs     
  2016 15.1: 378μs         Disc timing
  2016 15.2: 2,862μs       
  2016 16.1: 6μs           Dragon checksum
@@ -112,7 +112,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 24.2: 18,745μs      
  2016 25.1: 158,034μs     Clock signal
             -------------
-            4.770s       
+            3.827s       
 
  2017  1.1: 8μs           Captcha
  2017  1.2: 10μs          
@@ -207,7 +207,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 20.1: 3,075μs       Regex maze
  2018 20.2: 3,791μs       
  2018 21.1: 7μs           Time machine halting problem
- 2018 21.2: 4,599μs       
+ 2018 21.2: 4,174μs       
  2018 22.1: 208μs         Caving capers
  2018 22.2: 58,167μs      
  2018 23.1: 172μs         Nanobot teleportation
@@ -216,7 +216,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 260,875μs     
  2018 25.1: 32,604μs      4D chocolate teleportation
             -------------
-            2.674s       
+            2.673s       
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
@@ -470,14 +470,14 @@ Tests performed on a 2023 MacBook Pro.
  2023 21.1: 57μs          Step counter
  2023 21.2: 439μs         
  2023 22.1: 28,088μs      Sand slabs
- 2023 22.2: 55,937μs      
+ 2023 22.2: 54,676μs      
  2023 23.1: 10,271μs      A long walk
  2023 23.2: 50,315μs      
  2023 24.1: 1,509μs       Never tell me the odds
  2023 24.2: 5,110μs       
  2023 25.1: 9,284μs       Snowverload
             -------------
-            345.303ms    
+            344.042ms    
 
  2024  1.1: 112μs         Historian hysteria
  2024  1.2: 79μs          
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             333.812ms    
 
- 514 puzzles solved in 17.663s.
+ 514 puzzles solved in 16.660s.
 ```
