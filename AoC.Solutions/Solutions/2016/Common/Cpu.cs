@@ -172,10 +172,10 @@ public static class Cpu
     {
         public OpCode OpCode = opCode;
 
-        public Operand A = a;
+        public readonly Operand A = a;
 
-        public Operand B = b;
+        public readonly Operand B = b;
 
-        public Operand C = c;
+        public readonly Operand C = c;
     }
 }
