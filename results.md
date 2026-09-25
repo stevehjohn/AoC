@@ -17,7 +17,7 @@ Tests performed on a 2023 MacBook Pro.
  2015  3.1: 1,203μs       Perfectly spherical houses in a vacuum
  2015  3.2: 1,093μs       
  2015  4.1: 8,689μs       Crypto stocking stuffer
- 2015  4.2: 208,538μs     
+ 2015  4.2: 190,803μs     
  2015  5.1: 136μs         Naughty or nice
  2015  5.2: 806μs         
  2015  6.1: 23,877μs      Bournville estate lights
@@ -60,7 +60,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 24.2: 126μs         
  2015 25.1: 57,269μs      Let it snow
             -------------
-            2.193s       
+            2.175s       
 
  2016  1.1: 6μs           Manhattan distance
  2016  1.2: 15μs          
@@ -71,7 +71,7 @@ Tests performed on a 2023 MacBook Pro.
  2016  4.1: 4,290μs       Security through obscurity
  2016  4.2: 4,264μs       
  2016  5.1: 218,606μs     Password hash
- 2016  5.2: 618,705μs     
+ 2016  5.2: 616,815μs     
  2016  6.1: 874μs         Signals and noise
  2016  6.2: 272μs         
  2016  7.1: 729μs         ABBA internet protocol
@@ -112,7 +112,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 24.2: 18,745μs      
  2016 25.1: 7,848μs       Clock signal
             -------------
-            2.786s       
+            2.784s       
 
  2017  1.1: 8μs           Captcha
  2017  1.2: 10μs          
@@ -192,8 +192,8 @@ Tests performed on a 2023 MacBook Pro.
  2018 12.2: 8,040μs       
  2018 13.1: 17,543μs      Crashing carts
  2018 13.2: 31,589μs      
- 2018 14.1: 21,207μs      Elf recipes
- 2018 14.2: 994,447μs     
+ 2018 14.1: 3,698μs       Elf recipes
+ 2018 14.2: 123,387μs     
  2018 15.1: 83,588μs      Elves vs Goblins
  2018 15.2: 349,565μs     
  2018 16.1: 511μs         Opcode reverse-engineering
@@ -216,7 +216,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 260,875μs     
  2018 25.1: 32,604μs      4D chocolate teleportation
             -------------
-            2.673s       
+            1.784s       
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
@@ -513,7 +513,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 16.2: 31,394μs      
  2024 17.1: 7μs           Chronospatial computer
  2024 17.2: 2,525μs       
- 2024 18.1: 1,170μs       RAM run
+ 2024 18.1: 1,167μs       RAM run
  2024 18.2: 1,318μs       
  2024 19.1: 37,654μs      Linen layout
  2024 19.2: 55,434μs      
@@ -529,7 +529,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 231μs         
  2024 25.1: 112μs         Code chronicle
             -------------
-            520.057ms    
+            520.054ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 87μs          
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             333.812ms    
 
- 514 puzzles solved in 15.619s.
+ 514 puzzles solved in 14.710s.
 ```
