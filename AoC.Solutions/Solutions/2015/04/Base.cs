@@ -13,36 +13,49 @@ public abstract class Base : Solution
     {
         var key = Input[0];
 
-        var i = 1;
-
         var keyBytes = Encoding.ASCII.GetBytes(key);
 
-        var buffer = new byte[keyBytes.Length + 11];
-
-        Array.Copy(keyBytes, buffer, keyBytes.Length);
-
         var requireSixZeroes = pattern.Length == 6;
-        
-        using var md5 = MD5.Create();
-        
+
+        const int batchSize = 16_384;
+
+        var matches = new bool[batchSize];
+
+        var i = 1;
+
         while (true)
         {
-            Utf8Formatter.TryFormat(i, buffer.AsSpan(keyBytes.Length), out var written);
+            var start = i;
 
-            var hash = md5.ComputeHash(buffer, 0, keyBytes.Length + written);
-
-            var isMatch = hash[0] == 0 && hash[1] == 0 && (requireSixZeroes ? hash[2] == 0 : (hash[2] & 0xF0) == 0);
-
-            if (isMatch)
+            Parallel.For(0, batchSize, x =>
             {
-                break;
+                matches[x] = IsMatch(keyBytes, start + x, requireSixZeroes);
+            });
+
+            for (var x = 0; x < batchSize; x++)
+            {
+                if (matches[x])
+                {
+                    return start + x;
+                }
             }
 
-            i++;
+            i += batchSize;
         }
-            
-        md5.Clear();
+    }
 
-        return i;
+    private static bool IsMatch(byte[] keyBytes, int value, bool requireSixZeroes)
+    {
+        Span<byte> buffer = stackalloc byte[keyBytes.Length + 11];
+
+        keyBytes.CopyTo(buffer);
+
+        Utf8Formatter.TryFormat(value, buffer[keyBytes.Length..], out var written);
+
+        Span<byte> hash = stackalloc byte[16];
+
+        MD5.TryHashData(buffer[..(keyBytes.Length + written)], hash, out _);
+
+        return hash[0] == 0 && hash[1] == 0 && (requireSixZeroes ? hash[2] == 0 : (hash[2] & 0xf0) == 0);
     }
 }

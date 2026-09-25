@@ -16,8 +16,8 @@ Tests performed on a 2023 MacBook Pro.
  2015  2.2: 434μs         
  2015  3.1: 1,203μs       Perfectly spherical houses in a vacuum
  2015  3.2: 1,093μs       
- 2015  4.1: 101,241μs     Crypto stocking stuffer
- 2015  4.2: 2,728,032μs   
+ 2015  4.1: 10,172μs      Crypto stocking stuffer
+ 2015  4.2: 265,259μs     
  2015  5.1: 136μs         Naughty or nice
  2015  5.2: 806μs         
  2015  6.1: 23,877μs      Bournville estate lights
@@ -60,7 +60,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 24.2: 126μs         
  2015 25.1: 57,269μs      Let it snow
             -------------
-            4.805s       
+            2.251s       
 
  2016  1.1: 6μs           Manhattan distance
  2016  1.2: 15μs          
@@ -79,7 +79,7 @@ Tests performed on a 2023 MacBook Pro.
  2016  8.1: 150μs         MFA
  2016  8.2: 136μs         
  2016  9.1: 42μs          Cyberspace explosives
- 2016  9.2: 115μs         
+ 2016  9.2: 114μs         
  2016 10.1: 748μs         Balance bots
  2016 10.2: 1,523μs       
  2016 11.1: 61μs          Radioisotope thermoelectric elevators
@@ -206,8 +206,8 @@ Tests performed on a 2023 MacBook Pro.
  2018 19.2: 34,365μs      
  2018 20.1: 3,075μs       Regex maze
  2018 20.2: 3,791μs       
- 2018 21.1: 8μs           Time machine halting problem
- 2018 21.2: 4,650μs       
+ 2018 21.1: 7μs           Time machine halting problem
+ 2018 21.2: 4,599μs       
  2018 22.1: 208μs         Caving capers
  2018 22.2: 58,167μs      
  2018 23.1: 172μs         Nanobot teleportation
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             333.812ms    
 
- 514 puzzles solved in 20.217s.
+ 514 puzzles solved in 17.663s.
 ```
