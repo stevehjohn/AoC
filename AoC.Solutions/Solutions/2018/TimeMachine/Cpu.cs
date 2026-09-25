@@ -14,6 +14,8 @@ public sealed class Cpu
 
     private int _instructionPointerBinding = -1;
 
+    private int _divideBy256Loop = -1;
+
     public Cpu(int registerCount)
     {
         _registers = new int[registerCount];
@@ -60,11 +62,22 @@ public sealed class Cpu
         var length = _programLength;
 
         var instructionPointerBinding = _instructionPointerBinding;
-        
+
         var instructionPointer = _instructionPointer;
 
         while ((uint) instructionPointer < (uint) length)
         {
+            if (instructionPointer == _divideBy256Loop && ! (breakAt >= _divideBy256Loop && breakAt <= _divideBy256Loop + 10))
+            {
+                registers[1] = registers[3] / 256;
+                registers[3] = registers[1];
+                registers[4] = 1;
+
+                instructionPointer = 8;
+
+                continue;
+            }
+
             if (instructionPointerBinding >= 0)
             {
                 registers[instructionPointerBinding] = instructionPointer;
@@ -97,7 +110,7 @@ public sealed class Cpu
             if (breakAt > -1 && instructionPointer == breakAt)
             {
                 _instructionPointer = instructionPointer;
-                
+
                 return;
             }
 
@@ -139,6 +152,8 @@ public sealed class Cpu
         _program = [.. list];
 
         _programLength = _program.Length;
+
+        _divideBy256Loop = FindDivideBy256Loop();
     }
 
     public void SetRegisters(int[] values)
@@ -156,6 +171,45 @@ public sealed class Cpu
     }
 
     public int GetRegister(int register) => _registers[register];
+
+    private int FindDivideBy256Loop()
+    {
+        for (var i = 0; i <= _programLength - 11; i++)
+        {
+            if (IsDivideBy256Loop(i))
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    private bool IsDivideBy256Loop(int i)
+    {
+        return
+            Is(i, OpCode.Seti, 0, 9, 1) &&
+            Is(i + 1, OpCode.Addi, 1, 1, 4) &&
+            Is(i + 2, OpCode.Muli, 4, 256, 4) &&
+            Is(i + 3, OpCode.Gtrr, 4, 3, 4) &&
+            Is(i + 4, OpCode.Addr, 4, 2, 2) &&
+            Is(i + 5, OpCode.Addi, 2, 1, 2) &&
+            Is(i + 6, OpCode.Seti, 25, 4, 2) &&
+            Is(i + 7, OpCode.Addi, 1, 1, 1) &&
+            Is(i + 8, OpCode.Seti, 17, 2, 2) &&
+            Is(i + 9, OpCode.Setr, 1, 6, 3) &&
+            Is(i + 10, OpCode.Seti, 7, 8, 2);
+    }
+
+    private bool Is(int i, OpCode opCode, int a, int b, int c)
+    {
+        ref readonly var instruction = ref _program[i];
+
+        return instruction.OpCode == opCode &&
+               instruction.A == a &&
+               instruction.B == b &&
+               instruction.C == c;
+    }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static Instruction ParseLine(string line)
