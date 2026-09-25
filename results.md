@@ -71,7 +71,7 @@ Tests performed on a 2023 MacBook Pro.
  2016  4.1: 4,290μs       Security through obscurity
  2016  4.2: 4,264μs       
  2016  5.1: 1,149,720μs   Password hash
- 2016  5.2: 3,405,382μs   
+ 2016  5.2: 635,706μs     
  2016  6.1: 874μs         Signals and noise
  2016  6.2: 272μs         
  2016  7.1: 729μs         ABBA internet protocol
@@ -89,7 +89,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 13.1: 48μs          Cubicle maze
  2016 13.2: 46μs          
  2016 14.1: 10,371μs      One time pad
- 2016 14.2: 726,404μs     
+ 2016 14.2: 725,926μs     
  2016 15.1: 378μs         Disc timing
  2016 15.2: 2,862μs       
  2016 16.1: 6μs           Dragon checksum
@@ -112,7 +112,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 24.2: 18,745μs      
  2016 25.1: 158,034μs     Clock signal
             -------------
-            7.540s       
+            4.770s       
 
  2017  1.1: 8μs           Captcha
  2017  1.2: 10μs          
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             333.812ms    
 
- 514 puzzles solved in 22.987s.
+ 514 puzzles solved in 20.217s.
 ```

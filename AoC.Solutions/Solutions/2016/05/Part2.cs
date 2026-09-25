@@ -73,9 +73,7 @@ public class Part2 : Base
 
         MD5.TryHashData(bytes[..(prefixBytes.Length + written)], hash, out _);
 
-        if (hash[0] != 0 ||
-            hash[1] != 0 ||
-            (hash[2] & 0b1111_0000) != 0)
+        if (hash[0] != 0 || hash[1] != 0 || (hash[2] & 0b1111_0000) != 0)
         {
             return default;
         }
@@ -84,9 +82,7 @@ public class Part2 : Base
 
         var value = hash[3] >> 4;
 
-        var character = value < 10
-            ? (char) ('0' + value)
-            : (char) ('a' + value - 10);
+        var character = value < 10 ? (char) ('0' + value) : (char) ('a' + value - 10);
 
         return new Match(true, position, character);
     }
