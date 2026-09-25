@@ -168,11 +168,7 @@ public static class Cpu
 
     private readonly record struct Operand(int Value, bool IsRegister);
 
-    private struct Instruction(
-        OpCode opCode,
-        Operand a = default,
-        Operand b = default,
-        Operand c = default)
+    private struct Instruction(OpCode opCode, Operand a = default, Operand b = default, Operand c = default)
     {
         public OpCode OpCode = opCode;
 
