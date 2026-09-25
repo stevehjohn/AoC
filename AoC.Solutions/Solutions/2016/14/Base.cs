@@ -15,10 +15,6 @@ public abstract class Base : Solution
 
         var saltBytes = Encoding.ASCII.GetBytes(salt);
 
-        var i = 0;
-
-        var found = 0;
-
         var queued = new List<int>[16];
 
         for (var x = 0; x < 16; x++)
@@ -28,82 +24,136 @@ public abstract class Base : Solution
 
         var matches = new List<int>();
 
+        var found = 0;
+
+        var i = 0;
+
+        if (additionalHashes == 0)
+        {
+            while (true)
+            {
+                var hash = CalculateHash(saltBytes, i, additionalHashes);
+
+                var result = ProcessHash(hash, i, queued, matches, ref found);
+
+                if (result >= 0)
+                {
+                    return result;
+                }
+
+                i++;
+            }
+        }
+
+        const int batchSize = 1_024;
+
+        var hashes = new HashInfo[batchSize];
+
+        while (true)
+        {
+            var start = i;
+
+            Parallel.For(0, batchSize, x =>
+            {
+                hashes[x] = CalculateHash(saltBytes, start + x, additionalHashes);
+            });
+
+            for (var x = 0; x < batchSize; x++)
+            {
+                i = start + x;
+
+                var result = ProcessHash(hashes[x], i, queued, matches, ref found);
+
+                if (result >= 0)
+                {
+                    return result;
+                }
+            }
+        }
+    }
+
+    private static int ProcessHash(HashInfo hash, int i, List<int>[] queued, List<int> matches, ref int found)
+    {
+        if (hash.Triple >= 0)
+        {
+            queued[hash.Triple].Add(i);
+        }
+
+        if (hash.Quintuple < 0)
+        {
+            return -1;
+        }
+
+        matches.Clear();
+
+        var list = queued[hash.Quintuple];
+
+        for (var x = list.Count - 1; x >= 0; x--)
+        {
+            var idx = list[x];
+
+            if (idx < i - 1_000)
+            {
+                list.RemoveAt(x);
+
+                continue;
+            }
+
+            if (idx < i)
+            {
+                matches.Add(idx);
+
+                list.RemoveAt(x);
+            }
+        }
+
+        if (matches.Count == 0)
+        {
+            return -1;
+        }
+
+        var previousFound = found;
+
+        found += matches.Count;
+
+        if (found > 64)
+        {
+            return matches[^(64 - previousFound)];
+        }
+
+        return -1;
+    }
+
+    private static HashInfo CalculateHash(byte[] saltBytes, int i, int additionalHashes)
+    {
         Span<byte> baseBuffer = stackalloc byte[saltBytes.Length + 11];
 
         saltBytes.CopyTo(baseBuffer);
 
+        var numberSpan = baseBuffer[saltBytes.Length..];
+
+        Utf8Formatter.TryFormat(i, numberSpan, out var written);
+
+        var toHash = baseBuffer[..(saltBytes.Length + written)];
+
         Span<byte> hashBytes = stackalloc byte[16];
+
+        MD5.TryHashData(toHash, hashBytes, out _);
 
         Span<byte> hexBytes = stackalloc byte[32];
 
-        while (true)
+        for (var j = 0; j < additionalHashes; j++)
         {
-            var numberSpan = baseBuffer[saltBytes.Length..];
-
-            Utf8Formatter.TryFormat(i, numberSpan, out var written);
-
-            var toHash = baseBuffer[..(saltBytes.Length + written)];
-
-            MD5.TryHashData(toHash, hashBytes, out _);
-
-            for (var j = 0; j < additionalHashes; j++)
-            {
-                BytesToLowerHex(hashBytes, hexBytes);
-
-                MD5.TryHashData(hexBytes, hashBytes, out _);
-            }
-
             BytesToLowerHex(hashBytes, hexBytes);
 
-            var triple = GetTripleRepeatedCharacter(hexBytes);
-
-            if (triple >= 0)
-            {
-                queued[triple].Add(i);
-            }
-
-            var quintuple = GetQuintupleRepeatedCharacter(hexBytes);
-
-            if (quintuple >= 0)
-            {
-                matches.Clear();
-
-                var list = queued[quintuple];
-
-                for (var x = list.Count - 1; x >= 0; x--)
-                {
-                    var idx = list[x];
-
-                    if (idx < i - 1_000)
-                    {
-                        list.RemoveAt(x);
-
-                        continue;
-                    }
-
-                    if (idx < i)
-                    {
-                        matches.Add(idx);
-
-                        list.RemoveAt(x);
-                    }
-                }
-
-                if (matches.Count > 0)
-                {
-                    var previousFound = found;
-
-                    found += matches.Count;
-
-                    if (found > 64)
-                    {
-                        return matches[^(64 - previousFound)];
-                    }
-                }
-            }
-
-            i++;
+            MD5.TryHashData(hexBytes, hashBytes, out _);
         }
+
+        BytesToLowerHex(hashBytes, hexBytes);
+
+        return new HashInfo(
+            GetTripleRepeatedCharacter(hexBytes),
+            GetQuintupleRepeatedCharacter(hexBytes));
     }
 
     private static void BytesToLowerHex(ReadOnlySpan<byte> src, Span<byte> dest)
@@ -151,4 +201,6 @@ public abstract class Base : Solution
 
         return -1;
     }
+
+    private readonly record struct HashInfo(int Triple, int Quintuple);
 }
