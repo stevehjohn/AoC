@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.Buffers.Text;
+using System.Security.Cryptography;
 using System.Text;
 using AoC.Solutions.Infrastructure;
 
@@ -18,13 +19,11 @@ public abstract class Base : Solution
 
         var found = 0;
 
-        var queued = new Dictionary<char, List<int>>(16);
+        var queued = new List<int>[16];
 
-        const string hexChars = "0123456789abcdef";
-
-        foreach (var character in hexChars)
+        for (var x = 0; x < 16; x++)
         {
-            queued[character] = [];
+            queued[x] = [];
         }
 
         var matches = new List<int>();
@@ -41,7 +40,7 @@ public abstract class Base : Solution
         {
             var numberSpan = baseBuffer[saltBytes.Length..];
 
-            var written = Encoding.ASCII.GetBytes(i.ToString(), numberSpan);
+            Utf8Formatter.TryFormat(i, numberSpan, out var written);
 
             var toHash = baseBuffer[..(saltBytes.Length + written)];
 
@@ -58,18 +57,18 @@ public abstract class Base : Solution
 
             var triple = GetTripleRepeatedCharacter(hexBytes);
 
-            if (triple != '\0')
+            if (triple >= 0)
             {
                 queued[triple].Add(i);
             }
 
-            var quadruple = GetQuadrupleRepeatedCharacter(hexBytes);
+            var quintuple = GetQuintupleRepeatedCharacter(hexBytes);
 
-            if (quadruple != '\0')
+            if (quintuple >= 0)
             {
                 matches.Clear();
 
-                var list = queued[quadruple];
+                var list = queued[quintuple];
 
                 for (var x = list.Count - 1; x >= 0; x--)
                 {
@@ -123,7 +122,7 @@ public abstract class Base : Solution
         }
     }
 
-    private static char GetTripleRepeatedCharacter(ReadOnlySpan<byte> hex)
+    private static int GetTripleRepeatedCharacter(ReadOnlySpan<byte> hex)
     {
         for (var i = 0; i < hex.Length - 2; i++)
         {
@@ -131,14 +130,14 @@ public abstract class Base : Solution
 
             if (c == hex[i + 1] && c == hex[i + 2])
             {
-                return (char) c;
+                return c <= (byte) '9' ? c - (byte) '0' : c - (byte) 'a' + 10;
             }
         }
 
-        return '\0';
+        return -1;
     }
 
-    private static char GetQuadrupleRepeatedCharacter(ReadOnlySpan<byte> hex)
+    private static int GetQuintupleRepeatedCharacter(ReadOnlySpan<byte> hex)
     {
         for (var i = 0; i < hex.Length - 4; i++)
         {
@@ -146,10 +145,10 @@ public abstract class Base : Solution
 
             if (c == hex[i + 1] && c == hex[i + 2] && c == hex[i + 3] && c == hex[i + 4])
             {
-                return (char) c;
+                return c <= (byte) '9' ? c - (byte) '0' : c - (byte) 'a' + 10;
             }
         }
 
-        return '\0';
+        return -1;
     }
 }
