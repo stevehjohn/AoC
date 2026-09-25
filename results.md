@@ -192,7 +192,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 12.2: 8,040μs       
  2018 13.1: 17,543μs      Crashing carts
  2018 13.2: 31,589μs      
- 2018 14.1: 3,698μs       Elf recipes
+ 2018 14.1: 3,658μs       Elf recipes
  2018 14.2: 123,387μs     
  2018 15.1: 83,588μs      Elves vs Goblins
  2018 15.2: 349,565μs     
