@@ -4,91 +4,96 @@ namespace AoC.Solutions.Solutions._2016.Common;
 
 public static class Cpu
 {
-    public static int RunProgram(string[] input, Dictionary<char, int> registers)
+    public static int RunProgram(string[] input, Dictionary<char, int> initialRegisters)
     {
+        var program = ParseProgram(input);
+
+        Span<int> registers = stackalloc int[4];
+
+        foreach (var register in initialRegisters)
+        {
+            registers[register.Key - 'a'] = register.Value;
+        }
+
         var programCounter = 0;
 
         var output = new StringBuilder();
 
-        while (true)
+        while ((uint) programCounter < (uint) program.Length)
         {
-            if (programCounter >= input.Length)
+            ref var instruction = ref program[programCounter];
+
+            switch (instruction.OpCode)
             {
-                break;
-            }
-
-            var line = input[programCounter];
-
-            var parts = line.Split(' ', StringSplitOptions.TrimEntries);
-
-            int value;
-
-            switch (parts[0])
-            {
-                case "cpy":
-                    value = char.IsLetter(parts[1][0]) ? GetRegisterValue(registers, parts[1][0]) : int.Parse(parts[1]);
-
-                    SetRegisterValue(registers, parts[2][0], value);
-
-                    break;
-                case "inc":
-                    value = GetRegisterValue(registers, parts[1][0]);
-
-                    registers[parts[1][0]] = value + 1;
-
-                    break;
-                case "dec":
-                    value = GetRegisterValue(registers, parts[1][0]);
-
-                    registers[parts[1][0]] = value - 1;
-
-                    break;
-                case "jnz":
-                    value = char.IsLetter(parts[1][0]) ? GetRegisterValue(registers, parts[1][0]) : int.Parse(parts[1]);
-
-                    if (value != 0)
+                case OpCode.Cpy:
+                    if (instruction.B.IsRegister)
                     {
-                        if (char.IsLetter(parts[2][0]))
-                        {
-                            programCounter += GetRegisterValue(registers, parts[2][0]);
-                        }
-                        else
-                        {
-                            programCounter += int.Parse(parts[2]);
-                        }
+                        registers[instruction.B.Value] = GetValue(instruction.A, registers);
+                    }
+
+                    break;
+
+                case OpCode.Inc:
+                    if (instruction.A.IsRegister)
+                    {
+                        registers[instruction.A.Value]++;
+                    }
+
+                    break;
+
+                case OpCode.Dec:
+                    if (instruction.A.IsRegister)
+                    {
+                        registers[instruction.A.Value]--;
+                    }
+
+                    break;
+
+                case OpCode.Jnz:
+                    if (GetValue(instruction.A, registers) != 0)
+                    {
+                        programCounter += GetValue(instruction.B, registers);
 
                         continue;
                     }
 
                     break;
-                case "tgl":
-                    value = char.IsLetter(parts[1][0]) ? GetRegisterValue(registers, parts[1][0]) : int.Parse(parts[1]);
 
-                    if (programCounter + value >= input.Length)
+                case OpCode.Tgl:
+                {
+                    var target = programCounter + GetValue(instruction.A, registers);
+
+                    if ((uint) target >= (uint) program.Length)
                     {
                         break;
                     }
 
-                    var toToggle = input[programCounter + value][..3];
+                    ref var toToggle = ref program[target];
 
-                    var toggled = toToggle switch
+                    toToggle.OpCode = toToggle.OpCode switch
                     {
-                        "inc" => "dec",
-                        "dec" or "tgl" => "inc",
-                        "jnz" => "cpy",
-                        "cpy" => "jnz",
-                        _ => string.Empty
+                        OpCode.Inc => OpCode.Dec,
+                        OpCode.Dec or OpCode.Tgl => OpCode.Inc,
+                        OpCode.Jnz => OpCode.Cpy,
+                        OpCode.Cpy => OpCode.Jnz,
+                        _ => OpCode.Nop
                     };
 
-                    input[programCounter + value] = $"{toggled} {input[programCounter + value][4..]}";
+                    break;
+                }
+
+                case OpCode.Mul:
+                    if (instruction.C.IsRegister)
+                    {
+                        registers[instruction.C.Value] =
+                            GetValue(instruction.A, registers) * GetValue(instruction.B, registers);
+                    }
 
                     break;
-                case "mul":
-                    SetRegisterValue(registers, parts[3][0], GetRegisterValue(registers, parts[1][0]) * GetRegisterValue(registers, parts[2][0]));
 
-                    break;
-                case "out": 
-                    value = char.IsLetter(parts[1][0]) ? GetRegisterValue(registers, parts[1][0]) : int.Parse(parts[1]);
+                case OpCode.Out:
+                {
+                    var value = GetValue(instruction.A, registers);
 
                     output.Append(value);
 
@@ -102,29 +107,79 @@ public static class Cpu
                     }
 
                     break;
+                }
             }
 
             programCounter++;
         }
 
-        return registers['a'];
+        return registers[0];
     }
 
-    private static int GetRegisterValue(Dictionary<char, int> registers, char register)
+    private static Instruction[] ParseProgram(string[] input)
     {
-        if (! registers.TryAdd(register, 0))
+        var program = new Instruction[input.Length];
+
+        for (var i = 0; i < input.Length; i++)
         {
-            return registers[register];
+            var parts = input[i].Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+
+            program[i] = parts[0] switch
+            {
+                "cpy" => new Instruction(OpCode.Cpy, ParseOperand(parts[1]), ParseOperand(parts[2])),
+                "inc" => new Instruction(OpCode.Inc, ParseOperand(parts[1])),
+                "dec" => new Instruction(OpCode.Dec, ParseOperand(parts[1])),
+                "jnz" => new Instruction(OpCode.Jnz, ParseOperand(parts[1]), ParseOperand(parts[2])),
+                "tgl" => new Instruction(OpCode.Tgl, ParseOperand(parts[1])),
+                "mul" => new Instruction(OpCode.Mul, ParseOperand(parts[1]), ParseOperand(parts[2]), ParseOperand(parts[3])),
+                "out" => new Instruction(OpCode.Out, ParseOperand(parts[1])),
+                _ => new Instruction(OpCode.Nop)
+            };
         }
 
-        return 0;
+        return program;
     }
 
-    private static void SetRegisterValue(Dictionary<char, int> registers, char register, int value)
+    private static Operand ParseOperand(string value)
     {
-        if (! registers.TryAdd(register, value))
-        {
-            registers[register] = value;
-        }
+        return char.IsLetter(value[0])
+            ? new Operand(value[0] - 'a', true)
+            : new Operand(int.Parse(value), false);
+    }
+
+    private static int GetValue(Operand operand, ReadOnlySpan<int> registers)
+    {
+        return operand.IsRegister
+            ? registers[operand.Value]
+            : operand.Value;
+    }
+
+    private enum OpCode
+    {
+        Nop,
+        Cpy,
+        Inc,
+        Dec,
+        Jnz,
+        Tgl,
+        Mul,
+        Out
+    }
+
+    private readonly record struct Operand(int Value, bool IsRegister);
+
+    private struct Instruction(
+        OpCode opCode,
+        Operand a = default,
+        Operand b = default,
+        Operand c = default)
+    {
+        public OpCode OpCode = opCode;
+
+        public Operand A = a;
+
+        public Operand B = b;
+
+        public Operand C = c;
     }
 }
