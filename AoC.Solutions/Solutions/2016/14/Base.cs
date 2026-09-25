@@ -151,9 +151,7 @@ public abstract class Base : Solution
 
         BytesToLowerHex(hashBytes, hexBytes);
 
-        return new HashInfo(
-            GetTripleRepeatedCharacter(hexBytes),
-            GetQuintupleRepeatedCharacter(hexBytes));
+        return new HashInfo(GetTripleRepeatedCharacter(hexBytes), GetQuintupleRepeatedCharacter(hexBytes));
     }
 
     private static void BytesToLowerHex(ReadOnlySpan<byte> src, Span<byte> dest)
