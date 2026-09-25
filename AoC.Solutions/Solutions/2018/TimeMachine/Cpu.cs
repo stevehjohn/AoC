@@ -72,15 +72,17 @@ public sealed class Cpu
         var length = _programLength;
 
         var instructionPointerBinding = _instructionPointerBinding;
+        
+        var instructionPointer = _instructionPointer;
 
-        while ((uint) _instructionPointer < (uint) length)
+        while ((uint) instructionPointer < (uint) length)
         {
             if (instructionPointerBinding >= 0)
             {
-                registers[instructionPointerBinding] = _instructionPointer;
+                registers[instructionPointerBinding] = instructionPointer;
             }
 
-            ref readonly var instruction = ref program[_instructionPointer];
+            ref readonly var instruction = ref program[instructionPointer];
 
             // ReSharper disable once ConvertSwitchStatementToSwitchExpression - Statement is faster in this instance
             // ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault
@@ -104,30 +106,30 @@ public sealed class Cpu
                 case OpCode.Eqrr: registers[instruction.C] = registers[instruction.A] == registers[instruction.B] ? 1 : 0; break;
             }
 
-            if (_breakAt > -1 && _instructionPointer == _breakAt)
+            if (_breakAt > -1 && instructionPointer == _breakAt)
             {
-                _registers.AsSpan().CopyTo(registers);
-
+                _instructionPointer = instructionPointer;
+                
                 return;
             }
 
             if (instructionPointerBinding >= 0)
             {
-                _instructionPointer = registers[instructionPointerBinding];
+                instructionPointer = registers[instructionPointerBinding];
             }
 
-            _instructionPointer++;
+            instructionPointer++;
 
             // ReSharper disable once PossibleInvalidOperationException
             if (_hasBreakOn && instruction.OpCode == _breakOn.Value)
             {
-                _registers.AsSpan().CopyTo(registers);
+                _instructionPointer = instructionPointer;
 
                 return;
             }
         }
 
-        _registers.AsSpan().CopyTo(registers);
+        _instructionPointer = instructionPointer;
     }
 
     public void LoadProgram(string[] program)
