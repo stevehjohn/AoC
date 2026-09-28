@@ -38,6 +38,7 @@ public abstract partial class Base : Solution
 
             suffix += batchSize;
         }
+        // ReSharper disable once IteratorNeverReturns
     }
 
     private static HashMatch? Calculate(byte[] prefixBytes, int suffix)
