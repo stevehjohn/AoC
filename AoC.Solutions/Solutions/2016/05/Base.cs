@@ -65,6 +65,4 @@ public abstract partial class Base : Solution
     {
         return value < 10 ? (char) ('0' + value) : (char) ('a' + value - 10);
     }
-
-    // ReSharper disable once NotAccessedPositionalProperty.Global
 }
