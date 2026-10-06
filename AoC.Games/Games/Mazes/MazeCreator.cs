@@ -38,7 +38,7 @@ public class MazeCreator
             _direction.Dx = -_direction.Dx;
         }
 
-        if (_position.Y + _direction.Dy is 0 or Constants.Width)
+        if (_position.Y + _direction.Dy is 0 or Constants.Height)
         {
             _direction.Dy = -_direction.Dy;
         }
