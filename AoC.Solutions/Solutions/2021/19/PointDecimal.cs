@@ -28,10 +28,6 @@ public class PointDecimal
         Z = z;
     }
 
-    public PointDecimal()
-    {
-    }
-
     public override string ToString()
     {
         return $"{X,5},{Y,5},{Z,5}";
