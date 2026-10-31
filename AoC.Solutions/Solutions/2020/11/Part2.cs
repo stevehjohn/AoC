@@ -138,9 +138,4 @@ public class Part2 : Base
 
         return result.ToString();
     }
-
-    protected override int CountOccupiedNeighbors(int x, int y)
-    {
-        throw new NotImplementedException();
-    }
 }
