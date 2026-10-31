@@ -143,7 +143,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 14.1: 22,730μs      Defragger
  2017 14.2: 23,077μs      
  2017 15.1: 63,549μs      Dueling generators
- 2017 15.2: 139,828μs     
+ 2017 15.2: 138,817μs     
  2017 16.1: 589μs         Permutation promenade
  2017 16.2: 64,299μs      
  2017 17.1: 770μs         Spinlock
@@ -157,14 +157,14 @@ Tests performed on a 2023 MacBook Pro.
  2017 21.1: 536μs         Fractal art
  2017 21.2: 42,511μs      
  2017 22.1: 456μs         Sporifica virus
- 2017 22.2: 48,694μs      
+ 2017 22.2: 48,525μs      
  2017 23.1: 4,707μs       Coprocessor conflagration
  2017 23.2: 2,663μs       
  2017 24.1: 49,644μs      Electromagnetic moat
  2017 24.2: 51,010μs      
  2017 25.1: 97,041μs      Turing tape
             -------------
-            932.035ms    
+            930.855ms    
 
  2018  1.1: 17μs          Tardis calibration
  2018  1.2: 3,880μs       
@@ -367,13 +367,13 @@ Tests performed on a 2023 MacBook Pro.
  2021 21.2: 17,634μs      
  2021 22.1: 1,899μs       Reactor reboot
  2021 22.2: 23,586μs      
- 2021 23.1: 58,900μs      Hotel amphipod
+ 2021 23.1: 58,544μs      Hotel amphipod
  2021 23.2: 23,519μs      
  2021 24.1: 2μs           Model number
  2021 24.2: 1μs           
  2021 25.1: 76,199μs      Landing among the cucumbers
             -------------
-            528.624ms    
+            528.268ms    
 
  2022  1.1: 22μs          Calorie counting
  2022  1.2: 32μs          
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             249.279ms    
 
- 514 puzzles solved in 11.148s.
+ 514 puzzles solved in 11.147s.
 ```
