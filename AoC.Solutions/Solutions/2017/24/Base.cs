@@ -6,7 +6,7 @@ public abstract class Base : Solution
 {
     public override string Description => "Electromagnetic moat";
 
-    private readonly List<(int EdgeA, int EdgeB)> _components = [];
+    private readonly List<(int A, int B)> _components = [];
 
     private int _maxStrength;
 
@@ -14,27 +14,26 @@ public abstract class Base : Solution
 
     private int _strongestLongest;
 
+    private readonly Dictionary<int, List<int>> _byPort = [];
+
     protected (int Strongest, int StrongestLongest) Solve()
     {
-        var starts = _components.Where(c => c.EdgeA == 0 || c.EdgeB == 0).ToList();
+        _maxStrength = 0;
+        
+        _maxLength = 0;
+        
+        _strongestLongest = 0;
 
-        foreach (var component in starts)
-        {
-            var edge = component.EdgeA == 0 ? component.EdgeB : component.EdgeA;
-
-            Solve(edge, edge, 0, [.. _components.Where(c => c != component)]);
-        }
+        Search(0, UInt128.Zero, 0, 0);
 
         return (_maxStrength, _strongestLongest);
     }
 
-    private void Solve(int edge, int strength, int length, List<(int EdgeA, int EdgeB)> remainingEdges)
+    private void Search(int port, UInt128 used, int strength, int length)
     {
-        _maxStrength = Math.Max(strength, _maxStrength);
-
-        if (length == _maxLength)
+        if (strength > _maxStrength)
         {
-            _strongestLongest = Math.Max(strength, _strongestLongest);
+            _maxStrength = strength;
         }
 
         if (length > _maxLength)
@@ -43,23 +42,72 @@ public abstract class Base : Solution
             
             _strongestLongest = strength;
         }
-
-        foreach (var component in remainingEdges)
+        else if (length == _maxLength && strength > _strongestLongest)
         {
-            if (component.EdgeA == edge || component.EdgeB == edge)
+            _strongestLongest = strength;
+        }
+
+        if (! _byPort.TryGetValue(port, out var candidates))
+        {
+            return;
+        }
+
+        foreach (var index in candidates)
+        {
+            var bit = UInt128.One << index;
+
+            if ((used & bit) != 0)
             {
-                Solve(component.EdgeA == edge ? component.EdgeB : component.EdgeA, strength + component.EdgeA + component.EdgeB, length + 1, [.. remainingEdges.Where(c => c != component)]);
+                continue;
             }
+
+            var (a, b) = _components[index];
+
+            Search(a == port ? b : a, used | bit, strength + a + b, length + 1);
         }
     }
 
     protected void ParseInput()
     {
+        _components.Clear();
+        
+        _byPort.Clear();
+
         foreach (var line in Input)
         {
-            var parts = line.Split('/').Select(int.Parse).ToList();
+            var parts = line.Split('/');
 
-            _components.Add((parts[0], parts[1]));
+            var a = int.Parse(parts[0]);
+            
+            var b = int.Parse(parts[1]);
+
+            var index = _components.Count;
+
+            if (index >= 128)
+            {
+                throw new InvalidOperationException("More than 128 components.");
+            }
+
+            _components.Add((a, b));
+
+            AddPort(a, index);
+
+            if (a != b)
+            {
+                AddPort(b, index);
+            }
         }
+    }
+
+    private void AddPort(int port, int index)
+    {
+        if (! _byPort.TryGetValue(port, out var list))
+        {
+            list = [];
+            
+            _byPort.Add(port, list);
+        }
+
+        list.Add(index);
     }
 }
