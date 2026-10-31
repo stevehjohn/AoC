@@ -1,5 +1,4 @@
-﻿using AoC.Solutions.Extensions;
-using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2018._09;
 
@@ -9,46 +8,69 @@ public abstract class Base : Solution
 
     protected static long Play(int players, int lastMarbleValue)
     {
-        var circle = new LinkedList<int>();
+        var next = new int[lastMarbleValue + 1];
+        
+        var previous = new int[lastMarbleValue + 1];
 
+        var scores = new long[players];
+
+        var current = 0;
+        
         var player = 0;
 
-        var playerScores = new Dictionary<int, long>();
+        next[0] = 0;
+        
+        previous[0] = 0;
 
-        var nextMarble = 1;
-
-        var currentMarble = circle.AddFirst(0);
-
-        while (nextMarble <= lastMarbleValue)
+        for (var marble = 1; marble <= lastMarbleValue; marble++)
         {
-            if (nextMarble % 23 == 0)
+            if (marble % 23 == 0)
             {
-                if (! playerScores.TryAdd(player, nextMarble))
+                var removed = current;
+
+                for (var i = 0; i < 7; i++)
                 {
-                    playerScores[player] += nextMarble;
+                    removed = previous[removed];
                 }
 
-                var toRemove = currentMarble.PreviousCircular().PreviousCircular().PreviousCircular().PreviousCircular().PreviousCircular().PreviousCircular().PreviousCircular();
+                scores[player] += marble + removed;
 
-                playerScores[player] += toRemove.Value;
+                var before = previous[removed];
+                
+                var after = next[removed];
 
-                currentMarble = toRemove.NextCircular();
+                next[before] = after;
+                
+                previous[after] = before;
 
-                circle.Remove(toRemove);
+                current = after;
             }
             else
             {
-                currentMarble = currentMarble.NextCircular();
+                var left = next[current];
+                
+                var right = next[left];
 
-                currentMarble = circle.AddAfter(currentMarble, nextMarble);
+                next[left] = marble;
+                
+                previous[marble] = left;
+
+                next[marble] = right;
+                
+                previous[right] = marble;
+
+                current = marble;
             }
 
-            nextMarble++;
+            player++;
 
-            player = (player + 1) % players;
+            if (player == players)
+            {
+                player = 0;
+            }
         }
 
-        return playerScores.Max(s => s.Value);
+        return scores.Max();
     }
 
     protected (int Players, int LastMarbleValue) ParseInput()
