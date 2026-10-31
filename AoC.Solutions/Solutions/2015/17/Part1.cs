@@ -7,17 +7,27 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var containers = Input.Select((v, i) => (Index: i, Value: int.Parse(v))).ToDictionary(i => 1 << i.Index, i => i.Value);
+        var containers = Input.Select(int.Parse).ToArray();
 
-        var combinations = 1 << containers.Count;
+        var combinations = 1 << containers.Length;
+        
+        var sums = new int[combinations];
 
         var count = 0;
 
-        for (var i = 0; i < combinations; i++)
+        for (var mask = 1; mask < combinations; mask++)
         {
-            var total = containers.Where(c => (c.Key & i) > 0).Sum(c => c.Value);
+            var previous = mask & (mask - 1);
+            
+            var bit = mask ^ previous;
 
-            if (total == 150)
+            var index = System.Numerics.BitOperations.TrailingZeroCount((uint)bit);
+
+            var sum = sums[previous] + containers[index];
+
+            sums[mask] = sum;
+
+            if (sum == 150)
             {
                 count++;
             }

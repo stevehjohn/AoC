@@ -7,34 +7,46 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        var containers = Input.Select((v, i) => (Index: i, Value: int.Parse(v))).ToDictionary(i => 1 << i.Index, i => i.Value);
+        const int target = 150;
 
-        var combinations = 1 << containers.Count;
+        var minimum = new int[target + 1];
+        
+        var ways = new int[target + 1];
 
-        var minContainers = int.MaxValue;
+        Array.Fill(minimum, int.MaxValue);
 
-        for (var i = 0; i < combinations; i++)
+        minimum[0] = 0;
+        
+        ways[0] = 1;
+
+        foreach (var line in Input)
         {
-            var iteration = containers.Where(c => (c.Key & i) > 0).ToList();
+            var capacity = int.Parse(line);
 
-            if (iteration.Sum(c => c.Value) == 150 && iteration.Count < minContainers)
+            for (var volume = target; volume >= capacity; volume--)
             {
-                minContainers = iteration.Count;
+                var previous = minimum[volume - capacity];
+
+                if (previous == int.MaxValue)
+                {
+                    continue;
+                }
+
+                var count = previous + 1;
+
+                if (count < minimum[volume])
+                {
+                    minimum[volume] = count;
+                    
+                    ways[volume] = ways[volume - capacity];
+                }
+                else if (count == minimum[volume])
+                {
+                    ways[volume] += ways[volume - capacity];
+                }
             }
         }
 
-        var count = 0;
-
-        for (var i = 0; i < combinations; i++)
-        {
-            var iteration = containers.Where(c => (c.Key & i) > 0).ToList();
-
-            if (iteration.Sum(c => c.Value) == 150 && iteration.Count == minContainers)
-            {
-                count++;
-            }
-        }
-
-        return count.ToString();
+        return ways[target].ToString();
     }
 }
