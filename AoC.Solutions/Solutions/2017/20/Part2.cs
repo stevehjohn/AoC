@@ -9,32 +9,38 @@ public class Part2 : Base
     {
         var particles = ParseInput();
 
-        var lastCount = 1000;
+        var lastCount = particles.Count;
 
         while (true)
         {
+            var positions = new Dictionary<(long X, long Y, long Z), int>();
+
             foreach (var particle in particles)
             {
                 particle.Move();
-            }
 
-            var toRemove = new List<Particle>();
+                var position = particle.Position;
 
-            foreach (var particle in particles)
-            {
-                var others = particles.Where(p => p.Position.Equals(particle.Position) && p != particle).ToList();
+                var key = ((long) position.X, (long) position.Y, (long) position.Z);
 
-                if (others.Count > 0)
+                if (positions.TryGetValue(key, out var count))
                 {
-                    toRemove.Add(particle);
-
-                    toRemove.AddRange(others);
+                    positions[key] = count + 1;
+                }
+                else
+                {
+                    positions.Add(key, 1);
                 }
             }
 
-            toRemove.ForEach(p => particles.Remove(p));
+            particles.RemoveAll(p =>
+            {
+                var position = p.Position;
 
-            if (particles.Count < 1_000 && particles.Count == lastCount)
+                return positions[(position.X, position.Y, position.Z)] > 1;
+            });
+
+            if (particles.Count < Input.Length && particles.Count == lastCount)
             {
                 break;
             }
@@ -42,20 +48,16 @@ public class Part2 : Base
             lastCount = particles.Count;
         }
 
-        return lastCount.ToString();
+        return particles.Count.ToString();
     }
 
     private List<Particle> ParseInput()
     {
-        var particles = new List<Particle>();
+        var particles = new List<Particle>(Input.Length);
 
-        var i = 0;
-
-        foreach (var line in Input)
+        for (var i = 0; i < Input.Length; i++)
         {
-            particles.Add(Particle.Parse(i, line));
-
-            i++;
+            particles.Add(Particle.Parse(i, Input[i]));
         }
 
         return particles;

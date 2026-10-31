@@ -53,14 +53,14 @@ Tests performed on a 2023 MacBook Pro.
  2015 21.1: 380μs         RPG simulator 2015
  2015 21.2: 365μs         
  2015 22.1: 8,174μs       Wizard simulator 2015
- 2015 22.2: 4,462μs       
+ 2015 22.2: 4,426μs       
  2015 23.1: 71μs          Opening the Turing lock
  2015 23.2: 85μs          
  2015 24.1: 85,779μs      It hangs in the balance
  2015 24.2: 126μs         
  2015 25.1: 57,269μs      Let it snow
             -------------
-            534.514ms    
+            534.478ms    
 
  2016  1.1: 6μs           Manhattan distance
  2016  1.2: 15μs          
@@ -153,7 +153,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 19.1: 95μs          Packet map
  2017 19.2: 86μs          
  2017 20.1: 336μs         Particle swarm
- 2017 20.2: 70,136μs      
+ 2017 20.2: 6,760μs       
  2017 21.1: 536μs         Fractal art
  2017 21.2: 42,511μs      
  2017 22.1: 456μs         Sporifica virus
@@ -164,7 +164,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 24.2: 48,288μs      
  2017 25.1: 97,041μs      Turing tape
             -------------
-            910.740ms    
+            847.364ms    
 
  2018  1.1: 17μs          Tardis calibration
  2018  1.2: 3,880μs       
@@ -239,7 +239,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 10.1: 17,610μs      Asteroids
  2019 10.2: 1,526μs       
  2019 11.1: 33,356μs      Personal plate (CPU used unmodified)
- 2019 11.2: 196μs         
+ 2019 11.2: 193μs         
  2019 12.1: 498μs         Orbital simulation
  2019 12.2: 59,543μs      
  2019 13.1: 175μs         Arkanoid (CPU used unmodified)
@@ -268,7 +268,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 24.2: 7,264μs       
  2019 25.1: 16,970μs      Airlock password (CPU used unmodified)
             -------------
-            784.789ms    
+            784.786ms    
 
  2020  1.1: 22μs          Expenses
  2020  1.2: 106μs         
@@ -303,7 +303,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 16.1: 586μs         Ticket deciphering
  2020 16.2: 1,041μs       
  2020 17.1: 1,287μs       Conway cubes
- 2020 17.2: 1,018μs       
+ 2020 17.2: 955μs         
  2020 18.1: 408μs         Operator precedence
  2020 18.2: 447μs         
  2020 19.1: 1,660μs       Message pattern matching
@@ -320,7 +320,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 24.2: 170,528μs     
  2020 25.1: 45,743μs      Door cryptography
             -------------
-            731.563ms    
+            731.500ms    
 
  2021  1.1: 47μs          Depth scan
  2021  1.2: 138μs         
@@ -461,7 +461,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 16.2: 5,394μs       
  2023 17.1: 45,127μs      Clumsy crucible
  2023 17.2: 43,415μs      
- 2023 18.1: 83μs          Lavaduct lagoon
+ 2023 18.1: 82μs          Lavaduct lagoon
  2023 18.2: 97μs          
  2023 19.1: 197μs         Aplenty
  2023 19.2: 436μs         
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,110μs       
  2023 25.1: 9,284μs       Snowverload
             -------------
-            342.229ms    
+            342.228ms    
 
  2024  1.1: 112μs         Historian hysteria
  2024  1.2: 79μs          
@@ -520,7 +520,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 20.1: 32,630μs      Race condition
  2024 20.2: 32,398μs      
  2024 21.1: 634μs         Keypad conundrum
- 2024 21.2: 3,639μs       
+ 2024 21.2: 3,638μs       
  2024 22.1: 33,620μs      Monkey market
  2024 22.2: 128,614μs     
  2024 23.1: 18,009μs      LAN party
@@ -529,7 +529,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 231μs         
  2024 25.1: 112μs         Code chronicle
             -------------
-            520.023ms    
+            520.022ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 87μs          
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             248.999ms    
 
- 514 puzzles solved in 7.317s.
+ 514 puzzles solved in 7.253s.
 ```
