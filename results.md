@@ -254,7 +254,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 17.2: 1,632μs       
  2019 18.1: 121,718μs     Maze and keys
  2019 18.2: 61,086μs      
- 2019 19.1: 26,126μs      Tractorrr (CPU used unmodified)
+ 2019 19.1: 26,119μs      Tractorrr (CPU used unmodified)
  2019 19.2: 26,199μs      
  2019 20.1: 251μs         Doughnut maze
  2019 20.2: 5,891μs       
@@ -268,7 +268,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 24.2: 7,264μs       
  2019 25.1: 16,447μs      Airlock password (CPU used unmodified)
             -------------
-            656.620ms    
+            656.613ms    
 
  2020  1.1: 22μs          Expenses
  2020  1.2: 106μs         
@@ -281,7 +281,7 @@ Tests performed on a 2023 MacBook Pro.
  2020  5.1: 111μs         Boarding parse
  2020  5.2: 170μs         
  2020  6.1: 207μs         Customs questions
- 2020  6.2: 1,359μs       
+ 2020  6.2: 908μs         
  2020  7.1: 10,774μs      Recursive bag packing
  2020  7.2: 929μs         
  2020  8.1: 8μs           Console assembly debugging
@@ -320,7 +320,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 24.2: 170,528μs     
  2020 25.1: 45,743μs      Door cryptography
             -------------
-            681.283ms    
+            680.832ms    
 
  2021  1.1: 47μs          Depth scan
  2021  1.2: 138μs         
@@ -351,7 +351,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 13.2: 3,111μs       
  2021 14.1: 184μs         Ablative armour
  2021 14.2: 892μs         
- 2021 15.1: 1,106μs       Risky business
+ 2021 15.1: 1,093μs       Risky business
  2021 15.2: 51,946μs      
  2021 16.1: 122μs         Packet processing
  2021 16.2: 122μs         
@@ -373,7 +373,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 24.2: 1μs           
  2021 25.1: 76,199μs      Landing among the cucumbers
             -------------
-            522.516ms    
+            522.503ms    
 
  2022  1.1: 22μs          Calorie counting
  2022  1.2: 30μs          
@@ -439,7 +439,7 @@ Tests performed on a 2023 MacBook Pro.
  2023  5.2: 126μs         
  2023  6.1: 2μs           Wait for it
  2023  6.2: 36μs          
- 2023  7.1: 590μs         Camel cards
+ 2023  7.1: 586μs         Camel cards
  2023  7.2: 621μs         
  2023  8.1: 424μs         Haunted wasteland
  2023  8.2: 747μs         
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,110μs       
  2023 25.1: 9,284μs       Snowverload
             -------------
-            342.221ms    
+            342.217ms    
 
  2024  1.1: 112μs         Historian hysteria
  2024  1.2: 79μs          
