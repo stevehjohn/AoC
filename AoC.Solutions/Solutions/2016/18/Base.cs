@@ -1,6 +1,4 @@
-﻿// ReSharper disable DuplicatedSequentialIfBodies
-
-using System.Text;
+﻿using System.Numerics;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2016._18;
@@ -11,52 +9,61 @@ public abstract class Base : Solution
 
     protected static int Solve(string state, int totalRows)
     {
-        state = $"-{state}-";
+        var width = state.Length;
 
-        var rows = new List<string> { state };
-
-        for (var i = 0; i < totalRows - 1; i++)
+        if (width > 128)
         {
-            var builder = new StringBuilder();
-
-            for (var c = 0; c < state.Length - 2; c++)
-            {
-                if (state[c] == '^' && state[c + 1] == '^' && state[c + 2] != '^')
-                {
-                    builder.Append('^');
-
-                    continue;
-                }
-
-                if (state[c] != '^' && state[c + 1] == '^' && state[c + 2] == '^')
-                {
-                    builder.Append('^');
-
-                    continue;
-                }
-            
-                if (state[c] == '^' && state[c + 1] != '^' && state[c + 2] != '^')
-                {
-                    builder.Append('^');
-
-                    continue;
-                }
-            
-                if (state[c] != '^' && state[c + 1] != '^' && state[c + 2] == '^')
-                {
-                    builder.Append('^');
-
-                    continue;
-                }
-
-                builder.Append('.');
-            }
-
-            state = $"-{builder}-";
-
-            rows.Add(state);
+            throw new ArgumentOutOfRangeException(nameof(state), "Maximum supported width is 128.");
         }
 
-        return rows.Select(r => r.Count(c => c == '.')).Sum();
+        ulong low = 0;
+        
+        ulong high = 0;
+
+        for (var i = 0; i < width; i++)
+        {
+            if (state[i] != '^')
+            {
+                continue;
+            }
+
+            if (i < 64)
+            {
+                low |= 1UL << i;
+            }
+            else
+            {
+                high |= 1UL << (i - 64);
+            }
+        }
+
+        var lowBits = Math.Min(width, 64);
+        
+        var highBits = Math.Max(0, width - 64);
+
+        var lowMask = lowBits == 64
+            ? ulong.MaxValue
+            : (1UL << lowBits) - 1;
+
+        var highMask = highBits == 64
+            ? ulong.MaxValue
+            : (1UL << highBits) - 1;
+
+        var safe = 0;
+
+        for (var row = 0; row < totalRows; row++)
+        {
+            safe += width - BitOperations.PopCount(low) - BitOperations.PopCount(high);
+
+            var nextLow = ((low << 1) ^ (low >> 1 | high << 63)) & lowMask;
+
+            var nextHigh = ((high << 1 | low >> 63) ^ (high >> 1)) & highMask;
+
+            low = nextLow;
+            
+            high = nextHigh;
+        }
+
+        return safe;
     }
 }
