@@ -8,31 +8,13 @@ public abstract class Base : Solution
 
     protected readonly HashSet<Point4D> ActiveCubes = [];
 
-    private int _xMin;
-
-    private int _xMax;
-
-    private int _yMin;
-
-    private int _yMax;
-
-    private int _zMin;
-
-    private int _zMax = 1;
-
-    private int _wMin;
-
-    private int _wMax = 1;
-
     protected void ParseInput()
     {
-        _xMax = Input[0].Length;
+        ActiveCubes.Clear();
 
-        _yMax = Input.Length;
-
-        for (var y = 0; y < _xMax; y++)
+        for (var y = 0; y < Input.Length; y++)
         {
-            for (var x = 0; x < _yMax; x++)
+            for (var x = 0; x < Input[y].Length; x++)
             {
                 if (Input[y][x] == '#')
                 {
@@ -44,93 +26,46 @@ public abstract class Base : Solution
 
     protected void RunCycle(bool exploreW = false)
     {
-        _xMax++;
+        var counts = new Dictionary<Point4D, int>();
 
-        _xMin--;
-
-        _yMax++;
-
-        _yMin--;
-
-        _zMax++;
-
-        _zMin--;
-
-        if (exploreW)
+        foreach (var cube in ActiveCubes)
         {
-            _wMax++;
-
-            _wMin--;
-        }
-
-        var add = new List<Point4D>();
-        
-        var remove = new List<Point4D>();
-
-        for (var w = _wMin; w < _wMax; w++)
-        {
-            for (var z = _zMin; z < _zMax; z++)
+            for (var dw = exploreW ? -1 : 0; dw <= (exploreW ? 1 : 0); dw++)
             {
-                for (var y = _yMin; y < _yMax; y++)
+                for (var dz = -1; dz <= 1; dz++)
                 {
-                    for (var x = _xMin; x < _xMax; x++)
+                    for (var dy = -1; dy <= 1; dy++)
                     {
-                        var position = new Point4D(x, y, z, w);
-
-                        var neighbors = CountNeighbors(position);
-
-                        var cube = ActiveCubes.Contains(position);
-
-                        if (cube)
+                        for (var dx = -1; dx <= 1; dx++)
                         {
-                            if (neighbors != 2 && neighbors != 3)
+                            if (dx == 0 && dy == 0 && dz == 0 && dw == 0)
                             {
-                                remove.Add(position);
+                                continue;
                             }
-                        }
-                        else
-                        {
-                            if (neighbors == 3)
-                            {
-                                add.Add(position);
-                            }
+
+                            var neighbor = new Point4D(cube.X + dx, cube.Y + dy, cube.Z + dz, cube.W + dw);
+
+                            counts.TryGetValue(neighbor, out var count);
+
+                            counts[neighbor] = count + 1;
                         }
                     }
                 }
             }
         }
 
-        foreach (var point in remove)
+        var next = new HashSet<Point4D>();
+
+        foreach (var (position, neighbors) in counts)
         {
-            ActiveCubes.Remove(point);
-        }
-
-        foreach (var item in add)
-        {
-            ActiveCubes.Add(item);
-        }
-    }
-
-    private int CountNeighbors(Point4D point)
-    {
-        var neighbors = 0;
-
-        foreach (var p in ActiveCubes)
-        {
-            neighbors += p.X >= point.X - 1 && p.X <= point.X + 1 &&
-                         p.Y >= point.Y - 1 && p.Y <= point.Y + 1 &&
-                         p.Z >= point.Z - 1 && p.Z <= point.Z + 1 &&
-                         p.W >= point.W - 1 && p.W <= point.W + 1 &&
-                         ! (p.X == point.X && p.Y == point.Y && p.Z == point.Z && p.W == point.W)
-                             ? 1
-                             : 0;
-
-            if (neighbors > 4)
+            if (neighbors == 3 || (neighbors == 2 && ActiveCubes.Contains(position)))
             {
-                return 4;
+                next.Add(position);
             }
         }
+
+        ActiveCubes.Clear();
         
-        return neighbors;
+        ActiveCubes.UnionWith(next);
     }
 }
