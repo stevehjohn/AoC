@@ -52,15 +52,15 @@ Tests performed on a 2023 MacBook Pro.
  2015 20.2: 2,280μs       
  2015 21.1: 380μs         RPG simulator 2015
  2015 21.2: 365μs         
- 2015 22.1: 477,787μs     Wizard simulator 2015
- 2015 22.2: 24,311μs      
+ 2015 22.1: 8,490μs       Wizard simulator 2015
+ 2015 22.2: 4,636μs       
  2015 23.1: 71μs          Opening the Turing lock
  2015 23.2: 85μs          
  2015 24.1: 85,779μs      It hangs in the balance
  2015 24.2: 126μs         
  2015 25.1: 57,269μs      Let it snow
             -------------
-            2.159s       
+            1.670s       
 
  2016  1.1: 6μs           Manhattan distance
  2016  1.2: 15μs          
@@ -238,7 +238,7 @@ Tests performed on a 2023 MacBook Pro.
  2019  9.2: 1,574μs       
  2019 10.1: 17,610μs      Asteroids
  2019 10.2: 1,526μs       
- 2019 11.1: 34,256μs      Personal plate (CPU used unmodified)
+ 2019 11.1: 33,988μs      Personal plate (CPU used unmodified)
  2019 11.2: 196μs         
  2019 12.1: 498μs         Orbital simulation
  2019 12.2: 59,543μs      
@@ -268,7 +268,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 24.2: 7,264μs       
  2019 25.1: 16,970μs      Airlock password (CPU used unmodified)
             -------------
-            786.624ms    
+            786.356ms    
 
  2020  1.1: 22μs          Expenses
  2020  1.2: 106μs         
@@ -303,7 +303,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 16.1: 586μs         Ticket deciphering
  2020 16.2: 1,041μs       
  2020 17.1: 1,287μs       Conway cubes
- 2020 17.2: 29,358μs      
+ 2020 17.2: 28,701μs      
  2020 18.1: 410μs         Operator precedence
  2020 18.2: 449μs         
  2020 19.1: 1,660μs       Message pattern matching
@@ -320,7 +320,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 24.2: 170,528μs     
  2020 25.1: 45,743μs      Door cryptography
             -------------
-            783.400ms    
+            782.743ms    
 
  2021  1.1: 47μs          Depth scan
  2021  1.2: 138μs         
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             249.279ms    
 
- 514 puzzles solved in 9.014s.
+ 514 puzzles solved in 8.524s.
 ```
