@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Common;
+﻿
+using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2015._18;
@@ -8,80 +9,74 @@ public abstract class Base : Solution
     public override string Description => "Bournville GIF";
 
     private const int GridSize = 100;
+    
+    private const int Stride = GridSize + 2;
 
     protected HashSet<Point> Lights = [];
 
+    private readonly byte[] _grid = new byte[Stride * Stride];
+
     protected void RunStep(bool isPart2 = false)
     {
-        var newLights = new HashSet<Point>();
+        Array.Clear(_grid);
 
-        for (var y = 0; y < GridSize; y++)
+        foreach (var point in Lights)
         {
-            for (var x = 0; x < GridSize; x++)
-            {
-                var position = new Point(x, y);
+            _grid[(point.Y + 1) * Stride + point.X + 1] = 1;
+        }
 
-                if (Lights.Contains(position))
+        var next = new HashSet<Point>();
+
+        for (var y = 1; y <= GridSize; y++)
+        {
+            var row = y * Stride;
+
+            for (var x = 1; x <= GridSize; x++)
+            {
+                var i = row + x;
+
+                var neighbours =
+                    _grid[i - Stride - 1] +
+                    _grid[i - Stride] +
+                    _grid[i - Stride + 1] +
+                    _grid[i - 1] +
+                    _grid[i + 1] +
+                    _grid[i + Stride - 1] +
+                    _grid[i + Stride] +
+                    _grid[i + Stride + 1];
+
+                if (neighbours == 3 || (neighbours == 2 && _grid[i] != 0))
                 {
-                    if (CountNeighbors(position) is 2 or 3)
-                    {
-                        newLights.Add(position);
-                    }
-                }
-                else
-                {
-                    if (CountNeighbors(position) == 3)
-                    {
-                        newLights.Add(position);
-                    }
+                    next.Add(new Point(x - 1, y - 1));
                 }
             }
         }
 
-        Lights = newLights;
-
         if (isPart2)
         {
-            Lights.Add(new Point(0, 0));
-
-            Lights.Add(new Point(0, 99));
-
-            Lights.Add(new Point(99, 0));
-
-            Lights.Add(new Point(99, 99));
+            next.Add(new Point(0, 0));
+            
+            next.Add(new Point(0, GridSize - 1));
+            
+            next.Add(new Point(GridSize - 1, 0));
+            
+            next.Add(new Point(GridSize - 1, GridSize - 1));
         }
-    }
 
-    private int CountNeighbors(Point position)
-    {
-        var count = 0;
-
-        count += Lights.Contains(new Point(position.X - 1, position.Y - 1)) ? 1 : 0;
-
-        count += Lights.Contains(new Point(position.X, position.Y - 1)) ? 1 : 0;
-
-        count += Lights.Contains(new Point(position.X + 1, position.Y - 1)) ? 1 : 0;
-
-        count += Lights.Contains(new Point(position.X - 1, position.Y)) ? 1 : 0;
-
-        count += Lights.Contains(new Point(position.X + 1, position.Y)) ? 1 : 0;
-
-        count += Lights.Contains(new Point(position.X - 1, position.Y + 1)) ? 1 : 0;
-
-        count += Lights.Contains(new Point(position.X, position.Y + 1)) ? 1 : 0;
-
-        count += Lights.Contains(new Point(position.X + 1, position.Y + 1)) ? 1 : 0;
-
-        return count;
+        Lights = next;
     }
 
     protected void ParseInput()
     {
+        Lights.Clear();
+
         for (var y = 0; y < GridSize; y++)
         {
+            var line = Input[y];
+
             for (var x = 0; x < GridSize; x++)
             {
-                if (Input[y][x] == '#')
+                if (line[x] == '#')
                 {
                     Lights.Add(new Point(x, y));
                 }
