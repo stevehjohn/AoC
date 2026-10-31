@@ -7,31 +7,48 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        var data = string.Concat(Enumerable.Repeat(Input[0], 10_000)).Select(c => byte.Parse(c.ToString())).ToArray();
+        var input = Input[0];
+        
+        var inputLength = input.Length;
+        
+        var totalLength = inputLength * 10_000;
 
-        var offset = int.Parse(Input[0][..7]);
+        var offset = int.Parse(input.AsSpan(0, 7));
 
-        for (var p = 0; p < 100; p++)
+        if (offset < totalLength / 2)
+        {
+            throw new InvalidOperationException("Suffix-sum optimisation requires the offset to be in the second half.");
+        }
+
+        var length = totalLength - offset;
+        
+        var data = new byte[length];
+
+        for (var i = 0; i < length; i++)
+        {
+            data[i] = (byte) (input[(offset + i) % inputLength] - '0');
+        }
+
+        for (var phase = 0; phase < 100; phase++)
         {
             var sum = 0;
 
-            int i;
-
-            for (i = offset; i < data.Length; i++)
+            for (var i = length - 1; i >= 0; i--)
             {
                 sum += data[i];
-            }
+                
+                sum %= 10;
 
-            for (i = offset; i < data.Length; i++)
-            {
-                var temp = data[i];
-
-                data[i] = (byte) (sum % 10);
-
-                sum -= temp;
+                data[i] = (byte) sum;
             }
         }
 
-        return new string(data[offset..(offset + 8)].Select(d => (char) ('0' + d)).ToArray());
+        return string.Create(8, data, static (result, source) =>
+        {
+            for (var i = 0; i < 8; i++)
+            {
+                result[i] = (char) ('0' + source[i]);
+            }
+        });
     }
 }

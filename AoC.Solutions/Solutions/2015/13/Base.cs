@@ -1,4 +1,4 @@
-﻿using AoC.Solutions.Extensions;
+﻿
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2015._13;
@@ -13,51 +13,107 @@ public abstract class Base : Solution
 
     protected int Solve()
     {
-        var permutations = People.GetPermutations();
+        var count = People.Length;
 
-        var happiest = int.MinValue;
-
-        foreach (var permutation in permutations)
+        if (count < 2)
         {
-            var happiness = 0;
+            return 0;
+        }
 
-            for (var i = 0; i < permutation.Length; i++)
+        var scores = new int[count, count];
+
+        for (var i = 0; i < count; i++)
+        {
+            for (var j = i + 1; j < count; j++)
             {
-                if (i == 0)
-                {
-                    happiness += Happiness[$"{permutation[i]}{permutation[^1]}"];
+                Happiness.TryGetValue(People[i] + People[j], out var forward);
 
-                    happiness += Happiness[$"{permutation[i]}{permutation[i + 1]}"];
+                Happiness.TryGetValue(People[j] + People[i], out var backward);
 
-                    continue;
-                }
-
-                if (i == permutation.Length - 1)
-                {
-                    happiness += Happiness[$"{permutation[i]}{permutation[i - 1]}"];
-
-                    happiness += Happiness[$"{permutation[i]}{permutation[0]}"];
-
-                    continue;
-                }
-
-                happiness += Happiness[$"{permutation[i]}{permutation[i - 1]}"];
-
-                happiness += Happiness[$"{permutation[i]}{permutation[i + 1]}"];
-            }
-
-            if (happiness > happiest)
-            {
-                happiest = happiness;
+                scores[i, j] = forward + backward;
+                
+                scores[j, i] = forward + backward;
             }
         }
 
-        return happiest;
+        var remaining = count - 1;
+        
+        var combinations = 1 << remaining;
+
+        var dp = new int[combinations * remaining];
+
+        Array.Fill(dp, int.MinValue);
+
+        for (var person = 0; person < remaining; person++)
+        {
+            var mask = 1 << person;
+
+            dp[mask * remaining + person] = scores[0, person + 1];
+        }
+
+        for (var mask = 1; mask < combinations; mask++)
+        {
+            for (var last = 0; last < remaining; last++)
+            {
+                var current = dp[mask * remaining + last];
+
+                if (current == int.MinValue)
+                {
+                    continue;
+                }
+
+                for (var next = 0; next < remaining; next++)
+                {
+                    var bit = 1 << next;
+
+                    if ((mask & bit) != 0)
+                    {
+                        continue;
+                    }
+
+                    var nextMask = mask | bit;
+                    
+                    var index = nextMask * remaining + next;
+
+                    var happiness = current + scores[last + 1, next + 1];
+
+                    if (happiness > dp[index])
+                    {
+                        dp[index] = happiness;
+                    }
+                }
+            }
+        }
+
+        var fullMask = combinations - 1;
+        
+        var best = int.MinValue;
+
+        for (var last = 0; last < remaining; last++)
+        {
+            var current = dp[fullMask * remaining + last];
+
+            if (current == int.MinValue)
+            {
+                continue;
+            }
+
+            var total = current + scores[last + 1, 0];
+
+            if (total > best)
+            {
+                best = total;
+            }
+        }
+
+        return best;
     }
 
     protected void ParseInput()
     {
-        People = [.. Input.Select(l => l.Split(' ', StringSplitOptions.TrimEntries)[0]).Distinct()];
+        People = [..Input.Select(l => l.Split(' ', StringSplitOptions.TrimEntries)[0]).Distinct()];
+
+        Happiness.Clear();
 
         foreach (var line in Input)
         {
