@@ -7,37 +7,34 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var input = int.Parse(Input[0]);
+        var target = int.Parse(Input[0]);
 
-        var house = 1;
+        var limit = (target + 9) / 10;
 
-        while (Sigma(house) * 10 < input)
+        var presents = new int[limit + 1];
+
+        for (var elf = 1; elf <= limit; elf++)
         {
-            house++;
-        }
+            var delivery = elf * 10;
 
-        File.WriteAllText("2015.20.1.result", $"{house}");
-
-        return house.ToString();
-    }
-
-    private static int Sigma(int n)
-    {
-        var sum = 0;
-
-        for (var i = 1; i <= Math.Sqrt(n); i++)
-        {
-            if (n % i == 0)
+            for (var house = elf; house <= limit; house += elf)
             {
-                sum += i;
-
-                if (n / i != i)
-                {
-                    sum += n / i;
-                }
+                presents[house] += delivery;
             }
         }
 
-        return sum;
+        for (var house = 1; house <= limit; house++)
+        {
+            if (presents[house] < target)
+            {
+                continue;
+            }
+
+            File.WriteAllText("2015.20.1.result", $"{house}");
+
+            return house.ToString();
+        }
+
+        throw new InvalidOperationException("Solution not found.");
     }
 }
