@@ -7,6 +7,6 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        return new string(
-            GetMatches().Take(8).Select(x => ToHex(x.Sixth)).ToArray());
-    }}
+        return new string(GetMatches().Take(8).Select(x => ToHex(x.Sixth)).ToArray());
+    }
+}
