@@ -142,8 +142,8 @@ Tests performed on a 2023 MacBook Pro.
  2017 13.2: 12,256μs      
  2017 14.1: 22,730μs      Defragger
  2017 14.2: 23,077μs      
- 2017 15.1: 63,292μs      Dueling generators
- 2017 15.2: 137,954μs     
+ 2017 15.1: 63,268μs      Dueling generators
+ 2017 15.2: 124,850μs     
  2017 16.1: 589μs         Permutation promenade
  2017 16.2: 64,299μs      
  2017 17.1: 770μs         Spinlock
@@ -164,7 +164,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 24.2: 48,288μs      
  2017 25.1: 97,041μs      Turing tape
             -------------
-            923.868ms    
+            910.740ms    
 
  2018  1.1: 17μs          Tardis calibration
  2018  1.2: 3,880μs       
@@ -290,7 +290,7 @@ Tests performed on a 2023 MacBook Pro.
  2020  9.2: 30μs          
  2020 10.1: 19μs          Joltage meter
  2020 10.2: 24μs          
- 2020 11.1: 3,054μs       Conway's game of seating
+ 2020 11.1: 2,990μs       Conway's game of seating
  2020 11.2: 4,239μs       
  2020 12.1: 18μs          Evergreen ship sailing
  2020 12.2: 25μs          
@@ -303,7 +303,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 16.1: 586μs         Ticket deciphering
  2020 16.2: 1,041μs       
  2020 17.1: 1,287μs       Conway cubes
- 2020 17.2: 1,104μs       
+ 2020 17.2: 1,018μs       
  2020 18.1: 408μs         Operator precedence
  2020 18.2: 447μs         
  2020 19.1: 1,660μs       Message pattern matching
@@ -320,7 +320,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 24.2: 170,528μs     
  2020 25.1: 45,743μs      Door cryptography
             -------------
-            731.713ms    
+            731.563ms    
 
  2021  1.1: 47μs          Depth scan
  2021  1.2: 138μs         
@@ -364,7 +364,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 20.1: 1,127μs       NCIS image enhancement
  2021 20.2: 71,964μs      
  2021 21.1: 12μs          Quantum dice
- 2021 21.2: 17,351μs      
+ 2021 21.2: 17,326μs      
  2021 22.1: 1,899μs       Reactor reboot
  2021 22.2: 23,586μs      
  2021 23.1: 57,124μs      Hotel amphipod
@@ -373,7 +373,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 24.2: 1μs           
  2021 25.1: 76,199μs      Landing among the cucumbers
             -------------
-            523.545ms    
+            523.520ms    
 
  2022  1.1: 22μs          Calorie counting
  2022  1.2: 32μs          
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             248.999ms    
 
- 514 puzzles solved in 7.330s.
+ 514 puzzles solved in 7.317s.
 ```

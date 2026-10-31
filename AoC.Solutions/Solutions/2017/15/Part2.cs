@@ -7,9 +7,11 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        var generatorA = long.Parse(Input[0].Split(' ')[^1]);
-        
-        var generatorB = long.Parse(Input[1].Split(' ')[^1]);
+        var generatorA = uint.Parse(Input[0].AsSpan(
+            Input[0].LastIndexOf(' ') + 1));
+
+        var generatorB = uint.Parse(Input[1].AsSpan(
+            Input[1].LastIndexOf(' ') + 1));
 
         var matches = 0;
 
@@ -27,7 +29,7 @@ public class Part2 : Base
             }
             while ((generatorB & 7) != 0);
 
-            if ((generatorA & 0xFFFF) == (generatorB & 0xFFFF))
+            if ((ushort)generatorA == (ushort)generatorB)
             {
                 matches++;
             }
@@ -36,14 +38,16 @@ public class Part2 : Base
         return matches.ToString();
     }
 
-    private static long Next(long value, long factor)
+    private static uint Next(uint value, uint factor)
     {
-        const long modulus = int.MaxValue;
+        const ulong modulus = 2147483647;
 
-        var product = value * factor;
+        var product = (ulong)value * factor;
 
         var result = (product & modulus) + (product >> 31);
 
-        return result >= modulus ? result - modulus : result;
+        return (uint)(result >= modulus
+            ? result - modulus
+            : result);
     }
 }
