@@ -1,5 +1,4 @@
-﻿using AoC.Solutions.Extensions;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2017._04;
 
@@ -12,7 +11,10 @@ public class Part2 : Base
 
         foreach (var line in Input)
         {
-            valid += IsValidPassphrase(line) ? 1 : 0;
+            if (IsValidPassphrase(line))
+            {
+                valid++;
+            }
         }
 
         return valid.ToString();
@@ -22,20 +24,15 @@ public class Part2 : Base
     {
         var encountered = new HashSet<string>();
 
-        var words = line.Split(' ');
-
-        foreach (var word in words)
+        foreach (var word in line.Split(' '))
         {
-            if (encountered.Contains(word))
+            var chars = word.ToCharArray();
+
+            Array.Sort(chars);
+
+            if (!encountered.Add(new string(chars)))
             {
                 return false;
-            }
-
-            var permutations = word.ToCharArray().GetPermutations().Select(p => new string(p));
-
-            foreach (var permutation in permutations)
-            {
-                encountered.Add(permutation);
             }
         }
 

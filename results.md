@@ -70,7 +70,7 @@ Tests performed on a 2023 MacBook Pro.
  2016  3.2: 615μs         
  2016  4.1: 4,290μs       Security through obscurity
  2016  4.2: 4,264μs       
- 2016  5.1: 210,563μs     Password hash
+ 2016  5.1: 207,033μs     Password hash
  2016  5.2: 596,959μs     
  2016  6.1: 874μs         Signals and noise
  2016  6.2: 272μs         
@@ -112,7 +112,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 24.2: 18,745μs      
  2016 25.1: 7,791μs       Clock signal
             -------------
-            2.747s       
+            2.743s       
 
  2017  1.1: 8μs           Captcha
  2017  1.2: 10μs          
@@ -121,7 +121,7 @@ Tests performed on a 2023 MacBook Pro.
  2017  3.1: 0μs           Spiral memory
  2017  3.2: 18μs          
  2017  4.1: 126μs         Passphrase validation
- 2017  4.2: 407,059μs     
+ 2017  4.2: 271μs         
  2017  5.1: 508μs         Memory trampoline
  2017  5.2: 47,579μs      
  2017  6.1: 1,494μs       Garbage collection
@@ -164,7 +164,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 24.2: 110,206μs     
  2017 25.1: 97,041μs      Turing tape
             -------------
-            2.192s       
+            1.785s       
 
  2018  1.1: 17μs          Tardis calibration
  2018  1.2: 3,880μs       
@@ -193,7 +193,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 13.1: 17,543μs      Crashing carts
  2018 13.2: 31,589μs      
  2018 14.1: 3,293μs       Elf recipes
- 2018 14.2: 117,628μs     
+ 2018 14.2: 117,144μs     
  2018 15.1: 83,588μs      Elves vs Goblins
  2018 15.2: 349,565μs     
  2018 16.1: 511μs         Opcode reverse-engineering
@@ -216,7 +216,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 260,875μs     
  2018 25.1: 32,604μs      4D chocolate teleportation
             -------------
-            1.371s       
+            1.370s       
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
@@ -302,8 +302,8 @@ Tests performed on a 2023 MacBook Pro.
  2020 15.2: 222,209μs     
  2020 16.1: 586μs         Ticket deciphering
  2020 16.2: 1,041μs       
- 2020 17.1: 1,956μs       Conway cubes
- 2020 17.2: 38,020μs      
+ 2020 17.1: 1,899μs       Conway cubes
+ 2020 17.2: 37,887μs      
  2020 18.1: 410μs         Operator precedence
  2020 18.2: 450μs         
  2020 19.1: 1,660μs       Message pattern matching
@@ -320,7 +320,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 24.2: 170,528μs     
  2020 25.1: 45,743μs      Door cryptography
             -------------
-            792.825ms    
+            792.635ms    
 
  2021  1.1: 47μs          Depth scan
  2021  1.2: 138μs         
@@ -359,7 +359,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 17.2: 12,013μs      
  2021 18.1: 3,513μs       Snailfish homework
  2021 18.2: 50,167μs      
- 2021 19.1: 18,098μs      3D scanners and beacons
+ 2021 19.1: 17,795μs      3D scanners and beacons
  2021 19.2: 17,614μs      
  2021 20.1: 1,127μs       NCIS image enhancement
  2021 20.2: 71,964μs      
@@ -368,12 +368,12 @@ Tests performed on a 2023 MacBook Pro.
  2021 22.1: 1,899μs       Reactor reboot
  2021 22.2: 23,586μs      
  2021 23.1: 58,900μs      Hotel amphipod
- 2021 23.2: 23,922μs      
+ 2021 23.2: 23,684μs      
  2021 24.1: 2μs           Model number
  2021 24.2: 1μs           
  2021 25.1: 76,199μs      Landing among the cucumbers
             -------------
-            529.330ms    
+            528.789ms    
 
  2022  1.1: 22μs          Calorie counting
  2022  1.2: 32μs          
@@ -545,7 +545,7 @@ Tests performed on a 2023 MacBook Pro.
  2025  6.2: 64μs          
  2025  7.1: 5μs           Laboratories
  2025  7.2: 274μs         
- 2025  8.1: 16,666μs      Playground
+ 2025  8.1: 16,564μs      Playground
  2025  8.2: 91,371μs      
  2025  9.1: 175μs         Movie theater
  2025  9.2: 7,114μs       
@@ -555,7 +555,7 @@ Tests performed on a 2023 MacBook Pro.
  2025 11.2: 520μs         
  2025 12.1: 276μs         Christmas tree farm
             -------------
-            249.980ms    
+            249.878ms    
 
- 514 puzzles solved in 12.424s.
+ 514 puzzles solved in 12.012s.
 ```
