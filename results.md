@@ -121,7 +121,7 @@ Tests performed on a 2023 MacBook Pro.
  2017  3.1: 0μs           Spiral memory
  2017  3.2: 18μs          
  2017  4.1: 126μs         Passphrase validation
- 2017  4.2: 253μs         
+ 2017  4.2: 246μs         
  2017  5.1: 508μs         Memory trampoline
  2017  5.2: 47,579μs      
  2017  6.1: 1,494μs       Garbage collection
@@ -164,7 +164,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 24.2: 48,506μs      
  2017 25.1: 97,041μs      Turing tape
             -------------
-            925.055ms    
+            925.048ms    
 
  2018  1.1: 17μs          Tardis calibration
  2018  1.2: 3,880μs       
@@ -186,8 +186,8 @@ Tests performed on a 2023 MacBook Pro.
  2018  9.2: 18,817μs      
  2018 10.1: 5,799μs       Writing in the stars
  2018 10.2: 5,959μs       
- 2018 11.1: 350μs         Max power... cell
- 2018 11.2: 151,320μs     
+ 2018 11.1: 255μs         Max power... cell
+ 2018 11.2: 5,096μs       
  2018 12.1: 1,915μs       Plant potty
  2018 12.2: 8,040μs       
  2018 13.1: 17,543μs      Crashing carts
@@ -212,11 +212,11 @@ Tests performed on a 2023 MacBook Pro.
  2018 22.2: 58,167μs      
  2018 23.1: 172μs         Nanobot teleportation
  2018 23.2: 14,654μs      
- 2018 24.1: 534μs         Immune system battle
- 2018 24.2: 10,943μs      
+ 2018 24.1: 517μs         Immune system battle
+ 2018 24.2: 10,367μs      
  2018 25.1: 24,856μs      4D chocolate teleportation
             -------------
-            736.221ms    
+            589.309ms    
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
@@ -243,13 +243,13 @@ Tests performed on a 2023 MacBook Pro.
  2019 12.1: 498μs         Orbital simulation
  2019 12.2: 59,543μs      
  2019 13.1: 200μs         Arkanoid (CPU used unmodified)
- 2019 13.2: 4,131μs       
+ 2019 13.2: 3,965μs       
  2019 14.1: 98μs          Replicator
  2019 14.2: 4,129μs       
- 2019 15.1: 5,077μs       Oxygen repair droid (CPU used unmodified)
+ 2019 15.1: 4,882μs       Oxygen repair droid (CPU used unmodified)
  2019 15.2: 156μs         
  2019 16.1: 13,422μs      FFT
- 2019 16.2: 99,848μs      
+ 2019 16.2: 99,460μs      
  2019 17.1: 374μs         Scaffolding vacuum robot (CPU used unmodified)
  2019 17.2: 1,802μs       
  2019 18.1: 121,718μs     Maze and keys
@@ -263,12 +263,12 @@ Tests performed on a 2023 MacBook Pro.
  2019 22.1: 370μs         Space shuffle
  2019 22.2: 26μs          
  2019 23.1: 1,757μs       IntCode network (CPU used unmodified)
- 2019 23.2: 2,717μs       
+ 2019 23.2: 2,692μs       
  2019 24.1: 8μs           Wastl's game of life
  2019 24.2: 7,264μs       
  2019 25.1: 16,970μs      Airlock password (CPU used unmodified)
             -------------
-            799.429ms    
+            798.655ms    
 
  2020  1.1: 22μs          Expenses
  2020  1.2: 106μs         
@@ -513,7 +513,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 16.2: 31,394μs      
  2024 17.1: 7μs           Chronospatial computer
  2024 17.2: 2,525μs       
- 2024 18.1: 1,166μs       RAM run
+ 2024 18.1: 1,160μs       RAM run
  2024 18.2: 1,318μs       
  2024 19.1: 37,654μs      Linen layout
  2024 19.2: 55,434μs      
@@ -529,7 +529,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 231μs         
  2024 25.1: 112μs         Code chronicle
             -------------
-            520.053ms    
+            520.047ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 87μs          
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             249.279ms    
 
- 514 puzzles solved in 10.080s.
+ 514 puzzles solved in 9.932s.
 ```
