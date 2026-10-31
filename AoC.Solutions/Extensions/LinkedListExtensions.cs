@@ -13,15 +13,5 @@ public static class LinkedListExtensions
 
             return node.Next ?? node.List.First;
         }
-
-        public LinkedListNode<T> PreviousCircular()
-        {
-            if (node.List == null)
-            {
-                throw new NullReferenceException("Node is not linked to a list");
-            }
-
-            return node.Previous ?? node.List.Last;
-        }
     }
 }
