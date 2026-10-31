@@ -16,7 +16,7 @@ Tests performed on a 2023 MacBook Pro.
  2015  2.2: 434μs         
  2015  3.1: 1,203μs       Perfectly spherical houses in a vacuum
  2015  3.2: 1,093μs       
- 2015  4.1: 8,368μs       Crypto stocking stuffer
+ 2015  4.1: 8,354μs       Crypto stocking stuffer
  2015  4.2: 182,457μs     
  2015  5.1: 136μs         Naughty or nice
  2015  5.2: 806μs         
@@ -106,7 +106,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 21.2: 22μs          
  2016 22.1: 270,519μs     Grid computing
  2016 22.2: 271,902μs     
- 2016 23.1: 100μs         Safe cracking
+ 2016 23.1: 95μs          Safe cracking
  2016 23.2: 37μs          
  2016 24.1: 19,559μs      Air duct spelunking
  2016 24.2: 18,745μs      
@@ -213,10 +213,10 @@ Tests performed on a 2023 MacBook Pro.
  2018 23.1: 172μs         Nanobot teleportation
  2018 23.2: 14,654μs      
  2018 24.1: 534μs         Immune system battle
- 2018 24.2: 40,440μs      
+ 2018 24.2: 11,014μs      
  2018 25.1: 24,874μs      4D chocolate teleportation
             -------------
-            765.736ms    
+            736.310ms    
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
@@ -239,7 +239,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 10.1: 17,610μs      Asteroids
  2019 10.2: 1,526μs       
  2019 11.1: 44,596μs      Personal plate (CPU used unmodified)
- 2019 11.2: 660μs         
+ 2019 11.2: 638μs         
  2019 12.1: 498μs         Orbital simulation
  2019 12.2: 59,543μs      
  2019 13.1: 1,063μs       Arkanoid (CPU used unmodified)
@@ -368,12 +368,12 @@ Tests performed on a 2023 MacBook Pro.
  2021 22.1: 1,899μs       Reactor reboot
  2021 22.2: 23,586μs      
  2021 23.1: 57,274μs      Hotel amphipod
- 2021 23.2: 23,519μs      
+ 2021 23.2: 23,284μs      
  2021 24.1: 2μs           Model number
  2021 24.2: 1μs           
  2021 25.1: 76,199μs      Landing among the cucumbers
             -------------
-            526.071ms    
+            525.836ms    
 
  2022  1.1: 22μs          Calorie counting
  2022  1.2: 32μs          
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             249.279ms    
 
- 514 puzzles solved in 10.524s.
+ 514 puzzles solved in 10.495s.
 ```
