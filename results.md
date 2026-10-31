@@ -104,15 +104,15 @@ Tests performed on a 2023 MacBook Pro.
  2016 20.2: 4,404μs       
  2016 21.1: 19μs          Scrambled letters and hash
  2016 21.2: 22μs          
- 2016 22.1: 270,519μs     Grid computing
- 2016 22.2: 271,902μs     
+ 2016 22.1: 722μs         Grid computing
+ 2016 22.2: 9,235μs       
  2016 23.1: 95μs          Safe cracking
  2016 23.2: 34μs          
  2016 24.1: 19,559μs      Air duct spelunking
  2016 24.2: 18,745μs      
  2016 25.1: 7,791μs       Clock signal
             -------------
-            2.402s       
+            1.869s       
 
  2017  1.1: 8μs           Captcha
  2017  1.2: 10μs          
@@ -192,8 +192,8 @@ Tests performed on a 2023 MacBook Pro.
  2018 12.2: 8,040μs       
  2018 13.1: 17,543μs      Crashing carts
  2018 13.2: 31,589μs      
- 2018 14.1: 3,281μs       Elf recipes
- 2018 14.2: 115,068μs     
+ 2018 14.1: 3,264μs       Elf recipes
+ 2018 14.2: 114,974μs     
  2018 15.1: 12,492μs      Elves vs Goblins
  2018 15.2: 55,255μs      
  2018 16.1: 511μs         Opcode reverse-engineering
@@ -212,11 +212,11 @@ Tests performed on a 2023 MacBook Pro.
  2018 22.2: 46,828μs      
  2018 23.1: 172μs         Nanobot teleportation
  2018 23.2: 14,654μs      
- 2018 24.1: 517μs         Immune system battle
+ 2018 24.1: 510μs         Immune system battle
  2018 24.2: 10,367μs      
  2018 25.1: 24,856μs      4D chocolate teleportation
             -------------
-            577.854ms    
+            577.736ms    
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
@@ -250,11 +250,11 @@ Tests performed on a 2023 MacBook Pro.
  2019 15.2: 156μs         
  2019 16.1: 13,422μs      FFT
  2019 16.2: 99,460μs      
- 2019 17.1: 346μs         Scaffolding vacuum robot (CPU used unmodified)
- 2019 17.2: 1,769μs       
+ 2019 17.1: 341μs         Scaffolding vacuum robot (CPU used unmodified)
+ 2019 17.2: 1,710μs       
  2019 18.1: 121,718μs     Maze and keys
  2019 18.2: 61,086μs      
- 2019 19.1: 94,441μs      Tractorrr (CPU used unmodified)
+ 2019 19.1: 91,691μs      Tractorrr (CPU used unmodified)
  2019 19.2: 88,219μs      
  2019 20.1: 251μs         Doughnut maze
  2019 20.2: 5,891μs       
@@ -268,7 +268,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 24.2: 7,264μs       
  2019 25.1: 16,970μs      Airlock password (CPU used unmodified)
             -------------
-            789.618ms    
+            786.804ms    
 
  2020  1.1: 22μs          Expenses
  2020  1.2: 106μs         
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             249.279ms    
 
- 514 puzzles solved in 9.564s.
+ 514 puzzles solved in 9.029s.
 ```

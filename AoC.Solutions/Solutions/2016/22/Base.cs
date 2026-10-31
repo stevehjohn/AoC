@@ -8,24 +8,30 @@ public abstract class Base : Solution
 
     protected List<(int X, int Y, int Used, int Available)> GetViableNodes()
     {
-        var data = Input.Skip(2).ToList();
+        var nodes = Input
+            .Skip(2)
+            .Select(ParseLine)
+            .ToArray();
 
         var result = new List<(int X, int Y, int Used, int Available)>();
 
-        for (var o = 0; o < data.Count; o++)
+        for (var a = 0; a < nodes.Length; a++)
         {
-            for (var i = 0; i < data.Count; i++)
+            var nodeA = nodes[a];
+
+            if (nodeA.Used == 0)
             {
-                if (o == i)
+                continue;
+            }
+
+            for (var b = 0; b < nodes.Length; b++)
+            {
+                if (a == b)
                 {
                     continue;
                 }
 
-                var nodeA = ParseLine(data[o]);
-
-                var nodeB = ParseLine(data[i]);
-
-                if (nodeA.Used > 0 && nodeA.Used <= nodeB.Available)
+                if (nodeA.Used <= nodes[b].Available)
                 {
                     result.Add(nodeA);
                 }
@@ -42,7 +48,7 @@ public abstract class Base : Solution
         var coordsPart = parts[0][15..].Split('-');
 
         var x = int.Parse(coordsPart[0][1..]);
-
+        
         var y = int.Parse(coordsPart[1][1..]);
 
         return (x, y, int.Parse(parts[2][..^1]), int.Parse(parts[3][..^1]));
