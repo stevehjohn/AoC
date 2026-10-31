@@ -162,9 +162,9 @@ Tests performed on a 2023 MacBook Pro.
  2017 23.2: 2,663μs       
  2017 24.1: 48,641μs      Electromagnetic moat
  2017 24.2: 48,288μs      
- 2017 25.1: 97,041μs      Turing tape
+ 2017 25.1: 67,244μs      Turing tape
             -------------
-            847.178ms    
+            817.381ms    
 
  2018  1.1: 17μs          Tardis calibration
  2018  1.2: 3,880μs       
@@ -305,7 +305,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 17.1: 1,287μs       Conway cubes
  2020 17.2: 955μs         
  2020 18.1: 408μs         Operator precedence
- 2020 18.2: 447μs         
+ 2020 18.2: 444μs         
  2020 19.1: 1,660μs       Message pattern matching
  2020 19.2: 6,641μs       
  2020 20.1: 6,387μs       Satellite jigsaw
@@ -320,7 +320,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 24.2: 170,528μs     
  2020 25.1: 45,743μs      Door cryptography
             -------------
-            701.239ms    
+            701.236ms    
 
  2021  1.1: 47μs          Depth scan
  2021  1.2: 138μs         
@@ -351,7 +351,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 13.2: 3,111μs       
  2021 14.1: 184μs         Ablative armour
  2021 14.2: 892μs         
- 2021 15.1: 1,118μs       Risky business
+ 2021 15.1: 1,106μs       Risky business
  2021 15.2: 52,278μs      
  2021 16.1: 122μs         Packet processing
  2021 16.2: 122μs         
@@ -373,7 +373,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 24.2: 1μs           
  2021 25.1: 76,199μs      Landing among the cucumbers
             -------------
-            523.520ms    
+            523.508ms    
 
  2022  1.1: 22μs          Calorie counting
  2022  1.2: 30μs          
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             248.999ms    
 
- 514 puzzles solved in 7.222s.
+ 514 puzzles solved in 7.193s.
 ```
