@@ -5,79 +5,73 @@ namespace AoC.Solutions.Solutions._2021._21;
 [UsedImplicitly]
 public class Part2 : Base
 {
-    private readonly (int Roll, int Probability)[] _rollProbabilities = [(3, 1), (4, 3), (5, 6), (6, 7), (7, 6), (8, 3), (9, 1)];
+    private static readonly (int Roll, int Frequency)[] RollProbabilities =
+    [
+        (3, 1), (4, 3), (5, 6), (6, 7), (7, 6), (8, 3), (9, 1)
+    ];
+
+    private readonly Dictionary<(int P1, int P2, int S1, int S2, bool Turn), (long W1, long W2)> _cache = new();
 
     public override string GetAnswer()
     {
         ParseInput();
+        
+        _cache.Clear();
 
-        var player1Wins = GetPlayerWins(true);
+        var (p1Wins, p2Wins) = Play(Player1Position, Player2Position, 0, 0, true);
 
-        var player2Wins = GetPlayerWins(false);
-
-        return Math.Max(player1Wins, player2Wins).ToString();
+        return Math.Max(p1Wins, p2Wins).ToString();
     }
 
-    private long GetPlayerWins(bool evaluatePlayer1)
+    private (long W1, long W2) Play(int p1, int p2, int s1, int s2, bool player1Turn)
     {
-        var scores = (Player1: 0, Player2: 0);
-
-        var positions = (Player1: Player1Position, Player2: Player2Position);
-
-        var wins = 0L;
-
-        foreach (var probability in _rollProbabilities)
+        if (s1 >= 21)
         {
-            wins += Play(scores, positions, true, probability.Roll, evaluatePlayer1) * probability.Probability;
+            return (1, 0);
         }
 
-        return wins;
-    }
-
-    private long Play((int Player1, int Player2) scores, (int Player1, int Player2) positions, bool player1Turn, int roll, bool evaluatePlayer1)
-    {
-        var wins = 0L;
-
-        if (player1Turn)
+        if (s2 >= 21)
         {
-            positions.Player1 += roll;
+            return (0, 1);
+        }
 
-            if (positions.Player1 > 10)
+        var key = (p1, p2, s1, s2, player1Turn);
+
+        if (_cache.TryGetValue(key, out var cached))
+        {
+            return cached;
+        }
+
+        long wins1 = 0;
+        
+        long wins2 = 0;
+
+        foreach (var (roll, frequency) in RollProbabilities)
+        {
+            (long w1, long w2) result;
+
+            if (player1Turn)
             {
-                positions.Player1 -= 10;
+                var next = (p1 + roll - 1) % 10 + 1;
+
+                result = Play(next, p2, s1 + next, s2, false);
+            }
+            else
+            {
+                var next = (p2 + roll - 1) % 10 + 1;
+
+                result = Play(p1, next, s1, s2 + next, true);
             }
 
-            scores.Player1 += positions.Player1;
-        }
-        else
-        {
-            positions.Player2 += roll;
-
-            if (positions.Player2 > 10)
-            {
-                positions.Player2 -= 10;
-            }
-
-            scores.Player2 += positions.Player2;
+            wins1 += result.w1 * frequency;
+            
+            wins2 += result.w2 * frequency;
         }
 
-        if (scores.Player1 >= 21 || scores.Player2 >= 21)
-        {
-            if (evaluatePlayer1)
-            {
-                return scores.Player1 >= 21 ? 1 : 0;
-            }
+        var answer = (wins1, wins2);
+        
+        _cache[key] = answer;
 
-            return scores.Player2 >= 21 ? 1 : 0;
-        }
-
-        player1Turn = ! player1Turn;
-
-        foreach (var probability in _rollProbabilities)
-        {
-            wins += Play(scores, positions, player1Turn, probability.Roll, evaluatePlayer1) * probability.Probability;
-        }
-
-        return wins;
+        return answer;
     }
 }
