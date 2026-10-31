@@ -15,7 +15,7 @@ public class Part2 : Base
     public override string GetAnswer()
     {
         ParseInput();
-        
+
         _cache.Clear();
 
         var (p1Wins, p2Wins) = Play(Player1Position, Player2Position, 0, 0, true);
@@ -43,7 +43,7 @@ public class Part2 : Base
         }
 
         long wins1 = 0;
-        
+
         long wins2 = 0;
 
         foreach (var (roll, frequency) in RollProbabilities)
@@ -64,12 +64,12 @@ public class Part2 : Base
             }
 
             wins1 += result.w1 * frequency;
-            
+
             wins2 += result.w2 * frequency;
         }
 
         var answer = (wins1, wins2);
-        
+
         _cache[key] = answer;
 
         return answer;

@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2021._23;
 
@@ -7,398 +6,315 @@ public abstract class Base : Solution
 {
     public override string Description => "Hotel amphipod";
 
-    private int[] _initialAmphipodState;
+    private static readonly int[] Doors = [2, 4, 6, 8];
 
-    private int _lowestCost;
+    private static readonly int[] HallwayStops =
+        [0, 1, 3, 5, 7, 9, 10];
 
-    private PriorityQueue<(int[] State, int Index, int Cost), int> _queue;
+    private static readonly int[] Energy =
+        [0, 1, 10, 100, 1000];
 
-    private Dictionary<int, int> _bestCosts;
+    private int _depth;
 
-    private static int _burrowDepth = 2;
+    private UInt128 _initialState;
 
-    private static readonly int[] Hallway = [0, 1, 3, 5, 7, 9, 10];
+    private UInt128 _goalState;
+
+    private PriorityQueue<(UInt128 State, int Cost), int> _queue;
+
+    private Dictionary<UInt128, int> _bestCosts;
 
     protected void ParseInput(bool insertExtra = false)
     {
-        var state = new List<int>();
+        _depth = insertExtra ? 4 : 2;
 
-        string[] modifiedInput;
+        _initialState = UInt128.Zero;
+
+        _goalState = UInt128.Zero;
+
+        var rows = new List<string>();
+
+        rows.Add(Input[2]);
 
         if (insertExtra)
         {
-            _burrowDepth = 4;
+            rows.Add("  #D#C#B#A#");
 
-            var newInput = new List<string>();
-
-            newInput.AddRange(Input.Take(3));
-
-            newInput.Add("  #D#C#B#A#");
-
-            newInput.Add("  #D#B#A#C#");
-
-            newInput.AddRange(Input.Skip(3).Take(2));
-
-            modifiedInput = [.. newInput];
-        }
-        else
-        {
-            _burrowDepth = 2;
-
-            modifiedInput = Input;
+            rows.Add("  #D#B#A#C#");
         }
 
-        for (var y = 1; y < 2 + _burrowDepth; y++)
+        rows.Add(Input[3]);
+
+        for (var room = 0; room < 4; room++)
         {
-            for (var x = 1; x < 12; x += 2)
+            for (var depth = 0; depth < _depth; depth++)
             {
-                if (x >= modifiedInput[y].Length)
-                {
-                    continue;
-                }
+                var type = rows[depth][3 + room * 2] - 'A' + 1;
 
-                var c = modifiedInput[y][x];
+                _initialState = Set(_initialState, RoomIndex(room, depth), type);
 
-                if (c is '#' or '.' or ' ')
-                {
-                    continue;
-                }
-
-                state.Add(Encode(x - 1, y - 1, (c - '@') * 2));
+                _goalState = Set(_goalState, RoomIndex(room, depth), room + 1);
             }
         }
-
-        _initialAmphipodState = [.. state];
     }
 
     protected int Solve()
     {
-        _lowestCost = int.MaxValue;
+        _queue = new PriorityQueue<(UInt128 State, int Cost), int>();
 
-        _queue = new PriorityQueue<(int[] State, int Index, int Cost), int>();
+        _bestCosts = new Dictionary<UInt128, int>();
 
-        _bestCosts = [];
+        Enqueue(_initialState, 0);
 
-        for (var i = 0; i < _initialAmphipodState.Length; i++)
+        while (_queue.TryDequeue(out var item, out _))
         {
-            if (DecodeY(_initialAmphipodState[i]) != 1)
+            var (state, cost) = item;
+
+            if (_bestCosts[state] != cost)
             {
                 continue;
             }
 
-            _queue.Enqueue((Copy(_initialAmphipodState), i, 0), 0);
+            if (state == _goalState)
+            {
+                return cost;
+            }
 
-            UpdateBestCost(_initialAmphipodState, i, 0);
+            MoveFromHallway(state, cost);
+
+            MoveFromRooms(state, cost);
         }
 
-        ProcessQueue();
-
-        return _lowestCost;
+        throw new InvalidOperationException("No solution found.");
     }
 
-    private void ProcessQueue()
+    private void MoveFromHallway(UInt128 state, int cost)
     {
-        while (_queue.Count > 0)
+        foreach (var hall in HallwayStops)
         {
-            var (state, index, cost) = _queue.Dequeue();
+            var type = Get(state, hall);
 
-            var moves = GetMovesAndCosts(state, index);
-
-            foreach (var move in moves)
+            if (type == 0)
             {
-                var moveCost = cost + move.Cost;
+                continue;
+            }
 
-                if (moveCost >= _lowestCost)
+            var room = type - 1;
+
+            var door = Doors[room];
+
+            if (! HallwayClear(state, hall, door))
+            {
+                continue;
+            }
+
+            if (! RoomCanAccept(state, room, type, out var depth))
+            {
+                continue;
+            }
+
+            var steps = Math.Abs(hall - door) + depth + 1;
+
+            var next = Set(state, hall, 0);
+
+            next = Set(next, RoomIndex(room, depth), type);
+
+            Enqueue(next, cost + steps * Energy[type]);
+        }
+    }
+
+    private void MoveFromRooms(UInt128 state, int cost)
+    {
+        for (var room = 0; room < 4; room++)
+        {
+            var depth = 0;
+
+            while (depth < _depth && Get(state, RoomIndex(room, depth)) == 0)
+            {
+                depth++;
+            }
+
+            if (depth == _depth)
+            {
+                continue;
+            }
+
+            var index = RoomIndex(room, depth);
+
+            var type = Get(state, index);
+
+            if (IsSettled(state, room, depth, type))
+            {
+                continue;
+            }
+
+            var door = Doors[room];
+
+            var targetRoom = type - 1;
+
+            var targetDoor = Doors[targetRoom];
+
+            if (targetRoom != room && HallwayClear(state, door, targetDoor) && RoomCanAccept(state, targetRoom, type, out var targetDepth))
+            {
+                var steps = depth + 1 + Math.Abs(door - targetDoor) + targetDepth + 1;
+
+                var next = Set(state, index, 0);
+
+                next = Set(next, RoomIndex(targetRoom, targetDepth), type);
+
+                Enqueue(next, cost + steps * Energy[type]);
+            }
+
+            foreach (var hall in HallwayStops)
+            {
+                if (! HallwayClear(state, door, hall))
                 {
                     continue;
                 }
 
-                if (AllHome(move.State))
-                {
-                    if (moveCost < _lowestCost)
-                    {
-                        _lowestCost = moveCost;
-                    }
+                var steps = depth + 1 + Math.Abs(door - hall);
 
+                var next = Set(state, index, 0);
+
+                next = Set(next, hall, type);
+
+                Enqueue(next, cost + steps * Energy[type]);
+            }
+        }
+    }
+
+    private bool RoomCanAccept(UInt128 state, int room, int type, out int targetDepth)
+    {
+        targetDepth = -1;
+
+        for (var depth = _depth - 1; depth >= 0; depth--)
+        {
+            var occupant = Get(state, RoomIndex(room, depth));
+
+            if (occupant == 0)
+            {
+                if (targetDepth == -1)
+                {
+                    targetDepth = depth;
+                }
+            }
+            else if (occupant != type)
+            {
+                return false;
+            }
+        }
+
+        return targetDepth >= 0;
+    }
+
+    private bool IsSettled(UInt128 state, int room, int depth, int type)
+    {
+        if (type != room + 1)
+        {
+            return false;
+        }
+
+        for (var d = depth + 1; d < _depth; d++)
+        {
+            if (Get(state, RoomIndex(room, d)) != type)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static bool HallwayClear(UInt128 state, int from, int to)
+    {
+        var step = from < to ? 1 : -1;
+
+        for (var x = from + step; x != to + step; x += step)
+        {
+            if (Get(state, x) != 0)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private void Enqueue(UInt128 state, int cost)
+    {
+        if (_bestCosts.TryGetValue(state, out var best) && best <= cost)
+        {
+            return;
+        }
+
+        _bestCosts[state] = cost;
+
+        var priority = cost + Heuristic(state);
+
+        _queue.Enqueue((state, cost), priority);
+    }
+
+    private int Heuristic(UInt128 state)
+    {
+        var estimate = 0;
+
+        foreach (var hall in HallwayStops)
+        {
+            var type = Get(state, hall);
+
+            if (type == 0)
+            {
+                continue;
+            }
+
+            var targetDoor = Doors[type - 1];
+
+            var steps = Math.Abs(hall - targetDoor) + 1;
+
+            estimate += steps * Energy[type];
+        }
+
+        for (var room = 0; room < 4; room++)
+        {
+            for (var depth = 0; depth < _depth; depth++)
+            {
+                var type = Get(state, RoomIndex(room, depth));
+
+                if (type == 0)
+                {
                     continue;
                 }
 
-                for (var i = 0; i < state.Length; i++)
+                if (IsSettled(state, room, depth, type))
                 {
-                    if (i == index)
-                    {
-                        continue;
-                    }
-
-                    if (! UpdateBestCost(move.State, i, moveCost))
-                    {
-                        continue;
-                    }
-
-                    _queue.Enqueue((move.State, i, moveCost), moveCost);
-                }
-            }
-        }
-    }
-
-    private static int GetCostMultiplier(int type)
-    {
-        return type switch
-        {
-            4 => 10,
-            6 => 100,
-            8 => 1000,
-            _ => 1
-        };
-    }
-
-    private static int HashState(int[] state, int index)
-    {
-        unchecked
-        {
-            var hash = 17;
-
-            Span<int> sorted = stackalloc int[state.Length];
-
-            state.CopyTo(sorted);
-
-            sorted.Sort();
-
-            for (var i = 0; i < sorted.Length; i++)
-            {
-                hash = hash * 31 + sorted[i];
-            }
-
-            hash = hash * 31 + index;
-
-            return hash;
-        }
-    }
-
-    private bool UpdateBestCost(int[] state, int index, int cost)
-    {
-        var hash = HashState(state, index);
-
-        if (_bestCosts.TryGetValue(hash, out var existing))
-        {
-            if (existing <= cost)
-            {
-                return false;
-            }
-        }
-
-        _bestCosts[hash] = cost;
-
-        return true;
-    }
-
-    private static bool AllHome(int[] state)
-    {
-        for (var i = 0; i < state.Length; i++)
-        {
-            var encoded = state[i];
-
-            var y = DecodeY(encoded);
-
-            if (y == 0)
-            {
-                return false;
-            }
-
-            var x = DecodeX(encoded);
-
-            var home = DecodeHome(encoded);
-
-            if (x != home)
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private static List<(int[] State, int Cost)> GetMovesAndCosts(int[] state, int index)
-    {
-        var result = new List<(int[] State, int Cost)>();
-
-        var pod = Decode(state[index]);
-
-        int y;
-
-        if (pod.X == pod.Home && pod.Y > 0)
-        {
-            if (pod.Y == _burrowDepth)
-            {
-                return result;
-            }
-
-            var same = true;
-
-            for (y = pod.Y + 1; y <= _burrowDepth; y++)
-            {
-                if (TypeInPosition(state, pod.X, y) != pod.Home)
-                {
-                    same = false;
-
-                    break;
-                }
-            }
-
-            if (same)
-            {
-                return result;
-            }
-        }
-
-        int cost;
-
-        for (y = _burrowDepth; y > 0; y--)
-        {
-            var typeInPosition = TypeInPosition(state, pod.Home, y);
-
-            if (typeInPosition == 0)
-            {
-                cost = CostToGetTo(state, pod.X, pod.Y, pod.Home, y) * GetCostMultiplier(pod.Home);
-
-                if (cost > 0)
-                {
-                    result.Add((MakeMove(state, index, pod.Home, y), cost));
-
-                    return result;
+                    continue;
                 }
 
-                break;
-            }
+                var steps = depth + 1 + Math.Abs(Doors[room] - Doors[type - 1]) + 1;
 
-            if (typeInPosition != pod.Home)
-            {
-                break;
+                estimate += steps * Energy[type];
             }
         }
 
-        if (pod.Y > 0)
-        {
-            foreach (var x in Hallway)
-            {
-                cost = CostToGetTo(state, pod.X, pod.Y, x, 0) * GetCostMultiplier(pod.Home);
-
-                if (cost > 0)
-                {
-                    result.Add((MakeMove(state, index, x, 0), cost));
-                }
-            }
-        }
-
-        return result;
+        return estimate;
     }
 
-    private static int[] MakeMove(int[] state, int index, int endX, int endY)
+    private int RoomIndex(int room, int depth)
     {
-        var newState = Copy(state);
-
-        var home = DecodeHome(state[index]);
-
-        newState[index] = Encode(endX, endY, home);
-
-        return newState;
+        return 11 + room * _depth + depth;
     }
 
-    private static int CostToGetTo(int[] state, int startX, int startY, int endX, int endY)
+    private static int Get(UInt128 state, int index)
     {
-        var cost = 0;
-
-        while (startX != endX && startY > 0)
-        {
-            startY--;
-
-            if (TypeInPosition(state, startX, startY) != 0)
-            {
-                return 0;
-            }
-
-            cost++;
-        }
-
-        var step = startX > endX ? -1 : 1;
-
-        while (startX != endX)
-        {
-            startX += step;
-
-            if (TypeInPosition(state, startX, startY) != 0)
-            {
-                return 0;
-            }
-
-            cost++;
-        }
-
-        while (startY < endY)
-        {
-            startY++;
-
-            if (TypeInPosition(state, startX, startY) != 0)
-            {
-                return 0;
-            }
-
-            cost++;
-        }
-
-        return cost;
+        return (int) ((state >> (index * 3)) & 7);
     }
 
-    private static int TypeInPosition(int[] state, int x, int y)
+    private static UInt128 Set(UInt128 state, int index, int value)
     {
-        for (var i = 0; i < state.Length; i++)
-        {
-            var encoded = state[i];
+        var shift = index * 3;
 
-            if (DecodeX(encoded) == x && DecodeY(encoded) == y)
-            {
-                return DecodeHome(encoded);
-            }
-        }
+        var mask = (UInt128) 7 << shift;
 
-        return 0;
+        return (state & ~mask) | ((UInt128) value << shift);
     }
-
-    private static int[] Copy(int[] source)
-    {
-        var copy = new int[source.Length];
-
-        Buffer.BlockCopy(source, 0, copy, 0, source.Length * sizeof(int));
-
-        return copy;
-    }
-
-    private static int Encode(int x, int y, int home)
-    {
-        var result = ((x & 255) << 16)
-                     | ((y & 255) << 8)
-                     | (home & 255);
-
-        return result;
-    }
-
-    private static (int X, int Y, int Home) Decode(int state)
-    {
-        var x = DecodeX(state);
-
-        var y = DecodeY(state);
-
-        var home = DecodeHome(state);
-
-        return (x, y, home);
-    }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static int DecodeX(int state) => (state >> 16) & 255;
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static int DecodeY(int state) => (state >> 8) & 255;
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static int DecodeHome(int state) => state & 255;
 }
