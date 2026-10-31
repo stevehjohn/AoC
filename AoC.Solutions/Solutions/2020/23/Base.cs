@@ -7,59 +7,47 @@ public abstract class Base : Solution
     public override string Description => "Crab cups";
 
     protected int[] Cups;
-    
+
     protected int Max;
 
     private int _cup;
 
     protected void PerformMove()
     {
-        var targetCup = _cup;
+        var cups = Cups;
+        
+        var current = _cup;
 
-        int i;
+        var first = cups[current];
+        
+        var second = cups[first];
+        
+        var third = cups[second];
 
-        var sequenceToShift = 0;
+        var destination = current - 1;
 
-        var removed = new int[3];
-
-        for (i = 0; i < 3; i++)
+        if (destination == 0)
         {
-            targetCup = Cups[targetCup];
+            destination = Max;
+        }
 
-            removed[i] = targetCup;
+        while (destination == first || destination == second || destination == third)
+        {
+            destination--;
 
-            if (i == 2)
+            if (destination == 0)
             {
-                sequenceToShift = targetCup;
+                destination = Max;
             }
         }
 
-        targetCup = _cup - 1;
+        cups[current] = cups[third];
 
-        if (targetCup == 0)
-        {
-            targetCup = Max;
-        }
+        cups[third] = cups[destination];
 
-        while (targetCup == removed[0] || targetCup == removed[1] || targetCup == removed[2])
-        {
-            targetCup--;
+        cups[destination] = first;
 
-            if (targetCup < 1)
-            {
-                targetCup = Max;
-            }
-        }
-
-        var nextCup = Cups[_cup];
-
-        Cups[_cup] = Cups[sequenceToShift];
-
-        Cups[sequenceToShift] = Cups[targetCup];
-
-        Cups[targetCup] = nextCup;
-
-        _cup = Cups[_cup];
+        _cup = cups[current];
     }
 
     protected void ParseInput()
@@ -75,7 +63,7 @@ public abstract class Base : Solution
 
         Cups[data[^1] - '0'] = data[0] - '0';
 
-        _cup = Input[0][0] - '0';
+        _cup = data[0] - '0';
 
         Max = data.Length;
     }
