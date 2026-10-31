@@ -71,7 +71,7 @@ Tests performed on a 2023 MacBook Pro.
  2016  4.1: 4,290μs       Security through obscurity
  2016  4.2: 4,264μs       
  2016  5.1: 218,606μs     Password hash
- 2016  5.2: 613,794μs     
+ 2016  5.2: 610,851μs     
  2016  6.1: 874μs         Signals and noise
  2016  6.2: 272μs         
  2016  7.1: 729μs         ABBA internet protocol
@@ -89,7 +89,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 13.1: 48μs          Cubicle maze
  2016 13.2: 46μs          
  2016 14.1: 10,371μs      One time pad
- 2016 14.2: 718,947μs     
+ 2016 14.2: 713,278μs     
  2016 15.1: 378μs         Disc timing
  2016 15.2: 2,862μs       
  2016 16.1: 6μs           Dragon checksum
@@ -112,7 +112,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 24.2: 18,745μs      
  2016 25.1: 7,848μs       Clock signal
             -------------
-            2.781s       
+            2.772s       
 
  2017  1.1: 8μs           Captcha
  2017  1.2: 10μs          
@@ -192,8 +192,8 @@ Tests performed on a 2023 MacBook Pro.
  2018 12.2: 8,040μs       
  2018 13.1: 17,543μs      Crashing carts
  2018 13.2: 31,589μs      
- 2018 14.1: 3,658μs       Elf recipes
- 2018 14.2: 123,387μs     
+ 2018 14.1: 3,609μs       Elf recipes
+ 2018 14.2: 123,186μs     
  2018 15.1: 83,588μs      Elves vs Goblins
  2018 15.2: 349,565μs     
  2018 16.1: 511μs         Opcode reverse-engineering
@@ -545,7 +545,7 @@ Tests performed on a 2023 MacBook Pro.
  2025  6.2: 64μs          
  2025  7.1: 5μs           Laboratories
  2025  7.2: 274μs         
- 2025  8.1: 100,498μs     Playground
+ 2025  8.1: 16,848μs      Playground
  2025  8.2: 91,371μs      
  2025  9.1: 175μs         Movie theater
  2025  9.2: 7,114μs       
@@ -555,7 +555,7 @@ Tests performed on a 2023 MacBook Pro.
  2025 11.2: 520μs         
  2025 12.1: 276μs         Christmas tree farm
             -------------
-            333.812ms    
+            250.162ms    
 
- 514 puzzles solved in 14.707s.
+ 514 puzzles solved in 14.615s.
 ```
