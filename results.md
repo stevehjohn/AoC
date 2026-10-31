@@ -105,14 +105,14 @@ Tests performed on a 2023 MacBook Pro.
  2016 21.1: 19μs          Scrambled letters and hash
  2016 21.2: 22μs          
  2016 22.1: 722μs         Grid computing
- 2016 22.2: 9,235μs       
+ 2016 22.2: 1,184μs       
  2016 23.1: 95μs          Safe cracking
  2016 23.2: 34μs          
  2016 24.1: 19,559μs      Air duct spelunking
  2016 24.2: 18,745μs      
  2016 25.1: 7,791μs       Clock signal
             -------------
-            1.869s       
+            1.861s       
 
  2017  1.1: 8μs           Captcha
  2017  1.2: 10μs          
@@ -207,7 +207,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 20.1: 3,075μs       Regex maze
  2018 20.2: 3,791μs       
  2018 21.1: 6μs           Time machine halting problem
- 2018 21.2: 4,055μs       
+ 2018 21.2: 3,955μs       
  2018 22.1: 208μs         Caving capers
  2018 22.2: 46,828μs      
  2018 23.1: 172μs         Nanobot teleportation
@@ -216,12 +216,12 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 10,367μs      
  2018 25.1: 24,856μs      4D chocolate teleportation
             -------------
-            577.736ms    
+            577.636ms    
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
  2019  2.1: 9μs           Gravity assist (CPU start)
- 2019  2.2: 27,763μs      
+ 2019  2.2: 27,619μs      
  2019  3.1: 2,004μs       Path intersections
  2019  3.2: 2,081μs       
  2019  4.1: 49,009μs      Forgotten password
@@ -242,7 +242,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 11.2: 196μs         
  2019 12.1: 498μs         Orbital simulation
  2019 12.2: 59,543μs      
- 2019 13.1: 198μs         Arkanoid (CPU used unmodified)
+ 2019 13.1: 175μs         Arkanoid (CPU used unmodified)
  2019 13.2: 3,740μs       
  2019 14.1: 98μs          Replicator
  2019 14.2: 4,129μs       
@@ -250,7 +250,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 15.2: 156μs         
  2019 16.1: 13,422μs      FFT
  2019 16.2: 99,460μs      
- 2019 17.1: 341μs         Scaffolding vacuum robot (CPU used unmodified)
+ 2019 17.1: 328μs         Scaffolding vacuum robot (CPU used unmodified)
  2019 17.2: 1,710μs       
  2019 18.1: 121,718μs     Maze and keys
  2019 18.2: 61,086μs      
@@ -268,7 +268,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 24.2: 7,264μs       
  2019 25.1: 16,970μs      Airlock password (CPU used unmodified)
             -------------
-            786.804ms    
+            786.624ms    
 
  2020  1.1: 22μs          Expenses
  2020  1.2: 106μs         
@@ -279,7 +279,7 @@ Tests performed on a 2023 MacBook Pro.
  2020  4.1: 247μs         Passport validation
  2020  4.2: 597μs         
  2020  5.1: 113μs         Boarding parse
- 2020  5.2: 172μs         
+ 2020  5.2: 171μs         
  2020  6.1: 207μs         Customs questions
  2020  6.2: 1,359μs       
  2020  7.1: 10,774μs      Recursive bag packing
@@ -302,8 +302,8 @@ Tests performed on a 2023 MacBook Pro.
  2020 15.2: 222,209μs     
  2020 16.1: 586μs         Ticket deciphering
  2020 16.2: 1,041μs       
- 2020 17.1: 1,816μs       Conway cubes
- 2020 17.2: 35,919μs      
+ 2020 17.1: 1,287μs       Conway cubes
+ 2020 17.2: 29,358μs      
  2020 18.1: 410μs         Operator precedence
  2020 18.2: 449μs         
  2020 19.1: 1,660μs       Message pattern matching
@@ -320,7 +320,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 24.2: 170,528μs     
  2020 25.1: 45,743μs      Door cryptography
             -------------
-            790.491ms    
+            783.400ms    
 
  2021  1.1: 47μs          Depth scan
  2021  1.2: 138μs         
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             249.279ms    
 
- 514 puzzles solved in 9.029s.
+ 514 puzzles solved in 9.014s.
 ```

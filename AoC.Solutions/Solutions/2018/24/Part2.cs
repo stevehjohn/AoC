@@ -7,12 +7,6 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        (int Units, Type Side) Test(int boost)
-        {
-            ParseInput();
-            return Play(boost);
-        }
-
         var low = 0;
         
         var high = 1;
@@ -39,5 +33,12 @@ public class Part2 : Base
         }
 
         return Test(high).Units.ToString();
+    }
+
+    private (int Units, Type Side) Test(int boost)
+    {
+        ParseInput();
+        
+        return Play(boost);
     }
 }
