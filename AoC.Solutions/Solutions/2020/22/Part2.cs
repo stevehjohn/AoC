@@ -5,82 +5,135 @@ namespace AoC.Solutions.Solutions._2020._22;
 [UsedImplicitly]
 public class Part2 : Base
 {
+    private static int _winningPlayer1Count;
+
+    private static int _winningPlayer2Count;
+
     public override string GetAnswer()
     {
         ParseInput();
 
-        Play(Player1Cards, Player2Cards);
+        var count1 = Player1Cards.Count;
 
-        var score = CalculateScore();
+        var count2 = Player2Cards.Count;
+
+        var capacity = count1 + count2;
+
+        var player1 = new int[capacity];
+
+        var player2 = new int[capacity];
+
+        Player1Cards.CopyTo(player1, 0);
+
+        Player2Cards.CopyTo(player2, 0);
+
+        var winner = Play(player1, count1, player2, count2);
+
+        var deck = winner == 1 ? player1 : player2;
+
+        var count = winner == 1
+            ? _winningPlayer1Count
+            : _winningPlayer2Count;
+
+        var score = 0;
+
+        for (var i = 0; i < count; i++)
+        {
+            score += deck[i] * (count - i);
+        }
 
         return score.ToString();
     }
 
-    private static int Play(Queue<int> player1Cards, Queue<int> player2Cards)
+    private static int Play(int[] player1, int count1, int[] player2, int count2, bool topLevel = true)
     {
-        var winner = 0;
+        var previous = new HashSet<string>();
 
-        var previousStates = new HashSet<int>();
-
-        while (player1Cards.Count > 0 && player2Cards.Count > 0)
+        while (count1 > 0 && count2 > 0)
         {
-            var stateHash = HashStates(player1Cards, player2Cards);
+            var state = CreateState(player1, count1, player2, count2);
 
-            if (previousStates.Contains(stateHash))
+            if (! previous.Add(state))
             {
+                if (topLevel)
+                {
+                    _winningPlayer1Count = count1;
+
+                    _winningPlayer2Count = count2;
+                }
+
                 return 1;
             }
 
-            previousStates.Add(HashStates(player1Cards, player2Cards));
+            var card1 = player1[0];
 
-            var player1Draw = player1Cards.Dequeue();
-            
-            var player2Draw = player2Cards.Dequeue();
+            var card2 = player2[0];
 
-            winner = player1Draw > player2Draw ? 1 : 2;
+            Array.Copy(player1, 1, player1, 0, --count1);
 
-            if (player1Cards.Count >= player1Draw && player2Cards.Count >= player2Draw)
+            Array.Copy(player2, 1, player2, 0, --count2);
+
+            int winner;
+
+            if (count1 >= card1 && count2 >= card2)
             {
-                winner = Play(new Queue<int>(player1Cards.Take(player1Draw)), new Queue<int>(player2Cards.Take(player2Draw)));
+                var sub1 = new int[card1 + card2];
+
+                var sub2 = new int[card1 + card2];
+
+                Array.Copy(player1, sub1, card1);
+
+                Array.Copy(player2, sub2, card2);
+
+                winner = Play(sub1, card1, sub2, card2, false);
+            }
+            else
+            {
+                winner = card1 > card2 ? 1 : 2;
             }
 
             if (winner == 1)
             {
-                player1Cards.Enqueue(player1Draw);
+                player1[count1++] = card1;
 
-                player1Cards.Enqueue(player2Draw);
+                player1[count1++] = card2;
             }
             else
             {
-                player2Cards.Enqueue(player2Draw);
+                player2[count2++] = card2;
 
-                player2Cards.Enqueue(player1Draw);
+                player2[count2++] = card1;
             }
         }
 
-        return winner;
+        if (topLevel)
+        {
+            _winningPlayer1Count = count1;
+
+            _winningPlayer2Count = count2;
+        }
+
+        return count1 > 0 ? 1 : 2;
     }
 
-    private static int HashStates(Queue<int> player1Cards, Queue<int> player2Cards)
+    private static string CreateState(int[] player1, int count1, int[] player2, int count2)
     {
-        var p1Array = player1Cards.ToArray();
+        return string.Create(
+            count1 + count2 + 1,
+            (player1, count1, player2, count2),
+            static (span, state) =>
+            {
+                for (var i = 0; i < state.count1; i++)
+                {
+                    span[i] = (char) state.player1[i];
+                }
 
-        var p2Array = player2Cards.ToArray();
+                span[state.count1] = '\0';
 
-        var p1Hash = 0;
-
-        var p2Hash = 0;
-
-        for (var i = 0; i < p1Array.Length; i++)
-        {
-            p1Hash = HashCode.Combine(p1Hash, p1Array[i]);
-        }
-
-        for (var i = 0; i < p2Array.Length; i++)
-        {
-            p2Hash = HashCode.Combine(p1Hash, p2Array[i]);
-        }
-
-        return HashCode.Combine(p1Hash, p2Hash);
+                for (var i = 0; i < state.count2; i++)
+                {
+                    span[state.count1 + 1 + i] = (char) state.player2[i];
+                }
+            });
     }
 }
