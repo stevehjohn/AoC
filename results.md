@@ -84,7 +84,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 10.2: 1,523μs       
  2016 11.1: 61μs          Radioisotope thermoelectric elevators
  2016 11.2: 108μs         
- 2016 12.1: 1,619μs       Monorail
+ 2016 12.1: 1,596μs       Monorail
  2016 12.2: 45,748μs      
  2016 13.1: 48μs          Cubicle maze
  2016 13.2: 46μs          
@@ -160,11 +160,11 @@ Tests performed on a 2023 MacBook Pro.
  2017 22.2: 46,390μs      
  2017 23.1: 4,707μs       Coprocessor conflagration
  2017 23.2: 2,663μs       
- 2017 24.1: 49,563μs      Electromagnetic moat
- 2017 24.2: 48,947μs      
+ 2017 24.1: 49,541μs      Electromagnetic moat
+ 2017 24.2: 48,506μs      
  2017 25.1: 97,041μs      Turing tape
             -------------
-            925.518ms    
+            925.055ms    
 
  2018  1.1: 17μs          Tardis calibration
  2018  1.2: 3,880μs       
@@ -213,20 +213,20 @@ Tests performed on a 2023 MacBook Pro.
  2018 23.1: 172μs         Nanobot teleportation
  2018 23.2: 14,654μs      
  2018 24.1: 534μs         Immune system battle
- 2018 24.2: 11,014μs      
- 2018 25.1: 24,874μs      4D chocolate teleportation
+ 2018 24.2: 10,943μs      
+ 2018 25.1: 24,856μs      4D chocolate teleportation
             -------------
-            736.310ms    
+            736.221ms    
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
- 2019  2.1: 26μs          Gravity assist (CPU start)
- 2019  2.2: 55,078μs      
+ 2019  2.1: 10μs          Gravity assist (CPU start)
+ 2019  2.2: 27,763μs      
  2019  3.1: 2,004μs       Path intersections
  2019  3.2: 2,081μs       
  2019  4.1: 49,009μs      Forgotten password
  2019  4.2: 48,728μs      
- 2019  5.1: 29μs          Air conditioning (CPU extension 1)
+ 2019  5.1: 27μs          Air conditioning (CPU extension 1)
  2019  5.2: 21μs          
  2019  6.1: 241μs         Orbital transfers
  2019  6.2: 33μs          
@@ -235,40 +235,40 @@ Tests performed on a 2023 MacBook Pro.
  2019  8.1: 1,030μs       Space GIF
  2019  8.2: 998μs         
  2019  9.1: 45μs          Sensor booster (CPU extension 2)
- 2019  9.2: 22,571μs      
+ 2019  9.2: 1,668μs       
  2019 10.1: 17,610μs      Asteroids
  2019 10.2: 1,526μs       
  2019 11.1: 44,596μs      Personal plate (CPU used unmodified)
- 2019 11.2: 638μs         
+ 2019 11.2: 196μs         
  2019 12.1: 498μs         Orbital simulation
  2019 12.2: 59,543μs      
- 2019 13.1: 1,063μs       Arkanoid (CPU used unmodified)
- 2019 13.2: 48,931μs      
+ 2019 13.1: 211μs         Arkanoid (CPU used unmodified)
+ 2019 13.2: 4,186μs       
  2019 14.1: 98μs          Replicator
  2019 14.2: 4,129μs       
- 2019 15.1: 13,282μs      Oxygen repair droid (CPU used unmodified)
+ 2019 15.1: 5,293μs       Oxygen repair droid (CPU used unmodified)
  2019 15.2: 156μs         
  2019 16.1: 13,422μs      FFT
- 2019 16.2: 104,080μs     
- 2019 17.1: 3,694μs       Scaffolding vacuum robot (CPU used unmodified)
- 2019 17.2: 11,620μs      
+ 2019 16.2: 99,848μs      
+ 2019 17.1: 389μs         Scaffolding vacuum robot (CPU used unmodified)
+ 2019 17.2: 1,802μs       
  2019 18.1: 121,718μs     Maze and keys
  2019 18.2: 61,086μs      
- 2019 19.1: 112,897μs     Tractorrr (CPU used unmodified)
- 2019 19.2: 121,421μs     
+ 2019 19.1: 98,790μs      Tractorrr (CPU used unmodified)
+ 2019 19.2: 98,468μs      
  2019 20.1: 251μs         Doughnut maze
  2019 20.2: 5,891μs       
- 2019 21.1: 1,638μs       Jumping droids (CPU used unmodified)
- 2019 21.2: 31,810μs      
+ 2019 21.1: 166μs         Jumping droids (CPU used unmodified)
+ 2019 21.2: 2,308μs       
  2019 22.1: 370μs         Space shuffle
  2019 22.2: 26μs          
- 2019 23.1: 2,277μs       IntCode network (CPU used unmodified)
- 2019 23.2: 12,732μs      
+ 2019 23.1: 1,757μs       IntCode network (CPU used unmodified)
+ 2019 23.2: 2,970μs       
  2019 24.1: 8μs           Wastl's game of life
  2019 24.2: 7,264μs       
- 2019 25.1: 215,502μs     Airlock password (CPU used unmodified)
+ 2019 25.1: 16,970μs      Airlock password (CPU used unmodified)
             -------------
-            1.213s       
+            816.703ms    
 
  2020  1.1: 22μs          Expenses
  2020  1.2: 106μs         
@@ -279,7 +279,7 @@ Tests performed on a 2023 MacBook Pro.
  2020  4.1: 247μs         Passport validation
  2020  4.2: 597μs         
  2020  5.1: 113μs         Boarding parse
- 2020  5.2: 184μs         
+ 2020  5.2: 182μs         
  2020  6.1: 207μs         Customs questions
  2020  6.2: 1,359μs       
  2020  7.1: 10,774μs      Recursive bag packing
@@ -320,7 +320,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 24.2: 170,528μs     
  2020 25.1: 45,743μs      Door cryptography
             -------------
-            790.503ms    
+            790.501ms    
 
  2021  1.1: 47μs          Depth scan
  2021  1.2: 138μs         
@@ -336,15 +336,15 @@ Tests performed on a 2023 MacBook Pro.
  2021  6.2: 10μs          
  2021  7.1: 65μs          Crab submarines
  2021  7.2: 50μs          
- 2021  7.X: 32μs          Easter egg (2019 CPU used)
- 2021  8.1: 41μs          Old school displays
+ 2021  7.X: 17μs          Easter egg (2019 CPU used)
+ 2021  8.1: 36μs          Old school displays
  2021  8.2: 770μs         
  2021  9.1: 86μs          Lava level
  2021  9.2: 1,979μs       
  2021 10.1: 375μs         Esoteric language parser
  2021 10.2: 547μs         
  2021 11.1: 1,722μs       Flashers
- 2021 11.2: 3,077μs       
+ 2021 11.2: 3,063μs       
  2021 12.1: 3,307μs       Caving
  2021 12.2: 54,443μs      
  2021 13.1: 927μs         ZX Spectrum copy protection
@@ -359,21 +359,21 @@ Tests performed on a 2023 MacBook Pro.
  2021 17.2: 12,013μs      
  2021 18.1: 3,513μs       Snailfish homework
  2021 18.2: 50,167μs      
- 2021 19.1: 17,795μs      3D scanners and beacons
- 2021 19.2: 17,614μs      
+ 2021 19.1: 17,580μs      3D scanners and beacons
+ 2021 19.2: 17,143μs      
  2021 20.1: 1,127μs       NCIS image enhancement
  2021 20.2: 71,964μs      
  2021 21.1: 12μs          Quantum dice
  2021 21.2: 17,410μs      
  2021 22.1: 1,899μs       Reactor reboot
  2021 22.2: 23,586μs      
- 2021 23.1: 57,274μs      Hotel amphipod
+ 2021 23.1: 57,124μs      Hotel amphipod
  2021 23.2: 23,284μs      
  2021 24.1: 2μs           Model number
  2021 24.2: 1μs           
  2021 25.1: 76,199μs      Landing among the cucumbers
             -------------
-            525.836ms    
+            524.966ms    
 
  2022  1.1: 22μs          Calorie counting
  2022  1.2: 32μs          
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             249.279ms    
 
- 514 puzzles solved in 10.495s.
+ 514 puzzles solved in 10.097s.
 ```

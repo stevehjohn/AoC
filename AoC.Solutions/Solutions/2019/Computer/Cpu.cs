@@ -1,5 +1,5 @@
-﻿using JetBrains.Annotations;
-using System.Reflection;
+﻿
+using System.Runtime.CompilerServices;
 using System.Text;
 using AoC.Solutions.Exceptions;
 
@@ -10,27 +10,15 @@ public class Cpu
     public long[] Memory;
 
     public readonly Queue<long> UserInput = new();
-
     public readonly Queue<long> UserOutput = new();
 
-    private readonly Dictionary<int, Instruction> _opCodes = new();
-
-    private long _programCounter;
-
-    private long _relativeBase;
-
-    private long[] _operands;
-
-    private byte[] _modes;
-
-    private int _additionalMemory;
-
     private long[] _originalMemory;
+    private long _programCounter;
+    private long _relativeBase;
+    private int _additionalMemory;
 
     public void Initialise(int additionalMemory = 0)
     {
-        AddAllOpCodes();
-
         _additionalMemory = additionalMemory;
     }
 
@@ -39,15 +27,12 @@ public class Cpu
         var program = input[0].Split(',').Select(long.Parse).ToArray();
 
         Memory = new long[program.Length + _additionalMemory];
-        
-        _originalMemory = new long[program.Length + _additionalMemory];
+        _originalMemory = new long[Memory.Length];
 
         Array.Copy(program, Memory, program.Length);
-
         Array.Copy(program, _originalMemory, program.Length);
 
         _programCounter = 0;
-
         _relativeBase = 0;
     }
 
@@ -56,45 +41,175 @@ public class Cpu
         Array.Copy(_originalMemory, Memory, _originalMemory.Length);
 
         _programCounter = 0;
-
         _relativeBase = 0;
     }
 
     public CpuState Run(int maxCycles = int.MaxValue)
     {
+        var memory = Memory;
+        var pc = _programCounter;
+        var relativeBase = _relativeBase;
+
         while (maxCycles > 0)
         {
-            var opCodeWithFlags = Memory[_programCounter].ToString().PadLeft(5, '0');
+            var instruction = memory[pc];
 
-            var opCode = int.Parse(opCodeWithFlags[3..]);
+            var opcode = (int)(instruction % 100);
+            var mode1 = (int)(instruction / 100 % 10);
+            var mode2 = (int)(instruction / 1000 % 10);
+            var mode3 = (int)(instruction / 10000 % 10);
 
-            if (opCode == 99)
+            switch (opcode)
             {
-                return CpuState.Halted;
-            }
+                case 1:
+                {
+                    var a = Read(memory, memory[pc + 1], mode1, relativeBase);
+                    var b = Read(memory, memory[pc + 2], mode2, relativeBase);
+                    var address = Address(memory[pc + 3], mode3, relativeBase);
 
-            var instruction = _opCodes[opCode];
-
-            _operands = Memory[((int) _programCounter + 1)..((int) _programCounter + instruction.Length)];
-
-            _modes = [.. opCodeWithFlags[..3].Select(c => (byte) (c - '0')).Reverse()];
-
-            switch (instruction.Execute())
-            {
-                case OperationState.CompleteJumped:
-                    continue;
-                case OperationState.CompleteAdvanceCounter:
-                    _programCounter += instruction.Length;
+                    memory[address] = a + b;
+                    pc += 4;
                     break;
-                case OperationState.AwaitingInput:
-                    default:
-                    return CpuState.AwaitingInput;
+                }
+
+                case 2:
+                {
+                    var a = Read(memory, memory[pc + 1], mode1, relativeBase);
+                    var b = Read(memory, memory[pc + 2], mode2, relativeBase);
+                    var address = Address(memory[pc + 3], mode3, relativeBase);
+
+                    memory[address] = a * b;
+                    pc += 4;
+                    break;
+                }
+
+                case 3:
+                {
+                    if (!UserInput.TryDequeue(out var value))
+                    {
+                        _programCounter = pc;
+                        _relativeBase = relativeBase;
+
+                        return CpuState.AwaitingInput;
+                    }
+
+                    var address = Address(memory[pc + 1], mode1, relativeBase);
+
+                    memory[address] = value;
+                    pc += 2;
+                    break;
+                }
+
+                case 4:
+                {
+                    var value = Read(memory, memory[pc + 1], mode1, relativeBase);
+
+                    UserOutput.Enqueue(value);
+                    pc += 2;
+                    break;
+                }
+
+                case 5:
+                {
+                    var condition = Read(memory, memory[pc + 1], mode1, relativeBase);
+                    var destination = Read(memory, memory[pc + 2], mode2, relativeBase);
+
+                    pc = condition != 0 ? destination : pc + 3;
+                    break;
+                }
+
+                case 6:
+                {
+                    var condition = Read(memory, memory[pc + 1], mode1, relativeBase);
+                    var destination = Read(memory, memory[pc + 2], mode2, relativeBase);
+
+                    pc = condition == 0 ? destination : pc + 3;
+                    break;
+                }
+
+                case 7:
+                {
+                    var a = Read(memory, memory[pc + 1], mode1, relativeBase);
+                    var b = Read(memory, memory[pc + 2], mode2, relativeBase);
+                    var address = Address(memory[pc + 3], mode3, relativeBase);
+
+                    memory[address] = a < b ? 1 : 0;
+                    pc += 4;
+                    break;
+                }
+
+                case 8:
+                {
+                    var a = Read(memory, memory[pc + 1], mode1, relativeBase);
+                    var b = Read(memory, memory[pc + 2], mode2, relativeBase);
+                    var address = Address(memory[pc + 3], mode3, relativeBase);
+
+                    memory[address] = a == b ? 1 : 0;
+                    pc += 4;
+                    break;
+                }
+
+                case 9:
+                {
+                    relativeBase += Read(
+                        memory,
+                        memory[pc + 1],
+                        mode1,
+                        relativeBase);
+
+                    pc += 2;
+                    break;
+                }
+
+                case 99:
+                {
+                    _programCounter = pc;
+                    _relativeBase = relativeBase;
+
+                    return CpuState.Halted;
+                }
+
+                default:
+                    throw new PuzzleException($"Unknown opcode {opcode}.");
             }
 
             maxCycles--;
         }
 
+        _programCounter = pc;
+        _relativeBase = relativeBase;
+
         return CpuState.MaxCyclesExceeded;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static long Read(
+        long[] memory,
+        long parameter,
+        int mode,
+        long relativeBase)
+    {
+        return mode switch
+        {
+            0 => memory[parameter],
+            1 => parameter,
+            2 => memory[relativeBase + parameter],
+            _ => throw new PuzzleException($"Unknown read operand mode {mode}.")
+        };
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static long Address(
+        long parameter,
+        int mode,
+        long relativeBase)
+    {
+        return mode switch
+        {
+            0 => parameter,
+            2 => relativeBase + parameter,
+            _ => throw new PuzzleException($"Unknown write operand mode {mode}.")
+        };
     }
 
     public void WriteString(string input)
@@ -103,182 +218,19 @@ public class Cpu
         {
             UserInput.Enqueue(c);
         }
-        
+
         UserInput.Enqueue('\n');
     }
 
     public string ReadString()
     {
         var builder = new StringBuilder();
-        
-        while (UserOutput.TryDequeue(out var c))
+
+        while (UserOutput.TryDequeue(out var value))
         {
-            builder.Append((char) c);
+            builder.Append((char)value);
         }
 
         return builder.ToString();
-    }
-
-    private void AddAllOpCodes()
-    {
-        var methods = GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic).Where(m => m.Name.StartsWith("OpCodes"));
-
-        foreach (var method in methods)
-        {
-            method.Invoke(this, null);
-        }
-    }
-
-    [UsedImplicitly]
-    private void OpCodesPart2()
-    {
-        _opCodes.Add(1, new Instruction
-                        {
-                            Length = 4,
-                            Execute = () =>
-                            {
-                                SetMemory(2, GetOperand(0) + GetOperand(1));
-
-                                return OperationState.CompleteAdvanceCounter;
-                            }
-                        });
-
-        _opCodes.Add(2, new Instruction
-                        {
-                            Length = 4,
-                            Execute = () =>
-                            {
-                                SetMemory(2, GetOperand(0) * GetOperand(1));
-
-                                return OperationState.CompleteAdvanceCounter;
-                            }
-                        });
-    }
-
-    [UsedImplicitly]
-    private void OpCodesPart5()
-    {
-        _opCodes.Add(3, new Instruction
-        {
-            Length = 2,
-            Execute = () =>
-            {
-                if (UserInput.Count == 0)
-                {
-                    return OperationState.AwaitingInput;
-                }
-
-                SetMemory(0, UserInput.Dequeue());
-
-                return OperationState.CompleteAdvanceCounter;
-            }
-        });
-
-        _opCodes.Add(4, new Instruction
-        {
-            Length = 2,
-            Execute = () =>
-            {
-                UserOutput.Enqueue(GetOperand(0));
-
-                return OperationState.CompleteAdvanceCounter;
-            }
-        });
-
-        _opCodes.Add(5, new Instruction
-        {
-            Length = 3,
-            Execute = () =>
-            {
-                if (GetOperand(0) != 0)
-                {
-                    _programCounter = GetOperand(1);
-
-                    return OperationState.CompleteJumped;
-                }
-
-                return OperationState.CompleteAdvanceCounter;
-            }
-        });
-
-        _opCodes.Add(6, new Instruction
-        {
-            Length = 3,
-            Execute = () =>
-            {
-                if (GetOperand(0) == 0)
-                {
-                    _programCounter = GetOperand(1);
-
-                    return OperationState.CompleteJumped;
-                }
-
-                return OperationState.CompleteAdvanceCounter;
-            }
-        });
-
-        _opCodes.Add(7, new Instruction
-        {
-            Length = 4,
-            Execute = () =>
-            {
-                SetMemory(2, GetOperand(0) < GetOperand(1) ? 1 : 0);
-
-                return OperationState.CompleteAdvanceCounter;
-            }
-        });
-
-        _opCodes.Add(8, new Instruction
-        {
-            Length = 4,
-            Execute = () =>
-            {
-                SetMemory(2, GetOperand(0) == GetOperand(1) ? 1 : 0);
-
-                return OperationState.CompleteAdvanceCounter;
-            }
-        });
-    }
-
-
-    [UsedImplicitly]
-    private void OpCodesPart9()
-    {
-        _opCodes.Add(9, new Instruction
-                        {
-                            Length = 2,
-                            Execute = () =>
-                            {
-                                _relativeBase += GetOperand(0);
-
-                                return OperationState.CompleteAdvanceCounter;
-                            }
-                        });
-    }
-
-    private long GetOperand(int index)
-    {
-        return _modes[index] switch
-        {
-            0 => Memory[_operands[index]],
-            1 => _operands[index],
-            2 => Memory[_relativeBase + _operands[index]],
-            _ => throw new PuzzleException($"Unknown read operand mode {_modes[index]}.")
-        };
-    }
-
-    private void SetMemory(int addressOperandIndex, long value)
-    {
-        switch (_modes[addressOperandIndex])
-        {
-            case 0:
-                Memory[_operands[addressOperandIndex]] = value;
-                return;
-            case 2:
-                Memory[_relativeBase + _operands[addressOperandIndex]] = value;
-                return;
-        }
-
-        throw new PuzzleException($"Unknown write operand mode {_modes[addressOperandIndex]}.");
     }
 }
