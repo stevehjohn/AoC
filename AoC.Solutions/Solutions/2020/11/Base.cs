@@ -1,5 +1,4 @@
-﻿using AoC.Solutions.Common;
-using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2020._11;
 
