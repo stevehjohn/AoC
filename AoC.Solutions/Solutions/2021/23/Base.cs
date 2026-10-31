@@ -32,9 +32,7 @@ public abstract class Base : Solution
 
         _goalState = UInt128.Zero;
 
-        var rows = new List<string>();
-
-        rows.Add(Input[2]);
+        var rows = new List<string> { Input[2] };
 
         if (insertExtra)
         {
