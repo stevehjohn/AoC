@@ -107,7 +107,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 22.1: 270,519μs     Grid computing
  2016 22.2: 271,902μs     
  2016 23.1: 100μs         Safe cracking
- 2016 23.2: 38μs          
+ 2016 23.2: 37μs          
  2016 24.1: 19,559μs      Air duct spelunking
  2016 24.2: 18,745μs      
  2016 25.1: 7,791μs       Clock signal
@@ -142,8 +142,8 @@ Tests performed on a 2023 MacBook Pro.
  2017 13.2: 12,256μs      
  2017 14.1: 22,730μs      Defragger
  2017 14.2: 23,077μs      
- 2017 15.1: 129,093μs     Dueling generators
- 2017 15.2: 260,150μs     
+ 2017 15.1: 63,549μs      Dueling generators
+ 2017 15.2: 139,828μs     
  2017 16.1: 589μs         Permutation promenade
  2017 16.2: 64,299μs      
  2017 17.1: 770μs         Spinlock
@@ -157,14 +157,14 @@ Tests performed on a 2023 MacBook Pro.
  2017 21.1: 536μs         Fractal art
  2017 21.2: 42,511μs      
  2017 22.1: 456μs         Sporifica virus
- 2017 22.2: 48,956μs      
+ 2017 22.2: 48,694μs      
  2017 23.1: 4,707μs       Coprocessor conflagration
  2017 23.2: 2,663μs       
  2017 24.1: 110,217μs     Electromagnetic moat
  2017 24.2: 110,206μs     
  2017 25.1: 97,041μs      Turing tape
             -------------
-            1.238s       
+            1.052s       
 
  2018  1.1: 17μs          Tardis calibration
  2018  1.2: 3,880μs       
@@ -182,8 +182,8 @@ Tests performed on a 2023 MacBook Pro.
  2018  7.2: 222μs         
  2018  8.1: 4,888μs       Navigation licensing
  2018  8.2: 4,941μs       
- 2018  9.1: 181μs         Marble madness
- 2018  9.2: 20,041μs      
+ 2018  9.1: 167μs         Marble madness
+ 2018  9.2: 18,817μs      
  2018 10.1: 5,799μs       Writing in the stars
  2018 10.2: 5,959μs       
  2018 11.1: 350μs         Max power... cell
@@ -216,7 +216,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 260,875μs     
  2018 25.1: 32,604μs      4D chocolate teleportation
             -------------
-            1.370s       
+            1.369s       
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
@@ -302,7 +302,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 15.2: 222,209μs     
  2020 16.1: 586μs         Ticket deciphering
  2020 16.2: 1,041μs       
- 2020 17.1: 1,849μs       Conway cubes
+ 2020 17.1: 1,822μs       Conway cubes
  2020 17.2: 37,887μs      
  2020 18.1: 410μs         Operator precedence
  2020 18.2: 450μs         
@@ -320,7 +320,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 24.2: 170,528μs     
  2020 25.1: 45,743μs      Door cryptography
             -------------
-            792.585ms    
+            792.558ms    
 
  2021  1.1: 47μs          Depth scan
  2021  1.2: 138μs         
@@ -368,12 +368,12 @@ Tests performed on a 2023 MacBook Pro.
  2021 22.1: 1,899μs       Reactor reboot
  2021 22.2: 23,586μs      
  2021 23.1: 58,900μs      Hotel amphipod
- 2021 23.2: 23,684μs      
+ 2021 23.2: 23,519μs      
  2021 24.1: 2μs           Model number
  2021 24.2: 1μs           
  2021 25.1: 76,199μs      Landing among the cucumbers
             -------------
-            528.789ms    
+            528.624ms    
 
  2022  1.1: 22μs          Calorie counting
  2022  1.2: 32μs          
@@ -404,7 +404,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 14.1: 402μs         Regolith reservoir
  2022 14.2: 4,092μs       
  2022 15.1: 8μs           Beacon exclusion zone
- 2022 15.2: 10,048μs      
+ 2022 15.2: 9,967μs       
  2022 16.1: 21,516μs      Proboscidea volcanium
  2022 16.2: 13,314μs      
  2022 17.1: 124μs         Pyroclastic flow
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 53,434μs      
  2022 25.1: 9μs           Full of hot air
             -------------
-            283.743ms    
+            283.662ms    
 
  2023  1.1: 115μs         Trebuchet
  2023  1.2: 330μs         
@@ -545,7 +545,7 @@ Tests performed on a 2023 MacBook Pro.
  2025  6.2: 64μs          
  2025  7.1: 5μs           Laboratories
  2025  7.2: 274μs         
- 2025  8.1: 16,564μs      Playground
+ 2025  8.1: 15,965μs      Playground
  2025  8.2: 91,371μs      
  2025  9.1: 175μs         Movie theater
  2025  9.2: 7,114μs       
@@ -555,7 +555,7 @@ Tests performed on a 2023 MacBook Pro.
  2025 11.2: 520μs         
  2025 12.1: 276μs         Christmas tree farm
             -------------
-            249.878ms    
+            249.279ms    
 
- 514 puzzles solved in 11.456s.
+ 514 puzzles solved in 11.268s.
 ```

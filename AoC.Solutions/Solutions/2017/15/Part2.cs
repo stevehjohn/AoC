@@ -8,43 +8,42 @@ public class Part2 : Base
     public override string GetAnswer()
     {
         var generatorA = long.Parse(Input[0].Split(' ')[^1]);
-
+        
         var generatorB = long.Parse(Input[1].Split(' ')[^1]);
 
         var matches = 0;
 
-        var queueA = new Queue<long>();
-
-        var queueB = new Queue<long>();
-
-        while (queueA.Count < 5_000_000)
+        for (var i = 0; i < 5_000_000; i++)
         {
-            generatorA = generatorA * 16807 % int.MaxValue;
-
-            if (generatorA % 4 == 0)
+            do
             {
-                queueA.Enqueue(generatorA);
+                generatorA = Next(generatorA, 16807);
             }
-        }
+            while ((generatorA & 3) != 0);
 
-        while (queueB.Count < 5_000_000)
-        {
-            generatorB = generatorB * 48271 % int.MaxValue;
-
-            if (generatorB % 8 == 0)
+            do
             {
-                queueB.Enqueue(generatorB);
+                generatorB = Next(generatorB, 48271);
             }
-        }
+            while ((generatorB & 7) != 0);
 
-        while (queueA.Count > 0)
-        {
-            if ((queueA.Dequeue() & 65_535) == (queueB.Dequeue() & 65_535))
+            if ((generatorA & 0xFFFF) == (generatorB & 0xFFFF))
             {
                 matches++;
             }
         }
 
         return matches.ToString();
+    }
+
+    private static long Next(long value, long factor)
+    {
+        const long modulus = int.MaxValue;
+
+        var product = value * factor;
+
+        var result = (product & modulus) + (product >> 31);
+
+        return result >= modulus ? result - modulus : result;
     }
 }
