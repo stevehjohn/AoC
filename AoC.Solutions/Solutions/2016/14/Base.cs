@@ -53,10 +53,7 @@ public abstract partial class Base : Solution
         {
             var start = i;
 
-            Parallel.For(0, batchSize, x =>
-            {
-                hashes[x] = CalculateHash(saltBytes, start + x, additionalHashes);
-            });
+            Parallel.For(0, batchSize, x => { hashes[x] = CalculateHash(saltBytes, start + x, additionalHashes); });
 
             for (var x = 0; x < batchSize; x++)
             {
@@ -149,9 +146,7 @@ public abstract partial class Base : Solution
             MD5.TryHashData(hexBytes, hashBytes, out _);
         }
 
-        BytesToLowerHex(hashBytes, hexBytes);
-
-        return new HashInfo(GetTripleRepeatedCharacter(hexBytes), GetQuintupleRepeatedCharacter(hexBytes));
+        return AnalyseHash(hashBytes);
     }
 
     private static void BytesToLowerHex(ReadOnlySpan<byte> src, Span<byte> dest)
@@ -170,33 +165,49 @@ public abstract partial class Base : Solution
         }
     }
 
-    private static int GetTripleRepeatedCharacter(ReadOnlySpan<byte> hex)
+    private static HashInfo AnalyseHash(ReadOnlySpan<byte> hash)
     {
-        for (var i = 0; i < hex.Length - 2; i++)
-        {
-            var c = hex[i];
+        var triple = -1;
+        
+        var quintuple = -1;
 
-            if (c == hex[i + 1] && c == hex[i + 2])
+        var previous = -1;
+        
+        var runLength = 0;
+
+        for (var i = 0; i < 32; i++)
+        {
+            var b = hash[i >> 1];
+
+            var nibble = (i & 1) == 0
+                ? b >> 4
+                : b & 15;
+
+            if (nibble == previous)
             {
-                return c <= (byte) '9' ? c - (byte) '0' : c - (byte) 'a' + 10;
+                runLength++;
+            }
+            else
+            {
+                previous = nibble;
+                
+                runLength = 1;
+            }
+
+            switch (runLength)
+            {
+                case 3 when triple < 0:
+                    triple = nibble;
+                    
+                    break;
+                
+                case 5 when quintuple < 0:
+                    quintuple = nibble;
+                    
+                    break;
             }
         }
 
-        return -1;
-    }
-
-    private static int GetQuintupleRepeatedCharacter(ReadOnlySpan<byte> hex)
-    {
-        for (var i = 0; i < hex.Length - 4; i++)
-        {
-            var c = hex[i];
-
-            if (c == hex[i + 1] && c == hex[i + 2] && c == hex[i + 3] && c == hex[i + 4])
-            {
-                return c <= (byte) '9' ? c - (byte) '0' : c - (byte) 'a' + 10;
-            }
-        }
-
-        return -1;
+        return new HashInfo(triple, quintuple);
     }
 }
