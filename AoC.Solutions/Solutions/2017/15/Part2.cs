@@ -42,6 +42,7 @@ public class Part2 : Base
 
         var product = (ulong) value * factor;
 
+        // ReSharper disable once UselessBinaryOperation - Rider's full of shit sometimes.
         var result = (product & modulus) + (product >> 31);
 
         return (uint) (result >= modulus
