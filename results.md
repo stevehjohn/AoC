@@ -17,7 +17,7 @@ Tests performed on a 2023 MacBook Pro.
  2015  3.1: 1,203μs       Perfectly spherical houses in a vacuum
  2015  3.2: 1,093μs       
  2015  4.1: 8,368μs       Crypto stocking stuffer
- 2015  4.2: 190,803μs     
+ 2015  4.2: 182,457μs     
  2015  5.1: 136μs         Naughty or nice
  2015  5.2: 806μs         
  2015  6.1: 23,877μs      Bournville estate lights
@@ -60,7 +60,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 24.2: 126μs         
  2015 25.1: 57,269μs      Let it snow
             -------------
-            2.175s       
+            2.167s       
 
  2016  1.1: 6μs           Manhattan distance
  2016  1.2: 15μs          
@@ -84,7 +84,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 10.2: 1,523μs       
  2016 11.1: 61μs          Radioisotope thermoelectric elevators
  2016 11.2: 108μs         
- 2016 12.1: 1,680μs       Monorail
+ 2016 12.1: 1,619μs       Monorail
  2016 12.2: 45,748μs      
  2016 13.1: 48μs          Cubicle maze
  2016 13.2: 46μs          
@@ -121,7 +121,7 @@ Tests performed on a 2023 MacBook Pro.
  2017  3.1: 0μs           Spiral memory
  2017  3.2: 18μs          
  2017  4.1: 126μs         Passphrase validation
- 2017  4.2: 271μs         
+ 2017  4.2: 253μs         
  2017  5.1: 508μs         Memory trampoline
  2017  5.2: 47,579μs      
  2017  6.1: 1,494μs       Garbage collection
@@ -157,14 +157,14 @@ Tests performed on a 2023 MacBook Pro.
  2017 21.1: 536μs         Fractal art
  2017 21.2: 42,511μs      
  2017 22.1: 456μs         Sporifica virus
- 2017 22.2: 596,134μs     
+ 2017 22.2: 48,956μs      
  2017 23.1: 4,707μs       Coprocessor conflagration
  2017 23.2: 2,663μs       
  2017 24.1: 110,217μs     Electromagnetic moat
  2017 24.2: 110,206μs     
  2017 25.1: 97,041μs      Turing tape
             -------------
-            1.785s       
+            1.238s       
 
  2018  1.1: 17μs          Tardis calibration
  2018  1.2: 3,880μs       
@@ -302,7 +302,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 15.2: 222,209μs     
  2020 16.1: 586μs         Ticket deciphering
  2020 16.2: 1,041μs       
- 2020 17.1: 1,899μs       Conway cubes
+ 2020 17.1: 1,849μs       Conway cubes
  2020 17.2: 37,887μs      
  2020 18.1: 410μs         Operator precedence
  2020 18.2: 450μs         
@@ -320,7 +320,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 24.2: 170,528μs     
  2020 25.1: 45,743μs      Door cryptography
             -------------
-            792.635ms    
+            792.585ms    
 
  2021  1.1: 47μs          Depth scan
  2021  1.2: 138μs         
@@ -513,7 +513,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 16.2: 31,394μs      
  2024 17.1: 7μs           Chronospatial computer
  2024 17.2: 2,525μs       
- 2024 18.1: 1,167μs       RAM run
+ 2024 18.1: 1,166μs       RAM run
  2024 18.2: 1,318μs       
  2024 19.1: 37,654μs      Linen layout
  2024 19.2: 55,434μs      
@@ -529,7 +529,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 231μs         
  2024 25.1: 112μs         Code chronicle
             -------------
-            520.054ms    
+            520.053ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 87μs          
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             249.878ms    
 
- 514 puzzles solved in 12.012s.
+ 514 puzzles solved in 11.456s.
 ```

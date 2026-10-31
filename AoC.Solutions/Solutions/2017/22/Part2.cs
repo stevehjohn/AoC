@@ -1,66 +1,73 @@
-﻿using AoC.Solutions.Common;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2017._22;
 
 [UsedImplicitly]
 public class Part2 : Base
 {
-    private readonly HashSet<Point> _weakened = [];
-
-    private readonly HashSet<Point> _flagged = [];
-
     public override string GetAnswer()
     {
         ParseInput();
+
+        const int size = 2048;
+        
+        const int offset = size / 2;
+
+        var grid = new byte[size * size];
+
+        foreach (var point in Infected)
+        {
+            grid[(point.Y + offset) * size + point.X + offset] = 2;
+        }
+
+        var x = Position.X + offset;
+        
+        var y = Position.Y + offset;
+
+        var dx = Direction.X;
+        
+        var dy = Direction.Y;
 
         var infections = 0;
 
         for (var i = 0; i < 10_000_000; i++)
         {
-            infections += RunCycle() ? 1 : 0;
+            var index = y * size + x;
+            
+            var state = grid[index];
+
+            switch (state)
+            {
+                case 0: 
+                    (dx, dy) = (dy, -dx);
+                    grid[index] = 1;
+                    
+                    break;
+
+                case 1: 
+                    grid[index] = 2;
+                    infections++;
+                    
+                    break;
+
+                case 2: 
+                    (dx, dy) = (-dy, dx);
+                    grid[index] = 3;
+                    
+                    break;
+
+                case 3: 
+                    (dx, dy) = (-dx, -dy);
+                    grid[index] = 0;
+                    
+                    break;
+            }
+
+            x += dx;
+            
+            y += dy;
         }
 
         return infections.ToString();
-    }
-
-    private bool RunCycle()
-    {
-        var infects = false;
-
-        if (Infected.Contains(Position))
-        {
-            Direction = new Point(-Direction.Y, Direction.X);
-
-            Infected.Remove(Position);
-
-            _flagged.Add(Position);
-        }
-        else if (_flagged.Contains(Position))
-        {
-            Direction = new Point(-Direction.X, -Direction.Y);
-
-            _flagged.Remove(Position);
-        }
-        else if (_weakened.Contains(Position))
-        {
-            Infected.Add(Position);
-
-            _weakened.Remove(Position);
-
-            infects = true;
-        }
-        else
-        {
-            Direction = new Point(Direction.Y, -Direction.X);
-
-            _weakened.Add(new Point(Position));
-        }
-
-        Position.X += Direction.X;
-
-        Position.Y += Direction.Y;
-
-        return infects;
     }
 }
