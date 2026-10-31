@@ -8,28 +8,27 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
+        var cpu = new Cpu();
+
+        cpu.Initialise(65536);
+        
+        cpu.LoadProgram(Input);
+
         var total = 0;
 
         for (var y = 0; y < 50; y++)
         {
             for (var x = 0; x < 50; x++)
             {
-                // TODO: Add reboot function rather than new CPU every time.
-                var cpu = new Cpu();
-
-                cpu.Initialise(65536);
-
-                cpu.LoadProgram(Input);
+                cpu.Reset();
 
                 cpu.UserInput.Enqueue(x);
-
+                
                 cpu.UserInput.Enqueue(y);
 
                 cpu.Run();
 
-                var output = (int) cpu.UserOutput.Dequeue();
-
-                total += output;
+                total += (int)cpu.UserOutput.Dequeue();
             }
         }
 
