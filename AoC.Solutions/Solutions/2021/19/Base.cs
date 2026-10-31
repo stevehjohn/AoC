@@ -2,47 +2,9 @@ using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2021._19;
 
-public abstract class Base : Solution
+public abstract partial class Base : Solution
 {
     public override string Description => "3D scanners and beacons";
-
-    private readonly record struct Vector(int X, int Y, int Z)
-    {
-        public static Vector operator +(Vector a, Vector b) => new(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
-
-        public static Vector operator -(Vector a, Vector b) => new(a.X - b.X, a.Y - b.Y, a.Z - b.Z);
-
-        public int Manhattan(Vector other) => Math.Abs(X - other.X) + Math.Abs(Y - other.Y) + Math.Abs(Z - other.Z);
-
-        public int SquaredDistance(Vector other)
-        {
-            var d = this - other;
-            return d.X * d.X + d.Y * d.Y + d.Z * d.Z;
-        }
-    }
-
-    private readonly record struct Rotation(int A, int B, int C, int Sx, int Sy, int Sz)
-    {
-        public Vector Apply(Vector p)
-        {
-            Span<int> v = [p.X, p.Y, p.Z];
-
-            return new Vector(Sx * v[A], Sy * v[B], Sz * v[C]);
-        }
-    }
-
-    private sealed class Scan
-    {
-        public required Vector[] Local { get; init; }
-
-        public required Vector[][] Rotated { get; init; }
-
-        public required Dictionary<int, int> Distances { get; init; }
-
-        public Vector[] Global { get; set; }
-
-        public Vector Position { get; set; }
-    }
 
     private static readonly Rotation[] Rotations = CreateRotations();
 
@@ -122,42 +84,45 @@ public abstract class Base : Solution
         foreach (var rotated in candidate.Rotated)
         {
             offsets.Clear();
+            
             foreach (var from in fixedPoints)
-            foreach (var to in rotated)
             {
-                var offset = from - to;
-                
-                var count = offsets.GetValueOrDefault(offset) + 1;
-                
-                if (count < 12)
+                foreach (var to in rotated)
                 {
-                    offsets[offset] = count;
-                    
-                    continue;
-                }
+                    var offset = from - to;
 
-                var overlaps = 0;
-                
-                foreach (var p in rotated)
-                {
-                    if (fixedSet.Contains(p + offset)) overlaps++;
-                }
+                    var count = offsets.GetValueOrDefault(offset) + 1;
 
-                if (overlaps < 12)
-                {
-                    continue;
-                }
+                    if (count < 12)
+                    {
+                        offsets[offset] = count;
 
-                candidate.Position = offset;
-                
-                candidate.Global = new Vector[rotated.Length];
-                
-                for (var i = 0; i < rotated.Length; i++)
-                {
-                    candidate.Global[i] = rotated[i] + offset;
+                        continue;
+                    }
+
+                    var overlaps = 0;
+
+                    foreach (var p in rotated)
+                    {
+                        if (fixedSet.Contains(p + offset)) overlaps++;
+                    }
+
+                    if (overlaps < 12)
+                    {
+                        continue;
+                    }
+
+                    candidate.Position = offset;
+
+                    candidate.Global = new Vector[rotated.Length];
+
+                    for (var i = 0; i < rotated.Length; i++)
+                    {
+                        candidate.Global[i] = rotated[i] + offset;
+                    }
+
+                    return true;
                 }
-                
-                return true;
             }
         }
 
