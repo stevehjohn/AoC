@@ -220,7 +220,7 @@ Tests performed on a 2023 MacBook Pro.
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
- 2019  2.1: 9μs           Gravity assist (CPU start)
+ 2019  2.1: 8μs           Gravity assist (CPU start)
  2019  2.2: 27,331μs      
  2019  3.1: 2,004μs       Path intersections
  2019  3.2: 2,081μs       
@@ -268,7 +268,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 24.2: 7,264μs       
  2019 25.1: 16,888μs      Airlock password (CPU used unmodified)
             -------------
-            784.663ms    
+            784.662ms    
 
  2020  1.1: 22μs          Expenses
  2020  1.2: 106μs         
@@ -303,7 +303,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 16.1: 586μs         Ticket deciphering
  2020 16.2: 1,041μs       
  2020 17.1: 1,287μs       Conway cubes
- 2020 17.2: 955μs         
+ 2020 17.2: 932μs         
  2020 18.1: 408μs         Operator precedence
  2020 18.2: 444μs         
  2020 19.1: 1,660μs       Message pattern matching
@@ -320,7 +320,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 24.2: 170,528μs     
  2020 25.1: 45,743μs      Door cryptography
             -------------
-            682.945ms    
+            682.922ms    
 
  2021  1.1: 47μs          Depth scan
  2021  1.2: 138μs         
