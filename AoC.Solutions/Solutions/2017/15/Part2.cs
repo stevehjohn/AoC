@@ -20,16 +20,14 @@ public class Part2 : Base
             do
             {
                 generatorA = Next(generatorA, 16807);
-            }
-            while ((generatorA & 3) != 0);
+            } while ((generatorA & 3) != 0);
 
             do
             {
                 generatorB = Next(generatorB, 48271);
-            }
-            while ((generatorB & 7) != 0);
+            } while ((generatorB & 7) != 0);
 
-            if ((ushort)generatorA == (ushort)generatorB)
+            if ((ushort) generatorA == (ushort) generatorB)
             {
                 matches++;
             }
@@ -42,11 +40,11 @@ public class Part2 : Base
     {
         const ulong modulus = 2147483647;
 
-        var product = (ulong)value * factor;
+        var product = (ulong) value * factor;
 
         var result = (product & modulus) + (product >> 31);
 
-        return (uint)(result >= modulus
+        return (uint) (result >= modulus
             ? result - modulus
             : result);
     }

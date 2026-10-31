@@ -9,7 +9,7 @@ public class Part2 : Base
     {
         var seed = Input[0];
 
-        var data = GenerateData(seed, 35_651_584);
+        var data = CalculateChecksum(seed, 35_651_584);
 
         return GetChecksum(data);
     }

@@ -26,27 +26,83 @@ public abstract class Base : Solution
         return checksum;
     }
 
-    protected static string GenerateData(string state, int minLength)
+    protected static string CalculateChecksum(string seed, int length)
     {
-        var builder = new StringBuilder();
+        var blockSize = length & -length;
 
-        builder.Append(state);
+        var lengths = new List<int> { seed.Length };
 
-        while (builder.Length < minLength)
+        var parities = new List<int>();
+
+        var seedParity = new int[seed.Length + 1];
+
+        for (var i = 0; i < seed.Length; i++)
         {
-            builder.Append('0');
-
-            state = new string(state.Reverse().ToArray());
-
-            state = state.Replace('0', 'x');
-            state = state.Replace('1', '0');
-            state = state.Replace('x', '1');
-
-            builder.Append(state);
-
-            state = builder.ToString();
+            seedParity[i + 1] = seedParity[i] ^ (seed[i] - '0');
         }
 
-        return builder.ToString()[..minLength];
+        parities.Add(seedParity[^1]);
+
+        while (lengths[^1] < length)
+        {
+            var previousLength = lengths[^1];
+
+            lengths.Add(previousLength * 2 + 1);
+
+            parities.Add(previousLength & 1);
+        }
+
+        var result = new char[length / blockSize];
+
+        var previous = 0;
+
+        for (var i = 0; i < result.Length; i++)
+        {
+            var end = (i + 1) * blockSize;
+
+            var current = PrefixParity(end, lengths, parities, seedParity);
+
+            var parity = current ^ previous;
+
+            result[i] = (char) ('0' + (blockSize == 1 ? parity : parity ^ 1));
+
+            previous = current;
+        }
+
+        return new string(result);
+    }
+
+    private static int PrefixParity(int count, List<int> lengths, List<int> parities, int[] seedParity)
+    {
+        var level = lengths.Count - 1;
+
+        var parity = 0;
+
+        while (level > 0)
+        {
+            var previousLength = lengths[level - 1];
+
+            if (count <= previousLength)
+            {
+                level--;
+
+                continue;
+            }
+
+            if (count == previousLength + 1)
+            {
+                return parity ^ parities[level - 1];
+            }
+
+            var tail = count - previousLength - 1;
+
+            parity ^= tail & 1;
+
+            count = previousLength - tail;
+
+            level--;
+        }
+
+        return parity ^ seedParity[count];
     }
 }
