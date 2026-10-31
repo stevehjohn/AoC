@@ -7,21 +7,37 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        // Could do a binary thing here, but it runs fast enough.
-        var boost = 1;
-
-        while (true)
+        (int Units, Type Side) Test(int boost)
         {
             ParseInput();
-
-            var result = Play(boost);
-
-            if (result.Side == Type.ImmuneSystem)
-            {
-                return result.Units.ToString();
-            }
-
-            boost++;
+            return Play(boost);
         }
+
+        var low = 0;
+        
+        var high = 1;
+
+        while (Test(high).Side != Type.ImmuneSystem)
+        {
+            low = high;
+            
+            high *= 2;
+        }
+
+        while (high - low > 1)
+        {
+            var mid = low + (high - low) / 2;
+
+            if (Test(mid).Side == Type.ImmuneSystem)
+            {
+                high = mid;
+            }
+            else
+            {
+                low = mid;
+            }
+        }
+
+        return Test(high).Units.ToString();
     }
 }
