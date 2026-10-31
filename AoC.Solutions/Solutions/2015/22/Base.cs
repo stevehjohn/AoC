@@ -6,148 +6,134 @@ public abstract class Base : Solution
 {
     public override string Description => "Wizard simulator 2015";
 
-    private readonly SpellData[] _spells =
-    [
-        new(Spell.MagicMissile, 53, 0),
-        new(Spell.Drain, 73, 0),
-        new(Spell.Shield, 113, 6),
-        new(Spell.Poison, 173, 6),
-        new(Spell.Recharge, 229, 5)
-    ];
-
-    private readonly int _effectCounts = Enum.GetValues<Spell>().Length;
-
-
     protected int GetManaCostToWin(bool isPart2 = false)
     {
-        var queue = new PriorityQueue<(Player Player, Player Boss, int[] Active, int PlayerTurn, int TotalCost), int>();
+        var bossHealth = int.Parse(Input[0].AsSpan()[(Input[0].IndexOf(':') + 1)..].Trim());
 
-        var bossHealth = int.Parse(Input[0].Split(':', StringSplitOptions.TrimEntries)[1]);
+        var bossDamage = int.Parse(Input[1].AsSpan()[(Input[1].IndexOf(':') + 1)..].Trim());
 
-        var bossDamage = int.Parse(Input[1].Split(':', StringSplitOptions.TrimEntries)[1]);
+        var queue = new PriorityQueue<State, int>();
+        var best = new Dictionary<State, int>();
 
-        var player = new Player { HitPoints = 50, Mana = 500 };
+        var initial = new State(
+            Hp: 50,
+            Mana: 500,
+            BossHp: bossHealth,
+            Shield: 0,
+            Poison: 0,
+            Recharge: 0,
+            PlayerTurn: true);
 
-        var boss = new Player { HitPoints = bossHealth, Damage = bossDamage };
+        Enqueue(initial, 0);
 
-        queue.Enqueue((player, boss, new int[_effectCounts], 0, 0), 0);
-
-        while (queue.Count > 0)
+        while (queue.TryDequeue(out var state, out var spent))
         {
-            (player, boss, var active, var playerTurn, var totalCost) = queue.Dequeue();
-
-            if (isPart2 && playerTurn == 0)
+            if (best[state] != spent)
             {
-                player.HitPoints--;
+                continue;
+            }
 
-                if (player.HitPoints <= 0)
+            if (state.BossHp <= 0)
+            {
+                return spent;
+            }
+
+            var hp = state.Hp;
+            
+            var mana = state.Mana;
+            
+            var bossHp = state.BossHp;
+
+            var shield = state.Shield;
+            
+            var poison = state.Poison;
+            
+            var recharge = state.Recharge;
+
+            if (state.PlayerTurn && isPart2)
+            {
+                if (--hp <= 0)
                 {
                     continue;
                 }
             }
 
-            ApplyEffects(player, boss, active);
+            var armour = shield > 0 ? 7 : 0;
 
-            if (boss.HitPoints <= 0)
+            if (shield > 0)
             {
-                return totalCost;
+                shield--;
             }
 
-            if (playerTurn == 0)
+            if (poison > 0)
             {
-                for (var i = 0; i < _spells.Length; i++)
-                {
-                    var spell = _spells[i];
-
-                    if (spell.Cost > player.Mana)
-                    {
-                        continue;
-                    }
-
-                    if (spell.Duration > 0 && active[(int) spell.Id] > 0)
-                    {
-                        continue;
-                    }
-
-                    var nextPlayer = new Player(player) { Mana = player.Mana - spell.Cost };
-
-                    var nextBoss = new Player(boss);
-
-                    var nextActive = (int[]) active.Clone();
-
-                    var nextCost = totalCost + spell.Cost;
-
-                    // ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault
-                    switch (spell.Id)
-                    {
-                        case Spell.MagicMissile:
-                            nextBoss.HitPoints -= 4;
-
-                            break;
-
-                        case Spell.Drain:
-                            nextBoss.HitPoints -= 2;
-                            nextPlayer.HitPoints += 2;
-
-                            break;
-
-                        case Spell.Shield:
-                        case Spell.Poison:
-                        case Spell.Recharge:
-                            nextActive[(int) spell.Id] = spell.Duration;
-
-                            break;
-                    }
-
-                    if (nextBoss.HitPoints <= 0)
-                    {
-                        return nextCost;
-                    }
-
-                    queue.Enqueue((nextPlayer, nextBoss, nextActive, 1, nextCost), nextCost);
-                }
+                bossHp -= 3;
+                
+                poison--;
             }
-            else
+
+            if (recharge > 0)
             {
-                var damage = Math.Max(boss.Damage - player.Armour, 1);
+                mana += 101;
+                
+                recharge--;
+            }
 
-                var nextPlayer = new Player(player) { HitPoints = player.HitPoints - damage };
+            if (bossHp <= 0)
+            {
+                return spent;
+            }
 
-                if (nextPlayer.HitPoints > 0)
+            if (! state.PlayerTurn)
+            {
+                hp -= Math.Max(1, bossDamage - armour);
+
+                if (hp > 0)
                 {
-                    var nextBoss = new Player(boss);
-
-                    queue.Enqueue((nextPlayer, nextBoss, (int[]) active.Clone(), 0, TotalCost: totalCost), totalCost);
+                    Enqueue(new State(hp, mana, bossHp, shield, poison, recharge, true), spent);
                 }
+
+                continue;
+            }
+
+            if (mana >= 53)
+            {
+                Enqueue(new State(hp, mana - 53, bossHp - 4, shield, poison, recharge, false), spent + 53);
+            }
+
+            if (mana >= 73)
+            {
+                Enqueue(new State(hp + 2, mana - 73, bossHp - 2, shield, poison, recharge, false), spent + 73);
+            }
+
+            if (mana >= 113 && shield == 0)
+            {
+                Enqueue(new State(hp, mana - 113, bossHp, 6, poison, recharge, false), spent + 113);
+            }
+
+            if (mana >= 173 && poison == 0)
+            {
+                Enqueue(new State(hp, mana - 173, bossHp, shield, 6, recharge, false), spent + 173);
+            }
+
+            if (mana >= 229 && recharge == 0)
+            {
+                Enqueue(new State(hp, mana - 229, bossHp, shield, poison, 5, false), spent + 229);
             }
         }
 
         return int.MaxValue;
-    }
 
-    private static void ApplyEffects(Player player, Player boss, int[] active)
-    {
-        player.Armour = 0;
-
-        if (active[(int) Spell.Shield] > 0)
+        void Enqueue(State next, int cost)
         {
-            player.Armour = 7;
+            if (best.TryGetValue(next, out var previous) && previous <= cost)
+            {
+                return;
+            }
 
-            active[(int) Spell.Shield]--;
-        }
-
-        if (active[(int) Spell.Poison] > 0)
-        {
-            boss.HitPoints -= 3;
-
-            active[(int) Spell.Poison]--;
-        }
-
-        if (active[(int) Spell.Recharge] > 0)
-        {
-            player.Mana += 101;
-
-            active[(int) Spell.Recharge]--;
+            best[next] = cost;
+            
+            queue.Enqueue(next, cost);
         }
     }
 }
