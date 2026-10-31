@@ -16,7 +16,7 @@ Tests performed on a 2023 MacBook Pro.
  2015  2.2: 434μs         
  2015  3.1: 1,203μs       Perfectly spherical houses in a vacuum
  2015  3.2: 1,093μs       
- 2015  4.1: 8,689μs       Crypto stocking stuffer
+ 2015  4.1: 8,368μs       Crypto stocking stuffer
  2015  4.2: 190,803μs     
  2015  5.1: 136μs         Naughty or nice
  2015  5.2: 806μs         
@@ -71,7 +71,7 @@ Tests performed on a 2023 MacBook Pro.
  2016  4.1: 4,290μs       Security through obscurity
  2016  4.2: 4,264μs       
  2016  5.1: 218,606μs     Password hash
- 2016  5.2: 610,851μs     
+ 2016  5.2: 609,370μs     
  2016  6.1: 874μs         Signals and noise
  2016  6.2: 272μs         
  2016  7.1: 729μs         ABBA internet protocol
@@ -89,7 +89,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 13.1: 48μs          Cubicle maze
  2016 13.2: 46μs          
  2016 14.1: 10,371μs      One time pad
- 2016 14.2: 713,278μs     
+ 2016 14.2: 711,186μs     
  2016 15.1: 378μs         Disc timing
  2016 15.2: 2,862μs       
  2016 16.1: 6μs           Dragon checksum
@@ -112,7 +112,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 24.2: 18,745μs      
  2016 25.1: 7,848μs       Clock signal
             -------------
-            2.772s       
+            2.768s       
 
  2017  1.1: 8μs           Captcha
  2017  1.2: 10μs          
@@ -192,8 +192,8 @@ Tests performed on a 2023 MacBook Pro.
  2018 12.2: 8,040μs       
  2018 13.1: 17,543μs      Crashing carts
  2018 13.2: 31,589μs      
- 2018 14.1: 3,609μs       Elf recipes
- 2018 14.2: 123,186μs     
+ 2018 14.1: 3,491μs       Elf recipes
+ 2018 14.2: 122,906μs     
  2018 15.1: 83,588μs      Elves vs Goblins
  2018 15.2: 349,565μs     
  2018 16.1: 511μs         Opcode reverse-engineering
@@ -359,21 +359,21 @@ Tests performed on a 2023 MacBook Pro.
  2021 17.2: 12,013μs      
  2021 18.1: 3,513μs       Snailfish homework
  2021 18.2: 50,167μs      
- 2021 19.1: 117,145μs     3D scanners and beacons
- 2021 19.2: 212,184μs     
+ 2021 19.1: 18,430μs      3D scanners and beacons
+ 2021 19.2: 18,226μs      
  2021 20.1: 1,127μs       NCIS image enhancement
  2021 20.2: 71,964μs      
  2021 21.1: 12μs          Quantum dice
- 2021 21.2: 533,835μs     
+ 2021 21.2: 18,323μs      
  2021 22.1: 1,899μs       Reactor reboot
  2021 22.2: 23,586μs      
- 2021 23.1: 150,185μs     Hotel amphipod
- 2021 23.2: 470,931μs     
+ 2021 23.1: 59,481μs      Hotel amphipod
+ 2021 23.2: 25,191μs      
  2021 24.1: 2μs           Model number
  2021 24.2: 1μs           
  2021 25.1: 76,199μs      Landing among the cucumbers
             -------------
-            1.884s       
+            539.093ms    
 
  2022  1.1: 22μs          Calorie counting
  2022  1.2: 32μs          
@@ -469,15 +469,15 @@ Tests performed on a 2023 MacBook Pro.
  2023 20.2: 37,608μs      
  2023 21.1: 57μs          Step counter
  2023 21.2: 439μs         
- 2023 22.1: 28,056μs      Sand slabs
- 2023 22.2: 54,676μs      
+ 2023 22.1: 27,688μs      Sand slabs
+ 2023 22.2: 54,348μs      
  2023 23.1: 10,271μs      A long walk
  2023 23.2: 50,315μs      
  2023 24.1: 1,509μs       Never tell me the odds
  2023 24.2: 5,110μs       
  2023 25.1: 9,284μs       Snowverload
             -------------
-            344.010ms    
+            343.314ms    
 
  2024  1.1: 112μs         Historian hysteria
  2024  1.2: 79μs          
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             250.162ms    
 
- 514 puzzles solved in 14.615s.
+ 514 puzzles solved in 13.265s.
 ```
