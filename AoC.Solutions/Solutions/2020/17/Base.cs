@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2020._17;
 
@@ -26,10 +27,66 @@ public abstract class Base : Solution
 
     protected void RunCycle(bool exploreW = false)
     {
-        var counts = new Dictionary<Point4D, int>();
+        if (ActiveCubes.Count == 0)
+        {
+            return;
+        }
+
+        var minX = int.MaxValue;
+        var minY = int.MaxValue;
+        var minZ = int.MaxValue;
+        var minW = int.MaxValue;
+
+        var maxX = int.MinValue;
+        var maxY = int.MinValue;
+        var maxZ = int.MinValue;
+        var maxW = int.MinValue;
 
         foreach (var cube in ActiveCubes)
         {
+            minX = Math.Min(minX, cube.X);
+            minY = Math.Min(minY, cube.Y);
+            minZ = Math.Min(minZ, cube.Z);
+            minW = Math.Min(minW, cube.W);
+
+            maxX = Math.Max(maxX, cube.X);
+            maxY = Math.Max(maxY, cube.Y);
+            maxZ = Math.Max(maxZ, cube.Z);
+            maxW = Math.Max(maxW, cube.W);
+        }
+
+        var sizeX = maxX - minX + 3;
+        
+        var sizeY = maxY - minY + 3;
+        
+        var sizeZ = maxZ - minZ + 3;
+        
+        var sizeW = exploreW ? maxW - minW + 3 : 1;
+
+        var strideZ = sizeX * sizeY;
+        
+        var strideW = strideZ * sizeZ;
+
+        var total = strideW * sizeW;
+
+        var occupied = new bool[total];
+        
+        var counts = new byte[total];
+
+        foreach (var cube in ActiveCubes)
+        {
+            var x = cube.X - minX + 1;
+            
+            var y = cube.Y - minY + 1;
+            
+            var z = cube.Z - minZ + 1;
+            
+            var w = exploreW ? cube.W - minW + 1 : 0;
+
+            var index = x + y * sizeX + z * strideZ + w * strideW;
+
+            occupied[index] = true;
+
             for (var dw = exploreW ? -1 : 0; dw <= (exploreW ? 1 : 0); dw++)
             {
                 for (var dz = -1; dz <= 1; dz++)
@@ -43,29 +100,39 @@ public abstract class Base : Solution
                                 continue;
                             }
 
-                            var neighbor = new Point4D(cube.X + dx, cube.Y + dy, cube.Z + dz, cube.W + dw);
+                            var neighbor = index + dx + dy * sizeX + dz * strideZ + dw * strideW;
 
-                            counts.TryGetValue(neighbor, out var count);
-
-                            counts[neighbor] = count + 1;
+                            counts[neighbor]++;
                         }
                     }
                 }
             }
         }
 
-        var next = new HashSet<Point4D>();
+        ActiveCubes.Clear();
 
-        foreach (var (position, neighbors) in counts)
+        for (var w = 0; w < sizeW; w++)
         {
-            if (neighbors == 3 || (neighbors == 2 && ActiveCubes.Contains(position)))
+            for (var z = 0; z < sizeZ; z++)
             {
-                next.Add(position);
+                for (var y = 0; y < sizeY; y++)
+                {
+                    for (var x = 0; x < sizeX; x++)
+                    {
+                        var index = x + y * sizeX + z * strideZ + w * strideW;
+
+                        var neighbors = counts[index];
+
+                        if (neighbors != 3 &&
+                            (neighbors != 2 || !occupied[index]))
+                        {
+                            continue;
+                        }
+
+                        ActiveCubes.Add(new Point4D(x + minX - 1, y + minY - 1, z + minZ - 1, exploreW ? w + minW - 1 : 0));
+                    }
+                }
             }
         }
-
-        ActiveCubes.Clear();
-        
-        ActiveCubes.UnionWith(next);
     }
 }
