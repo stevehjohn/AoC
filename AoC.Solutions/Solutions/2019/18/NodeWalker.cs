@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Globalization;
+using System.Text;
 
 namespace AoC.Solutions.Solutions._2019._18;
 
@@ -100,7 +101,7 @@ public class NodeWalker : INodeWalker
 
         foreach (var door in blockers)
         {
-            if (! Visited.Contains(char.ToLower(door)))
+            if (! Visited.Contains(char.ToLower(door, CultureInfo.InvariantCulture)))
             {
                 return true;
             }

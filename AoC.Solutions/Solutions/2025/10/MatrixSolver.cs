@@ -68,9 +68,11 @@ public sealed class MatrixSolver
 
         for (;; val++)
         {
-            var cur = new List<Vector>(rows.Count + 1);
-            
-            cur.AddRange(rows);
+            List<Vector> cur =
+            [
+                with(rows.Count + 1),
+                .. rows
+            ];
 
             Vector sumRow = default;
 
@@ -369,9 +371,11 @@ public sealed class MatrixSolver
     {
         for (var val = 0; val <= maxVal; val++)
         {
-            var cur = new List<Vector>(rows.Count + 1);
-
-            cur.AddRange(rows);
+            List<Vector> cur =
+            [
+                with(rows.Count + 1),
+                .. rows
+            ];
 
             Vector eq = default;
             

@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using System.Globalization;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2018._05;
 
@@ -14,7 +15,7 @@ public abstract class Base : Solution
 
         while (node is { Next: not null })
         {
-            if (char.ToLower(node.Value) == char.ToLower(node.Next.Value) && node.Value != node.Next.Value)
+            if (char.ToLower(node.Value, CultureInfo.InvariantCulture) == char.ToLower(node.Next.Value, CultureInfo.InvariantCulture) && node.Value != node.Next.Value)
             {
                 var previous = node.Previous;
 

@@ -9,6 +9,6 @@ public class AlphanumericOrderer : ITestCaseOrderer
 {
     public IEnumerable<TTestCase> OrderTestCases<TTestCase>(IEnumerable<TTestCase> testCases) where TTestCase : ITestCase
     {
-        return testCases.OrderBy(tc => tc.TestMethod.Method.Name).ThenBy(tc => tc.DisplayName);
+        return testCases.OrderBy(tc => tc.TestMethod.Method.Name, StringComparer.Ordinal).ThenBy(tc => tc.DisplayName, StringComparer.Ordinal);
     }
 }

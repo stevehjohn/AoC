@@ -19,7 +19,7 @@ public class Part2 : Base
 
             var amount = int.Parse(parts[1]);
 
-            switch (command.ToLower())
+            switch (command.ToLowerInvariant())
             {
                 case "forward":
                     x += amount;

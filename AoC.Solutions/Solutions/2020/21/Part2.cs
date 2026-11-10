@@ -11,7 +11,7 @@ public class Part2 : Base
 
         var ingredientAllergens = IdentifyIngredientAllergens();
 
-        var result = string.Join(',', ingredientAllergens.OrderBy(ia => ia.Allergen).Select(ia => ia.Ingredient));
+        var result = string.Join(',', ingredientAllergens.OrderBy(ia => ia.Allergen, StringComparer.Ordinal).Select(ia => ia.Ingredient));
 
         return result;
     }

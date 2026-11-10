@@ -28,7 +28,7 @@ public abstract class Base : Solution
 
     private List<(string Hand, int Bid)> OrderHands(bool jokersWild)
     {
-        var ordered = _hands.OrderBy(h => GetTypeStrength(jokersWild ? OptimiseHand(h.Hand) : h.Hand)).ThenBy(h => ParseHandForOrdering(h.Hand, jokersWild)).ToList();
+        var ordered = _hands.OrderBy(h => GetTypeStrength(jokersWild ? OptimiseHand(h.Hand) : h.Hand)).ThenBy(h => ParseHandForOrdering(h.Hand, jokersWild), StringComparer.Ordinal).ToList();
         
         return ordered;
     }

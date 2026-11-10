@@ -118,7 +118,7 @@ public class MatrixParser
         {
             var matched = true;
 
-            for (var y = 0; y < _height; y++)
+            outer: for (var y = 0; y < _height; y++)
             {
                 for (var x = 0; x < _width; x++)
                 {
@@ -126,13 +126,8 @@ public class MatrixParser
                     {
                         matched = false;
 
-                        break;
+                        break outer;
                     }
-                }
-
-                if (! matched)
-                {
-                    break;
                 }
             }
 

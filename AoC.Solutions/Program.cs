@@ -15,8 +15,8 @@ public static class Program
         var solutions = Assembly.GetExecutingAssembly()
             .GetTypes()
             .Where(t => t.IsSubclassOf(typeof(Solution)) && ! t.IsAbstract)
-            .OrderBy(t => t.Namespace)
-            .ThenBy(t => t.Name);
+            .OrderBy(t => t.Namespace, StringComparer.Ordinal)
+            .ThenBy(t => t.Name, StringComparer.Ordinal);
 
         var totalMs = 0L;
 

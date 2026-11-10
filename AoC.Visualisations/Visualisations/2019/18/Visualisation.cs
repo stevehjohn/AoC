@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Solutions._2019._18;
+﻿using System.Globalization;
+using AoC.Solutions.Solutions._2019._18;
 using AoC.Visualisations.Exceptions;
 using AoC.Visualisations.Infrastructure;
 using JetBrains.Annotations;
@@ -326,7 +327,7 @@ public class Visualisation : VisualisationBase<PuzzleState>
 
         _state.Map[move.X, move.Y] = '.';
 
-        OpenDoor(char.ToUpper(tile));
+        OpenDoor(char.ToUpper(tile, CultureInfo.InvariantCulture));
     }
 
     private static bool IsLockedDoor(char tile)

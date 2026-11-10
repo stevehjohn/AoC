@@ -51,7 +51,7 @@ public static class KnotHash
             builder.Append(item.ToString("X2"));
         }
 
-        var result = builder.ToString().ToLower();
+        var result = builder.ToString().ToLowerInvariant();
 
         return result;
     }

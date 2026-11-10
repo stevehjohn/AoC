@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Globalization;
+using System.Text;
 
 namespace AoC.Solutions.Solutions._2019._18;
 
@@ -160,7 +161,7 @@ public class MultiGraphNodeWalker : INodeWalker
 
         foreach (var door in blockers)
         {
-            if (! _visited.Contains(char.ToLower(door)))
+            if (! _visited.Contains(char.ToLower(door, CultureInfo.InvariantCulture)))
             {
                 return true;
             }

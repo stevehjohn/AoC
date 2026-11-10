@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using System.Globalization;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2018._04;
 
@@ -101,7 +102,7 @@ public abstract class Base : Solution
         {
             var split = line.Split(']', StringSplitOptions.TrimEntries);
 
-            lines.Add((DateTime.Parse(split[0][1..]), line));
+            lines.Add((DateTime.Parse(split[0][1..], CultureInfo.InvariantCulture), line));
         }
 
         return [.. lines.OrderBy(l => l.Time).Select(l => l.Line)];
@@ -111,7 +112,7 @@ public abstract class Base : Solution
     {
         var split = line.Split(']', StringSplitOptions.TrimEntries);
 
-        var time = DateTime.Parse(split[0][1..]);
+        var time = DateTime.Parse(split[0][1..], CultureInfo.InvariantCulture);
 
         var @event = Event.StartShift;
 
