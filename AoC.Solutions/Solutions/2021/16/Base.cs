@@ -1,7 +1,6 @@
 ﻿using AoC.Solutions.Infrastructure;
 using System.Globalization;
 using System.Text;
-using AoC.Solutions.Extensions;
 
 namespace AoC.Solutions.Solutions._2021._16;
 
