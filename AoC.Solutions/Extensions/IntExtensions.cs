@@ -37,7 +37,6 @@ public static class IntExtensions
 
     extension(int)
     {
-        
         public static int FastParse(string input)
         {
             if (input.Length == 0)
