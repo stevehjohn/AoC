@@ -256,7 +256,7 @@ public static class Program
                 {
                     var line = file[index];
 
-                    var time = int.Parse(line[12..].Split(' ', StringSplitOptions.TrimEntries)[0][..^2], NumberStyles.AllowThousands);
+                    var time =int.FastParse(line[12..].Split(' ', StringSplitOptions.TrimEntries)[0][..^2]);
 
                     if (result.Value.Microseconds < time)
                     {
@@ -309,7 +309,7 @@ public static class Program
 
                 if (line.StartsWith(" 20") && year != 0)
                 {
-                    var time = int.Parse(line[12..].Split(' ', StringSplitOptions.TrimEntries)[0][..^2], NumberStyles.AllowThousands);
+                    var time =int.FastParse(line[12..].Split(' ', StringSplitOptions.TrimEntries)[0][..^2]);
 
                     sum += time;
 

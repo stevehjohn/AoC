@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2015._22;
 
@@ -8,9 +9,9 @@ public abstract class Base : Solution
 
     protected int GetManaCostToWin(bool isPart2 = false)
     {
-        var bossHealth = int.Parse(Input[0].AsSpan()[(Input[0].IndexOf(':') + 1)..].Trim());
+        var bossHealth =int.FastParse(Input[0].AsSpan()[(Input[0].IndexOf(':') + 1)..].Trim());
 
-        var bossDamage = int.Parse(Input[1].AsSpan()[(Input[1].IndexOf(':') + 1)..].Trim());
+        var bossDamage =int.FastParse(Input[1].AsSpan()[(Input[1].IndexOf(':') + 1)..].Trim());
 
         var queue = new PriorityQueue<State, int>();
         var best = new Dictionary<State, int>();

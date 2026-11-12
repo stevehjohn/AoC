@@ -16,7 +16,7 @@ public abstract class Base : Solution
 
         for (var i = 0; i < data.Length; i++)
         {
-            var number = int.Parse(data.Substring(i, 1), NumberStyles.HexNumber);
+            var number =int.Parse(data.Substring(i, 1), NumberStyles.HexNumber);
 
             binary.Append(Convert.ToString(number, 2).PadLeft(4, '0'));
         }

@@ -39,6 +39,11 @@ public static class IntExtensions
     {
         public static int FastParse(string input)
         {
+            return FastParse(input.AsSpan());
+        }
+        
+        public static int FastParse(ReadOnlySpan<char> input)
+        {
             if (input.Length == 0)
             {
                 throw new FormatException("Input string is empty.");
@@ -66,7 +71,7 @@ public static class IntExtensions
             {
                 var digit = input[i];
 
-                if (char.IsWhiteSpace(digit))
+                if (char.IsWhiteSpace(digit) || digit == ',')
                 {
                     continue;
                 }

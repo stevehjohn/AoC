@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using AoC.Solutions.Extensions;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2017._25;
@@ -16,7 +17,7 @@ public class Part1 : Base
         
         var end = stepsLine.IndexOf(' ', start);
         
-        var steps = int.Parse(stepsLine.AsSpan(start, end - start));
+        var steps =int.FastParse(stepsLine.AsSpan(start, end - start));
 
         var transitions = new Transition[26, 2];
 

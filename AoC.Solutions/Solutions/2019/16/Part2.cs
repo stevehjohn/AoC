@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Extensions;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2019._16;
 
@@ -13,7 +14,7 @@ public class Part2 : Base
         
         var totalLength = inputLength * 10_000;
 
-        var offset = int.Parse(input.AsSpan(0, 7));
+        var offset = int.FastParse(input.AsSpan(0, 7));
 
         if (offset < totalLength / 2)
         {
