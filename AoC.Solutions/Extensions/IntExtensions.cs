@@ -67,6 +67,11 @@ public static class IntExtensions
             {
                 var digit = input[i];
 
+                if (char.IsWhiteSpace(digit))
+                {
+                    continue;
+                }
+
                 if (digit is < '0' or > '9')
                 {
                     break;
