@@ -1,4 +1,5 @@
 ﻿using AoC.Solutions.Exceptions;
+using AoC.Solutions.Extensions;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2015._16;
@@ -28,7 +29,7 @@ public class Part2 : Base
         {
             var parts = sue.Split([' ', ',', ':'], StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
-            if (imprint[parts[2]](int.Parse(parts[3])) && imprint[parts[4]](int.Parse(parts[5])) && imprint[parts[6]](int.Parse(parts[7])))
+            if (imprint[parts[2]](int.FastParse(parts[3])) && imprint[parts[4]](int.FastParse(parts[5])) && imprint[parts[6]](int.FastParse(parts[7])))
             {
                 return parts[1];
             }

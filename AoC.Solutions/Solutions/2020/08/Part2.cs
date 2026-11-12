@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Extensions;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2020._08;
 
@@ -22,7 +23,7 @@ public class Part2 : Base
 
             previousInstruction = Input[lineToModify];
 
-            if (Input[lineToModify][..3] == "nop" && int.Parse(Input[lineToModify][4..]) != 0)
+            if (Input[lineToModify][..3] == "nop" && int.FastParse(Input[lineToModify][4..]) != 0)
             {
                 Input[lineToModify] = $"jmp {Input[lineToModify][4..]}";
             }

@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2015._21;
 
@@ -105,7 +106,7 @@ public abstract class Base : Solution
                           Armour = 0
                       };
 
-        var inputData = Input.Select(l => l.Split(':', StringSplitOptions.TrimEntries)[1]).Select(int.Parse).ToArray();
+        var inputData = Input.Select(l => l.Split(':', StringSplitOptions.TrimEntries)[1]).Select(int.FastParse).ToArray();
 
         _players[1] = new Player
                       {

@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2021._06;
 
@@ -8,7 +9,7 @@ public abstract class Base : Solution
 
     protected string GetAnswer(int days)
     {
-        var fish = Input[0].Split(',').Select(int.Parse).ToList();
+        var fish = Input[0].Split(',').Select(int.FastParse).ToList();
 
         var fishDays = new long[9];
 

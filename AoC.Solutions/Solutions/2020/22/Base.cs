@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2020._22;
 
@@ -39,11 +40,11 @@ public abstract class Base : Solution
 
             if (player1)
             {
-                Player1Cards.Enqueue(int.Parse(line));
+                Player1Cards.Enqueue(int.FastParse(line));
             }
             else
             {
-                Player2Cards.Enqueue(int.Parse(line));
+                Player2Cards.Enqueue(int.FastParse(line));
             }
         }
     }

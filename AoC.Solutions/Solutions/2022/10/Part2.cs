@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using AoC.Solutions.Common.Ocr;
+using AoC.Solutions.Extensions;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2022._10;
@@ -58,7 +59,7 @@ public class Part2 : Base
                         answer.Append('\0');
                     }
 
-                    registerX += int.Parse(line[5..]);
+                    registerX += int.FastParse(line[5..]);
 
                     break;
             }

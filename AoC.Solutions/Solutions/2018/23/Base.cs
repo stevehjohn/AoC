@@ -1,4 +1,5 @@
 ﻿using AoC.Solutions.Common;
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2018._23;
@@ -17,7 +18,7 @@ public abstract class Base : Solution
 
             var parts = split[0].Split(',', StringSplitOptions.TrimEntries);
 
-            Nanobots.Add((new Point(int.Parse(parts[0]), int.Parse(parts[1]), int.Parse(parts[2])), int.Parse(split[1])));
+            Nanobots.Add((new Point(int.FastParse(parts[0]), int.FastParse(parts[1]), int.FastParse(parts[2])), int.FastParse(split[1])));
         }
     }
 

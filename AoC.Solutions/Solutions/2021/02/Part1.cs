@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Extensions;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2021._02;
 
@@ -16,7 +17,7 @@ public class Part1 : Base
 
             var command = parts[0];
 
-            var amount = int.Parse(parts[1]);
+            var amount = int.FastParse(parts[1]);
 
             switch (command.ToLowerInvariant())
             {

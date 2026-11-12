@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Extensions;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2015._25;
 
@@ -9,9 +10,9 @@ public class Part1 : Base
     {
         var parts = Input[0].Split([' ', ',', '.'], StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
-        var targetRow = int.Parse(parts[15]);
+        var targetRow = int.FastParse(parts[15]);
 
-        var targetColumn = int.Parse(parts[17]);
+        var targetColumn = int.FastParse(parts[17]);
 
         var code = 20151125L;
 

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
+using AoC.Solutions.Extensions;
 
 namespace AoC.Solutions;
 
@@ -75,16 +76,16 @@ public static class Program
 
         foreach (var solution in solutions)
         {
-            var year = int.Parse(solution.Namespace?.Split('.')[3].Replace("_", string.Empty) ?? "0");
+            var year = int.FastParse(solution.Namespace?.Split('.')[3].Replace("_", string.Empty) ?? "0");
 
-            var day = int.Parse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0");
+            var day = int.FastParse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0");
 
             if (arguments.Length > 0
                 && ! arguments[0].Equals("true", StringComparison.InvariantCultureIgnoreCase)
                 && ! arguments[0].Equals("sa", StringComparison.InvariantCultureIgnoreCase))
             {
                 var solutionKey =
-                    $"{int.Parse(solution.Namespace?.Split('.')[3].Replace("_", string.Empty) ?? "0")}.{int.Parse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0"):D2}.{solution.Name[4]}";
+                    $"{int.FastParse(solution.Namespace?.Split('.')[3].Replace("_", string.Empty) ?? "0")}.{int.FastParse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0"):D2}.{solution.Name[4]}";
 
                 if (solutionKey[..arguments[0].Length] != arguments[0])
                 {
@@ -303,7 +304,7 @@ public static class Program
                 {
                     sum = 0;
 
-                    year = int.Parse(line[1..5]);
+                    year = int.FastParse(line[1..5]);
                 }
 
                 if (line.StartsWith(" 20") && year != 0)
@@ -349,7 +350,7 @@ public static class Program
             }
 
             var key =
-                $"{int.Parse(solution.Namespace?.Split('.')[3].Replace("_", string.Empty) ?? "0")}.{int.Parse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0")}.{solution.Name[4]}";
+                $"{int.FastParse(solution.Namespace?.Split('.')[3].Replace("_", string.Empty) ?? "0")}.{int.FastParse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0")}.{solution.Name[4]}";
 
             var correctAnswerLine = answers.FirstOrDefault(a => a.StartsWith(key));
 

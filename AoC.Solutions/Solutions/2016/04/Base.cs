@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2016._04;
 
@@ -19,7 +20,7 @@ public abstract class Base : Solution
 
         var roomId = split[0][..split[0].LastIndexOf('-')].Replace("-", string.Empty);
 
-        var sectorId = int.Parse(split[0][(split[0].LastIndexOf('-') + 1)..]);
+        var sectorId = int.FastParse(split[0][(split[0].LastIndexOf('-') + 1)..]);
 
         var checksum = split[1];
 

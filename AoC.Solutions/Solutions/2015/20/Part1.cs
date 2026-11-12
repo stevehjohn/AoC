@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Extensions;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2015._20;
 
@@ -7,7 +8,7 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var target = int.Parse(Input[0]);
+        var target = int.FastParse(Input[0]);
 
         var limit = (target + 9) / 10;
 

@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Extensions;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2017._02;
 
@@ -18,7 +19,7 @@ public class Part2 : Base
 
         foreach (var line in Input)
         {
-            var cells = line.Split('\t', StringSplitOptions.TrimEntries).Select(int.Parse).ToList();
+            var cells = line.Split('\t', StringSplitOptions.TrimEntries).Select(int.FastParse).ToList();
 
             for (var outer = 0; outer < cells.Count; outer++)
             {

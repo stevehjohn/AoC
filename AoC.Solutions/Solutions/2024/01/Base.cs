@@ -1,3 +1,4 @@
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2024._01;
@@ -18,9 +19,9 @@ public abstract class Base : Solution
         {
             var parts = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             
-            Left.Add(int.Parse(parts[0]));
+            Left.Add(int.FastParse(parts[0]));
 
-            var right = int.Parse(parts[1]);
+            var right = int.FastParse(parts[1]);
             
             Right.Add(right);
 

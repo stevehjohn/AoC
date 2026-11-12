@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using AoC.Solutions.Extensions;
 
 namespace AoC.Solutions.Solutions._2017.Common;
 
@@ -139,7 +140,7 @@ public class Cpu
         }
         else
         {
-            literal = int.Parse(parts[1]);
+            literal = int.FastParse(parts[1]);
         }
 
         var sourceRegister = '\0';
@@ -154,7 +155,7 @@ public class Cpu
             }
             else
             {
-                value = int.Parse(parts[2]);
+                value = int.FastParse(parts[2]);
             }
         }
 

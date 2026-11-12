@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Extensions;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2015._20;
 
@@ -7,9 +8,9 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        var input = int.Parse(Input[0]);
+        var input = int.FastParse(Input[0]);
 
-        var house = int.Parse(File.ReadAllText("2015.20.1.result"));
+        var house = int.FastParse(File.ReadAllText("2015.20.1.result"));
 
         while (Sigma(house) * 11 < input)
         {

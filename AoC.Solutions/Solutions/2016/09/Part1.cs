@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using AoC.Solutions.Extensions;
+using System.Text;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2016._09;
@@ -21,7 +22,7 @@ public class Part1 : Base
         {
             if (input[0] == '(')
             {
-                var parameters = input[1..input.IndexOf(')')].Split('x').Select(int.Parse).ToArray();
+                var parameters = input[1..input.IndexOf(')')].Split('x').Select(int.FastParse).ToArray();
 
                 input = input[(input.IndexOf(')') + 1)..];
 

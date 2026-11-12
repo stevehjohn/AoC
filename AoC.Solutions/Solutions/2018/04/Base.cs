@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2018._04;
@@ -127,7 +128,7 @@ public abstract class Base : Solution
 
                 break;
             default:
-                currentGuard = int.Parse(split[1].Replace("Guard #", string.Empty).Replace(" begins shift", string.Empty));
+                currentGuard = int.FastParse(split[1].Replace("Guard #", string.Empty).Replace(" begins shift", string.Empty));
 
                 break;
         }

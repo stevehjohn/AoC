@@ -1,3 +1,5 @@
+using AoC.Solutions.Extensions;
+
 namespace AoC.Games.Games.Deflectors;
 
 public static class ScoreKeeper
@@ -14,7 +16,7 @@ public static class ScoreKeeper
             {
                 var text = File.ReadAllText(HighScoreFile);
 
-                _highScore = int.Parse(text);
+                _highScore = int.FastParse(text);
             }
             else
             {

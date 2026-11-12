@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2019._04;
 
@@ -8,7 +9,7 @@ public abstract class Base : Solution
 
     protected string GetAnswer(bool singlePairRequired)
     {
-        var range = Input[0].Split('-', StringSplitOptions.TrimEntries).Select(int.Parse).ToArray();
+        var range = Input[0].Split('-', StringSplitOptions.TrimEntries).Select(int.FastParse).ToArray();
 
         var validCount = 0;
 

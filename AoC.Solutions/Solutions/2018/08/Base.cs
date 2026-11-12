@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2018._08;
 
@@ -48,6 +49,6 @@ public abstract class Base : Solution
 
     protected List<int> ParseInput()
     {
-        return [.. Input[0].Split(' ').Select(int.Parse)];
+        return [.. Input[0].Split(' ').Select(int.FastParse)];
     }
 }

@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Solutions._2018.TimeMachine;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Solutions._2018.TimeMachine;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2018._16;
@@ -21,7 +22,7 @@ public class Part1 : Base
                 break;
             }
 
-            var parts = Input[i + 1].Split(' ').Select(int.Parse).ToArray();
+            var parts = Input[i + 1].Split(' ').Select(int.FastParse).ToArray();
 
             var matches = CountMatchingCodes(parts[1], parts[2], parts[3], ParseRegisters(Input[i]), ParseRegisters(Input[i + 2]));
 

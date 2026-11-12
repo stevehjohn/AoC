@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Solutions._2017.Common;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Solutions._2017.Common;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2017._10;
@@ -8,7 +9,7 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var lengths = Input[0].Split(',', StringSplitOptions.TrimEntries).Select(int.Parse).ToArray();
+        var lengths = Input[0].Split(',', StringSplitOptions.TrimEntries).Select(int.FastParse).ToArray();
 
         var skipLength = 0;
 

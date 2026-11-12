@@ -1,4 +1,5 @@
 ﻿
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2015._13;
@@ -119,7 +120,7 @@ public abstract class Base : Solution
         {
             var parts = line[..^1].Split(' ', StringSplitOptions.TrimEntries);
 
-            Happiness.Add($"{parts[0]}{parts[10]}", int.Parse(parts[3]) * (parts[2] == "gain" ? 1 : -1));
+            Happiness.Add($"{parts[0]}{parts[10]}", int.FastParse(parts[3]) * (parts[2] == "gain" ? 1 : -1));
         }
     }
 }

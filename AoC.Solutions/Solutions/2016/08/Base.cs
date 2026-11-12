@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2016._08;
 
@@ -20,7 +21,7 @@ public abstract class Base : Solution
     {
         if (line.StartsWith("rect"))
         {
-            var coords = line[5..].Split('x').Select(int.Parse).ToArray();
+            var coords = line[5..].Split('x').Select(int.FastParse).ToArray();
 
             for (var y = 0; y < coords[1]; y++)
             {
@@ -39,7 +40,7 @@ public abstract class Base : Solution
         {
             line = line[16..];
 
-            parameters = [.. line.Split(" by ", StringSplitOptions.TrimEntries).Select(int.Parse)];
+            parameters = [.. line.Split(" by ", StringSplitOptions.TrimEntries).Select(int.FastParse)];
 
             for (var i = 0; i < parameters[1]; i++)
             {
@@ -58,7 +59,7 @@ public abstract class Base : Solution
 
         line = line[13..];
 
-        parameters = [.. line.Split(" by ", StringSplitOptions.TrimEntries).Select(int.Parse)];
+        parameters = [.. line.Split(" by ", StringSplitOptions.TrimEntries).Select(int.FastParse)];
 
         for (var i = 0; i < parameters[1]; i++)
         {

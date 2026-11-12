@@ -1,4 +1,5 @@
 ﻿using AoC.Solutions.Exceptions;
+using AoC.Solutions.Extensions;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2020._01;
@@ -12,7 +13,7 @@ public class Part1 : Base
 
         for (var i = 0; i < Input.Length; i++)
         {
-            integers[i] = int.Parse(Input[i]);
+            integers[i] = int.FastParse(Input[i]);
         }
 
         for (var i = 0; i < integers.Length; i++)

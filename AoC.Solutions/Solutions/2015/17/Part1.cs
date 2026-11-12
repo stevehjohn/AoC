@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Extensions;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2015._17;
 
@@ -7,7 +8,7 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var containers = Input.Select(int.Parse).ToArray();
+        var containers = Input.Select(int.FastParse).ToArray();
 
         var combinations = 1 << containers.Length;
         

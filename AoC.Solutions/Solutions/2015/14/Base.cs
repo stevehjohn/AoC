@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2015._14;
 
@@ -52,6 +53,6 @@ public abstract class Base : Solution
     {
         var parts = line.Split(' ');
 
-        return new Reindeer(int.Parse(parts[3]), int.Parse(parts[6]), int.Parse(parts[13]));
+        return new Reindeer(int.FastParse(parts[3]), int.FastParse(parts[6]), int.FastParse(parts[13]));
     }
 }

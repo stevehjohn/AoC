@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using AoC.Solutions.Common;
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2022._09;
@@ -31,7 +32,7 @@ public abstract class Base : Solution
 
         foreach (var line in Input)
         {
-            var distance = int.Parse(line[2..]);
+            var distance = int.FastParse(line[2..]);
 
             switch (line[0])
             {

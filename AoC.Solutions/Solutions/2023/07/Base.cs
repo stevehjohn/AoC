@@ -1,3 +1,4 @@
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2023._07;
@@ -139,7 +140,7 @@ public abstract class Base : Solution
 
             var hand = parts[0];
 
-            _hands.Add((hand, int.Parse(parts[1])));
+            _hands.Add((hand, int.FastParse(parts[1])));
         }
     }
 

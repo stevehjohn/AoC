@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Extensions;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2021._07;
 
@@ -7,7 +8,7 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        var positions = Input[0].Split(',').Select(int.Parse).OrderBy(n => n).ToList();
+        var positions = Input[0].Split(',').Select(int.FastParse).OrderBy(n => n).ToList();
 
         var mean = positions.Sum() / positions.Count;
 

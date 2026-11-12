@@ -1,3 +1,4 @@
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2025._01;
@@ -14,7 +15,7 @@ public abstract class Base : Solution
 
         foreach (var line in Input)
         {
-            var clicks = int.Parse(line[1..]);
+            var clicks = int.FastParse(line[1..]);
 
             var left = line[0] == 'L';
 

@@ -1,4 +1,5 @@
 ﻿using AoC.Solutions.Common;
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2020._12;
@@ -17,7 +18,7 @@ public abstract class Base : Solution
 
         foreach (var line in Input)
         {
-            var value = int.Parse(line[1..]);
+            var value = int.FastParse(line[1..]);
 
             switch (line[0])
             {

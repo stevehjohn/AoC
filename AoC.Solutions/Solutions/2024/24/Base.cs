@@ -1,3 +1,4 @@
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2024._24;
@@ -41,7 +42,7 @@ public abstract class Base : Solution
 
             if (parts[4][0] == 'z')
             {
-                MaxZ = Math.Max(int.Parse(parts[4][1..]), MaxZ);
+                MaxZ = Math.Max(int.FastParse(parts[4][1..]), MaxZ);
             }
 
             i++;

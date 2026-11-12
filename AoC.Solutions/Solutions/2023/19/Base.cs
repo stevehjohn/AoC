@@ -1,3 +1,4 @@
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2023._19;
@@ -41,7 +42,7 @@ public abstract class Base : Solution
                 
                 var ruleParts = item.Split(':');
 
-                rule.Value = int.Parse(ruleParts[0][2..]);
+                rule.Value = int.FastParse(ruleParts[0][2..]);
 
                 rule.Destination = ruleParts[1];
                 
@@ -66,10 +67,10 @@ public abstract class Base : Solution
 
             var part = new Part
             {
-                X = int.Parse(parts[0][2..]),
-                M = int.Parse(parts[1][2..]),
-                A = int.Parse(parts[2][2..]),
-                S = int.Parse(parts[3][2..])
+                X = int.FastParse(parts[0][2..]),
+                M = int.FastParse(parts[1][2..]),
+                A = int.FastParse(parts[2][2..]),
+                S = int.FastParse(parts[3][2..])
             };
             
             Parts.Add(part);

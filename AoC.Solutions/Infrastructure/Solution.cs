@@ -1,4 +1,5 @@
 ﻿using AoC.Solutions.Common.Ocr;
+using AoC.Solutions.Extensions;
 
 namespace AoC.Solutions.Infrastructure;
 
@@ -16,7 +17,7 @@ public abstract class Solution
 
         var unlock = DateTime.UtcNow.AddHours(-5);
 
-        if (int.Parse(GetType().FullName!.Split('.')[^3][1..]) < unlock.Year || unlock.Day >= int.Parse(GetType().FullName!.Split('.')[^2][1..]))
+        if (int.FastParse(GetType().FullName!.Split('.')[^3][1..]) < unlock.Year || unlock.Day >= int.FastParse(GetType().FullName!.Split('.')[^2][1..]))
         {
             Input = InputProvider.GetInput(nameSpace);
         }

@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Extensions;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2020._13;
 
@@ -7,9 +8,9 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var departTime = int.Parse(Input[0]);
+        var departTime = int.FastParse(Input[0]);
 
-        var busTimes = Input[1].Split(',').Where(s => s != "x").Select(b => (Id: int.Parse(b), Time: int.Parse(b) )).ToList();
+        var busTimes = Input[1].Split(',').Where(s => s != "x").Select(b => (Id: int.FastParse(b), Time: int.FastParse(b) )).ToList();
 
         for (var i = 0; i < busTimes.Count; i++)
         {

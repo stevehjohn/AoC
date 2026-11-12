@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Extensions;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2019._22;
 
@@ -37,12 +38,12 @@ public class Part1 : Base
 
             if (line.StartsWith("cut"))
             {
-                Cut(int.Parse(line[4..]));
+                Cut(int.FastParse(line[4..]));
 
                 continue;
             }
 
-            DealWithIncrement(int.Parse(line[20..]));
+            DealWithIncrement(int.FastParse(line[20..]));
         }
 
         var decks = GetDecks();

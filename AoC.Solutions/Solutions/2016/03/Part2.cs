@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Extensions; 
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2016._03;
 
@@ -15,7 +16,7 @@ public class Part2 : Base
 
             for (var j = 0; j < 3; j++)
             {
-                var sides = Input[i + j].Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
+                var sides = Input[i + j].Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).Select(int.FastParse).ToArray();
 
                 triangles[0].Add(sides[0]);
 

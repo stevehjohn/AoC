@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2017._13;
 
@@ -14,7 +15,7 @@ public abstract class Base : Solution
         {
             var parts = line.Split(':', StringSplitOptions.TrimEntries);
 
-            firewall.Add(int.Parse(parts[0]), new Layer(int.Parse(parts[1])));
+            firewall.Add(int.FastParse(parts[0]), new Layer(int.FastParse(parts[1])));
         }
 
         return firewall;

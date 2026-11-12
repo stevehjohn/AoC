@@ -1,3 +1,4 @@
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2024._17;
@@ -86,7 +87,7 @@ public abstract class Base : Solution
 
         for (var i = 0; i < 3; i++)
         {
-            _registers[i] = int.Parse(Input[i][12..]);
+            _registers[i] = int.FastParse(Input[i][12..]);
         }
 
         Program = [.. Input[4][9..].Split(',').Select(long.Parse)];

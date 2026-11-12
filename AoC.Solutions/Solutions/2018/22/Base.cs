@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2018._22;
 
@@ -74,12 +75,12 @@ public abstract class Base : Solution
 
     protected void ParseInput()
     {
-        _depth = int.Parse(Input[0][7..]);
+        _depth = int.FastParse(Input[0][7..]);
 
         var parts = Input[1][8..].Split(',', StringSplitOptions.TrimEntries);
 
-        TargetX = int.Parse(parts[0]);
+        TargetX = int.FastParse(parts[0]);
 
-        TargetY = int.Parse(parts[1]);
+        TargetY = int.FastParse(parts[1]);
     }
 }

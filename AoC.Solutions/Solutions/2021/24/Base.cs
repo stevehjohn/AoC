@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2021._24;
 
@@ -66,6 +67,6 @@ public abstract class Base : Solution
 
     private int GetOperand(int line)
     {
-        return int.Parse(Input[line].Split(' ')[2]);
+        return int.FastParse(Input[line].Split(' ')[2]);
     }
 }

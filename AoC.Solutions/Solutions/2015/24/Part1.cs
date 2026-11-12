@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Extensions; 
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2015._24;
 
@@ -7,7 +8,7 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var weights = Input.Select(int.Parse).OrderByDescending(w => w).ToList();
+        var weights = Input.Select(int.FastParse).OrderByDescending(w => w).ToList();
 
         TryFindQeOfGroup(weights, weights.Sum() / 3);
 

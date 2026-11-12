@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2020._19;
 
@@ -20,7 +21,7 @@ public abstract class Base : Solution
         {
             var split = Input[i].Split(':', StringSplitOptions.TrimEntries);
 
-            var ruleId = int.Parse(split[0]);
+            var ruleId = int.FastParse(split[0]);
 
             if (replaceRules)
             {
@@ -82,7 +83,7 @@ public abstract class Base : Solution
 
     private List<Rule> ParseRuleString(string rules)
     {
-        var ids = rules.Split(' ', StringSplitOptions.TrimEntries).Select(int.Parse);
+        var ids = rules.Split(' ', StringSplitOptions.TrimEntries).Select(int.FastParse);
 
         var result = new List<Rule>();
 

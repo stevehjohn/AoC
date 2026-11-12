@@ -1,4 +1,5 @@
 ﻿using AoC.Solutions.Common;
+using AoC.Solutions.Extensions;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2019._10;
@@ -12,7 +13,7 @@ public class Part2 : Base
     {
         var stationLocation = File.ReadAllText("2019.10.1.result").Split(',', StringSplitOptions.TrimEntries);
 
-        var station = new Point(int.Parse(stationLocation[0]), int.Parse(stationLocation[1]));
+        var station = new Point(int.FastParse(stationLocation[0]), int.FastParse(stationLocation[1]));
 
         var asteroidsWithAngle = Asteroids.Select(a => (Angle: Math.Atan2(a.X - station.X, a.Y - station.Y), Point: a)).ToList();
 

@@ -1,4 +1,6 @@
-﻿namespace AoC.Solutions.Solutions._2021._18;
+﻿using AoC.Solutions.Extensions;
+
+namespace AoC.Solutions.Solutions._2021._18;
 
 public class Number
 {
@@ -17,7 +19,7 @@ public class Number
             return new Number
                    {
                        Parent = parent,
-                       Value = int.Parse(input)
+                       Value = int.FastParse(input)
                    };
         }
 

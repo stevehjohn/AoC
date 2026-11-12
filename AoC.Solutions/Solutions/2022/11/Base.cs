@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2022._11;
@@ -102,9 +103,9 @@ public abstract class Base : Solution
         {
             var test = ulong.Parse(Input[i + 2][21..]);
 
-            var pass = int.Parse(Input[i + 3][29..]);
+            var pass = int.FastParse(Input[i + 3][29..]);
 
-            var fail = int.Parse(Input[i + 4][30..]);
+            var fail = int.FastParse(Input[i + 4][30..]);
 
             var @operator = Input[i + 1][23];
 

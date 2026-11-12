@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Extensions;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2021._01;
 
@@ -13,7 +14,7 @@ public class Part2 : Base
 
         foreach (var line in Input)
         {
-            window.Add(int.Parse(line));
+            window.Add(int.FastParse(line));
 
             if (window.Count > 4)
             {

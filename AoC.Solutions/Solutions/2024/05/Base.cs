@@ -1,3 +1,4 @@
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2024._05;
@@ -18,9 +19,9 @@ public abstract class Base : Solution
         {
             var parts = Input[i].Split('|');
 
-            var left = int.Parse(parts[0]);
+            var left = int.FastParse(parts[0]);
 
-            var right = int.Parse(parts[1]);
+            var right = int.FastParse(parts[1]);
             
             if (Rules.TryGetValue(left, out var rule))
             {
@@ -38,7 +39,7 @@ public abstract class Base : Solution
 
         while (i < Input.Length)
         {
-            Updates.Add([.. Input[i].Split(',').Select(int.Parse)]);
+            Updates.Add([.. Input[i].Split(',').Select(int.FastParse)]);
 
             i++;
         }

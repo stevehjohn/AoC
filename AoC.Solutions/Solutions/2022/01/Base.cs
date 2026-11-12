@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2022._01;
 
@@ -23,7 +24,7 @@ public abstract class Base : Solution
                 continue;
             }
 
-            total += int.Parse(line);
+            total += int.FastParse(line);
         }
     }
 }

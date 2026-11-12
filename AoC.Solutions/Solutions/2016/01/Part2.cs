@@ -1,4 +1,5 @@
 ﻿using AoC.Solutions.Exceptions;
+using AoC.Solutions.Extensions;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2016._01;
@@ -38,7 +39,7 @@ public class Part2 : Base
                 (dX, dY) = (dY, -dX);
             }
 
-            var amount = int.Parse(step[1..]);
+            var amount = int.FastParse(step[1..]);
 
             var sX = x;
 

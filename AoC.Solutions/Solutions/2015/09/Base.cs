@@ -52,11 +52,11 @@ public abstract class Base : Solution
 
             var route = parts[0].Split(" to ", StringSplitOptions.TrimEntries);
 
-            _distances.Add($"{route[0]}{route[1]}", int.Parse(parts[1]));
+            _distances.Add($"{route[0]}{route[1]}", int.FastParse(parts[1]));
 
             if (! _distances.ContainsKey($"{route[1]}{route[0]}"))
             {
-                _distances.Add($"{route[1]}{route[0]}", int.Parse(parts[1]));
+                _distances.Add($"{route[1]}{route[0]}", int.FastParse(parts[1]));
             }
         }
     }

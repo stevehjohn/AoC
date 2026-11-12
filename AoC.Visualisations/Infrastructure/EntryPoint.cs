@@ -1,3 +1,4 @@
+using AoC.Solutions.Extensions;
 using AoC.Visualisations.Exceptions;
 using Microsoft.Xna.Framework;
 
@@ -58,7 +59,7 @@ public static class EntryPoint
 
         try
         {
-            ((IMultiPartVisualiser) visualisation).SetPart(int.Parse(part));
+            ((IMultiPartVisualiser) visualisation).SetPart(int.FastParse(part));
         }
         catch (Exception exception)
         {

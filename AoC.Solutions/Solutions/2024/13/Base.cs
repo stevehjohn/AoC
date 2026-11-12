@@ -1,4 +1,5 @@
 using AoC.Solutions.Common;
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2024._13;
@@ -31,7 +32,7 @@ public abstract class Base : Solution
 
         var parts = line.Split(", ", StringSplitOptions.TrimEntries);
 
-        return new Point(int.Parse(parts[0][2..]), int.Parse(parts[1][2..]));
+        return new Point(int.FastParse(parts[0][2..]), int.FastParse(parts[1][2..]));
     }
 
     protected static (long A, long B) GetButtonPresses(Machine machine, bool isPart2 = false)

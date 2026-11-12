@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Extensions;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2018._01;
 
@@ -32,7 +33,7 @@ public class Part2 : Base
         {
             var sign = line[0] == '-' ? -1 : 1;
 
-            _frequency += sign * int.Parse(line[1..]);
+            _frequency += sign * int.FastParse(line[1..]);
 
             if (! _found.Add(_frequency))
             {

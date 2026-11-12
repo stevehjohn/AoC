@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Extensions;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2021._01;
 
@@ -9,11 +10,11 @@ public class Part1 : Base
     {
         var increases = 0;
 
-        var previous = int.Parse(Input[0]);
+        var previous = int.FastParse(Input[0]);
 
         foreach (var line in Input.Skip(1))
         {
-            var value = int.Parse(line);
+            var value = int.FastParse(line);
 
             if (value > previous)
             {

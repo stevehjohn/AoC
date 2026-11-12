@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2017._06;
 
@@ -67,7 +68,7 @@ public abstract class Base : Solution
 
         for (var i = 0; i < banks.Length; i++)
         {
-            _banks.Add(i, int.Parse(banks[i]));
+            _banks.Add(i, int.FastParse(banks[i]));
         }
     }
 }

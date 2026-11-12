@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2017._12;
 
@@ -14,7 +15,7 @@ public abstract class Base : Solution
         {
             var parts = line.Split(" <-> ", StringSplitOptions.TrimEntries);
 
-            var id = int.Parse(parts[0]);
+            var id = int.FastParse(parts[0]);
 
             if (! Nodes.TryGetValue(id, out var node))
             {
@@ -23,7 +24,7 @@ public abstract class Base : Solution
                 Nodes.Add(node.Id, node);
             }
 
-            var connectionsString = parts[1].Split(',', StringSplitOptions.TrimEntries).Select(int.Parse);
+            var connectionsString = parts[1].Split(',', StringSplitOptions.TrimEntries).Select(int.FastParse);
 
             foreach (var connection in connectionsString)
             {

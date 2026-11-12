@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2020._02;
 
@@ -18,6 +19,6 @@ public abstract class Base : Solution
 
         split = split[0].Split('-');
 
-        return (A: int.Parse(split[0]), B: int.Parse(split[1]), Character: character, Password: password);
+        return (A: int.FastParse(split[0]), B: int.FastParse(split[1]), Character: character, Password: password);
     }
 }

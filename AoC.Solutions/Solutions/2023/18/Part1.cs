@@ -1,3 +1,4 @@
+using AoC.Solutions.Extensions;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2023._18;
@@ -20,7 +21,7 @@ public class Part1 : Base
         {
             var parts = line.Split(' ');
 
-            var length = int.Parse(parts[1]);
+            var length = int.FastParse(parts[1]);
 
             Length += length;
             

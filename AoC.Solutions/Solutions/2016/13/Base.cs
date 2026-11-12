@@ -18,7 +18,7 @@ public abstract class Base : Solution
     {
         _maze = new bool[Width, Height];
 
-        var designerNumber = int.Parse(Input[0]);
+        var designerNumber = int.FastParse(Input[0]);
 
         for (var y = 0; y < Height; y++)
         {

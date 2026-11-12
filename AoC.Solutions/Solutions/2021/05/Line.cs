@@ -13,7 +13,7 @@ public class Line
 
     public static Line Parse(string data)
     {
-        var coords = data.Replace("->", ",").Split(",", StringSplitOptions.TrimEntries).Select(int.Parse).ToList();
+        var coords = data.Replace("->", ",").Split(",", StringSplitOptions.TrimEntries).Select(int.FastParse).ToList();
 
         var line = new Line
                    {

@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using AoC.Solutions.Extensions;
 
 namespace AoC.Solutions.Solutions._2016.Common;
 
@@ -145,7 +146,7 @@ public static partial class Cpu
     {
         return char.IsLetter(value[0])
             ? new Operand(value[0] - 'a', true)
-            : new Operand(int.Parse(value), false);
+            : new Operand(int.FastParse(value), false);
     }
 
     private static int GetValue(Operand operand, ReadOnlySpan<int> registers)

@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Extensions;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2015._17;
 
@@ -21,7 +22,7 @@ public class Part2 : Base
 
         foreach (var line in Input)
         {
-            var capacity = int.Parse(line);
+            var capacity = int.FastParse(line);
 
             for (var volume = target; volume >= capacity; volume--)
             {

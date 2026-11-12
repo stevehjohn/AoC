@@ -1,4 +1,5 @@
 ﻿using AoC.Solutions.Exceptions;
+using AoC.Solutions.Extensions;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2020._09;
@@ -10,7 +11,7 @@ public class Part2 : Base
     {
         ParseData();
 
-        var targetIndex = int.Parse(File.ReadAllText(Part1ResultFile));
+        var targetIndex = int.FastParse(File.ReadAllText(Part1ResultFile));
 
         var target = Data[targetIndex];
 

@@ -1,3 +1,4 @@
+using AoC.Solutions.Extensions;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2023._02;
@@ -37,7 +38,7 @@ public class Part2 : Base
             {
                 var parts = draw.Split(' ', StringSplitOptions.TrimEntries);
 
-                var number = int.Parse(parts[0]);
+                var number = int.FastParse(parts[0]);
 
                 switch (parts[1])
                 {

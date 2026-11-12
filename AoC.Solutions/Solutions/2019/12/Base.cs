@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2019._12;
 
@@ -80,7 +81,7 @@ public abstract class Base : Solution
 
     private static int ParseComponent(string component)
     {
-        return int.Parse(component.Split('=', StringSplitOptions.TrimEntries)[1]);
+        return int.FastParse(component.Split('=', StringSplitOptions.TrimEntries)[1]);
 
     }
 }

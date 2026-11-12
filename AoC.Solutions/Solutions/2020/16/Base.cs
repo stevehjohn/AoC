@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2020._16;
 
@@ -91,7 +92,7 @@ public abstract class Base : Solution
 
     private static List<int> ParseTicket(string input)
     {
-        return [.. input.Split(',', StringSplitOptions.TrimEntries).Select(int.Parse)];
+        return [.. input.Split(',', StringSplitOptions.TrimEntries).Select(int.FastParse)];
     }
 
     private static Rule ParseRule(string input)
@@ -102,11 +103,11 @@ public abstract class Base : Solution
 
         var rule = rules[0].Split('-', StringSplitOptions.TrimEntries);
 
-        var rule1 = new Range(int.Parse(rule[0]), int.Parse(rule[1]));
+        var rule1 = new Range(int.FastParse(rule[0]), int.FastParse(rule[1]));
 
         rule = rules[1].Split('-', StringSplitOptions.TrimEntries);
 
-        var rule2 = new Range(int.Parse(rule[0]), int.Parse(rule[1]));
+        var rule2 = new Range(int.FastParse(rule[0]), int.FastParse(rule[1]));
 
         return new Rule(split[0], rule1, rule2);
     }

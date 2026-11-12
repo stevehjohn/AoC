@@ -1,3 +1,4 @@
+using AoC.Solutions.Extensions;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2025._10;
@@ -47,7 +48,7 @@ public class Part2 : Base
 
         for (var i = 0; i < joltages.Length; i++)
         {
-            totals[i] = int.Parse(joltages[i]);
+            totals[i] = int.FastParse(joltages[i]);
         }
 
         return new Matrix(rows, totals);

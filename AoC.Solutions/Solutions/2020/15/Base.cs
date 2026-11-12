@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2020._15;
 
@@ -10,7 +11,7 @@ public abstract class Base : Solution
     {
         var split = Input[0].Split(',').ToList();
 
-        var numbers = split.Select(int.Parse).ToList();
+        var numbers = split.Select(int.FastParse).ToList();
 
         var lastSpoken = new int[turns];
 

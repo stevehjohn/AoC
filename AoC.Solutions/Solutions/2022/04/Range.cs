@@ -1,4 +1,6 @@
-﻿namespace AoC.Solutions.Solutions._2022._04;
+﻿using AoC.Solutions.Extensions;
+
+namespace AoC.Solutions.Solutions._2022._04;
 
 public class Range
 {
@@ -10,8 +12,8 @@ public class Range
     {
         var split = data.Split('-');
 
-        Left = int.Parse(split[0]);
+        Left = int.FastParse(split[0]);
 
-        Right = int.Parse(split[1]);
+        Right = int.FastParse(split[1]);
     }
 }

@@ -1,3 +1,4 @@
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 using JetBrains.Annotations;
 
@@ -70,7 +71,7 @@ public class Part1 : Base
         {
             var line = Input[i];
 
-            var area = int.Parse(line[..2]) * int.Parse(line[3..5]);
+            var area = int.FastParse(line[..2]) * int.FastParse(line[3..5]);
 
             var presentCounts = line[7..].Split(' ');
 
@@ -78,7 +79,7 @@ public class Part1 : Base
 
             for (var x = 0; x < presentCounts.Length; x++)
             {
-                var required = int.Parse(presentCounts[x]);
+                var required = int.FastParse(presentCounts[x]);
 
                 used += required * areas[x];
             }
@@ -90,7 +91,7 @@ public class Part1 : Base
 
             if (_visualiser != null)
             {
-                _puzzleState.Areas.Add(new Area(int.Parse(line[..2]), int.Parse(line[3..5]), [.. presentCounts.Select(int.Parse)], used < area));
+                _puzzleState.Areas.Add(new Area(int.FastParse(line[..2]), int.FastParse(line[3..5]), [.. presentCounts.Select(int.FastParse)], used < area));
             }
         }
 

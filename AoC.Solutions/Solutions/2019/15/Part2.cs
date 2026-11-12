@@ -1,4 +1,5 @@
 ﻿using AoC.Solutions.Common;
+using AoC.Solutions.Extensions;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2019._15;
@@ -21,11 +22,11 @@ public class Part2 : Base
 
         var coords = data[0].Split(',', StringSplitOptions.TrimEntries);
 
-        Origin = new Point(int.Parse(coords[0]), int.Parse(coords[1]));
+        Origin = new Point(int.FastParse(coords[0]), int.FastParse(coords[1]));
 
         coords = data[1].Split(',', StringSplitOptions.TrimEntries);
 
-        Destination = new Point(int.Parse(coords[0]), int.Parse(coords[1]));
+        Destination = new Point(int.FastParse(coords[0]), int.FastParse(coords[1]));
 
         Map = new bool[data[2].Length, data.Length];
 

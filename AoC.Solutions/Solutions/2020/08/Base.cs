@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2020._08;
 
@@ -28,12 +29,12 @@ public abstract class Base : Solution
             switch (instruction[..3])
             {
                 case "jmp":
-                    programCounter += int.Parse(instruction[4..]);
+                    programCounter += int.FastParse(instruction[4..]);
 
                     break;
 
                 case "acc":
-                    accumulator += int.Parse(instruction[4..]);
+                    accumulator += int.FastParse(instruction[4..]);
 
                     programCounter++;
 

@@ -8,7 +8,7 @@ public readonly record struct Vertex(int X, int Y, int Z)
     {
         var parts = input.Split(',');
 
-        return new Vertex(parts[0].ParseToInt(), parts[1].ParseToInt(), parts[2].ParseToInt());
+        return new Vertex(int.FastParse(parts[0]), int.FastParse(parts[1]), int.FastParse(parts[2]));
     }
 
     public override string ToString()

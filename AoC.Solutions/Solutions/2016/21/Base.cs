@@ -16,21 +16,21 @@ public abstract class Base : Solution
             switch (parts[0])
             {
                 case "swap":
-                    state = parts[1] == "position" ? SwapPosition(state, int.Parse(parts[2]), int.Parse(parts[5])) : SwapLetter(state, parts[2][0], parts[5][0]);
+                    state = parts[1] == "position" ? SwapPosition(state, int.FastParse(parts[2]), int.FastParse(parts[5])) : SwapLetter(state, parts[2][0], parts[5][0]);
 
                     break;
                 case "rotate":
                     switch (parts[1])
                     {
                         case "left" when reverse:
-                            state = RotateRight(state, int.Parse(parts[2]));
+                            state = RotateRight(state, int.FastParse(parts[2]));
                             break;
                         case "left":
                         case "right" when reverse:
-                            state = RotateLeft(state, int.Parse(parts[2]));
+                            state = RotateLeft(state, int.FastParse(parts[2]));
                             break;
                         case "right":
-                            state = RotateRight(state, int.Parse(parts[2]));
+                            state = RotateRight(state, int.FastParse(parts[2]));
                             break;
                         default:
                             state = RotateByIndexOf(state, parts[6][0], reverse);
@@ -39,11 +39,11 @@ public abstract class Base : Solution
 
                     break;
                 case "reverse":
-                    state = Reverse(state, int.Parse(parts[2]), int.Parse(parts[4]));
+                    state = Reverse(state, int.FastParse(parts[2]), int.FastParse(parts[4]));
 
                     break;
                 case "move":
-                    state = reverse ? Move(state, int.Parse(parts[5]), int.Parse(parts[2])) : Move(state, int.Parse(parts[2]), int.Parse(parts[5]));
+                    state = reverse ? Move(state, int.FastParse(parts[5]), int.FastParse(parts[2])) : Move(state, int.FastParse(parts[2]), int.FastParse(parts[5]));
 
                     break;
             }

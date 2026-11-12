@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Extensions;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2018._25;
 
@@ -75,7 +76,7 @@ public class Part1 : Base
         {
             var parts = line.Split(',', StringSplitOptions.TrimEntries);
 
-            result.Add((int.Parse(parts[0]), int.Parse(parts[1]), int.Parse(parts[2]), int.Parse(parts[3])));
+            result.Add((int.FastParse(parts[0]), int.FastParse(parts[1]), int.FastParse(parts[2]), int.FastParse(parts[3])));
         }
 
         return result;

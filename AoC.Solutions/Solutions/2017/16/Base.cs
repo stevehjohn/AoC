@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2017._16;
 
@@ -15,7 +16,7 @@ public abstract class Base : Solution
             switch (step[0])
             {
                 case 's':
-                    var len = int.Parse(step[1..]);
+                    var len = int.FastParse(step[1..]);
 
                     var temp = new char[16];
 
@@ -35,7 +36,7 @@ public abstract class Base : Solution
 
                     break;
                 case 'x':
-                    var indexes = step[1..].Split('/').Select(int.Parse).ToArray();
+                    var indexes = step[1..].Split('/').Select(int.FastParse).ToArray();
 
                     (dancers[indexes[0]], dancers[indexes[1]]) = (dancers[indexes[1]], dancers[indexes[0]]);
 

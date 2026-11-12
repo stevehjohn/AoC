@@ -1,4 +1,5 @@
 ﻿using AoC.Solutions.Common;
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2019._03;
@@ -47,7 +48,7 @@ public abstract class Base : Solution
         {
             var newPoint = new Point(position);
 
-            var distance = int.Parse(direction[1..]);
+            var distance = int.FastParse(direction[1..]);
 
             switch (direction[0])
             {

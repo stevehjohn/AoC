@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2017._24;
 
@@ -77,9 +78,9 @@ public abstract class Base : Solution
         {
             var parts = line.Split('/');
 
-            var a = int.Parse(parts[0]);
+            var a = int.FastParse(parts[0]);
             
-            var b = int.Parse(parts[1]);
+            var b = int.FastParse(parts[1]);
 
             var index = _components.Count;
 

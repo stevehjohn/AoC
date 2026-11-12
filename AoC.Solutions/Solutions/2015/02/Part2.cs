@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Extensions;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2015._02;
 
@@ -11,7 +12,7 @@ public class Part2 : Base
 
         foreach (var box in Input)
         {
-            var sides = box.Split('x').Select(int.Parse).OrderBy(s => s).ToList();
+            var sides = box.Split('x').Select(int.FastParse).OrderBy(s => s).ToList();
 
             total += 2 * sides[0] + 2 * sides[1];
 

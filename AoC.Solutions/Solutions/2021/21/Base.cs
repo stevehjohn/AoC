@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2021._21;
 
@@ -12,8 +13,8 @@ public abstract class Base : Solution
 
     protected void ParseInput()
     {
-        Player1Position = int.Parse(Input[0][(Input[0].IndexOf(':') + 1)..]);
+        Player1Position = int.FastParse(Input[0][(Input[0].IndexOf(':') + 1)..]);
 
-        Player2Position = int.Parse(Input[1][(Input[1].IndexOf(':') + 1)..]);
+        Player2Position = int.FastParse(Input[1][(Input[1].IndexOf(':') + 1)..]);
     }
 }

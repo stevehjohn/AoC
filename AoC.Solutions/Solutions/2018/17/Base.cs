@@ -1,4 +1,5 @@
 ﻿using AoC.Solutions.Common;
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2018._17;
@@ -283,13 +284,13 @@ public abstract class Base : Solution
 
         var rangeAxis = halves[1][0];
 
-        var single = int.Parse(halves[0][2..]);
+        var single = int.FastParse(halves[0][2..]);
 
         var range = halves[1][2..].Split("..", StringSplitOptions.TrimEntries);
 
-        var rangeStart = Math.Min(int.Parse(range[0]), int.Parse(range[1]));
+        var rangeStart = Math.Min(int.FastParse(range[0]), int.FastParse(range[1]));
 
-        var rangeEnd = Math.Max(int.Parse(range[0]), int.Parse(range[1]));
+        var rangeEnd = Math.Max(int.FastParse(range[0]), int.FastParse(range[1]));
 
         return (single, rangeStart, rangeEnd, rangeAxis);
     }

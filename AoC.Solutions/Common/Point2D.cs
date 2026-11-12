@@ -1,3 +1,5 @@
+using AoC.Solutions.Extensions;
+
 namespace AoC.Solutions.Common;
 
 public struct Point2D : IEquatable<Point2D>
@@ -17,9 +19,9 @@ public struct Point2D : IEquatable<Point2D>
     {
         var parts = text.Split(',');
 
-        X = int.Parse(parts[0]);
+        X = int.FastParse(parts[0]);
 
-        Y = int.Parse(parts[1]);
+        Y = int.FastParse(parts[1]);
     }
 
     public int ManhattanDistance(Point2D other)

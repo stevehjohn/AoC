@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Extensions;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2016._01;
 
@@ -35,7 +36,7 @@ public class Part1 : Base
                 (dX, dY) = (dY, -dX);
             }
 
-            var amount = int.Parse(step[1..]);
+            var amount = int.FastParse(step[1..]);
 
             x += dX * amount;
 

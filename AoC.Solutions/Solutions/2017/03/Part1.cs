@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Extensions;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2017._03;
 
@@ -7,7 +8,7 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var number = int.Parse(Input[0]);
+        var number = int.FastParse(Input[0]);
 
         var ring = Ring(number);
 

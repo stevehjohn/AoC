@@ -1,3 +1,4 @@
+using AoC.Solutions.Extensions;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2024._21;
@@ -11,7 +12,7 @@ public class Part2 : Base
         
         foreach (var line in Input)
         {
-            result += Solve(line, 25) * int.Parse(line[..3]);
+            result += Solve(line, 25) * int.FastParse(line[..3]);
         }
         
         return result.ToString();

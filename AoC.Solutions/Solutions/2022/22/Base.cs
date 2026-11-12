@@ -1,5 +1,6 @@
 ﻿using AoC.Solutions.Common;
 using AoC.Solutions.Exceptions;
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2022._22;
@@ -76,7 +77,7 @@ public abstract class Base : Solution
         {
             if (_path[i] > '9' || i == _path.Length - 1)
             {
-                var length = i == _path.Length - 1 ? int.Parse(_path[previous..]) : int.Parse(_path.Substring(previous, i - previous));
+                var length = i == _path.Length - 1 ? int.FastParse(_path[previous..]) : int.FastParse(_path.Substring(previous, i - previous));
 
                 Walk(length);
 

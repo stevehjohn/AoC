@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2017._05;
 
@@ -41,7 +42,7 @@ public abstract class Base : Solution
 
         for (var i = 0; i < Input.Length; i++)
         {
-            _jumps[i] = int.Parse(Input[i]);
+            _jumps[i] = int.FastParse(Input[i]);
         }
     }
 }

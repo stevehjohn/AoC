@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2016._10;
 
@@ -18,9 +19,9 @@ public abstract class Base : Solution
         {
             var parts = instruction.Split(' ', StringSplitOptions.TrimEntries);
 
-            var bot = int.Parse(parts[5]);
+            var bot = int.FastParse(parts[5]);
 
-            GiveBotChip(bot, int.Parse(parts[1]));
+            GiveBotChip(bot, int.FastParse(parts[1]));
         }
     }
 
@@ -52,22 +53,22 @@ public abstract class Base : Solution
 
                 if (parts[5] == "bot")
                 {
-                    GiveBotChip(int.Parse(parts[6]), low);
+                    GiveBotChip(int.FastParse(parts[6]), low);
                 }
                 else
                 {
-                    GiveOutputChip(int.Parse(parts[6]), low);
+                    GiveOutputChip(int.FastParse(parts[6]), low);
                 }
 
                 bot.Value.Remove(low);
 
                 if (parts[10] == "bot")
                 {
-                    GiveBotChip(int.Parse(parts[11]), high);
+                    GiveBotChip(int.FastParse(parts[11]), high);
                 }
                 else
                 {
-                    GiveOutputChip(int.Parse(parts[11]), high);
+                    GiveOutputChip(int.FastParse(parts[11]), high);
                 }
 
                 bot.Value.Remove(high);

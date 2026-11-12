@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Extensions;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2015._06;
 
@@ -30,13 +31,13 @@ public class Part2 : Base
                 end = parts[3].Split(',');
             }
 
-            var startX = int.Parse(start[0]);
+            var startX = int.FastParse(start[0]);
             
-            var startY = int.Parse(start[1]);
+            var startY = int.FastParse(start[1]);
 
-            var endX = int.Parse(end[0]);
+            var endX = int.FastParse(end[0]);
             
-            var endY = int.Parse(end[1]);
+            var endY = int.FastParse(end[1]);
 
             for (var y = startY; y <= endY; y++)
             {

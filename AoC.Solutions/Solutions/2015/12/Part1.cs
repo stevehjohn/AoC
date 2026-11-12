@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Extensions;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2015._12;
 
@@ -25,7 +26,7 @@ public class Part1 : Base
                     }
                 }
 
-                sum += int.Parse(json[(i + 1)..n]);
+                sum += int.FastParse(json[(i + 1)..n]);
             }
         }
 

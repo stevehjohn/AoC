@@ -1,4 +1,6 @@
-﻿namespace AoC.Solutions.Solutions._2018._24;
+﻿using AoC.Solutions.Extensions;
+
+namespace AoC.Solutions.Solutions._2018._24;
 
 public class Group
 {
@@ -27,11 +29,11 @@ public class Group
 
         Type = type;
 
-        Units = int.Parse(input[..input.IndexOf(' ')]);
+        Units = int.FastParse(input[..input.IndexOf(' ')]);
 
         input = input[(input.IndexOf("with") + 5)..];
 
-        HitPoints = int.Parse(input[..input.IndexOf(' ')]);
+        HitPoints = int.FastParse(input[..input.IndexOf(' ')]);
 
         if (input.IndexOf('(') > -1)
         {
@@ -56,7 +58,7 @@ public class Group
 
         input = input[(input.IndexOf("does") + 5)..];
 
-        DamagePoints = int.Parse(input[..input.IndexOf(' ')]);
+        DamagePoints = int.FastParse(input[..input.IndexOf(' ')]);
 
         input = input[(input.IndexOf(' ') + 1)..];
 
@@ -64,7 +66,7 @@ public class Group
 
         input = input[(input.LastIndexOf(' ') + 1)..];
 
-        Initiative = int.Parse(input);
+        Initiative = int.FastParse(input);
 
         // ReSharper restore StringIndexOfIsCultureSpecific.1
         // ReSharper restore StringLastIndexOfIsCultureSpecific.1

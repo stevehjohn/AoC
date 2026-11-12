@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2018._09;
 
@@ -77,6 +78,6 @@ public abstract class Base : Solution
     {
         var split = Input[0].Split(' ', StringSplitOptions.TrimEntries);
 
-        return (int.Parse(split[0]), int.Parse(split[6]));
+        return (int.FastParse(split[0]), int.FastParse(split[6]));
     }
 }

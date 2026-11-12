@@ -1,4 +1,5 @@
 ﻿using AoC.Solutions.Common;
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2021._22;
@@ -37,7 +38,7 @@ public abstract class Base : Solution
     {
         var split = pair[2..].Split("..", StringSplitOptions.TrimEntries);
 
-        return (int.Parse(split[0]), int.Parse(split[1]));
+        return (int.FastParse(split[0]), int.FastParse(split[1]));
     }
 
     protected void ProcessInput(int linesToProcess)

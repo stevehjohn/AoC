@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Extensions;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2022._10;
 
@@ -53,7 +54,7 @@ public class Part1 : Base
 
                     cycle++;
 
-                    registerX += int.Parse(line[5..]);
+                    registerX += int.FastParse(line[5..]);
 
                     break;
             }

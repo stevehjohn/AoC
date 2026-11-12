@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Extensions;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2017._17;
 
@@ -7,7 +8,7 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        var steps = int.Parse(Input[0]);
+        var steps = int.FastParse(Input[0]);
 
         var next = 0;
 

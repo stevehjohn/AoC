@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Solutions._2018.TimeMachine;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Solutions._2018.TimeMachine;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2018._16;
@@ -38,7 +39,7 @@ public class Part2 : Base
         {
             var line = Input[i];
 
-            var parts = line.Split(' ').Select(int.Parse).ToArray();
+            var parts = line.Split(' ').Select(int.FastParse).ToArray();
 
             _cpu.Execute(_matchedOpCodes[parts[0]], parts[1], parts[2], parts[3]);
         }
@@ -74,7 +75,7 @@ public class Part2 : Base
                 break;
             }
 
-            var parts = Input[i + 1].Split(' ').Select(int.Parse).ToArray();
+            var parts = Input[i + 1].Split(' ').Select(int.FastParse).ToArray();
 
             ExecuteSample(parts[0], parts[1], parts[2], parts[3], ParseRegisters(Input[i]), ParseRegisters(Input[i + 2]));
         }

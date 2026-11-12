@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2021._04;
 
@@ -8,7 +9,7 @@ public abstract class Base : Solution
 
     protected int[] ReadDraws()
     {
-        return [.. Input[0].Split(',').Select(int.Parse)];
+        return [.. Input[0].Split(',').Select(int.FastParse)];
     }
 
     protected List<Board> ReadBoards()
@@ -23,7 +24,7 @@ public abstract class Base : Solution
 
             boards.Add(new Board([
                 .. data.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-                    .Select(int.Parse)
+                    .Select(int.FastParse)
             ]));
 
             line += 6;

@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2015._23;
 
@@ -36,13 +37,13 @@ public abstract class Base : Solution
 
                     break;
                 case "jmp":
-                    programCounter += int.Parse(parts[1]);
+                    programCounter += int.FastParse(parts[1]);
 
                     continue;
                 case "jie":
                     if (registers[parts[1][0]] % 2 == 0)
                     {
-                        programCounter += int.Parse(parts[2]);
+                        programCounter += int.FastParse(parts[2]);
 
                         continue;
                     }
@@ -51,7 +52,7 @@ public abstract class Base : Solution
                 case "jio":
                     if (registers[parts[1][0]] == 1)
                     {
-                        programCounter += int.Parse(parts[2]);
+                        programCounter += int.FastParse(parts[2]);
 
                         continue;
                     }

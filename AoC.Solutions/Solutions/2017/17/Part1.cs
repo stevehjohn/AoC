@@ -8,7 +8,7 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var steps = int.Parse(Input[0]);
+        var steps = int.FastParse(Input[0]);
 
         var circle = new LinkedList<int>();
 

@@ -34,4 +34,55 @@ public static class IntExtensions
             }
         }
     }
+
+    extension(int)
+    {
+        
+        public static int FastParse(string input)
+        {
+            if (input.Length == 0)
+            {
+                throw new FormatException("Input string is empty.");
+            }
+
+            var result = 0;
+
+            var i = 0;
+
+            var negative = false;
+
+            if (input[0] == '-')
+            {
+                negative = true;
+
+                i = 1;
+            }
+
+            if (input[0] == '+')
+            {
+                i = 1;
+            }
+
+            for (; i < input.Length; i++)
+            {
+                var digit = input[i];
+
+                if (digit is < '0' or > '9')
+                {
+                    break;
+                }
+
+                result = negative
+                    ? result * 10 - (digit - '0')
+                    : result * 10 + (digit - '0');
+            }
+
+            if (i == (negative ? 1 : 0))
+            {
+                throw new FormatException("No integer input.");
+            }
+
+            return result;
+        }
+    }
 }

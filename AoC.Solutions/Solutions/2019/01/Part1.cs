@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Extensions;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2019._01;
 
@@ -11,7 +12,7 @@ public class Part1 : Base
 
         foreach (var line in Input)
         {
-            fuel += int.Parse(line) / 3 - 2;
+            fuel += int.FastParse(line) / 3 - 2;
         }
 
         return fuel.ToString();

@@ -1,4 +1,5 @@
 ﻿using AoC.Solutions.Common;
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 using JetBrains.Annotations;
 
@@ -28,7 +29,7 @@ public abstract class Base : Solution
     {
         var split = line.Split('@', StringSplitOptions.TrimEntries);
 
-        var claimId = int.Parse(split[0][1..]);
+        var claimId = int.FastParse(split[0][1..]);
 
         split = split[1].Split(':', StringSplitOptions.TrimEntries);
 
@@ -39,6 +40,6 @@ public abstract class Base : Solution
     {
         var split = data.Split(delimiter, StringSplitOptions.TrimEntries);
 
-        return new Point(int.Parse(split[0]), int.Parse(split[1]));
+        return new Point(int.FastParse(split[0]), int.FastParse(split[1]));
     }
 }

@@ -1,3 +1,5 @@
+using AoC.Solutions.Extensions;
+
 using System.Diagnostics.CodeAnalysis;
 
 namespace AoC.Solutions.Infrastructure;
@@ -47,7 +49,7 @@ public static class InputProvider
     {
         var parts = path.Split(Path.DirectorySeparatorChar, StringSplitOptions.RemoveEmptyEntries);
 
-        var url = $"https://adventofcode.com/{parts[^2]}/day/{int.Parse(parts[^1])}/input";
+        var url = $"https://adventofcode.com/{parts[^2]}/day/{int.FastParse(parts[^1])}/input";
         
         using var request = new HttpRequestMessage(HttpMethod.Get, url);
         

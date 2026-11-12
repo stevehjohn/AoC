@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using System.Text;
+using AoC.Solutions.Extensions;
 
 namespace AoC.Solutions.Solutions._2020._20;
 
@@ -37,7 +38,7 @@ public class Tile
 
     public Tile(List<string> data)
     {
-        Id = int.Parse(data[0].Substring(5, 4));
+        Id = int.FastParse(data[0].Substring(5, 4));
 
         var left = new StringBuilder();
 

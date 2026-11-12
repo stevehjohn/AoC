@@ -1,4 +1,6 @@
-﻿namespace AoC.Solutions.Common;
+﻿using AoC.Solutions.Extensions;
+
+namespace AoC.Solutions.Common;
 
 public class Point
 {
@@ -36,13 +38,13 @@ public class Point
 
         var point = new Point
                     {
-                        X = int.Parse(split[0]),
-                        Y = int.Parse(split[1])
+                        X = int.FastParse(split[0]),
+                        Y = int.FastParse(split[1])
                     };
 
         if (split.Length > 2)
         {
-            point.Z = int.Parse(split[2]);
+            point.Z = int.FastParse(split[2]);
         }
 
         return point;

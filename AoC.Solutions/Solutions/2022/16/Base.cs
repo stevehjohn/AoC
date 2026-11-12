@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2022._16;
 
@@ -22,7 +23,7 @@ public abstract class Base : Solution
 
             var parts = line.Split(';', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
-            var flowRate = int.Parse(parts[0][23..]);
+            var flowRate = int.FastParse(parts[0][23..]);
 
             var valve = new Valve(name, flowRate);
 

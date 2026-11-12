@@ -1,5 +1,6 @@
 ﻿
 using AoC.Solutions.Common;
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2018._11;
@@ -71,7 +72,7 @@ public abstract class Base : Solution
 
     protected int ParseInput()
     {
-        return int.Parse(Input[0]);
+        return int.FastParse(Input[0]);
     }
 
     private static int CalculatePowerLevel(int x, int y, int serial)

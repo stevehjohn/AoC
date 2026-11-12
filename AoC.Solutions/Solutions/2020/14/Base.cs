@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2020._14;
 
@@ -14,6 +15,6 @@ public abstract class Base : Solution
 
         locationString = locationString[..locationString.IndexOf(']')];
 
-        return (int.Parse(locationString), long.Parse(split[1]));
+        return (int.FastParse(locationString), long.Parse(split[1]));
     }
 }

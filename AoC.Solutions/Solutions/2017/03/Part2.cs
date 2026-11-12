@@ -1,4 +1,5 @@
 ﻿using AoC.Solutions.Common;
+using AoC.Solutions.Extensions;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2017._03;
@@ -10,7 +11,7 @@ public class Part2 : Base
 
     public override string GetAnswer()
     {
-        var result = Solve(int.Parse(Input[0]));
+        var result = Solve(int.FastParse(Input[0]));
 
         return result.ToString();
     }

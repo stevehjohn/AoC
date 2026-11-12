@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using AoC.Solutions.Extensions;
 
 namespace AoC.Solutions.Solutions._2018.TimeMachine;
 
@@ -215,7 +216,7 @@ public sealed class Cpu
     private static Instruction ParseLine(string line)
     {
         var parts = line.Split(' ', StringSplitOptions.TrimEntries);
-        return new Instruction(ParseOpCode(parts[0]), int.Parse(parts[1]), int.Parse(parts[2]), int.Parse(parts[3]));
+        return new Instruction(ParseOpCode(parts[0]), int.FastParse(parts[1]), int.FastParse(parts[2]), int.FastParse(parts[3]));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

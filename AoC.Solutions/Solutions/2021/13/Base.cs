@@ -1,4 +1,5 @@
 ﻿using AoC.Solutions.Common;
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2021._13;
@@ -24,14 +25,14 @@ public abstract class Base : Solution
             {
                 var fold = line.Split('=');
 
-                _folds.Add((fold[0][^1..], int.Parse(fold[1])));
+                _folds.Add((fold[0][^1..], int.FastParse(fold[1])));
 
                 continue;
             }
 
             var coords = line.Split(',', StringSplitOptions.TrimEntries);
 
-            Dots.Add(new Point(int.Parse(coords[0]), int.Parse(coords[1])));
+            Dots.Add(new Point(int.FastParse(coords[0]), int.FastParse(coords[1])));
         }
     }
 

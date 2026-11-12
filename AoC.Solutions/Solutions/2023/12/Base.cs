@@ -1,3 +1,4 @@
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2023._12;
@@ -16,7 +17,7 @@ public abstract class Base : Solution
 
         for (var i = 0; i < right.Length; i++)
         {
-            var value = int.Parse(right[i]);
+            var value = int.FastParse(right[i]);
 
             groups[i] = value;
         }

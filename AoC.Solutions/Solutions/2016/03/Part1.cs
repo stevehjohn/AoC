@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using AoC.Solutions.Extensions;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2016._03;
 
@@ -11,7 +12,7 @@ public class Part1 : Base
 
         foreach (var line in Input)
         {
-            var sides = line.Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).OrderBy(s => s).ToArray();
+            var sides = line.Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).Select(int.FastParse).OrderBy(s => s).ToArray();
 
             if (sides[0] + sides[1] > sides[2])
             {

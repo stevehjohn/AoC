@@ -1,5 +1,6 @@
 ﻿using AoC.Solutions.Infrastructure;
 using System.Text;
+using AoC.Solutions.Extensions;
 
 namespace AoC.Solutions.Solutions._2022._05;
 
@@ -20,7 +21,7 @@ public abstract class Base : Solution
 
         index--;
 
-        var count = int.Parse(Input[index].Split(' ', StringSplitOptions.RemoveEmptyEntries).Last());
+        var count = int.FastParse(Input[index].Split(' ', StringSplitOptions.RemoveEmptyEntries).Last());
 
         var stacks = new Stack<char>[count];
 
@@ -52,9 +53,9 @@ public abstract class Base : Solution
     {
         var parts = instruction.Split(' ', StringSplitOptions.TrimEntries);
 
-        for (var i = 0; i < int.Parse(parts[1]); i++)
+        for (var i = 0; i < int.FastParse(parts[1]); i++)
         {
-            _stacks[int.Parse(parts[5]) - 1].Push(_stacks[int.Parse(parts[3]) - 1].Pop());
+            _stacks[int.FastParse(parts[5]) - 1].Push(_stacks[int.FastParse(parts[3]) - 1].Pop());
         }
     }
 
@@ -64,14 +65,14 @@ public abstract class Base : Solution
 
         var tempStack = new Stack<char>();
 
-        for (var i = 0; i < int.Parse(parts[1]); i++)
+        for (var i = 0; i < int.FastParse(parts[1]); i++)
         {
-            tempStack.Push(_stacks[int.Parse(parts[3]) - 1].Pop());
+            tempStack.Push(_stacks[int.FastParse(parts[3]) - 1].Pop());
         }
 
-        for (var i = 0; i < int.Parse(parts[1]); i++)
+        for (var i = 0; i < int.FastParse(parts[1]); i++)
         {
-            _stacks[int.Parse(parts[5]) - 1].Push(tempStack.Pop());
+            _stacks[int.FastParse(parts[5]) - 1].Push(tempStack.Pop());
         }
     }
 

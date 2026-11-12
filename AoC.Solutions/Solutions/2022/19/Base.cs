@@ -1,5 +1,6 @@
 ﻿using AoC.Solutions.Infrastructure;
 using System.Collections.Concurrent;
+using AoC.Solutions.Extensions;
 
 namespace AoC.Solutions.Solutions._2022._19;
 
@@ -15,7 +16,7 @@ public abstract class Base : Solution
         {
             var parts = line.Split(':', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
-            var id = int.Parse(parts[0][10..]);
+            var id = int.FastParse(parts[0][10..]);
 
             var ingredients = parts[1].Split('.', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
@@ -23,9 +24,9 @@ public abstract class Base : Solution
 
             var clayBot = new Materials(ingredients[1][22] - '0', 0, 0);
 
-            var obsidianBot = new Materials(ingredients[2][26] - '0', int.Parse(ingredients[2][36..38].Trim()), 0);
+            var obsidianBot = new Materials(ingredients[2][26] - '0', int.FastParse(ingredients[2][36..38].Trim()), 0);
 
-            var geodeBot = new Materials(ingredients[3][23] - '0', 0, int.Parse(ingredients[3][33..35].Trim()));
+            var geodeBot = new Materials(ingredients[3][23] - '0', 0, int.FastParse(ingredients[3][33..35].Trim()));
 
             var blueprint = new Blueprint(id, oreBot, clayBot, obsidianBot, geodeBot);
 

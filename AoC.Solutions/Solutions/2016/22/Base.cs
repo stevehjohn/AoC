@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2016._22;
 
@@ -47,10 +48,10 @@ public abstract class Base : Solution
 
         var coordsPart = parts[0][15..].Split('-');
 
-        var x = int.Parse(coordsPart[0][1..]);
+        var x = int.FastParse(coordsPart[0][1..]);
         
-        var y = int.Parse(coordsPart[1][1..]);
+        var y = int.FastParse(coordsPart[1][1..]);
 
-        return (x, y, int.Parse(parts[2][..^1]), int.Parse(parts[3][..^1]));
+        return (x, y, int.FastParse(parts[2][..^1]), int.FastParse(parts[3][..^1]));
     }
 }

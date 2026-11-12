@@ -1,3 +1,4 @@
+using AoC.Solutions.Extensions;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2021._19;
@@ -150,7 +151,7 @@ public abstract partial class Base : Solution
             {
                 var parts = line.Split(',');
 
-                current!.Add(new Vector(int.Parse(parts[0]), int.Parse(parts[1]), int.Parse(parts[2])));
+                current!.Add(new Vector(int.FastParse(parts[0]), int.FastParse(parts[1]), int.FastParse(parts[2])));
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Common;
+﻿using AoC.Solutions.Extensions;
+using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2021._17;
@@ -21,9 +22,9 @@ public abstract class Base : Solution
 
         var components = input.Split(',', StringSplitOptions.TrimEntries).Select(c => c[2..]).ToArray();
 
-        var xRange = components[0].Split("..").Select(int.Parse).ToArray();
+        var xRange = components[0].Split("..").Select(int.FastParse).ToArray();
 
-        var yRange = components[1].Split("..").Select(int.Parse).ToArray();
+        var yRange = components[1].Split("..").Select(int.FastParse).ToArray();
 
         _topLeft.X = xRange[0];
 
