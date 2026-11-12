@@ -1,3 +1,5 @@
+using AoC.Solutions.Extensions;
+
 namespace AoC.Solutions.Infrastructure;
 
 public readonly record struct Vertex(int X, int Y, int Z)
@@ -6,7 +8,7 @@ public readonly record struct Vertex(int X, int Y, int Z)
     {
         var parts = input.Split(',');
 
-        return new Vertex(int.Parse(parts[0]), int.Parse(parts[1]), int.Parse(parts[2]));
+        return new Vertex(parts[0].ParseToInt(), parts[1].ParseToInt(), parts[2].ParseToInt());
     }
 
     public override string ToString()
