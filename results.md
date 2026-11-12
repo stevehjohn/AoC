@@ -107,7 +107,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 22.1: 721μs         Grid computing
  2016 22.2: 1,076μs       
  2016 23.1: 86μs          Safe cracking
- 2016 23.2: 28μs          
+ 2016 23.2: 26μs          
  2016 24.1: 19,559μs      Air duct spelunking
  2016 24.2: 18,745μs      
  2016 25.1: 6,641μs       Clock signal
@@ -160,11 +160,11 @@ Tests performed on a 2023 MacBook Pro.
  2017 22.2: 46,390μs      
  2017 23.1: 4,707μs       Coprocessor conflagration
  2017 23.2: 2,663μs       
- 2017 24.1: 42,576μs      Electromagnetic moat
- 2017 24.2: 42,322μs      
+ 2017 24.1: 41,688μs      Electromagnetic moat
+ 2017 24.2: 41,350μs      
  2017 25.1: 67,209μs      Turing tape
             -------------
-            805.045ms    
+            803.185ms    
 
  2018  1.1: 17μs          Tardis calibration
  2018  1.2: 3,880μs       
@@ -174,7 +174,7 @@ Tests performed on a 2023 MacBook Pro.
  2018  3.2: 4,994μs       
  2018  4.1: 673μs         Sleepy guards
  2018  4.2: 1,148μs       
- 2018  5.1: 882μs         Polymer reactions
+ 2018  5.1: 875μs         Polymer reactions
  2018  5.2: 33,500μs      
  2018  6.1: 8,045μs       Safe coordinates
  2018  6.2: 5,368μs       
@@ -184,7 +184,7 @@ Tests performed on a 2023 MacBook Pro.
  2018  8.2: 4,941μs       
  2018  9.1: 166μs         Marble madness
  2018  9.2: 17,634μs      
- 2018 10.1: 4,468μs       Writing in the stars
+ 2018 10.1: 4,462μs       Writing in the stars
  2018 10.2: 4,467μs       
  2018 11.1: 222μs         Max power... cell
  2018 11.2: 4,561μs       
@@ -194,12 +194,12 @@ Tests performed on a 2023 MacBook Pro.
  2018 13.2: 31,589μs      
  2018 14.1: 3,253μs       Elf recipes
  2018 14.2: 114,974μs     
- 2018 15.1: 9,706μs       Elves vs Goblins
- 2018 15.2: 44,272μs      
+ 2018 15.1: 9,539μs       Elves vs Goblins
+ 2018 15.2: 43,969μs      
  2018 16.1: 511μs         Opcode reverse-engineering
  2018 16.2: 725μs         
- 2018 17.1: 18,123μs      Don't go chasing waterfalls
- 2018 17.2: 17,715μs      
+ 2018 17.1: 18,038μs      Don't go chasing waterfalls
+ 2018 17.2: 17,694μs      
  2018 18.1: 405μs         I'm a lumberjack...
  2018 18.2: 18,093μs      
  2018 19.1: 18,660μs      Tardis halting problem
@@ -216,7 +216,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 10,248μs      
  2018 25.1: 24,412μs      4D chocolate teleportation
             -------------
-            554.080ms    
+            553.491ms    
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
@@ -375,7 +375,7 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             511.641ms    
 
- 2022  1.1: 22μs          Calorie counting
+ 2022  1.1: 20μs          Calorie counting
  2022  1.2: 30μs          
  2022  2.1: 37μs          Rock paper scissors
  2022  2.2: 30μs          
@@ -404,7 +404,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 14.1: 402μs         Regolith reservoir
  2022 14.2: 4,092μs       
  2022 15.1: 8μs           Beacon exclusion zone
- 2022 15.2: 9,842μs       
+ 2022 15.2: 9,500μs       
  2022 16.1: 21,516μs      Proboscidea volcanium
  2022 16.2: 13,314μs      
  2022 17.1: 124μs         Pyroclastic flow
@@ -413,7 +413,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 18.2: 1,418μs       
  2022 19.1: 19,068μs      Not enough minerals
  2022 19.2: 3,987μs       
- 2022 20.1: 11,514μs      Grove positioning system
+ 2022 20.1: 11,322μs      Grove positioning system
  2022 20.2: 51,054μs      
  2022 21.1: 259μs         Monkey math
  2022 21.2: 256μs         
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 53,434μs      
  2022 25.1: 9μs           Full of hot air
             -------------
-            282.297ms    
+            281.761ms    
 
  2023  1.1: 115μs         Trebuchet
  2023  1.2: 320μs         
@@ -438,9 +438,9 @@ Tests performed on a 2023 MacBook Pro.
  2023  5.1: 32μs          If you give a seed a fertilizer
  2023  5.2: 126μs         
  2023  6.1: 2μs           Wait for it
- 2023  6.2: 36μs          
- 2023  7.1: 586μs         Camel cards
- 2023  7.2: 621μs         
+ 2023  6.2: 35μs          
+ 2023  7.1: 531μs         Camel cards
+ 2023  7.2: 607μs         
  2023  8.1: 424μs         Haunted wasteland
  2023  8.2: 747μs         
  2023  9.1: 350μs         Mirage maintenance
@@ -477,12 +477,12 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,110μs       
  2023 25.1: 9,284μs       Snowverload
             -------------
-            342.217ms    
+            342.147ms    
 
  2024  1.1: 112μs         Historian hysteria
  2024  1.2: 79μs          
  2024  2.1: 155μs         Red-nosed reports
- 2024  2.2: 317μs         
+ 2024  2.2: 313μs         
  2024  3.1: 252μs         Mull it over
  2024  3.2: 221μs         
  2024  4.1: 256μs         Ceres search
@@ -513,7 +513,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 16.2: 31,394μs      
  2024 17.1: 7μs           Chronospatial computer
  2024 17.2: 2,525μs       
- 2024 18.1: 1,160μs       RAM run
+ 2024 18.1: 888μs         RAM run
  2024 18.2: 1,318μs       
  2024 19.1: 37,654μs      Linen layout
  2024 19.2: 55,434μs      
@@ -529,12 +529,12 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 231μs         
  2024 25.1: 112μs         Code chronicle
             -------------
-            517.614ms    
+            517.338ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 87μs          
  2025  2.1: 15,516μs      Gift shop
- 2025  2.2: 45,327μs      
+ 2025  2.2: 45,040μs      
  2025  3.1: 107μs         Lobby
  2025  3.2: 197μs         
  2025  4.1: 190μs         Printing department
@@ -547,7 +547,7 @@ Tests performed on a 2023 MacBook Pro.
  2025  7.2: 274μs         
  2025  8.1: 15,741μs      Playground
  2025  8.2: 91,235μs      
- 2025  9.1: 175μs         Movie theater
+ 2025  9.1: 160μs         Movie theater
  2025  9.2: 7,114μs       
  2025 10.1: 1,610μs       Factory
  2025 10.2: 67,032μs      
@@ -555,7 +555,7 @@ Tests performed on a 2023 MacBook Pro.
  2025 11.2: 520μs         
  2025 12.1: 276μs         Christmas tree farm
             -------------
-            248.893ms    
+            248.591ms    
 
- 514 puzzles solved in 6.786s.
+ 514 puzzles solved in 6.783s.
 ```
