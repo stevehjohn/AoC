@@ -39,7 +39,7 @@ public static class IntExtensions
     {
         public static int FastParse(string input)
         {
-            return FastParse(input.AsSpan());
+            return int.FastParse(input.AsSpan());
         }
         
         public static int FastParse(ReadOnlySpan<char> input)

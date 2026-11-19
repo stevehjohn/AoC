@@ -2,7 +2,6 @@
 using AoC.Solutions.Infrastructure;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.Reflection;
 using AoC.Solutions.Extensions;
 
