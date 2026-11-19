@@ -141,7 +141,7 @@ public abstract partial class Base : Solution
 
         for (var j = 0; j < additionalHashes; j++)
         {
-            BytesToLowerHex(hashBytes, hexBytes);
+            Convert.TryToHexStringLower(hashBytes, hexBytes, out _);
 
             MD5.TryHashData(hexBytes, hashBytes, out _);
         }
