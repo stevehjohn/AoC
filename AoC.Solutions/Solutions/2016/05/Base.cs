@@ -14,7 +14,7 @@ public abstract partial class Base : Solution
 
         var suffix = 1;
 
-        const int batchSize = 4_096;
+        const int batchSize = 65_536;
 
         var matches = new HashMatch?[batchSize];
 
