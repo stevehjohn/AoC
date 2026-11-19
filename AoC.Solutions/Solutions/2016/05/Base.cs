@@ -55,26 +55,6 @@ public abstract partial class Base : Solution
         // ReSharper disable once IteratorNeverReturns
     }
 
-    private static HashMatch? Calculate(byte[] prefixBytes, int suffix)
-    {
-        Span<byte> bytes = stackalloc byte[prefixBytes.Length + 10];
-
-        prefixBytes.CopyTo(bytes);
-
-        Utf8Formatter.TryFormat(suffix, bytes[prefixBytes.Length..], out var written);
-
-        Span<byte> hash = stackalloc byte[16];
-
-        MD5.TryHashData(bytes[..(prefixBytes.Length + written)], hash, out _);
-
-        if (hash[0] != 0 || hash[1] != 0 || (hash[2] & 0b1111_0000) != 0)
-        {
-            return null;
-        }
-
-        return new HashMatch(suffix, hash[2] & 0b0000_1111, hash[3] >> 4);
-    }
-
     protected static char ToHex(int value)
     {
         return value < 10 ? (char) ('0' + value) : (char) ('a' + value - 10);
