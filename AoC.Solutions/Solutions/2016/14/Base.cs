@@ -57,15 +57,15 @@ public abstract partial class Base : Solution
 
             for (var x = 0; x < batchSize; x++)
             {
-                i = start + x;
-
-                var result = ProcessHash(hashes[x], i, queued, matches, ref found);
-
+                var result = ProcessHash(hashes[x], start + x, queued, matches, ref found);
+                
                 if (result >= 0)
                 {
                     return result;
                 }
             }
+            
+            i += batchSize;
         }
     }
 
