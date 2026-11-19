@@ -2,6 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 using AoC.Solutions.Infrastructure;
+using AoC.Solutions.Solutions._2016.Common;
 
 namespace AoC.Solutions.Solutions._2016._05;
 
@@ -23,11 +24,24 @@ public abstract partial class Base : Solution
         {
             var start = suffix;
 
-            Parallel.For(0, batchSize, i =>
+            Parallel.For(0, batchSize / 4, group =>
             {
-                matches[i] = Calculate(prefixBytes, start + i);
-            });
+                var offset = group * 4;
 
+                Span<byte> hashes = stackalloc byte[64];
+
+                Md5Four.Hash(prefixBytes, start + offset, hashes);
+
+                for (var lane = 0; lane < 4; lane++)
+                {
+                    var hash = hashes.Slice(lane * 16, 16);
+
+                    matches[offset + lane] = hash[0] == 0 && hash[1] == 0 && (hash[2] & 0xF0) == 0
+                            ? new HashMatch(start + offset + lane, hash[2] & 0x0F, hash[3] >> 4)
+                            : null;
+                }
+            });
+            
             for (var i = 0; i < batchSize; i++)
             {
                 if (matches[i].HasValue)

@@ -2,6 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 using AoC.Solutions.Infrastructure;
+using AoC.Solutions.Solutions._2016.Common;
 
 namespace AoC.Solutions.Solutions._2016._14;
 
@@ -53,8 +54,24 @@ public abstract partial class Base : Solution
         {
             var start = i;
 
-            Parallel.For(0, batchSize, x => { hashes[x] = CalculateHash(saltBytes, start + x, additionalHashes); });
+            Parallel.For(0, batchSize / 4, group =>
+            {
+                var offset = group * 4;
 
+                Span<byte> digests = stackalloc byte[64];
+
+                Md5Four.Hash(
+                    saltBytes,
+                    start + offset,
+                    digests,
+                    additionalHashes);
+
+                for (var lane = 0; lane < 4; lane++)
+                {
+                    hashes[offset + lane] =
+                        AnalyseHash(digests.Slice(lane * 16, 16));
+                }
+            });
             for (var x = 0; x < batchSize; x++)
             {
                 var result = ProcessHash(hashes[x], start + x, queued, matches, ref found);
