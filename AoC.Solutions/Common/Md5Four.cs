@@ -3,13 +3,13 @@ using System.Buffers.Text;
 using System.Runtime.CompilerServices;
 using System.Runtime.Intrinsics;
 
-namespace AoC.Solutions.Solutions._2016.Common;
+namespace AoC.Solutions.Common;
 
 public static class Md5Four
 {
     public static void Hash(ReadOnlySpan<byte> prefix, int firstIndex, Span<byte> destination, int additionalHashes = 0)
     {
-        if (firstIndex < 0 || firstIndex > int.MaxValue - 3)
+        if (firstIndex is < 0 or > int.MaxValue - 3)
         {
             throw new ArgumentOutOfRangeException(nameof(firstIndex));
         }

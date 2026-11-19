@@ -1,6 +1,5 @@
-﻿using System.Buffers.Text;
-using System.Security.Cryptography;
-using System.Text;
+﻿using System.Text;
+using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2015._04;
@@ -11,9 +10,7 @@ public abstract class Base : Solution
 
     protected int GetAnswer(string pattern)
     {
-        var key = Input[0];
-
-        var keyBytes = Encoding.ASCII.GetBytes(key);
+        var keyBytes = Encoding.ASCII.GetBytes(Input[0]);
 
         var requireSixZeroes = pattern.Length == 6;
 
@@ -27,9 +24,25 @@ public abstract class Base : Solution
         {
             var start = i;
 
-            Parallel.For(0, batchSize, x =>
+            Parallel.For(0, batchSize / 4, group =>
             {
-                matches[x] = IsMatch(keyBytes, start + x, requireSixZeroes);
+                var offset = group * 4;
+
+                Span<byte> hashes = stackalloc byte[64];
+
+                Md5Four.Hash(keyBytes, start + offset, hashes);
+
+                for (var lane = 0; lane < 4; lane++)
+                {
+                    var hash = hashes.Slice(lane * 16, 16);
+
+                    matches[offset + lane] =
+                        hash[0] == 0 &&
+                        hash[1] == 0 &&
+                        (requireSixZeroes
+                            ? hash[2] == 0
+                            : (hash[2] & 0xF0) == 0);
+                }
             });
 
             for (var x = 0; x < batchSize; x++)
@@ -42,20 +55,5 @@ public abstract class Base : Solution
 
             i += batchSize;
         }
-    }
-
-    private static bool IsMatch(byte[] keyBytes, int value, bool requireSixZeroes)
-    {
-        Span<byte> buffer = stackalloc byte[keyBytes.Length + 11];
-
-        keyBytes.CopyTo(buffer);
-
-        Utf8Formatter.TryFormat(value, buffer[keyBytes.Length..], out var written);
-
-        Span<byte> hash = stackalloc byte[16];
-
-        MD5.TryHashData(buffer[..(keyBytes.Length + written)], hash, out _);
-
-        return hash[0] == 0 && hash[1] == 0 && (requireSixZeroes ? hash[2] == 0 : (hash[2] & 0xf0) == 0);
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System.Buffers.Text;
 using System.Security.Cryptography;
 using System.Text;
+using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
-using AoC.Solutions.Solutions._2016.Common;
 
 namespace AoC.Solutions.Solutions._2016._14;
 
@@ -165,23 +165,7 @@ public abstract partial class Base : Solution
 
         return AnalyseHash(hashBytes);
     }
-
-    private static void BytesToLowerHex(ReadOnlySpan<byte> src, Span<byte> dest)
-    {
-        const string hex = "0123456789abcdef";
-
-        var j = 0;
-
-        for (var i = 0; i < src.Length; i++)
-        {
-            var b = src[i];
-
-            dest[j++] = (byte) hex[(b >> 4) & 0xF];
-
-            dest[j++] = (byte) hex[b & 0xF];
-        }
-    }
-
+    
     private static HashInfo AnalyseHash(ReadOnlySpan<byte> hash)
     {
         var triple = -1;

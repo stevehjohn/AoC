@@ -1,8 +1,6 @@
-﻿using System.Buffers.Text;
-using System.Security.Cryptography;
-using System.Text;
+﻿using System.Text;
+using AoC.Solutions.Common;
 using AoC.Solutions.Infrastructure;
-using AoC.Solutions.Solutions._2016.Common;
 
 namespace AoC.Solutions.Solutions._2016._05;
 
