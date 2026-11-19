@@ -44,17 +44,7 @@ public class Part2 : Base
 
         var remainingCycles = (1_000_000_000 - seenCycle) % (_cycle - seenCycle);
 
-        var hashCycle = seenCycle;
-        
-        for (var i = 0; i < remainingCycles; i++)
-        {
-            hashCycle++;
-
-            if (hashCycle > _seen.Count)
-            {
-                hashCycle = seenCycle;
-            }
-        }
+        var hashCycle = seenCycle + remainingCycles;
         
         Visualise();
 
