@@ -63,7 +63,7 @@ public static class InputProvider
         {
             Console.WriteLine($"Status code {response.StatusCode} received calling {url} to retrieve puzzle input.");
             
-            Console.WriteLine($"Session cookie {keyData[1][6..]} used.");
+            Console.WriteLine($"Session cookie {keyData[1][^6..]} used.");
             
             return;
         }
