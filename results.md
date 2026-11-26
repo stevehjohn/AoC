@@ -249,7 +249,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 15.1: 4,548μs       Oxygen repair droid (CPU used unmodified)
  2019 15.2: 156μs         
  2019 16.1: 13,422μs      FFT
- 2019 16.2: 313μs         
+ 2019 16.2: 312μs         
  2019 17.1: 323μs         Scaffolding vacuum robot (CPU used unmodified)
  2019 17.2: 1,632μs       
  2019 18.1: 121,718μs     Maze and keys
@@ -265,10 +265,10 @@ Tests performed on a 2023 MacBook Pro.
  2019 23.1: 1,709μs       IntCode network (CPU used unmodified)
  2019 23.2: 2,541μs       
  2019 24.1: 8μs           Wastl's game of life
- 2019 24.2: 6,766μs       
+ 2019 24.2: 6,656μs       
  2019 25.1: 16,447μs      Airlock password (CPU used unmodified)
             -------------
-            456.048ms    
+            455.937ms    
 
  2020  1.1: 22μs          Expenses
  2020  1.2: 106μs         
@@ -297,7 +297,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 13.1: 7μs           Bus timetables
  2020 13.2: 13μs          
  2020 14.1: 88μs          Memory bit twiddling
- 2020 14.2: 3,812μs       
+ 2020 14.2: 3,768μs       
  2020 15.1: 8μs           Number memory game
  2020 15.2: 165,088μs     
  2020 16.1: 586μs         Ticket deciphering
@@ -313,14 +313,14 @@ Tests performed on a 2023 MacBook Pro.
  2020 21.1: 184μs         Allergen detective
  2020 21.2: 165μs         
  2020 22.1: 13μs          Crab cards
- 2020 22.2: 69,884μs      
+ 2020 22.2: 69,669μs      
  2020 23.1: 2μs           Crab cups
  2020 23.2: 119,362μs     
  2020 24.1: 668μs         Tile flipping
- 2020 24.2: 34,056μs      
+ 2020 24.2: 33,923μs      
  2020 25.1: 45,743μs      Door cryptography
             -------------
-            482.736ms    
+            482.344ms    
 
  2021  1.1: 47μs          Depth scan
  2021  1.2: 138μs         
@@ -340,7 +340,7 @@ Tests performed on a 2023 MacBook Pro.
  2021  8.1: 35μs          Old school displays
  2021  8.2: 770μs         
  2021  9.1: 81μs          Lava level
- 2021  9.2: 1,943μs       
+ 2021  9.2: 1,921μs       
  2021 10.1: 375μs         Esoteric language parser
  2021 10.2: 547μs         
  2021 11.1: 1,722μs       Flashers
@@ -351,7 +351,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 13.2: 3,111μs       
  2021 14.1: 184μs         Ablative armour
  2021 14.2: 892μs         
- 2021 15.1: 1,045μs       Risky business
+ 2021 15.1: 1,044μs       Risky business
  2021 15.2: 51,946μs      
  2021 16.1: 122μs         Packet processing
  2021 16.2: 122μs         
@@ -364,16 +364,16 @@ Tests performed on a 2023 MacBook Pro.
  2021 20.1: 1,127μs       NCIS image enhancement
  2021 20.2: 71,964μs      
  2021 21.1: 12μs          Quantum dice
- 2021 21.2: 16,258μs      
+ 2021 21.2: 16,124μs      
  2021 22.1: 1,899μs       Reactor reboot
  2021 22.2: 23,586μs      
- 2021 23.1: 45,667μs      Hotel amphipod
+ 2021 23.1: 45,510μs      Hotel amphipod
  2021 23.2: 23,282μs      
  2021 24.1: 2μs           Model number
  2021 24.2: 1μs           
  2021 25.1: 24,401μs      Landing among the cucumbers
             -------------
-            400.539ms    
+            400.225ms    
 
  2022  1.1: 20μs          Calorie counting
  2022  1.2: 29μs          
@@ -459,8 +459,8 @@ Tests performed on a 2023 MacBook Pro.
  2023 15.2: 493μs         
  2023 16.1: 122μs         The floor will be lava
  2023 16.2: 5,394μs       
- 2023 17.1: 45,127μs      Clumsy crucible
- 2023 17.2: 43,415μs      
+ 2023 17.1: 16,838μs      Clumsy crucible
+ 2023 17.2: 26,265μs      
  2023 18.1: 82μs          Lavaduct lagoon
  2023 18.2: 97μs          
  2023 19.1: 196μs         Aplenty
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,110μs       
  2023 25.1: 489μs         Snowverload
             -------------
-            250.984ms    
+            205.545ms    
 
  2024  1.1: 112μs         Historian hysteria
  2024  1.2: 79μs          
@@ -547,7 +547,7 @@ Tests performed on a 2023 MacBook Pro.
  2025  7.2: 274μs         
  2025  8.1: 15,741μs      Playground
  2025  8.2: 1,847μs       
- 2025  9.1: 158μs         Movie theater
+ 2025  9.1: 157μs         Movie theater
  2025  9.2: 7,114μs       
  2025 10.1: 1,485μs       Factory
  2025 10.2: 67,032μs      
@@ -555,7 +555,7 @@ Tests performed on a 2023 MacBook Pro.
  2025 11.2: 520μs         
  2025 12.1: 276μs         Christmas tree farm
             -------------
-            98.546ms     
+            98.545ms     
 
- 514 puzzles solved in 4.459s.
+ 514 puzzles solved in 4.412s.
 ```
