@@ -17,21 +17,30 @@ public abstract class Base : Solution
 
     private readonly Dictionary<int, List<int>> _byPort = [];
 
+    private readonly HashSet<(int Port, UInt128 Used)> _visited = [];
+
     protected (int Strongest, int StrongestLongest) Solve()
     {
         _maxStrength = 0;
-        
+
         _maxLength = 0;
-        
+
         _strongestLongest = 0;
 
         Search(0, UInt128.Zero, 0, 0);
+
+        _visited.Clear();
 
         return (_maxStrength, _strongestLongest);
     }
 
     private void Search(int port, UInt128 used, int strength, int length)
     {
+        if (! _visited.Add((port, used)))
+        {
+            return;
+        }
+
         if (strength > _maxStrength)
         {
             _maxStrength = strength;
@@ -40,7 +49,7 @@ public abstract class Base : Solution
         if (length > _maxLength)
         {
             _maxLength = length;
-            
+
             _strongestLongest = strength;
         }
         else if (length == _maxLength && strength > _strongestLongest)
@@ -71,7 +80,7 @@ public abstract class Base : Solution
     protected void ParseInput()
     {
         _components.Clear();
-        
+
         _byPort.Clear();
 
         foreach (var line in Input)
@@ -79,7 +88,7 @@ public abstract class Base : Solution
             var parts = line.Split('/');
 
             var a = int.FastParse(parts[0]);
-            
+
             var b = int.FastParse(parts[1]);
 
             var index = _components.Count;
@@ -105,7 +114,7 @@ public abstract class Base : Solution
         if (! _byPort.TryGetValue(port, out var list))
         {
             list = [];
-            
+
             _byPort.Add(port, list);
         }
 
