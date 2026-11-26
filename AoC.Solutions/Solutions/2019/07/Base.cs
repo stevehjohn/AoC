@@ -28,27 +28,20 @@ public abstract class Base : Solution
             
             var previousOutput = 0L;
 
-            while (true)
+            amplifiers: while (true)
             {
-                var lastState = CpuState.AwaitingInput;
-
                 for (var i = 0; i < 5; i++)
                 {
                     amps[i].UserInput.Enqueue(previousOutput);
 
-                    lastState = amps[i].Run();
+                    var state = amps[i].Run();
 
                     previousOutput = amps[i].UserOutput.Dequeue();
 
-                    if (lastState == CpuState.Halted && i == 4)
+                    if (state == CpuState.Halted && i == 4)
                     {
-                        break;
+                        break amplifiers;
                     }
-                }
-
-                if (lastState == CpuState.Halted)
-                {
-                    break;
                 }
             }
 
