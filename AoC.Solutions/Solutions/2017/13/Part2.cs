@@ -9,30 +9,17 @@ public class Part2 : Base
     {
         var firewall = ParseInput();
 
-        var delay = 0;
-
-        while (true)
+        delays: for (var delay = 0; ; delay++)
         {
-            var caught = false;
-
             foreach (var (layer, value) in firewall)
             {
                 if ((delay + layer) % value.Period == 0)
                 {
-                    caught = true;
-
-                    break;
+                    continue delays;
                 }
             }
 
-            if (! caught)
-            {
-                break;
-            }
-
-            delay++;
+            return delay.ToString();
         }
-
-        return delay.ToString();
     }
 }
