@@ -13,7 +13,7 @@ public class Part2 : Base
 
         var unique = new HashSet<(int, int)>();
             
-        while (true)
+        simulation: while (true)
         {
             seconds++;
             
@@ -27,14 +27,11 @@ public class Part2 : Base
 
                 if (! unique.Add((robot.Position.X, robot.Position.Y)))
                 {
-                    break;
+                    continue simulation;
                 }
             }
 
-            if (unique.Count == Robots.Length)
-            {
-                break;
-            }
+            break;
         }
 
         return seconds.ToString();
