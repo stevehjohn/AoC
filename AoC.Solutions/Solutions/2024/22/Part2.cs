@@ -41,7 +41,7 @@ public class Part2 : Base
 
                 previous = price;
 
-                key = (key % window) * radix + delta;
+                key = key % window * radix + delta;
 
                 if (i < 3 || visited[key] == generation)
                 {

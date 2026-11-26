@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Common;
+﻿using System.Runtime.InteropServices;
+using AoC.Solutions.Common;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2020._24;
@@ -39,65 +40,41 @@ public class Part2 : Base
         _neighbors.Add(new Point(0, 1, -1));
     }
 
+    private readonly Dictionary<Point, int> _counts = new();
+
+    private readonly List<Point> _next = [];
+
     private void PlayGameOfLife()
     {
-        var flips = new List<Point>();
+        _counts.Clear();
 
         foreach (var tile in BlackTiles)
         {
-            var neighbors = CountNeighbors(tile);
-
-            var emptyNeighbors = GetEmptyNeighbors(tile);
-
-            foreach (var emptyNeighbor in emptyNeighbors)
+            foreach (var offset in _neighbors)
             {
-                if (CountNeighbors(emptyNeighbor) == 2)
-                {
-                    flips.Add(emptyNeighbor);
-                }
-            }
+                var point = new Point(tile.X + offset.X, tile.Y + offset.Y, tile.Z + offset.Z);
 
-            if (neighbors is 0 or > 2)
-            {
-                flips.Add(tile);
+                ref var count = ref CollectionsMarshal.GetValueRefOrAddDefault(_counts, point, out _);
+
+                count++;
             }
         }
 
-        foreach (var point in flips.Distinct())
+        _next.Clear();
+
+        foreach (var (point, count) in _counts)
         {
-            if (! BlackTiles.Add(point))
+            if (count == 2 || count == 1 && BlackTiles.Contains(point))
             {
-                BlackTiles.Remove(point);
-            }
-        }
-    }
-
-    private int CountNeighbors(Point position)
-    {
-        var neighbors = 0;
-
-        foreach (var neighbor in _neighbors)
-        {
-            neighbors += BlackTiles.Contains(new Point(position.X + neighbor.X, position.Y + neighbor.Y, position.Z + neighbor.Z)) ? 1 : 0;
-        }
-
-        return neighbors;
-    }
-
-    private List<Point> GetEmptyNeighbors(Point position)
-    {
-        var emptyNeighbors = new List<Point>();
-
-        foreach (var neighborOffset in _neighbors)
-        {
-            var neighbor = new Point(position.X + neighborOffset.X, position.Y + neighborOffset.Y, position.Z + neighborOffset.Z);
-
-            if (! BlackTiles.Contains(neighbor))
-            {
-                emptyNeighbors.Add(neighbor);
+                _next.Add(point);
             }
         }
 
-        return emptyNeighbors;
+        BlackTiles.Clear();
+
+        foreach (var point in _next)
+        {
+            BlackTiles.Add(point);
+        }
     }
 }
