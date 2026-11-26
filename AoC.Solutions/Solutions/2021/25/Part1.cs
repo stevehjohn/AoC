@@ -1,127 +1,77 @@
-﻿using AoC.Solutions.Common;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2021._25;
 
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private int _width;
-
-    private int _height;
-
-    private CellState[,] _cells;
-
-    private readonly HashSet<(Point Source, Point Target)> _cellsToMove = [];
-
     public override string GetAnswer()
     {
-        ParseInput();
+        var width = Input[0].Length;
+        var height = Input.Length;
 
-        var steps = CountStepsToNoMovement();
+        var size = width * height;
 
-        return steps.ToString();
-    }
+        var cells = new char[size];
 
-    private int CountStepsToNoMovement()
-    {
-        var moved = true;
+        var east = new int[size];
+        var south = new int[size];
+
+        var moves = new int[size];
+
+        for (var y = 0; y < height; y++)
+        {
+            for (var x = 0; x < width; x++)
+            {
+                var index = y * width + x;
+
+                cells[index] = Input[y][x];
+
+                east[index] = y * width + (x + 1) % width;
+
+                south[index] = (y + 1) % height * width + x;
+            }
+        }
 
         var steps = 0;
 
-        while (moved)
+        while (true)
         {
-            moved = false;
-
             steps++;
 
-            foreach (var state in new[] { CellState.East, CellState.South })
-            {
-                _cellsToMove.Clear();
+            var eastCount = Move('>', east);
 
-                for (var y = 0; y < _height; y++)
+            var southCount = Move('v', south);
+
+            if (eastCount + southCount == 0)
+            {
+                return steps.ToString();
+            }
+        }
+
+        int Move(char cucumber, int[] destinations)
+        {
+            var count = 0;
+
+            for (var i = 0; i < size; i++)
+            {
+                if (cells[i] == cucumber &&
+                    cells[destinations[i]] == '.')
                 {
-                    for (var x = 0; x < _width; x++)
-                    {
-                        // ReSharper disable once SwitchStatementMissingSomeEnumCasesNoDefault
-                        switch (state)
-                        {
-                            case CellState.East:
-                                moved |= CanMoveCell(x, y, 1, 0, CellState.East);
-                                break;
-                            case CellState.South:
-                                moved |= CanMoveCell(x, y, 0, 1, CellState.South);
-                                break;
-                        }
-                    }
+                    moves[count++] = i;
                 }
-
-                MoveCells();
             }
-        }
 
-        return steps;
-    }
-
-    private void MoveCells()
-    {
-        foreach (var move in _cellsToMove)
-        {
-            _cells[move.Target.X, move.Target.Y] = _cells[move.Source.X, move.Source.Y];
-
-            _cells[move.Source.X, move.Source.Y] = CellState.Empty;
-        }
-    }
-
-    private bool CanMoveCell(int x, int y, int dX, int dY, CellState state)
-    {
-        if (_cells[x, y] != state)
-        {
-            return false;
-        }
-
-        var checkX = x + dX;
-
-        if (checkX >= _width)
-        {
-            checkX = 0;
-        }
-
-        var checkY = y + dY;
-
-        if (checkY >= _height)
-        {
-            checkY = 0;
-        }
-
-        if (_cells[checkX, checkY] == CellState.Empty)
-        {
-            _cellsToMove.Add((Source: new Point(x, y), Target: new Point(checkX, checkY)));
-
-            return true;
-        }
-
-        return false;
-    }
-
-    private void ParseInput()
-    {
-        _width = Input[0].Length;
-
-        _height = Input.Length;
-
-        _cells = new CellState[_width, _height];
-
-        for (var y = 0; y < _height; y++)
-        {
-            for (var x = 0; x < _width; x++)
+            for (var i = 0; i < count; i++)
             {
-                _cells[x, y] = Input[y][x] == '>'
-                    ? CellState.East
-                    : Input[y][x] == 'v'
-                        ? CellState.South
-                        : CellState.Empty;
+                var source = moves[i];
+
+                cells[source] = '.';
+
+                cells[destinations[source]] = cucumber;
             }
+
+            return count;
         }
     }
 }

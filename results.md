@@ -201,7 +201,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 17.1: 16,429μs      Don't go chasing waterfalls
  2018 17.2: 15,944μs      
  2018 18.1: 396μs         I'm a lumberjack...
- 2018 18.2: 18,093μs      
+ 2018 18.2: 18,080μs      
  2018 19.1: 18,414μs      Tardis halting problem
  2018 19.2: 34,365μs      
  2018 20.1: 3,075μs       Regex maze
@@ -216,7 +216,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 9,988μs       
  2018 25.1: 24,412μs      4D chocolate teleportation
             -------------
-            547.506ms    
+            547.493ms    
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
@@ -225,7 +225,7 @@ Tests performed on a 2023 MacBook Pro.
  2019  3.1: 2,004μs       Path intersections
  2019  3.2: 2,081μs       
  2019  4.1: 68μs          Forgotten password
- 2019  4.2: 91μs          
+ 2019  4.2: 90μs          
  2019  5.1: 24μs          Air conditioning (CPU extension 1)
  2019  5.2: 21μs          
  2019  6.1: 240μs         Orbital transfers
@@ -268,7 +268,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 24.2: 6,790μs       
  2019 25.1: 16,447μs      Airlock password (CPU used unmodified)
             -------------
-            554.958ms    
+            554.957ms    
 
  2020  1.1: 22μs          Expenses
  2020  1.2: 106μs         
@@ -371,9 +371,9 @@ Tests performed on a 2023 MacBook Pro.
  2021 23.2: 23,282μs      
  2021 24.1: 2μs           Model number
  2021 24.2: 1μs           
- 2021 25.1: 76,199μs      Landing among the cucumbers
+ 2021 25.1: 24,508μs      Landing among the cucumbers
             -------------
-            452.354ms    
+            400.663ms    
 
  2022  1.1: 20μs          Calorie counting
  2022  1.2: 29μs          
@@ -381,7 +381,7 @@ Tests performed on a 2023 MacBook Pro.
  2022  2.2: 30μs          
  2022  3.1: 71μs          Rucksack reorganization
  2022  3.2: 49μs          
- 2022  4.1: 99μs          Camp cleanup
+ 2022  4.1: 98μs          Camp cleanup
  2022  4.2: 94μs          
  2022  5.1: 84μs          Supply stacks
  2022  5.2: 156μs         
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 53,434μs      
  2022 25.1: 9μs           Full of hot air
             -------------
-            279.631ms    
+            279.630ms    
 
  2023  1.1: 115μs         Trebuchet
  2023  1.2: 320μs         
@@ -457,7 +457,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 14.2: 14,020μs      
  2023 15.1: 175μs         Lens library
  2023 15.2: 493μs         
- 2023 16.1: 124μs         The floor will be lava
+ 2023 16.1: 122μs         The floor will be lava
  2023 16.2: 5,394μs       
  2023 17.1: 45,127μs      Clumsy crucible
  2023 17.2: 43,415μs      
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,110μs       
  2023 25.1: 489μs         Snowverload
             -------------
-            251.009ms    
+            251.007ms    
 
  2024  1.1: 112μs         Historian hysteria
  2024  1.2: 79μs          
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             187.942ms    
 
- 514 puzzles solved in 4.750s.
+ 514 puzzles solved in 4.699s.
 ```
