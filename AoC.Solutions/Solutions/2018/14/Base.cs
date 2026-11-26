@@ -12,46 +12,97 @@ public abstract class Base : Solution
         var recipes = new byte[Math.Max(input + 12, 1_024)];
 
         recipes[0] = 3;
+        
         recipes[1] = 7;
 
         var count = 2;
 
         var elf1 = 0;
+        
         var elf2 = 1;
 
-        var search = input.ToString().Select(c => (byte) (c - '0')).ToArray();
+        var digits = input.ToString().Length;
+
+        var modulus = 1L;
+
+        for (var i = 0; i < digits; i++)
+        {
+            modulus *= 10;
+        }
+
+        var window = 37L % modulus;
+
+        if (isPart2)
+        {
+            if (digits == 1 && input == 3)
+            {
+                return "0";
+            }
+
+            if (count >= digits && window == input)
+            {
+                return (count - digits).ToString();
+            }
+        }
 
         while (true)
         {
-            var newRecipes = recipes[elf1] + recipes[elf2];
+            var a = recipes[elf1];
+            
+            var b = recipes[elf2];
 
-            if (newRecipes >= 10)
+            var sum = a + b;
+
+            if (count + 2 > recipes.Length)
             {
-                EnsureCapacity(ref recipes, count + 1);
+                Array.Resize(ref recipes, recipes.Length * 2);
+            }
 
+            if (sum >= 10)
+            {
                 recipes[count++] = 1;
 
-                if (isPart2 && Matches(recipes, count, search))
+                if (isPart2)
                 {
-                    return (count - search.Length).ToString();
+                    window = (window * 10 + 1) % modulus;
+
+                    if (count >= digits && window == input)
+                    {
+                        return (count - digits).ToString();
+                    }
+                }
+
+                sum -= 10;
+            }
+
+            recipes[count++] = (byte) sum;
+
+            if (isPart2)
+            {
+                window = (window * 10 + sum) % modulus;
+
+                if (count >= digits && window == input)
+                {
+                    return (count - digits).ToString();
                 }
             }
-
-            EnsureCapacity(ref recipes, count + 1);
-
-            recipes[count++] = (byte) (newRecipes % 10);
-
-            if (isPart2 && Matches(recipes, count, search))
-            {
-                return (count - search.Length).ToString();
-            }
-
-            elf1 = (elf1 + recipes[elf1] + 1) % count;
-            elf2 = (elf2 + recipes[elf2] + 1) % count;
-
-            if (! isPart2 && count >= input + 10)
+            else if (count >= input + 10)
             {
                 break;
+            }
+
+            elf1 += a + 1;
+
+            while (elf1 >= count)
+            {
+                elf1 -= count;
+            }
+
+            elf2 += b + 1;
+
+            while (elf2 >= count)
+            {
+                elf2 -= count;
             }
         }
 
@@ -63,35 +114,5 @@ public abstract class Base : Solution
         }
 
         return builder.ToString();
-    }
-
-    private static bool Matches(byte[] recipes, int count, byte[] search)
-    {
-        if (count < search.Length)
-        {
-            return false;
-        }
-
-        var start = count - search.Length;
-
-        for (var i = 0; i < search.Length; i++)
-        {
-            if (recipes[start + i] != search[i])
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private static void EnsureCapacity(ref byte[] recipes, int required)
-    {
-        if (required <= recipes.Length)
-        {
-            return;
-        }
-
-        Array.Resize(ref recipes, recipes.Length * 2);
     }
 }

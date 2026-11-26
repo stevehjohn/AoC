@@ -192,8 +192,8 @@ Tests performed on a 2023 MacBook Pro.
  2018 12.2: 8,040μs       
  2018 13.1: 17,543μs      Crashing carts
  2018 13.2: 31,589μs      
- 2018 14.1: 3,226μs       Elf recipes
- 2018 14.2: 114,974μs     
+ 2018 14.1: 1,858μs       Elf recipes
+ 2018 14.2: 74,840μs      
  2018 15.1: 9,256μs       Elves vs Goblins
  2018 15.2: 43,470μs      
  2018 16.1: 511μs         Opcode reverse-engineering
@@ -216,7 +216,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 9,988μs       
  2018 25.1: 24,412μs      4D chocolate teleportation
             -------------
-            547.493ms    
+            505.991ms    
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
@@ -371,9 +371,9 @@ Tests performed on a 2023 MacBook Pro.
  2021 23.2: 23,282μs      
  2021 24.1: 2μs           Model number
  2021 24.2: 1μs           
- 2021 25.1: 24,508μs      Landing among the cucumbers
+ 2021 25.1: 24,476μs      Landing among the cucumbers
             -------------
-            400.663ms    
+            400.631ms    
 
  2022  1.1: 20μs          Calorie counting
  2022  1.2: 29μs          
@@ -469,15 +469,15 @@ Tests performed on a 2023 MacBook Pro.
  2023 20.2: 37,608μs      
  2023 21.1: 55μs          Step counter
  2023 21.2: 439μs         
- 2023 22.1: 383μs         Sand slabs
- 2023 22.2: 373μs         
+ 2023 22.1: 379μs         Sand slabs
+ 2023 22.2: 368μs         
  2023 23.1: 10,271μs      A long walk
  2023 23.2: 48,550μs      
  2023 24.1: 1,509μs       Never tell me the odds
  2023 24.2: 5,110μs       
  2023 25.1: 489μs         Snowverload
             -------------
-            251.007ms    
+            250.998ms    
 
  2024  1.1: 112μs         Historian hysteria
  2024  1.2: 79μs          
@@ -532,8 +532,8 @@ Tests performed on a 2023 MacBook Pro.
             234.131ms    
 
  2025  1.1: 98μs          Secret Entrance
- 2025  1.2: 82μs          
- 2025  2.1: 19μs          Gift shop
+ 2025  1.2: 80μs          
+ 2025  2.1: 15μs          Gift shop
  2025  2.2: 22μs          
  2025  3.1: 107μs         Lobby
  2025  3.2: 197μs         
@@ -555,7 +555,7 @@ Tests performed on a 2023 MacBook Pro.
  2025 11.2: 520μs         
  2025 12.1: 276μs         Christmas tree farm
             -------------
-            187.942ms    
+            187.936ms    
 
- 514 puzzles solved in 4.699s.
+ 514 puzzles solved in 4.657s.
 ```
