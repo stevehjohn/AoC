@@ -10,18 +10,37 @@ public class Part2 : Base
     {
         var steps = int.FastParse(Input[0]);
 
-        var next = 0;
+        const int limit = 50_000_000;
 
+        var position = 0;
+        
+        var size = 1;
+        
         var target = 0;
 
-        for (var i = 1; i < 50_000_000; i++)
+        while (size <= limit)
         {
-            next = (steps + next) % i + 1;
+            var skip = (size - position - 1) / steps;
 
-            if (next == 1)
+            if (skip > 0)
             {
-                target = i;
+                skip = Math.Min(skip, limit - size + 1);
+
+                position += skip * (steps + 1);
+                
+                size += skip;
+
+                continue;
             }
+
+            position = (position + steps) % size + 1;
+
+            if (position == 1)
+            {
+                target = size;
+            }
+
+            size++;
         }
 
         return target.ToString();
