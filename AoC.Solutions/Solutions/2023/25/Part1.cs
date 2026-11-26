@@ -1,4 +1,4 @@
-using AoC.Solutions.Extensions;
+using AoC.Solutions.Exceptions;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2023._25;
@@ -6,148 +6,177 @@ namespace AoC.Solutions.Solutions._2023._25;
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private List<(string L, string R)> _nodes;
+    private readonly Dictionary<string, int> _vertices = new();
 
-    private Dictionary<string, List<string>> _links;
-    
-    private List<string> _distinct;
+    private List<int>[] _links;
+
+    private int[] _destinations;
+
+    private int[] _capacity;
+
+    private int[] _parent;
+
+    private int[] _queue;
 
     public override string GetAnswer()
     {
-        var left = 0;
-
-        int right;
-        
         ParseInput();
 
-        var backup = _nodes.ToList();
+        var count = _vertices.Count;
 
-        var links = _links.ToDictionary(l => l.Key, l => l.Value.ToList());
+        _parent = new int[count];
 
-        var rng = new Random();
+        _queue = new int[count];
 
-        while (true)
+        const int source = 0;
+
+        targets: for (var target = 1; target < count; target++)
         {
-            var l = _distinct[rng.Next(_distinct.Count)];
-            var r = _distinct[rng.Next(_distinct.Count)];
+            Array.Fill(_capacity, 1);
 
-            if (l == r)
+            var flow = 0;
+            
+            int reachable;
+            
+            while (FindPath(source, target, out reachable))
             {
-                continue;
+                if (++flow > 3)
+                {
+                    continue targets;
+                }
+
+                var vertex = target;
+
+                while (vertex != source)
+                {
+                    var edge = _parent[vertex];
+
+                    _capacity[edge]--;
+
+                    _capacity[edge ^ 1]++;
+
+                    vertex = _destinations[edge ^ 1];
+                }
             }
 
-            Walk(l, r);
-            
-            Walk(l, r);
-            
-            Walk(l, r);
-
-            Walk(l, r);
-
-            Walk(l, r);
-            
-            var result = Walk(l, r);
-
-            if (result < Input.Length && result > 1)
+            if (flow == 3)
             {
-                if (left == 0)
+                return (reachable * (count - reachable)).ToString();
+            }
+        }
+
+        throw new PuzzleException("Solution not found.");
+    }
+
+    private bool FindPath(int source, int target, out int reachable)
+    {
+        Array.Fill(_parent, -1);
+
+        var head = 0;
+
+        var tail = 0;
+
+        _queue[tail++] = source;
+
+        _parent[source] = -2;
+
+        while (head < tail)
+        {
+            var vertex = _queue[head++];
+
+            var links = _links[vertex];
+
+            for (var i = 0; i < links.Count; i++)
+            {
+                var edge = links[i];
+
+                if (_capacity[edge] == 0)
                 {
-                    left = result;
-                    
                     continue;
                 }
 
-                if (result != left)
-                {
-                    right = result;
+                var destination = _destinations[edge];
 
-                    break;
+                if (_parent[destination] != -1)
+                {
+                    continue;
                 }
-            }
 
-            _nodes = [.. backup];
-            
-            _links = links.ToDictionary(i => i.Key, i => i.Value.ToList());
-        }
+                _parent[destination] = edge;
 
-        return (left * right).ToString();
-    }
-
-    private int Walk(string start, string end)
-    {
-        var queue = new Queue<(string Name, List<(string L, string R)> History)>();
-
-        queue.Enqueue((start, []));
-
-        var visited = new HashSet<string>();
-
-        while (queue.TryDequeue(out var node))
-        {
-            if (! visited.Add(node.Name))
-            {
-                continue;
-            }
-
-            if (node.Name == end)
-            {
-                node.History.ForAll((_, n) =>
+                if (destination == target)
                 {
-                    _nodes.Remove(n);
+                    reachable = 0;
 
-                    _links[n.L].Remove(n.R);
-                });
+                    return true;
+                }
 
-                break;
-            }
-
-            foreach (var connection in _links[node.Name])
-            {
-                queue.Enqueue((connection, [..node.History, (node.Name, connection)]));
+                _queue[tail++] = destination;
             }
         }
 
-        return visited.Count;
+        reachable = tail;
+
+        return false;
     }
 
     private void ParseInput()
     {
-        _nodes = [];
-
-        _distinct = [];
+        var edges = new HashSet<(int Left, int Right)>();
 
         foreach (var line in Input)
         {
             var parts = line.Split(':', StringSplitOptions.TrimEntries);
 
-            _distinct.Add(parts[0]);
+            var left = GetVertex(parts[0]);
 
-            var connections = parts[1].Split(' ', StringSplitOptions.TrimEntries);
-
-            foreach (var connection in connections)
+            foreach (var connection in parts[1].Split(
+                         ' ', StringSplitOptions.RemoveEmptyEntries))
             {
-                _nodes.Add((parts[0], connection));
+                var right = GetVertex(connection);
 
-                _nodes.Add((connection, parts[0]));
-
-                if (! _distinct.Contains(connection))
-                {
-                    _distinct.Add(connection);
-                }
+                edges.Add(left < right
+                    ? (left, right)
+                    : (right, left));
             }
         }
 
-        _links = new Dictionary<string, List<string>>();
+        _links = new List<int>[_vertices.Count];
 
-        foreach (var node in _nodes)
+        for (var i = 0; i < _links.Length; i++)
         {
-            if (_links.TryGetValue(node.L, out var value))
-            {
-                value.Add(node.R);
-            }
-            else
-            {
-                _links.Add(node.L, [node.R]);
-            }
+            _links[i] = [];
         }
+
+        _destinations = new int[edges.Count * 2];
+
+        _capacity = new int[edges.Count * 2];
+
+        var index = 0;
+
+        foreach (var (left, right) in edges)
+        {
+            _links[left].Add(index);
+
+            _destinations[index++] = right;
+
+            _links[right].Add(index);
+
+            _destinations[index++] = left;
+        }
+    }
+
+    private int GetVertex(string name)
+    {
+        if (_vertices.TryGetValue(name, out var index))
+        {
+            return index;
+        }
+
+        index = _vertices.Count;
+
+        _vertices.Add(name, index);
+
+        return index;
     }
 }
