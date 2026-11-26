@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Extensions;
+﻿using System.Numerics;
+using AoC.Solutions.Extensions;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2015._25;
@@ -10,33 +11,17 @@ public class Part1 : Base
     {
         var parts = Input[0].Split([' ', ',', '.'], StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
-        var targetRow = int.FastParse(parts[15]);
+        var row = int.FastParse(parts[15]);
 
-        var targetColumn = int.FastParse(parts[17]);
+        var column = int.FastParse(parts[17]);
 
-        var code = 20151125L;
+        var diagonal = (long) row + column - 2;
 
-        var row = 1;
+        var exponent = diagonal * (diagonal + 1) / 2 + column - 1;
 
-        var column = 1;
+        const long modulus = 33554393;
 
-        while (row != targetRow || column != targetColumn)
-        {
-            row -= 1;
-
-            column += 1;
-
-            if (row == 0)
-            {
-                row = column;
-
-                column = 1;
-            }
-
-            code *= 252533;
-
-            code %= 33554393;
-        }
+        var code = 20151125 * BigInteger.ModPow(252533, exponent, modulus) % modulus;
 
         return code.ToString();
     }
