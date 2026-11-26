@@ -11,22 +11,16 @@ public class Part1 : Base
 
         var lowest = ranges[0].High + 1;
 
-        var found = true;
-
-        while (found)
+        foreach (var range in ranges)
         {
-            found = false;
-
-            foreach (var range in ranges)
+            if (range.Low > lowest)
             {
-                if (lowest >= range.Low && lowest <= range.High)
-                {
-                    lowest = range.High + 1;
+                break;
+            }
 
-                    found = true;
-
-                    break;
-                }
+            if (lowest >= range.Low && lowest <= range.High)
+            {
+                lowest = range.High + 1;
             }
         }
 
