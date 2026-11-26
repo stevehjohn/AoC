@@ -39,7 +39,7 @@ public class Part2 : Base
         {
             var left = Coordinates[l];
 
-            for (var r = l + 1; r < length; r++)
+            candidates: for (var r = l + 1; r < length; r++)
             {
                 var right = Coordinates[r];
 
@@ -50,14 +50,12 @@ public class Part2 : Base
                     continue;
                 }
 
-                var empty = true;
-
                 var startX = Math.Min(left.X, right.X);
-
+                
                 var endX = Math.Max(left.X, right.X);
-
+                
                 var startY = Math.Min(left.Y, right.Y);
-
+                
                 var endY = Math.Max(left.Y, right.Y);
 
                 for (var i = 0; i < _lines.Length; i++)
@@ -66,16 +64,11 @@ public class Part2 : Base
 
                     if (Intersects(startX, startY, endX, endY, ref line))
                     {
-                        empty = false;
-
-                        break;
+                        continue candidates;
                     }
                 }
 
-                if (empty)
-                {
-                    largest = area;
-                }
+                largest = area;
             }
         }
 
