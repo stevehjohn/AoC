@@ -95,7 +95,7 @@ public abstract class Base : Solution
 
                 windIndex++;
 
-                if (windIndex>= _wind.Length)
+                if (windIndex >= _wind.Length)
                 {
                     windIndex = 0;
                 }
@@ -104,56 +104,42 @@ public abstract class Base : Solution
                 {
                 }
 
-                switch (wind)
+                movement: switch (wind)
                 {
                     case '<' when (mask & 0b1000000) == 0:
                     {
-                        var ok = true;
-
                         for (var rY = 0; rY < rock.Length; rY++)
                         {
                             if ((rock[rY] << 1 & _map[y + rY]) > 0)
                             {
-                                ok = false;
-
-                                break;
+                                break movement;
                             }
                         }
 
-                        if (ok)
-                        {
-                            mask <<= 1;
+                        mask <<= 1;
 
-                            for (var rY = 0; rY < rock.Length; rY++)
-                            {
-                                rock[rY] <<= 1;
-                            }
+                        for (var rY = 0; rY < rock.Length; rY++)
+                        {
+                            rock[rY] <<= 1;
                         }
 
                         break;
                     }
                     case '>' when (mask & 0b0000001) == 0:
                     {
-                        var ok = true;
-
                         for (var rY = 0; rY < rock.Length; rY++)
                         {
                             if ((rock[rY] >> 1 & _map[y + rY]) > 0)
                             {
-                                ok = false;
-
-                                break;
+                                break movement;
                             }
                         }
 
-                        if (ok)
-                        {
-                            mask >>= 1;
+                        mask >>= 1;
 
-                            for (var rY = 0; rY < rock.Length; rY++)
-                            {
-                                rock[rY] >>= 1;
-                            }
+                        for (var rY = 0; rY < rock.Length; rY++)
+                        {
+                            rock[rY] >>= 1;
                         }
 
                         break;
