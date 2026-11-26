@@ -9,52 +9,40 @@ public abstract class Base : Solution
 
     protected string GetAnswer(bool singlePairRequired)
     {
-        var range = Input[0].Split('-', StringSplitOptions.TrimEntries).Select(int.FastParse).ToArray();
+        var range = Input[0].Split('-');
 
-        var validCount = 0;
+        var low = int.FastParse(range[0]);
+        
+        var high = int.FastParse(range[1]);
 
-        for (var i = range[0]; i <= range[1]; i++)
+        return Count(0, 1, 0, 0, false).ToString();
+
+        int Count(int value, int digit, int length, int run, bool valid)
         {
-            if (CheckPasswordValidity(i.ToString(), singlePairRequired))
+            if (length == 6)
             {
-                validCount++;
+                valid |= singlePairRequired ? run == 2 : run >= 2;
+
+                return valid && value >= low && value <= high ? 1 : 0;
             }
+
+            var result = 0;
+
+            for (var d = digit; d <= 9; d++)
+            {
+                var same = d == digit;
+
+                var matched = singlePairRequired ? run == 2 : run >= 2;
+
+                result += Count(
+                    value * 10 + d,
+                    d,
+                    length + 1,
+                    same ? run + 1 : 1,
+                    valid || ! same && matched);
+            }
+
+            return result;
         }
-
-        return validCount.ToString();
-    }
-
-    private static bool CheckPasswordValidity(string password, bool singlePairRequired)
-    {
-        var adjacent = new Dictionary<char, int>
-                       {
-                           { '0', 0 },
-                           { '1', 0 },
-                           { '2', 0 },
-                           { '3', 0 },
-                           { '4', 0 },
-                           { '5', 0 },
-                           { '6', 0 },
-                           { '7', 0 },
-                           { '8', 0 },
-                           { '9', 0 }
-                       };
-
-        for (var x = 0; x < 5; x++)
-        {
-            if (password[x + 1] < password[x])
-            {
-                return false;
-            }
-
-            if (password[x + 1] == password[x])
-            {
-                adjacent[password[x]]++;
-            }
-        }
-
-        return singlePairRequired
-            ? adjacent.ContainsValue(1)
-            : adjacent.Any(p => p.Value > 0);
     }
 }
