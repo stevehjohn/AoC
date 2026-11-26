@@ -16,29 +16,22 @@ public class Part2 : Base
     {
         var text = id.ToString();
 
-        for (var patternLength = text.Length / 2; patternLength > 0; patternLength--)
+        patterns: for (var patternLength = text.Length / 2; patternLength > 0; patternLength--)
         {
             if (text.Length % patternLength != 0)
             {
                 continue;
             }
 
-            var isRepeating = true;
-
             for (var i = patternLength; i < text.Length; i++)
             {
                 if (text[i] != text[i % patternLength])
                 {
-                    isRepeating = false;
-                    
-                    break;
+                    continue patterns;
                 }
             }
 
-            if (isRepeating)
-            {
-                return id;
-            }
+            return id;
         }
 
         return 0;
