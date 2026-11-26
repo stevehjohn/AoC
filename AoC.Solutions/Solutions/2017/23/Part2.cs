@@ -13,31 +13,19 @@ public class Part2 : Base
 
         var registerH = 0L;
 
-        while (true)
+        numbers: for (; registerB <= registerC; registerB += 17)
         {
-            var isPrime = true;
+            var limit = (int) Math.Sqrt(registerB);
 
-            for (var i = 2; i < registerB / 2; i++)
+            for (var i = 2; i <= limit; i++)
             {
                 if (registerB % i == 0)
                 {
-                    isPrime = false;
+                    registerH++;
 
-                    break;
+                    continue numbers;
                 }
             }
-
-            if (! isPrime)
-            {
-                registerH++;
-            }
-
-            if (registerB == registerC)
-            {
-                break;
-            }
-
-            registerB += 17;
         }
 
         return registerH.ToString();
