@@ -48,7 +48,7 @@ public class Part1 : Base
 
         var count = 0;
 
-        for (var d = 0; d < _directions.Length; d++)
+        directions: for (var d = 0; d < _directions.Length; d++)
         {
             var direction = _directions[d];
 
@@ -61,8 +61,6 @@ public class Part1 : Base
             {
                 continue;
             }
-
-            var found = true;
             
             for (var i = 1; i < word.Length; i++)
             {
@@ -72,16 +70,11 @@ public class Part1 : Base
 
                 if (Input[checkY][checkX] != word[i])
                 {
-                    found = false;
-                    
-                    break;
+                    continue directions;
                 }
             }
 
-            if (found)
-            {
-                count++;
-            }
+            count++;
         }
 
         return count;

@@ -28,7 +28,7 @@ public class Part2 : Base
         
         for (var x = 0; x < area + 1; x++)
         {
-            for (var y = 0; y < area + 1; y++)
+            y: for (var y = 0; y < area + 1; y++)
             {
                 var velocity = new LongPoint(x, y, 0);
 
@@ -37,17 +37,13 @@ public class Part2 : Base
                     stones[i] = Hail[i] with { Velocity = Hail[i].Velocity - velocity }; 
                 }
 
-                var pass = true;
-                
                 for (var i = 1; i < stoneCount; i++)
                 {
                     var collision = CollidesInFutureXy(stones[i], stones[0]);
                     
                     if (collision == null)
                     {
-                        pass = false;
-
-                        break;
+                        continue y;
                     }
 
                     collisions[i - 1] = collision.Value;
@@ -61,23 +57,14 @@ public class Part2 : Base
 
                     if (firstCollision.X != collision.Value.X || firstCollision.Y != collision.Value.Y)
                     {
-                        pass = false;
-                        
-                        break;
+                        continue y;
                     }
                 }
 
-                if (! pass)
-                {
-                    continue;
-                }
-
-                for (var z = -0; z < area + 1; z++)
+                z: for (var z = -0; z < area + 1; z++)
                 {
                     var pZ = stones[1].Position.Z + (stones[1].Velocity.Z - z) * collisions[0].Time;
 
-                    pass = true;
-                    
                     for (var i = 2; i < stoneCount; i++)
                     {
                         var pZ2 = stones[i].Position.Z + (stones[i].Velocity.Z - z) * collisions[i - 1].Time;
@@ -85,15 +72,10 @@ public class Part2 : Base
                         // ReSharper disable once CompareOfFloatsByEqualityOperator
                         if (pZ2 != pZ)
                         {
-                            pass = false;
+                            continue z;
                         }
                     }
 
-                    if (! pass)
-                    {
-                        continue;
-                    }
-                    
                     var result = firstCollision.X + firstCollision.Y + pZ;
                     
                     return (long) result;
