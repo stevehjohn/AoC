@@ -9,31 +9,18 @@ public abstract class Base : Solution
 
     protected static int Solve(List<(int Disc, int Slots, int Position)> discs)
     {
-        var delay = 0;
-
-        while (true)
+        delays: for (var delay = 0;; delay++)
         {
-            var caught = false;
-
             foreach (var disc in discs)
             {
                 if ((delay + disc.Disc + disc.Position) % disc.Slots != 0)
                 {
-                    caught = true;
-
-                    break;
+                    continue delays;
                 }
             }
 
-            if (! caught)
-            {
-                break;
-            }
-
-            delay++;
+            return delay;
         }
-
-        return delay;
     }
 
     protected List<(int Disc, int Slots, int Position)> ParseInput()
