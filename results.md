@@ -228,7 +228,7 @@ Tests performed on a 2023 MacBook Pro.
  2019  4.2: 91μs          
  2019  5.1: 24μs          Air conditioning (CPU extension 1)
  2019  5.2: 21μs          
- 2019  6.1: 241μs         Orbital transfers
+ 2019  6.1: 240μs         Orbital transfers
  2019  6.2: 32μs          
  2019  7.1: 5,127μs       Amplifiers (CPU used unmodified)
  2019  7.2: 6,367μs       
@@ -268,7 +268,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 24.2: 6,790μs       
  2019 25.1: 16,447μs      Airlock password (CPU used unmodified)
             -------------
-            554.959ms    
+            554.958ms    
 
  2020  1.1: 22μs          Expenses
  2020  1.2: 106μs         
@@ -298,7 +298,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 13.2: 13μs          
  2020 14.1: 88μs          Memory bit twiddling
  2020 14.2: 3,812μs       
- 2020 15.1: 13μs          Number memory game
+ 2020 15.1: 11μs          Number memory game
  2020 15.2: 169,619μs     
  2020 16.1: 586μs         Ticket deciphering
  2020 16.2: 1,041μs       
@@ -320,7 +320,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 24.2: 34,056μs      
  2020 25.1: 45,743μs      Door cryptography
             -------------
-            487.415ms    
+            487.413ms    
 
  2021  1.1: 47μs          Depth scan
  2021  1.2: 138μs         
@@ -475,9 +475,9 @@ Tests performed on a 2023 MacBook Pro.
  2023 23.2: 48,550μs      
  2023 24.1: 1,509μs       Never tell me the odds
  2023 24.2: 5,110μs       
- 2023 25.1: 492μs         Snowverload
+ 2023 25.1: 489μs         Snowverload
             -------------
-            251.012ms    
+            251.009ms    
 
  2024  1.1: 112μs         Historian hysteria
  2024  1.2: 79μs          
