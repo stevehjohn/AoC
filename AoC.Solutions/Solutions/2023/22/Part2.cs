@@ -14,27 +14,32 @@ public class Part2 : Base
     public Part2(IVisualiser<PuzzleState> visualiser) : base(visualiser)
     {
     }
-    
+
     public override string GetAnswer()
     {
+        if (Visualiser == null)
+        {
+            return SolveFast(true).ToString();
+        }
+
         ParseInput();
-        
+
         SettleBricks(Map);
-        
+
         var result = GetSupportingBricks();
 
         var count = 0;
-        
+
         Parallel.ForEach(result,
             () => 0,
             (brickId, _, c) =>
             {
                 var copy = new int[MaxHeight, 10, 10];
-        
+
                 Array.Copy(Map, copy, MaxHeight * 100);
 
                 var removed = false;
-                
+
                 for (var z = 1; z < HighestZ; z++)
                 {
                     for (var x = 0; x < 10; x++)
@@ -82,15 +87,14 @@ public class Part2 : Base
                         }
                     }
                 }
-
             }
-            
+
             SettleBricks(Map);
         }
 
         return count.ToString();
     }
-    
+
     private List<int> GetSupportingBricks()
     {
         var result = new ConcurrentDictionary<int, bool>();

@@ -9,12 +9,17 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
+        if (Visualiser == null)
+        {
+            return SolveFast(false).ToString();
+        }
+
         ParseInput();
 
         SettleBricks(Map);
 
         var result = CountNonSupportingBricks();
-        
+
         return result.ToString();
     }
 
@@ -29,9 +34,9 @@ public class Part1 : Base
     private int CountNonSupportingBricks()
     {
         var result = 0;
-        
+
         var brickIds = new ConcurrentDictionary<int, bool>();
-        
+
         Parallel.For(1, Count + 1,
             () => 0,
             (id, _, c) =>
