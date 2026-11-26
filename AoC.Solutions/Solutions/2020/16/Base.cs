@@ -57,26 +57,19 @@ public abstract class Base : Solution
         {
             var ticketValid = true;
 
-            foreach (var field in ticket)
+            fields: foreach (var field in ticket)
             {
-                var fieldValid = false;
-
                 foreach (var rule in Rules)
                 {
                     if (field >= rule.Rule1.Minimum && field <= rule.Rule1.Maximum || field >= rule.Rule2.Minimum && field <= rule.Rule2.Maximum)
                     {
-                        fieldValid = true;
-
-                        break;
+                        continue fields;
                     }
                 }
 
-                if (! fieldValid)
-                {
-                    invalid += field;
+                invalid += field;
 
-                    ticketValid = false;
-                }
+                ticketValid = false;
             }
 
             if (! ticketValid)
