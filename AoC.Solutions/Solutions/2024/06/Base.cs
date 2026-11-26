@@ -24,18 +24,18 @@ public abstract class Base : Solution
         Map = Input.To2DArray();
 
         Width = Map.GetUpperBound(0);
-
+        
         Height = Map.GetUpperBound(1);
 
-        for (var x = 0; x < Width; x++)
+        search: for (var x = 0; x <= Width; x++)
         {
-            for (var y = 0; y < Height; y++)
+            for (var y = 0; y <= Height; y++)
             {
                 if (Map[x, y] == '^')
                 {
                     _startPosition = (x, y);
-                    
-                    break;
+
+                    break search;
                 }
             }
         }
