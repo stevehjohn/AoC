@@ -10,23 +10,23 @@ public abstract class Base : Solution
     {
         var unique = new HashSet<char>();
 
-        int i;
-
         var data = Input[0];
 
-        for (i = 0; i < data.Length - length + 1; i++)
+        int i;
+
+        windows: for (i = 0; i < data.Length - length + 1; i++)
         {
+            unique.Clear();
+
             for (var x = 0; x < length; x++)
             {
-                unique.Add(data[i + x]);
+                if (! unique.Add(data[i + x]))
+                {
+                    continue windows;
+                }
             }
 
-            if (unique.Count == length)
-            {
-                break;
-            }
-
-            unique.Clear();
+            break;
         }
 
         return i + length;
