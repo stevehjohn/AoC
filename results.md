@@ -53,14 +53,14 @@ Tests performed on a 2023 MacBook Pro.
  2015 21.1: 380μs         RPG simulator 2015
  2015 21.2: 365μs         
  2015 22.1: 7,966μs       Wizard simulator 2015
- 2015 22.2: 4,426μs       
+ 2015 22.2: 4,301μs       
  2015 23.1: 71μs          Opening the Turing lock
  2015 23.2: 85μs          
  2015 24.1: 85,779μs      It hangs in the balance
  2015 24.2: 126μs         
  2015 25.1: 8μs           Let it snow
             -------------
-            475.662ms    
+            475.537ms    
 
  2016  1.1: 6μs           Manhattan distance
  2016  1.2: 15μs          
@@ -70,7 +70,7 @@ Tests performed on a 2023 MacBook Pro.
  2016  3.2: 615μs         
  2016  4.1: 4,290μs       Security through obscurity
  2016  4.2: 4,264μs       
- 2016  5.1: 81,795μs      Password hash
+ 2016  5.1: 77,836μs      Password hash
  2016  5.2: 225,912μs     
  2016  6.1: 874μs         Signals and noise
  2016  6.2: 272μs         
@@ -112,7 +112,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 24.2: 18,745μs      
  2016 25.1: 6,122μs       Clock signal
             -------------
-            729.456ms    
+            725.497ms    
 
  2017  1.1: 8μs           Captcha
  2017  1.2: 10μs          
@@ -145,7 +145,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 15.1: 61,971μs      Dueling generators
  2017 15.2: 124,850μs     
  2017 16.1: 501μs         Permutation promenade
- 2017 16.2: 62,373μs      
+ 2017 16.2: 468μs         
  2017 17.1: 770μs         Spinlock
  2017 17.2: 119μs         
  2017 18.1: 181μs         Soundcard shenanigans
@@ -164,7 +164,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 24.2: 29,389μs      
  2017 25.1: 67,209μs      Turing tape
             -------------
-            621.677ms    
+            559.772ms    
 
  2018  1.1: 16μs          Tardis calibration
  2018  1.2: 3,880μs       
@@ -199,8 +199,8 @@ Tests performed on a 2023 MacBook Pro.
  2018 16.1: 511μs         Opcode reverse-engineering
  2018 16.2: 725μs         
  2018 17.1: 16,429μs      Don't go chasing waterfalls
- 2018 17.2: 16,225μs      
- 2018 18.1: 405μs         I'm a lumberjack...
+ 2018 17.2: 16,152μs      
+ 2018 18.1: 396μs         I'm a lumberjack...
  2018 18.2: 18,093μs      
  2018 19.1: 18,660μs      Tardis halting problem
  2018 19.2: 34,365μs      
@@ -216,7 +216,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 10,091μs      
  2018 25.1: 24,412μs      4D chocolate teleportation
             -------------
-            548.612ms    
+            548.530ms    
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
@@ -315,12 +315,12 @@ Tests performed on a 2023 MacBook Pro.
  2020 22.1: 14μs          Crab cards
  2020 22.2: 70,024μs      
  2020 23.1: 2μs           Crab cups
- 2020 23.2: 119,673μs     
+ 2020 23.2: 119,420μs     
  2020 24.1: 668μs         Tile flipping
- 2020 24.2: 34,693μs      
+ 2020 24.2: 34,612μs      
  2020 25.1: 45,743μs      Door cryptography
             -------------
-            541.246ms    
+            540.912ms    
 
  2021  1.1: 47μs          Depth scan
  2021  1.2: 138μs         
@@ -345,7 +345,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 10.2: 547μs         
  2021 11.1: 1,722μs       Flashers
  2021 11.2: 2,956μs       
- 2021 12.1: 3,262μs       Caving
+ 2021 12.1: 3,155μs       Caving
  2021 12.2: 54,443μs      
  2021 13.1: 916μs         ZX Spectrum copy protection
  2021 13.2: 3,111μs       
@@ -373,7 +373,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 24.2: 1μs           
  2021 25.1: 76,199μs      Landing among the cucumbers
             -------------
-            510.918ms    
+            510.811ms    
 
  2022  1.1: 20μs          Calorie counting
  2022  1.2: 29μs          
@@ -475,9 +475,9 @@ Tests performed on a 2023 MacBook Pro.
  2023 23.2: 48,550μs      
  2023 24.1: 1,509μs       Never tell me the odds
  2023 24.2: 5,110μs       
- 2023 25.1: 523μs         Snowverload
+ 2023 25.1: 510μs         Snowverload
             -------------
-            331.447ms    
+            331.434ms    
 
  2024  1.1: 112μs         Historian hysteria
  2024  1.2: 79μs          
@@ -497,7 +497,7 @@ Tests performed on a 2023 MacBook Pro.
  2024  8.2: 121μs         
  2024  9.1: 287μs         Disk fragmenter
  2024  9.2: 34,746μs      
- 2024 10.1: 287μs         Hoof it
+ 2024 10.1: 286μs         Hoof it
  2024 10.2: 469μs         
  2024 11.1: 411μs         Plutonian pebbles
  2024 11.2: 11,504μs      
@@ -529,7 +529,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 231μs         
  2024 25.1: 112μs         Code chronicle
             -------------
-            404.046ms    
+            404.045ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 83μs          
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             248.475ms    
 
- 514 puzzles solved in 5.247s.
+ 514 puzzles solved in 5.180s.
 ```
