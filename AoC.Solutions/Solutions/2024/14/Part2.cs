@@ -31,9 +31,7 @@ public class Part2 : Base
                 }
             }
 
-            break;
+            return seconds.ToString();
         }
-
-        return seconds.ToString();
     }
 }
