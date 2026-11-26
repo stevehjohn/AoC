@@ -192,7 +192,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 12.2: 8,040μs       
  2018 13.1: 17,543μs      Crashing carts
  2018 13.2: 31,589μs      
- 2018 14.1: 1,784μs       Elf recipes
+ 2018 14.1: 1,743μs       Elf recipes
  2018 14.2: 73,804μs      
  2018 15.1: 9,256μs       Elves vs Goblins
  2018 15.2: 43,470μs      
@@ -202,7 +202,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 17.2: 15,944μs      
  2018 18.1: 396μs         I'm a lumberjack...
  2018 18.2: 18,080μs      
- 2018 19.1: 18,414μs      Tardis halting problem
+ 2018 19.1: 18,408μs      Tardis halting problem
  2018 19.2: 34,365μs      
  2018 20.1: 3,075μs       Regex maze
  2018 20.2: 3,791μs       
@@ -216,7 +216,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 9,988μs       
  2018 25.1: 24,412μs      4D chocolate teleportation
             -------------
-            504.881ms    
+            504.834ms    
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
@@ -249,7 +249,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 15.1: 4,548μs       Oxygen repair droid (CPU used unmodified)
  2019 15.2: 156μs         
  2019 16.1: 13,422μs      FFT
- 2019 16.2: 99,196μs      
+ 2019 16.2: 313μs         
  2019 17.1: 323μs         Scaffolding vacuum robot (CPU used unmodified)
  2019 17.2: 1,632μs       
  2019 18.1: 121,718μs     Maze and keys
@@ -265,10 +265,10 @@ Tests performed on a 2023 MacBook Pro.
  2019 23.1: 1,709μs       IntCode network (CPU used unmodified)
  2019 23.2: 2,541μs       
  2019 24.1: 8μs           Wastl's game of life
- 2019 24.2: 6,790μs       
+ 2019 24.2: 6,766μs       
  2019 25.1: 16,447μs      Airlock password (CPU used unmodified)
             -------------
-            554.955ms    
+            456.048ms    
 
  2020  1.1: 22μs          Expenses
  2020  1.2: 106μs         
@@ -371,9 +371,9 @@ Tests performed on a 2023 MacBook Pro.
  2021 23.2: 23,282μs      
  2021 24.1: 2μs           Model number
  2021 24.2: 1μs           
- 2021 25.1: 24,446μs      Landing among the cucumbers
+ 2021 25.1: 24,401μs      Landing among the cucumbers
             -------------
-            400.584ms    
+            400.539ms    
 
  2022  1.1: 20μs          Calorie counting
  2022  1.2: 29μs          
@@ -517,7 +517,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 18.2: 1,318μs       
  2024 19.1: 851μs         Linen layout
  2024 19.2: 1,353μs       
- 2024 20.1: 2,512μs       Race condition
+ 2024 20.1: 2,466μs       Race condition
  2024 20.2: 14,069μs      
  2024 21.1: 634μs         Keypad conundrum
  2024 21.2: 3,638μs       
@@ -529,7 +529,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 231μs         
  2024 25.1: 112μs         Code chronicle
             -------------
-            234.131ms    
+            234.085ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 80μs          
@@ -546,7 +546,7 @@ Tests performed on a 2023 MacBook Pro.
  2025  7.1: 5μs           Laboratories
  2025  7.2: 274μs         
  2025  8.1: 15,741μs      Playground
- 2025  8.2: 91,235μs      
+ 2025  8.2: 1,913μs       
  2025  9.1: 160μs         Movie theater
  2025  9.2: 7,114μs       
  2025 10.1: 1,485μs       Factory
@@ -555,7 +555,7 @@ Tests performed on a 2023 MacBook Pro.
  2025 11.2: 520μs         
  2025 12.1: 276μs         Christmas tree farm
             -------------
-            187.936ms    
+            98.614ms     
 
- 514 puzzles solved in 4.655s.
+ 514 puzzles solved in 4.467s.
 ```
