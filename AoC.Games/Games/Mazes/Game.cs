@@ -89,7 +89,7 @@ public class Game : Microsoft.Xna.Framework.Game
         (int X, int Y) step;
 
         // ReSharper disable once SwitchStatementMissingSomeEnumCasesNoDefault
-        switch (_state)
+        state: switch (_state)
         {
             case State.Creating:
                 for (var i = 0; i < Constants.StepsPerFrame; i++)
@@ -98,7 +98,7 @@ public class Game : Microsoft.Xna.Framework.Game
                     {
                         _state = State.Created;
 
-                        break;
+                        break state;
                     }
                 }
 
@@ -133,7 +133,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
                         _state = State.Solved;
                         
-                        break;
+                        break state;
                     }
                 }
 
