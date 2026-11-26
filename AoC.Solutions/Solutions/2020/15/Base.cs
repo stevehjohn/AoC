@@ -9,39 +9,31 @@ public abstract class Base : Solution
 
     protected int GetAnswer(int turns)
     {
-        var split = Input[0].Split(',').ToList();
+        var numbers = Input[0].Split(',').Select(int.FastParse).ToArray();
 
-        var numbers = split.Select(int.FastParse).ToList();
-
-        var lastSpoken = new int[turns];
-
-        var penultimateSpoken = new int[turns];
-
-        for (var i = 1; i <= numbers.Count; i++)
+        if (turns <= numbers.Length)
         {
-            lastSpoken[numbers[i - 1]] = i;
+            return numbers[turns - 1];
         }
 
-        var lastNumber = numbers.Last();
+        var lastSpoken = new int[Math.Max(turns, numbers.Max() + 1)];
 
-        var speak = 0;
-
-        for (var t = numbers.Count + 1; t <= turns; t++)
+        for (var i = 0; i < numbers.Length - 1; i++)
         {
-            speak = 0;
-
-            if (penultimateSpoken[lastNumber] != 0)
-            {
-                speak = lastSpoken[lastNumber] - penultimateSpoken[lastNumber];
-            }
-
-            penultimateSpoken[speak] = lastSpoken[speak];
-
-            lastSpoken[speak] = t;
-
-            lastNumber = speak;
+            lastSpoken[numbers[i]] = i + 1;
         }
 
-        return speak;
+        var last = numbers[^1];
+
+        for (var turn = numbers.Length; turn < turns; turn++)
+        {
+            var previous = lastSpoken[last];
+
+            lastSpoken[last] = turn;
+
+            last = previous == 0 ? 0 : turn - previous;
+        }
+
+        return last;
     }
 }

@@ -71,7 +71,7 @@ Tests performed on a 2023 MacBook Pro.
  2016  4.1: 4,290μs       Security through obscurity
  2016  4.2: 4,264μs       
  2016  5.1: 77,836μs      Password hash
- 2016  5.2: 225,912μs     
+ 2016  5.2: 221,035μs     
  2016  6.1: 874μs         Signals and noise
  2016  6.2: 272μs         
  2016  7.1: 729μs         ABBA internet protocol
@@ -105,14 +105,14 @@ Tests performed on a 2023 MacBook Pro.
  2016 21.1: 19μs          Scrambled letters and hash
  2016 21.2: 22μs          
  2016 22.1: 702μs         Grid computing
- 2016 22.2: 1,075μs       
+ 2016 22.2: 1,064μs       
  2016 23.1: 75μs          Safe cracking
  2016 23.2: 23μs          
  2016 24.1: 19,559μs      Air duct spelunking
  2016 24.2: 18,745μs      
  2016 25.1: 6,106μs       Clock signal
             -------------
-            725.361ms    
+            720.473ms    
 
  2017  1.1: 8μs           Captcha
  2017  1.2: 10μs          
@@ -145,7 +145,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 15.1: 61,971μs      Dueling generators
  2017 15.2: 124,850μs     
  2017 16.1: 501μs         Permutation promenade
- 2017 16.2: 366μs         
+ 2017 16.2: 363μs         
  2017 17.1: 770μs         Spinlock
  2017 17.2: 114μs         
  2017 18.1: 181μs         Soundcard shenanigans
@@ -164,7 +164,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 24.2: 29,389μs      
  2017 25.1: 67,209μs      Turing tape
             -------------
-            559.433ms    
+            559.430ms    
 
  2018  1.1: 16μs          Tardis calibration
  2018  1.2: 3,529μs       
@@ -224,7 +224,7 @@ Tests performed on a 2023 MacBook Pro.
  2019  2.2: 27,331μs      
  2019  3.1: 2,004μs       Path intersections
  2019  3.2: 2,081μs       
- 2019  4.1: 71μs          Forgotten password
+ 2019  4.1: 68μs          Forgotten password
  2019  4.2: 91μs          
  2019  5.1: 24μs          Air conditioning (CPU extension 1)
  2019  5.2: 21μs          
@@ -268,7 +268,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 24.2: 6,790μs       
  2019 25.1: 16,447μs      Airlock password (CPU used unmodified)
             -------------
-            554.962ms    
+            554.959ms    
 
  2020  1.1: 22μs          Expenses
  2020  1.2: 106μs         
@@ -299,7 +299,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 14.1: 88μs          Memory bit twiddling
  2020 14.2: 3,812μs       
  2020 15.1: 13μs          Number memory game
- 2020 15.2: 222,209μs     
+ 2020 15.2: 169,619μs     
  2020 16.1: 586μs         Ticket deciphering
  2020 16.2: 1,041μs       
  2020 17.1: 1,287μs       Conway cubes
@@ -320,7 +320,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 24.2: 34,056μs      
  2020 25.1: 45,743μs      Door cryptography
             -------------
-            540.005ms    
+            487.415ms    
 
  2021  1.1: 47μs          Depth scan
  2021  1.2: 138μs         
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             187.942ms    
 
- 514 puzzles solved in 4.808s.
+ 514 puzzles solved in 4.750s.
 ```
