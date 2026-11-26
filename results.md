@@ -16,7 +16,7 @@ Tests performed on a 2023 MacBook Pro.
  2015  2.2: 434μs         
  2015  3.1: 1,203μs       Perfectly spherical houses in a vacuum
  2015  3.2: 1,086μs       
- 2015  4.1: 7,094μs       Crypto stocking stuffer
+ 2015  4.1: 7,054μs       Crypto stocking stuffer
  2015  4.2: 175,123μs     
  2015  5.1: 136μs         Naughty or nice
  2015  5.2: 806μs         
@@ -60,7 +60,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 24.2: 126μs         
  2015 25.1: 8μs           Let it snow
             -------------
-            475.463ms    
+            475.423ms    
 
  2016  1.1: 6μs           Manhattan distance
  2016  1.2: 15μs          
@@ -422,10 +422,10 @@ Tests performed on a 2023 MacBook Pro.
  2022 23.1: 8,070μs       Unstable diffusion
  2022 23.2: 43,849μs      
  2022 24.1: 25,244μs      Blizzard basin
- 2022 24.2: 53,434μs      
+ 2022 24.2: 49,484μs      
  2022 25.1: 9μs           Full of hot air
             -------------
-            279.624ms    
+            275.674ms    
 
  2023  1.1: 115μs         Trebuchet
  2023  1.2: 320μs         
@@ -488,7 +488,7 @@ Tests performed on a 2023 MacBook Pro.
  2024  4.1: 256μs         Ceres search
  2024  4.2: 89μs          
  2024  5.1: 93μs          Print queue
- 2024  5.2: 1,717μs       
+ 2024  5.2: 1,698μs       
  2024  6.1: 319μs         Guard gallivant
  2024  6.2: 32,226μs      
  2024  7.1: 141μs         Bridge repair
@@ -526,10 +526,10 @@ Tests performed on a 2023 MacBook Pro.
  2024 23.1: 18,009μs      LAN party
  2024 23.2: 19,914μs      
  2024 24.1: 329μs         Crossed wires
- 2024 24.2: 231μs         
+ 2024 24.2: 228μs         
  2024 25.1: 112μs         Code chronicle
             -------------
-            234.085ms    
+            234.063ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 80μs          
@@ -546,8 +546,8 @@ Tests performed on a 2023 MacBook Pro.
  2025  7.1: 5μs           Laboratories
  2025  7.2: 274μs         
  2025  8.1: 15,741μs      Playground
- 2025  8.2: 1,913μs       
- 2025  9.1: 160μs         Movie theater
+ 2025  8.2: 1,847μs       
+ 2025  9.1: 158μs         Movie theater
  2025  9.2: 7,114μs       
  2025 10.1: 1,485μs       Factory
  2025 10.2: 67,032μs      
@@ -555,7 +555,7 @@ Tests performed on a 2023 MacBook Pro.
  2025 11.2: 520μs         
  2025 12.1: 276μs         Christmas tree farm
             -------------
-            98.614ms     
+            98.546ms     
 
- 514 puzzles solved in 4.463s.
+ 514 puzzles solved in 4.459s.
 ```
