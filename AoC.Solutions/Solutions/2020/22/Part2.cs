@@ -51,6 +51,28 @@ public class Part2 : Base
 
         while (count1 > 0 && count2 > 0)
         {
+            if (! topLevel)
+            {
+                var max1 = 0;
+
+                var max2 = 0;
+
+                for (var i = 0; i < count1; i++)
+                {
+                    max1 = Math.Max(max1, player1[i]);
+                }
+
+                for (var i = 0; i < count2; i++)
+                {
+                    max2 = Math.Max(max2, player2[i]);
+                }
+
+                if (max1 > max2 && max1 >= count1 + count2)
+                {
+                    return 1;
+                }
+            }
+            
             var state = CreateState(player1, count1, player2, count2);
 
             if (! previous.Add(state))
