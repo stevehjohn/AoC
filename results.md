@@ -53,14 +53,14 @@ Tests performed on a 2023 MacBook Pro.
  2015 21.1: 380μs         RPG simulator 2015
  2015 21.2: 365μs         
  2015 22.1: 7,966μs       Wizard simulator 2015
- 2015 22.2: 4,301μs       
+ 2015 22.2: 4,299μs       
  2015 23.1: 71μs          Opening the Turing lock
  2015 23.2: 85μs          
  2015 24.1: 85,779μs      It hangs in the balance
  2015 24.2: 126μs         
  2015 25.1: 8μs           Let it snow
             -------------
-            475.537ms    
+            475.535ms    
 
  2016  1.1: 6μs           Manhattan distance
  2016  1.2: 15μs          
@@ -145,9 +145,9 @@ Tests performed on a 2023 MacBook Pro.
  2017 15.1: 61,971μs      Dueling generators
  2017 15.2: 124,850μs     
  2017 16.1: 501μs         Permutation promenade
- 2017 16.2: 468μs         
+ 2017 16.2: 368μs         
  2017 17.1: 770μs         Spinlock
- 2017 17.2: 119μs         
+ 2017 17.2: 115μs         
  2017 18.1: 181μs         Soundcard shenanigans
  2017 18.2: 17,802μs      
  2017 19.1: 95μs          Packet map
@@ -164,7 +164,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 24.2: 29,389μs      
  2017 25.1: 67,209μs      Turing tape
             -------------
-            559.772ms    
+            559.668ms    
 
  2018  1.1: 16μs          Tardis calibration
  2018  1.2: 3,880μs       
@@ -345,7 +345,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 10.2: 547μs         
  2021 11.1: 1,722μs       Flashers
  2021 11.2: 2,956μs       
- 2021 12.1: 3,155μs       Caving
+ 2021 12.1: 3,096μs       Caving
  2021 12.2: 54,443μs      
  2021 13.1: 916μs         ZX Spectrum copy protection
  2021 13.2: 3,111μs       
@@ -373,7 +373,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 24.2: 1μs           
  2021 25.1: 76,199μs      Landing among the cucumbers
             -------------
-            510.811ms    
+            510.752ms    
 
  2022  1.1: 20μs          Calorie counting
  2022  1.2: 29μs          
@@ -515,8 +515,8 @@ Tests performed on a 2023 MacBook Pro.
  2024 17.2: 2,525μs       
  2024 18.1: 888μs         RAM run
  2024 18.2: 1,318μs       
- 2024 19.1: 37,654μs      Linen layout
- 2024 19.2: 55,434μs      
+ 2024 19.1: 881μs         Linen layout
+ 2024 19.2: 1,412μs       
  2024 20.1: 32,630μs      Race condition
  2024 20.2: 32,398μs      
  2024 21.1: 634μs         Keypad conundrum
@@ -529,7 +529,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 231μs         
  2024 25.1: 112μs         Code chronicle
             -------------
-            404.045ms    
+            313.250ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 83μs          
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             248.475ms    
 
- 514 puzzles solved in 5.180s.
+ 514 puzzles solved in 5.089s.
 ```

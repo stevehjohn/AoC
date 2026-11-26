@@ -7,27 +7,62 @@ public abstract class Base : Solution
     public override string Description => "Linen layout";
 
     protected bool IsPart2;
-    
-    private string[] _towels;
 
-    private string[] _designs;
+    private const int AlphabetSize = 5;
 
-    private readonly Dictionary<string, long> _cache = [];
-    
+    private int[] _trie;
+
+    private bool[] _terminal;
+
     protected void ParseInput()
     {
-        _towels = Input[0].Split(',', StringSplitOptions.TrimEntries);
+        var towels = Input[0].Split(
+            ',', StringSplitOptions.TrimEntries);
 
-        _designs = Input[2..];
+        var capacity = towels.Sum(t => t.Length) + 1;
+
+        _trie = new int[capacity * AlphabetSize];
+
+        _terminal = new bool[capacity];
+
+        var nodes = 1;
+
+        foreach (var towel in towels)
+        {
+            var node = 0;
+
+            foreach (var colour in towel)
+            {
+                var index = node * AlphabetSize + Colour(colour);
+
+                if (_trie[index] == 0)
+                {
+                    _trie[index] = nodes++;
+                }
+
+                node = _trie[index];
+            }
+
+            _terminal[node] = true;
+        }
     }
 
     protected long CheckEachTowel()
     {
         var count = 0L;
 
-        for (var i = 0; i < _designs.Length; i++)
+        var maxLength = 0;
+
+        for (var i = 2; i < Input.Length; i++)
         {
-            var result = CountPossibilities(_designs[i]);
+            maxLength = Math.Max(maxLength, Input[i].Length);
+        }
+
+        var ways = new long[maxLength + 1];
+
+        for (var i = 2; i < Input.Length; i++)
+        {
+            var result = CountPossibilities(Input[i], ways);
 
             count += IsPart2 ? result : result > 0 ? 1 : 0;
         }
@@ -35,34 +70,52 @@ public abstract class Base : Solution
         return count;
     }
 
-    private long CountPossibilities(string design)
+    private long CountPossibilities(string design, long[] ways)
     {
-        if (_cache.TryGetValue(design, out var value))
-        {
-            return value;
-        }
+        ways[design.Length] = 1;
 
-        var count = _towels.Contains(design) ? 1L : 0L;
-        
-        for (var i = 0; i < _towels.Length; i++)
+        for (var i = design.Length - 1; i >= 0; i--)
         {
-            var towel = _towels[i];
+            var node = 0;
 
-            if (design.StartsWith(towel))
+            var count = 0L;
+
+            for (var j = i; j < design.Length; j++)
             {
-                var nextCount = CountPossibilities(design[towel.Length..]);
+                node = _trie[node * AlphabetSize + Colour(design[j])];
 
-                if (nextCount > 0 && ! IsPart2)
+                if (node == 0)
                 {
-                    return nextCount;
+                    break;
                 }
 
-                count += nextCount;
+                if (_terminal[node])
+                {
+                    count += ways[j + 1];
+
+                    if (! IsPart2 && count > 0)
+                    {
+                        break;
+                    }
+                }
             }
+
+            ways[i] = count;
         }
 
-        _cache[design] = count;
+        return ways[0];
+    }
 
-        return count;
+    private static int Colour(char colour)
+    {
+        return colour switch
+        {
+            'w' => 0,
+            'u' => 1,
+            'b' => 2,
+            'r' => 3,
+            'g' => 4,
+            _ => throw new ArgumentOutOfRangeException(nameof(colour))
+        };
     }
 }
