@@ -5,50 +5,57 @@ namespace AoC.Solutions.Solutions._2024._22;
 [UsedImplicitly]
 public class Part2 : Base
 {
-    private readonly (byte Price, byte Delta)[] _sequence = new(byte Price, byte Delta)[2_000];
-    
     public override string GetAnswer()
     {
-        var visited = new HashSet<long>();
+        const int radix = 19;
 
-        var patternResults = new Dictionary<long, int>();
-        
+        const int window = radix * radix * radix;
+
+        const int patterns = window * radix;
+
+        var totals = new int[patterns];
+
+        var visited = new int[patterns];
+
+        var generation = 0;
+
+        var best = 0;
+
         foreach (var line in Input)
         {
-            GetSequence(long.Parse(line));
-            
-            visited.Clear();
+            generation++;
 
-            for (var i = 0; i < _sequence.Length - 4; i++)
+            var seed = long.Parse(line);
+
+            var previous = (int) (seed % 10);
+
+            var key = 0;
+
+            for (var i = 0; i < 2_000; i++)
             {
-                var key = (_sequence[i].Delta << 24) | (_sequence[i + 1].Delta << 16) | (_sequence[i + 2].Delta << 8) | _sequence[i + 3].Delta;
+                seed = SimulateRound(seed);
 
-                if (visited.Add(key))
+                var price = (int) (seed % 10);
+                
+                var delta = price - previous + 9;
+
+                previous = price;
+
+                key = (key % window) * radix + delta;
+
+                if (i < 3 || visited[key] == generation)
                 {
-                    if (! patternResults.TryAdd(key, _sequence[i + 3].Price))
-                    {
-                        patternResults[key] += _sequence[i + 3].Price;
-                    }
+                    continue;
                 }
+
+                visited[key] = generation;
+
+                totals[key] += price;
+
+                best = Math.Max(best, totals[key]);
             }
         }
 
-        return patternResults.MaxBy(p => p.Value).Value.ToString();
-    }
-
-    private void GetSequence(long seed)
-    {
-        var previous = (byte) (seed % 10);
-        
-        for (var i = 0; i < 1_999; i++)
-        {
-            seed = SimulateRound(seed);
-
-            var price = (byte) (seed % 10);
-            
-            _sequence[i] = (price, (byte) (price - previous));
-
-            previous = price;
-        }
+        return best.ToString();
     }
 }
