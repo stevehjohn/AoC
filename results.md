@@ -110,9 +110,9 @@ Tests performed on a 2023 MacBook Pro.
  2016 23.2: 23μs          
  2016 24.1: 19,559μs      Air duct spelunking
  2016 24.2: 18,745μs      
- 2016 25.1: 6,122μs       Clock signal
+ 2016 25.1: 6,106μs       Clock signal
             -------------
-            725.378ms    
+            725.362ms    
 
  2017  1.1: 8μs           Captcha
  2017  1.2: 10μs          
@@ -208,7 +208,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 20.2: 3,791μs       
  2018 21.1: 5μs           Time machine halting problem
  2018 21.2: 3,955μs       
- 2018 22.1: 208μs         Caving capers
+ 2018 22.1: 205μs         Caving capers
  2018 22.2: 46,828μs      
  2018 23.1: 171μs         Nanobot teleportation
  2018 23.2: 14,654μs      
@@ -216,7 +216,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 9,988μs       
  2018 25.1: 24,412μs      4D chocolate teleportation
             -------------
-            547.615ms    
+            547.612ms    
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
@@ -245,7 +245,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 13.1: 175μs         Arkanoid (CPU used unmodified)
  2019 13.2: 3,530μs       
  2019 14.1: 98μs          Replicator
- 2019 14.2: 1,946μs       
+ 2019 14.2: 1,925μs       
  2019 15.1: 4,548μs       Oxygen repair droid (CPU used unmodified)
  2019 15.2: 156μs         
  2019 16.1: 13,422μs      FFT
@@ -268,7 +268,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 24.2: 6,790μs       
  2019 25.1: 16,447μs      Airlock password (CPU used unmodified)
             -------------
-            554.983ms    
+            554.962ms    
 
  2020  1.1: 22μs          Expenses
  2020  1.2: 106μs         
@@ -344,10 +344,10 @@ Tests performed on a 2023 MacBook Pro.
  2021 10.1: 375μs         Esoteric language parser
  2021 10.2: 547μs         
  2021 11.1: 1,722μs       Flashers
- 2021 11.2: 2,923μs       
+ 2021 11.2: 2,905μs       
  2021 12.1: 52μs          Caving
  2021 12.2: 117μs         
- 2021 13.1: 916μs         ZX Spectrum copy protection
+ 2021 13.1: 904μs         ZX Spectrum copy protection
  2021 13.2: 3,111μs       
  2021 14.1: 184μs         Ablative armour
  2021 14.2: 892μs         
@@ -373,7 +373,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 24.2: 1μs           
  2021 25.1: 76,199μs      Landing among the cucumbers
             -------------
-            452.405ms    
+            452.375ms    
 
  2022  1.1: 20μs          Calorie counting
  2022  1.2: 29μs          
@@ -469,7 +469,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 20.2: 37,608μs      
  2023 21.1: 55μs          Step counter
  2023 21.2: 439μs         
- 2023 22.1: 385μs         Sand slabs
+ 2023 22.1: 383μs         Sand slabs
  2023 22.2: 373μs         
  2023 23.1: 10,271μs      A long walk
  2023 23.2: 48,550μs      
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,110μs       
  2023 25.1: 495μs         Snowverload
             -------------
-            251.018ms    
+            251.016ms    
 
  2024  1.1: 112μs         Historian hysteria
  2024  1.2: 79μs          
@@ -549,13 +549,13 @@ Tests performed on a 2023 MacBook Pro.
  2025  8.2: 91,235μs      
  2025  9.1: 160μs         Movie theater
  2025  9.2: 7,114μs       
- 2025 10.1: 1,492μs       Factory
+ 2025 10.1: 1,485μs       Factory
  2025 10.2: 67,032μs      
  2025 11.1: 139μs         Reactor
  2025 11.2: 520μs         
  2025 12.1: 276μs         Christmas tree farm
             -------------
-            187.953ms    
+            187.946ms    
 
  514 puzzles solved in 4.857s.
 ```
