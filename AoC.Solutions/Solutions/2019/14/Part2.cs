@@ -13,33 +13,38 @@ public class Part2 : Base
 
         var oreForOne = CreateFuel();
 
-        var minEstimate = (int) (AvailableOre / oreForOne);
+        var low = (int) (AvailableOre / oreForOne);
 
-        var increment = minEstimate / 10;
+        var high = low * 2;
 
         while (true)
         {
             ResetStock();
 
-            var ore = CreateFuel(minEstimate);
-
-            if (ore > AvailableOre)
+            if (CreateFuel(high) > AvailableOre)
             {
-                ResetStock();
-
-                if (CreateFuel(minEstimate - 1) < AvailableOre)
-                {
-                    break;
-                }
-
-                minEstimate -= increment;
-
-                increment /= 2;
+                break;
             }
 
-            minEstimate += increment;
+            high *= 2;
         }
 
-        return (minEstimate - 1).ToString();
+        while (low + 1 < high)
+        {
+            var middle = low + (high - low) / 2;
+
+            ResetStock();
+
+            if (CreateFuel(middle) <= AvailableOre)
+            {
+                low = middle;
+            }
+            else
+            {
+                high = middle;
+            }
+        }
+
+        return low.ToString();
     }
 }
