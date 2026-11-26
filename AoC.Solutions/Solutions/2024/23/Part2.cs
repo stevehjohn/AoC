@@ -27,26 +27,19 @@ public class Part2 : Base
 
     private void BuildClique(HashSet<int> clique, Node node)
     {
-        foreach (var connection in node.Connections)
+        connections: foreach (var connection in node.Connections)
         {
-            var connected = true;
-            
             foreach (var name in clique)
             {
                 if (Lan[name].Connections.All(c => c.Id != connection.Id))
                 {
-                    connected = false;
-                    
-                    break;
+                    continue connections;
                 }
             }
 
-            if (connected)
-            {
-                clique.Add(connection.Id);
+            clique.Add(connection.Id);
 
-                BuildClique(clique, connection);
-            }
+            BuildClique(clique, connection);
         }
     }
 }
