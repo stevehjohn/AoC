@@ -33,13 +33,13 @@ public abstract class Base : Solution
             var left = winningNumbersString[location];
 
             var right = winningNumbersString[location + 1];
-            
+
             _winningNumbers[i] = left == ' ' ? right - '0' : (left - '0') * 10 + right - '0';
         }
 
         var count = 0;
-        
-        for (var i = 0; i < 25; i++)
+
+        numbers: for (var i = 0; i < 25; i++)
         {
             var location = i * 3;
 
@@ -53,15 +53,13 @@ public abstract class Base : Solution
             {
                 if (_winningNumbers[j] == number)
                 {
-                    count++;
+                    if (++count == 10)
+                    {
+                        break numbers;
+                    }
 
                     break;
                 }
-            }
-
-            if (count == 10)
-            {
-                break;
             }
         }
 
