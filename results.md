@@ -298,7 +298,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 13.2: 13μs          
  2020 14.1: 88μs          Memory bit twiddling
  2020 14.2: 3,812μs       
- 2020 15.1: 11μs          Number memory game
+ 2020 15.1: 8μs           Number memory game
  2020 15.2: 169,619μs     
  2020 16.1: 586μs         Ticket deciphering
  2020 16.2: 1,041μs       
@@ -320,7 +320,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 24.2: 34,056μs      
  2020 25.1: 45,743μs      Door cryptography
             -------------
-            487.413ms    
+            487.410ms    
 
  2021  1.1: 47μs          Depth scan
  2021  1.2: 138μs         
