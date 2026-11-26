@@ -27,7 +27,7 @@ public abstract class Base : Solution
     {
         _visualiser = visualiser;
     }
-    
+
     protected int Solve(int cheatTime)
     {
         var state = Race();
@@ -37,14 +37,19 @@ public abstract class Base : Solution
         var track = new State[state.Steps + 1];
 
         var i = 0;
-        
+
         while (state != null)
         {
             track[i] = state;
-            
+
             state = state.Previous;
 
             i++;
+        }
+        
+        if (_visualiser == null)
+        {
+            return CountCheatsFast(track, cheatTime);
         }
 
         Visualise(track, Point2D.Null, Point2D.Null);
@@ -58,7 +63,7 @@ public abstract class Base : Solution
                 var right = track[j];
 
                 var distance = left.Position.ManhattanDistance(right.Position);
-                
+
                 if (distance <= cheatTime)
                 {
                     var saving = left.Steps - right.Steps - distance;
@@ -69,7 +74,7 @@ public abstract class Base : Solution
                     }
 
                     count++;
-                    
+
                     Visualise(null, left.Position, right.Position);
                 }
             }
@@ -86,7 +91,7 @@ public abstract class Base : Solution
     private State Race()
     {
         var queue = new Queue<State>();
-        
+
         queue.Enqueue(new State(_start, Point2D.South, 0));
 
         while (queue.Count > 0)
@@ -147,11 +152,11 @@ public abstract class Base : Solution
                     case '#':
                         _map[x, y] = '#';
                         continue;
-                    
+
                     case 'S':
                         _start = new Point2D(x, y);
                         break;
-                    
+
                     case 'E':
                         _end = new Point2D(x, y);
                         break;
@@ -160,5 +165,65 @@ public abstract class Base : Solution
                 _map[x, y] = '.';
             }
         }
+    }
+
+    private int CountCheatsFast(State[] track, int cheatTime)
+    {
+        var steps = new int[_width * _height];
+
+        Array.Fill(steps, -1);
+
+        foreach (var state in track)
+        {
+            steps[state.Position.Y * _width + state.Position.X] = state.Steps;
+        }
+
+        var offsets = new List<(int X, int Y, int Distance)>();
+
+        for (var dy = -cheatTime; dy <= cheatTime; dy++)
+        {
+            var extent = cheatTime - Math.Abs(dy);
+
+            for (var dx = -extent; dx <= extent; dx++)
+            {
+                var distance = Math.Abs(dx) + Math.Abs(dy);
+
+                if (distance > 0)
+                {
+                    offsets.Add((dx, dy, distance));
+                }
+            }
+        }
+
+        var count = 0;
+
+        foreach (var state in track)
+        {
+            if (state.Steps < 100)
+            {
+                continue;
+            }
+
+            foreach (var offset in offsets)
+            {
+                var x = state.Position.X + offset.X;
+
+                var y = state.Position.Y + offset.Y;
+
+                if ((uint) x >= (uint) _width || (uint) y >= (uint) _height)
+                {
+                    continue;
+                }
+
+                var destination = steps[y * _width + x];
+
+                if (destination >= 0 && state.Steps - destination - offset.Distance >= 100)
+                {
+                    count++;
+                }
+            }
+        }
+
+        return count;
     }
 }
