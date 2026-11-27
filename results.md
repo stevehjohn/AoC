@@ -58,9 +58,9 @@ Tests performed on a 2023 MacBook Pro.
  2015 23.2: 85μs          
  2015 24.1: 85,779μs      It hangs in the balance
  2015 24.2: 126μs         
- 2015 25.1: 8μs           Let it snow
+ 2015 25.1: 6μs           Let it snow
             -------------
-            466.612ms    
+            466.610ms    
 
  2016  1.1: 6μs           Manhattan distance
  2016  1.2: 15μs          
@@ -162,9 +162,9 @@ Tests performed on a 2023 MacBook Pro.
  2017 23.2: 31μs          
  2017 24.1: 18,243μs      Electromagnetic moat
  2017 24.2: 16,982μs      
- 2017 25.1: 39,685μs      Turing tape
+ 2017 25.1: 39,502μs      Turing tape
             -------------
-            452.215ms    
+            452.032ms    
 
  2018  1.1: 16μs          Tardis calibration
  2018  1.2: 3,236μs       
@@ -192,7 +192,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 12.2: 8,040μs       
  2018 13.1: 17,543μs      Crashing carts
  2018 13.2: 31,589μs      
- 2018 14.1: 1,705μs       Elf recipes
+ 2018 14.1: 1,670μs       Elf recipes
  2018 14.2: 73,694μs      
  2018 15.1: 9,028μs       Elves vs Goblins
  2018 15.2: 41,873μs      
@@ -216,7 +216,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 9,988μs       
  2018 25.1: 24,412μs      4D chocolate teleportation
             -------------
-            499.771ms    
+            499.736ms    
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
@@ -362,7 +362,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 19.1: 16,755μs      3D scanners and beacons
  2021 19.2: 16,693μs      
  2021 20.1: 1,103μs       NCIS image enhancement
- 2021 20.2: 2,264μs       
+ 2021 20.2: 2,254μs       
  2021 21.1: 12μs          Quantum dice
  2021 21.2: 16,124μs      
  2021 22.1: 1,899μs       Reactor reboot
@@ -373,7 +373,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 24.2: 1μs           
  2021 25.1: 24,301μs      Landing among the cucumbers
             -------------
-            327.093ms    
+            327.083ms    
 
  2022  1.1: 20μs          Calorie counting
  2022  1.2: 29μs          
@@ -384,7 +384,7 @@ Tests performed on a 2023 MacBook Pro.
  2022  4.1: 97μs          Camp cleanup
  2022  4.2: 94μs          
  2022  5.1: 82μs          Supply stacks
- 2022  5.2: 156μs         
+ 2022  5.2: 152μs         
  2022  6.1: 48μs          Tuning trouble
  2022  6.2: 53μs          
  2022  7.1: 246μs         No space left on device
@@ -413,8 +413,8 @@ Tests performed on a 2023 MacBook Pro.
  2022 18.2: 1,418μs       
  2022 19.1: 19,068μs      Not enough minerals
  2022 19.2: 3,987μs       
- 2022 20.1: 10,697μs      Grove positioning system
- 2022 20.2: 51,054μs      
+ 2022 20.1: 1,371μs       Grove positioning system
+ 2022 20.2: 12,636μs      
  2022 21.1: 259μs         Monkey math
  2022 21.2: 256μs         
  2022 22.1: 1,454μs       Monkey map
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 226μs         
  2022 25.1: 9μs           Full of hot air
             -------------
-            199.793ms    
+            152.045ms    
 
  2023  1.1: 115μs         Trebuchet
  2023  1.2: 320μs         
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             97.084ms     
 
- 514 puzzles solved in 3.797s.
+ 514 puzzles solved in 3.749s.
 ```

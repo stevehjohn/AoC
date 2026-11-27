@@ -8,25 +8,38 @@ public abstract class Base : Solution
 
     private int _length;
 
-    private Number[] _initialNumbers;
+    private long[] _values;
 
-    private Number[] _numbers;
+    private int[] _order;
+
+    private int[] _offsets;
+
+    private int _zero;
 
     protected void ParseInput(long key = 1)
     {
         _length = Input.Length;
 
-        _initialNumbers = new Number[_length];
+        _values = new long[_length];
 
-        _numbers = new Number[_length];
+        _order = new int[_length];
+
+        _offsets = new int[_length];
 
         for (var i = 0; i < _length; i++)
         {
-            var number = new Number(long.Parse(Input[i]) * key);
+            var value = long.Parse(Input[i]) * key;
 
-            _initialNumbers[i] = number;
+            _values[i] = value;
 
-            _numbers[i] = number;
+            _order[i] = i;
+
+            _offsets[i] = (int) (value % (_length - 1));
+
+            if (value == 0)
+            {
+                _zero = i;
+            }
         }
     }
 
@@ -43,52 +56,33 @@ public abstract class Base : Solution
 
     protected long Solve()
     {
-        var zero = _numbers.First(n => n.Value == 0);
+        var start = Array.IndexOf(_order, _zero);
 
-        var startIndex = 0;
-
-        for (var i = 0; i < _length; i++)
-        {
-            if (_numbers[i] == zero)
-            {
-                startIndex = i;
-
-                break;
-            }
-        }
-
-        var sum = 0L;
-
-        sum += _numbers[(1_000 + startIndex) % _length].Value;
-
-        sum += _numbers[(2_000 + startIndex) % _length].Value;
-
-        sum += _numbers[(3_000 + startIndex) % _length].Value;
-
-        return sum;
+        return _values[_order[(start + 1_000) % _length]] + _values[_order[(start + 2_000) % _length]] + _values[_order[(start + 3_000) % _length]];
     }
 
     private void DoSwap(int index)
     {
-        var number = _initialNumbers[index];
+        var offset = _offsets[index];
 
-        var oldIndex = 0;
-
-        for (var i = 0; i < _length; i++)
+        if (offset == 0)
         {
-            if (_numbers[i] == number)
-            {
-                oldIndex = i;
-
-                break;
-            }
+            return;
         }
 
-        var newIndex = (int) ((oldIndex + number.Value) % (_length - 1));
+        var oldIndex = Array.IndexOf(_order, index);
+
+        var newIndex = oldIndex + offset;
+
+        var modulus = _length - 1;
 
         if (newIndex < 0)
         {
-            newIndex += _length - 1;
+            newIndex += modulus;
+        }
+        else if (newIndex >= modulus)
+        {
+            newIndex -= modulus;
         }
 
         if (oldIndex == newIndex)
@@ -98,13 +92,13 @@ public abstract class Base : Solution
 
         if (oldIndex < newIndex)
         {
-            Array.Copy(_numbers, oldIndex + 1, _numbers, oldIndex, newIndex - oldIndex);
+            Array.Copy(_order, oldIndex + 1, _order, oldIndex, newIndex - oldIndex);
         }
         else
         {
-            Array.Copy(_numbers, newIndex, _numbers, newIndex + 1, oldIndex - newIndex);
+            Array.Copy(_order, newIndex, _order, newIndex + 1, oldIndex - newIndex);
         }
 
-        _numbers[newIndex] = number;
+        _order[newIndex] = index;
     }
 }
