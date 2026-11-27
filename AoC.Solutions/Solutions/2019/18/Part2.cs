@@ -16,17 +16,22 @@ public class Part2 : Base
     {
         _visualiser = visualiser;
     }
-    
+
     public override string GetAnswer()
     {
         ParseInput();
 
         ModifyMap();
+        
+        if (_visualiser == null)
+        {
+            return SolveFast().ToString();
+        }
 
         FindItemLocations();
 
         Visualise();
-        
+
         InterrogateMap();
 
         var result = FindShortestPath();
@@ -54,11 +59,11 @@ public class Part2 : Base
         graphs[3].Build(Distances.Where(d => GetQuadrant(d.Key[0]) == 4 && GetQuadrant(d.Key[1]) == 4).ToDictionary(kvp => kvp.Key, kvp => kvp.Value), Doors);
 
         var solver = new GraphSolver(graphs);
-        
+
         var result = solver.Solve();
 
         Visualise(result.Path);
-        
+
         return result.Steps;
     }
 

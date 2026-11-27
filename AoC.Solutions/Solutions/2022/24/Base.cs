@@ -48,7 +48,7 @@ public abstract class Base : Solution
                 Map = Input.To2DArray(),
                 Moves = [.. moves.Select(m => (m % _width, m / _width))]
             };
-            
+
             _visualiser.PuzzleStateChanged(state);
         }
     }
@@ -66,7 +66,7 @@ public abstract class Base : Solution
         _leftStorms = new bool[_height, _width];
 
         _downStorms = new bool[_width, _height];
-        
+
         _rightStorms = new bool[_height, _width];
 
         _upStorms = new bool[_width, _height];
@@ -116,6 +116,11 @@ public abstract class Base : Solution
 
     protected int RunSimulation(int loops = 1)
     {
+        if (_visualiser == null && _blizzardWidth <= 128)
+        {
+            return RunSimulationFast(loops);
+        }
+
         var steps = 0;
 
         for (var i = 0; i < loops; i++)
@@ -124,6 +129,120 @@ public abstract class Base : Solution
         }
 
         return steps;
+    }
+
+    private int RunSimulationFast(int loops)
+    {
+        var width = _blizzardWidth;
+
+        var height = _blizzardHeight;
+
+        var mask = UInt128.MaxValue >> (128 - width);
+
+        var left = new UInt128[height];
+
+        var right = new UInt128[height];
+
+        var up = new UInt128[height];
+
+        var down = new UInt128[height];
+
+        for (var y = 0; y < height; y++)
+        {
+            for (var x = 0; x < width; x++)
+            {
+                var bit = UInt128.One << x;
+
+                switch (Input[y + 1][x + 1])
+                {
+                    case '<':
+                        left[y] |= bit;
+                        break;
+
+                    case '>':
+                        right[y] |= bit;
+                        break;
+
+                    case '^':
+                        up[y] |= bit;
+                        break;
+
+                    case 'v':
+                        down[y] |= bit;
+                        break;
+                }
+            }
+        }
+
+        var startBit = UInt128.One << (_start % _width - 1);
+
+        var endBit = UInt128.One << (_end % _width - 1);
+
+        var frontier = new UInt128[height + 2];
+
+        var next = new UInt128[height + 2];
+
+        var minute = 0;
+
+        for (var leg = 0; leg < loops; leg++)
+        {
+            Array.Clear(frontier);
+
+            var reverse = (leg & 1) != 0;
+
+            var origin = reverse ? height + 1 : 0;
+
+            var target = reverse ? 0 : height + 1;
+
+            var targetBit = reverse ? startBit : endBit;
+
+            frontier[origin] = reverse ? endBit : startBit;
+
+            while ((frontier[target] & targetBit) == 0)
+            {
+                minute++;
+
+                var phase = minute % height;
+
+                next[0] = (frontier[0] | frontier[1]) & startBit;
+
+                next[height + 1] =
+                    (frontier[height] | frontier[height + 1]) & endBit;
+
+                for (var y = 0; y < height; y++)
+                {
+                    var l = left[y];
+
+                    var r = right[y];
+
+                    left[y] = (l >> 1) |
+                              ((l & UInt128.One) << (width - 1));
+
+                    right[y] = ((r << 1) & mask) |
+                               (r >> (width - 1));
+
+                    var occupied = left[y] | right[y] |
+                                   up[(y + phase) % height] |
+                                   down[(y + height - phase) % height];
+
+                    var row = y + 1;
+
+                    var current = frontier[row];
+
+                    var reachable = current |
+                                    (current << 1) |
+                                    (current >> 1) |
+                                    frontier[row - 1] |
+                                    frontier[row + 1];
+
+                    next[row] = reachable & mask & ~occupied;
+                }
+
+                (frontier, next) = (next, frontier);
+            }
+        }
+
+        return minute;
     }
 
     private int RunSimulationStep(int startIteration, int loop)
@@ -135,7 +254,7 @@ public abstract class Base : Solution
         var origin = loop == 1 ? _end : _start;
 
         var target = loop == 1 ? _start : _end;
-        
+
         queue.Enqueue((origin, 0, _visualiser == null ? null : [origin]), 0);
 
         while (queue.Count > 0)
@@ -145,7 +264,7 @@ public abstract class Base : Solution
             if (item.Position == target && item.Position == target)
             {
                 Visualise(item.History);
-                
+
                 return item.Steps;
             }
 
@@ -162,7 +281,7 @@ public abstract class Base : Solution
 
                 if (! visited.Contains(code))
                 {
-                    queue.Enqueue((move, item.Steps + 1, _visualiser == null ? null : [..item.History, move]), Math.Abs(target % _width - move % _width) + Math.Abs(target / _width - move / _width) + item.Steps);
+                    queue.Enqueue((move, item.Steps + 1, _visualiser == null ? null : [.. item.History, move]), Math.Abs(target % _width - move % _width) + Math.Abs(target / _width - move / _width) + item.Steps);
 
                     visited.Add(code);
                 }
@@ -299,7 +418,7 @@ public abstract class Base : Solution
         target = (y - 1 + yD) % _blizzardHeight + 1;
 
         found = _upStorms[x, target];
-        
+
         return found;
     }
 }

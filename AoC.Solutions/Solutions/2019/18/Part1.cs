@@ -11,7 +11,7 @@ public class Part1 : Base
     public Part1()
     {
     }
-    
+
     public Part1(IVisualiser<PuzzleState> visualiser)
     {
         _visualiser = visualiser;
@@ -20,11 +20,16 @@ public class Part1 : Base
     public override string GetAnswer()
     {
         ParseInput();
+        
+        if (_visualiser == null)
+        {
+            return SolveFast().ToString();
+        }
 
         FindItemLocations();
 
         Visualise();
-        
+
         InterrogateMap();
 
         var result = FindShortestPath();
@@ -46,7 +51,7 @@ public class Part1 : Base
         var solver = new GraphSolver([graph]);
 
         var result = solver.Solve();
-        
+
         Visualise(result.Path);
 
         return result.Steps;
