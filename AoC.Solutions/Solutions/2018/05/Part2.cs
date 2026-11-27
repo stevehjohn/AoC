@@ -9,14 +9,11 @@ public class Part2 : Base
     {
         var smallest = int.MaxValue;
 
+        var polymer = Input[0];
+
         for (var c = 'a'; c <= 'z'; c++)
         {
-            var result = ReactPolymer(Input[0].Replace(c.ToString(), string.Empty, StringComparison.InvariantCultureIgnoreCase));
-
-            if (result < smallest)
-            {
-                smallest = result;
-            }
+            smallest = Math.Min(smallest, ReactPolymer(polymer, c));
         }
 
         return smallest.ToString();
