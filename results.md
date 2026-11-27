@@ -142,7 +142,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 13.2: 11,471μs      
  2017 14.1: 22,730μs      Defragger
  2017 14.2: 23,077μs      
- 2017 15.1: 6,516μs       Dueling generators
+ 2017 15.1: 6,338μs       Dueling generators
  2017 15.2: 124,810μs     
  2017 16.1: 501μs         Permutation promenade
  2017 16.2: 362μs         
@@ -164,7 +164,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 24.2: 16,982μs      
  2017 25.1: 39,685μs      Turing tape
             -------------
-            452.393ms    
+            452.215ms    
 
  2018  1.1: 16μs          Tardis calibration
  2018  1.2: 3,236μs       
@@ -362,7 +362,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 19.1: 16,755μs      3D scanners and beacons
  2021 19.2: 16,693μs      
  2021 20.1: 1,103μs       NCIS image enhancement
- 2021 20.2: 2,290μs       
+ 2021 20.2: 2,264μs       
  2021 21.1: 12μs          Quantum dice
  2021 21.2: 16,124μs      
  2021 22.1: 1,899μs       Reactor reboot
@@ -373,7 +373,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 24.2: 1μs           
  2021 25.1: 24,301μs      Landing among the cucumbers
             -------------
-            327.119ms    
+            327.093ms    
 
  2022  1.1: 20μs          Calorie counting
  2022  1.2: 29μs          
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             97.084ms     
 
- 514 puzzles solved in 3.798s.
+ 514 puzzles solved in 3.797s.
 ```
