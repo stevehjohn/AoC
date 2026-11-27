@@ -1,74 +1,55 @@
-﻿using JetBrains.Annotations;
+﻿using System.Numerics;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2020._25;
 
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private long _pk1;
+    private const long Modulus = 20201227;
 
-    private long _pk2;
+    private const long Subject = 7;
 
     public override string GetAnswer()
     {
-        ParseInput();
+        var pk1 = long.Parse(Input[0]);
 
-        long smallerPkLoopSize;
+        var pk2 = long.Parse(Input[1]);
 
-        long result;
+        var loopSize = GetLoopSize(pk1);
 
-        if (_pk1 < _pk2)
-        {
-            smallerPkLoopSize = GetLoopSize(_pk1);
-
-            result = Transform(_pk2, smallerPkLoopSize);
-        }
-        else
-        {
-            smallerPkLoopSize = GetLoopSize(_pk2);
-
-            result = Transform(_pk1, smallerPkLoopSize);
-        }
-
-        return result.ToString();
-    }
-
-    private static long Transform(long key, long loopSize)
-    {
-        var value = 1L;
-
-        for (var i = 0; i < loopSize; i++)
-        {
-            value *= key;
-
-            value %= 20201227;
-        }
-
-        return value;
+        return BigInteger.ModPow(pk2, loopSize, Modulus).ToString();
     }
 
     private static long GetLoopSize(long key)
     {
+        const int m = 4495;
+
+        var babies = new Dictionary<long, int>(m);
+
         var value = 1L;
 
-        long loop = 0;
-
-        while (value != key)
+        for (var j = 0; j < m; j++)
         {
-            value *= 7;
+            babies.TryAdd(value, j);
 
-            value %= 20201227;
-
-            loop++;
+            value = value * Subject % Modulus;
         }
 
-        return loop;
-    }
+        var inverse = (long) BigInteger.ModPow(value, Modulus - 2, Modulus);
 
-    private void ParseInput()
-    {
-        _pk1 = long.Parse(Input[0]);
+        var giant = key;
 
-        _pk2 = long.Parse(Input[1]);
+        for (var i = 0; i < m; i++)
+        {
+            if (babies.TryGetValue(giant, out var j))
+            {
+                return (long) i * m + j;
+            }
+
+            giant = giant * inverse % Modulus;
+        }
+
+        throw new InvalidOperationException("No loop size found.");
     }
 }
