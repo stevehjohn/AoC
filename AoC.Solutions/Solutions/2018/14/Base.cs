@@ -1,5 +1,4 @@
-﻿using System.Text;
-using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2018._14;
 
@@ -12,43 +11,36 @@ public abstract class Base : Solution
         var recipes = new byte[Math.Max(input + 12, 1_024)];
 
         recipes[0] = 3;
-        
+
         recipes[1] = 7;
 
         var count = 2;
 
         var elf1 = 0;
-        
+
         var elf2 = 1;
 
-        var digits = input.ToString().Length;
+        var pattern = input.ToString().Select(c => (byte) (c - '0')).ToArray();
 
-        var modulus = 1L;
+        var digits = pattern.Length;
 
-        for (var i = 0; i < digits; i++)
-        {
-            modulus *= 10;
-        }
-
-        var window = 37L % modulus;
+        var lastDigit = pattern[^1];
 
         if (isPart2)
         {
-            if (digits == 1 && input == 3)
+            for (var i = digits; i <= count; i++)
             {
-                return "0";
-            }
-
-            if (count >= digits && window == input)
-            {
-                return (count - digits).ToString();
+                if (recipes.AsSpan(i - digits, digits).SequenceEqual(pattern))
+                {
+                    return (i - digits).ToString();
+                }
             }
         }
 
         while (true)
         {
             var a = recipes[elf1];
-            
+
             var b = recipes[elf2];
 
             var sum = a + b;
@@ -62,14 +54,9 @@ public abstract class Base : Solution
             {
                 recipes[count++] = 1;
 
-                if (isPart2)
+                if (isPart2 && lastDigit == 1 && count >= digits && recipes.AsSpan(count - digits, digits).SequenceEqual(pattern))
                 {
-                    window = (window * 10 + 1) % modulus;
-
-                    if (count >= digits && window == input)
-                    {
-                        return (count - digits).ToString();
-                    }
+                    return (count - digits).ToString();
                 }
 
                 sum -= 10;
@@ -79,9 +66,7 @@ public abstract class Base : Solution
 
             if (isPart2)
             {
-                window = (window * 10 + sum) % modulus;
-
-                if (count >= digits && window == input)
+                if (sum == lastDigit && count >= digits && recipes.AsSpan(count - digits, digits).SequenceEqual(pattern))
                 {
                     return (count - digits).ToString();
                 }
@@ -106,13 +91,14 @@ public abstract class Base : Solution
             }
         }
 
-        var builder = new StringBuilder(10);
-
-        for (var i = input; i < input + 10; i++)
-        {
-            builder.Append((char) ('0' + recipes[i]));
-        }
-
-        return builder.ToString();
+        return string.Create(10, (recipes, input),
+            static (span, state) =>
+            {
+                for (var i = 0; i < span.Length; i++)
+                {
+                    span[i] = (char) ('0' +
+                                      state.recipes[state.input + i]);
+                }
+            });
     }
 }

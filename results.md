@@ -110,9 +110,9 @@ Tests performed on a 2023 MacBook Pro.
  2016 23.2: 23μs          
  2016 24.1: 19,559μs      Air duct spelunking
  2016 24.2: 18,745μs      
- 2016 25.1: 6,106μs       Clock signal
+ 2016 25.1: 6,071μs       Clock signal
             -------------
-            720.423ms    
+            720.388ms    
 
  2017  1.1: 8μs           Captcha
  2017  1.2: 10μs          
@@ -142,10 +142,10 @@ Tests performed on a 2023 MacBook Pro.
  2017 13.2: 11,471μs      
  2017 14.1: 22,730μs      Defragger
  2017 14.2: 23,077μs      
- 2017 15.1: 7,572μs       Dueling generators
+ 2017 15.1: 6,516μs       Dueling generators
  2017 15.2: 124,810μs     
  2017 16.1: 501μs         Permutation promenade
- 2017 16.2: 363μs         
+ 2017 16.2: 362μs         
  2017 17.1: 770μs         Spinlock
  2017 17.2: 111μs         
  2017 18.1: 181μs         Soundcard shenanigans
@@ -162,9 +162,9 @@ Tests performed on a 2023 MacBook Pro.
  2017 23.2: 31μs          
  2017 24.1: 18,243μs      Electromagnetic moat
  2017 24.2: 16,982μs      
- 2017 25.1: 39,942μs      Turing tape
+ 2017 25.1: 39,685μs      Turing tape
             -------------
-            453.707ms    
+            452.393ms    
 
  2018  1.1: 16μs          Tardis calibration
  2018  1.2: 3,236μs       
@@ -192,7 +192,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 12.2: 8,040μs       
  2018 13.1: 17,543μs      Crashing carts
  2018 13.2: 31,589μs      
- 2018 14.1: 1,739μs       Elf recipes
+ 2018 14.1: 1,705μs       Elf recipes
  2018 14.2: 73,694μs      
  2018 15.1: 9,028μs       Elves vs Goblins
  2018 15.2: 41,873μs      
@@ -216,7 +216,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 9,988μs       
  2018 25.1: 24,412μs      4D chocolate teleportation
             -------------
-            499.805ms    
+            499.771ms    
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
@@ -413,7 +413,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 18.2: 1,418μs       
  2022 19.1: 19,068μs      Not enough minerals
  2022 19.2: 3,987μs       
- 2022 20.1: 10,879μs      Grove positioning system
+ 2022 20.1: 10,697μs      Grove positioning system
  2022 20.2: 51,054μs      
  2022 21.1: 259μs         Monkey math
  2022 21.2: 256μs         
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 226μs         
  2022 25.1: 9μs           Full of hot air
             -------------
-            199.975ms    
+            199.793ms    
 
  2023  1.1: 115μs         Trebuchet
  2023  1.2: 320μs         
@@ -546,7 +546,7 @@ Tests performed on a 2023 MacBook Pro.
  2025  7.1: 5μs           Laboratories
  2025  7.2: 274μs         
  2025  8.1: 15,741μs      Playground
- 2025  8.2: 1,800μs       
+ 2025  8.2: 1,795μs       
  2025  9.1: 156μs         Movie theater
  2025  9.2: 7,114μs       
  2025 10.1: 1,485μs       Factory
@@ -555,7 +555,7 @@ Tests performed on a 2023 MacBook Pro.
  2025 11.2: 520μs         
  2025 12.1: 276μs         Christmas tree farm
             -------------
-            97.089ms     
+            97.084ms     
 
- 514 puzzles solved in 3.799s.
+ 514 puzzles solved in 3.798s.
 ```
