@@ -26,8 +26,8 @@ Tests performed on a 2023 MacBook Pro.
  2015  7.2: 93μs          
  2015  8.1: 26μs          Matchsticks
  2015  8.2: 30μs          
- 2015  9.1: 988μs         All in a single night
- 2015  9.2: 38μs          
+ 2015  9.1: 971μs         All in a single night
+ 2015  9.2: 37μs          
  2015 10.1: 2,982μs       Elves look, elves say
  2015 10.2: 40,100μs      
  2015 11.1: 1,866μs       Password policy
@@ -35,14 +35,14 @@ Tests performed on a 2023 MacBook Pro.
  2015 12.1: 89μs          Json abacus
  2015 12.2: 2,708μs       
  2015 13.1: 57μs          Knights of the dinner table
- 2015 13.2: 68μs          
+ 2015 13.2: 66μs          
  2015 14.1: 1,330μs       Reindeer olympics
  2015 14.2: 1,385μs       
  2015 15.1: 723μs         Science for hungry people
  2015 15.2: 722μs         
  2015 16.1: 21μs          Aunt Sue
  2015 16.2: 89μs          
- 2015 17.1: 1,537μs       Too much eggnog
+ 2015 17.1: 1,234μs       Too much eggnog
  2015 17.2: 13μs          
  2015 18.1: 7,409μs       Bournville GIF
  2015 18.2: 7,474μs       
@@ -60,7 +60,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 24.2: 18μs          
  2015 25.1: 5μs           Let it snow
             -------------
-            355.907ms    
+            355.584ms    
 
  2016  1.1: 6μs           Manhattan distance
  2016  1.2: 15μs          
@@ -203,7 +203,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 18.1: 396μs         I'm a lumberjack...
  2018 18.2: 17,630μs      
  2018 19.1: 17,923μs      Tardis halting problem
- 2018 19.2: 14μs          
+ 2018 19.2: 11μs          
  2018 20.1: 3,075μs       Regex maze
  2018 20.2: 3,791μs       
  2018 21.1: 5μs           Time machine halting problem
@@ -216,7 +216,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 9,824μs       
  2018 25.1: 24,412μs      4D chocolate teleportation
             -------------
-            433.328ms    
+            433.325ms    
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
@@ -413,7 +413,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 18.2: 1,418μs       
  2022 19.1: 19,068μs      Not enough minerals
  2022 19.2: 3,987μs       
- 2022 20.1: 1,317μs       Grove positioning system
+ 2022 20.1: 1,295μs       Grove positioning system
  2022 20.2: 12,525μs      
  2022 21.1: 259μs         Monkey math
  2022 21.2: 256μs         
@@ -425,7 +425,7 @@ Tests performed on a 2023 MacBook Pro.
  2022 24.2: 224μs         
  2022 25.1: 9μs           Full of hot air
             -------------
-            151.869ms    
+            151.847ms    
 
  2023  1.1: 115μs         Trebuchet
  2023  1.2: 320μs         
@@ -496,7 +496,7 @@ Tests performed on a 2023 MacBook Pro.
  2024  8.1: 90μs          Resonant collinearity
  2024  8.2: 121μs         
  2024  9.1: 287μs         Disk fragmenter
- 2024  9.2: 710μs         
+ 2024  9.2: 671μs         
  2024 10.1: 286μs         Hoof it
  2024 10.2: 469μs         
  2024 11.1: 411μs         Plutonian pebbles
@@ -524,12 +524,12 @@ Tests performed on a 2023 MacBook Pro.
  2024 22.1: 165μs         Monkey market
  2024 22.2: 16,724μs      
  2024 23.1: 233μs         LAN party
- 2024 23.2: 991μs         
+ 2024 23.2: 976μs         
  2024 24.1: 329μs         Crossed wires
  2024 24.2: 225μs         
  2024 25.1: 111μs         Code chronicle
             -------------
-            162.998ms    
+            162.944ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 78μs          
@@ -550,12 +550,12 @@ Tests performed on a 2023 MacBook Pro.
  2025  9.1: 152μs         Movie theater
  2025  9.2: 7,073μs       
  2025 10.1: 1,485μs       Factory
- 2025 10.2: 20,084μs      
+ 2025 10.2: 19,057μs      
  2025 11.1: 139μs         Reactor
  2025 11.2: 520μs         
  2025 12.1: 276μs         Christmas tree farm
             -------------
-            51.494ms     
+            50.467ms     
 
- 514 puzzles solved in 3.284s.
+ 514 puzzles solved in 3.282s.
 ```

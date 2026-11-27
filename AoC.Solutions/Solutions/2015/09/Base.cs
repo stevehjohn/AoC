@@ -20,9 +20,9 @@ public abstract class Base : Solution
         {
             var parts = line.Split(' ');
 
-            var a = GetId(parts[0]);
+            var a = GetId(locations, parts[0]);
 
-            var b = GetId(parts[2]);
+            var b = GetId(locations, parts[2]);
 
             edges.Add((a, b, int.Parse(parts[4])));
         }
@@ -36,18 +36,6 @@ public abstract class Base : Solution
             _distances[a, b] = distance;
 
             _distances[b, a] = distance;
-        }
-
-        int GetId(string name)
-        {
-            if (! locations.TryGetValue(name, out var id))
-            {
-                id = locations.Count;
-
-                locations.Add(name, id);
-            }
-
-            return id;
         }
     }
 
@@ -118,5 +106,17 @@ public abstract class Base : Solution
         }
 
         return (shortest, longest);
+    }
+
+    private static int GetId(Dictionary<string, int> locations, string name)
+    {
+        if (! locations.TryGetValue(name, out var id))
+        {
+            id = locations.Count;
+
+            locations.Add(name, id);
+        }
+
+        return id;
     }
 }

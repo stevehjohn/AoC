@@ -176,14 +176,15 @@ public abstract class Base : Solution
 
         foreach (var c in pattern)
         {
-            if (c == '/')
+            switch (c)
             {
-                continue;
-            }
-
-            if (c == '#')
-            {
-                result |= 1 << bit;
+                case '/':
+                    continue;
+                
+                case '#':
+                    result |= 1 << bit;
+                    
+                    break;
             }
 
             bit++;
