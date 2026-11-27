@@ -26,10 +26,10 @@ public abstract class Base : Solution
         _maxLength = 0;
 
         _strongestLongest = 0;
-
-        Search(0, UInt128.Zero, 0, 0);
-
+        
         _visited.Clear();
+        
+        Search(0, UInt128.Zero, 0, 0);
 
         return (_maxStrength, _strongestLongest);
     }
