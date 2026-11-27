@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using AoC.Solutions.Extensions;
+﻿using AoC.Solutions.Extensions;
 using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2017._25;
@@ -9,62 +8,64 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var startState = Input[0][^2] - 'A';
+        var state = (Input[0][^2] - 'A') * 2;
 
         var stepsLine = Input[1];
-        
-        var start = stepsLine.IndexOf("after ", StringComparison.Ordinal) + 6;
-        
-        var end = stepsLine.IndexOf(' ', start);
-        
-        var steps =int.FastParse(stepsLine.AsSpan(start, end - start));
 
-        var transitions = new Transition[26, 2];
+        var start = stepsLine.IndexOf(
+            "after ", StringComparison.Ordinal) + 6;
+
+        var end = stepsLine.IndexOf(' ', start);
+
+        var steps = int.FastParse(
+            stepsLine.AsSpan(start, end - start));
+
+        var writes = new byte[52];
+
+        var directions = new int[52];
+
+        var nextStates = new int[52];
 
         for (var i = 3; i < Input.Length; i += 10)
         {
-            var state = Input[i][^2] - 'A';
+            var index = (Input[i][^2] - 'A') * 2;
 
-            transitions[state, 0] = new Transition(Input[i + 2][^2] - '0', Input[i + 3][^3] == 'h' ? 1 : -1, Input[i + 4][^2] - 'A');
+            writes[index] = (byte) (Input[i + 2][^2] - '0');
 
-            transitions[state, 1] = new Transition(Input[i + 6][^2] - '0', Input[i + 7][^3] == 'h' ? 1 : -1, Input[i + 8][^2] - 'A');
+            directions[index] = Input[i + 3][^3] == 'h'
+                ? 1 : -1;
+
+            nextStates[index] = (Input[i + 4][^2] - 'A') * 2;
+
+            writes[index + 1] = (byte) (Input[i + 6][^2] - '0');
+
+            directions[index + 1] = Input[i + 7][^3] == 'h'
+                ? 1 : -1;
+
+            nextStates[index + 1] = (Input[i + 8][^2] - 'A') * 2;
         }
 
-        var tape = new ulong[(2L * steps + 65) / 64];
+        var tape = new byte[steps * 2 + 1];
 
         var position = steps;
 
-        var stateIndex = startState;
+        var checksum = 0;
 
         for (var i = 0; i < steps; i++)
         {
-            var word = position >> 6;
-            
-            var bit = 1UL << (position & 63);
+            var value = tape[position];
 
-            var value = (tape[word] & bit) == 0 ? 0 : 1;
+            var transition = state | value;
 
-            var transition = transitions[stateIndex, value];
+            var write = writes[transition];
 
-            if (transition.Write == 1)
-            {
-                tape[word] |= bit;
-            }
-            else
-            {
-                tape[word] &= ~bit;
-            }
+            checksum += write - value;
 
-            position += transition.Direction;
-            
-            stateIndex = transition.NextState;
-        }
+            tape[position] = write;
 
-        var checksum = 0;
+            position += directions[transition];
 
-        foreach (var word in tape)
-        {
-            checksum += BitOperations.PopCount(word);
+            state = nextStates[transition];
         }
 
         return checksum.ToString();
