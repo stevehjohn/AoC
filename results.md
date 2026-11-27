@@ -56,11 +56,11 @@ Tests performed on a 2023 MacBook Pro.
  2015 22.2: 4,294μs       
  2015 23.1: 71μs          Opening the Turing lock
  2015 23.2: 85μs          
- 2015 24.1: 85,779μs      It hangs in the balance
- 2015 24.2: 126μs         
- 2015 25.1: 6μs           Let it snow
+ 2015 24.1: 203μs         It hangs in the balance
+ 2015 24.2: 18μs          
+ 2015 25.1: 5μs           Let it snow
             -------------
-            466.430ms    
+            380.745ms    
 
  2016  1.1: 6μs           Manhattan distance
  2016  1.2: 15μs          
@@ -70,7 +70,7 @@ Tests performed on a 2023 MacBook Pro.
  2016  3.2: 615μs         
  2016  4.1: 4,290μs       Security through obscurity
  2016  4.2: 4,264μs       
- 2016  5.1: 77,836μs      Password hash
+ 2016  5.1: 73,413μs      Password hash
  2016  5.2: 221,035μs     
  2016  6.1: 874μs         Signals and noise
  2016  6.2: 272μs         
@@ -112,7 +112,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 24.2: 18,745μs      
  2016 25.1: 6,071μs       Clock signal
             -------------
-            720.314ms    
+            715.891ms    
 
  2017  1.1: 8μs           Captcha
  2017  1.2: 10μs          
@@ -429,7 +429,7 @@ Tests performed on a 2023 MacBook Pro.
 
  2023  1.1: 115μs         Trebuchet
  2023  1.2: 320μs         
- 2023  2.1: 56μs          Cube conundrum
+ 2023  2.1: 55μs          Cube conundrum
  2023  2.2: 77μs          
  2023  3.1: 51μs          Gear ratios
  2023  3.2: 169μs         
@@ -469,15 +469,15 @@ Tests performed on a 2023 MacBook Pro.
  2023 20.2: 37,608μs      
  2023 21.1: 53μs          Step counter
  2023 21.2: 434μs         
- 2023 22.1: 370μs         Sand slabs
- 2023 22.2: 368μs         
+ 2023 22.1: 358μs         Sand slabs
+ 2023 22.2: 360μs         
  2023 23.1: 10,271μs      A long walk
  2023 23.2: 47,514μs      
  2023 24.1: 1,509μs       Never tell me the odds
  2023 24.2: 5,110μs       
  2023 25.1: 489μs         Snowverload
             -------------
-            199.288ms    
+            199.267ms    
 
  2024  1.1: 112μs         Historian hysteria
  2024  1.2: 79μs          
@@ -526,10 +526,10 @@ Tests performed on a 2023 MacBook Pro.
  2024 23.1: 18,009μs      LAN party
  2024 23.2: 19,914μs      
  2024 24.1: 329μs         Crossed wires
- 2024 24.2: 226μs         
+ 2024 24.2: 225μs         
  2024 25.1: 111μs         Code chronicle
             -------------
-            233.742ms    
+            233.741ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 78μs          
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             97.039ms     
 
- 514 puzzles solved in 3.552s.
+ 514 puzzles solved in 3.462s.
 ```

@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using System.Numerics;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2015._24;
 
@@ -8,33 +9,133 @@ public abstract class Base : Solution
 
     protected long Smallest = long.MaxValue;
 
-    private int _minDepth = int.MaxValue;
-
-    protected void TryFindQeOfGroup(List<int> weights, int target, long qe = 1, int current = 0, int depth = 0)
+    protected void TryFindQeOfGroup(List<int> weights, int target)
     {
-        foreach (var weight in weights)
-        {
-            if (weight + current == target)
-            {
-                if (qe * weight < Smallest)
-                {
-                    Smallest = qe * weight;
+        var values = weights.OrderByDescending(w => w).ToArray();
 
-                    _minDepth = depth;
+        var n = values.Length;
+
+        if (n > 64)
+        {
+            throw new InvalidOperationException("Too many packages.");
+        }
+
+        var all = n == 64 ? ulong.MaxValue : (1UL << n) - 1;
+
+        var groups = values.Sum() / target;
+
+        var prefix = new int[n + 1];
+
+        for (var i = 0; i < n; i++)
+        {
+            prefix[i + 1] = prefix[i] + values[i];
+        }
+
+        var partitionCache = new Dictionary<ulong, bool>();
+
+        Smallest = long.MaxValue;
+
+        for (var size = 1; size <= n; size++)
+        {
+            Search(0, size, target, 1, 0);
+
+            if (Smallest != long.MaxValue)
+            {
+                return;
+            }
+        }
+
+        void Search(int start, int left, int remaining, long product, ulong used)
+        {
+            if (left == 0)
+            {
+                if (remaining == 0 && product < Smallest && CanPartition(all ^ used, groups - 1))
+                {
+                    Smallest = product;
                 }
 
-                continue;
+                return;
             }
 
-            if (weight + current > target)
+            if (n - start < left || remaining <= 0 || product >= Smallest)
             {
-                continue;
+                return;
             }
 
-            if (depth + 1 < _minDepth)
+            var maximum = prefix[start + left] - prefix[start];
+
+            var minimum = prefix[n] - prefix[n - left];
+
+            if (remaining > maximum || remaining < minimum)
             {
-                TryFindQeOfGroup([.. weights.Where(w => w != weight)], target, qe * weight, current + weight, depth + 1);
+                return;
             }
+
+            for (var i = start; i <= n - left; i++)
+            {
+                var value = values[i];
+
+                if (value > remaining || product > long.MaxValue / value)
+                {
+                    continue;
+                }
+
+                Search(i + 1, left - 1, remaining - value, product * value, used | (1UL << i));
+            }
+        }
+
+        bool CanPartition(ulong available, int remainingGroups)
+        {
+            if (remainingGroups == 1)
+            {
+                return true;
+            }
+
+            if (partitionCache.TryGetValue(available, out var cached))
+            {
+                return cached;
+            }
+
+            var first = BitOperations.TrailingZeroCount(available);
+
+            var rest = available & ~(1UL << first);
+
+            var result = FindGroup(rest, rest, target - values[first], remainingGroups);
+
+            partitionCache[available] = result;
+
+            return result;
+        }
+
+        bool FindGroup(ulong remaining, ulong candidates, int needed, int remainingGroups)
+        {
+            if (needed == 0)
+            {
+                return CanPartition(remaining, remainingGroups - 1);
+            }
+
+            while (candidates != 0)
+            {
+                var index = BitOperations.TrailingZeroCount(candidates);
+
+                var bit = 1UL << index;
+
+                candidates &= candidates - 1;
+
+                var value = values[index];
+
+                if (value > needed)
+                {
+                    continue;
+                }
+
+                if (FindGroup(remaining ^ bit, candidates, needed - value, remainingGroups))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
