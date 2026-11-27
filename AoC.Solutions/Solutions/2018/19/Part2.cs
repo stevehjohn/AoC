@@ -23,10 +23,27 @@ public class Part2 : Base
         return result.ToString();
     }
 
-    private static long SumFactors(int i)
+    private static long SumFactors(int value)
     {
-        var result = Enumerable.Range(1, i).Where(v => i % v == 0).Sum();
+        var sum = 0L;
 
-        return result;
+        for (var i = 1; (long) i * i <= value; i++)
+        {
+            if (value % i != 0)
+            {
+                continue;
+            }
+
+            var other = value / i;
+
+            sum += i;
+
+            if (other != i)
+            {
+                sum += other;
+            }
+        }
+
+        return sum;
     }
 }

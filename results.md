@@ -193,7 +193,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 13.1: 17,543μs      Crashing carts
  2018 13.2: 31,589μs      
  2018 14.1: 1,670μs       Elf recipes
- 2018 14.2: 73,694μs      
+ 2018 14.2: 72,792μs      
  2018 15.1: 9,028μs       Elves vs Goblins
  2018 15.2: 41,873μs      
  2018 16.1: 511μs         Opcode reverse-engineering
@@ -203,7 +203,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 18.1: 396μs         I'm a lumberjack...
  2018 18.2: 17,630μs      
  2018 19.1: 17,923μs      Tardis halting problem
- 2018 19.2: 34,365μs      
+ 2018 19.2: 14μs          
  2018 20.1: 3,075μs       Regex maze
  2018 20.2: 3,791μs       
  2018 21.1: 5μs           Time machine halting problem
@@ -213,10 +213,10 @@ Tests performed on a 2023 MacBook Pro.
  2018 23.1: 171μs         Nanobot teleportation
  2018 23.2: 14,654μs      
  2018 24.1: 502μs         Immune system battle
- 2018 24.2: 9,988μs       
+ 2018 24.2: 9,824μs       
  2018 25.1: 24,412μs      4D chocolate teleportation
             -------------
-            469.405ms    
+            433.988ms    
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
@@ -421,11 +421,11 @@ Tests performed on a 2023 MacBook Pro.
  2022 22.2: 547μs         
  2022 23.1: 8,070μs       Unstable diffusion
  2022 23.2: 42,016μs      
- 2022 24.1: 850μs         Blizzard basin
+ 2022 24.1: 844μs         Blizzard basin
  2022 24.2: 224μs         
  2022 25.1: 9μs           Full of hot air
             -------------
-            151.877ms    
+            151.871ms    
 
  2023  1.1: 115μs         Trebuchet
  2023  1.2: 320μs         
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             97.039ms     
 
- 514 puzzles solved in 3.461s.
+ 514 puzzles solved in 3.426s.
 ```
