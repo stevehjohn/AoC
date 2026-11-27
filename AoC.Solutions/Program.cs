@@ -97,6 +97,23 @@ public static class Program
                 continue;
             }
 
+            if (previousYear == null)
+            {
+                previousYear = year;
+            }
+            else if (year != previousYear)
+            {
+                CleanUp();
+
+                WriteYearSummary(yearMs);
+
+                previousYear = year;
+
+                yearMs = 0;
+
+                GC.Collect(GC.MaxGeneration, GCCollectionMode.Aggressive, true, true);
+            }
+
             var runTwice = arguments.Length != 1 || arguments[0].Length < 5;
 
             var stopwatch = new Stopwatch();
@@ -154,23 +171,6 @@ public static class Program
 
                     answer = nextAnswer;
                 }
-            }
-
-            if (previousYear == null)
-            {
-                previousYear = year;
-            }
-            else if (year != previousYear)
-            {
-                CleanUp();
-
-                WriteYearSummary(yearMs);
-
-                previousYear = year;
-
-                yearMs = 0;
-
-                GC.Collect(GC.MaxGeneration, GCCollectionMode.Aggressive, true, true);
             }
 
             var description = string.Empty;
