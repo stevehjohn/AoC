@@ -143,7 +143,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 14.1: 22,730μs      Defragger
  2017 14.2: 23,077μs      
  2017 15.1: 61,971μs      Dueling generators
- 2017 15.2: 124,850μs     
+ 2017 15.2: 124,810μs     
  2017 16.1: 501μs         Permutation promenade
  2017 16.2: 363μs         
  2017 17.1: 770μs         Spinlock
@@ -154,27 +154,27 @@ Tests performed on a 2023 MacBook Pro.
  2017 19.2: 86μs          
  2017 20.1: 334μs         Particle swarm
  2017 20.2: 6,350μs       
- 2017 21.1: 534μs         Fractal art
+ 2017 21.1: 532μs         Fractal art
  2017 21.2: 42,511μs      
  2017 22.1: 456μs         Sporifica virus
  2017 22.2: 46,390μs      
  2017 23.1: 4,707μs       Coprocessor conflagration
  2017 23.2: 31μs          
- 2017 24.1: 19,157μs      Electromagnetic moat
+ 2017 24.1: 18,840μs      Electromagnetic moat
  2017 24.2: 17,746μs      
  2017 25.1: 67,124μs      Turing tape
             -------------
-            537.147ms    
+            536.788ms    
 
  2018  1.1: 16μs          Tardis calibration
- 2018  1.2: 3,529μs       
+ 2018  1.2: 3,339μs       
  2018  2.1: 297μs         Warehouse checksum
  2018  2.2: 173μs         
  2018  3.1: 5,741μs       Fabric overlap
  2018  3.2: 4,994μs       
  2018  4.1: 673μs         Sleepy guards
  2018  4.2: 1,113μs       
- 2018  5.1: 810μs         Polymer reactions
+ 2018  5.1: 803μs         Polymer reactions
  2018  5.2: 33,296μs      
  2018  6.1: 8,045μs       Safe coordinates
  2018  6.2: 5,368μs       
@@ -216,7 +216,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 9,988μs       
  2018 25.1: 24,412μs      4D chocolate teleportation
             -------------
-            500.119ms    
+            499.922ms    
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
@@ -252,15 +252,15 @@ Tests performed on a 2023 MacBook Pro.
  2019 16.2: 303μs         
  2019 17.1: 323μs         Scaffolding vacuum robot (CPU used unmodified)
  2019 17.2: 1,632μs       
- 2019 18.1: 7,568μs       Maze and keys
- 2019 18.2: 1,967μs       
+ 2019 18.1: 6,797μs       Maze and keys
+ 2019 18.2: 1,934μs       
  2019 19.1: 25,790μs      Tractorrr (CPU used unmodified)
  2019 19.2: 24,978μs      
  2019 20.1: 251μs         Doughnut maze
  2019 20.2: 5,891μs       
  2019 21.1: 165μs         Jumping droids (CPU used unmodified)
  2019 21.2: 2,272μs       
- 2019 22.1: 363μs         Space shuffle
+ 2019 22.1: 362μs         Space shuffle
  2019 22.2: 26μs          
  2019 23.1: 1,709μs       IntCode network (CPU used unmodified)
  2019 23.2: 2,541μs       
@@ -268,7 +268,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 24.2: 6,656μs       
  2019 25.1: 16,447μs      Airlock password (CPU used unmodified)
             -------------
-            223.832ms    
+            223.027ms    
 
  2020  1.1: 22μs          Expenses
  2020  1.2: 106μs         
@@ -371,9 +371,9 @@ Tests performed on a 2023 MacBook Pro.
  2021 23.2: 23,063μs      
  2021 24.1: 2μs           Model number
  2021 24.2: 1μs           
- 2021 25.1: 24,401μs      Landing among the cucumbers
+ 2021 25.1: 24,324μs      Landing among the cucumbers
             -------------
-            396.893ms    
+            396.816ms    
 
  2022  1.1: 20μs          Calorie counting
  2022  1.2: 29μs          
@@ -421,11 +421,11 @@ Tests performed on a 2023 MacBook Pro.
  2022 22.2: 547μs         
  2022 23.1: 8,070μs       Unstable diffusion
  2022 23.2: 42,016μs      
- 2022 24.1: 880μs         Blizzard basin
+ 2022 24.1: 872μs         Blizzard basin
  2022 24.2: 226μs         
  2022 25.1: 9μs           Full of hot air
             -------------
-            200.022ms    
+            200.014ms    
 
  2023  1.1: 115μs         Trebuchet
  2023  1.2: 320μs         
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             97.090ms     
 
- 514 puzzles solved in 4.009s.
+ 514 puzzles solved in 4.008s.
 ```
