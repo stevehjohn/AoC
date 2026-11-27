@@ -6,116 +6,99 @@ namespace AoC.Solutions.Solutions._2024._09;
 [UsedImplicitly]
 public class Part2 : Base
 {
-    private readonly List<(int Position, int Size)> _freeSpace = [];
-
     public Part2()
     {
     }
-    
+
     public Part2(IVisualiser<PuzzleState> visualiser) : base(visualiser)
     {
     }
-    
+
     public override string GetAnswer()
     {
         CalculateRequiredSize();
 
         IdentifyFiles();
-        
+
         Visualise();
 
-        MapFreeSpace();
-        
-        Defragment();
+        var free = new List<(int Position, int Size)>();
 
-        var result = CalculateChecksum(false);
-        
-        return result.ToString();
-    }
+        var position = 0;
 
-    private void Defragment()
-    {
-        var fileId = FileSystem[Size - 1];
-
-        while (fileId > 0)
+        while (position < Size)
         {
-            var position = Array.IndexOf(FileSystem, fileId);
-
-            var size = 1;
-
-            while (position + size < Size && FileSystem[position + size] == fileId)
+            if (FileSystem[position] >= 0)
             {
-                size++;
+                position++;
+
+                continue;
             }
-        
-            Visualise();
 
-            TryRelocateFile(position, size);
+            var start = position;
 
-            fileId--;
+            while (position < Size && FileSystem[position] == -1)
+            {
+                position++;
+            }
+
+            free.Add((start, position - start));
         }
-    }
 
-    private void MapFreeSpace()
-    {
-        var freeSize = 0;
+        Span<int> cursors = stackalloc int[10];
 
-        for (var i = 0; i < Size; i++)
+        cursors.Clear();
+
+        var map = Input[0];
+
+        position = Size;
+
+        for (var id = (map.Length - 1) / 2; id > 0; id--)
         {
-            if (FileSystem[i] >= 0)
+            var index = id * 2;
+
+            if (index + 1 < map.Length)
+            {
+                position -= map[index + 1] - '0';
+            }
+
+            var length = map[index] - '0';
+
+            position -= length;
+
+            if (length == 0)
             {
                 continue;
             }
 
-            while (FileSystem[i] == -1)
+            Visualise();
+
+            ref var cursor = ref cursors[length];
+
+            while (cursor < free.Count && free[cursor].Size < length)
             {
-                freeSize++;
-
-                i++;
-
-                if (i == Size)
-                {
-                    return;
-                }
+                cursor++;
             }
-            
-            _freeSpace.Add((i - freeSize, freeSize));
 
-            freeSize = 0;
+            if (cursor == free.Count)
+            {
+                continue;
+            }
+
+            var block = free[cursor];
+
+            if (block.Position >= position)
+            {
+                continue;
+            }
+
+            Array.Fill(FileSystem, id, block.Position, length);
+
+            Array.Fill(FileSystem, -1, position, length);
+
+            free[cursor] = (block.Position + length, block.Size - length);
         }
-    }
 
-    private void TryRelocateFile(int position, int size)
-    {
-        for (var i = 0; i < _freeSpace.Count; i++)
-        {
-            var block = _freeSpace[i];
-
-            if (block.Position > position)
-            {
-                return;
-            }
-
-            if (block.Size >= size)
-            {
-                for (var j = 0; j < size; j++)
-                {
-                    FileSystem[block.Position + j] = FileSystem[position + j];
-
-                    FileSystem[position + j] = -1;
-                }
-
-                if (block.Size == size)
-                {
-                    _freeSpace.RemoveAt(i);
-                }
-                else
-                {
-                    _freeSpace[i] = (block.Position + size, block.Size - size);
-                }
-
-                return;
-            }
-        }
+        return CalculateChecksum(false).ToString();
     }
 }
