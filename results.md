@@ -147,7 +147,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 16.1: 501μs         Permutation promenade
  2017 16.2: 363μs         
  2017 17.1: 770μs         Spinlock
- 2017 17.2: 114μs         
+ 2017 17.2: 111μs         
  2017 18.1: 181μs         Soundcard shenanigans
  2017 18.2: 17,802μs      
  2017 19.1: 95μs          Packet map
@@ -164,7 +164,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 24.2: 16,982μs      
  2017 25.1: 67,124μs      Turing tape
             -------------
-            535.427ms    
+            535.424ms    
 
  2018  1.1: 16μs          Tardis calibration
  2018  1.2: 3,236μs       
@@ -299,7 +299,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 14.1: 88μs          Memory bit twiddling
  2020 14.2: 3,768μs       
  2020 15.1: 8μs           Number memory game
- 2020 15.2: 165,088μs     
+ 2020 15.2: 163,918μs     
  2020 16.1: 586μs         Ticket deciphering
  2020 16.2: 1,041μs       
  2020 17.1: 1,287μs       Conway cubes
@@ -320,7 +320,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 24.2: 32,868μs      
  2020 25.1: 151μs         Door cryptography
             -------------
-            379.697ms    
+            378.527ms    
 
  2021  1.1: 47μs          Depth scan
  2021  1.2: 138μs         
@@ -362,7 +362,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 19.1: 16,755μs      3D scanners and beacons
  2021 19.2: 16,693μs      
  2021 20.1: 1,103μs       NCIS image enhancement
- 2021 20.2: 71,964μs      
+ 2021 20.2: 2,290μs       
  2021 21.1: 12μs          Quantum dice
  2021 21.2: 16,124μs      
  2021 22.1: 1,899μs       Reactor reboot
@@ -373,7 +373,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 24.2: 1μs           
  2021 25.1: 24,301μs      Landing among the cucumbers
             -------------
-            396.793ms    
+            327.119ms    
 
  2022  1.1: 20μs          Calorie counting
  2022  1.2: 29μs          
@@ -421,11 +421,11 @@ Tests performed on a 2023 MacBook Pro.
  2022 22.2: 547μs         
  2022 23.1: 8,070μs       Unstable diffusion
  2022 23.2: 42,016μs      
- 2022 24.1: 872μs         Blizzard basin
+ 2022 24.1: 850μs         Blizzard basin
  2022 24.2: 226μs         
  2022 25.1: 9μs           Full of hot air
             -------------
-            199.997ms    
+            199.975ms    
 
  2023  1.1: 115μs         Trebuchet
  2023  1.2: 320μs         
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             97.090ms     
 
- 514 puzzles solved in 3.952s.
+ 514 puzzles solved in 3.881s.
 ```

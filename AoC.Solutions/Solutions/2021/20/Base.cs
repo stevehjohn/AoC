@@ -1,137 +1,98 @@
-﻿using AoC.Solutions.Common;
-using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2021._20;
 
 public abstract class Base : Solution
 {
-    private int _padBy;
-
     public override string Description => "NCIS image enhancement";
-
-    private bool[] _algorithm;
-
-    private int _width;
-
-    private int _height;
-
-    private bool[,] _image;
-
-    private readonly HashSet<Point> _pixelsToFlip = [];
-
-    private bool _infinityLit;
 
     protected string GetAnswer(int iterations)
     {
-        _padBy = iterations;
+        var algorithm = new byte[512];
 
-        ParseInput();
-
-        for (var i = 0; i < iterations; i++)
+        for (var i = 0; i < 512; i++)
         {
-            Enhance();
+            algorithm[i] = (byte) (Input[0][i] == '#' ? 1 : 0);
         }
 
-        return CountLitPixels().ToString();
-    }
+        var padding = iterations + 1;
 
-    private void ParseInput()
-    {
-        _algorithm = [.. Input[0].Select(c => c == '#')];
+        var width = Input[2].Length + padding * 2;
 
-        var y = 0;
+        var height = Input.Length - 2 + padding * 2;
 
-        _width = Input[2].Length + _padBy * 2;
+        var current = new byte[width * height];
 
-        _height = Input.Length - 2 + _padBy * 2;
+        var next = new byte[current.Length];
 
-        _image = new bool[_width, _height];
-
-        foreach (var line in Input.Skip(2))
+        for (var y = 2; y < Input.Length; y++)
         {
+            var line = Input[y];
+
+            var offset = (y - 2 + padding) * width + padding;
+
             for (var x = 0; x < line.Length; x++)
             {
-                if (line[x] == '#')
+                current[offset + x] = (byte) (line[x] == '#' ? 1 : 0);
+            }
+        }
+
+        var infinity = (byte) 0;
+
+        for (var iteration = 0; iteration < iterations; iteration++)
+        {
+            infinity = algorithm[infinity == 0 ? 0 : 511];
+
+            next.AsSpan(0, width).Fill(infinity);
+
+            next.AsSpan((height - 1) * width, width).Fill(infinity);
+
+            for (var y = 1; y < height - 1; y++)
+            {
+                var middle = y * width;
+
+                var top = middle - width;
+
+                var bottom = middle + width;
+
+                next[middle] = infinity;
+
+                next[middle + width - 1] = infinity;
+
+                var a = (current[top] << 1) | current[top + 1];
+
+                var b = (current[middle] << 1) | current[middle + 1];
+
+                var c = (current[bottom] << 1) | current[bottom + 1];
+
+                for (var x = 1; x < width - 1; x++)
                 {
-                    _image[x + _padBy, y + _padBy] = true;
+                    a = ((a << 1) | current[top + x + 1]) & 7;
+
+                    b = ((b << 1) | current[middle + x + 1]) & 7;
+
+                    c = ((c << 1) | current[bottom + x + 1]) & 7;
+
+                    next[middle + x] = algorithm[
+                        (a << 6) | (b << 3) | c];
                 }
             }
 
-            y++;
+            (current, next) = (next, current);
         }
-    }
 
-    private void Enhance()
-    {
-        _pixelsToFlip.Clear();
-
-        for (var y = 0; y < _height; y++)
+        if (infinity != 0)
         {
-            for (var x = 0; x < _width; x++)
-            {
-                EnhancePixel(x, y);
-            }
+            throw new InvalidOperationException("Infinite lit pixels.");
         }
 
-        Apply();
+        var count = 0;
 
-        if (_algorithm[0])
+        foreach (var pixel in current)
         {
-            _infinityLit = ! _infinityLit;
-        }
-    }
-
-    private int CountLitPixels()
-    {
-        var lit = 0;
-
-        for (var y = 0; y < _height; y++)
-        {
-            for (var x = 0; x < _width; x++)
-            {
-                lit += _image[x, y] ? 1 : 0;
-            }
+            count += pixel;
         }
 
-        return lit;
-    }
-
-    private void Apply()
-    {
-        foreach (var pixel in _pixelsToFlip)
-        {
-            _image[pixel.X, pixel.Y] = ! _image[pixel.X, pixel.Y];
-        }
-    }
-
-    private void EnhancePixel(int cX, int cY)
-    {
-        var index = 0;
-
-        var shift = 0;
-
-        for (var y = cY - 1; y < cY + 2; y++)
-        {
-            for (var x = cX - 1; x < cX + 2; x++)
-            {
-                if (x < 0 || x >= _width || y < 0 || y >= _height)
-                {
-                    index += _infinityLit ? 256 >> shift : 0;
-                }
-                else
-                {
-                    index += _image[x, y] ? 256 >> shift : 0;
-                }
-
-                shift++;
-            }
-        }
-
-        var pixel = new Point(cX, cY);
-
-        if (_algorithm[index] != _image[cX, cY])
-        {
-            _pixelsToFlip.Add(pixel);
-        }
+        return count.ToString();
     }
 }
