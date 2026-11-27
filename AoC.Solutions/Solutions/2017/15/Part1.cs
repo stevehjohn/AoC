@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System.Numerics;
+using JetBrains.Annotations;
 
 namespace AoC.Solutions.Solutions._2017._15;
 
@@ -7,39 +8,64 @@ public class Part1 : Base
 {
     public override string GetAnswer()
     {
-        var generatorA = long.Parse(Input[0].Split(' ')[^1]);
-        
-        var generatorB = long.Parse(Input[1].Split(' ')[^1]);
+        var seedA = long.Parse(Input[0].Split(' ')[^1]);
+
+        var seedB = long.Parse(Input[1].Split(' ')[^1]);
 
         const long modulus = int.MaxValue;
 
+        const int iterations = 40_000_000;
+
+        var workers = Environment.ProcessorCount;
+
         var matches = 0;
 
-        for (var i = 0; i < 40_000_000; i++)
+        Parallel.For(0, workers, worker =>
         {
-            var productA = generatorA * 16807;
-            
-            generatorA = (productA & modulus) + (productA >> 31);
+            var start = (long) worker * iterations / workers;
 
-            if (generatorA >= modulus)
+            var end = (long) (worker + 1) * iterations / workers;
+
+            var generatorA = seedA *
+                             (long) BigInteger.ModPow(16807, start, modulus)
+                             % modulus;
+
+            var generatorB = seedB *
+                             (long) BigInteger.ModPow(48271, start, modulus)
+                             % modulus;
+
+            var localMatches = 0;
+
+            for (var i = start; i < end; i++)
             {
-                generatorA -= modulus;
+                var productA = generatorA * 16807;
+
+                generatorA = (productA & modulus) +
+                             (productA >> 31);
+
+                if (generatorA >= modulus)
+                {
+                    generatorA -= modulus;
+                }
+
+                var productB = generatorB * 48271;
+
+                generatorB = (productB & modulus) +
+                             (productB >> 31);
+
+                if (generatorB >= modulus)
+                {
+                    generatorB -= modulus;
+                }
+
+                if ((ushort) generatorA == (ushort) generatorB)
+                {
+                    localMatches++;
+                }
             }
 
-            var productB = generatorB * 48271;
-            
-            generatorB = (productB & modulus) + (productB >> 31);
-
-            if (generatorB >= modulus)
-            {
-                generatorB -= modulus;
-            }
-
-            if ((generatorA & 0xFFFF) == (generatorB & 0xFFFF))
-            {
-                matches++;
-            }
-        }
+            Interlocked.Add(ref matches, localMatches);
+        });
 
         return matches.ToString();
     }

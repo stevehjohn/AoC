@@ -142,7 +142,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 13.2: 11,594μs      
  2017 14.1: 22,730μs      Defragger
  2017 14.2: 23,077μs      
- 2017 15.1: 61,971μs      Dueling generators
+ 2017 15.1: 8,292μs       Dueling generators
  2017 15.2: 124,810μs     
  2017 16.1: 501μs         Permutation promenade
  2017 16.2: 363μs         
@@ -164,7 +164,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 24.2: 16,982μs      
  2017 25.1: 67,124μs      Turing tape
             -------------
-            535.424ms    
+            481.745ms    
 
  2018  1.1: 16μs          Tardis calibration
  2018  1.2: 3,236μs       
@@ -185,7 +185,7 @@ Tests performed on a 2023 MacBook Pro.
  2018  9.1: 160μs         Marble madness
  2018  9.2: 17,634μs      
  2018 10.1: 4,165μs       Writing in the stars
- 2018 10.2: 4,175μs       
+ 2018 10.2: 4,161μs       
  2018 11.1: 207μs         Max power... cell
  2018 11.2: 4,114μs       
  2018 12.1: 1,915μs       Plant potty
@@ -216,7 +216,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 9,988μs       
  2018 25.1: 24,412μs      4D chocolate teleportation
             -------------
-            499.819ms    
+            499.805ms    
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
@@ -283,7 +283,7 @@ Tests performed on a 2023 MacBook Pro.
  2020  6.1: 207μs         Customs questions
  2020  6.2: 908μs         
  2020  7.1: 9,572μs       Recursive bag packing
- 2020  7.2: 809μs         
+ 2020  7.2: 802μs         
  2020  8.1: 8μs           Console assembly debugging
  2020  8.2: 2,467μs       
  2020  9.1: 517μs         Cypher cracking
@@ -320,7 +320,7 @@ Tests performed on a 2023 MacBook Pro.
  2020 24.2: 32,868μs      
  2020 25.1: 151μs         Door cryptography
             -------------
-            378.527ms    
+            378.520ms    
 
  2021  1.1: 47μs          Depth scan
  2021  1.2: 138μs         
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             97.090ms     
 
- 514 puzzles solved in 3.881s.
+ 514 puzzles solved in 3.827s.
 ```
