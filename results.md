@@ -155,7 +155,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 20.1: 321μs         Particle swarm
  2017 20.2: 6,350μs       
  2017 21.1: 54μs          Fractal art
- 2017 21.2: 108μs         
+ 2017 21.2: 106μs         
  2017 22.1: 456μs         Sporifica virus
  2017 22.2: 46,390μs      
  2017 23.1: 4,707μs       Coprocessor conflagration
@@ -164,7 +164,7 @@ Tests performed on a 2023 MacBook Pro.
  2017 24.2: 16,865μs      
  2017 25.1: 39,502μs      Turing tape
             -------------
-            310.563ms    
+            310.561ms    
 
  2018  1.1: 16μs          Tardis calibration
  2018  1.2: 3,236μs       
@@ -174,8 +174,8 @@ Tests performed on a 2023 MacBook Pro.
  2018  3.2: 4,994μs       
  2018  4.1: 673μs         Sleepy guards
  2018  4.2: 1,113μs       
- 2018  5.1: 789μs         Polymer reactions
- 2018  5.2: 33,296μs      
+ 2018  5.1: 137μs         Polymer reactions
+ 2018  5.2: 8,922μs       
  2018  6.1: 8,045μs       Safe coordinates
  2018  6.2: 5,368μs       
  2018  7.1: 48μs          Ikea sleigh
@@ -216,7 +216,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 9,988μs       
  2018 25.1: 24,412μs      4D chocolate teleportation
             -------------
-            499.722ms    
+            474.696ms    
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
@@ -254,7 +254,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 17.2: 1,632μs       
  2019 18.1: 6,797μs       Maze and keys
  2019 18.2: 1,883μs       
- 2019 19.1: 25,790μs      Tractorrr (CPU used unmodified)
+ 2019 19.1: 25,254μs      Tractorrr (CPU used unmodified)
  2019 19.2: 24,978μs      
  2019 20.1: 251μs         Doughnut maze
  2019 20.2: 5,891μs       
@@ -268,7 +268,7 @@ Tests performed on a 2023 MacBook Pro.
  2019 24.2: 6,656μs       
  2019 25.1: 16,447μs      Airlock password (CPU used unmodified)
             -------------
-            222.708ms    
+            222.172ms    
 
  2020  1.1: 22μs          Expenses
  2020  1.2: 106μs         
@@ -337,7 +337,7 @@ Tests performed on a 2023 MacBook Pro.
  2021  7.1: 58μs          Crab submarines
  2021  7.2: 48μs          
  2021  7.X: 17μs          Easter egg (2019 CPU used)
- 2021  8.1: 35μs          Old school displays
+ 2021  8.1: 34μs          Old school displays
  2021  8.2: 770μs         
  2021  9.1: 81μs          Lava level
  2021  9.2: 1,901μs       
@@ -373,7 +373,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 24.2: 1μs           
  2021 25.1: 24,301μs      Landing among the cucumbers
             -------------
-            303.195ms    
+            303.194ms    
 
  2022  1.1: 20μs          Calorie counting
  2022  1.2: 29μs          
@@ -557,5 +557,5 @@ Tests performed on a 2023 MacBook Pro.
             -------------
             97.039ms     
 
- 514 puzzles solved in 3.583s.
+ 514 puzzles solved in 3.557s.
 ```

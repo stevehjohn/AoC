@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using AoC.Solutions.Infrastructure;
+﻿using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2018._05;
 
@@ -7,30 +6,29 @@ public abstract class Base : Solution
 {
     public override string Description => "Polymer reactions";
 
-    protected static int ReactPolymer(string polymerString)
+    protected static int ReactPolymer(string polymerString, char exclude = '\0')
     {
-        var polymer = new LinkedList<char>(polymerString.ToCharArray());
+        var stack = new char[polymerString.Length];
 
-        var node = polymer.First;
+        var count = 0;
 
-        while (node is { Next: not null })
+        foreach (var c in polymerString)
         {
-            if (char.ToLower(node.Value, CultureInfo.InvariantCulture) == char.ToLower(node.Next.Value, CultureInfo.InvariantCulture) && node.Value != node.Next.Value)
+            if ((c | 32) == exclude)
             {
-                var previous = node.Previous;
-
-                polymer.Remove(node.Next);
-
-                polymer.Remove(node);
-
-                node = previous ?? polymer.First;
+                continue;
             }
-            else
+
+            if (count > 0 && (stack[count - 1] ^ c) == 32)
             {
-                node = node.Next;
+                count--;
+
+                continue;
             }
+
+            stack[count++] = c;
         }
 
-        return polymer.Count;
+        return count;
     }
 }
