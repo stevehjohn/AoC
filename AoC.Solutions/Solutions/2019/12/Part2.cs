@@ -10,43 +10,52 @@ public class Part2 : Base
     {
         ParseInput();
 
-        var xCycle = -1;
+        var x = FindPeriod(Moons[0].Position.X, Moons[1].Position.X, Moons[2].Position.X, Moons[3].Position.X);
 
-        var yCycle = -1;
+        var y = FindPeriod(Moons[0].Position.Y, Moons[1].Position.Y, Moons[2].Position.Y, Moons[3].Position.Y);
 
-        var zCycle = -1;
+        var z = FindPeriod(Moons[0].Position.Z, Moons[1].Position.Z, Moons[2].Position.Z, Moons[3].Position.Z);
 
-        var cycle = 0;
+        return Maths.LowestCommonMultiple([x, y, z]).ToString();
+    }
 
-        while (true)
+    private static int FindPeriod(int a, int b, int c, int d)
+    {
+        var p0 = a;
+        var p1 = b;
+        var p2 = c;
+        var p3 = d;
+
+        var v0 = 0;
+        var v1 = 0;
+        var v2 = 0;
+        var v3 = 0;
+
+        var steps = 0;
+
+        do
         {
-            RunCycle();
+            var ab = Math.Sign(p1 - p0);
+            var ac = Math.Sign(p2 - p0);
+            var ad = Math.Sign(p3 - p0);
+            var bc = Math.Sign(p2 - p1);
+            var bd = Math.Sign(p3 - p1);
+            var cd = Math.Sign(p3 - p2);
 
-            cycle++;
+            v0 += ab + ac + ad;
+            v1 += bc + bd - ab;
+            v2 += cd - ac - bc;
+            v3 -= ad + bd + cd;
 
-            if (xCycle == -1 && Moons.All(m => m.Velocity.X == 0))
-            {
-                xCycle = cycle;
-            }
+            p0 += v0;
+            p1 += v1;
+            p2 += v2;
+            p3 += v3;
 
-            if (yCycle == -1 && Moons.All(m => m.Velocity.Y == 0))
-            {
-                yCycle = cycle;
-            }
+            steps++;
+        } while ((v0 | v1 | v2 | v3) != 0 ||
+                 p0 != a || p1 != b || p2 != c || p3 != d);
 
-            if (zCycle == -1 && Moons.All(m => m.Velocity.Z == 0))
-            {
-                zCycle = cycle;
-            }
-
-            if (xCycle > -1 && yCycle > -1 && zCycle > -1)
-            {
-                break;
-            }
-        }
-
-        var lowestCommonMultiple = Maths.LowestCommonMultiple([xCycle, yCycle, zCycle]) * 2;
-
-        return lowestCommonMultiple.ToString();
+        return steps;
     }
 }
