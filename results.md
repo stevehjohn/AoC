@@ -26,7 +26,7 @@ Tests performed on a 2023 MacBook Pro.
  2015  7.2: 93μs          
  2015  8.1: 26μs          Matchsticks
  2015  8.2: 30μs          
- 2015  9.1: 1,118μs       All in a single night
+ 2015  9.1: 988μs         All in a single night
  2015  9.2: 38μs          
  2015 10.1: 2,982μs       Elves look, elves say
  2015 10.2: 40,100μs      
@@ -60,7 +60,7 @@ Tests performed on a 2023 MacBook Pro.
  2015 24.2: 18μs          
  2015 25.1: 5μs           Let it snow
             -------------
-            356.037ms    
+            355.907ms    
 
  2016  1.1: 6μs           Manhattan distance
  2016  1.2: 15μs          
@@ -496,7 +496,7 @@ Tests performed on a 2023 MacBook Pro.
  2024  8.1: 90μs          Resonant collinearity
  2024  8.2: 121μs         
  2024  9.1: 287μs         Disk fragmenter
- 2024  9.2: 750μs         
+ 2024  9.2: 710μs         
  2024 10.1: 286μs         Hoof it
  2024 10.2: 469μs         
  2024 11.1: 411μs         Plutonian pebbles
@@ -529,7 +529,7 @@ Tests performed on a 2023 MacBook Pro.
  2024 24.2: 225μs         
  2024 25.1: 111μs         Code chronicle
             -------------
-            163.038ms    
+            162.998ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 78μs          
@@ -550,12 +550,12 @@ Tests performed on a 2023 MacBook Pro.
  2025  9.1: 152μs         Movie theater
  2025  9.2: 7,073μs       
  2025 10.1: 1,485μs       Factory
- 2025 10.2: 65,629μs      
+ 2025 10.2: 20,084μs      
  2025 11.1: 139μs         Reactor
  2025 11.2: 520μs         
  2025 12.1: 276μs         Christmas tree farm
             -------------
-            97.039ms     
+            51.494ms     
 
- 514 puzzles solved in 3.329s.
+ 514 puzzles solved in 3.284s.
 ```
