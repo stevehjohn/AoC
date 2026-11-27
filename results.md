@@ -174,8 +174,8 @@ Tests performed on a 2023 MacBook Pro.
  2018  3.2: 4,994μs       
  2018  4.1: 673μs         Sleepy guards
  2018  4.2: 1,113μs       
- 2018  5.1: 137μs         Polymer reactions
- 2018  5.2: 3,631μs       
+ 2018  5.1: 134μs         Polymer reactions
+ 2018  5.2: 3,625μs       
  2018  6.1: 8,045μs       Safe coordinates
  2018  6.2: 5,368μs       
  2018  7.1: 48μs          Ikea sleigh
@@ -216,7 +216,7 @@ Tests performed on a 2023 MacBook Pro.
  2018 24.2: 9,824μs       
  2018 25.1: 24,412μs      4D chocolate teleportation
             -------------
-            433.337ms    
+            433.328ms    
 
  2019  1.1: 1μs           Calculate launch fuel
  2019  1.2: 4μs           
@@ -523,13 +523,13 @@ Tests performed on a 2023 MacBook Pro.
  2024 21.2: 3,638μs       
  2024 22.1: 165μs         Monkey market
  2024 22.2: 16,724μs      
- 2024 23.1: 240μs         LAN party
- 2024 23.2: 1,010μs       
+ 2024 23.1: 233μs         LAN party
+ 2024 23.2: 991μs         
  2024 24.1: 329μs         Crossed wires
  2024 24.2: 225μs         
  2024 25.1: 111μs         Code chronicle
             -------------
-            197.060ms    
+            197.034ms    
 
  2025  1.1: 98μs          Secret Entrance
  2025  1.2: 78μs          
