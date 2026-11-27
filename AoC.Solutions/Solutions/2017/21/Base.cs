@@ -1,4 +1,5 @@
-﻿using AoC.Solutions.Infrastructure;
+﻿using System.Numerics;
+using AoC.Solutions.Infrastructure;
 
 namespace AoC.Solutions.Solutions._2017._21;
 
@@ -6,207 +7,222 @@ public abstract class Base : Solution
 {
     public override string Description => "Fractal art";
 
-    private Dictionary<int, char[,]> _patterns;
-
-    private char[,] _state;
-
     protected int GetAnswer(int cycles)
     {
-        _patterns = ParseInput();
+        var rules2 = new int[16];
 
-        _state = new[,] { { '.', '.', '#' }, { '#', '.', '#' }, { '.', '#', '#' } };
+        var rules3 = new int[512];
 
-        for (var i = 0; i < cycles; i++)
+        foreach (var line in Input)
         {
-            RunCycle();
+            var parts = line.Split(" => ");
+
+            var size = parts[0].Length == 5 ? 2 : 3;
+
+            var pattern = Encode(parts[0]);
+
+            var result = Encode(parts[1]);
+
+            var rules = size == 2 ? rules2 : rules3;
+
+            for (var rotation = 0; rotation < 4; rotation++)
+            {
+                rules[pattern] = result;
+
+                rules[Flip(pattern, size)] = result;
+
+                pattern = Rotate(pattern, size);
+            }
         }
 
-        return CountOn();
+        var counts = new int[512];
+
+        var next = new int[512];
+
+        var transitions = new int[512][];
+
+        counts[Encode(".#./..#/###")] = 1;
+
+        while (cycles >= 3)
+        {
+            Array.Clear(next);
+
+            for (var pattern = 0; pattern < 512; pattern++)
+            {
+                var count = counts[pattern];
+
+                if (count == 0)
+                {
+                    continue;
+                }
+
+                var tiles = transitions[pattern] ??= ExpandThree(pattern, rules2, rules3);
+
+                foreach (var tile in tiles)
+                {
+                    next[tile] += count;
+                }
+            }
+
+            (counts, next) = (next, counts);
+
+            cycles -= 3;
+        }
+
+        var total = 0;
+
+        for (var pattern = 0; pattern < 512; pattern++)
+        {
+            if (counts[pattern] == 0)
+            {
+                continue;
+            }
+
+            var lit = cycles switch
+            {
+                0 => BitOperations.PopCount((uint) pattern),
+                1 => BitOperations.PopCount((uint) rules3[pattern]),
+                _ => CountAfterTwo(rules3[pattern], rules2)
+            };
+
+            total += lit * counts[pattern];
+        }
+
+        return total;
     }
 
-    private int CountOn()
+    private static int[] ExpandThree(
+        int pattern, int[] rules2, int[] rules3)
+    {
+        var four = rules3[pattern];
+
+        ulong six = 0;
+
+        for (var y = 0; y < 2; y++)
+        {
+            for (var x = 0; x < 2; x++)
+            {
+                var tile = Extract((ulong) four, 4, x * 2, y * 2, 2);
+
+                Insert(ref six, 6, x * 3, y * 3, 3, rules2[tile]);
+            }
+        }
+
+        var result = new int[9];
+
+        for (var y = 0; y < 3; y++)
+        {
+            for (var x = 0; x < 3; x++)
+            {
+                var tile = Extract(six,
+                    6, x * 2, y * 2, 2);
+
+                result[y * 3 + x] = rules2[tile];
+            }
+        }
+
+        return result;
+    }
+
+    private static int CountAfterTwo(int four, int[] rules2)
     {
         var count = 0;
 
-        for (var y = 0; y < _state.GetLength(0); y++)
+        for (var y = 0; y < 4; y += 2)
         {
-            for (var x = 0; x < _state.GetLength(1); x++)
+            for (var x = 0; x < 4; x += 2)
             {
-                count += _state[x, y] == '#' ? 1 : 0;
+                var tile = Extract((ulong) four, 4, x, y, 2);
+
+                count += BitOperations.PopCount((uint) rules2[tile]);
             }
         }
 
         return count;
     }
 
-    private void RunCycle()
+    private static int Extract(
+        ulong grid, int width, int x, int y, int size)
     {
-        int size;
+        var result = 0;
 
-        char[,] newState;
+        var mask = (1UL << size) - 1;
 
-        if (_state.GetLength(0) % 2 == 0)
+        for (var row = 0; row < size; row++)
         {
-            size = 2;
-
-            var newLength = _state.GetLength(0) / 2 * 3;
-
-            newState = new char[newLength, newLength];
-        }
-        else
-        {
-            size = 3;
-
-            var newLength = _state.GetLength(0) / 3 * 4;
-
-            newState = new char[newLength, newLength];
+            result |= (int) ((grid >> ((y + row) * width + x)) & mask) << (row * size);
         }
 
-        var tile = new char[size, size];
-
-        for (var iY = 0; iY < _state.GetLength(0) / size; iY++)
-        {
-            for (var iX = 0; iX < _state.GetLength(0) / size; iX++)
-            {
-                for (var y = 0; y < size; y++)
-                {
-                    for (var x = 0; x < size; x++)
-                    {
-                        tile[x, y] = _state[iX * size + x, iY * size + y];
-                    }
-                }
-
-                var newTile = _patterns[HashPattern(tile, size)];
-
-                for (var y = 0; y < size + 1; y++)
-                {
-                    for (var x = 0; x < size + 1; x++)
-                    {
-                        newState[iX * (size + 1) + x, iY * (size + 1) + y] = newTile[x, y];
-                    }
-                }
-            }
-        }
-
-        _state = newState;
+        return result;
     }
 
-    private Dictionary<int, char[,]> ParseInput()
+    private static void Insert(
+        ref ulong grid, int width,
+        int x, int y, int size, int tile)
     {
-        var patterns = new Dictionary<int, char[,]>();
+        var mask = (1 << size) - 1;
 
-        foreach (var line in Input)
+        for (var row = 0; row < size; row++)
         {
-            var parts = line.Split(" => ", StringSplitOptions.TrimEntries);
-
-            var sideLength = 2;
-
-            if (parts[0].Length == 11)
-            {
-                sideLength = 3;
-            }
-
-            var result = ParsePattern(parts[1], sideLength + 1);
-
-            var pattern = ParsePattern(parts[0], sideLength);
-
-            patterns.TryAdd(HashPattern(pattern, sideLength), result);
-
-            for (var i = 0; i < 4; i++)
-            {
-                pattern = Rotate(pattern, sideLength);
-
-                patterns.TryAdd(HashPattern(pattern, sideLength), result);
-
-                pattern = FlipVertical(pattern, sideLength);
-
-                patterns.TryAdd(HashPattern(pattern, sideLength), result);
-            
-                pattern = FlipHorizontal(pattern, sideLength);
-
-                patterns.TryAdd(HashPattern(pattern, sideLength), result);
-
-                pattern = FlipVertical(pattern, sideLength);
-
-                patterns.TryAdd(HashPattern(pattern, sideLength), result);
-            }
+            grid |= (ulong) ((tile >> (row * size)) & mask) << ((y + row) * width + x);
         }
-
-        return patterns;
     }
 
-    private static char[,] Rotate(char[,] pattern, int sideLength)
+    private static int Encode(string pattern)
     {
-        var newPattern = new char[sideLength, sideLength];
+        var result = 0;
 
-        for (var y = 0; y < sideLength; y++)
+        var bit = 0;
+
+        foreach (var c in pattern)
         {
-            for (var x = 0; x < sideLength; x++)
+            if (c == '/')
             {
-                newPattern[x, y] = pattern[y, sideLength - 1 - x];
+                continue;
             }
+
+            if (c == '#')
+            {
+                result |= 1 << bit;
+            }
+
+            bit++;
         }
 
-        return newPattern;
+        return result;
     }
 
-    private static char[,] FlipVertical(char[,] pattern, int sideLength)
+    private static int Rotate(int pattern, int size)
     {
-        var newPattern = new char[sideLength, sideLength];
+        var result = 0;
 
-        for (var y = 0; y < sideLength; y++)
+        for (var y = 0; y < size; y++)
         {
-            for (var x = 0; x < sideLength; x++)
+            for (var x = 0; x < size; x++)
             {
-                newPattern[x, y] = pattern[x, sideLength - 1 - y];
+                var bit = (pattern >> (y * size + x)) & 1;
+
+                result |= bit << (x * size + size - 1 - y);
             }
         }
 
-        return newPattern;
+        return result;
     }
 
-    private static char[,] FlipHorizontal(char[,] pattern, int sideLength)
+    private static int Flip(int pattern, int size)
     {
-        var newPattern = new char[sideLength, sideLength];
+        var result = 0;
 
-        for (var y = 0; y < sideLength; y++)
+        for (var y = 0; y < size; y++)
         {
-            for (var x = 0; x < sideLength; x++)
+            for (var x = 0; x < size; x++)
             {
-                newPattern[x, y] = pattern[sideLength - 1 - x, y];
+                var bit = (pattern >> (y * size + x)) & 1;
+
+                result |= bit << (y * size + size - 1 - x);
             }
         }
 
-        return newPattern;
-    }
-
-    private static char[,] ParsePattern(string pattern, int sideLength)
-    {
-        var grid = new char[sideLength, sideLength];
-
-        for (var y = 0; y < sideLength; y++)
-        {
-            for (var x = 0; x < sideLength; x++)
-            {
-                grid[x, y] = pattern[y * (sideLength + 1) + x];
-            }
-        }
-
-        return grid;
-    }
-
-    private static int HashPattern(char[,] pattern, int sideLength)
-    {
-        var hash = 0;
-
-        for (var y = 0; y < sideLength; y++)
-        {
-            for (var x = 0; x < sideLength; x++)
-            {
-                hash = HashCode.Combine(hash, pattern[x, y]);
-            }
-        }
-
-        return hash;
+        return result;
     }
 }
