@@ -6,35 +6,39 @@ public abstract class Base : Solution
 {
     public override string Description => "LAN party";
 
-    protected readonly Dictionary<int, Node> Lan = [];
+    protected const int Size = 26 * 26;
+
+    protected readonly bool[] Adjacent = new bool[Size * Size];
+
+    protected readonly int[][] Neighbours = new int[Size][];
 
     protected void ParseInput()
     {
-        foreach (var line in Input)
-        {
-            var left = GetId(line[..2]);
-
-            var right = GetId(line[3..]);
-
-            Lan.TryAdd(left, new Node(left));
-
-            Lan.TryAdd(right, new Node(right));
-        }
+        var lists = new List<int>[Size];
 
         foreach (var line in Input)
         {
-            var left = GetId(line[..2]);
+            var a = (line[0] - 'a') * 26 + line[1] - 'a';
 
-            var right = GetId(line[3..]);
+            var b = (line[3] - 'a') * 26 + line[4] - 'a';
 
-            Lan[left].Connections.Add(Lan[right]);
-            
-            Lan[right].Connections.Add(Lan[left]);
+            if (a == b || Adjacent[a * Size + b])
+            {
+                continue;
+            }
+
+            Adjacent[a * Size + b] = true;
+
+            Adjacent[b * Size + a] = true;
+
+            (lists[a] ??= []).Add(b);
+
+            (lists[b] ??= []).Add(a);
         }
-    }
 
-    private static int GetId(string name)
-    {
-        return ((name[0] - 'a') << 8) | (name[1] - 'a');
+        for (var i = 0; i < Size; i++)
+        {
+            Neighbours[i] = lists[i]?.Order().ToArray() ?? [];
+        }
     }
 }

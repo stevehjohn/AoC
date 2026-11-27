@@ -5,47 +5,42 @@ namespace AoC.Solutions.Solutions._2024._23;
 [UsedImplicitly]
 public class Part1 : Base
 {
-    private readonly HashSet<string> _loops = [];
-    
     public override string GetAnswer()
     {
         ParseInput();
 
-        foreach (var node in Lan)
-        {
-            WalkNodes(node.Key, node.Value, [node.Key], 3);
-        }
+        var count = 0;
 
-        return _loops.Count.ToString();
-    }
-
-    private void WalkNodes(int start, Node node, HashSet<int> visited, int steps)
-    {
-        if (visited.Count > steps)
+        for (var a = 0; a < Size; a++)
         {
-            return;
-        }
+            var neighbours = Neighbours[a];
 
-        if (visited.Count == steps)
-        {
-            var result = node.Connections.Any(n => n.Id == start) && visited.Any(n => n >> 8 == 19);
-            
-            if (result)
+            for (var i = 0; i < neighbours.Length; i++)
             {
-                _loops.Add(string.Join(",", visited.Order()));
-            }
+                var b = neighbours[i];
 
-            return;
+                if (b <= a)
+                {
+                    continue;
+                }
+
+                for (var j = i + 1; j < neighbours.Length; j++)
+                {
+                    var c = neighbours[j];
+
+                    if (! Adjacent[b * Size + c])
+                    {
+                        continue;
+                    }
+
+                    if (a / 26 == 19 || b / 26 == 19 || c / 26 == 19)
+                    {
+                        count++;
+                    }
+                }
+            }
         }
 
-        foreach (var connection in node.Connections)
-        {
-            if (visited.Contains(connection.Id))
-            {
-                continue;
-            }
-
-            WalkNodes(start, connection, [..visited, connection.Id], steps);
-        }
+        return count.ToString();
     }
 }
