@@ -360,19 +360,21 @@ public static class Program
     {
         if (answer.Equals("Unknown", StringComparison.OrdinalIgnoreCase))
         {
-            var temp = Console.ForegroundColor;
+            if (run == 1)
+            {
+                var temp = Console.ForegroundColor;
 
-            Console.ForegroundColor = ConsoleColor.Blue;
+                Console.ForegroundColor = ConsoleColor.Blue;
 
-            Console.WriteLine(" This seems to be an in progress puzzle.");
+                Console.WriteLine(" This seems to be an in progress puzzle.");
 
-            Console.ForegroundColor = temp;
+                Console.ForegroundColor = temp;
+            }
 
             return false;
         }
 
-        var key =
-            $"{int.FastParse(solution.Namespace?.Split('.')[3].Replace("_", string.Empty) ?? "0")}.{int.FastParse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0")}.{solution.Name[4]}";
+        var key = $"{int.FastParse(solution.Namespace?.Split('.')[3].Replace("_", string.Empty) ?? "0")}.{int.FastParse(solution.Namespace?.Split('.')[4].Replace("_", string.Empty) ?? "0")}.{solution.Name[4]}";
 
         var correctAnswerLine = answers.FirstOrDefault(a => a.StartsWith(key + ": ", StringComparison.Ordinal));
 
