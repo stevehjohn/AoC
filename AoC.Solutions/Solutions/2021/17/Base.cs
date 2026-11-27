@@ -12,10 +12,6 @@ public abstract class Base : Solution
 
     protected int HighestY { get; private set; }
 
-    private readonly Point _topLeft = new();
-
-    private readonly Point _bottomRight = new();
-
     protected void Simulate()
     {
         var input = Input[0][(Input[0].IndexOf(':') + 2)..];
@@ -26,60 +22,90 @@ public abstract class Base : Solution
 
         var yRange = components[1].Split("..").Select(int.FastParse).ToArray();
 
-        _topLeft.X = xRange[0];
+        var minX = xRange[0];
 
-        _topLeft.Y = yRange[1];
+        var maxX = xRange[1];
 
-        _bottomRight.X = xRange[1];
+        var minY = yRange[0];
 
-        _bottomRight.Y = yRange[0];
+        var maxY = yRange[1];
 
-        for (var xVelocity = 0; xVelocity <= _bottomRight.X; xVelocity++)
+        var maxVelocityY = -minY - 1;
+
+        var maxTime = -minY * 2;
+
+        var lower = new int[maxTime + 1];
+
+        var upper = new int[maxTime + 1];
+
+        Velocities.Clear();
+
+        HighestY = 0;
+
+        for (var t = 1; t <= maxTime; t++)
         {
-            for (var yVelocity = _bottomRight.Y; yVelocity <= -_bottomRight.Y; yVelocity++)
-            {
-                if (HitsTarget(xVelocity, yVelocity))
-                {
-                    Velocities.Add(new Point(xVelocity, yVelocity));
-                }
-            }
+            var triangle = t * (t - 1) / 2;
+
+            lower[t] = Math.Max(minY, (int) Math.Ceiling((minY + triangle) / (double) t));
+
+            upper[t] = Math.Min(maxVelocityY, (int) Math.Floor((maxY + triangle) / (double) t));
         }
-    }
 
-    private bool HitsTarget(int xVelocity, int yVelocity)
-    {
-        var position = new Point();
+        var seen = new int[maxVelocityY - minY + 1];
 
-        var highestY = 0;
-
-        while (true)
+        for (var vx = 1; vx <= maxX; vx++)
         {
-            position.X += xVelocity;
-
-            position.Y += yVelocity;
-
-            if (position.Y > highestY)
+            if (vx * (vx + 1) / 2 < minX)
             {
-                highestY = position.Y;
+                continue;
             }
 
-            xVelocity = Math.Max(xVelocity - 1, 0);
+            var x = 0;
 
-            yVelocity--;
+            var dx = vx;
 
-            if (position.X >= _topLeft.X && position.X <= _bottomRight.X && position.Y <= _topLeft.Y && position.Y >= _bottomRight.Y)
+            for (var t = 1; t <= maxTime; t++)
             {
-                if (highestY > HighestY)
+                x += dx;
+
+                if (dx > 0)
                 {
-                    HighestY = highestY;
+                    dx--;
                 }
 
-                return true;
-            }
+                if (x > maxX)
+                {
+                    break;
+                }
 
-            if (position.X > _bottomRight.X || position.Y < _bottomRight.Y)
-            {
-                return false;
+                if (x < minX)
+                {
+                    if (dx == 0)
+                    {
+                        break;
+                    }
+
+                    continue;
+                }
+
+                for (var vy = lower[t]; vy <= upper[t]; vy++)
+                {
+                    var index = vy - minY;
+
+                    if (seen[index] == vx)
+                    {
+                        continue;
+                    }
+
+                    seen[index] = vx;
+
+                    Velocities.Add(new Point(vx, vy));
+
+                    if (vy > 0)
+                    {
+                        HighestY = Math.Max(HighestY, vy * (vy + 1) / 2);
+                    }
+                }
             }
         }
     }
