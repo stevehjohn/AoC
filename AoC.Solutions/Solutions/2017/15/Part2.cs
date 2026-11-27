@@ -7,11 +7,9 @@ public class Part2 : Base
 {
     public override string GetAnswer()
     {
-        var generatorA = uint.Parse(Input[0].AsSpan(
-            Input[0].LastIndexOf(' ') + 1));
+        var generatorA = uint.Parse(Input[0].AsSpan(Input[0].LastIndexOf(' ') + 1));
 
-        var generatorB = uint.Parse(Input[1].AsSpan(
-            Input[1].LastIndexOf(' ') + 1));
+        var generatorB = uint.Parse(Input[1].AsSpan(Input[1].LastIndexOf(' ') + 1));
 
         var matches = 0;
 
