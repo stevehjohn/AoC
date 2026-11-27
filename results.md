@@ -85,7 +85,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 11.1: 61μs          Radioisotope thermoelectric elevators
  2016 11.2: 108μs         
  2016 12.1: 1,023μs       Monorail
- 2016 12.2: 29,741μs      
+ 2016 12.2: 29,710μs      
  2016 13.1: 48μs          Cubicle maze
  2016 13.2: 46μs          
  2016 14.1: 10,371μs      One time pad
@@ -112,7 +112,7 @@ Tests performed on a 2023 MacBook Pro.
  2016 24.2: 18,745μs      
  2016 25.1: 6,071μs       Clock signal
             -------------
-            720.345ms    
+            720.314ms    
 
  2017  1.1: 8μs           Captcha
  2017  1.2: 10μs          
@@ -325,7 +325,7 @@ Tests performed on a 2023 MacBook Pro.
  2021  1.1: 47μs          Depth scan
  2021  1.2: 138μs         
  2021  2.1: 42μs          Navigate forward
- 2021  2.2: 43μs          
+ 2021  2.2: 40μs          
  2021  3.1: 51μs          Power consumption
  2021  3.2: 37μs          
  2021  4.1: 930μs         Squid bingo
@@ -373,7 +373,7 @@ Tests performed on a 2023 MacBook Pro.
  2021 24.2: 1μs           
  2021 25.1: 24,301μs      Landing among the cucumbers
             -------------
-            303.200ms    
+            303.197ms    
 
  2022  1.1: 20μs          Calorie counting
  2022  1.2: 29μs          
@@ -432,7 +432,7 @@ Tests performed on a 2023 MacBook Pro.
  2023  2.1: 56μs          Cube conundrum
  2023  2.2: 81μs          
  2023  3.1: 51μs          Gear ratios
- 2023  3.2: 172μs         
+ 2023  3.2: 171μs         
  2023  4.1: 160μs         Scratchcards
  2023  4.2: 153μs         
  2023  5.1: 32μs          If you give a seed a fertilizer
@@ -461,7 +461,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 16.2: 5,394μs       
  2023 17.1: 14,994μs      Clumsy crucible
  2023 17.2: 23,599μs      
- 2023 18.1: 82μs          Lavaduct lagoon
+ 2023 18.1: 80μs          Lavaduct lagoon
  2023 18.2: 97μs          
  2023 19.1: 196μs         Aplenty
  2023 19.2: 435μs         
@@ -477,7 +477,7 @@ Tests performed on a 2023 MacBook Pro.
  2023 24.2: 5,110μs       
  2023 25.1: 489μs         Snowverload
             -------------
-            199.299ms    
+            199.296ms    
 
  2024  1.1: 112μs         Historian hysteria
  2024  1.2: 79μs          
@@ -547,7 +547,7 @@ Tests performed on a 2023 MacBook Pro.
  2025  7.2: 274μs         
  2025  8.1: 15,741μs      Playground
  2025  8.2: 1,795μs       
- 2025  9.1: 156μs         Movie theater
+ 2025  9.1: 154μs         Movie theater
  2025  9.2: 7,114μs       
  2025 10.1: 1,485μs       Factory
  2025 10.2: 65,629μs      
@@ -555,7 +555,7 @@ Tests performed on a 2023 MacBook Pro.
  2025 11.2: 520μs         
  2025 12.1: 276μs         Christmas tree farm
             -------------
-            97.084ms     
+            97.082ms     
 
  514 puzzles solved in 3.626s.
 ```
